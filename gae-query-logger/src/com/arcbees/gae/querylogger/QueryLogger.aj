@@ -16,6 +16,7 @@
 
 package com.arcbees.gae.querylogger;
 
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Before;
@@ -30,10 +31,12 @@ public aspect QueryLogger {
     Logger logger;
 
     // TODO figure out why this is issuing a warning about some advice not being applied
-    @Before("execution(* com.google.appengine.api.datastore.PreparedQueryImpl.runQuery(Query, ..))")
+    @Before("execution(* com.google.appengine.api.datastore.PreparedQueryImpl.runQuery(Query, FetchOptions))")
     public void logQuery(JoinPoint joinPoint) {
         Query query = (Query) joinPoint.getArgs()[0];
-        logger.info(QueryToString.queryToString(query));
+        FetchOptions fetchOptions = (FetchOptions) joinPoint.getArgs()[1];
+
+        logger.info(QueryToString.queryToString(query, fetchOptions));
     }
 
 }

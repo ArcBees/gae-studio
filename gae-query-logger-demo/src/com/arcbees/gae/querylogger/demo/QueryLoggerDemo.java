@@ -16,9 +16,12 @@
 
 package com.arcbees.gae.querylogger.demo;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
+import com.spoledge.audao.parser.gql.GqlDynamic;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -47,8 +50,18 @@ public class QueryLoggerDemo extends HttpServlet {
 
         Query<Sprocket> query = objectify.query(Sprocket.class).filter("name", "Foobar").order("-name");
         logger.info("Before executing get()");
-        Sprocket sprocket = query.get();
+        query.get();
         logger.info("After executing get()");
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+        GqlDynamic gqlDynamic = new GqlDynamic();
+        com.google.appengine.api.datastore.Query gqlQuery =
+                gqlDynamic.parseQuery("SELECT * FROM Sprocket WHERE name=:1 LIMIT 1", "Cookies");
+
+        logger.info("Before executing GQL");
+        datastore.prepare(gqlQuery).asSingleEntity();
+        logger.info("After executing GQL");
 
         request.getRequestDispatcher("queryLoggerDemo.jsp").forward(request, response);
     }

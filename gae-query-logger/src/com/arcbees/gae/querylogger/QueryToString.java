@@ -16,6 +16,7 @@
 
 package com.arcbees.gae.querylogger;
 
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Query;
 
@@ -23,7 +24,7 @@ import java.util.List;
 
 class QueryToString {
 
-    static String queryToString(Query query) {
+    static String queryToString(Query query, FetchOptions fetchOptions) {
         final StringBuilder builder = new StringBuilder();
 
         final String kind = query.getKind();
@@ -57,6 +58,20 @@ class QueryToString {
             }
             builder.append(sortPredicate.getPropertyName());
             builder.append("\")");
+        }
+
+        Integer offset = fetchOptions.getOffset();
+        if (offset != null) {
+            builder.append(".offset(");
+            builder.append(offset);
+            builder.append(")");
+        }
+        
+        Integer limit = fetchOptions.getLimit();
+        if (limit != null) {
+            builder.append(".limit(");
+            builder.append(limit);
+            builder.append(")");
         }
 
         return builder.toString();
