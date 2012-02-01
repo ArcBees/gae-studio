@@ -16,10 +16,11 @@
 
 package com.arcbees.gae.querylogger.guice;
 
-import com.arcbees.gae.querylogger.MemcacheQueryCollector;
-import com.arcbees.gae.querylogger.QueryCollector;
-import com.arcbees.gae.querylogger.SimpleStackInspector;
-import com.arcbees.gae.querylogger.StackInspector;
+import com.arcbees.gae.querylogger.analyzer.QueryAnalyzer;
+import com.arcbees.gae.querylogger.recorder.MemcacheQueryRecorder;
+import com.arcbees.gae.querylogger.recorder.QueryRecorder;
+import com.arcbees.gae.querylogger.recorder.SimpleStackInspector;
+import com.arcbees.gae.querylogger.recorder.StackInspector;
 import com.fasterxml.uuid.Generators;
 import com.google.appengine.api.datastore.QueryInterceptor;
 import com.google.appengine.api.memcache.MemcacheService;
@@ -35,7 +36,9 @@ public class QueryLoggerModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(StackInspector.class).to(SimpleStackInspector.class);
-        bind(QueryCollector.class).to(MemcacheQueryCollector.class).in(RequestScoped.class);
+        // TODO what should be pluggable is the shared persistence interface (memcache)
+        bind(QueryRecorder.class).to(MemcacheQueryRecorder.class).in(RequestScoped.class);
+        bind(QueryAnalyzer.class).in(RequestScoped.class);
 
         requestInjection(Aspects.aspectOf(QueryInterceptor.class));
     }

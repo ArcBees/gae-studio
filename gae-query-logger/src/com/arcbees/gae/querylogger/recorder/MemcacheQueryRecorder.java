@@ -1,25 +1,17 @@
-package com.arcbees.gae.querylogger;
+package com.arcbees.gae.querylogger.recorder;
 
+import com.arcbees.gae.querylogger.common.QueryCountData;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
-public class MemcacheQueryCollector implements QueryCollector {
+public class MemcacheQueryRecorder implements QueryRecorder {
     
-    private static final int N_PLUS_ONE_THRESHOLD = 5;
-
-    // TODO add low hanging fruit kind of checks
-    // * too many queries per request (say, 30)
-    // * unbound queries
-
     // TODO the way we're storing query count data is too coarse grained, fix it
     private final MemcacheService memcacheService;
 
@@ -28,16 +20,16 @@ public class MemcacheQueryCollector implements QueryCollector {
     private final StackInspector stackInspector;
 
     @Inject
-    public MemcacheQueryCollector(final MemcacheService memcacheService,
-                                  final @Named("requestId") String requestId,
-                                  final StackInspector stackInspector) {
+    public MemcacheQueryRecorder(final MemcacheService memcacheService,
+                                 final @Named("requestId") String requestId,
+                                 final StackInspector stackInspector) {
         this.memcacheService = memcacheService;
         this.memcacheKey = "queryCountDataByKind/" + requestId;
         this.stackInspector = stackInspector;
     }
 
     @Override
-    public void logQuery(Query query, FetchOptions fetchOptions) {
+    public void recordQuery(Query query, FetchOptions fetchOptions) {
         StackTraceElement caller = stackInspector.getCallerStackTraceElement();
         
         String kind = query.getKind();
@@ -60,8 +52,8 @@ public class MemcacheQueryCollector implements QueryCollector {
             }
             QueryCountData queryCountData = queryCountDataByKind.get(kind);
 
-            queryCountData.count++;
-            queryCountData.locations.add(caller.getFileName() + ":" + caller.getLineNumber());
+            queryCountData.incrementCount();
+            queryCountData.addLocation(caller.getFileName() + ":" + caller.getLineNumber());
             
             if (queryCountDataByKindIdentifiable == null) {
                 if (memcacheService.put(memcacheKey, queryCountDataByKind, null,
@@ -74,33 +66,5 @@ public class MemcacheQueryCollector implements QueryCollector {
                         queryCountDataByKind));
     }
 
-    public void printReport() {
-        Map<String, QueryCountData> queryCountDataByKind =
-                (Map<String, QueryCountData>) memcacheService.get(memcacheKey);
-
-        for (String kind : queryCountDataByKind.keySet()) {
-            QueryCountData queryCountData = queryCountDataByKind.get(kind);
-            
-            if (queryCountData.count >= N_PLUS_ONE_THRESHOLD) {
-                StringBuilder builder = new StringBuilder();
-                
-                builder.append("WARNING: Potential N+1 query for ");
-                builder.append(kind);
-                builder.append(".class, consider using a batched query instead.  Code location(s): ");
-                boolean first = true;
-                for (String location : queryCountData.locations) {
-                    if (first) first = false; else builder.append(", ");
-                    builder.append(location);
-                }
-                System.out.println(builder.toString());
-            }
-        }
-    }
-
 }
 
-class QueryCountData implements Serializable {
-    private static final long serialVersionUID = -182068789701427739L;
-    Integer count = 0;
-    Set<String> locations = new TreeSet<String>();
-}

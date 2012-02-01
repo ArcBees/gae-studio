@@ -16,15 +16,17 @@
 
 package com.arcbees.gae.querylogger.demo;
 
+import com.arcbees.gae.querylogger.analyzer.QueryAnalyzer;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.inject.Singleton;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
 import com.spoledge.audao.parser.gql.GqlDynamic;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,10 +38,13 @@ import java.util.logging.Logger;
 public class QueryLoggerDemo extends HttpServlet {
 
     private final Logger logger;
+    
+    private final Provider<QueryAnalyzer> queryAnalyzerProvider;
 
     @Inject
-    public QueryLoggerDemo(final Logger logger) {
+    public QueryLoggerDemo(final Logger logger, final Provider<QueryAnalyzer> queryAnalyzerProvider) {
         this.logger = logger;
+        this.queryAnalyzerProvider = queryAnalyzerProvider;
     }
 
     @Override
@@ -73,6 +78,8 @@ public class QueryLoggerDemo extends HttpServlet {
         for (int i = 0; i < 100; ++i) {
             objectify.query(Sprocket.class).filter("name", "Sprocket #" + i).get();
         }
+        
+        request.setAttribute("reportEntries", queryAnalyzerProvider.get().getReport());
 
         request.getRequestDispatcher("queryLoggerDemo.jsp").forward(request, response);
     }

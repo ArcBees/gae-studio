@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger;
+package com.arcbees.gae.querylogger.recorder;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -25,7 +25,7 @@ public class SimpleStackInspector implements StackInspector {
     // TODO support wildcards, also externalize to configuration
     private static final String _IGNORED_PACKAGES[] = {
             "java.lang",
-            "com.arcbees.gae.querylogger.logger",
+            "com.arcbees.gae.querylogger.recorder",
             "com.google.appengine.api.datastore",
             "com.googlecode.objectify.impl"
     };

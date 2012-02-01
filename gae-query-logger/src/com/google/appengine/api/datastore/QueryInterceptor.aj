@@ -16,7 +16,7 @@
 
 package com.google.appengine.api.datastore;
 
-import com.arcbees.gae.querylogger.QueryCollector;
+import com.arcbees.gae.querylogger.recorder.QueryRecorder;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import org.aspectj.lang.JoinPoint;
@@ -28,7 +28,7 @@ import org.aspectj.lang.annotation.Pointcut;
 public class QueryInterceptor {
 
     @Inject
-    private Provider<QueryCollector> queryLoggerProvider;
+    private Provider<QueryRecorder> queryRecorderProvider;
 
     @Pointcut("execution(* com.google.appengine.api.datastore.PreparedQueryImpl.runQuery(Query, FetchOptions))")
     public void runQueryExecution() {}
@@ -38,7 +38,7 @@ public class QueryInterceptor {
         Query query = (Query) joinPoint.getArgs()[0];
         FetchOptions fetchOptions = (FetchOptions) joinPoint.getArgs()[1];
 
-        queryLoggerProvider.get().logQuery(query, fetchOptions);
+        queryRecorderProvider.get().recordQuery(query, fetchOptions);
     }
 
 }
