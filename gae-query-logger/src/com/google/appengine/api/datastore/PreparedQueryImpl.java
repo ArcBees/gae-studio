@@ -51,14 +51,8 @@ class PreparedQueryImpl extends BasePreparedQuery {
     if (override.getCompile() == null) {
       override.compile(true);
     }
-    final LazyList lazyList = new LazyList(runQuery(query, override));
-    QueryResultListImpl.CursorProvider cursorProvider = new QueryResultListImpl.CursorProvider() {
-      @Override
-      public Cursor get() {
-        return lazyList.getCursor();
-      }
-    };
-    return new QueryResultListImpl<Entity>(lazyList, cursorProvider);
+    LazyList lazyList = new LazyList(runQuery(query, override));
+    return lazyList;
   }
 
   @Override

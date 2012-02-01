@@ -22,9 +22,9 @@ import com.google.appengine.api.datastore.Query;
 
 import java.util.List;
 
-class QueryToString {
+public class QueryToString {
 
-    static String queryToString(Query query, FetchOptions fetchOptions) {
+    public static String queryToString(Query query, FetchOptions fetchOptions) {
         final StringBuilder builder = new StringBuilder();
 
         final String kind = query.getKind();

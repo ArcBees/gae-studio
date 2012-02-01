@@ -14,29 +14,33 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger;
+package com.google.appengine.api.datastore;
 
-import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.Query;
+import com.arcbees.gae.querylogger.QueryCollector;
+import com.arcbees.gae.querylogger.QueryToString;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 import java.util.logging.Logger;
 
-// TODO see about using @Aspect instead
-public aspect QueryLogger {
+@Aspect
+public class QueryLogger {
 
     @Inject
-    Logger logger;
-    
-    @Inject
-    Provider<QueryCollector> queryCollectorProvider;
+    private Logger logger;
 
-    // TODO figure out why this is issuing a warning about some advice not being applied
-    @Before("execution(* com.google.appengine.api.datastore.PreparedQueryImpl.runQuery(Query, FetchOptions))")
-    public void logQuery(JoinPoint joinPoint) {
+    @Inject
+    private Provider<QueryCollector> queryCollectorProvider;
+
+    @Pointcut("execution(* com.google.appengine.api.datastore.PreparedQueryImpl.runQuery(Query, FetchOptions))")
+    public void runQueryExecution() {}
+
+    @Before("runQueryExecution()")
+    public void beforeRunQuery(JoinPoint joinPoint) {
         Query query = (Query) joinPoint.getArgs()[0];
         FetchOptions fetchOptions = (FetchOptions) joinPoint.getArgs()[1];
 

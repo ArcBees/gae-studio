@@ -17,7 +17,7 @@
 package com.arcbees.gae.querylogger.guice;
 
 import com.arcbees.gae.querylogger.QueryCollector;
-import com.arcbees.gae.querylogger.QueryLogger;
+import com.google.appengine.api.datastore.QueryLogger;
 import com.google.inject.AbstractModule;
 import com.google.inject.servlet.RequestScoped;
 import org.aspectj.lang.Aspects;
