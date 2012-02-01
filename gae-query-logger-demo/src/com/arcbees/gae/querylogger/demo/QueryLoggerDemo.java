@@ -24,8 +24,10 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.Query;
 import com.spoledge.audao.parser.gql.GqlDynamic;
+import com.vercer.engine.persist.ObjectDatastore;
+import com.vercer.engine.persist.annotation.AnnotationObjectDatastore;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -51,13 +53,17 @@ public class QueryLoggerDemo extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Simulate an Objectify query
-        Objectify objectify = ObjectifyService.factory().begin();
+        runObjectifyDemo();
+        runTwigPersistDemo();
+        runGqlDemo();
+        runNPlusOneDemo();
+        
+        request.setAttribute("reportEntries", queryAnalyzerProvider.get().getReport());
 
-        Query<Sprocket> query = objectify.query(Sprocket.class).filter("name", "Foobar").order("-name");
-        query.get();
+        request.getRequestDispatcher("queryLoggerDemo.jsp").forward(request, response);
+    }
 
-        // Simulate a GQL query
+    private void runGqlDemo() {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
         GqlDynamic gqlDynamic = new GqlDynamic();
@@ -65,23 +71,26 @@ public class QueryLoggerDemo extends HttpServlet {
                 gqlDynamic.parseQuery("SELECT * FROM Sprocket WHERE name=:1 LIMIT 1", "Cookies");
 
         datastore.prepare(gqlQuery).asSingleEntity();
-        
-        // Simulate an N+1 scenario
-//        long sprocketIds[] = new long[100];
-//        for (int i = 0; i < 100; ++i) {
-//            Sprocket sprocket = new Sprocket("Sprocket #" + i);
-//            sprocketIds[i] = objectify.put(sprocket).getId();
-//        }
-//
-//        objectify = ObjectifyService.factory().begin();
+    }
 
+    private void runNPlusOneDemo() {
+        Objectify objectify = ObjectifyService.factory().begin();
         for (int i = 0; i < 100; ++i) {
             objectify.query(Sprocket.class).filter("name", "Sprocket #" + i).get();
         }
-        
-        request.setAttribute("reportEntries", queryAnalyzerProvider.get().getReport());
+    }
 
-        request.getRequestDispatcher("queryLoggerDemo.jsp").forward(request, response);
+    private void runObjectifyDemo() {
+        Objectify objectify = ObjectifyService.factory().begin();
+        objectify.query(Sprocket.class).filter("name", "Foobar").order("-name").get();
+    }
+    
+    private void runTwigPersistDemo() {
+        ObjectDatastore datastore = new AnnotationObjectDatastore();
+        datastore.find().type(Sprocket.class)
+                .addFilter("name", FilterOperator.EQUAL, "Foobar")
+                .addSort("-name")
+                .returnResultsNow();
     }
 
 }

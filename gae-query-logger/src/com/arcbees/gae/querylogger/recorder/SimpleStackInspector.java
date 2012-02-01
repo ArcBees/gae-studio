@@ -27,7 +27,8 @@ public class SimpleStackInspector implements StackInspector {
             "java.lang",
             "com.arcbees.gae.querylogger.recorder",
             "com.google.appengine.api.datastore",
-            "com.googlecode.objectify.impl"
+            "com.googlecode.objectify.impl",
+            "com.vercer.engine.persist.standard"
     };
 
     private static final Set<String> IGNORED_PACKAGES = new HashSet<String>(_IGNORED_PACKAGES.length);
