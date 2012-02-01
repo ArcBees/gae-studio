@@ -16,18 +16,40 @@
 
 package com.arcbees.gae.querylogger.guice;
 
-import com.arcbees.gae.querylogger.QueryCollector;
-import com.google.appengine.api.datastore.QueryLogger;
+import com.arcbees.gae.querylogger.logger.QueryLogger;
+import com.arcbees.gae.querylogger.logger.QueryStatisticsCollector;
+import com.arcbees.gae.querylogger.logger.SimpleQueryLogger;
+import com.google.appengine.api.datastore.QueryLoggerAspect;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
 import com.google.inject.servlet.RequestScoped;
 import org.aspectj.lang.Aspects;
+
+import javax.inject.Named;
+import java.util.UUID;
 
 public class QueryLoggerModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(QueryCollector.class).in(RequestScoped.class);
-        requestInjection(Aspects.aspectOf(QueryLogger.class));
+        bind(QueryLogger.class).to(SimpleQueryLogger.class).in(RequestScoped.class);
+        bind(QueryStatisticsCollector.class).in(RequestScoped.class);
+        requestInjection(Aspects.aspectOf(QueryLoggerAspect.class));
+    }
+
+    @Provides
+    @RequestScoped
+    private MemcacheService memcacheServiceProvider() {
+        return MemcacheServiceFactory.getMemcacheService();
+    }
+    
+    @Provides
+    @Named("requestId")
+    @RequestScoped
+    private String requestIdProvider() {
+        return UUID.randomUUID().toString();
     }
 
 }

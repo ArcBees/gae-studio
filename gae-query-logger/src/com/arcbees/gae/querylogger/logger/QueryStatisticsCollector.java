@@ -1,8 +1,12 @@
-package com.arcbees.gae.querylogger;
+package com.arcbees.gae.querylogger.logger;
 
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.memcache.MemcacheService;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,7 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class QueryCollector {
+public class QueryStatisticsCollector implements QueryLogger {
     
     private static final int N_PLUS_ONE_THRESHOLD = 5;
 
@@ -26,30 +30,65 @@ public class QueryCollector {
     // * too many queries per request (say, 30)
     // * unbound queries
 
-    private Map<String, QueryCountData> queryCountDataByKind;
-    
+    // TODO the way we're storing query count data is too coarse grained, fix it
+    private final MemcacheService memcacheService;
+
     private Set<String> ignoredPackages;
     
-    public QueryCollector() {
-        queryCountDataByKind = new HashMap<String, QueryCountData>();
+    private final String memcacheKey;
+
+    @Inject
+    public QueryStatisticsCollector(MemcacheService memcacheService, @Named("requestId") String requestId) {
+        this.memcacheService = memcacheService;
+
         ignoredPackages = new HashSet<String>(_IGNORED_PACKAGES.length);
         Collections.addAll(ignoredPackages, _IGNORED_PACKAGES);
+        
+        memcacheKey = "queryCountDataByKind/" + requestId;
     }
 
-    public void collectQuery(Query query, FetchOptions fetchOptions) {
+    @Override
+    public void logQuery(Query query, FetchOptions fetchOptions) {
         StackTraceElement caller = getCallerStackTraceElement();
         
         String kind = query.getKind();
-        if (!queryCountDataByKind.containsKey(kind)) {
-            queryCountDataByKind.put(kind, new QueryCountData());
-        }
-        QueryCountData queryCountData = queryCountDataByKind.get(kind);
-        
-        queryCountData.count++;
-        queryCountData.locations.add(caller.getFileName() + ":" + caller.getLineNumber());
+
+        MemcacheService.IdentifiableValue queryCountDataByKindIdentifiable;
+        Map<String, QueryCountData> queryCountDataByKind;
+
+        do {
+            queryCountDataByKindIdentifiable = memcacheService.getIdentifiable(memcacheKey);
+
+            queryCountDataByKind = (queryCountDataByKindIdentifiable != null)
+                    ? (Map<String, QueryCountData>) queryCountDataByKindIdentifiable.getValue()
+                    : new HashMap<String, QueryCountData>();
+
+            if (queryCountDataByKind == null) {
+                queryCountDataByKind = new HashMap<String, QueryCountData>();
+            }
+            if (!queryCountDataByKind.containsKey(kind)) {
+                queryCountDataByKind.put(kind, new QueryCountData());
+            }
+            QueryCountData queryCountData = queryCountDataByKind.get(kind);
+
+            queryCountData.count++;
+            queryCountData.locations.add(caller.getFileName() + ":" + caller.getLineNumber());
+            
+            if (queryCountDataByKindIdentifiable == null) {
+                if (memcacheService.put(memcacheKey, queryCountDataByKind, null,
+                        MemcacheService.SetPolicy.ADD_ONLY_IF_NOT_PRESENT)) {
+                    break;
+                }
+            }
+        } while (queryCountDataByKindIdentifiable == null
+                || !memcacheService.putIfUntouched(memcacheKey, queryCountDataByKindIdentifiable,
+                        queryCountDataByKind));
     }
 
     public void printReport() {
+        Map<String, QueryCountData> queryCountDataByKind =
+                (Map<String, QueryCountData>) memcacheService.get(memcacheKey);
+
         for (String kind : queryCountDataByKind.keySet()) {
             QueryCountData queryCountData = queryCountDataByKind.get(kind);
             
@@ -88,9 +127,10 @@ public class QueryCollector {
         return lastDotIndex != -1 ? className.substring(0, lastDotIndex) : "";
     }
 
-    class QueryCountData {
-        Integer count = 0;
-        Set<String> locations = new TreeSet<String>();
-    }
+}
 
+class QueryCountData implements Serializable {
+    private static final long serialVersionUID = -182068789701427739L;
+    Integer count = 0;
+    Set<String> locations = new TreeSet<String>();
 }

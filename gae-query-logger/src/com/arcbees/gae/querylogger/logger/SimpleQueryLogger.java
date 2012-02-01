@@ -14,17 +14,31 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger;
+package com.arcbees.gae.querylogger.logger;
 
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Query;
 
+import javax.inject.Inject;
 import java.util.List;
+import java.util.logging.Logger;
 
-public class QueryToString {
+public class SimpleQueryLogger implements QueryLogger {
+    
+    private Logger logger;
+    
+    @Inject
+    public SimpleQueryLogger(Logger logger) {
+        this.logger = logger;
+    }
+    
+    @Override
+    public void logQuery(Query query, FetchOptions fetchOptions) {
+        logger.info(queryToString(query, fetchOptions));
+    }
 
-    public static String queryToString(Query query, FetchOptions fetchOptions) {
+    private static String queryToString(Query query, FetchOptions fetchOptions) {
         final StringBuilder builder = new StringBuilder();
 
         final String kind = query.getKind();
