@@ -50,9 +50,7 @@ public class QueryLoggerDemo extends HttpServlet {
         Objectify objectify = ObjectifyService.factory().begin();
 
         Query<Sprocket> query = objectify.query(Sprocket.class).filter("name", "Foobar").order("-name");
-        logger.info("Before executing get()");
         query.get();
-        logger.info("After executing get()");
 
         // Simulate a GQL query
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -61,9 +59,7 @@ public class QueryLoggerDemo extends HttpServlet {
         com.google.appengine.api.datastore.Query gqlQuery =
                 gqlDynamic.parseQuery("SELECT * FROM Sprocket WHERE name=:1 LIMIT 1", "Cookies");
 
-        logger.info("Before executing GQL");
         datastore.prepare(gqlQuery).asSingleEntity();
-        logger.info("After executing GQL");
         
         // Simulate an N+1 scenario
 //        long sprocketIds[] = new long[100];

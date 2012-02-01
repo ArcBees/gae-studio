@@ -21,7 +21,7 @@ public class QueryStatisticsCollector implements QueryLogger {
     // TODO support wildcards, also externalize to configuration
     private static final String _IGNORED_PACKAGES[] = {
             "java.lang",
-            "com.arcbees.gae.querylogger",
+            "com.arcbees.gae.querylogger.logger",
             "com.google.appengine.api.datastore",
             "com.googlecode.objectify.impl"
     };
