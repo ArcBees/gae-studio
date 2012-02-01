@@ -28,4 +28,23 @@ public class Sprocket {
 
     String name;
 
+    public Sprocket() {
+    }
+    
+    public Sprocket(String name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }

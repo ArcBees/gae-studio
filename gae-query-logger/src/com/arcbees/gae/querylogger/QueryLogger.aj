@@ -22,6 +22,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Before;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import java.util.logging.Logger;
 
 // TODO see about using @Aspect instead
@@ -29,12 +30,18 @@ public aspect QueryLogger {
 
     @Inject
     Logger logger;
+    
+    @Inject
+    Provider<QueryCollector> queryCollectorProvider;
 
     // TODO figure out why this is issuing a warning about some advice not being applied
     @Before("execution(* com.google.appengine.api.datastore.PreparedQueryImpl.runQuery(Query, FetchOptions))")
     public void logQuery(JoinPoint joinPoint) {
         Query query = (Query) joinPoint.getArgs()[0];
         FetchOptions fetchOptions = (FetchOptions) joinPoint.getArgs()[1];
+
+        QueryCollector queryCollector = queryCollectorProvider.get();
+        queryCollector.collectQuery(query, fetchOptions);
 
         logger.info(QueryToString.queryToString(query, fetchOptions));
     }

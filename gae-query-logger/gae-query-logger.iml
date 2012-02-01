@@ -8,6 +8,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="AppEngine API" level="application" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -35,7 +36,15 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="AppEngine API" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../gae-query-logger-demo/web/WEB-INF/lib/guice-servlet-3.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

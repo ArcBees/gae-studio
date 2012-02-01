@@ -16,14 +16,17 @@
 
 package com.arcbees.gae.querylogger.guice;
 
+import com.arcbees.gae.querylogger.QueryCollector;
 import com.arcbees.gae.querylogger.QueryLogger;
 import com.google.inject.AbstractModule;
+import com.google.inject.servlet.RequestScoped;
 import org.aspectj.lang.Aspects;
 
 public class QueryLoggerModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        bind(QueryCollector.class).in(RequestScoped.class);
         requestInjection(Aspects.aspectOf(QueryLogger.class));
     }
 

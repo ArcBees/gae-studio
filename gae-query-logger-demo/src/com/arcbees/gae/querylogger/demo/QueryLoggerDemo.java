@@ -16,6 +16,7 @@
 
 package com.arcbees.gae.querylogger.demo;
 
+import com.arcbees.gae.querylogger.QueryCollector;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.googlecode.objectify.Objectify;
@@ -24,6 +25,7 @@ import com.googlecode.objectify.Query;
 import com.spoledge.audao.parser.gql.GqlDynamic;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,15 +39,19 @@ public class QueryLoggerDemo extends HttpServlet {
 
     private final Logger logger;
 
+    private final Provider<QueryCollector> queryCollectorProvider;
+
     @Inject
-    public QueryLoggerDemo(final Logger logger) {
+    public QueryLoggerDemo(final Logger logger, Provider<QueryCollector> queryCollectorProvider) {
         this.logger = logger;
+        this.queryCollectorProvider = queryCollectorProvider;
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // Simulate an Objectify query
         Objectify objectify = ObjectifyService.factory().begin();
 
         Query<Sprocket> query = objectify.query(Sprocket.class).filter("name", "Foobar").order("-name");
@@ -53,6 +59,7 @@ public class QueryLoggerDemo extends HttpServlet {
         query.get();
         logger.info("After executing get()");
 
+        // Simulate a GQL query
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
         GqlDynamic gqlDynamic = new GqlDynamic();
@@ -62,6 +69,21 @@ public class QueryLoggerDemo extends HttpServlet {
         logger.info("Before executing GQL");
         datastore.prepare(gqlQuery).asSingleEntity();
         logger.info("After executing GQL");
+        
+        // Simulate an N+1 scenario
+//        long sprocketIds[] = new long[100];
+//        for (int i = 0; i < 100; ++i) {
+//            Sprocket sprocket = new Sprocket("Sprocket #" + i);
+//            sprocketIds[i] = objectify.put(sprocket).getId();
+//        }
+//
+//        objectify = ObjectifyService.factory().begin();
+
+        for (int i = 0; i < 100; ++i) {
+            objectify.query(Sprocket.class).filter("name", "Sprocket #" + i).get();
+        }
+        
+        queryCollectorProvider.get().printReport();
 
         request.getRequestDispatcher("queryLoggerDemo.jsp").forward(request, response);
     }

@@ -37,8 +37,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="AppEngine API" level="project" />
-    <orderEntry type="library" name="AppEngine ORM" level="project" />
+    <orderEntry type="library" name="AppEngine API" level="application" />
+    <orderEntry type="library" name="AppEngine ORM" level="application" />
     <orderEntry type="module" module-name="gae-query-logger" />
     <orderEntry type="module-library">
       <library>
