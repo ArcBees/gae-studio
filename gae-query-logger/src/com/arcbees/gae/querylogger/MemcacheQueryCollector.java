@@ -1,30 +1,20 @@
-package com.arcbees.gae.querylogger.logger;
+package com.arcbees.gae.querylogger;
 
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.memcache.MemcacheService;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class QueryStatisticsCollector implements QueryLogger {
+public class MemcacheQueryCollector implements QueryCollector {
     
     private static final int N_PLUS_ONE_THRESHOLD = 5;
-
-    // TODO support wildcards, also externalize to configuration
-    private static final String _IGNORED_PACKAGES[] = {
-            "java.lang",
-            "com.arcbees.gae.querylogger.logger",
-            "com.google.appengine.api.datastore",
-            "com.googlecode.objectify.impl"
-    };
 
     // TODO add low hanging fruit kind of checks
     // * too many queries per request (say, 30)
@@ -33,23 +23,22 @@ public class QueryStatisticsCollector implements QueryLogger {
     // TODO the way we're storing query count data is too coarse grained, fix it
     private final MemcacheService memcacheService;
 
-    private Set<String> ignoredPackages;
-    
     private final String memcacheKey;
+    
+    private final StackInspector stackInspector;
 
     @Inject
-    public QueryStatisticsCollector(MemcacheService memcacheService, @Named("requestId") String requestId) {
+    public MemcacheQueryCollector(final MemcacheService memcacheService,
+                                  final @Named("requestId") String requestId,
+                                  final StackInspector stackInspector) {
         this.memcacheService = memcacheService;
-
-        ignoredPackages = new HashSet<String>(_IGNORED_PACKAGES.length);
-        Collections.addAll(ignoredPackages, _IGNORED_PACKAGES);
-        
-        memcacheKey = "queryCountDataByKind/" + requestId;
+        this.memcacheKey = "queryCountDataByKind/" + requestId;
+        this.stackInspector = stackInspector;
     }
 
     @Override
     public void logQuery(Query query, FetchOptions fetchOptions) {
-        StackTraceElement caller = getCallerStackTraceElement();
+        StackTraceElement caller = stackInspector.getCallerStackTraceElement();
         
         String kind = query.getKind();
 
@@ -106,25 +95,6 @@ public class QueryStatisticsCollector implements QueryLogger {
                 System.out.println(builder.toString());
             }
         }
-    }
-    
-    private StackTraceElement getCallerStackTraceElement() {
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-
-        for (StackTraceElement currentElement : stackTrace) {
-            String packageName = getStackTraceElementPackage(currentElement);
-            if (!ignoredPackages.contains(packageName)) {
-                return currentElement;
-            }
-        }
-
-        return null;
-    }
-
-    private String getStackTraceElementPackage(StackTraceElement currentElement) {
-        String className = currentElement.getClassName();
-        int lastDotIndex = className.lastIndexOf('.');
-        return lastDotIndex != -1 ? className.substring(0, lastDotIndex) : "";
     }
 
 }

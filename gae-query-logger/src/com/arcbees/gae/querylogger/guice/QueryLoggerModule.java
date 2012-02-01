@@ -16,27 +16,28 @@
 
 package com.arcbees.gae.querylogger.guice;
 
-import com.arcbees.gae.querylogger.logger.QueryLogger;
-import com.arcbees.gae.querylogger.logger.QueryStatisticsCollector;
-import com.arcbees.gae.querylogger.logger.SimpleQueryLogger;
-import com.google.appengine.api.datastore.QueryLoggerAspect;
+import com.arcbees.gae.querylogger.MemcacheQueryCollector;
+import com.arcbees.gae.querylogger.QueryCollector;
+import com.arcbees.gae.querylogger.SimpleStackInspector;
+import com.arcbees.gae.querylogger.StackInspector;
+import com.fasterxml.uuid.Generators;
+import com.google.appengine.api.datastore.QueryInterceptor;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.name.Named;
 import com.google.inject.servlet.RequestScoped;
 import org.aspectj.lang.Aspects;
-
-import javax.inject.Named;
-import java.util.UUID;
 
 public class QueryLoggerModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(QueryLogger.class).to(SimpleQueryLogger.class).in(RequestScoped.class);
-        bind(QueryStatisticsCollector.class).in(RequestScoped.class);
-        requestInjection(Aspects.aspectOf(QueryLoggerAspect.class));
+        bind(StackInspector.class).to(SimpleStackInspector.class);
+        bind(QueryCollector.class).to(MemcacheQueryCollector.class).in(RequestScoped.class);
+
+        requestInjection(Aspects.aspectOf(QueryInterceptor.class));
     }
 
     @Provides
@@ -49,7 +50,9 @@ public class QueryLoggerModule extends AbstractModule {
     @Named("requestId")
     @RequestScoped
     private String requestIdProvider() {
-        return UUID.randomUUID().toString();
+        // We could get significantly fancier here to guarantee UUID uniqueness
+        // (see JUG documentation), but this should do for now.
+        return Generators.timeBasedGenerator().generate().toString();
     }
 
 }

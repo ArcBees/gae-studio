@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger.logger;
+package com.arcbees.gae.querylogger;
 
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
@@ -24,12 +24,12 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class SimpleQueryLogger implements QueryLogger {
+public class LoggingQueryCollector implements QueryCollector {
     
     private Logger logger;
     
     @Inject
-    public SimpleQueryLogger(Logger logger) {
+    public LoggingQueryCollector(Logger logger) {
         this.logger = logger;
     }
     
