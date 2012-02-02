@@ -27,7 +27,9 @@ public class SimpleStackInspector implements StackInspector {
             "java.lang",
             "com.arcbees.gae.querylogger.recorder",
             "com.google.appengine.api.datastore",
+            "com.google.appengine.api.utils",
             "com.googlecode.objectify.impl",
+            "com.googlecode.objectify.util",
             "com.vercer.engine.persist.standard"
     };
 
@@ -38,7 +40,7 @@ public class SimpleStackInspector implements StackInspector {
     }
 
     @Override
-    public StackTraceElement getCallerStackTraceElement() {
+    public StackTraceElement getCaller() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 
         for (StackTraceElement currentElement : stackTrace) {

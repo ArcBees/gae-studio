@@ -37,7 +37,7 @@ public class QueryLoggerModule extends AbstractModule {
     protected void configure() {
         bind(StackInspector.class).to(SimpleStackInspector.class);
         // TODO what should be pluggable is the shared persistence interface (memcache)
-        bind(QueryRecorder.class).to(MemcacheQueryRecorder.class).in(RequestScoped.class);
+        bind(QueryRecorder.class).to(MemcacheQueryRecorder.class);
         bind(QueryAnalyzer.class).in(RequestScoped.class);
         
         install(new FactoryModuleBuilder()
@@ -48,7 +48,7 @@ public class QueryLoggerModule extends AbstractModule {
     @Provides
     @RequestScoped
     private MemcacheService memcacheServiceProvider() {
-        return MemcacheServiceFactory.getMemcacheService();
+        return MemcacheServiceFactory.getMemcacheService("gae.studio");
     }
     
     @Provides

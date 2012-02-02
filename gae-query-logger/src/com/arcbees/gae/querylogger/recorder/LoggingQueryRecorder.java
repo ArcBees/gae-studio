@@ -24,7 +24,7 @@ import com.google.inject.Inject;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class LoggingQueryRecorder implements QueryRecorder {
+public class LoggingQueryRecorder {//implements QueryRecorder {
 
     private Logger logger;
 
@@ -33,7 +33,7 @@ public class LoggingQueryRecorder implements QueryRecorder {
         this.logger = logger;
     }
 
-    @Override
+//    @Override
     public void recordQuery(Query query, FetchOptions fetchOptions) {
         logger.info(queryToString(query, fetchOptions));
     }

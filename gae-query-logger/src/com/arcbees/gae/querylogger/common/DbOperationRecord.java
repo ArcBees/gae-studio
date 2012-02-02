@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 ArcBees Inc.
+ * Copyright 2012 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,10 +14,27 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger.recorder;
+package com.arcbees.gae.querylogger.common;
 
-public interface StackInspector {
+import java.io.Serializable;
 
-    StackTraceElement getCaller();
+public abstract class DbOperationRecord implements Serializable {
+
+    private final StackTraceElement caller;
+    
+    private final String requestId;
+
+    protected DbOperationRecord(StackTraceElement caller, String requestId) {
+        this.caller = caller;
+        this.requestId = requestId;
+    }
+
+    public StackTraceElement getCaller() {
+        return caller;
+    }
+
+    public String getRequestId() {
+        return requestId;
+    }
 
 }

@@ -16,14 +16,16 @@
 
 package com.arcbees.gae.querylogger.analyzer;
 
-import com.arcbees.gae.querylogger.common.QueryCountData;
+import com.arcbees.gae.querylogger.common.DbOperationRecord;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class QueryAnalyzer {
 
@@ -33,44 +35,75 @@ public class QueryAnalyzer {
     // * too many queries per request (say, 30)
     // * unbound queries
 
-    // TODO the way we're storing query count data is too coarse grained, fix it
     private final MemcacheService memcacheService;
+    
+    private Map<String, List<DbOperationRecord>> recordsByKind;
 
-    private final String memcacheKey;
+    private long lastId;
 
     @Inject
-    public QueryAnalyzer(final MemcacheService memcacheService, final @Named("requestId") String requestId) {
+    public QueryAnalyzer(final MemcacheService memcacheService) {
         this.memcacheService = memcacheService;
-        this.memcacheKey = "queryCountDataByKind/" + requestId;
+        this.recordsByKind = new HashMap<String, List<DbOperationRecord>>();
+        this.lastId = -1;
     }
 
     public Iterable<String> getReport() {
+        getNewOperationRecords();
+        
         List<String> report = new ArrayList<String>();
-        Map<String, QueryCountData> queryCountDataByKind =
-                (Map<String, QueryCountData>) memcacheService.get(memcacheKey);
 
-        if (queryCountDataByKind == null) {
-            return new ArrayList<String>();
-        }
-
-        for (String kind : queryCountDataByKind.keySet()) {
+        for (String kind : recordsByKind.keySet()) {
             StringBuilder builder = new StringBuilder();
-            QueryCountData queryCountData = queryCountDataByKind.get(kind);
+            List<DbOperationRecord> operations = recordsByKind.get(kind);
 
-            if (queryCountData.getCount() >= N_PLUS_ONE_THRESHOLD) {
+            if (operations.size() >= N_PLUS_ONE_THRESHOLD) {
                 builder.append("WARNING: Potential N+1 query for ");
                 builder.append(kind);
                 builder.append(".class, consider using a batched query instead.  Code location(s): ");
+
+                Set<String> locations = new TreeSet<String>();
+                for (DbOperationRecord record : operations) {
+                    locations.add(record.getCaller().getFileName() + ":" + record.getCaller().getLineNumber());
+                }
+                
                 boolean first = true;
-                for (String location : queryCountData.getLocations()) {
+                for (String loc : locations) {
                     if (first) first = false; else builder.append(", ");
-                    builder.append(location);
+                    builder.append(loc);
                 }
             }
             report.add(builder.toString());
         }
 
         return report;
+    }
+
+    private void getNewOperationRecords() {
+        Map<String, Object> recordsByKey = memcacheService.getAll(getNewOperationRecordKeys());
+
+        for (Object recordObject : recordsByKey.values()) {
+            DbOperationRecord record = (DbOperationRecord)recordObject;
+            String kind = record.getClass().getName();
+            if (!recordsByKind.containsKey(kind)) {
+                recordsByKind.put(kind, new ArrayList<DbOperationRecord>());
+            }
+            recordsByKind.get(kind).add(record);
+        }
+    }
+    
+    private List<String> getNewOperationRecordKeys() {
+        long mostRecentId = getMostRecentId();
+        List<String> keys = new ArrayList<String>((int)(mostRecentId - lastId));
+        for (long i = lastId + 1; i <= mostRecentId; ++i) {
+            keys.add("db.operation.record." + i);
+        }
+        lastId = mostRecentId;
+        return keys;
+    }
+    
+    private long getMostRecentId() {
+        return (Long)memcacheService.get("db.operation.counter");
     }
 
 }

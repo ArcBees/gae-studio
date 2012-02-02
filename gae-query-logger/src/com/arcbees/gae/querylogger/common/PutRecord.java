@@ -14,21 +14,31 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger.recorder;
+package com.arcbees.gae.querylogger.common;
 
-import com.google.apphosting.api.DatastorePb.GetRequest;
-import com.google.apphosting.api.DatastorePb.GetResponse;
 import com.google.apphosting.api.DatastorePb.PutRequest;
 import com.google.apphosting.api.DatastorePb.PutResponse;
-import com.google.apphosting.api.DatastorePb.Query;
-import com.google.apphosting.api.DatastorePb.QueryResult;
 
-public interface QueryRecorder {
+public class PutRecord extends DbOperationRecord {
+
+    private static final long serialVersionUID = 3745865294476274476L;
     
-    void recordQuery(Query query, QueryResult queryResult);
-
-    void recordGet(GetRequest request, GetResponse response);
-
-    void recordPut(PutRequest request, PutResponse response);
+    private final PutRequest putRequest;
     
+    private final PutResponse putResponse;
+
+    public PutRecord(PutRequest putRequest, PutResponse putResponse, StackTraceElement caller, String requestId) {
+        super(caller, requestId);
+        this.putRequest = putRequest;
+        this.putResponse = putResponse;
+    }
+
+    public PutRequest getPutRequest() {
+        return putRequest;
+    }
+
+    public PutResponse getPutResponse() {
+        return putResponse;
+    }
+
 }
