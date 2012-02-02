@@ -74,7 +74,7 @@ public class QueryRecorderHook extends BaseHook {
         QueryResult queryResult = new QueryResult();
         queryResult.mergeFrom(result);
         
-        queryRecorder.recordQuery(query, queryResult);
+        queryRecorder.recordQuery(query, queryResult, (int)(end - start));
 
         return result;
     }
@@ -95,7 +95,7 @@ public class QueryRecorderHook extends BaseHook {
 
         byte[] result = getResponse.toByteArray();
         
-        queryRecorder.recordGet(getRequest, getResponse);
+        queryRecorder.recordGet(getRequest, getResponse, (int)(end - start));
 
         return result;
     }
@@ -114,7 +114,7 @@ public class QueryRecorderHook extends BaseHook {
         PutResponse putResponse = new PutResponse();
         putResponse.mergeFrom(result);
 
-        queryRecorder.recordPut(putRequest, putResponse);
+        queryRecorder.recordPut(putRequest, putResponse, (int)(end - start));
 
         return result;
     }

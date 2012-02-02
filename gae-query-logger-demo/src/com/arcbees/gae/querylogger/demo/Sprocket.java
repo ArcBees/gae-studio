@@ -27,6 +27,8 @@ public class Sprocket {
     Long id;
 
     String name;
+    
+    Double size;
 
     public Sprocket() {
     }
@@ -45,6 +47,14 @@ public class Sprocket {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Double getSize() {
+        return size;
+    }
+
+    public void setSize(Double size) {
+        this.size = size;
     }
 
 }

@@ -88,6 +88,9 @@ public class QueryLoggerDemo extends HttpServlet {
 
     private void runNPlusOneDemo() {
         Objectify objectify = ObjectifyService.factory().begin();
+        objectify.query(Sprocket.class).filter("size", 0.0).get();
+        objectify.query(Sprocket.class).filter("isFoo", true).get();
+        objectify.query(Sprocket.class).filter("isFoo", false).get();
         for (int i = 0; i < 100; ++i) {
             objectify.query(Sprocket.class).filter("name", "Sprocket #" + i).get();
         }

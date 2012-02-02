@@ -1,9 +1,9 @@
 package com.arcbees.gae.querylogger.recorder;
 
-import com.arcbees.gae.querylogger.common.DbOperationRecord;
-import com.arcbees.gae.querylogger.common.GetRecord;
-import com.arcbees.gae.querylogger.common.PutRecord;
-import com.arcbees.gae.querylogger.common.QueryRecord;
+import com.arcbees.gae.querylogger.common.dto.DbOperationRecord;
+import com.arcbees.gae.querylogger.common.dto.GetRecord;
+import com.arcbees.gae.querylogger.common.dto.PutRecord;
+import com.arcbees.gae.querylogger.common.dto.QueryRecord;
 import com.google.appengine.api.memcache.Expiration;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.apphosting.api.DatastorePb.GetRequest;
@@ -34,18 +34,21 @@ public class MemcacheQueryRecorder implements QueryRecorder {
     }
 
     @Override
-    public void recordQuery(Query query, QueryResult queryResult) {
-        recordOperation(new QueryRecord(query, queryResult, stackInspector.getCaller(), requestIdProvider.get()));
+    public void recordQuery(Query query, QueryResult queryResult, int executionTimeMs) {
+        recordOperation(new QueryRecord(query, queryResult, stackInspector.getCaller(), requestIdProvider.get(),
+                                        executionTimeMs));
     }
 
     @Override
-    public void recordGet(GetRequest request, GetResponse response) {
-        recordOperation(new GetRecord(request, response, stackInspector.getCaller(), requestIdProvider.get()));
+    public void recordGet(GetRequest request, GetResponse response, int executionTimeMs) {
+        recordOperation(new GetRecord(request, response, stackInspector.getCaller(), requestIdProvider.get(),
+                                      executionTimeMs));
     }
 
     @Override
-    public void recordPut(PutRequest request, PutResponse response) {
-        recordOperation(new PutRecord(request, response, stackInspector.getCaller(), requestIdProvider.get()));
+    public void recordPut(PutRequest request, PutResponse response, int executionTimeMs) {
+        recordOperation(new PutRecord(request, response, stackInspector.getCaller(), requestIdProvider.get(),
+                                      executionTimeMs));
     }
     
     private void recordOperation(DbOperationRecord record) {

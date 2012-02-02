@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 ArcBees Inc.
+ * Copyright 2012 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,6 +17,8 @@
 package com.arcbees.gae.querylogger.guice;
 
 import com.arcbees.gae.querylogger.analyzer.QueryAnalyzer;
+import com.arcbees.gae.querylogger.common.formatters.ObjectifyRecordFormatter;
+import com.arcbees.gae.querylogger.common.formatters.RecordFormatter;
 import com.arcbees.gae.querylogger.recorder.MemcacheQueryRecorder;
 import com.arcbees.gae.querylogger.recorder.QueryRecorder;
 import com.arcbees.gae.querylogger.recorder.QueryRecorderHook;
@@ -27,6 +29,7 @@ import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Named;
 import com.google.inject.servlet.RequestScoped;
@@ -36,9 +39,9 @@ public class QueryLoggerModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(StackInspector.class).to(SimpleStackInspector.class);
-        // TODO what should be pluggable is the shared persistence interface (memcache)
         bind(QueryRecorder.class).to(MemcacheQueryRecorder.class);
-        bind(QueryAnalyzer.class).in(RequestScoped.class);
+        bind(RecordFormatter.class).to(ObjectifyRecordFormatter.class);
+        bind(QueryAnalyzer.class).in(Singleton.class);
         
         install(new FactoryModuleBuilder()
                 .implement(QueryRecorderHook.class, QueryRecorderHook.class)

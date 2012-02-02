@@ -16,7 +16,8 @@
 
 package com.arcbees.gae.querylogger.analyzer;
 
-import com.arcbees.gae.querylogger.common.DbOperationRecord;
+import com.arcbees.gae.querylogger.common.dto.DbOperationRecord;
+import com.arcbees.gae.querylogger.common.formatters.RecordFormatter;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.inject.Inject;
 
@@ -37,13 +38,16 @@ public class QueryAnalyzer {
 
     private final MemcacheService memcacheService;
     
+    private final RecordFormatter recordFormatter;
+    
     private Map<String, List<DbOperationRecord>> recordsByKind;
 
     private long lastId;
 
     @Inject
-    public QueryAnalyzer(final MemcacheService memcacheService) {
+    public QueryAnalyzer(final MemcacheService memcacheService, final RecordFormatter recordFormatter) {
         this.memcacheService = memcacheService;
+        this.recordFormatter = recordFormatter;
         this.recordsByKind = new HashMap<String, List<DbOperationRecord>>();
         this.lastId = -1;
     }
@@ -56,6 +60,10 @@ public class QueryAnalyzer {
         for (String kind : recordsByKind.keySet()) {
             StringBuilder builder = new StringBuilder();
             List<DbOperationRecord> operations = recordsByKind.get(kind);
+
+            for (DbOperationRecord record : operations) {
+                report.add(recordFormatter.formatRecord(record) + " (" + record.getExecutionTimeMs() + "ms)");
+            }
 
             if (operations.size() >= N_PLUS_ONE_THRESHOLD) {
                 builder.append("WARNING: Potential N+1 query for ");
@@ -73,7 +81,10 @@ public class QueryAnalyzer {
                     builder.append(loc);
                 }
             }
-            report.add(builder.toString());
+            String str = builder.toString();
+            if (str != null && !str.equals("")) {
+                report.add(builder.toString());
+            }
         }
 
         return report;
