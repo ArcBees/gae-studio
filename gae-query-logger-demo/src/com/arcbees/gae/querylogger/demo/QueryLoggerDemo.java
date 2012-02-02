@@ -56,13 +56,14 @@ public class QueryLoggerDemo extends HttpServlet {
 
         seedData();
 
-//        Key<Sprocket> key = persistAnObject();
-//        getAnObject(key);
-//        runNonStringFilterDemo();
-//        runObjectifyDemo();
-//        runTwigPersistDemo();
+        Key<Sprocket> key = persistAnObject();
+        getAnObject(key);
+        deleteAnObject(key);
+        runNonStringFilterDemo();
+        runObjectifyDemo();
+        runTwigPersistDemo();
         runGqlDemo();
-//        runNPlusOneDemo();
+        runNPlusOneDemo();
         runUnboundedQueryDemo();
         
         request.setAttribute("reportEntries", queryAnalyzerProvider.get().getReport());
@@ -88,6 +89,11 @@ public class QueryLoggerDemo extends HttpServlet {
     private void getAnObject(Key<Sprocket> key) {
         Objectify objectify = ObjectifyService.factory().begin();
         objectify.get(key);
+    }
+
+    private void deleteAnObject(Key<Sprocket> key) {
+        Objectify objectify = ObjectifyService.factory().begin();
+        objectify.delete(key);
     }
 
     private void runGqlDemo() {

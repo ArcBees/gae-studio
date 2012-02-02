@@ -1,11 +1,14 @@
 package com.arcbees.gae.querylogger.recorder;
 
 import com.arcbees.gae.querylogger.common.dto.DbOperationRecord;
+import com.arcbees.gae.querylogger.common.dto.DeleteRecord;
 import com.arcbees.gae.querylogger.common.dto.GetRecord;
 import com.arcbees.gae.querylogger.common.dto.PutRecord;
 import com.arcbees.gae.querylogger.common.dto.QueryRecord;
 import com.google.appengine.api.memcache.Expiration;
 import com.google.appengine.api.memcache.MemcacheService;
+import com.google.apphosting.api.DatastorePb.DeleteRequest;
+import com.google.apphosting.api.DatastorePb.DeleteResponse;
 import com.google.apphosting.api.DatastorePb.GetRequest;
 import com.google.apphosting.api.DatastorePb.GetResponse;
 import com.google.apphosting.api.DatastorePb.PutRequest;
@@ -34,9 +37,9 @@ public class MemcacheQueryRecorder implements QueryRecorder {
     }
 
     @Override
-    public void recordQuery(Query query, QueryResult queryResult, int executionTimeMs) {
-        recordOperation(new QueryRecord(query, queryResult, stackInspector.getCaller(), requestIdProvider.get(),
-                                        executionTimeMs));
+    public void recordDelete(DeleteRequest request, DeleteResponse response, int executionTimeMs) {
+        recordOperation(new DeleteRecord(request, response, stackInspector.getCaller(), requestIdProvider.get(),
+                executionTimeMs));
     }
 
     @Override
@@ -49,6 +52,12 @@ public class MemcacheQueryRecorder implements QueryRecorder {
     public void recordPut(PutRequest request, PutResponse response, int executionTimeMs) {
         recordOperation(new PutRecord(request, response, stackInspector.getCaller(), requestIdProvider.get(),
                                       executionTimeMs));
+    }
+
+    @Override
+    public void recordQuery(Query query, QueryResult queryResult, int executionTimeMs) {
+        recordOperation(new QueryRecord(query, queryResult, stackInspector.getCaller(), requestIdProvider.get(),
+                executionTimeMs));
     }
     
     private void recordOperation(DbOperationRecord record) {

@@ -17,6 +17,7 @@
 package com.arcbees.gae.querylogger.common.formatters;
 
 import com.arcbees.gae.querylogger.common.dto.DbOperationRecord;
+import com.arcbees.gae.querylogger.common.dto.DeleteRecord;
 import com.arcbees.gae.querylogger.common.dto.GetRecord;
 import com.arcbees.gae.querylogger.common.dto.PutRecord;
 import com.arcbees.gae.querylogger.common.dto.QueryRecord;
@@ -25,7 +26,9 @@ public abstract class AbstractRecordFormatter implements RecordFormatter {
 
     @Override
     public String formatRecord(DbOperationRecord record) {
-        if (record instanceof GetRecord) {
+        if (record instanceof DeleteRecord) {
+            return formatRecord((DeleteRecord)record);
+        } else if (record instanceof GetRecord) {
             return formatRecord((GetRecord)record);
         } else if (record instanceof PutRecord) {
             return formatRecord((PutRecord)record);

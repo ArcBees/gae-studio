@@ -16,6 +16,8 @@
 
 package com.arcbees.gae.querylogger.recorder;
 
+import com.google.apphosting.api.DatastorePb.DeleteRequest;
+import com.google.apphosting.api.DatastorePb.DeleteResponse;
 import com.google.apphosting.api.DatastorePb.GetRequest;
 import com.google.apphosting.api.DatastorePb.GetResponse;
 import com.google.apphosting.api.DatastorePb.PutRequest;
@@ -25,10 +27,12 @@ import com.google.apphosting.api.DatastorePb.QueryResult;
 
 public interface QueryRecorder {
     
-    void recordQuery(Query query, QueryResult queryResult, int executionTimeMs);
+    void recordDelete(DeleteRequest request, DeleteResponse response, int executionTimeMs);
 
     void recordGet(GetRequest request, GetResponse response, int executionTimeMs);
 
     void recordPut(PutRequest request, PutResponse response, int executionTimeMs);
+
+    void recordQuery(Query query, QueryResult queryResult, int executionTimeMs);
     
 }

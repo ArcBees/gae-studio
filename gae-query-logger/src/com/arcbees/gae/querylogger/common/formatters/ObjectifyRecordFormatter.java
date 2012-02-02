@@ -16,7 +16,9 @@
 
 package com.arcbees.gae.querylogger.common.formatters;
 
-import com.google.appengine.repackaged.com.google.io.protocol.ProtocolMessage;
+import com.arcbees.gae.querylogger.common.dto.DeleteRecord;
+import com.google.apphosting.api.DatastorePb.DeleteRequest;
+import com.google.apphosting.api.DatastorePb.DeleteResponse;
 import com.google.apphosting.api.DatastorePb.GetRequest;
 import com.google.apphosting.api.DatastorePb.GetResponse;
 import com.google.apphosting.api.DatastorePb.PutRequest;
@@ -43,6 +45,11 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
         FILTER_OP_SYMBOLS.put(Query.Filter.Operator.GREATER_THAN_OR_EQUAL, ">=");
         FILTER_OP_SYMBOLS.put(Query.Filter.Operator.LESS_THAN, "<");
         FILTER_OP_SYMBOLS.put(Query.Filter.Operator.LESS_THAN_OR_EQUAL, "<=");
+    }
+    
+    @Override
+    public String formatRecord(DeleteRecord record) {
+        return "Delete record formatting not implemented yet";
     }
 
     @Override
@@ -130,3 +137,4 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
     }
 
 }
+

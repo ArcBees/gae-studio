@@ -19,6 +19,8 @@ package com.arcbees.gae.querylogger.recorder;
 import com.google.apphosting.api.ApiProxy.ApiProxyException;
 import com.google.apphosting.api.ApiProxy.Delegate;
 import com.google.apphosting.api.ApiProxy.Environment;
+import com.google.apphosting.api.DatastorePb.DeleteRequest;
+import com.google.apphosting.api.DatastorePb.DeleteResponse;
 import com.google.apphosting.api.DatastorePb.GetRequest;
 import com.google.apphosting.api.DatastorePb.GetResponse;
 import com.google.apphosting.api.DatastorePb.PutRequest;
@@ -49,15 +51,36 @@ public class QueryRecorderHook extends BaseHook {
             throws ApiProxyException {
         logger.info("Processing makeSyncCall for " + packageName + "." + methodName);
 
-        if ("RunQuery".equals(methodName)) {
-            return this.handleQuery(environment, request);
+        if ("Delete".equals(methodName)) {
+            return this.handleDelete(environment, request);
         } else if ("Get".equals(methodName)) {
             return this.handleGet(environment, request);
         } else if ("Put".equals(methodName)) {
             return this.handlePut(environment, request);
+        } else if ("RunQuery".equals(methodName)) {
+            return this.handleQuery(environment, request);
         } else {
             return getBaseDelegate().makeSyncCall(environment, packageName, methodName, request);
         }
+    }
+
+    private byte[] handleDelete(Environment environment, byte[] requestData) {
+        DeleteRequest request = new DeleteRequest();
+        request.mergeFrom(requestData);
+
+        Delegate<Environment> d = getBaseDelegate();
+        long start = System.currentTimeMillis();
+        byte[] res = d.makeSyncCall(environment, "datastore_v3", "Delete", requestData);
+        long end = System.currentTimeMillis();
+
+        logger.info("Executed Get in " + (end - start) + "ms");
+
+        DeleteResponse response = new DeleteResponse();
+        response.mergeFrom(res);
+
+        queryRecorder.recordDelete(request, response, (int)(end - start));
+
+        return res;
     }
     
     private byte[] handleQuery(Environment environment, byte[] request) {
@@ -93,11 +116,9 @@ public class QueryRecorderHook extends BaseHook {
         GetResponse getResponse = new GetResponse();
         getResponse.mergeFrom(res);
 
-        byte[] result = getResponse.toByteArray();
-        
         queryRecorder.recordGet(getRequest, getResponse, (int)(end - start));
 
-        return result;
+        return res;
     }
 
     private byte[] handlePut(Environment environment, byte[] request) {

@@ -17,11 +17,14 @@
 package com.arcbees.gae.querylogger.common.formatters;
 
 import com.arcbees.gae.querylogger.common.dto.DbOperationRecord;
+import com.arcbees.gae.querylogger.common.dto.DeleteRecord;
 import com.arcbees.gae.querylogger.common.dto.GetRecord;
 import com.arcbees.gae.querylogger.common.dto.PutRecord;
 import com.arcbees.gae.querylogger.common.dto.QueryRecord;
 
 public interface RecordFormatter {
+    
+    public String formatRecord(DeleteRecord record);
     
     public String formatRecord(GetRecord record);
 
