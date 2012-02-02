@@ -17,6 +17,8 @@
 package com.arcbees.gae.querylogger.analyzer;
 
 import com.arcbees.gae.querylogger.common.dto.DbOperationRecord;
+import com.arcbees.gae.querylogger.common.dto.GetRecord;
+import com.arcbees.gae.querylogger.common.dto.PutRecord;
 import com.arcbees.gae.querylogger.common.dto.QueryRecord;
 import com.arcbees.gae.querylogger.common.formatters.RecordFormatter;
 import com.google.appengine.api.memcache.MemcacheService;
@@ -114,7 +116,8 @@ public class QueryAnalyzer {
 
         for (Object recordObject : recordsByKey.values()) {
             DbOperationRecord record = (DbOperationRecord)recordObject;
-            String kind = record.getClass().getName();
+            // TODO figure out what to do with this.  The corner case is heterogeneous batch gets
+            String kind = "<kind extraction not implemented yet>";
             if (!recordsByKind.containsKey(kind)) {
                 recordsByKind.put(kind, new ArrayList<DbOperationRecord>());
             }
@@ -135,5 +138,5 @@ public class QueryAnalyzer {
     private long getMostRecentId() {
         return (Long)memcacheService.get("db.operation.counter");
     }
-
+    
 }
