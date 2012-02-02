@@ -54,16 +54,30 @@ public class QueryLoggerDemo extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Key<Sprocket> key = persistAnObject();
-        getAnObject(key);
-        runObjectifyDemo();
-        runTwigPersistDemo();
+        seedData();
+
+//        Key<Sprocket> key = persistAnObject();
+//        getAnObject(key);
+//        runNonStringFilterDemo();
+//        runObjectifyDemo();
+//        runTwigPersistDemo();
         runGqlDemo();
-        runNPlusOneDemo();
+//        runNPlusOneDemo();
+        runUnboundedQueryDemo();
         
         request.setAttribute("reportEntries", queryAnalyzerProvider.get().getReport());
 
         request.getRequestDispatcher("queryLoggerDemo.jsp").forward(request, response);
+    }
+
+    private void seedData() {
+        Objectify objectify = ObjectifyService.factory().begin();
+
+        if (objectify.query(Sprocket.class).filter("name", "Sprocket #0").get() == null) {
+            for (int i = 0; i < 100; ++i) {
+                objectify.put(new Sprocket("Sprocket #" + i));
+            }
+        }
     }
     
     private Key<Sprocket> persistAnObject() {
@@ -86,14 +100,27 @@ public class QueryLoggerDemo extends HttpServlet {
         datastore.prepare(gqlQuery).asSingleEntity();
     }
 
-    private void runNPlusOneDemo() {
+    private void runNonStringFilterDemo() {
         Objectify objectify = ObjectifyService.factory().begin();
+
         objectify.query(Sprocket.class).filter("size", 0.0).get();
         objectify.query(Sprocket.class).filter("isFoo", true).get();
         objectify.query(Sprocket.class).filter("isFoo", false).get();
+    }
+
+    private void runNPlusOneDemo() {
+        Objectify objectify = ObjectifyService.factory().begin();
+
         for (int i = 0; i < 100; ++i) {
             objectify.query(Sprocket.class).filter("name", "Sprocket #" + i).get();
         }
+    }
+
+    private void runUnboundedQueryDemo() {
+        Objectify objectify = ObjectifyService.factory().begin();
+
+        objectify.query(Sprocket.class).limit(10).list();
+        objectify.query(Sprocket.class).limit(100).list();
     }
 
     private void runObjectifyDemo() {

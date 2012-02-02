@@ -17,6 +17,7 @@
 package com.arcbees.gae.querylogger.analyzer;
 
 import com.arcbees.gae.querylogger.common.dto.DbOperationRecord;
+import com.arcbees.gae.querylogger.common.dto.QueryRecord;
 import com.arcbees.gae.querylogger.common.formatters.RecordFormatter;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.inject.Inject;
@@ -26,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class QueryAnalyzer {
@@ -58,14 +60,31 @@ public class QueryAnalyzer {
         List<String> report = new ArrayList<String>();
 
         for (String kind : recordsByKind.keySet()) {
-            StringBuilder builder = new StringBuilder();
             List<DbOperationRecord> operations = recordsByKind.get(kind);
 
             for (DbOperationRecord record : operations) {
-                report.add(recordFormatter.formatRecord(record) + " (" + record.getExecutionTimeMs() + "ms)");
+                StringBuilder builder = new StringBuilder();
+                
+                builder.append(recordFormatter.formatRecord(record));
+                builder.append(" (");
+                builder.append(record.getExecutionTimeMs());
+                builder.append("ms)");
+                
+                if (record instanceof QueryRecord) {
+                    QueryRecord queryRecord = (QueryRecord)record;
+                    int count = queryRecord.getQueryResult().resultSize();
+                    
+                    builder.append(" (");
+                    builder.append(count);
+                    builder.append(count == 1 ? " result)" : " results)");
+                }
+                
+                report.add(builder.toString());
             }
 
             if (operations.size() >= N_PLUS_ONE_THRESHOLD) {
+                StringBuilder builder = new StringBuilder();
+
                 builder.append("WARNING: Potential N+1 query for ");
                 builder.append(kind);
                 builder.append(".class, consider using a batched query instead.  Code location(s): ");
@@ -80,18 +99,18 @@ public class QueryAnalyzer {
                     if (first) first = false; else builder.append(", ");
                     builder.append(loc);
                 }
-            }
-            String str = builder.toString();
-            if (str != null && !str.equals("")) {
+                
                 report.add(builder.toString());
             }
+            
         }
 
         return report;
     }
 
     private void getNewOperationRecords() {
-        Map<String, Object> recordsByKey = memcacheService.getAll(getNewOperationRecordKeys());
+        Map<String, Object> recordsByKey =
+                new TreeMap<String, Object>(memcacheService.getAll(getNewOperationRecordKeys()));
 
         for (Object recordObject : recordsByKey.values()) {
             DbOperationRecord record = (DbOperationRecord)recordObject;
