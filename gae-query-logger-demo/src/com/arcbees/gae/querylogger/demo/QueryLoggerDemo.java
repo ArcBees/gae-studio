@@ -22,6 +22,7 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.spoledge.audao.parser.gql.GqlDynamic;
@@ -53,6 +54,8 @@ public class QueryLoggerDemo extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        Key<Sprocket> key = persistAnObject();
+        getAnObject(key);
         runObjectifyDemo();
         runTwigPersistDemo();
         runGqlDemo();
@@ -61,6 +64,16 @@ public class QueryLoggerDemo extends HttpServlet {
         request.setAttribute("reportEntries", queryAnalyzerProvider.get().getReport());
 
         request.getRequestDispatcher("queryLoggerDemo.jsp").forward(request, response);
+    }
+    
+    private Key<Sprocket> persistAnObject() {
+        Objectify objectify = ObjectifyService.factory().begin();
+        return objectify.put(new Sprocket("MySprocket"));
+    }
+    
+    private void getAnObject(Key<Sprocket> key) {
+        Objectify objectify = ObjectifyService.factory().begin();
+        objectify.get(key);
     }
 
     private void runGqlDemo() {

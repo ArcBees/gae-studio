@@ -4,6 +4,7 @@ import com.arcbees.gae.querylogger.common.QueryCountData;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.memcache.MemcacheService;
+import com.google.apphosting.api.DatastorePb;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
@@ -64,6 +65,21 @@ public class MemcacheQueryRecorder implements QueryRecorder {
         } while (queryCountDataByKindIdentifiable == null
                 || !memcacheService.putIfUntouched(memcacheKey, queryCountDataByKindIdentifiable,
                         queryCountDataByKind));
+    }
+
+    @Override
+    public void recordQuery(DatastorePb.Query query, DatastorePb.QueryResult result) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void recordGet(DatastorePb.GetRequest request, DatastorePb.GetResponse response) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void recordPut(DatastorePb.PutRequest request, DatastorePb.PutResponse response) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
 }

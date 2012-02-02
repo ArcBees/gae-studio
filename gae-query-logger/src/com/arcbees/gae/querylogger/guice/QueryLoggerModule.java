@@ -19,17 +19,17 @@ package com.arcbees.gae.querylogger.guice;
 import com.arcbees.gae.querylogger.analyzer.QueryAnalyzer;
 import com.arcbees.gae.querylogger.recorder.MemcacheQueryRecorder;
 import com.arcbees.gae.querylogger.recorder.QueryRecorder;
+import com.arcbees.gae.querylogger.recorder.QueryRecorderHook;
 import com.arcbees.gae.querylogger.recorder.SimpleStackInspector;
 import com.arcbees.gae.querylogger.recorder.StackInspector;
 import com.fasterxml.uuid.Generators;
-import com.google.appengine.api.datastore.QueryInterceptor;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Named;
 import com.google.inject.servlet.RequestScoped;
-import org.aspectj.lang.Aspects;
 
 public class QueryLoggerModule extends AbstractModule {
 
@@ -39,8 +39,10 @@ public class QueryLoggerModule extends AbstractModule {
         // TODO what should be pluggable is the shared persistence interface (memcache)
         bind(QueryRecorder.class).to(MemcacheQueryRecorder.class).in(RequestScoped.class);
         bind(QueryAnalyzer.class).in(RequestScoped.class);
-
-        requestInjection(Aspects.aspectOf(QueryInterceptor.class));
+        
+        install(new FactoryModuleBuilder()
+                .implement(QueryRecorderHook.class, QueryRecorderHook.class)
+                .build(QueryRecorderHookFactory.class));
     }
 
     @Provides

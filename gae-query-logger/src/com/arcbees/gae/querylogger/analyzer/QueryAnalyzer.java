@@ -49,6 +49,10 @@ public class QueryAnalyzer {
         Map<String, QueryCountData> queryCountDataByKind =
                 (Map<String, QueryCountData>) memcacheService.get(memcacheKey);
 
+        if (queryCountDataByKind == null) {
+            return new ArrayList<String>();
+        }
+
         for (String kind : queryCountDataByKind.keySet()) {
             StringBuilder builder = new StringBuilder();
             QueryCountData queryCountData = queryCountDataByKind.get(kind);

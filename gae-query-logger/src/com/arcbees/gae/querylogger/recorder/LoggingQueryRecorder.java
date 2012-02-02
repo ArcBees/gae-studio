@@ -25,14 +25,14 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class LoggingQueryRecorder implements QueryRecorder {
-    
+
     private Logger logger;
-    
+
     @Inject
     public LoggingQueryRecorder(Logger logger) {
         this.logger = logger;
     }
-    
+
     @Override
     public void recordQuery(Query query, FetchOptions fetchOptions) {
         logger.info(queryToString(query, fetchOptions));
@@ -80,7 +80,7 @@ public class LoggingQueryRecorder implements QueryRecorder {
             builder.append(offset);
             builder.append(")");
         }
-        
+
         Integer limit = fetchOptions.getLimit();
         if (limit != null) {
             builder.append(".limit(");

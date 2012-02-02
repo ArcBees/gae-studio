@@ -17,6 +17,9 @@
 package com.arcbees.gae.querylogger.demo;
 
 import com.arcbees.gae.querylogger.guice.QueryLoggerModule;
+import com.arcbees.gae.querylogger.guice.QueryRecorderHookFactory;
+import com.arcbees.gae.querylogger.recorder.ApiProxyHook;
+import com.google.apphosting.api.ApiProxy;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
@@ -27,7 +30,7 @@ public class GuiceServletConfig extends GuiceServletContextListener {
 
     @Override
     protected Injector getInjector() {
-        return Guice.createInjector(new ServletModule() {
+        Injector injector = Guice.createInjector(new ServletModule() {
             @Override
             public void configureServlets() {
                 ObjectifyService.register(Sprocket.class);
@@ -35,6 +38,13 @@ public class GuiceServletConfig extends GuiceServletContextListener {
                 serve("/").with(QueryLoggerDemo.class);
             }
         });
+
+        ApiProxyHook hook = new ApiProxyHook(ApiProxy.getDelegate());
+        hook.getHooks().put("datastore_v3",
+                injector.getProvider(QueryRecorderHookFactory.class).get().create(hook.getBaseDelegate()));
+        ApiProxy.setDelegate(hook);
+
+        return injector;
     }
 
 }
