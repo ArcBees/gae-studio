@@ -15,7 +15,7 @@ public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView> {
     public interface MyView extends View {
     }
 
-    private DispatchAsync dispatcher;
+    private final DispatchAsync dispatcher;
 
     @Inject
     public RequestPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {

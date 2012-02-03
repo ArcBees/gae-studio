@@ -6,10 +6,14 @@ public class ProfilerModule extends AbstractPresenterModule {
 
     @Override
     protected void configure() {
-        bindPresenterWidget(DetailsPresenter.class, DetailsPresenter.MyView.class, DetailsView.class);
-        bindPresenterWidget(RequestPresenter.class, RequestPresenter.MyView.class, RequestView.class);
-        bindPresenterWidget(StatementPresenter.class, StatementPresenter.MyView.class, StatementView.class);
-        bindPresenterWidget(StatisticsPresenter.class, StatisticsPresenter.MyView.class, StatisticsView.class);
+        bindSingletonPresenterWidget(DetailsPresenter.class, DetailsPresenter.MyView.class,
+                DetailsView.class);
+        bindSingletonPresenterWidget(RequestPresenter.class, RequestPresenter.MyView.class,
+                RequestView.class);
+        bindSingletonPresenterWidget(StatementPresenter.class, StatementPresenter.MyView.class,
+                StatementView.class);
+        bindSingletonPresenterWidget(StatisticsPresenter.class, StatisticsPresenter.MyView.class,
+                StatisticsView.class);
         
         bindPresenter(ProfilerPresenter.class, ProfilerPresenter.MyView.class,
                 ProfilerView.class, ProfilerPresenter.MyProxy.class);

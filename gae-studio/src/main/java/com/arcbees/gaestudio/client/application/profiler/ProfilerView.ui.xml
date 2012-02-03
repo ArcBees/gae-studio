@@ -2,18 +2,29 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <ui:style>
-
     </ui:style>
 
-    <g:HTMLPanel>
-        <div>
-            <g:SimplePanel ui:field="requestPanel" />
-            <g:SimplePanel ui:field="statisticsPanel" />
-        </div>
-        <div>
-            <g:SimplePanel ui:field="statementPanel" />
-            <g:SimplePanel ui:field="detailsPanel" />
-        </div>
-    </g:HTMLPanel>
+    <g:SplitLayoutPanel>
+        <g:west size="300">
+            <g:SplitLayoutPanel>
+                <g:center>
+                    <g:SimplePanel ui:field="requestPanel" />
+                </g:center>
+                <g:south size="350">
+                    <g:SimplePanel ui:field="statisticsPanel" />
+                </g:south>
+            </g:SplitLayoutPanel>
+        </g:west>
+        <g:center>
+            <g:SplitLayoutPanel>
+                <g:center>
+                    <g:SimplePanel ui:field="statementPanel" />
+                </g:center>
+                <g:south size="400">
+                    <g:SimplePanel ui:field="detailsPanel" />
+                </g:south>
+            </g:SplitLayoutPanel>
+        </g:center>
+    </g:SplitLayoutPanel>
 
 </ui:UiBinder>

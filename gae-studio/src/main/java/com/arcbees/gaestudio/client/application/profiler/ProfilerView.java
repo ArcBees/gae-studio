@@ -7,8 +7,6 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
-import java.util.List;
-
 public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
 
     public interface Binder extends UiBinder<Widget, ProfilerView> {
@@ -29,6 +27,21 @@ public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
     @Inject
     public ProfilerView(final Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
+    }
+
+    @Override
+    public void setInSlot(Object slot, Widget content) {
+        if (content != null) {
+            if (slot == ProfilerPresenter.TYPE_SetRequestPanelContent) {
+                requestPanel.setWidget(content);
+            } else if (slot == ProfilerPresenter.TYPE_SetStatisticsPanelContent) {
+                statisticsPanel.setWidget(content);
+            } else if (slot == ProfilerPresenter.TYPE_SetStatementPanelContent) {
+                statementPanel.setWidget(content);
+            } else if (slot == ProfilerPresenter.TYPE_SetDetailsPanelContent) {
+                detailsPanel.setWidget(content);
+            }
+        }
     }
 
 }

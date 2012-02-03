@@ -28,7 +28,7 @@ public class HomePagePresenter extends
     public interface MyProxy extends ProxyPlace<HomePagePresenter> {
     }
     
-    private DispatchAsync dispatcher;
+    private final DispatchAsync dispatcher;
 
     @Inject
     public HomePagePresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,

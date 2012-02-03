@@ -15,7 +15,7 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
     public interface MyView extends View {
     }
 
-    private DispatchAsync dispatcher;
+    private final DispatchAsync dispatcher;
 
     @Inject
     public StatementPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {

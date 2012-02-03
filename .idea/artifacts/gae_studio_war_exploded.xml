@@ -9,7 +9,7 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: com.google.gwt:gwt-servlet:2.4.0" />
-          <element id="library" level="project" name="Maven: com.google.appengine:appengine-api-1.0-sdk:1.6.1.1" />
+          <element id="library" level="project" name="Maven: com.google.appengine:appengine-api-1.0-sdk:1.6.2.1" />
           <element id="library" level="project" name="Maven: com.gwtplatform:gwtp-dispatch-server-guice:0.7-SNAPSHOT" />
           <element id="library" level="project" name="Maven: com.gwtplatform:gwtp-dispatch-server:0.7-SNAPSHOT" />
           <element id="library" level="project" name="Maven: com.gwtplatform:gwtp-dispatch-shared:0.7-SNAPSHOT" />

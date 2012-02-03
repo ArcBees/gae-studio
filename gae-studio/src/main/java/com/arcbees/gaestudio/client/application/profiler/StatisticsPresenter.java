@@ -15,7 +15,7 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
     public interface MyView extends View {
     }
 
-    private DispatchAsync dispatcher;
+    private final DispatchAsync dispatcher;
 
     @Inject
     public StatisticsPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {

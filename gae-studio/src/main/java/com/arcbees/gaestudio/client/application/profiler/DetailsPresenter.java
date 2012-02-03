@@ -15,7 +15,7 @@ public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView> {
     public interface MyView extends View {
     }
 
-    private DispatchAsync dispatcher;
+    private final DispatchAsync dispatcher;
 
     @Inject
     public DetailsPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
