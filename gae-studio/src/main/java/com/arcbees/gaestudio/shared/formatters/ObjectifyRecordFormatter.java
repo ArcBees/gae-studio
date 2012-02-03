@@ -14,21 +14,13 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger.common.formatters;
+package com.arcbees.gaestudio.shared.formatters;
 
-import com.arcbees.gae.querylogger.common.dto.DeleteRecord;
-import com.google.apphosting.api.DatastorePb.DeleteRequest;
-import com.google.apphosting.api.DatastorePb.DeleteResponse;
-import com.google.apphosting.api.DatastorePb.GetRequest;
-import com.google.apphosting.api.DatastorePb.GetResponse;
-import com.google.apphosting.api.DatastorePb.PutRequest;
-import com.google.apphosting.api.DatastorePb.PutResponse;
+import com.arcbees.gaestudio.shared.dto.DeleteRecord;
+import com.arcbees.gaestudio.shared.dto.GetRecord;
+import com.arcbees.gaestudio.shared.dto.PutRecord;
+import com.arcbees.gaestudio.shared.dto.QueryRecord;
 import com.google.apphosting.api.DatastorePb.Query;
-import com.google.apphosting.api.DatastorePb.QueryResult;
-
-import com.arcbees.gae.querylogger.common.dto.GetRecord;
-import com.arcbees.gae.querylogger.common.dto.PutRecord;
-import com.arcbees.gae.querylogger.common.dto.QueryRecord;
 import com.google.storage.onestore.v3.OnestoreEntity;
 
 import java.util.HashMap;

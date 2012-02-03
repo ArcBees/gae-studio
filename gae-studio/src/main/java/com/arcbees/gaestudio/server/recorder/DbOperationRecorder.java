@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger.recorder;
+package com.arcbees.gaestudio.server.recorder;
 
 import com.google.apphosting.api.DatastorePb.DeleteRequest;
 import com.google.apphosting.api.DatastorePb.DeleteResponse;
@@ -25,14 +25,14 @@ import com.google.apphosting.api.DatastorePb.PutResponse;
 import com.google.apphosting.api.DatastorePb.Query;
 import com.google.apphosting.api.DatastorePb.QueryResult;
 
-public interface QueryRecorder {
+public interface DbOperationRecorder {
     
-    void recordDelete(DeleteRequest request, DeleteResponse response, int executionTimeMs);
+    public void record(DeleteRequest request, DeleteResponse response, int executionTimeMs);
 
-    void recordGet(GetRequest request, GetResponse response, int executionTimeMs);
+    public void record(GetRequest request, GetResponse response, int executionTimeMs);
 
-    void recordPut(PutRequest request, PutResponse response, int executionTimeMs);
+    public void record(PutRequest request, PutResponse response, int executionTimeMs);
 
-    void recordQuery(Query query, QueryResult queryResult, int executionTimeMs);
+    public void record(Query query, QueryResult queryResult, int executionTimeMs);
     
 }

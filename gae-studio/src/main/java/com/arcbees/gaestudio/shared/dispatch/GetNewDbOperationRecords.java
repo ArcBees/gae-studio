@@ -4,22 +4,26 @@
 
 package com.arcbees.gaestudio.shared.dispatch;
 
+import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.gwtplatform.dispatch.annotation.GenDispatch;
 import com.gwtplatform.dispatch.annotation.In;
+import com.gwtplatform.dispatch.annotation.Optional;
 import com.gwtplatform.dispatch.annotation.Out;
 
-import java.util.List;
-
 @GenDispatch(isSecure = false)
-public class GetEntityKinds {
-    
+public class GetNewDbOperationRecords {
+
     @In(1)
-    Integer skip;
+    Long lastId;
     
+    @Optional
     @In(2)
-    Integer take;
-
+    Integer maxResults;
+    
     @Out(1)
-    List<String> kinds;
+    Long newLastId;
 
+    @Out(2)
+    Iterable<DbOperationRecord> records;
+    
 }

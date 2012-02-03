@@ -14,10 +14,10 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger.recorder;
+package com.arcbees.gaestudio.shared.util;
 
 public interface StackInspector {
 
-    StackTraceElement getCaller();
+    StackTraceElement getCaller(StackTraceElement[] stackTrace);
 
 }

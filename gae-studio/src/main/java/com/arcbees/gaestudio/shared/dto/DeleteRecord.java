@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger.common.dto;
+package com.arcbees.gaestudio.shared.dto;
 
 import com.google.apphosting.api.DatastorePb.DeleteRequest;
 import com.google.apphosting.api.DatastorePb.DeleteResponse;
@@ -27,9 +27,9 @@ public class DeleteRecord extends DbOperationRecord {
 
     private final DeleteResponse deleteResponse;
 
-    public DeleteRecord(DeleteRequest deleteRequest, DeleteResponse deleteResponse, StackTraceElement caller,
+    public DeleteRecord(DeleteRequest deleteRequest, DeleteResponse deleteResponse, StackTraceElement[] stackTrace,
                         String requestId, int executionTimeMs) {
-        super(caller, requestId, executionTimeMs);
+        super(stackTrace, requestId, executionTimeMs);
         this.deleteRequest = deleteRequest;
         this.deleteResponse = deleteResponse;
     }

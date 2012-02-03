@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger.common.dto;
+package com.arcbees.gaestudio.shared.dto;
 
 import com.google.apphosting.api.DatastorePb.Query;
 import com.google.apphosting.api.DatastorePb.QueryResult;
@@ -27,9 +27,9 @@ public class QueryRecord extends DbOperationRecord {
 
     private final QueryResult queryResult;
 
-    public QueryRecord(Query query, QueryResult queryResult, StackTraceElement caller, String requestId,
+    public QueryRecord(Query query, QueryResult queryResult, StackTraceElement[] stackTrace, String requestId,
                        int executionTimeMs) {
-        super(caller, requestId, executionTimeMs);
+        super(stackTrace, requestId, executionTimeMs);
         this.query = query;
         this.queryResult = queryResult;
     }

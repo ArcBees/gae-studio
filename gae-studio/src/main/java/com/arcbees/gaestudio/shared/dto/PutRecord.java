@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger.common.dto;
+package com.arcbees.gaestudio.shared.dto;
 
 import com.google.apphosting.api.DatastorePb.PutRequest;
 import com.google.apphosting.api.DatastorePb.PutResponse;
@@ -27,9 +27,9 @@ public class PutRecord extends DbOperationRecord {
     
     private final PutResponse putResponse;
 
-    public PutRecord(PutRequest putRequest, PutResponse putResponse, StackTraceElement caller, String requestId,
+    public PutRecord(PutRequest putRequest, PutResponse putResponse, StackTraceElement[] stackTrace, String requestId,
                      int executionTimeMs) {
-        super(caller, requestId, executionTimeMs);
+        super(stackTrace, requestId, executionTimeMs);
         this.putRequest = putRequest;
         this.putResponse = putResponse;
     }

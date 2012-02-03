@@ -14,13 +14,13 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger.common.formatters;
+package com.arcbees.gaestudio.shared.formatters;
 
-import com.arcbees.gae.querylogger.common.dto.DbOperationRecord;
-import com.arcbees.gae.querylogger.common.dto.DeleteRecord;
-import com.arcbees.gae.querylogger.common.dto.GetRecord;
-import com.arcbees.gae.querylogger.common.dto.PutRecord;
-import com.arcbees.gae.querylogger.common.dto.QueryRecord;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
+import com.arcbees.gaestudio.shared.dto.DeleteRecord;
+import com.arcbees.gaestudio.shared.dto.GetRecord;
+import com.arcbees.gaestudio.shared.dto.PutRecord;
+import com.arcbees.gaestudio.shared.dto.QueryRecord;
 
 public interface RecordFormatter {
     

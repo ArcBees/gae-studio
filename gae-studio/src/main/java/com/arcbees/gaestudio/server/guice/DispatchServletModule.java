@@ -10,4 +10,5 @@ public class DispatchServletModule extends ServletModule {
     public void configureServlets() {
         serve("/" + ActionImpl.DEFAULT_SERVICE_NAME + "*").with(DispatchServiceImpl.class);
     }
+
 }

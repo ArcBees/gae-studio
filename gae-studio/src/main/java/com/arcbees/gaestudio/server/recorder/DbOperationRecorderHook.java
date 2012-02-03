@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger.recorder;
+package com.arcbees.gaestudio.server.recorder;
 
 import com.google.apphosting.api.ApiProxy.ApiProxyException;
 import com.google.apphosting.api.ApiProxy.Delegate;
@@ -32,18 +32,18 @@ import com.google.inject.assistedinject.Assisted;
 
 import java.util.logging.Logger;
 
-public class QueryRecorderHook extends BaseHook {
+public class DbOperationRecorderHook extends BaseHook {
 
     private final Logger logger;
 
-    private final QueryRecorder queryRecorder;
+    private final DbOperationRecorder dbOperationRecorder;
 
     @Inject
-    public QueryRecorderHook(final Logger logger, final QueryRecorder queryRecorder,
-                             @Assisted Delegate<Environment> baseDelegate) {
+    public DbOperationRecorderHook(final Logger logger, final DbOperationRecorder dbOperationRecorder,
+                                   @Assisted Delegate<Environment> baseDelegate) {
         super(baseDelegate);
         this.logger = logger;
-        this.queryRecorder = queryRecorder;
+        this.dbOperationRecorder = dbOperationRecorder;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class QueryRecorderHook extends BaseHook {
         DeleteResponse response = new DeleteResponse();
         response.mergeFrom(res);
 
-        queryRecorder.recordDelete(request, response, (int)(end - start));
+        dbOperationRecorder.record(request, response, (int) (end - start));
 
         return res;
     }
@@ -97,7 +97,7 @@ public class QueryRecorderHook extends BaseHook {
         QueryResult queryResult = new QueryResult();
         queryResult.mergeFrom(result);
         
-        queryRecorder.recordQuery(query, queryResult, (int)(end - start));
+        dbOperationRecorder.record(query, queryResult, (int) (end - start));
 
         return result;
     }
@@ -116,7 +116,7 @@ public class QueryRecorderHook extends BaseHook {
         GetResponse getResponse = new GetResponse();
         getResponse.mergeFrom(res);
 
-        queryRecorder.recordGet(getRequest, getResponse, (int)(end - start));
+        dbOperationRecorder.record(getRequest, getResponse, (int) (end - start));
 
         return res;
     }
@@ -135,7 +135,7 @@ public class QueryRecorderHook extends BaseHook {
         PutResponse putResponse = new PutResponse();
         putResponse.mergeFrom(result);
 
-        queryRecorder.recordPut(putRequest, putResponse, (int)(end - start));
+        dbOperationRecorder.record(putRequest, putResponse, (int) (end - start));
 
         return result;
     }

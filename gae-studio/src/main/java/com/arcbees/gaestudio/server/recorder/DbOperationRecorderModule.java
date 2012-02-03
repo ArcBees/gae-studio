@@ -14,38 +14,31 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger.guice;
+package com.arcbees.gaestudio.server.recorder;
 
-import com.arcbees.gae.querylogger.analyzer.QueryAnalyzer;
-import com.arcbees.gae.querylogger.common.formatters.ObjectifyRecordFormatter;
-import com.arcbees.gae.querylogger.common.formatters.RecordFormatter;
-import com.arcbees.gae.querylogger.recorder.MemcacheQueryRecorder;
-import com.arcbees.gae.querylogger.recorder.QueryRecorder;
-import com.arcbees.gae.querylogger.recorder.QueryRecorderHook;
-import com.arcbees.gae.querylogger.recorder.SimpleStackInspector;
-import com.arcbees.gae.querylogger.recorder.StackInspector;
-import com.fasterxml.uuid.Generators;
+import com.arcbees.gaestudio.shared.formatters.ObjectifyRecordFormatter;
+import com.arcbees.gaestudio.shared.formatters.RecordFormatter;
+import com.arcbees.gaestudio.shared.util.SimpleStackInspector;
+import com.arcbees.gaestudio.shared.util.StackInspector;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
-import com.google.inject.Singleton;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Named;
 import com.google.inject.servlet.RequestScoped;
 
-public class QueryLoggerModule extends AbstractModule {
+public class DbOperationRecorderModule extends AbstractModule {
 
     @Override
     protected void configure() {
         bind(StackInspector.class).to(SimpleStackInspector.class);
-        bind(QueryRecorder.class).to(MemcacheQueryRecorder.class);
+        bind(DbOperationRecorder.class).to(MemcacheDbOperationRecorder.class);
         bind(RecordFormatter.class).to(ObjectifyRecordFormatter.class);
-        bind(QueryAnalyzer.class).in(Singleton.class);
-        
+
         install(new FactoryModuleBuilder()
-                .implement(QueryRecorderHook.class, QueryRecorderHook.class)
-                .build(QueryRecorderHookFactory.class));
+                .implement(DbOperationRecorderHook.class, DbOperationRecorderHook.class)
+                .build(DbOperationRecorderHookFactory.class));
     }
 
     @Provides
@@ -58,9 +51,8 @@ public class QueryLoggerModule extends AbstractModule {
     @Named("requestId")
     @RequestScoped
     private String requestIdProvider() {
-        // We could get significantly fancier here to guarantee UUID uniqueness
-        // (see JUG documentation), but this should do for now.
-        return Generators.timeBasedGenerator().generate().toString();
+        // Re-implement this using memcache.
+        return "1";
     }
 
 }

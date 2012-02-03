@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger.recorder;
+package com.arcbees.gaestudio.shared.util;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -41,9 +41,7 @@ public class SimpleStackInspector implements StackInspector {
     }
 
     @Override
-    public StackTraceElement getCaller() {
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-
+    public StackTraceElement getCaller(StackTraceElement[] stackTrace) {
         for (StackTraceElement currentElement : stackTrace) {
             String packageName = getStackTraceElementPackage(currentElement);
             if (!IGNORED_PACKAGES.contains(packageName)) {

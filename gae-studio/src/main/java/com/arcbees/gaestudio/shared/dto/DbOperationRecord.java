@@ -14,26 +14,26 @@
  * the License.
  */
 
-package com.arcbees.gae.querylogger.common.dto;
+package com.arcbees.gaestudio.shared.dto;
 
 import java.io.Serializable;
 
 public abstract class DbOperationRecord implements Serializable {
 
-    private final StackTraceElement caller;
+    private final StackTraceElement[] stackTrace;
     
     private final String requestId;
     
     private final int executionTimeMs;
 
-    protected DbOperationRecord(StackTraceElement caller, String requestId, int executionTimeMs) {
-        this.caller = caller;
+    protected DbOperationRecord(StackTraceElement[] stackTrace, String requestId, int executionTimeMs) {
+        this.stackTrace = stackTrace;
         this.requestId = requestId;
         this.executionTimeMs = executionTimeMs;
     }
 
-    public StackTraceElement getCaller() {
-        return caller;
+    public StackTraceElement[] getStackTrace() {
+        return stackTrace;
     }
 
     public String getRequestId() {
