@@ -2,7 +2,7 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <g:HTMLPanel>
-        <g:SimplePanel ui:field="entityKinds" />
+        Statistics
     </g:HTMLPanel>
 
 </ui:UiBinder>

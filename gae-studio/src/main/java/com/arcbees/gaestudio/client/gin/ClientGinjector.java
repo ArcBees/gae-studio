@@ -1,8 +1,9 @@
 package com.arcbees.gaestudio.client.gin;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
-import com.arcbees.gaestudio.client.application.entitykindlist.EntityKindListPresenter;
+import com.arcbees.gaestudio.client.application.profiler.ProfilerPresenter;
 import com.arcbees.gaestudio.client.application.home.HomePagePresenter;
+import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 import com.google.inject.Provider;
@@ -21,6 +22,6 @@ public interface ClientGinjector extends Ginjector {
 
     Provider<ApplicationPresenter> getAppPresenter();
     
-    Provider<EntityKindListPresenter> getEntityKindListPresenter();
+    AsyncProvider<ProfilerPresenter> getProfilerPresenter();
 
 }

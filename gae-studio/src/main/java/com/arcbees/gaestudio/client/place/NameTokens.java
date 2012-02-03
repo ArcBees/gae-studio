@@ -4,20 +4,19 @@ public class NameTokens {
 
     public static final String home = "home";
     
-    public static final String entityKindList = "entityKindList";
+    public static final String studio = "studio";
     
-    public static final String entities = "entities";
+    public static final String profiler = "profiler";
 
     public static String getHome() {
         return home;
     }
-    
-    public static String getEntityKindList() {
-        return entityKindList;
-    }
-    
-    public static String getEntities() {
-        return entities;
+
+    public static String getStudio() {
+        return studio;
     }
 
+    public static String getProfiler() {
+        return profiler;
+    }
 }

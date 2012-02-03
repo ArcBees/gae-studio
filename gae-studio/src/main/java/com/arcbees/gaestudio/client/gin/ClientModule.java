@@ -14,6 +14,6 @@ public class ClientModule extends AbstractPresenterModule {
         install(new DefaultModule(ClientPlaceManager.class));
         install(new ApplicationModule());
 
-        bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.home);
+        bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.profiler);
     }
 }
