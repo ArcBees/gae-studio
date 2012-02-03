@@ -8,6 +8,7 @@ import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsResult;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.google.appengine.api.memcache.MemcacheService;
+import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
@@ -26,6 +27,7 @@ public class GetNewDbOperationRecordsHandler
     
     private final MemcacheService memcacheService;
 
+    @Inject
     public GetNewDbOperationRecordsHandler(final Logger logger, final MemcacheService memcacheService) {
         super(GetNewDbOperationRecordsAction.class);
 
@@ -37,11 +39,24 @@ public class GetNewDbOperationRecordsHandler
     @SuppressWarnings("unchecked")
     public GetNewDbOperationRecordsResult execute(GetNewDbOperationRecordsAction action, ExecutionContext context)
             throws ActionException {
+        
+        Long mostRecentId = getMostRecentId();
+        if (mostRecentId == null) {
+            logger.info("Could not find a mostRecentId");
+            return new GetNewDbOperationRecordsResult(action.getLastId(), new ArrayList<DbOperationRecord>());
+        }
 
         long beginId = action.getLastId() + 1;
         long endId = action.getMaxResults() != null
                 ? Math.min(action.getLastId() + action.getMaxResults(), getMostRecentId())
                 : getMostRecentId();
+        
+        if (beginId > endId) {
+            logger.info("No new records since last poll");
+            return new GetNewDbOperationRecordsResult(action.getLastId(), new ArrayList<DbOperationRecord>());
+        }
+        
+        logger.info("Attempting to retrieve ids " + beginId + "-" + endId);
 
         Map<String, Object> recordsByKey = memcacheService.getAll(getNewOperationRecordKeys(beginId, endId));
         // TODO trimming missing results only from the end of the range is incorrect, as there are scenarios
@@ -51,8 +66,14 @@ public class GetNewDbOperationRecordsHandler
         while (!recordsByKey.containsKey("db.operation.record." + endId)) {
             endId--;
         }
+        
+        logger.info("Retrieved " + recordsByKey.size() + " records, endId is now " + endId);
 
-        Iterable<DbOperationRecord> records = (Iterable<DbOperationRecord>)(Iterable<?>)recordsByKey.values();
+        // TODO optimize this
+        ArrayList<DbOperationRecord> records = new ArrayList<DbOperationRecord>(recordsByKey.size());
+        for (Object recordObject : recordsByKey.values()) {
+            records.add((DbOperationRecord)recordObject);
+        }
         
         return new GetNewDbOperationRecordsResult(endId, records);
     }
@@ -72,7 +93,7 @@ public class GetNewDbOperationRecordsHandler
         return keys;
     }
 
-    private long getMostRecentId() {
+    private Long getMostRecentId() {
         return (Long)memcacheService.get("db.operation.counter");
     }
 

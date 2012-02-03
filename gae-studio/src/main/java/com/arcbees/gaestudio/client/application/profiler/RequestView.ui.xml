@@ -2,7 +2,8 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <g:HTMLPanel>
-        Requests
+        <h3>Requests</h3>
+        <g:HTML ui:field="requestList" />
     </g:HTMLPanel>
 
 </ui:UiBinder>

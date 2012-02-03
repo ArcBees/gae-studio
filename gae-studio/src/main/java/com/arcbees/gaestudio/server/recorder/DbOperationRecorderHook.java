@@ -78,7 +78,7 @@ public class DbOperationRecorderHook extends BaseHook {
         DeleteResponse response = new DeleteResponse();
         response.mergeFrom(res);
 
-        dbOperationRecorder.record(request, response, (int) (end - start));
+        dbOperationRecorder.recordDbOperation(request, response, (int) (end - start));
 
         return res;
     }
@@ -97,7 +97,7 @@ public class DbOperationRecorderHook extends BaseHook {
         QueryResult queryResult = new QueryResult();
         queryResult.mergeFrom(result);
         
-        dbOperationRecorder.record(query, queryResult, (int) (end - start));
+        dbOperationRecorder.recordDbOperation(query, queryResult, (int) (end - start));
 
         return result;
     }
@@ -116,7 +116,7 @@ public class DbOperationRecorderHook extends BaseHook {
         GetResponse getResponse = new GetResponse();
         getResponse.mergeFrom(res);
 
-        dbOperationRecorder.record(getRequest, getResponse, (int) (end - start));
+        dbOperationRecorder.recordDbOperation(getRequest, getResponse, (int) (end - start));
 
         return res;
     }
@@ -135,7 +135,7 @@ public class DbOperationRecorderHook extends BaseHook {
         PutResponse putResponse = new PutResponse();
         putResponse.mergeFrom(result);
 
-        dbOperationRecorder.record(putRequest, putResponse, (int) (end - start));
+        dbOperationRecorder.recordDbOperation(putRequest, putResponse, (int) (end - start));
 
         return result;
     }

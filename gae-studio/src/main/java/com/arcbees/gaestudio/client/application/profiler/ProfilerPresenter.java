@@ -21,6 +21,8 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
+import java.util.ArrayList;
+
 public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, ProfilerPresenter.MyProxy> {
 
     public interface MyView extends View {
@@ -85,6 +87,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         }.scheduleRepeating(1000);
     }
 
+    // TODO this should eventually be done using a channel rather than polling
     private void getNewDbOperationRecords() {
         dispatcher.execute(new GetNewDbOperationRecordsAction(lastDbOperationRecordId),
                 new AsyncCallback<GetNewDbOperationRecordsResult>() {
@@ -101,9 +104,9 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     // TODO properly handle any missing records
-    private void processNewDbOperationRecords(long newLastId, Iterable<DbOperationRecord> records) {
+    private void processNewDbOperationRecords(long newLastId, ArrayList<DbOperationRecord> records) {
         for (DbOperationRecord record : records) {
-
+            requestPresenter.processDbOperationRecord(record);
         }
         lastDbOperationRecordId = newLastId;
     }

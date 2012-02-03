@@ -57,7 +57,7 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
     @Override
     public String formatRecord(QueryRecord record) {
         final StringBuilder builder = new StringBuilder();
-        final Query query = record.getQuery();
+        final Query query = null;//record.getQuery();
 
         if (query.hasKind()) {
             builder.append("query(");

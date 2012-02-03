@@ -20,27 +20,34 @@ import java.io.Serializable;
 
 public abstract class DbOperationRecord implements Serializable {
 
-    private final StackTraceElement[] stackTrace;
+//    private StackTraceElement[] stackTrace;
     
-    private final Long requestId;
+    private Long requestId;
     
-    private final int executionTimeMs;
+    private Integer executionTimeMs;
 
-    protected DbOperationRecord(StackTraceElement[] stackTrace, Long requestId, int executionTimeMs) {
-        this.stackTrace = stackTrace;
+    @SuppressWarnings("unused")
+    protected DbOperationRecord() {
+        this.requestId = -1L;
+        this.executionTimeMs = -1;
+    }
+
+    protected DbOperationRecord(//StackTraceElement[] stackTrace,
+                                Long requestId, Integer executionTimeMs) {
+//        this.stackTrace = stackTrace;
         this.requestId = requestId;
         this.executionTimeMs = executionTimeMs;
     }
 
-    public StackTraceElement[] getStackTrace() {
-        return stackTrace;
-    }
+//    public StackTraceElement[] getStackTrace() {
+//        return stackTrace;
+//    }
 
     public Long getRequestId() {
         return requestId;
     }
 
-    public int getExecutionTimeMs() {
+    public Integer getExecutionTimeMs() {
         return executionTimeMs;
     }
 

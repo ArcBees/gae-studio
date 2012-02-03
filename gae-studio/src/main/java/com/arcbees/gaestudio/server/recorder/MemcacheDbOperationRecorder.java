@@ -34,27 +34,35 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     }
 
     @Override
-    public void record(DeleteRequest request, DeleteResponse response, int executionTimeMs) {
+    public void recordDbOperation(DeleteRequest request, DeleteResponse response, int executionTimeMs) {
         recordOperation(new DeleteRecord(
-                request, response, Thread.currentThread().getStackTrace(), requestIdProvider.get(), executionTimeMs));
+                //request, response,
+                //Thread.currentThread().getStackTrace(),
+                requestIdProvider.get(), executionTimeMs));
     }
 
     @Override
-    public void record(GetRequest request, GetResponse response, int executionTimeMs) {
+    public void recordDbOperation(GetRequest request, GetResponse response, int executionTimeMs) {
         recordOperation(new GetRecord(
-                request, response, Thread.currentThread().getStackTrace(), requestIdProvider.get(), executionTimeMs));
+                //request, response,
+                //Thread.currentThread().getStackTrace(),
+                requestIdProvider.get(), executionTimeMs));
     }
 
     @Override
-    public void record(PutRequest request, PutResponse response, int executionTimeMs) {
+    public void recordDbOperation(PutRequest request, PutResponse response, int executionTimeMs) {
         recordOperation(new PutRecord(
-                request, response, Thread.currentThread().getStackTrace(), requestIdProvider.get(), executionTimeMs));
+                //request, response,
+                //Thread.currentThread().getStackTrace(),
+                requestIdProvider.get(), executionTimeMs));
     }
 
     @Override
-    public void record(Query query, QueryResult queryResult, int executionTimeMs) {
+    public void recordDbOperation(Query query, QueryResult queryResult, int executionTimeMs) {
         recordOperation(new QueryRecord(
-                query, queryResult, Thread.currentThread().getStackTrace(), requestIdProvider.get(), executionTimeMs));
+                //query, queryResult,
+                //Thread.currentThread().getStackTrace(),
+                requestIdProvider.get(), executionTimeMs));
     }
     
     private void recordOperation(DbOperationRecord record) {

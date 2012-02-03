@@ -10,6 +10,8 @@ import com.gwtplatform.dispatch.annotation.In;
 import com.gwtplatform.dispatch.annotation.Optional;
 import com.gwtplatform.dispatch.annotation.Out;
 
+import java.util.ArrayList;
+
 @GenDispatch(isSecure = false)
 public class GetNewDbOperationRecords {
 
@@ -24,6 +26,6 @@ public class GetNewDbOperationRecords {
     Long newLastId;
 
     @Out(2)
-    Iterable<DbOperationRecord> records;
+    ArrayList<DbOperationRecord> records;
     
 }

@@ -15,31 +15,38 @@
  */
 
 package com.arcbees.gaestudio.shared.dto;
-
-import com.google.apphosting.api.DatastorePb.PutRequest;
-import com.google.apphosting.api.DatastorePb.PutResponse;
+//
+//import com.google.apphosting.api.DatastorePb.PutRequest;
+//import com.google.apphosting.api.DatastorePb.PutResponse;
 
 public class PutRecord extends DbOperationRecord {
 
     private static final long serialVersionUID = 3745865294476274476L;
     
-    private final PutRequest putRequest;
-    
-    private final PutResponse putResponse;
+//    private final PutRequest putRequest;
+//
+//    private final PutResponse putResponse;
 
-    public PutRecord(PutRequest putRequest, PutResponse putResponse, StackTraceElement[] stackTrace, Long requestId,
-                     int executionTimeMs) {
-        super(stackTrace, requestId, executionTimeMs);
-        this.putRequest = putRequest;
-        this.putResponse = putResponse;
+    @SuppressWarnings("unused")
+    protected PutRecord() {
     }
 
-    public PutRequest getPutRequest() {
-        return putRequest;
+    public PutRecord(//PutRequest putRequest, PutResponse putResponse,
+                     //StackTraceElement[] stackTrace,
+                     Long requestId,
+                     Integer executionTimeMs) {
+        super(//stackTrace,
+                requestId, executionTimeMs);
+//        this.putRequest = putRequest;
+//        this.putResponse = putResponse;
     }
 
-    public PutResponse getPutResponse() {
-        return putResponse;
-    }
+//    public PutRequest getPutRequest() {
+//        return putRequest;
+//    }
+//
+//    public PutResponse getPutResponse() {
+//        return putResponse;
+//    }
 
 }

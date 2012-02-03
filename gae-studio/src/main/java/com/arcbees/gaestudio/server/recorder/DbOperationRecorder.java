@@ -27,12 +27,12 @@ import com.google.apphosting.api.DatastorePb.QueryResult;
 
 public interface DbOperationRecorder {
     
-    public void record(DeleteRequest request, DeleteResponse response, int executionTimeMs);
+    public void recordDbOperation(DeleteRequest request, DeleteResponse response, int executionTimeMs);
 
-    public void record(GetRequest request, GetResponse response, int executionTimeMs);
+    public void recordDbOperation(GetRequest request, GetResponse response, int executionTimeMs);
 
-    public void record(PutRequest request, PutResponse response, int executionTimeMs);
+    public void recordDbOperation(PutRequest request, PutResponse response, int executionTimeMs);
 
-    public void record(Query query, QueryResult queryResult, int executionTimeMs);
+    public void recordDbOperation(Query query, QueryResult queryResult, int executionTimeMs);
     
 }

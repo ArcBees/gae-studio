@@ -15,31 +15,38 @@
  */
 
 package com.arcbees.gaestudio.shared.dto;
-
-import com.google.apphosting.api.DatastorePb.GetRequest;
-import com.google.apphosting.api.DatastorePb.GetResponse;
+//
+//import com.google.apphosting.api.DatastorePb.GetRequest;
+//import com.google.apphosting.api.DatastorePb.GetResponse;
 
 public class GetRecord extends DbOperationRecord {
 
     private static final long serialVersionUID = -7824011424844857721L;
 
-    private final GetRequest getRequest;
-    
-    private final GetResponse getResponse;
+//    private final GetRequest getRequest;
+//
+//    private final GetResponse getResponse;
 
-    public GetRecord(GetRequest getRequest, GetResponse getResponse, StackTraceElement[] stackTrace, Long requestId,
-                     int executionTimeMs) {
-        super(stackTrace, requestId, executionTimeMs);
-        this.getRequest = getRequest;
-        this.getResponse = getResponse;
+    @SuppressWarnings("unused")
+    protected GetRecord() {
     }
 
-    public GetRequest getGetRequest() {
-        return getRequest;
+    public GetRecord(//GetRequest getRequest, GetResponse getResponse,
+     //StackTraceElement[] stackTrace,
+     Long requestId,
+     Integer executionTimeMs) {
+        super(//stackTrace,
+                requestId, executionTimeMs);
+//        this.getRequest = getRequest;
+//        this.getResponse = getResponse;
     }
 
-    public GetResponse getGetResponse() {
-        return getResponse;
-    }
+//    public GetRequest getGetRequest() {
+//        return getRequest;
+//    }
+//
+//    public GetResponse getGetResponse() {
+//        return getResponse;
+//    }
 
 }
