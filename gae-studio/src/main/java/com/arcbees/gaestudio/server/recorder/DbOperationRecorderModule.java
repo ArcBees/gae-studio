@@ -25,9 +25,9 @@ import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
-import com.google.inject.name.Named;
 import com.google.inject.servlet.RequestScoped;
 
+// TODO externalize magic strings
 public class DbOperationRecorderModule extends AbstractModule {
 
     @Override
@@ -45,14 +45,6 @@ public class DbOperationRecorderModule extends AbstractModule {
     @RequestScoped
     private MemcacheService memcacheServiceProvider() {
         return MemcacheServiceFactory.getMemcacheService("gae.studio");
-    }
-    
-    @Provides
-    @Named("requestId")
-    @RequestScoped
-    private String requestIdProvider() {
-        // Re-implement this using memcache.
-        return "1";
     }
 
 }

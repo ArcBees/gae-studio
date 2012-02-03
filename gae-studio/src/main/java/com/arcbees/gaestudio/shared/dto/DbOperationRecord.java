@@ -22,11 +22,11 @@ public abstract class DbOperationRecord implements Serializable {
 
     private final StackTraceElement[] stackTrace;
     
-    private final String requestId;
+    private final Long requestId;
     
     private final int executionTimeMs;
 
-    protected DbOperationRecord(StackTraceElement[] stackTrace, String requestId, int executionTimeMs) {
+    protected DbOperationRecord(StackTraceElement[] stackTrace, Long requestId, int executionTimeMs) {
         this.stackTrace = stackTrace;
         this.requestId = requestId;
         this.executionTimeMs = executionTimeMs;
@@ -36,7 +36,7 @@ public abstract class DbOperationRecord implements Serializable {
         return stackTrace;
     }
 
-    public String getRequestId() {
+    public Long getRequestId() {
         return requestId;
     }
 

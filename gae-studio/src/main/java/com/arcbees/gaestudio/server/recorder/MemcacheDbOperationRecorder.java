@@ -24,11 +24,11 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     
     private final Provider<MemcacheService> memcacheServiceProvider;
     
-    private final Provider<String> requestIdProvider;
+    private final Provider<Long> requestIdProvider;
 
     @Inject
     public MemcacheDbOperationRecorder(final Provider<MemcacheService> memcacheServiceProvider,
-                                       final @Named("requestId") Provider<String> requestIdProvider) {
+                                       final @Named("requestId") Provider<Long> requestIdProvider) {
         this.memcacheServiceProvider = memcacheServiceProvider;
         this.requestIdProvider = requestIdProvider;
     }

@@ -28,7 +28,7 @@ public class DeleteRecord extends DbOperationRecord {
     private final DeleteResponse deleteResponse;
 
     public DeleteRecord(DeleteRequest deleteRequest, DeleteResponse deleteResponse, StackTraceElement[] stackTrace,
-                        String requestId, int executionTimeMs) {
+                        Long requestId, int executionTimeMs) {
         super(stackTrace, requestId, executionTimeMs);
         this.deleteRequest = deleteRequest;
         this.deleteResponse = deleteResponse;

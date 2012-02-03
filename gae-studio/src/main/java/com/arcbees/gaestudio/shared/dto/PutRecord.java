@@ -27,7 +27,7 @@ public class PutRecord extends DbOperationRecord {
     
     private final PutResponse putResponse;
 
-    public PutRecord(PutRequest putRequest, PutResponse putResponse, StackTraceElement[] stackTrace, String requestId,
+    public PutRecord(PutRequest putRequest, PutResponse putResponse, StackTraceElement[] stackTrace, Long requestId,
                      int executionTimeMs) {
         super(stackTrace, requestId, executionTimeMs);
         this.putRequest = putRequest;

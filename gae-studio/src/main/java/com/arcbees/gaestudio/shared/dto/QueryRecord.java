@@ -27,7 +27,7 @@ public class QueryRecord extends DbOperationRecord {
 
     private final QueryResult queryResult;
 
-    public QueryRecord(Query query, QueryResult queryResult, StackTraceElement[] stackTrace, String requestId,
+    public QueryRecord(Query query, QueryResult queryResult, StackTraceElement[] stackTrace, Long requestId,
                        int executionTimeMs) {
         super(stackTrace, requestId, executionTimeMs);
         this.query = query;
