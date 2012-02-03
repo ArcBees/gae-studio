@@ -47,6 +47,7 @@ public class GetNewDbOperationRecordsHandler
         // TODO trimming missing results only from the end of the range is incorrect, as there are scenarios
         // in which there could be missing records in the middle.  We need a better approach to this that
         // always retrieves all missing records.
+        // TODO actually this might best be entirely left to the client, since it needs to scan the records anyway
         while (!recordsByKey.containsKey("db.operation.record." + endId)) {
             endId--;
         }

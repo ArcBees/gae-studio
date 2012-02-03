@@ -6,6 +6,11 @@ package com.arcbees.gaestudio.client.application.profiler;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
+import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsResult;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -38,6 +43,8 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private final StatementPresenter statementPresenter;
     private final DetailsPresenter detailsPresenter;
 
+    private long lastDbOperationRecordId;
+
     @Inject
     public ProfilerPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
                              final DispatchAsync dispatcher, final RequestPresenter requestPresenter,
@@ -51,6 +58,8 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         this.statisticsPresenter = statisticsPresenter;
         this.statementPresenter = statementPresenter;
         this.detailsPresenter = detailsPresenter;
+
+        this.lastDbOperationRecordId = 0L;
     }
 
     @Override
@@ -66,8 +75,37 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         setInSlot(TYPE_SetStatisticsPanelContent, statisticsPresenter);
         setInSlot(TYPE_SetStatementPanelContent, statementPresenter);
         setInSlot(TYPE_SetDetailsPanelContent, detailsPresenter);
-        
-//        dispatcher.execute(new AsyncCallbackImpl<>)
+
+        getNewDbOperationRecords();
+        new Timer() {
+            @Override
+            public void run() {
+                getNewDbOperationRecords();
+            }
+        }.scheduleRepeating(1000);
+    }
+
+    private void getNewDbOperationRecords() {
+        dispatcher.execute(new GetNewDbOperationRecordsAction(lastDbOperationRecordId),
+                new AsyncCallback<GetNewDbOperationRecordsResult>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        // TODO implement
+                    }
+
+                    @Override
+                    public void onSuccess(GetNewDbOperationRecordsResult result) {
+                        processNewDbOperationRecords(result.getNewLastId(), result.getRecords());
+                    }
+                });
+    }
+
+    // TODO properly handle any missing records
+    private void processNewDbOperationRecords(long newLastId, Iterable<DbOperationRecord> records) {
+        for (DbOperationRecord record : records) {
+
+        }
+        lastDbOperationRecordId = newLastId;
     }
 
 }
