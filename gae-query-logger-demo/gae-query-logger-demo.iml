@@ -154,7 +154,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="AppEngine ORM" level="project" />
   </component>
 </module>
 

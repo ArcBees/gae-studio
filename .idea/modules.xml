@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/gae-query-logger/gae-query-logger.iml" filepath="$PROJECT_DIR$/gae-query-logger/gae-query-logger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gae-query-logger-demo/gae-query-logger-demo.iml" filepath="$PROJECT_DIR$/gae-query-logger-demo/gae-query-logger-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gae-studio/gae-studio.iml" filepath="$PROJECT_DIR$/gae-studio/gae-studio.iml" />
+    </modules>
+  </component>
+</project>
+
