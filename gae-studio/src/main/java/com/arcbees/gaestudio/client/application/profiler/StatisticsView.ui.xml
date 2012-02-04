@@ -2,7 +2,10 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <g:HTMLPanel>
-        Statistics
+        <h3>Statistics</h3>
+        <p>Total Requests: <g:HTML ui:field="requestCount" /></p>
+        <p>Total Statements: <g:HTML ui:field="statementCount" /></p>
+        <p>Total Execution Time: <g:HTML ui:field="totalExecutionTime" /></p>
     </g:HTMLPanel>
 
 </ui:UiBinder>

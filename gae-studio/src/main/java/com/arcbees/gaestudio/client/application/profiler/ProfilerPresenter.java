@@ -108,8 +108,10 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         lastDbOperationRecordId = newLastId;
         for (DbOperationRecord record : records) {
             requestPresenter.processDbOperationRecord(record);
+            statisticsPresenter.processDbOperationRecord(record);
         }
         requestPresenter.displayNewDbOperationRecords();
+        statisticsPresenter.displayNewDbOperationRecords();
     }
 
 }

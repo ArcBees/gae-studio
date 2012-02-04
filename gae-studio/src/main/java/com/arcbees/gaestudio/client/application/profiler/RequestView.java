@@ -18,8 +18,9 @@ import com.google.inject.Inject;
 import java.util.HashMap;
 
 public class RequestView extends ViewImpl implements RequestPresenter.MyView {
-    
-    private final NumberFormat numberFormat = NumberFormat.getFormat("0.000");
+
+    // TODO externalize this
+    private final NumberFormat numberFormat = NumberFormat.getFormat("0.000s");
 
     public interface Binder extends UiBinder<Widget, RequestView> {
     }

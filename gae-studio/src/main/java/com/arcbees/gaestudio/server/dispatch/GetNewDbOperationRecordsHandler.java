@@ -47,6 +47,7 @@ public class GetNewDbOperationRecordsHandler
         }
 
         long beginId = action.getLastId() + 1;
+        // TODO if there is a big difference between beginId and the most recent id, binary search for the true start
         long endId = action.getMaxResults() != null
                 ? Math.min(action.getLastId() + action.getMaxResults(), getMostRecentId())
                 : getMostRecentId();

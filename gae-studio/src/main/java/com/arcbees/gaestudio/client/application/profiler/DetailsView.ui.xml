@@ -2,7 +2,7 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <g:HTMLPanel>
-        Statement Details
+        <h3>Statement Details</h3>
     </g:HTMLPanel>
 
 </ui:UiBinder>

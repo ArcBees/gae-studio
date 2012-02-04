@@ -35,11 +35,6 @@ public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
     }
     
     @Override
-    protected void onBind() {
-        super.onBind();
-    }
-
-    @Override
     public void processDbOperationRecord(DbOperationRecord record) {
         final long requestId = record.getRequestId();
         RequestStatistics statistics;
