@@ -70,31 +70,53 @@
       <file leaf-file-name="StatisticsPresenter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatisticsPresenter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="19" selection-start="962" selection-end="962" vertical-scroll-proportion="0.0">
+            <state line="16" column="8" selection-start="533" selection-end="570" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StatisticsView.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatisticsView.java">
+      <file leaf-file-name="StatementView.ui.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatementView.ui.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="39" selection-start="1417" selection-end="1417" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="4" column="27" selection-start="166" selection-end="166" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RequestView.ui.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/RequestView.ui.xml">
+      <file leaf-file-name="StatementPresenter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatementPresenter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="48" selection-start="423" selection-end="423" vertical-scroll-proportion="0.2749141">
-              <folding>
-                <marker date="1328395151898" expanded="true" signature="234:373" placeholder="{...}" />
-                <marker date="1328395151898" expanded="true" signature="448:498" placeholder="{...}" />
-              </folding>
+            <state line="36" column="4" selection-start="1167" selection-end="1167" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DetailsPresenter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/DetailsPresenter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="36" column="4" selection-start="1161" selection-end="1161" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RequestPresenter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/RequestPresenter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="42" selection-start="1137" selection-end="1137" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProfilerPresenter.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/ProfilerPresenter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="117" column="56" selection-start="4820" selection-end="4820" vertical-scroll-proportion="0.8900344">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -114,8 +136,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/shared/dto/GetRecord.java" />
-        <option value="$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/shared/dto/PutRecord.java" />
         <option value="$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/shared/dto/DbOperationRecord.java" />
         <option value="$PROJECT_DIR$/gae-studio/src/main/webapp/WEB-INF/jsp/dataGenerator.jsp" />
         <option value="$PROJECT_DIR$/gae-query-logger-demo/src/com/arcbees/gae/querylogger/demo/QueryLoggerDemo.java" />
@@ -125,11 +145,13 @@
         <option value="$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/RequestPresenter.java" />
         <option value="$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatementView.ui.xml" />
         <option value="$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/DetailsView.ui.xml" />
-        <option value="$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/ProfilerPresenter.java" />
         <option value="$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatisticsPresenter.java" />
         <option value="$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/RequestView.java" />
         <option value="$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatisticsView.java" />
         <option value="$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatisticsView.ui.xml" />
+        <option value="$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatementPresenter.java" />
+        <option value="$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/DetailsPresenter.java" />
+        <option value="$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/ProfilerPresenter.java" />
       </list>
     </option>
   </component>
@@ -987,18 +1009,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/DbOperationRecordProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="47" selection-start="287" selection-end="287" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gae-studio/src/main/webapp/WEB-INF/jsp/dataGenerator.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="41" selection-start="221" selection-end="221" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/shared/dto/DeleteRecord.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="30" column="20" selection-start="1045" selection-end="1045" vertical-scroll-proportion="0.0" />
@@ -1028,34 +1038,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatementView.ui.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="27" selection-start="166" selection-end="166" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/RequestPresenter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="42" selection-start="1137" selection-end="1137" vertical-scroll-proportion="0.6323024">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/ProfilerPresenter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="113" column="59" selection-start="4576" selection-end="4576" vertical-scroll-proportion="0.78006876">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatisticsPresenter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="19" selection-start="962" selection-end="962" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/google/gwt/gwt-user/2.4.0/gwt-user-2.4.0-sources.jar!/com/google/gwt/user/client/ui/HTML.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="53" column="13" selection-start="1723" selection-end="1723" vertical-scroll-proportion="-3.7285223">
@@ -1070,15 +1052,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatisticsView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="39" selection-start="1417" selection-end="1417" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatisticsView.ui.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="26" selection-start="282" selection-end="282" vertical-scroll-proportion="0.3024055">
@@ -1090,11 +1063,62 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/RequestView.ui.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="48" selection-start="423" selection-end="423" vertical-scroll-proportion="0.2749141">
+        <state line="21" column="47" selection-start="673" selection-end="673" vertical-scroll-proportion="0.57731956">
           <folding>
-            <marker date="1328395151898" expanded="true" signature="234:373" placeholder="{...}" />
-            <marker date="1328395151898" expanded="true" signature="448:498" placeholder="{...}" />
+            <marker date="1328395151898" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1328395151898" expanded="true" signature="-1:-1" placeholder="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatisticsView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="39" selection-start="1417" selection-end="1417" vertical-scroll-proportion="1.0549828">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatisticsPresenter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="8" selection-start="533" selection-end="570" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatementView.ui.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="27" selection-start="166" selection-end="166" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/StatementPresenter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="4" selection-start="1167" selection-end="1167" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/DetailsPresenter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="4" selection-start="1161" selection-end="1161" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/RequestPresenter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="42" selection-start="1137" selection-end="1137" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae-studio/src/main/java/com/arcbees/gaestudio/client/application/profiler/ProfilerPresenter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="117" column="56" selection-start="4820" selection-end="4820" vertical-scroll-proportion="0.8900344">
+          <folding />
         </state>
       </provider>
     </entry>

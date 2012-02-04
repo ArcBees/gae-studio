@@ -109,9 +109,13 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         for (DbOperationRecord record : records) {
             requestPresenter.processDbOperationRecord(record);
             statisticsPresenter.processDbOperationRecord(record);
+            statementPresenter.processDbOperationRecord(record);
+            detailsPresenter.processDbOperationRecord(record);
         }
         requestPresenter.displayNewDbOperationRecords();
         statisticsPresenter.displayNewDbOperationRecords();
+        statementPresenter.displayNewDbOperationRecords();
+        detailsPresenter.displayNewDbOperationRecords();
     }
 
 }
