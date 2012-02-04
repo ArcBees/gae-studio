@@ -51,9 +51,13 @@ public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
             statistics.incrementStatementCount();
             statistics.incrementExecutionTimeMs(record.getExecutionTimeMs());
         }
+    }
+
+    @Override
+    public void displayNewDbOperationRecords() {
         getView().updateRequests(statisticsByRequestId.values());
     }
-    
+
     class RequestStatistics {
         private long requestId;
         private int statementCount;

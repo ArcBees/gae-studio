@@ -6,4 +6,6 @@ public interface DbOperationRecordProcessor {
     
     public void processDbOperationRecord(DbOperationRecord record);
 
+    public void displayNewDbOperationRecords();
+
 }

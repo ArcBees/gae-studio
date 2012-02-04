@@ -8,7 +8,7 @@
             padding: 0.5em;
         }
 
-        .request div:hover {
+        .request :hover {
             background-color: #d3d3d3;
         }
     </ui:style>

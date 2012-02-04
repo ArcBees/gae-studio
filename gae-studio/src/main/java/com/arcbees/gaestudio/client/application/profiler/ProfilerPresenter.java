@@ -88,7 +88,8 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     private void getNewDbOperationRecords() {
-        dispatcher.execute(new GetNewDbOperationRecordsAction(lastDbOperationRecordId),
+        dispatcher.execute(
+                new GetNewDbOperationRecordsAction.Builder(lastDbOperationRecordId).maxResults(100).build(),
                 new AsyncCallback<GetNewDbOperationRecordsResult>() {
                     @Override
                     public void onFailure(Throwable caught) {
@@ -108,6 +109,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         for (DbOperationRecord record : records) {
             requestPresenter.processDbOperationRecord(record);
         }
+        requestPresenter.displayNewDbOperationRecords();
     }
 
 }
