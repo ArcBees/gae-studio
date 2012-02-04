@@ -1,11 +1,17 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
+    <ui:style>
+        .inline {
+            display: inline;
+        }
+    </ui:style>
+
     <g:HTMLPanel>
         <h3>Statistics</h3>
-        <p>Total Requests: <g:HTML ui:field="requestCount" /></p>
-        <p>Total Statements: <g:HTML ui:field="statementCount" /></p>
-        <p>Total Execution Time: <g:HTML ui:field="totalExecutionTime" /></p>
+        <p>Total Requests: <g:HTML ui:field="requestCount" styleName="{style.inline}" /></p>
+        <p>Total Statements: <g:HTML ui:field="statementCount" styleName="{style.inline}" /></p>
+        <p>Total Execution Time: <g:HTML ui:field="totalExecutionTime" styleName="{style.inline}" /></p>
     </g:HTMLPanel>
 
 </ui:UiBinder>
