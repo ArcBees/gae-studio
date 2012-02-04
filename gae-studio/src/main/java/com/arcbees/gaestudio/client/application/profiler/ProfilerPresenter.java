@@ -87,7 +87,6 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         }.scheduleRepeating(1000);
     }
 
-    // TODO this should eventually be done using a channel rather than polling
     private void getNewDbOperationRecords() {
         dispatcher.execute(new GetNewDbOperationRecordsAction(lastDbOperationRecordId),
                 new AsyncCallback<GetNewDbOperationRecordsResult>() {
