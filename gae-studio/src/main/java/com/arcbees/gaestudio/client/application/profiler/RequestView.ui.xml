@@ -3,7 +3,9 @@
 
     <g:HTMLPanel>
         <h3>Requests</h3>
-        <g:HTML ui:field="requestList" />
+        <g:ScrollPanel>
+            <g:HTML ui:field="requestList" />
+        </g:ScrollPanel>
     </g:HTMLPanel>
 
 </ui:UiBinder>

@@ -31,7 +31,7 @@ public class RequestView extends ViewImpl implements RequestPresenter.MyView {
             builder.append("Request #");
             builder.append(request.getRequestId());
             builder.append(" - ");
-            builder.append(numberFormat.format(request.getExecutionTimeMs()));
+            builder.append(numberFormat.format(request.getExecutionTimeMs() / 1000.0));
             builder.append(" [");
             builder.append(request.getStatementCount());
             builder.append("]");
