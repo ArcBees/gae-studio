@@ -20,15 +20,15 @@ public class QueryRecord extends DbOperationRecord {
 
     private static final long serialVersionUID = -5801060359687948701L;
 
-    private QueryDTO query;
+    private Query query;
 
-    private QueryResultDTO queryResult;
+    private QueryResult queryResult;
 
     @SuppressWarnings("unused")
     protected QueryRecord() {
     }
 
-    public QueryRecord(QueryDTO query, QueryResultDTO queryResult,
+    public QueryRecord(Query query, QueryResult queryResult,
                        //StackTraceElement[] stackTrace,
                        Long requestId,
                        Long statementId,
@@ -40,11 +40,11 @@ public class QueryRecord extends DbOperationRecord {
     }
 
 
-    public QueryDTO getQuery() {
+    public Query getQuery() {
         return query;
     }
 
-    public QueryResultDTO getQueryResult() {
+    public QueryResult getQueryResult() {
         return queryResult;
     }
 

@@ -6,7 +6,7 @@ import com.arcbees.gaestudio.shared.dto.DeleteRecord;
 import com.arcbees.gaestudio.shared.dto.GetRecord;
 import com.arcbees.gaestudio.shared.dto.PutRecord;
 import com.arcbees.gaestudio.shared.dto.QueryRecord;
-import com.arcbees.gaestudio.shared.dto.QueryResultDTO;
+import com.arcbees.gaestudio.shared.dto.QueryResult;
 import com.google.appengine.api.memcache.Expiration;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.apphosting.api.DatastorePb.DeleteRequest;
@@ -16,7 +16,6 @@ import com.google.apphosting.api.DatastorePb.GetResponse;
 import com.google.apphosting.api.DatastorePb.PutRequest;
 import com.google.apphosting.api.DatastorePb.PutResponse;
 import com.google.apphosting.api.DatastorePb.Query;
-import com.google.apphosting.api.DatastorePb.QueryResult;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
@@ -60,9 +59,9 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     }
 
     @Override
-    public void recordDbOperation(Query query, QueryResult queryResult, int executionTimeMs) {
+    public void recordDbOperation(Query query, com.google.apphosting.api.DatastorePb.QueryResult queryResult, int executionTimeMs) {
         recordOperation(new QueryRecord(
-                QueryMapper.mapDTO(query), new QueryResultDTO(),
+                QueryMapper.mapDTO(query), new QueryResult(),
                 //Thread.currentThread().getStackTrace(),
                 requestIdProvider.get(), generateId(), executionTimeMs));
     }

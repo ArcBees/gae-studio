@@ -8,7 +8,7 @@ package com.arcbees.gaestudio.shared.dto;
 
 import java.io.Serializable;
 
-public class QueryResultDTO implements Serializable {
+public class QueryResult implements Serializable {
 
     private static final long serialVersionUID = -3499363771373323522L;
 
