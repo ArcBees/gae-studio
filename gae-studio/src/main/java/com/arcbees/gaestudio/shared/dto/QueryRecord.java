@@ -16,38 +16,36 @@
 
 package com.arcbees.gaestudio.shared.dto;
 
-//import com.google.apphosting.api.DatastorePb.Query;
-//import com.google.apphosting.api.DatastorePb.QueryResult;
-
 public class QueryRecord extends DbOperationRecord {
 
     private static final long serialVersionUID = -5801060359687948701L;
 
-//    private final Query query;
-//
-//    private final QueryResult queryResult;
+    private QueryDTO query;
+
+    private QueryResultDTO queryResult;
 
     @SuppressWarnings("unused")
     protected QueryRecord() {
     }
 
-    public QueryRecord(//Query query, QueryResult queryResult,
+    public QueryRecord(QueryDTO query, QueryResultDTO queryResult,
                        //StackTraceElement[] stackTrace,
                        Long requestId,
                        Long statementId,
                        Integer executionTimeMs) {
         super(//stackTrace,
                 requestId, statementId, executionTimeMs);
-//        this.query = query;
-//        this.queryResult = queryResult;
+        this.query = query;
+        this.queryResult = queryResult;
     }
 
 
-//    public Query getQuery() {
-//        return query;
-//    }
-//
-//    public QueryResult getQueryResult() {
-//        return queryResult;
-//    }
+    public QueryDTO getQuery() {
+        return query;
+    }
+
+    public QueryResultDTO getQueryResult() {
+        return queryResult;
+    }
+
 }

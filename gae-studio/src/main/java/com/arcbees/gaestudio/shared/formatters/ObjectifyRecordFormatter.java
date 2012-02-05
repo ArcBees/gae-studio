@@ -17,27 +17,29 @@
 package com.arcbees.gaestudio.shared.formatters;
 
 import com.arcbees.gaestudio.shared.dto.DeleteRecord;
+import com.arcbees.gaestudio.shared.dto.FilterDTO;
+import com.arcbees.gaestudio.shared.dto.FilterOperator;
 import com.arcbees.gaestudio.shared.dto.GetRecord;
+import com.arcbees.gaestudio.shared.dto.OrderDirection;
 import com.arcbees.gaestudio.shared.dto.PutRecord;
+import com.arcbees.gaestudio.shared.dto.QueryDTO;
+import com.arcbees.gaestudio.shared.dto.QueryOrderDTO;
 import com.arcbees.gaestudio.shared.dto.QueryRecord;
-//import com.google.apphosting.api.DatastorePb.Query;
-//import com.google.storage.onestore.v3.OnestoreEntity;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
     
-//    private static final Map<Query.Filter.Operator, String> FILTER_OP_SYMBOLS =
-//            new HashMap<Query.Filter.Operator, String>();
-//
-//    static {
-//        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.EQUAL, "=");
-//        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.GREATER_THAN, ">");
-//        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.GREATER_THAN_OR_EQUAL, ">=");
-//        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.LESS_THAN, "<");
-//        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.LESS_THAN_OR_EQUAL, "<=");
-//    }
+    private static final HashMap<FilterOperator, String> FILTER_OP_SYMBOLS =
+            new HashMap<FilterOperator, String>();
+
+    static {
+        FILTER_OP_SYMBOLS.put(FilterOperator.EQUAL, "=");
+        FILTER_OP_SYMBOLS.put(FilterOperator.GREATER_THAN, ">");
+        FILTER_OP_SYMBOLS.put(FilterOperator.GREATER_THAN_OR_EQUAL, ">=");
+        FILTER_OP_SYMBOLS.put(FilterOperator.LESS_THAN, "<");
+        FILTER_OP_SYMBOLS.put(FilterOperator.LESS_THAN_OR_EQUAL, "<=");
+    }
     
     @Override
     public String formatRecord(DeleteRecord record) {
@@ -56,80 +58,62 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
 
     @Override
     public String formatRecord(QueryRecord record) {
-        return "Query record formatting not implemented yet";
-        /*
         final StringBuilder builder = new StringBuilder();
-        final Query query = null;//record.getQuery();
+        final QueryDTO query = record.getQuery();
 
-        if (query.hasKind()) {
-            builder.append("query(");
+        builder.append("query(");
+        if (query.getKind() != null) {
             builder.append(query.getKind());
-            builder.append(".class)");
+            builder.append(".class");
         }
+        builder.append(")");
 
-        if (query.hasAncestor()) {
+        if (query.getAncestor() != null) {
             builder.append(".ancestor(");
-            builder.append(query.getAncestor().toString());
+            builder.append(query.getAncestor());
             builder.append(")");
         }
         
-        for (Query.Filter filter : query.filters()) {
-            // TODO find out why this is an array
-            OnestoreEntity.Property property = filter.getProperty(0);
+        for (FilterDTO filter : query.getFilters()) {
             builder.append(".filter(\"");
-            builder.append(property.getName()); 
+            builder.append(filter.getProperty());
             builder.append(" ");
-            builder.append(operatorToString(filter.getOpEnum()));
+            builder.append(operatorToString(filter.getOperator()));
             builder.append("\", ");
-            builder.append(valueToString(property.getValue()));
+            builder.append(filter.getValue());
             builder.append(")");
         }
 
-        for (Query.Order order : query.orders()) {
+        for (QueryOrderDTO order : query.getOrders()) {
             builder.append(".order(\"");
-            if (order.getDirectionEnum() == Query.Order.Direction.DESCENDING) {
+            if (order.getDirection() == OrderDirection.DESCENDING) {
                 builder.append("-");
             }
             builder.append(order.getProperty());
             builder.append("\")");
         }
 
-        if (query.hasOffset()) {
+        if (query.getOffset() != null) {
             builder.append(".offset(");
             builder.append(query.getOffset());
             builder.append(")");
         }
 
-        if (query.hasLimit()) {
+        if (query.getOffset() != null) {
             builder.append(".limit(");
             builder.append(query.getLimit());
             builder.append(")");
         }
 
         return builder.toString();
-        */
+
     }
     
-//    private String operatorToString(Query.Filter.Operator operator) {
-//        return FILTER_OP_SYMBOLS.containsKey(operator)
-//                ? FILTER_OP_SYMBOLS.get(operator)
-//                : operator.toString();
-//    }
-//
-//    // TODO find out if there's a built-in way to do this
-//    private String valueToString(OnestoreEntity.PropertyValue value) {
-//        if (value.hasBooleanValue()) {
-//            return Boolean.toString(value.isBooleanValue());
-//        } else if (value.hasDoubleValue()) {
-//            return Double.toString(value.getDoubleValue());
-//        } else if (value.hasInt64Value()) {
-//            return Long.toString(value.getInt64Value());
-//        } else if (value.hasStringValue()) {
-//            return "\"" + value.getStringValue() + "\"";
-//        } else {
-//            throw new IllegalArgumentException("I don't know how to format " + value.toString());
-//        }
-//    }
+    private String operatorToString(FilterOperator operator) {
+        return FILTER_OP_SYMBOLS.containsKey(operator)
+                ? FILTER_OP_SYMBOLS.get(operator)
+                : operator.toString();
+    }
 
 }
 
