@@ -34,9 +34,10 @@ public class QueryRecord extends DbOperationRecord {
     public QueryRecord(//Query query, QueryResult queryResult,
                        //StackTraceElement[] stackTrace,
                        Long requestId,
+                       Long statementId,
                        Integer executionTimeMs) {
         super(//stackTrace,
-                requestId, executionTimeMs);
+                requestId, statementId, executionTimeMs);
 //        this.query = query;
 //        this.queryResult = queryResult;
     }

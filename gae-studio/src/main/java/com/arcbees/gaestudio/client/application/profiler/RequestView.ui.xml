@@ -8,7 +8,7 @@
             padding: 0.5em;
         }
 
-        <!-- TODO fix this, it's not working -->
+        /* TODO fix this for hover */
         .request :hover {
             background-color: #d3d3d3;
         }

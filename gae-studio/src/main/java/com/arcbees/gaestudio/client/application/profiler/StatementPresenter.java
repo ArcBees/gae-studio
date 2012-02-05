@@ -4,20 +4,31 @@
 
 package com.arcbees.gaestudio.client.application.profiler;
 
+import com.arcbees.gaestudio.client.application.event.RequestSelectedEvent;
+import com.arcbees.gaestudio.client.application.event.StatementSelectedEvent;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
+import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
-public class StatementPresenter extends PresenterWidget<StatementPresenter.MyView>
-        implements DbOperationRecordProcessor {
+import java.util.ArrayList;
+import java.util.HashMap;
 
-    public interface MyView extends View {
+public class StatementPresenter extends PresenterWidget<StatementPresenter.MyView>
+        implements DbOperationRecordProcessor, RequestSelectedEvent.RequestSelectedHandler, StatementUiHandlers {
+
+    public interface MyView extends View, HasUiHandlers<StatementUiHandlers> {
+        Long getCurrentlyDisplayedRequestId();
+        void displayStatementsForRequest(Long requestId, ArrayList<DbOperationRecord> statements);
     }
 
     private final DispatchAsync dispatcher;
+
+    private final HashMap<Long, ArrayList<DbOperationRecord>> statementsByRequestId =
+            new HashMap<Long, ArrayList<DbOperationRecord>>();
 
     @Inject
     public StatementPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
@@ -26,13 +37,39 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
     }
 
     @Override
+    protected void onBind() {
+        super.onBind();
+        addRegisteredHandler(RequestSelectedEvent.getType(), this);
+    }
+
+    // TODO handle the case where records come in out of order
+    @Override
     public void processDbOperationRecord(DbOperationRecord record) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        final Long requestId = record.getRequestId();
+        if (statementsByRequestId.containsKey(requestId)) {
+            statementsByRequestId.get(requestId).add(record);
+        } else {
+            ArrayList<DbOperationRecord> list = new ArrayList<DbOperationRecord>();
+            list.add(record);
+            statementsByRequestId.put(requestId, list);
+        }
     }
 
     @Override
     public void displayNewDbOperationRecords() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        Long requestId = getView().getCurrentlyDisplayedRequestId();
+        getView().displayStatementsForRequest(requestId, statementsByRequestId.get(requestId));
+    }
+
+    @Override
+    public void onRequestSelected(RequestSelectedEvent event) {
+        Long requestId = event.getRequestId();
+        getView().displayStatementsForRequest(requestId, statementsByRequestId.get(requestId));
+    }
+
+    @Override
+    public void onStatementClicked(Long statementId) {
+        getEventBus().fireEvent(new StatementSelectedEvent(statementId));
     }
 
 }

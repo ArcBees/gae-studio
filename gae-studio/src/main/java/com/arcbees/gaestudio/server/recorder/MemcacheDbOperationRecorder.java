@@ -19,7 +19,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
-// TODO externalize magic strings
+// TODO externalize magic literals
 public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     
     private final Provider<MemcacheService> memcacheServiceProvider;
@@ -38,7 +38,7 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
         recordOperation(new DeleteRecord(
                 //request, response,
                 //Thread.currentThread().getStackTrace(),
-                requestIdProvider.get(), executionTimeMs));
+                requestIdProvider.get(), generateId(), executionTimeMs));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
         recordOperation(new GetRecord(
                 //request, response,
                 //Thread.currentThread().getStackTrace(),
-                requestIdProvider.get(), executionTimeMs));
+                requestIdProvider.get(), generateId(), executionTimeMs));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
         recordOperation(new PutRecord(
                 //request, response,
                 //Thread.currentThread().getStackTrace(),
-                requestIdProvider.get(), executionTimeMs));
+                requestIdProvider.get(), generateId(), executionTimeMs));
     }
 
     @Override
@@ -62,11 +62,12 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
         recordOperation(new QueryRecord(
                 //query, queryResult,
                 //Thread.currentThread().getStackTrace(),
-                requestIdProvider.get(), executionTimeMs));
+                requestIdProvider.get(), generateId(), executionTimeMs));
     }
     
     private void recordOperation(DbOperationRecord record) {
-        memcacheServiceProvider.get().put("db.operation.record." + generateId(), record, Expiration.byDeltaSeconds(60));
+        memcacheServiceProvider.get().put("db.operation.record." + record.getStatementId(), record,
+                Expiration.byDeltaSeconds(60));
     }
 
     private long generateId() {

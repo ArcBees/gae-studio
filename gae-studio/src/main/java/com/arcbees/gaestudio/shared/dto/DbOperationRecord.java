@@ -24,18 +24,22 @@ public abstract class DbOperationRecord implements Serializable {
     
     private Long requestId;
     
+    private Long statementId;
+    
     private Integer executionTimeMs;
 
     @SuppressWarnings("unused")
     protected DbOperationRecord() {
         this.requestId = -1L;
+        this.statementId = -1L;
         this.executionTimeMs = -1;
     }
 
     protected DbOperationRecord(//StackTraceElement[] stackTrace,
-                                Long requestId, Integer executionTimeMs) {
+                                Long requestId, Long statementId, Integer executionTimeMs) {
 //        this.stackTrace = stackTrace;
         this.requestId = requestId;
+        this.statementId = statementId;
         this.executionTimeMs = executionTimeMs;
     }
 
@@ -45,6 +49,10 @@ public abstract class DbOperationRecord implements Serializable {
 
     public Long getRequestId() {
         return requestId;
+    }
+    
+    public Long getStatementId() {
+        return statementId;
     }
 
     public Integer getExecutionTimeMs() {

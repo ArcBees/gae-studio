@@ -34,9 +34,10 @@ public class GetRecord extends DbOperationRecord {
     public GetRecord(//GetRequest getRequest, GetResponse getResponse,
      //StackTraceElement[] stackTrace,
      Long requestId,
+     Long statementId,
      Integer executionTimeMs) {
         super(//stackTrace,
-                requestId, executionTimeMs);
+                requestId, statementId, executionTimeMs);
 //        this.getRequest = getRequest;
 //        this.getResponse = getResponse;
     }

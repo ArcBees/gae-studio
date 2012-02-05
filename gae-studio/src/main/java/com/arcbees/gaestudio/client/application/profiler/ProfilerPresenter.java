@@ -104,6 +104,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     // TODO properly handle any missing records
+    // TODO properly handle situations (such as resyncs) where the records come out of order
     private void processNewDbOperationRecords(long newLastId, ArrayList<DbOperationRecord> records) {
         lastDbOperationRecordId = newLastId;
         for (DbOperationRecord record : records) {

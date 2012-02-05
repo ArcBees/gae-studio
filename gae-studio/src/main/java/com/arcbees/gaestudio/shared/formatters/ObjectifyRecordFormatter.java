@@ -20,24 +20,24 @@ import com.arcbees.gaestudio.shared.dto.DeleteRecord;
 import com.arcbees.gaestudio.shared.dto.GetRecord;
 import com.arcbees.gaestudio.shared.dto.PutRecord;
 import com.arcbees.gaestudio.shared.dto.QueryRecord;
-import com.google.apphosting.api.DatastorePb.Query;
-import com.google.storage.onestore.v3.OnestoreEntity;
+//import com.google.apphosting.api.DatastorePb.Query;
+//import com.google.storage.onestore.v3.OnestoreEntity;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
     
-    private static final Map<Query.Filter.Operator, String> FILTER_OP_SYMBOLS =
-            new HashMap<Query.Filter.Operator, String>();
-    
-    static {
-        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.EQUAL, "=");
-        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.GREATER_THAN, ">");
-        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.GREATER_THAN_OR_EQUAL, ">=");
-        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.LESS_THAN, "<");
-        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.LESS_THAN_OR_EQUAL, "<=");
-    }
+//    private static final Map<Query.Filter.Operator, String> FILTER_OP_SYMBOLS =
+//            new HashMap<Query.Filter.Operator, String>();
+//
+//    static {
+//        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.EQUAL, "=");
+//        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.GREATER_THAN, ">");
+//        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.GREATER_THAN_OR_EQUAL, ">=");
+//        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.LESS_THAN, "<");
+//        FILTER_OP_SYMBOLS.put(Query.Filter.Operator.LESS_THAN_OR_EQUAL, "<=");
+//    }
     
     @Override
     public String formatRecord(DeleteRecord record) {
@@ -56,6 +56,8 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
 
     @Override
     public String formatRecord(QueryRecord record) {
+        return "Query record formatting not implemented yet";
+        /*
         final StringBuilder builder = new StringBuilder();
         final Query query = null;//record.getQuery();
 
@@ -105,28 +107,29 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
         }
 
         return builder.toString();
+        */
     }
     
-    private String operatorToString(Query.Filter.Operator operator) {
-        return FILTER_OP_SYMBOLS.containsKey(operator)
-                ? FILTER_OP_SYMBOLS.get(operator)
-                : operator.toString();
-    }
-
-    // TODO find out if there's a built-in way to do this
-    private String valueToString(OnestoreEntity.PropertyValue value) {
-        if (value.hasBooleanValue()) {
-            return Boolean.toString(value.isBooleanValue());
-        } else if (value.hasDoubleValue()) {
-            return Double.toString(value.getDoubleValue());
-        } else if (value.hasInt64Value()) {
-            return Long.toString(value.getInt64Value());
-        } else if (value.hasStringValue()) {
-            return "\"" + value.getStringValue() + "\"";
-        } else {
-            throw new IllegalArgumentException("I don't know how to format " + value.toString());
-        }
-    }
+//    private String operatorToString(Query.Filter.Operator operator) {
+//        return FILTER_OP_SYMBOLS.containsKey(operator)
+//                ? FILTER_OP_SYMBOLS.get(operator)
+//                : operator.toString();
+//    }
+//
+//    // TODO find out if there's a built-in way to do this
+//    private String valueToString(OnestoreEntity.PropertyValue value) {
+//        if (value.hasBooleanValue()) {
+//            return Boolean.toString(value.isBooleanValue());
+//        } else if (value.hasDoubleValue()) {
+//            return Double.toString(value.getDoubleValue());
+//        } else if (value.hasInt64Value()) {
+//            return Long.toString(value.getInt64Value());
+//        } else if (value.hasStringValue()) {
+//            return "\"" + value.getStringValue() + "\"";
+//        } else {
+//            throw new IllegalArgumentException("I don't know how to format " + value.toString());
+//        }
+//    }
 
 }
 

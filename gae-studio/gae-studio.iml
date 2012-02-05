@@ -34,6 +34,7 @@
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/apt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/annotations" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target/gae-studio-1.0-SNAPSHOT" />
+      <excludeFolder url="file://$MODULE_DIR$/target/generated-sources/annotations" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

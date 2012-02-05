@@ -4,28 +4,27 @@
 
 package com.arcbees.gaestudio.client.application.profiler;
 
+import com.arcbees.gaestudio.client.application.event.RequestSelectedEvent;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
+import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
-        implements DbOperationRecordProcessor {
+        implements DbOperationRecordProcessor, RequestUiHandlers {
 
-    public interface MyView extends View {
+    public interface MyView extends View, HasUiHandlers<RequestUiHandlers> {
         void updateRequests(Iterable<RequestStatistics> requestStatistics);
     }
 
     private final DispatchAsync dispatcher;
     
-    private final Map<Long, RequestStatistics> statisticsByRequestId =
+    private final TreeMap<Long, RequestStatistics> statisticsByRequestId =
             new TreeMap<Long, RequestStatistics>();
 
     @Inject
@@ -51,6 +50,11 @@ public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
     @Override
     public void displayNewDbOperationRecords() {
         getView().updateRequests(statisticsByRequestId.values());
+    }
+
+    @Override
+    public void onRequestClicked(Long requestId) {
+        getEventBus().fireEvent(new RequestSelectedEvent(requestId));
     }
 
     class RequestStatistics {
