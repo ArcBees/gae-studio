@@ -61,6 +61,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
         }
 
         Collections.sort(statements, new StatementIdComparator());
+
         if (currentlyDisplayedRequestId.equals(requestId)) {
             for (DbOperationRecord statement : statements) {
                 if (!statementElementIds.containsKey(statement.getStatementId())) {
