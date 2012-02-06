@@ -17,7 +17,7 @@ import com.google.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.TreeMap;
+import java.util.HashMap;
 
 // TODO see if I can factor out some of the common logic in statement and request view
 public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> implements StatementPresenter.MyView {
@@ -38,7 +38,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     
     private final RecordFormatter recordFormatter;
 
-    private final TreeMap<Long, String> statementElementIds = new TreeMap<Long, String>();
+    private final HashMap<Long, String> statementElementIds = new HashMap<Long, String>();
     private Long currentlyDisplayedRequestId = -1L;
 
     @Inject
