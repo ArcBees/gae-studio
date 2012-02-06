@@ -30,17 +30,30 @@ public class DataGenerator extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        initializeSeedData();
 
         Objectify objectify = ObjectifyService.factory().begin();
-
+        
         int numStatements = random.nextInt(50);
         for (int i = 0; i < numStatements; ++i) {
-            objectify.query(Sprocket.class).filter("name", "Foobar").list();
+            objectify.query(Sprocket.class).filter("name", "Sprocket #" + i).get();
         }
         
         logger.info("Fired off " + numStatements + " queries");
 
         request.getRequestDispatcher("/WEB-INF/jsp/dataGenerator.jsp").forward(request, response);
+    }
+    
+    private void initializeSeedData() {
+        Objectify objectify = ObjectifyService.factory().begin();
+        
+        if (objectify.query(Sprocket.class).filter("name", "Sprocket #0").get() == null) {
+            logger.info("Initializing seed data");
+            for (int i = 0; i < 100; ++i) {
+                objectify.put(new Sprocket("Sprocket #" + i));
+            }
+        }
     }
 
 }
