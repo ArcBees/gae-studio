@@ -51,22 +51,36 @@ public class QueryMapper {
 
     private static QueryFilterOperator convertFilterOperator(DatastorePb.Query.Filter.Operator operator) {
         switch (operator) {
-            case EQUAL: return QueryFilterOperator.EQUAL;
-            case GREATER_THAN: return QueryFilterOperator.GREATER_THAN;
-            case GREATER_THAN_OR_EQUAL: return QueryFilterOperator.GREATER_THAN_OR_EQUAL;
-            case LESS_THAN: return QueryFilterOperator.LESS_THAN;
-            case LESS_THAN_OR_EQUAL: return QueryFilterOperator.LESS_THAN_OR_EQUAL;
-            // TODO add some kind of error handling here
-            default: return null;
+            case EQUAL:
+                return QueryFilterOperator.EQUAL;
+
+            case GREATER_THAN:
+                return QueryFilterOperator.GREATER_THAN;
+
+            case GREATER_THAN_OR_EQUAL:
+                return QueryFilterOperator.GREATER_THAN_OR_EQUAL;
+
+            case LESS_THAN:
+                return QueryFilterOperator.LESS_THAN;
+
+            case LESS_THAN_OR_EQUAL:
+                return QueryFilterOperator.LESS_THAN_OR_EQUAL;
+
+            default:
+                throw new IllegalArgumentException("Unknown query filter operator: " + operator);
         }
     }
     
     private static QueryOrderDirection convertOrderDirection(DatastorePb.Query.Order.Direction direction) {
         switch (direction) {
-            case ASCENDING: return QueryOrderDirection.ASCENDING;
-            case DESCENDING: return QueryOrderDirection.DESCENDING;
-            // TODO add some kind of error handling here
-            default: return null;
+            case ASCENDING:
+                return QueryOrderDirection.ASCENDING;
+
+            case DESCENDING:
+                return QueryOrderDirection.DESCENDING;
+
+            default:
+                throw new IllegalArgumentException("Unknown query order direction: " + direction);
         }
     }
 
@@ -81,7 +95,7 @@ public class QueryMapper {
         } else if (value.hasStringValue()) {
             return "\"" + value.getStringValue() + "\"";
         } else {
-            throw new IllegalArgumentException("I don't know how to format " + value.toString());
+            throw new IllegalArgumentException("Unknown property value type: " + value.toString());
         }
     }
     
