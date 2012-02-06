@@ -1,21 +1,15 @@
 package com.arcbees.gaestudio.server.recorder;
 
 import com.arcbees.gaestudio.server.dto.mapper.QueryMapper;
+import com.arcbees.gaestudio.server.dto.mapper.QueryResultMapper;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.arcbees.gaestudio.shared.dto.DeleteRecord;
 import com.arcbees.gaestudio.shared.dto.GetRecord;
 import com.arcbees.gaestudio.shared.dto.PutRecord;
-import com.arcbees.gaestudio.shared.dto.QueryRecord;
-import com.arcbees.gaestudio.shared.dto.QueryResult;
+import com.arcbees.gaestudio.shared.dto.query.QueryRecord;
 import com.google.appengine.api.memcache.Expiration;
 import com.google.appengine.api.memcache.MemcacheService;
-import com.google.apphosting.api.DatastorePb.DeleteRequest;
-import com.google.apphosting.api.DatastorePb.DeleteResponse;
-import com.google.apphosting.api.DatastorePb.GetRequest;
-import com.google.apphosting.api.DatastorePb.GetResponse;
-import com.google.apphosting.api.DatastorePb.PutRequest;
-import com.google.apphosting.api.DatastorePb.PutResponse;
-import com.google.apphosting.api.DatastorePb.Query;
+import com.google.apphosting.api.DatastorePb;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
@@ -35,7 +29,8 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     }
 
     @Override
-    public void recordDbOperation(DeleteRequest request, DeleteResponse response, int executionTimeMs) {
+    public void recordDbOperation(DatastorePb.DeleteRequest request, DatastorePb.DeleteResponse response,
+                                  int executionTimeMs) {
         recordOperation(new DeleteRecord(
                 //request, response,
                 //Thread.currentThread().getStackTrace(),
@@ -43,7 +38,8 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     }
 
     @Override
-    public void recordDbOperation(GetRequest request, GetResponse response, int executionTimeMs) {
+    public void recordDbOperation(DatastorePb.GetRequest request, DatastorePb.GetResponse response,
+                                  int executionTimeMs) {
         recordOperation(new GetRecord(
                 //request, response,
                 //Thread.currentThread().getStackTrace(),
@@ -51,7 +47,8 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     }
 
     @Override
-    public void recordDbOperation(PutRequest request, PutResponse response, int executionTimeMs) {
+    public void recordDbOperation(DatastorePb.PutRequest request, DatastorePb.PutResponse response,
+                                  int executionTimeMs) {
         recordOperation(new PutRecord(
                 //request, response,
                 //Thread.currentThread().getStackTrace(),
@@ -59,9 +56,9 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     }
 
     @Override
-    public void recordDbOperation(Query query, com.google.apphosting.api.DatastorePb.QueryResult queryResult, int executionTimeMs) {
+    public void recordDbOperation(DatastorePb.Query query, DatastorePb.QueryResult queryResult, int executionTimeMs) {
         recordOperation(new QueryRecord(
-                QueryMapper.mapDTO(query), new QueryResult(),
+                QueryMapper.mapDTO(query), QueryResultMapper.mapDTO(queryResult),
                 //Thread.currentThread().getStackTrace(),
                 requestIdProvider.get(), generateId(), executionTimeMs));
     }

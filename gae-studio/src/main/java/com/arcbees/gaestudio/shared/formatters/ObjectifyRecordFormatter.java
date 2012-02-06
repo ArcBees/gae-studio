@@ -17,14 +17,14 @@
 package com.arcbees.gaestudio.shared.formatters;
 
 import com.arcbees.gaestudio.shared.dto.DeleteRecord;
-import com.arcbees.gaestudio.shared.dto.QueryFilter;
-import com.arcbees.gaestudio.shared.dto.QueryFilterOperator;
+import com.arcbees.gaestudio.shared.dto.query.Query;
+import com.arcbees.gaestudio.shared.dto.query.QueryFilter;
+import com.arcbees.gaestudio.shared.dto.query.QueryFilterOperator;
 import com.arcbees.gaestudio.shared.dto.GetRecord;
-import com.arcbees.gaestudio.shared.dto.QueryOrderDirection;
+import com.arcbees.gaestudio.shared.dto.query.QueryOrder;
+import com.arcbees.gaestudio.shared.dto.query.QueryOrderDirection;
 import com.arcbees.gaestudio.shared.dto.PutRecord;
-import com.arcbees.gaestudio.shared.dto.Query;
-import com.arcbees.gaestudio.shared.dto.QueryOrder;
-import com.arcbees.gaestudio.shared.dto.QueryRecord;
+import com.arcbees.gaestudio.shared.dto.query.QueryRecord;
 
 import java.util.HashMap;
 

@@ -14,7 +14,9 @@
  * the License.
  */
 
-package com.arcbees.gaestudio.shared.dto;
+package com.arcbees.gaestudio.shared.dto.query;
+
+import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 
 public class QueryRecord extends DbOperationRecord {
 

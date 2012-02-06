@@ -20,7 +20,7 @@ import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.arcbees.gaestudio.shared.dto.DeleteRecord;
 import com.arcbees.gaestudio.shared.dto.GetRecord;
 import com.arcbees.gaestudio.shared.dto.PutRecord;
-import com.arcbees.gaestudio.shared.dto.QueryRecord;
+import com.arcbees.gaestudio.shared.dto.query.QueryRecord;
 
 public abstract class AbstractRecordFormatter implements RecordFormatter {
 

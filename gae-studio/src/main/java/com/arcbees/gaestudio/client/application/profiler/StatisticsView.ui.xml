@@ -12,6 +12,8 @@
         <p>Total Requests: <g:HTML ui:field="requestCount" styleName="{style.inline}" /></p>
         <p>Total Statements: <g:HTML ui:field="statementCount" styleName="{style.inline}" /></p>
         <p>Total Execution Time: <g:HTML ui:field="totalExecutionTime" styleName="{style.inline}" /></p>
+        <p>Total Objects Retrieved: <g:HTML ui:field="totalObjectsRetrieved" styleName="{style.inline}" /></p>
+        <p>Total Data Received: <g:HTML ui:field="totalDataReceived" styleName="{style.inline}" /></p>
     </g:HTMLPanel>
 
 </ui:UiBinder>

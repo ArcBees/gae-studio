@@ -5,6 +5,7 @@
 package com.arcbees.gaestudio.client.application.profiler;
 
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
+import com.arcbees.gaestudio.shared.dto.query.QueryRecord;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -20,6 +21,8 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
         void updateRequestCount(Integer requestCount);
         void updateStatementCount(Integer statementCount);
         void updateTotalExecutionTimeMs(Integer totalExecutionTimeMs);
+        void updateTotalObjectsRetrieved(Integer totalObjectsRetrieved);
+        void updateTotalDataReceived(Integer totalDataReceived);
     }
 
     private final DispatchAsync dispatcher;
@@ -27,6 +30,8 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
     private final HashSet<Long> knownRequestIds;
     private Integer statementCount;
     private Integer totalExecutionTimeMs;
+    private Integer totalObjectsRetrieved;
+    private Integer totalDataReceived;
 
     @Inject
     public StatisticsPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
@@ -37,6 +42,8 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
         this.knownRequestIds = new HashSet<Long>();
         this.statementCount = 0;
         this.totalExecutionTimeMs = 0;
+        this.totalObjectsRetrieved = 0;
+        this.totalDataReceived = 0;
     }
 
     @Override
@@ -46,6 +53,12 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
         knownRequestIds.add(requestId);
         statementCount++;
         totalExecutionTimeMs += record.getExecutionTimeMs();
+        
+        if (record instanceof QueryRecord) {
+            QueryRecord queryRecord = (QueryRecord)record;
+            totalObjectsRetrieved += queryRecord.getQueryResult().getResultSize();
+            totalDataReceived += queryRecord.getQueryResult().getSerializedSize();
+        }
     }
 
     @Override
@@ -53,5 +66,7 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
         getView().updateRequestCount(knownRequestIds.size());
         getView().updateStatementCount(statementCount);
         getView().updateTotalExecutionTimeMs(totalExecutionTimeMs);
+        getView().updateTotalObjectsRetrieved(totalObjectsRetrieved);
+        getView().updateTotalDataReceived(totalDataReceived);
     }
 }

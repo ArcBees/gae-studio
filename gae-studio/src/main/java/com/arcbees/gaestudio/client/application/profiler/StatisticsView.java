@@ -24,6 +24,12 @@ public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyVi
     
     @UiField
     HTML totalExecutionTime;
+    
+    @UiField
+    HTML totalObjectsRetrieved;
+    
+    @UiField
+    HTML totalDataReceived;
 
     @Inject
     public StatisticsView(final Binder uiBinder) {
@@ -32,6 +38,8 @@ public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyVi
         updateRequestCount(0);
         updateStatementCount(0);
         updateTotalExecutionTimeMs(0);
+        updateTotalObjectsRetrieved(0);
+        updateTotalDataReceived(0);
     }
 
     @Override
@@ -47,6 +55,17 @@ public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyVi
     @Override
     public void updateTotalExecutionTimeMs(Integer totalExecutionTimeMs) {
         this.totalExecutionTime.setHTML(numberFormat.format(totalExecutionTimeMs / 1000.0));
+    }
+
+    @Override
+    public void updateTotalObjectsRetrieved(Integer totalObjectsRetrieved) {
+        this.totalObjectsRetrieved.setHTML(totalObjectsRetrieved.toString());
+    }
+
+    @Override
+    public void updateTotalDataReceived(Integer totalDataReceived) {
+        // TODO this would be nicer if the units changed as the data grows (b, Kb, Mb, etc.)
+        this.totalDataReceived.setHTML(totalDataReceived.toString() + " bytes");
     }
 
 }
