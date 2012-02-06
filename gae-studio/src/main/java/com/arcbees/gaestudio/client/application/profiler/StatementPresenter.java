@@ -42,7 +42,6 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
         addRegisteredHandler(RequestSelectedEvent.getType(), this);
     }
 
-    // TODO handle the case where records come in out of order
     @Override
     public void processDbOperationRecord(DbOperationRecord record) {
         final Long requestId = record.getRequestId();

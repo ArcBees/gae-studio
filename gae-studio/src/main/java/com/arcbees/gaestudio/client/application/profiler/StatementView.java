@@ -15,7 +15,9 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.TreeMap;
 
 // TODO see if I can factor out some of the common logic in statement and request view
 public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> implements StatementPresenter.MyView {
@@ -36,7 +38,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     
     private final RecordFormatter recordFormatter;
 
-    private final HashMap<Long, String> statementElementIds = new HashMap<Long, String>();
+    private final TreeMap<Long, String> statementElementIds = new TreeMap<Long, String>();
     private Long currentlyDisplayedRequestId = -1L;
 
     @Inject
@@ -58,6 +60,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
             return;
         }
 
+        Collections.sort(statements, new StatementIdComparator());
         if (currentlyDisplayedRequestId.equals(requestId)) {
             for (DbOperationRecord statement : statements) {
                 if (!statementElementIds.containsKey(statement.getStatementId())) {
@@ -69,7 +72,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
             
             statementList.clear();
             statementElementIds.clear();
-            
+
             for (DbOperationRecord statement : statements) {
                 createAndInsertStatementElement(statement);
             }
@@ -97,6 +100,13 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
         });
 
         return html;
+    }
+    
+    private class StatementIdComparator implements Comparator<DbOperationRecord> {
+        @Override
+        public int compare(DbOperationRecord o1, DbOperationRecord o2) {
+            return o1.getStatementId().compareTo(o2.getStatementId());
+        }
     }
 
 }
