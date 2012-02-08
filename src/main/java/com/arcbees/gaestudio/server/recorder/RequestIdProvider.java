@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.server.guice;
+package com.arcbees.gaestudio.server.recorder;
 
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.inject.Inject;
