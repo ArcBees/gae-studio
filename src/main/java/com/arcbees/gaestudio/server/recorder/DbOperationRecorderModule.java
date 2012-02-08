@@ -26,6 +26,7 @@ import com.google.apphosting.api.ApiProxy;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
+import com.google.inject.name.Names;
 import com.google.inject.servlet.RequestScoped;
 
 // TODO externalize magic strings
@@ -34,6 +35,9 @@ public class DbOperationRecorderModule extends AbstractModule {
     @SuppressWarnings("unchecked")
     @Override
     protected void configure() {
+        bind(Long.class).annotatedWith(Names.named("requestId")).toProvider(RequestIdProvider.class)
+                .in(RequestScoped.class);
+
         bind(StackInspector.class).to(SimpleStackInspector.class);
         bind(DbOperationRecorder.class).to(MemcacheDbOperationRecorder.class);
         bind(RecordFormatter.class).to(ObjectifyRecordFormatter.class);
