@@ -13,7 +13,7 @@ import com.gwtplatform.dispatch.annotation.Out;
 import java.util.ArrayList;
 
 @GenDispatch(isSecure = false)
-public class GetEntitiesOfKind {
+public class GetEntitiesByKind {
     
     @In(1)
     String kind;
