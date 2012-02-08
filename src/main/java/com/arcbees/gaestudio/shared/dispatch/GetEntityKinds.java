@@ -14,14 +14,6 @@ import java.util.ArrayList;
 @GenDispatch(isSecure = false)
 public class GetEntityKinds {
 
-    @Optional
-    @In(1)
-    Integer offset;
-
-    @Optional
-    @In(2)
-    Integer limit;
-    
     @Out(1)
     ArrayList<String> kinds;
     

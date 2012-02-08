@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+// TODO add logging
 public class GetEntitiesByKindHandler
         extends AbstractActionHandler<GetEntitiesByKindAction, GetEntitiesByKindResult> {
     
