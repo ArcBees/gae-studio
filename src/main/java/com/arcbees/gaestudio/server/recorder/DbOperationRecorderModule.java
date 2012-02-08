@@ -22,6 +22,7 @@ import com.arcbees.gaestudio.shared.util.SimpleStackInspector;
 import com.arcbees.gaestudio.shared.util.StackInspector;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.google.apphosting.api.ApiProxy;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
@@ -30,6 +31,7 @@ import com.google.inject.servlet.RequestScoped;
 // TODO externalize magic strings
 public class DbOperationRecorderModule extends AbstractModule {
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void configure() {
         bind(StackInspector.class).to(SimpleStackInspector.class);
@@ -39,6 +41,11 @@ public class DbOperationRecorderModule extends AbstractModule {
         install(new FactoryModuleBuilder()
                 .implement(DbOperationRecorderHook.class, DbOperationRecorderHook.class)
                 .build(DbOperationRecorderHookFactory.class));
+
+        ApiProxyHook hook = new ApiProxyHook(ApiProxy.getDelegate());
+        hook.getHooks().put("datastore_v3",
+                getProvider(DbOperationRecorderHookFactory.class).get().create(hook.getBaseDelegate()));
+        ApiProxy.setDelegate(hook);
     }
 
     @Provides
