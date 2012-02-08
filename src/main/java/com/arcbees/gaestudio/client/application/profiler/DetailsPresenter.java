@@ -8,7 +8,6 @@ import com.arcbees.gaestudio.client.application.event.StatementSelectedEvent;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
@@ -20,15 +19,12 @@ public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView>
     public interface MyView extends View {
         void displayStatementDetails(DbOperationRecord record);
     }
-
-    private final DispatchAsync dispatcher;
     
     private final HashMap<Long, DbOperationRecord> statementsById = new HashMap<Long, DbOperationRecord>();
 
     @Inject
-    public DetailsPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
+    public DetailsPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
-        this.dispatcher = dispatcher;
     }
 
     @Override

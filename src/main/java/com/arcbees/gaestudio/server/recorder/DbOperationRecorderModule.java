@@ -44,7 +44,7 @@ public class DbOperationRecorderModule extends AbstractModule {
     @Provides
     @RequestScoped
     private MemcacheService memcacheServiceProvider() {
-        return MemcacheServiceFactory.getMemcacheService("gae.studio");
+        return MemcacheServiceFactory.getMemcacheService("gae.visualizer");
     }
 
 }

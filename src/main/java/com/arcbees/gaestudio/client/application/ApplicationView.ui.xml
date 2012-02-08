@@ -2,6 +2,9 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <g:DockLayoutPanel unit="PX">
+        <g:north size="20">
+            <g:SimplePanel ui:field="header" />
+        </g:north>
         <g:center>
             <g:SimpleLayoutPanel ui:field="main" />
         </g:center>

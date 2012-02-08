@@ -8,7 +8,6 @@ import com.arcbees.gaestudio.client.application.event.RequestSelectedEvent;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -21,16 +20,13 @@ public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
     public interface MyView extends View, HasUiHandlers<RequestUiHandlers> {
         void updateRequests(Iterable<RequestStatistics> requestStatistics);
     }
-
-    private final DispatchAsync dispatcher;
     
     private final TreeMap<Long, RequestStatistics> statisticsByRequestId =
             new TreeMap<Long, RequestStatistics>();
 
     @Inject
-    public RequestPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
+    public RequestPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
-        this.dispatcher = dispatcher;
     }
     
     @Override
