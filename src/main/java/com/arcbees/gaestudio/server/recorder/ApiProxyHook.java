@@ -94,8 +94,9 @@ public class ApiProxyHook extends BaseHook {
         return hooks;
     }
     
-    public Boolean areApiHooksDisabled(Environment environment) {
-        return (Boolean)environment.getAttributes().get("GaeStudio.disableApiHooks");
+    public boolean areApiHooksDisabled(Environment environment) {
+        Boolean setting = (Boolean)environment.getAttributes().get("GaeStudio.disableApiHooks");
+        return setting != null && setting;
     }
 
 }
