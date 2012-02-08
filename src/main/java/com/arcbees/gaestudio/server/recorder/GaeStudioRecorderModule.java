@@ -16,6 +16,7 @@
 
 package com.arcbees.gaestudio.server.recorder;
 
+import com.arcbees.gaestudio.server.guice.RequestIdProvider;
 import com.arcbees.gaestudio.shared.formatters.ObjectifyRecordFormatter;
 import com.arcbees.gaestudio.shared.formatters.RecordFormatter;
 import com.arcbees.gaestudio.shared.util.SimpleStackInspector;
@@ -30,7 +31,7 @@ import com.google.inject.name.Names;
 import com.google.inject.servlet.RequestScoped;
 
 // TODO externalize magic strings
-public class DbOperationRecorderModule extends AbstractModule {
+public class GaeStudioRecorderModule extends AbstractModule {
 
     @SuppressWarnings("unchecked")
     @Override
