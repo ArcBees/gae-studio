@@ -27,6 +27,9 @@ public class GetEntityKindsHandler
     @Override
     public GetEntityKindsResult execute(GetEntityKindsAction action, ExecutionContext context)
             throws ActionException {
+
+        DispatchHelper.disableApiHooks();
+
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

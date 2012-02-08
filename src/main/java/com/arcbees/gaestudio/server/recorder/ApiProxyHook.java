@@ -28,6 +28,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+// TODO externalize magic strings
+// TODO cleanup
 public class ApiProxyHook extends BaseHook {
     
     private Map<String, Delegate<Environment>> hooks;
@@ -41,7 +43,7 @@ public class ApiProxyHook extends BaseHook {
     public byte[] makeSyncCall(Environment environment, String packageName, String methodName, byte[] request)
             throws ApiProxyException {
         Delegate<Environment> hook = hooks.get(packageName);
-        if (hook != null) {
+        if (hook != null && !areApiHooksDisabled(environment)) {
             return hook.makeSyncCall(environment, packageName, methodName, request);
         } else {
             return getBaseDelegate().makeSyncCall(environment, packageName, methodName, request);
@@ -52,6 +54,10 @@ public class ApiProxyHook extends BaseHook {
     public Future<byte[]> makeAsyncCall(final Environment environment, final String packageName,
                                         final String methodName, final byte[] request,
                                         final ApiConfig apiConfig) {
+        
+        if (areApiHooksDisabled(environment)) {
+            return getBaseDelegate().makeAsyncCall(environment, packageName, methodName, request, apiConfig);
+        }
 
         // TODO flesh this out and make sure it works in all scenarios
         Future<byte[]> future = new Future<byte[]>() {
@@ -86,6 +92,10 @@ public class ApiProxyHook extends BaseHook {
     
     public Map<String, Delegate<Environment>> getHooks() {
         return hooks;
+    }
+    
+    public Boolean areApiHooksDisabled(Environment environment) {
+        return (Boolean)environment.getAttributes().get("GaeStudio.disableApiHooks");
     }
 
 }
