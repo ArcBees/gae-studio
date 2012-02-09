@@ -47,8 +47,19 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             return;
         }
 
+        // TODO use a cell table
         for (Entity entity : entities) {
-            entityList.add(createEntityElement(entity.toString(), entity.getKey(), entity.getJson()));
+            StringBuilder builder = new StringBuilder();
+            
+            builder.append("[Kind: ");
+            builder.append(entity.getKey().getKind());
+            builder.append("] [Id: ");
+            builder.append(entity.getKey().getId());
+            builder.append("] [");
+            builder.append(entity.toString());
+            builder.append("]");
+            
+            entityList.add(createEntityElement(builder.toString(), entity.getKey(), entity.getJson()));
         }
     }
 
