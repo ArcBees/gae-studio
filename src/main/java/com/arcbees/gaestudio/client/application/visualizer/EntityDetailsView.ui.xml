@@ -1,0 +1,16 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+    <ui:style>
+        .json {
+            white-space: pre;
+            font-family: "Consolas", "Menlo", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
+        }
+    </ui:style>
+
+    <g:HTMLPanel>
+        <h3>Entity Details</h3>
+        <g:HTML ui:field="entityDetails" styleName="{style.json}" />
+    </g:HTMLPanel>
+
+</ui:UiBinder>

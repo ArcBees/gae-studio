@@ -1,0 +1,22 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+    <ui:style type="com.arcbees.gaestudio.client.application.visualizer.EntityListView.MyStyle">
+        .entityList {
+            position: absolute; top: 3em; left: 0; right: 0; bottom: 0;
+            overflow: auto;
+            padding: 0.5em;
+        }
+
+        /* TODO fix this for hover */
+        .entity :hover {
+            background-color: #d3d3d3;
+        }
+    </ui:style>
+
+    <g:HTMLPanel>
+        <h3>Entities</h3>
+        <g:HTMLPanel ui:field="entityList" styleName="{style.entityList}" />
+    </g:HTMLPanel>
+
+</ui:UiBinder>

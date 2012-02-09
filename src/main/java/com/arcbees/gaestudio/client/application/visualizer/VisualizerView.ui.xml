@@ -4,8 +4,20 @@
     <ui:style>
     </ui:style>
 
-    <g:HTMLPanel>
-        Visualizer
-    </g:HTMLPanel>
+    <g:SplitLayoutPanel>
+        <g:west size="300">
+            <g:SimplePanel ui:field="kindListPanel" />
+        </g:west>
+        <g:center>
+            <g:SplitLayoutPanel>
+                <g:north size="400">
+                    <g:SimplePanel ui:field="entityListPanel" />
+                </g:north>
+                <g:center>
+                    <g:SimplePanel ui:field="entityDetailsPanel" />
+                </g:center>
+            </g:SplitLayoutPanel>
+        </g:center>
+    </g:SplitLayoutPanel>
 
 </ui:UiBinder>

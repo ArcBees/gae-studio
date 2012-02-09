@@ -50,6 +50,7 @@ public class GetEntityKindsHandler
             }
         } else {
             // Querying by Stat_Kind does not currently work in the development environment
+            // TODO verify that this is actually still true
             kinds = new ArrayList<String>();
             // TODO externalize this
             kinds.add("Sprocket");

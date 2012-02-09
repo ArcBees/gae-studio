@@ -4,15 +4,14 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
 import com.arcbees.gaestudio.shared.dto.entity.Entity;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
-import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
@@ -28,13 +27,10 @@ public class GetEntitiesByKindHandler
     
     private final Logger logger;
     
-    private final Gson gson;
-    
     @Inject
-    public GetEntitiesByKindHandler(final Logger logger, final Gson gson) {
+    public GetEntitiesByKindHandler(final Logger logger) {
         super(GetEntitiesByKindAction.class);
         this.logger = logger;
-        this.gson = gson;
     }
 
     @SuppressWarnings("unchecked")
@@ -59,7 +55,7 @@ public class GetEntitiesByKindHandler
         
         ArrayList<Entity> entities = new ArrayList<Entity>(results.size());
         for (com.google.appengine.api.datastore.Entity dbEntity : results) {
-            entities.add(new Entity(dbEntity.getKey(), gson.toJson(dbEntity)));
+            entities.add(EntityMapper.mapDTO(dbEntity));
         }
         
         return new GetEntitiesByKindResult(entities);

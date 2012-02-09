@@ -25,20 +25,43 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
     @NameToken(NameTokens.visualizer)
     public interface MyProxy extends ProxyPlace<VisualizerPresenter> {
     }
-    
+
+    public static final Object TYPE_SetKindListPanelContent = new Object();
+    public static final Object TYPE_SetEntityListPanelContent = new Object();
+    public static final Object TYPE_SetEntityDetailsPanelContent = new Object();
+
     private final DispatchAsync dispatcher;
+
+    private final KindListPresenter kindListPresenter;
+    private final EntityListPresenter entityListPresenter;
+    private final EntityDetailsPresenter entityDetailsPresenter;
 
     @Inject
     public VisualizerPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                               final DispatchAsync dispatcher) {
+                               final DispatchAsync dispatcher, final KindListPresenter kindListPresenter,
+                               final EntityListPresenter entityListPresenter,
+                               final EntityDetailsPresenter entityDetailsPresenter) {
         super(eventBus, view, proxy);
 
         this.dispatcher = dispatcher;
+
+        this.kindListPresenter = kindListPresenter;
+        this.entityListPresenter = entityListPresenter;
+        this.entityDetailsPresenter = entityDetailsPresenter;
     }
 
     @Override
     protected void revealInParent() {
         RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
+    }
+
+    @Override
+    protected void onBind() {
+        super.onBind();
+
+        setInSlot(TYPE_SetKindListPanelContent, kindListPresenter);
+        setInSlot(TYPE_SetEntityListPanelContent, entityListPresenter);
+        setInSlot(TYPE_SetEntityDetailsPanelContent, entityDetailsPresenter);
     }
 
 }

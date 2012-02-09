@@ -4,8 +4,6 @@
 
 package com.arcbees.gaestudio.shared.dto.entity;
 
-import com.google.appengine.api.datastore.Key;
-
 import java.io.Serializable;
 
 public class Entity implements Serializable {
