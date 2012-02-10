@@ -40,21 +40,21 @@ public class GetEntityKindsHandler
         DispatchHelper.disableApiHooks();
 
         ArrayList<String> kinds;
-        if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
-            DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-            List<Entity> results =
-                    datastore.prepare(new Query("__Stat_Kind__")).asList(FetchOptions.Builder.withDefaults());
-            kinds = new ArrayList<String>(results.size());
-            for (Entity statKind : results) {
-                kinds.add((String)statKind.getProperty("kind_name"));
-            }
-        } else {
+//        if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
+//            DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+//            List<Entity> results =
+//                    datastore.prepare(new Query("__Stat_Kind__")).asList(FetchOptions.Builder.withDefaults());
+//            kinds = new ArrayList<String>(results.size());
+//            for (Entity statKind : results) {
+//                kinds.add((String)statKind.getProperty("kind_name"));
+//            }
+//        } else {
             // Querying by Stat_Kind does not currently work in the development environment
-            // TODO verify that this is actually still true
+            // Actually, it doesn't really work well anywhere: in GAE statistics aren't updated often enough
             kinds = new ArrayList<String>();
             // TODO externalize this
             kinds.add("Sprocket");
-        }
+//        }
 
         return new GetEntityKindsResult(kinds);
     }
