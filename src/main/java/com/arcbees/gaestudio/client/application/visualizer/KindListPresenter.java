@@ -5,11 +5,8 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.gaestudio.client.application.event.KindSelectedEvent;
-import com.arcbees.gaestudio.client.application.event.RequestSelectedEvent;
-import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -17,8 +14,6 @@ import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
-
-import java.util.TreeMap;
 
 public class KindListPresenter extends PresenterWidget<KindListPresenter.MyView> implements KindListUiHandlers {
 
