@@ -1,6 +1,7 @@
-package com.arcbees.gaestudio.client.application.profiler;
+package com.arcbees.gaestudio.client.application.profiler.statistics;
 
 import com.arcbees.core.client.mvp.ViewImpl;
+import com.arcbees.gaestudio.client.application.profiler.TimeNumberFormat;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -10,8 +11,7 @@ import com.google.inject.Inject;
 
 public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyView {
 
-    // TODO externalize this
-    private final NumberFormat numberFormat = NumberFormat.getFormat("0.000s");
+    private final NumberFormat numberFormat = TimeNumberFormat.getFormat();
 
     public interface Binder extends UiBinder<Widget, StatisticsView> {
     }
@@ -69,4 +69,3 @@ public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyVi
     }
 
 }
-    
