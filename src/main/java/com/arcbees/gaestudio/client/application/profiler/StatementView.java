@@ -2,11 +2,11 @@ package com.arcbees.gaestudio.client.application.profiler;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
+import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.arcbees.gaestudio.shared.formatters.RecordFormatter;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTML;
@@ -25,26 +25,21 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     public interface Binder extends UiBinder<Widget, StatementView> {
     }
 
-    public interface MyStyle extends CssResource {
-        String statementList();
-        String statement();
-    }
-    
-    @UiField
-    MyStyle style;
-    
     @UiField
     HTMLPanel statementList;
-    
-    private final RecordFormatter recordFormatter;
 
+    @UiField(provided = true)
+    Resources resources;
+
+    private final RecordFormatter recordFormatter;
     private final HashMap<Long, String> statementElementIds = new HashMap<Long, String>();
     private Long currentlyDisplayedRequestId = -1L;
 
     @Inject
     public StatementView(final Binder uiBinder, final UiHandlersStrategy<StatementUiHandlers> uiHandlersStrategy,
-                         final RecordFormatter recordFormatter) {
+                         final RecordFormatter recordFormatter, final Resources resources) {
         super(uiHandlersStrategy);
+        this.resources = resources;
         initWidget(uiBinder.createAndBindUi(this));
         this.recordFormatter = recordFormatter;
     }
@@ -70,7 +65,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
             }
         } else {
             currentlyDisplayedRequestId = requestId;
-            
+
             statementList.clear();
             statementElementIds.clear();
 
@@ -92,7 +87,6 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
         HTML html = new HTML(content);
 
         html.getElement().setId(elementId);
-        html.setStyleName(style.statement());
         html.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
@@ -102,7 +96,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
 
         return html;
     }
-    
+
     private class StatementIdComparator implements Comparator<DbOperationRecord> {
         @Override
         public int compare(DbOperationRecord o1, DbOperationRecord o2) {
@@ -111,4 +105,3 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     }
 
 }
-    

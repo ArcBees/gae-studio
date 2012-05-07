@@ -1,5 +1,6 @@
 package com.arcbees.gaestudio.client.gin;
 
+import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.profiler.ProfilerPresenter;
 import com.google.gwt.inject.client.AsyncProvider;
@@ -15,10 +16,12 @@ public interface ClientGinjector extends Ginjector {
 
     EventBus getEventBus();
 
+    Resources getResources();
+
     PlaceManager getPlaceManager();
 
     Provider<ApplicationPresenter> getAppPresenter();
-    
+
     AsyncProvider<ProfilerPresenter> getProfilerPresenter();
 
 }

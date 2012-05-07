@@ -1,22 +1,11 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
-    <ui:style type="com.arcbees.gaestudio.client.application.profiler.StatementView.MyStyle">
-        .statementList {
-            position: absolute; top: 3em; left: 0; right: 0; bottom: 0;
-            overflow: auto;
-            padding: 0.5em;
-        }
-
-        /* TODO fix this for hover */
-        .statement :hover {
-            background-color: #d3d3d3;
-        }
-    </ui:style>
+    <ui:with field="resources" type="com.arcbees.gaestudio.client.Resources"/>
 
     <g:HTMLPanel>
         <h3>Statements</h3>
-        <g:HTMLPanel ui:field="statementList" styleName="{style.statementList}" />
+        <g:HTMLPanel ui:field="statementList" styleName="{resources.styles.list}"/>
     </g:HTMLPanel>
 
 </ui:UiBinder>
