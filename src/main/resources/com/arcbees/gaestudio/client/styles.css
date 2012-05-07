@@ -12,6 +12,10 @@
         padding: 0.5em;
     }
 
-    .list div:hover {
+    .item:hover{
         background-color: #d3d3d3;
+    }
+
+    .selected{
+        background-color: #888888;
     }
