@@ -59,7 +59,7 @@ public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
 
     @Override
     public void onRequestClicked(Long requestId) {
-        RequestSelectedEvent.fire(this, new RequestSelectedEvent(requestId));
+        getEventBus().fireEvent(new RequestSelectedEvent(requestId));
     }
 
 }

@@ -65,7 +65,7 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
 
     @Override
     public void onStatementClicked(Long statementId) {
-        StatementSelectedEvent.fire(this, new StatementSelectedEvent(statementId));
+        getEventBus().fireEvent(new StatementSelectedEvent(statementId));
     }
 
 }
