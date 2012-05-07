@@ -24,7 +24,7 @@ public class GetNewDbOperationRecordsHandler
         extends AbstractActionHandler<GetNewDbOperationRecordsAction, GetNewDbOperationRecordsResult> {
 
     private final Logger logger;
-    
+
     private final MemcacheService memcacheService;
 
     @Inject
@@ -39,11 +39,11 @@ public class GetNewDbOperationRecordsHandler
     @SuppressWarnings("unchecked")
     public GetNewDbOperationRecordsResult execute(GetNewDbOperationRecordsAction action, ExecutionContext context)
             throws ActionException {
-        
+
         Long mostRecentId = getMostRecentId();
         if (mostRecentId == null) {
             logger.info("Could not find a mostRecentId");
-            return new GetNewDbOperationRecordsResult(action.getLastId(), new ArrayList<DbOperationRecord>());
+            return new GetNewDbOperationRecordsResult(new ArrayList<DbOperationRecord>());
         }
 
         long beginId = action.getLastId() + 1;
@@ -51,12 +51,12 @@ public class GetNewDbOperationRecordsHandler
         long endId = action.getMaxResults() != null
                 ? Math.min(action.getLastId() + action.getMaxResults(), getMostRecentId())
                 : getMostRecentId();
-        
+
         if (beginId > endId) {
             logger.info("No new records since last poll");
-            return new GetNewDbOperationRecordsResult(action.getLastId(), new ArrayList<DbOperationRecord>());
+            return new GetNewDbOperationRecordsResult(new ArrayList<DbOperationRecord>());
         }
-        
+
         logger.info("Attempting to retrieve ids " + beginId + "-" + endId);
 
         Map<String, Object> recordsByKey = memcacheService.getAll(getNewOperationRecordKeys(beginId, endId));
@@ -64,19 +64,20 @@ public class GetNewDbOperationRecordsHandler
         // in which there could be missing records in the middle.  We need a better approach to this that
         // always retrieves all missing records.
         // TODO actually this might best be entirely left to the client, since it needs to scan the records anyway
-        while (!recordsByKey.containsKey("db.operation.record." + endId)) {
+        // TODO: Remove before CR
+        /*while (!recordsByKey.containsKey("db.operation.record." + endId)) {
             endId--;
         }
-        
-        logger.info("Retrieved " + recordsByKey.size() + " records, endId is now " + endId);
+
+        logger.info("Retrieved " + recordsByKey.size() + " records, endId is now " + endId);*/
 
         // TODO optimize this
         ArrayList<DbOperationRecord> records = new ArrayList<DbOperationRecord>(recordsByKey.size());
         for (Object recordObject : recordsByKey.values()) {
-            records.add((DbOperationRecord)recordObject);
+            records.add((DbOperationRecord) recordObject);
         }
-        
-        return new GetNewDbOperationRecordsResult(endId, records);
+
+        return new GetNewDbOperationRecordsResult(records);
     }
 
     @Override
@@ -87,7 +88,7 @@ public class GetNewDbOperationRecordsHandler
     }
 
     private List<String> getNewOperationRecordKeys(long beginId, long endId) {
-        List<String> keys = new ArrayList<String>((int)(endId - beginId + 1));
+        List<String> keys = new ArrayList<String>((int) (endId - beginId + 1));
         for (long i = beginId; i <= endId; ++i) {
             keys.add("db.operation.record." + i);
         }
@@ -95,7 +96,7 @@ public class GetNewDbOperationRecordsHandler
     }
 
     private Long getMostRecentId() {
-        return (Long)memcacheService.get("db.operation.counter");
+        return (Long) memcacheService.get("db.operation.counter");
     }
 
 }
