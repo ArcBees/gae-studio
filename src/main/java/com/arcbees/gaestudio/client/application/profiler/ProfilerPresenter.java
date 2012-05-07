@@ -5,6 +5,10 @@
 package com.arcbees.gaestudio.client.application.profiler;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
+import com.arcbees.gaestudio.client.application.profiler.details.DetailsPresenter;
+import com.arcbees.gaestudio.client.application.profiler.request.RequestPresenter;
+import com.arcbees.gaestudio.client.application.profiler.statement.StatementPresenter;
+import com.arcbees.gaestudio.client.application.profiler.statistics.StatisticsPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsResult;
@@ -32,12 +36,12 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     @NameToken(NameTokens.profiler)
     public interface MyProxy extends ProxyPlace<ProfilerPresenter> {
     }
-    
+
     public static final Object TYPE_SetRequestPanelContent = new Object();
     public static final Object TYPE_SetStatisticsPanelContent = new Object();
     public static final Object TYPE_SetStatementPanelContent = new Object();
     public static final Object TYPE_SetDetailsPanelContent = new Object();
-    
+
     private final DispatchAsync dispatcher;
 
     private final RequestPresenter requestPresenter;
@@ -46,11 +50,13 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private final DetailsPresenter detailsPresenter;
 
     private long lastDbOperationRecordId;
+    private boolean isProcessing = false;
 
     @Inject
     public ProfilerPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
                              final DispatchAsync dispatcher, final RequestPresenter requestPresenter,
-                             final StatisticsPresenter statisticsPresenter, final StatementPresenter statementPresenter,
+                             final StatisticsPresenter statisticsPresenter,
+                             final StatementPresenter statementPresenter,
                              final DetailsPresenter detailsPresenter) {
         super(eventBus, view, proxy);
 
@@ -68,11 +74,11 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     protected void revealInParent() {
         RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
     }
-    
+
     @Override
     protected void onBind() {
         super.onBind();
-        
+
         setInSlot(TYPE_SetRequestPanelContent, requestPresenter);
         setInSlot(TYPE_SetStatisticsPanelContent, statisticsPresenter);
         setInSlot(TYPE_SetStatementPanelContent, statementPresenter);
@@ -82,41 +88,48 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         new Timer() {
             @Override
             public void run() {
-                getNewDbOperationRecords();
+                if (!isProcessing) {
+                    getNewDbOperationRecords();
+                }
             }
         }.scheduleRepeating(1000);
     }
 
     private void getNewDbOperationRecords() {
+        isProcessing = true;
         dispatcher.execute(
                 new GetNewDbOperationRecordsAction.Builder(lastDbOperationRecordId).maxResults(100).build(),
                 new AsyncCallback<GetNewDbOperationRecordsResult>() {
                     @Override
                     public void onFailure(Throwable caught) {
                         // TODO implement
+                        isProcessing = false;
                     }
 
                     @Override
                     public void onSuccess(GetNewDbOperationRecordsResult result) {
-                        processNewDbOperationRecords(result.getNewLastId(), result.getRecords());
+                        processNewDbOperationRecords(result.getRecords());
+                        isProcessing = false;
                     }
                 });
     }
 
     // TODO properly handle any missing records
     // TODO properly handle situations (such as resyncs) where the records come out of order
-    private void processNewDbOperationRecords(long newLastId, ArrayList<DbOperationRecord> records) {
-        lastDbOperationRecordId = newLastId;
-        for (DbOperationRecord record : records) {
-            requestPresenter.processDbOperationRecord(record);
-            statisticsPresenter.processDbOperationRecord(record);
-            statementPresenter.processDbOperationRecord(record);
-            detailsPresenter.processDbOperationRecord(record);
+    private void processNewDbOperationRecords(ArrayList<DbOperationRecord> records) {
+        if (!records.isEmpty()) {
+            for (DbOperationRecord record : records) {
+                requestPresenter.processDbOperationRecord(record);
+                statisticsPresenter.processDbOperationRecord(record);
+                statementPresenter.processDbOperationRecord(record);
+                detailsPresenter.processDbOperationRecord(record);
+                lastDbOperationRecordId = Math.max(lastDbOperationRecordId, record.getStatementId());
+            }
+            requestPresenter.displayNewDbOperationRecords();
+            statisticsPresenter.displayNewDbOperationRecords();
+            statementPresenter.displayNewDbOperationRecords();
+            detailsPresenter.displayNewDbOperationRecords();
         }
-        requestPresenter.displayNewDbOperationRecords();
-        statisticsPresenter.displayNewDbOperationRecords();
-        statementPresenter.displayNewDbOperationRecords();
-        detailsPresenter.displayNewDbOperationRecords();
     }
 
 }
