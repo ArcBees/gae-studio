@@ -2,13 +2,13 @@
  * Copyright 2012 ArcBees Inc.  All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.profiler;
+package com.arcbees.gaestudio.client.application.profiler.statistics;
 
+import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.arcbees.gaestudio.shared.dto.query.QueryRecord;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
@@ -25,8 +25,6 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
         void updateTotalDataReceived(Integer totalDataReceived);
     }
 
-    private final DispatchAsync dispatcher;
-    
     private final HashSet<Long> knownRequestIds;
     private Integer statementCount;
     private Integer totalExecutionTimeMs;
@@ -34,10 +32,8 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
     private Integer totalDataReceived;
 
     @Inject
-    public StatisticsPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
+    public StatisticsPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
-
-        this.dispatcher = dispatcher;
 
         this.knownRequestIds = new HashSet<Long>();
         this.statementCount = 0;

@@ -2,13 +2,13 @@
  * Copyright 2012 ArcBees Inc.  All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.profiler;
+package com.arcbees.gaestudio.client.application.profiler.details;
 
 import com.arcbees.gaestudio.client.application.event.StatementSelectedEvent;
+import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
@@ -21,14 +21,11 @@ public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView>
         void displayStatementDetails(DbOperationRecord record);
     }
 
-    private final DispatchAsync dispatcher;
-    
     private final HashMap<Long, DbOperationRecord> statementsById = new HashMap<Long, DbOperationRecord>();
 
     @Inject
-    public DetailsPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
+    public DetailsPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
-        this.dispatcher = dispatcher;
     }
 
     @Override

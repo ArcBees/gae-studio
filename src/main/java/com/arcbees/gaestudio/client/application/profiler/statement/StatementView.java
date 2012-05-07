@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.profiler;
+package com.arcbees.gaestudio.client.application.profiler.statement;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
