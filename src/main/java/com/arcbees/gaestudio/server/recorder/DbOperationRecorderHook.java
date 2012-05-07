@@ -70,17 +70,17 @@ public class DbOperationRecorderHook extends BaseHook {
 
         Delegate<Environment> d = getBaseDelegate();
         long start = System.currentTimeMillis();
-        byte[] res = d.makeSyncCall(environment, "datastore_v3", "Delete", requestData);
+        byte[] result = d.makeSyncCall(environment, "datastore_v3", "Delete", requestData);
         long end = System.currentTimeMillis();
 
         logger.info("Executed Get in " + (end - start) + "ms");
 
         DeleteResponse response = new DeleteResponse();
-        response.mergeFrom(res);
+        response.mergeFrom(result);
 
         dbOperationRecorder.recordDbOperation(request, response, (int) (end - start));
 
-        return res;
+        return result;
     }
     
     private byte[] handleQuery(Environment environment, byte[] request) {
@@ -108,17 +108,17 @@ public class DbOperationRecorderHook extends BaseHook {
 
         Delegate<Environment> d = getBaseDelegate();
         long start = System.currentTimeMillis();
-        byte[] res = d.makeSyncCall(environment, "datastore_v3", "Get", request);
+        byte[] result = d.makeSyncCall(environment, "datastore_v3", "Get", request);
         long end = System.currentTimeMillis();
 
         logger.info("Executed Get in " + (end - start) + "ms");
 
         GetResponse getResponse = new GetResponse();
-        getResponse.mergeFrom(res);
+        getResponse.mergeFrom(result);
 
         dbOperationRecorder.recordDbOperation(getRequest, getResponse, (int) (end - start));
 
-        return res;
+        return result;
     }
 
     private byte[] handlePut(Environment environment, byte[] request) {
