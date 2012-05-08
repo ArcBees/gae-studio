@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.visualizer;
+package com.arcbees.gaestudio.client.application.visualizer.entitydetails;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
@@ -31,4 +31,3 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
     }
 
 }
-    

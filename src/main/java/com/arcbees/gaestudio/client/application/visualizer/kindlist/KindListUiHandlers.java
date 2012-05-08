@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.visualizer;
+package com.arcbees.gaestudio.client.application.visualizer.kindlist;
 
 import com.gwtplatform.mvp.client.UiHandlers;
 

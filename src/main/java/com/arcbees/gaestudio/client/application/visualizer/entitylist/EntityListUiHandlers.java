@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.visualizer;
+package com.arcbees.gaestudio.client.application.visualizer.entitylist;
 
 import com.arcbees.gaestudio.shared.dto.entity.Key;
 import com.gwtplatform.mvp.client.UiHandlers;

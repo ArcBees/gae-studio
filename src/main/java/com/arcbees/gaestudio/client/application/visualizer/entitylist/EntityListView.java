@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.visualizer;
+package com.arcbees.gaestudio.client.application.visualizer.entitylist;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
@@ -78,4 +78,3 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
 }
-    

@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.visualizer;
+package com.arcbees.gaestudio.client.application.visualizer.kindlist;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
@@ -58,4 +58,3 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
     }
 
 }
-    

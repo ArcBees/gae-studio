@@ -2,6 +2,15 @@ package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.core.client.mvp.uihandlers.ProviderUiHandlersStrategy;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
+import com.arcbees.gaestudio.client.application.visualizer.entitydetails.EntityDetailsPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.entitydetails.EntityDetailsUiHandlers;
+import com.arcbees.gaestudio.client.application.visualizer.entitydetails.EntityDetailsView;
+import com.arcbees.gaestudio.client.application.visualizer.entitylist.EntityListPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.entitylist.EntityListUiHandlers;
+import com.arcbees.gaestudio.client.application.visualizer.entitylist.EntityListView;
+import com.arcbees.gaestudio.client.application.visualizer.kindlist.KindListPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.kindlist.KindListUiHandlers;
+import com.arcbees.gaestudio.client.application.visualizer.kindlist.KindListView;
 import com.google.inject.TypeLiteral;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 

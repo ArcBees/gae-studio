@@ -1,7 +1,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
-    <ui:style type="com.arcbees.gaestudio.client.application.visualizer.KindListView.MyStyle">
+    <ui:style type="com.arcbees.gaestudio.client.application.visualizer.kindlist.KindListView.MyStyle">
         .kindList {
             position: absolute;
             top: 3em;
