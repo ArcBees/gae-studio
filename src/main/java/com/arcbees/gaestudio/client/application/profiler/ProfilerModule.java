@@ -24,7 +24,7 @@ public class ProfilerModule extends AbstractPresenterModule {
 
     @Override
     protected void configure() {
-        install(new GinFactoryModuleBuilder().build(LabelFactory.class));
+        install(new GinFactoryModuleBuilder().build(com.arcbees.gaestudio.client.application.profiler.ProfilerLabelFactory.class));
 
         bind(RecordFormatter.class).to(ObjectifyRecordFormatter.class).in(Singleton.class);
 

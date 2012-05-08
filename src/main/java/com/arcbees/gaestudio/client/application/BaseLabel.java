@@ -2,9 +2,10 @@
  * Copyright 2012 ArcBees Inc. All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.profiler;
+package com.arcbees.gaestudio.client.application;
 
 import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.application.profiler.LabelCallback;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Label;

@@ -3,9 +3,9 @@ package com.arcbees.gaestudio.client.application.profiler.statement;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
-import com.arcbees.gaestudio.client.application.profiler.BaseLabel;
-import com.arcbees.gaestudio.client.application.profiler.LabelCallback;
-import com.arcbees.gaestudio.client.application.profiler.LabelFactory;
+import com.arcbees.gaestudio.client.application.BaseLabel;
+import com.arcbees.gaestudio.client.application.LabelCallback;
+import com.arcbees.gaestudio.client.application.profiler.ProfilerLabelFactory;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -29,17 +29,17 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     @UiField(provided = true)
     Resources resources;
 
-    private final LabelFactory labelFactory;
+    private final ProfilerLabelFactory profilerLabelFactory;
     private final List<Long> statementElements = new ArrayList<Long>();
     private Long currentlyDisplayedRequestId = -1L;
     private BaseLabel selectedBaseLabel;
 
     @Inject
     public StatementView(final Binder uiBinder, final UiHandlersStrategy<StatementUiHandlers> uiHandlersStrategy,
-                         final Resources resources, final LabelFactory labelFactory) {
+                         final Resources resources, final ProfilerLabelFactory profilerLabelFactory) {
         super(uiHandlersStrategy);
         this.resources = resources;
-        this.labelFactory = labelFactory;
+        this.profilerLabelFactory = profilerLabelFactory;
         initWidget(uiBinder.createAndBindUi(this));
     }
 
@@ -75,7 +75,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     }
 
     private void createAndInsertStatementElement(DbOperationRecord statement) {
-        StatementLabel statementLabel = labelFactory.createStatement(statement, new LabelCallback() {
+        StatementLabel statementLabel = profilerLabelFactory.createStatement(statement, new LabelCallback() {
             @Override
             public void onClick(BaseLabel element, Long statementId) {
                 onStatementClicked(element, statementId);

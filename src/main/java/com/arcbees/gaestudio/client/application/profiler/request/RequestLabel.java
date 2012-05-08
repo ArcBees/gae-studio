@@ -5,8 +5,10 @@
 package com.arcbees.gaestudio.client.application.profiler.request;
 
 import com.arcbees.gaestudio.client.Resources;
-import com.arcbees.gaestudio.client.application.profiler.BaseLabel;
-import com.arcbees.gaestudio.client.application.profiler.LabelCallback;
+import com.arcbees.gaestudio.client.application.BaseLabel;
+import com.arcbees.gaestudio.client.application.BaseLabel;
+import com.arcbees.gaestudio.client.application.LabelCallback;
+import com.arcbees.gaestudio.client.application.LabelCallback;
 import com.arcbees.gaestudio.client.application.profiler.TimeNumberFormat;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.inject.assistedinject.Assisted;

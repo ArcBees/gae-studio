@@ -3,9 +3,12 @@ package com.arcbees.gaestudio.client.application.profiler.request;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
-import com.arcbees.gaestudio.client.application.profiler.BaseLabel;
-import com.arcbees.gaestudio.client.application.profiler.LabelCallback;
-import com.arcbees.gaestudio.client.application.profiler.LabelFactory;
+import com.arcbees.gaestudio.client.application.BaseLabel;
+import com.arcbees.gaestudio.client.application.BaseLabel;
+import com.arcbees.gaestudio.client.application.LabelCallback;
+import com.arcbees.gaestudio.client.application.LabelCallback;
+import com.arcbees.gaestudio.client.application.profiler.ProfilerLabelFactory;
+import com.arcbees.gaestudio.client.application.profiler.ProfilerLabelFactory;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -25,13 +28,13 @@ public class RequestView extends ViewWithUiHandlers<RequestUiHandlers> implement
     @UiField(provided = true)
     Resources resources;
 
-    private final LabelFactory labelFactory;
+    private final ProfilerLabelFactory labelFactory;
     private final HashMap<Long, RequestLabel> requestElements = new HashMap<Long, RequestLabel>();
     private BaseLabel selectedBaseLabel;
 
     @Inject
     public RequestView(final Binder uiBinder, final UiHandlersStrategy<RequestUiHandlers> uiHandlersStrategy,
-                       final Resources resources, final LabelFactory labelFactory) {
+                       final Resources resources, final ProfilerLabelFactory labelFactory) {
         super(uiHandlersStrategy);
         this.resources = resources;
         this.labelFactory = labelFactory;
