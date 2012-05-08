@@ -2,8 +2,9 @@
  * Copyright 2012 ArcBees Inc.  All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.profiler;
+package com.arcbees.gaestudio.client.application.profiler.statistics;
 
+import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.arcbees.gaestudio.shared.dto.query.QueryRecord;
 import com.google.inject.Inject;
@@ -23,7 +24,7 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
         void updateTotalObjectsRetrieved(Integer totalObjectsRetrieved);
         void updateTotalDataReceived(Integer totalDataReceived);
     }
-    
+
     private final HashSet<Long> knownRequestIds;
     private Integer statementCount;
     private Integer totalExecutionTimeMs;

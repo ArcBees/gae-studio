@@ -30,6 +30,8 @@ public class GaeStudio implements EntryPoint {
         // This is required for Gwt-Platform proxy's generator
         DelayedBindRegistry.bind(ginjector);
 
+        ginjector.getResources().styles().ensureInjected();
+
         ginjector.getPlaceManager().revealCurrentPlace();
     }
 }

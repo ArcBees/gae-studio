@@ -22,9 +22,6 @@ public class GetNewDbOperationRecords {
     @In(2)
     Integer maxResults;
     
-    @Out(1)
-    Long newLastId;
-
     @Out(2)
     ArrayList<DbOperationRecord> records;
     

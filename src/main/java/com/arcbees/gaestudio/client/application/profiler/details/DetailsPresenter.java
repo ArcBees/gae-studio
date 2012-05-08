@@ -2,9 +2,10 @@
  * Copyright 2012 ArcBees Inc.  All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.profiler;
+package com.arcbees.gaestudio.client.application.profiler.details;
 
 import com.arcbees.gaestudio.client.application.event.StatementSelectedEvent;
+import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -19,7 +20,7 @@ public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView>
     public interface MyView extends View {
         void displayStatementDetails(DbOperationRecord record);
     }
-    
+
     private final HashMap<Long, DbOperationRecord> statementsById = new HashMap<Long, DbOperationRecord>();
 
     @Inject

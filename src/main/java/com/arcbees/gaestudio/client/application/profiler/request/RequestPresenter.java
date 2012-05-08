@@ -2,9 +2,10 @@
  * Copyright 2012 ArcBees Inc.  All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.profiler;
+package com.arcbees.gaestudio.client.application.profiler.request;
 
 import com.arcbees.gaestudio.client.application.event.RequestSelectedEvent;
+import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -12,6 +13,9 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
@@ -20,9 +24,10 @@ public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
     public interface MyView extends View, HasUiHandlers<RequestUiHandlers> {
         void updateRequests(Iterable<RequestStatistics> requestStatistics);
     }
-    
-    private final TreeMap<Long, RequestStatistics> statisticsByRequestId =
+
+    private final Map<Long, RequestStatistics> statisticsByRequestId =
             new TreeMap<Long, RequestStatistics>();
+    private final List<RequestStatistics> requestStatisticsToDisplay = new ArrayList<RequestStatistics>();
 
     @Inject
     public RequestPresenter(final EventBus eventBus, final MyView view) {
@@ -41,48 +46,18 @@ public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
             statistics.incrementStatementCount();
             statistics.incrementExecutionTimeMs(record.getExecutionTimeMs());
         }
+        requestStatisticsToDisplay.add(statistics);
     }
 
     @Override
     public void displayNewDbOperationRecords() {
-        getView().updateRequests(statisticsByRequestId.values());
+        getView().updateRequests(requestStatisticsToDisplay);
+        requestStatisticsToDisplay.clear();
     }
 
     @Override
     public void onRequestClicked(Long requestId) {
         getEventBus().fireEvent(new RequestSelectedEvent(requestId));
-    }
-
-    class RequestStatistics {
-        private long requestId;
-        private int statementCount;
-        private int executionTimeMs;
-
-        RequestStatistics(long requestId, int statementCount, int executionTimeMs) {
-            this.requestId = requestId;
-            this.statementCount = statementCount;
-            this.executionTimeMs = executionTimeMs;
-        }
-
-        long getRequestId() {
-            return requestId;
-        }
-
-        int getStatementCount() {
-            return statementCount;
-        }
-
-        void incrementStatementCount() {
-            statementCount++;
-        }
-
-        int getExecutionTimeMs() {
-            return executionTimeMs;
-        }
-
-        void incrementExecutionTimeMs(int deltaTimeMs) {
-            executionTimeMs += deltaTimeMs;
-        }
     }
 
 }

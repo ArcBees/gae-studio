@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.profiler;
+package com.arcbees.gaestudio.client.application.profiler.details;
 
 import com.arcbees.core.client.mvp.ViewImpl;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
@@ -31,4 +31,3 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
     }
 
 }
-    

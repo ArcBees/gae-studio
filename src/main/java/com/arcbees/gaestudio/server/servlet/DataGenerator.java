@@ -47,8 +47,8 @@ public class DataGenerator extends HttpServlet {
     
     private void initializeSeedData() {
         Objectify objectify = ObjectifyService.factory().begin();
-        
-        if (objectify.query(Sprocket.class).filter("name", "Sprocket #0").get() == null) {
+
+        if (objectify.query(Sprocket.class).count() == 0) {
             logger.info("Initializing seed data");
             for (int i = 0; i < 100; ++i) {
                 objectify.put(new Sprocket("Sprocket #" + i));

@@ -1,3 +1,7 @@
+/*
+ * Copyright 2012 ArcBees Inc. All rights reserved.
+ */
+
 package com.arcbees.gaestudio.server.dispatch;
 
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;

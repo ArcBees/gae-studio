@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.profiler;
+package com.arcbees.gaestudio.client.application.profiler.request;
 
 import com.gwtplatform.mvp.client.UiHandlers;
 
