@@ -4,6 +4,6 @@
 
 package com.arcbees.gaestudio.client.application.profiler;
 
-public interface ElementCallback {
-    void onClick(Element element, Long id);
+public interface LabelCallback {
+    void onClick(BaseLabel baseLabel, Long id);
 }

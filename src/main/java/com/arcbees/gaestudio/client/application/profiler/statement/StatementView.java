@@ -3,9 +3,9 @@ package com.arcbees.gaestudio.client.application.profiler.statement;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
-import com.arcbees.gaestudio.client.application.profiler.Element;
-import com.arcbees.gaestudio.client.application.profiler.ElementCallback;
-import com.arcbees.gaestudio.client.application.profiler.ElementFactory;
+import com.arcbees.gaestudio.client.application.profiler.BaseLabel;
+import com.arcbees.gaestudio.client.application.profiler.LabelCallback;
+import com.arcbees.gaestudio.client.application.profiler.LabelFactory;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -30,17 +30,17 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     @UiField(provided = true)
     Resources resources;
 
-    private final ElementFactory elementFactory;
+    private final LabelFactory labelFactory;
     private final List<Long> statementElements = new ArrayList<Long>();
     private Long currentlyDisplayedRequestId = -1L;
-    private Element selectedElement;
+    private BaseLabel selectedBaseLabel;
 
     @Inject
     public StatementView(final Binder uiBinder, final UiHandlersStrategy<StatementUiHandlers> uiHandlersStrategy,
-                         final Resources resources, final ElementFactory elementFactory) {
+                         final Resources resources, final LabelFactory labelFactory) {
         super(uiHandlersStrategy);
         this.resources = resources;
-        this.elementFactory = elementFactory;
+        this.labelFactory = labelFactory;
         initWidget(uiBinder.createAndBindUi(this));
     }
 
@@ -76,22 +76,22 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     }
 
     private void createAndInsertStatementElement(DbOperationRecord statement) {
-        StatementElement statementElement = elementFactory.createStatement(statement, new ElementCallback() {
+        StatementLabel statementLabel = labelFactory.createStatement(statement, new LabelCallback() {
             @Override
-            public void onClick(Element element, Long statementId) {
+            public void onClick(BaseLabel element, Long statementId) {
                 onStatementClicked(element, statementId);
             }
         });
-        statementList.add(statementElement);
+        statementList.add(statementLabel);
     }
 
-    private void onStatementClicked(Element element, Long statementId) {
+    private void onStatementClicked(BaseLabel baseLabel, Long statementId) {
         getUiHandlers().onStatementClicked(statementId);
-        if (selectedElement != null) {
-            selectedElement.setSelected(false);
+        if (selectedBaseLabel != null) {
+            selectedBaseLabel.setSelected(false);
         }
-        selectedElement = element;
-        element.setSelected(true);
+        selectedBaseLabel = baseLabel;
+        baseLabel.setSelected(true);
     }
 
     private class StatementIdComparator implements Comparator<DbOperationRecord> {

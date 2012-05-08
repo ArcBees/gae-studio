@@ -3,9 +3,9 @@ package com.arcbees.gaestudio.client.application.profiler.request;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
-import com.arcbees.gaestudio.client.application.profiler.Element;
-import com.arcbees.gaestudio.client.application.profiler.ElementCallback;
-import com.arcbees.gaestudio.client.application.profiler.ElementFactory;
+import com.arcbees.gaestudio.client.application.profiler.BaseLabel;
+import com.arcbees.gaestudio.client.application.profiler.LabelCallback;
+import com.arcbees.gaestudio.client.application.profiler.LabelFactory;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -26,16 +26,16 @@ public class RequestView extends ViewWithUiHandlers<RequestUiHandlers> implement
     @UiField(provided = true)
     Resources resources;
 
-    private final ElementFactory elementFactory;
-    private final HashMap<Long, RequestElement> requestElements = new HashMap<Long, RequestElement>();
-    private Element selectedElement;
+    private final LabelFactory labelFactory;
+    private final HashMap<Long, RequestLabel> requestElements = new HashMap<Long, RequestLabel>();
+    private BaseLabel selectedBaseLabel;
 
     @Inject
     public RequestView(final Binder uiBinder, final UiHandlersStrategy<RequestUiHandlers> uiHandlersStrategy,
-                       final Resources resources, final ElementFactory elementFactory) {
+                       final Resources resources, final LabelFactory labelFactory) {
         super(uiHandlersStrategy);
         this.resources = resources;
-        this.elementFactory = elementFactory;
+        this.labelFactory = labelFactory;
         initWidget(uiBinder.createAndBindUi(this));
     }
 
@@ -53,28 +53,28 @@ public class RequestView extends ViewWithUiHandlers<RequestUiHandlers> implement
         if (requestElements.containsKey(requestId)) {
             requestElements.get(requestId).updateContent(request);
         } else {
-            RequestElement requestElement = createRequestElement(request);
-            requestElements.put(requestId, requestElement);
-            requestList.add(requestElement);
+            RequestLabel requestLabel = createRequestElement(request);
+            requestElements.put(requestId, requestLabel);
+            requestList.add(requestLabel);
         }
     }
 
-    private RequestElement createRequestElement(RequestStatistics request) {
-        return elementFactory.createRequest(request, new ElementCallback() {
+    private RequestLabel createRequestElement(RequestStatistics request) {
+        return labelFactory.createRequest(request, new LabelCallback() {
             @Override
-            public void onClick(Element element, Long requestId) {
-                onRequestClicked(element, requestId);
+            public void onClick(BaseLabel baseLabel, Long requestId) {
+                onRequestClicked(baseLabel, requestId);
             }
         });
     }
 
-    private void onRequestClicked(Element element, Long requestId) {
+    private void onRequestClicked(BaseLabel baseLabel, Long requestId) {
         getUiHandlers().onRequestClicked(requestId);
-        if (selectedElement != null) {
-            selectedElement.setSelected(false);
+        if (selectedBaseLabel != null) {
+            selectedBaseLabel.setSelected(false);
         }
-        selectedElement = element;
-        element.setSelected(true);
+        selectedBaseLabel = baseLabel;
+        baseLabel.setSelected(true);
     }
 
 }

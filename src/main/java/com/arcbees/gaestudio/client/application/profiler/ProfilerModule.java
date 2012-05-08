@@ -24,7 +24,7 @@ public class ProfilerModule extends AbstractPresenterModule {
 
     @Override
     protected void configure() {
-        install(new GinFactoryModuleBuilder().build(ElementFactory.class));
+        install(new GinFactoryModuleBuilder().build(LabelFactory.class));
 
         bind(RecordFormatter.class).to(ObjectifyRecordFormatter.class).in(Singleton.class);
 
