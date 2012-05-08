@@ -28,14 +28,10 @@ public class ProfilerModule extends AbstractPresenterModule {
 
         bind(RecordFormatter.class).to(ObjectifyRecordFormatter.class).in(Singleton.class);
 
-        bind(new TypeLiteral<UiHandlersStrategy<RequestUiHandlers>>() {
-        })
-                .to(new TypeLiteral<ProviderUiHandlersStrategy<RequestUiHandlers>>() {
-                });
-        bind(new TypeLiteral<UiHandlersStrategy<StatementUiHandlers>>() {
-        })
-                .to(new TypeLiteral<ProviderUiHandlersStrategy<StatementUiHandlers>>() {
-                });
+        bind(new TypeLiteral<UiHandlersStrategy<RequestUiHandlers>>() {})
+                .to(new TypeLiteral<ProviderUiHandlersStrategy<RequestUiHandlers>>() {});
+        bind(new TypeLiteral<UiHandlersStrategy<StatementUiHandlers>>() {})
+                .to(new TypeLiteral<ProviderUiHandlersStrategy<StatementUiHandlers>>() {});
 
         bindSingletonPresenterWidget(DetailsPresenter.class, DetailsPresenter.MyView.class,
                 DetailsView.class);
