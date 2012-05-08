@@ -11,11 +11,7 @@ public class DispatchServletModule extends ServletModule {
 
     @Override
     public void configureServlets() {
-        bind(Long.class).annotatedWith(Names.named("requestId")).toProvider(RequestIdProvider.class)
-                .in(RequestScoped.class);
-
         serve("/" + ActionImpl.DEFAULT_SERVICE_NAME + "*").with(DispatchServiceImpl.class);
-        
         serve("/dataGenerator").with(DataGenerator.class);
     }
 

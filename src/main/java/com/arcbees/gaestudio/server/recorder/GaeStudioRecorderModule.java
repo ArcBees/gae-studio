@@ -16,22 +16,29 @@
 
 package com.arcbees.gaestudio.server.recorder;
 
+import com.arcbees.gaestudio.server.guice.RequestIdProvider;
 import com.arcbees.gaestudio.shared.formatters.ObjectifyRecordFormatter;
 import com.arcbees.gaestudio.shared.formatters.RecordFormatter;
 import com.arcbees.gaestudio.shared.util.SimpleStackInspector;
 import com.arcbees.gaestudio.shared.util.StackInspector;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.google.apphosting.api.ApiProxy;
 import com.google.inject.AbstractModule;
+import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
+import com.google.inject.name.Names;
 import com.google.inject.servlet.RequestScoped;
 
 // TODO externalize magic strings
-public class DbOperationRecorderModule extends AbstractModule {
+public class GaeStudioRecorderModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        bind(Long.class).annotatedWith(Names.named("requestId")).toProvider(RequestIdProvider.class)
+                .in(RequestScoped.class);
+
         bind(StackInspector.class).to(SimpleStackInspector.class);
         bind(DbOperationRecorder.class).to(MemcacheDbOperationRecorder.class);
         bind(RecordFormatter.class).to(ObjectifyRecordFormatter.class);
@@ -41,10 +48,18 @@ public class DbOperationRecorderModule extends AbstractModule {
                 .build(DbOperationRecorderHookFactory.class));
     }
 
+    @SuppressWarnings("unchecked")
+    public static void initialize(Injector injector) {
+        ApiProxyHook hook = new ApiProxyHook(ApiProxy.getDelegate());
+        hook.getHooks().put("datastore_v3",
+                injector.getProvider(DbOperationRecorderHookFactory.class).get().create(hook.getBaseDelegate()));
+        ApiProxy.setDelegate(hook);
+    }
+
     @Provides
     @RequestScoped
     private MemcacheService memcacheServiceProvider() {
-        return MemcacheServiceFactory.getMemcacheService("gae.studio");
+        return MemcacheServiceFactory.getMemcacheService("gae.visualizer");
     }
 
 }

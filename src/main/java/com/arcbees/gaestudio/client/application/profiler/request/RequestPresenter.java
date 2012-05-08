@@ -23,8 +23,6 @@ public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
 
     public interface MyView extends View, HasUiHandlers<RequestUiHandlers> {
         void updateRequests(Iterable<RequestStatistics> requestStatistics);
-
-        void updateRequest(RequestStatistics requestStatistics);
     }
 
     private final Map<Long, RequestStatistics> statisticsByRequestId =

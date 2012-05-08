@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-// TODO see if I can factor out some of the common logic in statement and request view
 public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> implements StatementPresenter.MyView {
 
     public interface Binder extends UiBinder<Widget, StatementView> {

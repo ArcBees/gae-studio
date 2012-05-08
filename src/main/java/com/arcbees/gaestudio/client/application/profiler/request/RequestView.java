@@ -14,7 +14,6 @@ import com.google.inject.Inject;
 
 import java.util.HashMap;
 
-// TODO see if I can factor out some of the common logic in statement and request view
 public class RequestView extends ViewWithUiHandlers<RequestUiHandlers> implements RequestPresenter.MyView {
 
     public interface Binder extends UiBinder<Widget, RequestView> {
@@ -46,7 +45,6 @@ public class RequestView extends ViewWithUiHandlers<RequestUiHandlers> implement
         }
     }
 
-    @Override
     public void updateRequest(RequestStatistics request) {
         final Long requestId = request.getRequestId();
 
