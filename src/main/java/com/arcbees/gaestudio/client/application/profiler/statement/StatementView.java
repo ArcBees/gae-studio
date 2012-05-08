@@ -82,6 +82,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
             }
         });
         statementList.add(statementLabel);
+        statementElements.add(statement.getStatementId());
     }
 
     private void onStatementClicked(BaseLabel baseLabel, Long statementId) {
