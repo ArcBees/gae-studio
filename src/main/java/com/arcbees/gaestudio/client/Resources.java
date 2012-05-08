@@ -17,4 +17,5 @@ public interface Resources extends ClientBundle {
     }
 
     public Styles styles();
+
 }

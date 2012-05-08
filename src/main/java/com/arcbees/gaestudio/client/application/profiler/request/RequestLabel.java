@@ -37,4 +37,5 @@ public class RequestLabel extends BaseLabel {
 
         setText(builder.toString());
     }
+
 }

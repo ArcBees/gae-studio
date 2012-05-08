@@ -28,4 +28,5 @@ public abstract class BaseLabel extends Label {
     public void setSelected(boolean selected) {
         setStyleName(resources.styles().selected(), selected);
     }
+
 }
