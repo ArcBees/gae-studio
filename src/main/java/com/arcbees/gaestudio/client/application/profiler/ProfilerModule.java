@@ -4,7 +4,6 @@ import com.arcbees.core.client.mvp.uihandlers.ProviderUiHandlersStrategy;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.application.profiler.details.DetailsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.details.DetailsView;
-import com.arcbees.gaestudio.client.application.profiler.request.RequestElementFactory;
 import com.arcbees.gaestudio.client.application.profiler.request.RequestPresenter;
 import com.arcbees.gaestudio.client.application.profiler.request.RequestUiHandlers;
 import com.arcbees.gaestudio.client.application.profiler.request.RequestView;
@@ -19,19 +18,25 @@ import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.TypeLiteral;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
+import javax.inject.Singleton;
+
 public class ProfilerModule extends AbstractPresenterModule {
 
     @Override
     protected void configure() {
-        install(new GinFactoryModuleBuilder().build(RequestElementFactory.class));
+        install(new GinFactoryModuleBuilder().build(ElementFactory.class));
 
-        bind(RecordFormatter.class).to(ObjectifyRecordFormatter.class);
+        bind(RecordFormatter.class).to(ObjectifyRecordFormatter.class).in(Singleton.class);
 
-        bind(new TypeLiteral<UiHandlersStrategy<RequestUiHandlers>>() {})
-                .to(new TypeLiteral<ProviderUiHandlersStrategy<RequestUiHandlers>>() {});
-        bind(new TypeLiteral<UiHandlersStrategy<StatementUiHandlers>>() {})
-                .to(new TypeLiteral<ProviderUiHandlersStrategy<StatementUiHandlers>>() {});
-        
+        bind(new TypeLiteral<UiHandlersStrategy<RequestUiHandlers>>() {
+        })
+                .to(new TypeLiteral<ProviderUiHandlersStrategy<RequestUiHandlers>>() {
+                });
+        bind(new TypeLiteral<UiHandlersStrategy<StatementUiHandlers>>() {
+        })
+                .to(new TypeLiteral<ProviderUiHandlersStrategy<StatementUiHandlers>>() {
+                });
+
         bindSingletonPresenterWidget(DetailsPresenter.class, DetailsPresenter.MyView.class,
                 DetailsView.class);
         bindSingletonPresenterWidget(RequestPresenter.class, RequestPresenter.MyView.class,
@@ -40,10 +45,10 @@ public class ProfilerModule extends AbstractPresenterModule {
                 StatementView.class);
         bindSingletonPresenterWidget(StatisticsPresenter.class, StatisticsPresenter.MyView.class,
                 StatisticsView.class);
-        
+
         bind(RequestUiHandlers.class).to(RequestPresenter.class);
         bind(StatementUiHandlers.class).to(StatementPresenter.class);
-        
+
         bindPresenter(ProfilerPresenter.class, ProfilerPresenter.MyView.class,
                 ProfilerView.class, ProfilerPresenter.MyProxy.class);
     }

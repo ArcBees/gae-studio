@@ -3,13 +3,12 @@ package com.arcbees.gaestudio.client.application.profiler.statement;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.application.profiler.Element;
+import com.arcbees.gaestudio.client.application.profiler.ElementCallback;
+import com.arcbees.gaestudio.client.application.profiler.ElementFactory;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
-import com.arcbees.gaestudio.shared.formatters.RecordFormatter;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -17,7 +16,7 @@ import com.google.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.List;
 
 // TODO see if I can factor out some of the common logic in statement and request view
 public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> implements StatementPresenter.MyView {
@@ -31,17 +30,18 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     @UiField(provided = true)
     Resources resources;
 
-    private final RecordFormatter recordFormatter;
-    private final HashMap<Long, String> statementElementIds = new HashMap<Long, String>();
+    private final ElementFactory elementFactory;
+    private final List<Long> statementElements = new ArrayList<Long>();
     private Long currentlyDisplayedRequestId = -1L;
+    private Element selectedElement;
 
     @Inject
     public StatementView(final Binder uiBinder, final UiHandlersStrategy<StatementUiHandlers> uiHandlersStrategy,
-                         final RecordFormatter recordFormatter, final Resources resources) {
+                         final Resources resources, final ElementFactory elementFactory) {
         super(uiHandlersStrategy);
         this.resources = resources;
+        this.elementFactory = elementFactory;
         initWidget(uiBinder.createAndBindUi(this));
-        this.recordFormatter = recordFormatter;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
 
         if (currentlyDisplayedRequestId.equals(requestId)) {
             for (DbOperationRecord statement : statements) {
-                if (!statementElementIds.containsKey(statement.getStatementId())) {
+                if (!statementElements.contains(statement.getStatementId())) {
                     createAndInsertStatementElement(statement);
                 }
             }
@@ -67,7 +67,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
             currentlyDisplayedRequestId = requestId;
 
             statementList.clear();
-            statementElementIds.clear();
+            statementElements.clear();
 
             for (DbOperationRecord statement : statements) {
                 createAndInsertStatementElement(statement);
@@ -76,25 +76,22 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     }
 
     private void createAndInsertStatementElement(DbOperationRecord statement) {
-        Long statementId = statement.getStatementId();
-        String elementId = HTMLPanel.createUniqueId();
-        HTML html = createStatementElement(recordFormatter.formatRecord(statement), statementId, elementId);
-        statementElementIds.put(statementId, elementId);
-        statementList.add(html);
-    }
-
-    private HTML createStatementElement(String content, final Long statementId, String elementId) {
-        HTML html = new HTML(content);
-
-        html.getElement().setId(elementId);
-        html.addClickHandler(new ClickHandler() {
+        StatementElement statementElement = elementFactory.createStatement(statement, new ElementCallback() {
             @Override
-            public void onClick(ClickEvent event) {
-                getUiHandlers().onStatementClicked(statementId);
+            public void onClick(Element element, Long statementId) {
+                onStatementClicked(element, statementId);
             }
         });
+        statementList.add(statementElement);
+    }
 
-        return html;
+    private void onStatementClicked(Element element, Long statementId) {
+        getUiHandlers().onStatementClicked(statementId);
+        if (selectedElement != null) {
+            selectedElement.setSelected(false);
+        }
+        selectedElement = element;
+        element.setSelected(true);
     }
 
     private class StatementIdComparator implements Comparator<DbOperationRecord> {

@@ -3,9 +3,11 @@ package com.arcbees.gaestudio.client.application.profiler.request;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.application.profiler.Element;
+import com.arcbees.gaestudio.client.application.profiler.ElementCallback;
+import com.arcbees.gaestudio.client.application.profiler.ElementFactory;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -24,16 +26,16 @@ public class RequestView extends ViewWithUiHandlers<RequestUiHandlers> implement
     @UiField(provided = true)
     Resources resources;
 
-    private final RequestElementFactory requestElementFactory;
+    private final ElementFactory elementFactory;
     private final HashMap<Long, RequestElement> requestElements = new HashMap<Long, RequestElement>();
-    private HTML selectedItem;
+    private Element selectedElement;
 
     @Inject
     public RequestView(final Binder uiBinder, final UiHandlersStrategy<RequestUiHandlers> uiHandlersStrategy,
-                       final Resources resources, final RequestElementFactory requestElementFactory) {
+                       final Resources resources, final ElementFactory elementFactory) {
         super(uiHandlersStrategy);
         this.resources = resources;
-        this.requestElementFactory = requestElementFactory;
+        this.elementFactory = elementFactory;
         initWidget(uiBinder.createAndBindUi(this));
     }
 
@@ -57,22 +59,22 @@ public class RequestView extends ViewWithUiHandlers<RequestUiHandlers> implement
         }
     }
 
-    private RequestElement createRequestElement(final RequestStatistics request) {
-        return requestElementFactory.create(request, new RequestElementCallback() {
+    private RequestElement createRequestElement(RequestStatistics request) {
+        return elementFactory.createRequest(request, new ElementCallback() {
             @Override
-            public void onClick(RequestElement elem, Long requestId) {
-                onRequestClicked(elem, requestId);
+            public void onClick(Element element, Long requestId) {
+                onRequestClicked(element, requestId);
             }
         });
     }
 
-    private void onRequestClicked(HTML html, Long requestId) {
+    private void onRequestClicked(Element element, Long requestId) {
         getUiHandlers().onRequestClicked(requestId);
-        if (selectedItem != null) {
-            selectedItem.removeStyleName(resources.styles().selected());
+        if (selectedElement != null) {
+            selectedElement.setSelected(false);
         }
-        selectedItem = html;
-        html.addStyleName(resources.styles().selected());
+        selectedElement = element;
+        element.setSelected(true);
     }
 
 }
