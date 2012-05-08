@@ -8,9 +8,9 @@ import com.arcbees.gaestudio.client.application.visualizer.entitydetails.EntityD
 import com.arcbees.gaestudio.client.application.visualizer.entitylist.EntityListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.entitylist.EntityListUiHandlers;
 import com.arcbees.gaestudio.client.application.visualizer.entitylist.EntityListView;
-import com.arcbees.gaestudio.client.application.visualizer.kindlist.KindListPresenter;
-import com.arcbees.gaestudio.client.application.visualizer.kindlist.KindListUiHandlers;
-import com.arcbees.gaestudio.client.application.visualizer.kindlist.KindListView;
+import com.arcbees.gaestudio.client.application.visualizer.kind.KindListPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.kind.KindListUiHandlers;
+import com.arcbees.gaestudio.client.application.visualizer.kind.KindListView;
 import com.google.inject.TypeLiteral;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 

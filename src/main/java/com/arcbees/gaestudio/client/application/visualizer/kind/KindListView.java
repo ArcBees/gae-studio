@@ -1,10 +1,10 @@
-package com.arcbees.gaestudio.client.application.visualizer.kindlist;
+package com.arcbees.gaestudio.client.application.visualizer.kind;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
+import com.arcbees.gaestudio.client.Resources;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTML;
@@ -18,20 +18,17 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
     public interface Binder extends UiBinder<Widget, KindListView> {
     }
 
-    public interface MyStyle extends CssResource {
-        String kindList();
-        String kind();
-    }
-
     @UiField
     HTMLPanel kindList;
 
-    @UiField
-    MyStyle style;
+    @UiField(provided = true)
+    Resources resources;
 
     @Inject
-    public KindListView(final Binder uiBinder, final UiHandlersStrategy<KindListUiHandlers> uiHandlersStrategy) {
+    public KindListView(final Binder uiBinder, final UiHandlersStrategy<KindListUiHandlers> uiHandlersStrategy,
+                        final Resources resources) {
         super(uiHandlersStrategy);
+        this.resources = resources;
         initWidget(uiBinder.createAndBindUi(this));
     }
 
@@ -46,7 +43,6 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
     private HTML createKindElement(final String kind) {
         HTML html = new HTML(kind);
 
-        html.setStyleName(style.kind());
         html.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {

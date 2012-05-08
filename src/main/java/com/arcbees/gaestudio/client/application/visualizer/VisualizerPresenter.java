@@ -7,7 +7,7 @@ package com.arcbees.gaestudio.client.application.visualizer;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.entitydetails.EntityDetailsPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.entitylist.EntityListPresenter;
-import com.arcbees.gaestudio.client.application.visualizer.kindlist.KindListPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.kind.KindListPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;

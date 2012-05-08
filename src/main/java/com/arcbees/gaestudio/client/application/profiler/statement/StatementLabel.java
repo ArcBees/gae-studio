@@ -5,8 +5,8 @@
 package com.arcbees.gaestudio.client.application.profiler.statement;
 
 import com.arcbees.gaestudio.client.Resources;
-import com.arcbees.gaestudio.client.application.profiler.BaseLabel;
-import com.arcbees.gaestudio.client.application.profiler.LabelCallback;
+import com.arcbees.gaestudio.client.application.BaseLabel;
+import com.arcbees.gaestudio.client.application.LabelCallback;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.arcbees.gaestudio.shared.formatters.RecordFormatter;
 import com.google.inject.assistedinject.Assisted;
