@@ -25,17 +25,10 @@ public class RequestLabel extends BaseLabel {
     }
 
     public void updateContent(RequestStatistics requestStatistics) {
-        StringBuilder builder = new StringBuilder();
+        String content = "Request #" + requestStatistics.getRequestId() + " - " + numberFormat.format
+                (requestStatistics.getExecutionTimeMs() / 1000.0) + " [" + requestStatistics.getStatementCount() + "]";
 
-        builder.append("Request #");
-        builder.append(requestStatistics.getRequestId());
-        builder.append(" - ");
-        builder.append(numberFormat.format(requestStatistics.getExecutionTimeMs() / 1000.0));
-        builder.append(" [");
-        builder.append(requestStatistics.getStatementCount());
-        builder.append("]");
-
-        setText(builder.toString());
+        setText(content);
     }
 
 }

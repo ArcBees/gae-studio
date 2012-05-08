@@ -119,17 +119,25 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private void processNewDbOperationRecords(ArrayList<DbOperationRecord> records) {
         if (!records.isEmpty()) {
             for (DbOperationRecord record : records) {
-                requestPresenter.processDbOperationRecord(record);
-                statisticsPresenter.processDbOperationRecord(record);
-                statementPresenter.processDbOperationRecord(record);
-                detailsPresenter.processDbOperationRecord(record);
+                processDbOperationRecord(record);
                 lastDbOperationRecordId = Math.max(lastDbOperationRecordId, record.getStatementId());
             }
-            requestPresenter.displayNewDbOperationRecords();
-            statisticsPresenter.displayNewDbOperationRecords();
-            statementPresenter.displayNewDbOperationRecords();
-            detailsPresenter.displayNewDbOperationRecords();
+            displayNewDbOperationRecords();
         }
+    }
+
+    private void displayNewDbOperationRecords() {
+        requestPresenter.displayNewDbOperationRecords();
+        statisticsPresenter.displayNewDbOperationRecords();
+        statementPresenter.displayNewDbOperationRecords();
+        detailsPresenter.displayNewDbOperationRecords();
+    }
+
+    private void processDbOperationRecord(DbOperationRecord record) {
+        requestPresenter.processDbOperationRecord(record);
+        statisticsPresenter.processDbOperationRecord(record);
+        statementPresenter.processDbOperationRecord(record);
+        detailsPresenter.processDbOperationRecord(record);
     }
 
 }
