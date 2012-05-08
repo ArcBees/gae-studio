@@ -21,4 +21,5 @@ public class ClientModule extends AbstractPresenterModule {
 
         bind(Resources.class).in(Singleton.class);
     }
+
 }

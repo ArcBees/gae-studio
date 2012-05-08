@@ -5,6 +5,7 @@
 package com.arcbees.gaestudio.client.application.profiler.request;
 
 public class RequestStatistics {
+
     private long requestId;
     private int statementCount;
     private int executionTimeMs;
@@ -34,4 +35,5 @@ public class RequestStatistics {
     void incrementExecutionTimeMs(int deltaTimeMs) {
         executionTimeMs += deltaTimeMs;
     }
+
 }

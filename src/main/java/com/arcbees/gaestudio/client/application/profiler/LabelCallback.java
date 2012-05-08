@@ -5,5 +5,7 @@
 package com.arcbees.gaestudio.client.application.profiler;
 
 public interface LabelCallback {
+
     void onClick(BaseLabel baseLabel, Long id);
+
 }

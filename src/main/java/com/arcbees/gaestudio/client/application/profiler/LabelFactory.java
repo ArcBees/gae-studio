@@ -10,9 +10,11 @@ import com.arcbees.gaestudio.client.application.profiler.statement.StatementLabe
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 
 public interface LabelFactory {
+
     RequestLabel createRequest(final RequestStatistics requestStatistics,
                                  final LabelCallback callback);
 
     StatementLabel createStatement(final DbOperationRecord record,
                                      final LabelCallback callback);
+
 }
