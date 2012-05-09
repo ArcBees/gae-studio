@@ -5,9 +5,9 @@
 package com.arcbees.gaestudio.client.application.profiler.request;
 
 import com.arcbees.gaestudio.client.Resources;
-import com.arcbees.gaestudio.client.application.profiler.BaseLabel;
-import com.arcbees.gaestudio.client.application.profiler.LabelCallback;
 import com.arcbees.gaestudio.client.application.profiler.TimeNumberFormat;
+import com.arcbees.gaestudio.client.application.ui.BaseLabel;
+import com.arcbees.gaestudio.client.application.ui.LabelCallback;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.inject.assistedinject.Assisted;
 
@@ -20,7 +20,8 @@ public class RequestLabel extends BaseLabel {
     @Inject
     public RequestLabel(final Resources resources, @Assisted final RequestStatistics requestStatistics,
                         @Assisted final LabelCallback callback) {
-        super(resources, requestStatistics.getRequestId(), callback);
+        super(resources, callback);
+
         updateContent(requestStatistics);
     }
 

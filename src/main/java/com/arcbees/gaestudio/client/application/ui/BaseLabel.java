@@ -2,7 +2,7 @@
  * Copyright 2012 ArcBees Inc. All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.profiler;
+package com.arcbees.gaestudio.client.application.ui;
 
 import com.arcbees.gaestudio.client.Resources;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -13,14 +13,14 @@ public abstract class BaseLabel extends Label {
 
     private final Resources resources;
 
-    protected BaseLabel(final Resources resources, final Long id, final LabelCallback callback) {
+    protected BaseLabel(final Resources resources, final LabelCallback callback) {
         this.resources = resources;
 
         addStyleName(resources.styles().item());
         addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                callback.onClick(BaseLabel.this, id);
+                callback.onClick(BaseLabel.this);
             }
         });
     }

@@ -2,7 +2,7 @@
  * Copyright 2012 ArcBees Inc.  All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer;
+package com.arcbees.gaestudio.client.application.visualizer.entitydetails;
 
 import com.arcbees.gaestudio.client.application.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDTO;

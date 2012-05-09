@@ -2,7 +2,7 @@
  * Copyright 2012 ArcBees Inc.  All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer;
+package com.arcbees.gaestudio.client.application.visualizer.kind;
 
 import com.arcbees.gaestudio.client.application.event.KindSelectedEvent;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
@@ -26,6 +26,7 @@ public class KindListPresenter extends PresenterWidget<KindListPresenter.MyView>
     @Inject
     public KindListPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
         super(eventBus, view);
+
         this.dispatcher = dispatcher;
     }
     

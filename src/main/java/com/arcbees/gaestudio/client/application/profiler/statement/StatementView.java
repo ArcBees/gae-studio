@@ -3,9 +3,10 @@ package com.arcbees.gaestudio.client.application.profiler.statement;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
-import com.arcbees.gaestudio.client.application.profiler.BaseLabel;
-import com.arcbees.gaestudio.client.application.profiler.LabelCallback;
-import com.arcbees.gaestudio.client.application.profiler.LabelFactory;
+import com.arcbees.gaestudio.client.application.profiler.ProfilerLabelFactory;
+import com.arcbees.gaestudio.client.application.ui.BaseLabel;
+import com.arcbees.gaestudio.client.application.ui.LabelCallback;
+import com.arcbees.gaestudio.client.application.ui.SelectableLabelServant;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -29,17 +30,20 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     @UiField(provided = true)
     Resources resources;
 
-    private final LabelFactory labelFactory;
+    private final ProfilerLabelFactory profilerLabelFactory;
+    private final SelectableLabelServant selectableLabelServant;
     private final List<Long> statementElements = new ArrayList<Long>();
     private Long currentlyDisplayedRequestId = -1L;
-    private BaseLabel selectedBaseLabel;
 
     @Inject
     public StatementView(final Binder uiBinder, final UiHandlersStrategy<StatementUiHandlers> uiHandlersStrategy,
-                         final Resources resources, final LabelFactory labelFactory) {
+                         final Resources resources, final ProfilerLabelFactory profilerLabelFactory,
+                         final SelectableLabelServant selectableLabelServant) {
         super(uiHandlersStrategy);
+
         this.resources = resources;
-        this.labelFactory = labelFactory;
+        this.profilerLabelFactory = profilerLabelFactory;
+        this.selectableLabelServant = selectableLabelServant;
         initWidget(uiBinder.createAndBindUi(this));
     }
 
@@ -74,24 +78,16 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
         }
     }
 
-    private void createAndInsertStatementElement(DbOperationRecordDTO statement) {
-        StatementLabel statementLabel = labelFactory.createStatement(statement, new LabelCallback() {
+    private void createAndInsertStatementElement(final DbOperationRecordDTO statement) {
+        StatementLabel statementLabel = profilerLabelFactory.createStatement(statement, new LabelCallback() {
             @Override
-            public void onClick(BaseLabel element, Long statementId) {
-                onStatementClicked(element, statementId);
+            public void onClick(BaseLabel element) {
+                selectableLabelServant.select(element);
+                getUiHandlers().onStatementClicked(statement.getStatementId());
             }
         });
         statementList.add(statementLabel);
         statementElements.add(statement.getStatementId());
-    }
-
-    private void onStatementClicked(BaseLabel baseLabel, Long statementId) {
-        getUiHandlers().onStatementClicked(statementId);
-        if (selectedBaseLabel != null) {
-            selectedBaseLabel.setSelected(false);
-        }
-        selectedBaseLabel = baseLabel;
-        baseLabel.setSelected(true);
     }
 
     private class StatementIdComparator implements Comparator<DbOperationRecordDTO> {

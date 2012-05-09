@@ -15,6 +15,7 @@ public class ClientPlaceManager extends PlaceManagerImpl {
                               final TokenFormatter tokenFormatter,
                               @DefaultPlace final String defaultPlaceNameToken) {
         super(eventBus, tokenFormatter);
+
         this.defaultPlaceRequest = new PlaceRequest(defaultPlaceNameToken);
     }
 

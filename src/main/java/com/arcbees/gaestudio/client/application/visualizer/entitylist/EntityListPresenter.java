@@ -2,7 +2,7 @@
  * Copyright 2012 ArcBees Inc.  All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer;
+package com.arcbees.gaestudio.client.application.visualizer.entitylist;
 
 import com.arcbees.gaestudio.client.application.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.event.KindSelectedEvent;
@@ -32,6 +32,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Inject
     public EntityListPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
         super(eventBus, view);
+
         this.dispatcher = dispatcher;
     }
 
