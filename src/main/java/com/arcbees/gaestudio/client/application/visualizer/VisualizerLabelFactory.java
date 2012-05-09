@@ -4,16 +4,15 @@
 
 package com.arcbees.gaestudio.client.application.visualizer;
 
-import com.arcbees.gaestudio.client.application.LabelCallback;
-import com.arcbees.gaestudio.client.application.profiler.request.RequestLabel;
-import com.arcbees.gaestudio.client.application.profiler.request.RequestStatistics;
-import com.arcbees.gaestudio.client.application.profiler.statement.StatementLabel;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
+import com.arcbees.gaestudio.client.application.ui.LabelCallback;
+import com.arcbees.gaestudio.client.application.visualizer.entitylist.EntityLabel;
+import com.arcbees.gaestudio.client.application.visualizer.kind.KindLabel;
+import com.arcbees.gaestudio.shared.dto.entity.Entity;
 
 public interface VisualizerLabelFactory {
 
-    RequestLabel createRequest(final RequestStatistics requestStatistics, final LabelCallback callback);
+    KindLabel createKind(final String kind, final LabelCallback<String> callback);
 
-    StatementLabel createStatement(final DbOperationRecord record, final LabelCallback callback);
+    EntityLabel createEntity(final Entity entity, final LabelCallback<Entity> callback);
 
 }

@@ -2,11 +2,14 @@ package com.arcbees.gaestudio.client.application.visualizer.entitylist;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
+import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.application.ui.BaseLabel;
+import com.arcbees.gaestudio.client.application.ui.LabelCallback;
+import com.arcbees.gaestudio.client.application.visualizer.VisualizerLabelFactory;
 import com.arcbees.gaestudio.shared.dto.entity.Entity;
 import com.arcbees.gaestudio.shared.dto.entity.Key;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTML;
@@ -22,20 +25,21 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     public interface Binder extends UiBinder<Widget, EntityListView> {
     }
 
-    public interface MyStyle extends CssResource {
-        String entityList();
-        String entity();
-    }
-    
-    @UiField
-    MyStyle style;
-    
     @UiField
     HTMLPanel entityList;
-    
+
+    @UiField(provided = true)
+    Resources resources;
+
+    private final VisualizerLabelFactory visualizerLabelFactory;
+    private BaseLabel<Entity> selectedBaseLabel;
+
     @Inject
-    public EntityListView(final Binder uiBinder, final UiHandlersStrategy<EntityListUiHandlers> uiHandlersStrategy) {
+    public EntityListView(final Binder uiBinder, final UiHandlersStrategy<EntityListUiHandlers> uiHandlersStrategy,
+                          final Resources resources, final VisualizerLabelFactory visualizerLabelFactory) {
         super(uiHandlersStrategy);
+        this.resources = resources;
+        this.visualizerLabelFactory = visualizerLabelFactory;
         initWidget(uiBinder.createAndBindUi(this));
     }
 
@@ -49,32 +53,26 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         // TODO use a cell table
         for (Entity entity : entities) {
-            StringBuilder builder = new StringBuilder();
-            
-            builder.append("[Kind: ");
-            builder.append(entity.getKey().getKind());
-            builder.append("] [Id: ");
-            builder.append(entity.getKey().getId());
-            builder.append("] [");
-            builder.append(entity.toString());
-            builder.append("]");
-            
-            entityList.add(createEntityElement(builder.toString(), entity.getKey(), entity.getJson()));
+            entityList.add(createEntityElement(entity));
         }
     }
 
-    private HTML createEntityElement(String name, final Key entityKey, final String entityData) {
-        HTML html = new HTML(name);
-
-        html.setStyleName(style.entity());
-        html.addClickHandler(new ClickHandler() {
+    private EntityLabel createEntityElement(final Entity entity){
+        return visualizerLabelFactory.createEntity(entity, new LabelCallback<Entity>() {
             @Override
-            public void onClick(ClickEvent event) {
-                getUiHandlers().onEntityClicked(entityKey, entityData);
+            public void onClick(BaseLabel baseLabel, Entity entity) {
+                onEntityClicked(baseLabel, entity);
             }
         });
+    }
 
-        return html;
+    private void onEntityClicked(BaseLabel baseLabel, Entity entity) {
+        getUiHandlers().onEntityClicked(entity.getKey(), entity.getJson());
+        if (selectedBaseLabel != null) {
+            selectedBaseLabel.setSelected(false);
+        }
+        selectedBaseLabel = baseLabel;
+        baseLabel.setSelected(true);
     }
 
 }

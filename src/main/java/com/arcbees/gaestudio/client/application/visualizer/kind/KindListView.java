@@ -3,6 +3,9 @@ package com.arcbees.gaestudio.client.application.visualizer.kind;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.application.ui.BaseLabel;
+import com.arcbees.gaestudio.client.application.ui.LabelCallback;
+import com.arcbees.gaestudio.client.application.visualizer.VisualizerLabelFactory;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -24,11 +27,15 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
     @UiField(provided = true)
     Resources resources;
 
+    private final VisualizerLabelFactory visualizerLabelFactory;
+    private BaseLabel<String> selectedBaseLabel;
+
     @Inject
     public KindListView(final Binder uiBinder, final UiHandlersStrategy<KindListUiHandlers> uiHandlersStrategy,
-                        final Resources resources) {
+                        final Resources resources, final VisualizerLabelFactory visualizerLabelFactory) {
         super(uiHandlersStrategy);
         this.resources = resources;
+        this.visualizerLabelFactory = visualizerLabelFactory;
         initWidget(uiBinder.createAndBindUi(this));
     }
 
@@ -40,17 +47,22 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
         }
     }
 
-    private HTML createKindElement(final String kind) {
-        HTML html = new HTML(kind);
-
-        html.addClickHandler(new ClickHandler() {
+    private KindLabel createKindElement(final String kind) {
+        return visualizerLabelFactory.createKind(kind, new LabelCallback<String>() {
             @Override
-            public void onClick(ClickEvent event) {
-                getUiHandlers().onKindClicked(kind);
+            public void onClick(BaseLabel baseLabel, String id) {
+                onKindClicked(kind, baseLabel);
             }
         });
+    }
 
-        return html;
+    private void onKindClicked(String kind, BaseLabel baseLabel) {
+        getUiHandlers().onKindClicked(kind);
+        if (selectedBaseLabel != null) {
+            selectedBaseLabel.setSelected(false);
+        }
+        selectedBaseLabel = baseLabel;
+        baseLabel.setSelected(true);
     }
 
 }

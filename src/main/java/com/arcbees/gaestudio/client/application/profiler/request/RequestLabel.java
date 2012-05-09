@@ -5,23 +5,21 @@
 package com.arcbees.gaestudio.client.application.profiler.request;
 
 import com.arcbees.gaestudio.client.Resources;
-import com.arcbees.gaestudio.client.application.BaseLabel;
-import com.arcbees.gaestudio.client.application.BaseLabel;
-import com.arcbees.gaestudio.client.application.LabelCallback;
-import com.arcbees.gaestudio.client.application.LabelCallback;
 import com.arcbees.gaestudio.client.application.profiler.TimeNumberFormat;
+import com.arcbees.gaestudio.client.application.ui.BaseLabel;
+import com.arcbees.gaestudio.client.application.ui.LabelCallback;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.inject.assistedinject.Assisted;
 
 import javax.inject.Inject;
 
-public class RequestLabel extends BaseLabel {
+public class RequestLabel extends BaseLabel<Long> {
 
     private static final NumberFormat numberFormat = TimeNumberFormat.getFormat();
 
     @Inject
     public RequestLabel(final Resources resources, @Assisted final RequestStatistics requestStatistics,
-                        @Assisted final LabelCallback callback) {
+                        @Assisted final LabelCallback<Long> callback) {
         super(resources, requestStatistics.getRequestId(), callback);
         updateContent(requestStatistics);
     }

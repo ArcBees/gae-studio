@@ -2,18 +2,18 @@
  * Copyright 2012 ArcBees Inc. All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application;
+package com.arcbees.gaestudio.client.application.ui;
 
 import com.arcbees.gaestudio.client.Resources;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Label;
 
-public abstract class BaseLabel extends Label {
+public abstract class BaseLabel<T> extends Label {
 
     private final Resources resources;
 
-    protected BaseLabel(final Resources resources, final Long id, final LabelCallback callback) {
+    protected BaseLabel(final Resources resources, final T id, final LabelCallback<T> callback) {
         this.resources = resources;
 
         addStyleName(resources.styles().item());
