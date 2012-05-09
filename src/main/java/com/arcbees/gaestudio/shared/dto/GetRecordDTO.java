@@ -15,38 +15,40 @@
  */
 
 package com.arcbees.gaestudio.shared.dto;
-
-//import com.google.apphosting.api.DatastorePb.DeleteRequest;
-//import com.google.apphosting.api.DatastorePb.DeleteResponse;
+//
+//import com.google.apphosting.api.DatastorePb.GetRequest;
+//import com.google.apphosting.api.DatastorePb.GetResponse;
 
 import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDTO;
 
-public class DeleteRecord extends DbOperationRecord {
+public class GetRecordDTO extends DbOperationRecordDTO {
 
-    private static final long serialVersionUID = 3745865294476274476L;
+    private static final long serialVersionUID = -7824011424844857721L;
 
-//    private final DeleteRequest deleteRequest;
+//    private final GetRequest getRequest;
 //
-//    private final DeleteResponse deleteResponse;
+//    private final GetResponse getResponse;
 
     @SuppressWarnings("unused")
-    protected DeleteRecord() {
+    protected GetRecordDTO() {
     }
 
-    public DeleteRecord(//DeleteRequest deleteRequest, DeleteResponse deleteResponse,
+    public GetRecordDTO(//GetRequest getRequest, GetResponse getResponse,
                         StackTraceElementDTO callerStackTraceElement,
-                        Long requestId, Long statementId, Integer executionTimeMs) {
+                        Long requestId,
+                        Long statementId,
+                        Integer executionTimeMs) {
         super(callerStackTraceElement, requestId, statementId, executionTimeMs);
-//        this.deleteRequest = deleteRequest;
-//        this.deleteResponse = deleteResponse;
+//        this.getRequest = getRequest;
+//        this.getResponse = getResponse;
     }
 
-//    public DeleteRequest getDeleteRequest() {
-//        return deleteRequest;
+//    public GetRequest getGetRequest() {
+//        return getRequest;
 //    }
 //
-//    public DeleteResponse getDeleteResponse() {
-//        return deleteResponse;
+//    public GetResponse getGetResponse() {
+//        return getResponse;
 //    }
 
 }

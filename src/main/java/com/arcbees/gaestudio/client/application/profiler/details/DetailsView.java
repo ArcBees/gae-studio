@@ -1,7 +1,7 @@
 package com.arcbees.gaestudio.client.application.profiler.details;
 
 import com.arcbees.core.client.mvp.ViewImpl;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.arcbees.gaestudio.shared.formatters.RecordFormatter;
 import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDTO;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -30,7 +30,7 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
     }
 
     @Override
-    public void displayStatementDetails(DbOperationRecord record) {
+    public void displayStatementDetails(DbOperationRecordDTO record) {
         statement.setHTML(recordFormatter.formatRecord(record));
         callLocation.setHTML(tempFormatCaller(record.getCallerStackTraceElement()));
     }

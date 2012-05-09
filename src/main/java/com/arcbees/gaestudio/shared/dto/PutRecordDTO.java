@@ -21,7 +21,7 @@ package com.arcbees.gaestudio.shared.dto;
 
 import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDTO;
 
-public class PutRecord extends DbOperationRecord {
+public class PutRecordDTO extends DbOperationRecordDTO {
 
     private static final long serialVersionUID = 3745865294476274476L;
     
@@ -30,14 +30,14 @@ public class PutRecord extends DbOperationRecord {
 //    private final PutResponse putResponse;
 
     @SuppressWarnings("unused")
-    protected PutRecord() {
+    protected PutRecordDTO() {
     }
 
-    public PutRecord(//PutRequest putRequest, PutResponse putResponse,
-                     StackTraceElementDTO callerStackTraceElement,
-                     Long requestId,
-                     Long statementId,
-                     Integer executionTimeMs) {
+    public PutRecordDTO(//PutRequest putRequest, PutResponse putResponse,
+                        StackTraceElementDTO callerStackTraceElement,
+                        Long requestId,
+                        Long statementId,
+                        Integer executionTimeMs) {
         super(callerStackTraceElement, requestId, statementId, executionTimeMs);
 //        this.putRequest = putRequest;
 //        this.putResponse = putResponse;

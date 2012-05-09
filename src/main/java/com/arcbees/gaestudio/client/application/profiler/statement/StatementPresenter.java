@@ -7,7 +7,7 @@ package com.arcbees.gaestudio.client.application.profiler.statement;
 import com.arcbees.gaestudio.client.application.event.RequestSelectedEvent;
 import com.arcbees.gaestudio.client.application.event.StatementSelectedEvent;
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -22,11 +22,11 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
 
     public interface MyView extends View, HasUiHandlers<StatementUiHandlers> {
         Long getCurrentlyDisplayedRequestId();
-        void displayStatementsForRequest(Long requestId, ArrayList<DbOperationRecord> statements);
+        void displayStatementsForRequest(Long requestId, ArrayList<DbOperationRecordDTO> statements);
     }
 
-    private final HashMap<Long, ArrayList<DbOperationRecord>> statementsByRequestId =
-            new HashMap<Long, ArrayList<DbOperationRecord>>();
+    private final HashMap<Long, ArrayList<DbOperationRecordDTO>> statementsByRequestId =
+            new HashMap<Long, ArrayList<DbOperationRecordDTO>>();
 
     @Inject
     public StatementPresenter(final EventBus eventBus, final MyView view) {
@@ -40,12 +40,12 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
     }
 
     @Override
-    public void processDbOperationRecord(DbOperationRecord record) {
+    public void processDbOperationRecord(DbOperationRecordDTO record) {
         final Long requestId = record.getRequestId();
         if (statementsByRequestId.containsKey(requestId)) {
             statementsByRequestId.get(requestId).add(record);
         } else {
-            ArrayList<DbOperationRecord> list = new ArrayList<DbOperationRecord>();
+            ArrayList<DbOperationRecordDTO> list = new ArrayList<DbOperationRecordDTO>();
             list.add(record);
             statementsByRequestId.put(requestId, list);
         }

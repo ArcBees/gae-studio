@@ -8,8 +8,8 @@ import com.arcbees.gaestudio.client.application.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.event.KindSelectedEvent;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
-import com.arcbees.gaestudio.shared.dto.entity.Entity;
-import com.arcbees.gaestudio.shared.dto.entity.Key;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDTO;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -24,7 +24,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         implements KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
-        void displayEntities(ArrayList<Entity> entities);
+        void displayEntities(ArrayList<EntityDTO> entities);
     }
     
     private final DispatchAsync dispatcher;
@@ -59,7 +59,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
-    public void onEntityClicked(Key entityKey, String entityData) {
+    public void onEntityClicked(KeyDTO entityKey, String entityData) {
         getEventBus().fireEvent(new EntitySelectedEvent(entityKey, entityData));
     }
 

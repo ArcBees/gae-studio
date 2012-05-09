@@ -2,7 +2,7 @@ package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
-import com.arcbees.gaestudio.shared.dto.entity.Key;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDTO;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTML;
@@ -26,7 +26,7 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
     }
 
     @Override
-    public void displayEntityDetails(Key entityKey, String entityData) {
+    public void displayEntityDetails(KeyDTO entityKey, String entityData) {
         entityDetails.setHTML(entityData);
     }
 
