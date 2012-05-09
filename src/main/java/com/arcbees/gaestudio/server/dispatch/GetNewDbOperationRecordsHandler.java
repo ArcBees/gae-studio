@@ -6,7 +6,7 @@ package com.arcbees.gaestudio.server.dispatch;
 
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsResult;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
@@ -43,7 +43,7 @@ public class GetNewDbOperationRecordsHandler
         Long mostRecentId = getMostRecentId();
         if (mostRecentId == null) {
             logger.info("Could not find a mostRecentId");
-            return new GetNewDbOperationRecordsResult(new ArrayList<DbOperationRecord>());
+            return new GetNewDbOperationRecordsResult(new ArrayList<DbOperationRecordDTO>());
         }
 
         long beginId = action.getLastId() + 1;
@@ -54,7 +54,7 @@ public class GetNewDbOperationRecordsHandler
 
         if (beginId > endId) {
             logger.info("No new records since last poll");
-            return new GetNewDbOperationRecordsResult(new ArrayList<DbOperationRecord>());
+            return new GetNewDbOperationRecordsResult(new ArrayList<DbOperationRecordDTO>());
         }
 
         logger.info("Attempting to retrieve ids " + beginId + "-" + endId);
@@ -65,9 +65,9 @@ public class GetNewDbOperationRecordsHandler
         // always retrieves all missing records.
 
         // TODO optimize this
-        ArrayList<DbOperationRecord> records = new ArrayList<DbOperationRecord>(recordsByKey.size());
+        ArrayList<DbOperationRecordDTO> records = new ArrayList<DbOperationRecordDTO>(recordsByKey.size());
         for (Object recordObject : recordsByKey.values()) {
-            records.add((DbOperationRecord) recordObject);
+            records.add((DbOperationRecordDTO) recordObject);
         }
 
         return new GetNewDbOperationRecordsResult(records);

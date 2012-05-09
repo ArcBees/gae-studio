@@ -7,7 +7,7 @@ package com.arcbees.gaestudio.server.dispatch;
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
-import com.arcbees.gaestudio.shared.dto.entity.Entity;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.FetchOptions;
@@ -53,7 +53,7 @@ public class GetEntitiesByKindHandler
         Query query = new Query(action.getKind());
         List<com.google.appengine.api.datastore.Entity> results = datastore.prepare(query).asList(fetchOptions);
         
-        ArrayList<Entity> entities = new ArrayList<Entity>(results.size());
+        ArrayList<EntityDTO> entities = new ArrayList<EntityDTO>(results.size());
         for (com.google.appengine.api.datastore.Entity dbEntity : results) {
             entities.add(EntityMapper.mapDTO(dbEntity));
         }

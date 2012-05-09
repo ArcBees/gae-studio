@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <gae.version>1.6.2.1</gae.version>
+        <gae.version>1.6.5</gae.version>
         <gwt.version>2.4.0</gwt.version>
         <gwt-maven-plugin.version>2.4.0</gwt-maven-plugin.version>
         <arcbees-core.version>1.0-SNAPSHOT</arcbees-core.version>

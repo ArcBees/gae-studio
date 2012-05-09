@@ -6,13 +6,9 @@ import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.ui.BaseLabel;
 import com.arcbees.gaestudio.client.application.ui.LabelCallback;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerLabelFactory;
-import com.arcbees.gaestudio.shared.dto.entity.Entity;
-import com.arcbees.gaestudio.shared.dto.entity.Key;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -32,7 +28,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     Resources resources;
 
     private final VisualizerLabelFactory visualizerLabelFactory;
-    private BaseLabel<Entity> selectedBaseLabel;
+    private BaseLabel<EntityDTO> selectedBaseLabel;
 
     @Inject
     public EntityListView(final Binder uiBinder, final UiHandlersStrategy<EntityListUiHandlers> uiHandlersStrategy,
@@ -44,7 +40,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void displayEntities(ArrayList<Entity> entities) {
+    public void displayEntities(ArrayList<EntityDTO> entities) {
         entityList.clear();
 
         if (entities == null) {
@@ -52,21 +48,21 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         }
 
         // TODO use a cell table
-        for (Entity entity : entities) {
+        for (EntityDTO entity : entities) {
             entityList.add(createEntityElement(entity));
         }
     }
 
-    private EntityLabel createEntityElement(final Entity entity){
-        return visualizerLabelFactory.createEntity(entity, new LabelCallback<Entity>() {
+    private EntityLabel createEntityElement(final EntityDTO entity) {
+        return visualizerLabelFactory.createEntity(entity, new LabelCallback<EntityDTO>() {
             @Override
-            public void onClick(BaseLabel baseLabel, Entity entity) {
+            public void onClick(BaseLabel baseLabel, EntityDTO entity) {
                 onEntityClicked(baseLabel, entity);
             }
         });
     }
 
-    private void onEntityClicked(BaseLabel baseLabel, Entity entity) {
+    private void onEntityClicked(BaseLabel baseLabel, EntityDTO entity) {
         getUiHandlers().onEntityClicked(entity.getKey(), entity.getJson());
         if (selectedBaseLabel != null) {
             selectedBaseLabel.setSelected(false);

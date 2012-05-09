@@ -4,7 +4,7 @@
 
 package com.arcbees.gaestudio.shared.dto.query;
 
-public enum QueryFilterOperator {
+public enum QueryFilterOperatorDTO {
 
     EQUAL,
 

@@ -6,7 +6,7 @@ package com.arcbees.gaestudio.client.application.profiler.request;
 
 import com.arcbees.gaestudio.client.application.event.RequestSelectedEvent;
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -35,7 +35,7 @@ public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
     }
     
     @Override
-    public void processDbOperationRecord(DbOperationRecord record) {
+    public void processDbOperationRecord(DbOperationRecordDTO record) {
         final long requestId = record.getRequestId();
         RequestStatistics statistics;
         if (!statisticsByRequestId.containsKey(requestId)) {

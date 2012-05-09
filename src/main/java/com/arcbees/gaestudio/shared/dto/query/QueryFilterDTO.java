@@ -6,19 +6,19 @@ package com.arcbees.gaestudio.shared.dto.query;
 
 import java.io.Serializable;
 
-public class QueryFilter implements Serializable {
+public class QueryFilterDTO implements Serializable {
 
     private static final long serialVersionUID = 1284195709357989944L;
 
     private String property;
-    private QueryFilterOperator operator;
+    private QueryFilterOperatorDTO operator;
     private String value;
 
     @SuppressWarnings("unused")
-    protected QueryFilter() {
+    protected QueryFilterDTO() {
     }
 
-    public QueryFilter(String property, QueryFilterOperator operator, String value) {
+    public QueryFilterDTO(String property, QueryFilterOperatorDTO operator, String value) {
         this.property = property;
         this.operator = operator;
         this.value = value;
@@ -28,7 +28,7 @@ public class QueryFilter implements Serializable {
         return property;
     }
 
-    public QueryFilterOperator getOperator() {
+    public QueryFilterOperatorDTO getOperator() {
         return operator;
     }
 
