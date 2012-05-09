@@ -19,7 +19,9 @@ package com.arcbees.gaestudio.shared.dto;
 //import com.google.apphosting.api.DatastorePb.DeleteRequest;
 //import com.google.apphosting.api.DatastorePb.DeleteResponse;
 
-public class DeleteRecord extends DbOperationRecord {
+import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDTO;
+
+public class DeleteRecordDTO extends DbOperationRecordDTO {
 
     private static final long serialVersionUID = 3745865294476274476L;
 
@@ -28,14 +30,13 @@ public class DeleteRecord extends DbOperationRecord {
 //    private final DeleteResponse deleteResponse;
 
     @SuppressWarnings("unused")
-    protected DeleteRecord() {
+    protected DeleteRecordDTO() {
     }
 
-    public DeleteRecord(//DeleteRequest deleteRequest, DeleteResponse deleteResponse,
-                        //StackTraceElement[] stackTrace,
-                        Long requestId, Long statementId, Integer executionTimeMs) {
-        super(//stackTrace,
-                requestId, statementId, executionTimeMs);
+    public DeleteRecordDTO(//DeleteRequest deleteRequest, DeleteResponse deleteResponse,
+                           StackTraceElementDTO callerStackTraceElement,
+                           Long requestId, Long statementId, Integer executionTimeMs) {
+        super(callerStackTraceElement, requestId, statementId, executionTimeMs);
 //        this.deleteRequest = deleteRequest;
 //        this.deleteResponse = deleteResponse;
     }

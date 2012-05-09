@@ -2,8 +2,8 @@ package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
-import com.arcbees.gaestudio.shared.dto.entity.Entity;
-import com.arcbees.gaestudio.shared.dto.entity.Key;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDTO;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.resources.client.CssResource;
@@ -40,7 +40,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void displayEntities(ArrayList<Entity> entities) {
+    public void displayEntities(ArrayList<EntityDTO> entities) {
         entityList.clear();
 
         if (entities == null) {
@@ -48,7 +48,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         }
 
         // TODO use a cell table
-        for (Entity entity : entities) {
+        for (EntityDTO entity : entities) {
             StringBuilder builder = new StringBuilder();
             
             builder.append("[Kind: ");
@@ -63,7 +63,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         }
     }
 
-    private HTML createEntityElement(String name, final Key entityKey, final String entityData) {
+    private HTML createEntityElement(String name, final KeyDTO entityKey, final String entityData) {
         HTML html = new HTML(name);
 
         html.setStyleName(style.entity());

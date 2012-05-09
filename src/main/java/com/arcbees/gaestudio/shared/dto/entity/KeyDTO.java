@@ -3,7 +3,7 @@ package com.arcbees.gaestudio.shared.dto.entity;
 import java.io.Serializable;
 
 // TODO add support for parent keys
-public class Key implements Serializable {
+public class KeyDTO implements Serializable {
 
     private static final long serialVersionUID = -6988501130987934034L;
     
@@ -12,10 +12,10 @@ public class Key implements Serializable {
     private Long id;
 
     @SuppressWarnings("unused")
-    protected Key() {
+    protected KeyDTO() {
     }
 
-    public Key(String kind, Long id) {
+    public KeyDTO(String kind, Long id) {
         this.kind = kind;
         this.id = id;
     }

@@ -4,7 +4,7 @@
 
 package com.arcbees.gaestudio.shared.dto.query;
 
-public enum QueryOrderDirection {
+public enum QueryOrderDirectionDTO {
 
     ASCENDING,
 

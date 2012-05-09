@@ -8,6 +8,8 @@
     <g:HTMLPanel>
         <h3>Statement Details</h3>
         <g:HTML ui:field="statement" />
+        <h3>Call Location</h3>
+        <g:HTML ui:field="callLocation" />
     </g:HTMLPanel>
 
 </ui:UiBinder>

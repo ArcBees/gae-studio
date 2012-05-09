@@ -6,7 +6,7 @@ import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.profiler.BaseLabel;
 import com.arcbees.gaestudio.client.application.profiler.LabelCallback;
 import com.arcbees.gaestudio.client.application.profiler.LabelFactory;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -49,7 +49,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     }
 
     @Override
-    public void displayStatementsForRequest(Long requestId, ArrayList<DbOperationRecord> statements) {
+    public void displayStatementsForRequest(Long requestId, ArrayList<DbOperationRecordDTO> statements) {
         if (statements == null) {
             return;
         }
@@ -57,7 +57,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
         Collections.sort(statements, new StatementIdComparator());
 
         if (currentlyDisplayedRequestId.equals(requestId)) {
-            for (DbOperationRecord statement : statements) {
+            for (DbOperationRecordDTO statement : statements) {
                 if (!statementElements.contains(statement.getStatementId())) {
                     createAndInsertStatementElement(statement);
                 }
@@ -68,13 +68,13 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
             statementList.clear();
             statementElements.clear();
 
-            for (DbOperationRecord statement : statements) {
+            for (DbOperationRecordDTO statement : statements) {
                 createAndInsertStatementElement(statement);
             }
         }
     }
 
-    private void createAndInsertStatementElement(DbOperationRecord statement) {
+    private void createAndInsertStatementElement(DbOperationRecordDTO statement) {
         StatementLabel statementLabel = labelFactory.createStatement(statement, new LabelCallback() {
             @Override
             public void onClick(BaseLabel element, Long statementId) {
@@ -94,9 +94,9 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
         baseLabel.setSelected(true);
     }
 
-    private class StatementIdComparator implements Comparator<DbOperationRecord> {
+    private class StatementIdComparator implements Comparator<DbOperationRecordDTO> {
         @Override
-        public int compare(DbOperationRecord o1, DbOperationRecord o2) {
+        public int compare(DbOperationRecordDTO o1, DbOperationRecordDTO o2) {
             return o1.getStatementId().compareTo(o2.getStatementId());
         }
     }

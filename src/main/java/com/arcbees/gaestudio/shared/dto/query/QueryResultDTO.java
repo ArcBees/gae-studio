@@ -6,7 +6,7 @@ package com.arcbees.gaestudio.shared.dto.query;
 
 import java.io.Serializable;
 
-public class QueryResult implements Serializable {
+public class QueryResultDTO implements Serializable {
 
     private static final long serialVersionUID = -3499363771373323522L;
     
@@ -15,10 +15,10 @@ public class QueryResult implements Serializable {
     private Integer serializedSize;
 
     @SuppressWarnings("unused")
-    protected QueryResult() {
+    protected QueryResultDTO() {
     }
     
-    public QueryResult(Integer resultSize, Integer serializedSize) {
+    public QueryResultDTO(Integer resultSize, Integer serializedSize) {
         this.resultSize = resultSize;
         this.serializedSize = serializedSize;
     }

@@ -5,7 +5,7 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.gaestudio.client.application.event.EntitySelectedEvent;
-import com.arcbees.gaestudio.shared.dto.entity.Key;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDTO;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -16,7 +16,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
         implements EntitySelectedEvent.EntitySelectedHandler, EntityDetailsUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<EntityDetailsUiHandlers> {
-        void displayEntityDetails(Key entityKey, String entityData);
+        void displayEntityDetails(KeyDTO entityKey, String entityData);
     }
 
     @Inject

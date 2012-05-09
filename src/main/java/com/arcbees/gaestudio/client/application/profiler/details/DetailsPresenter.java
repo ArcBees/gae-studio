@@ -6,7 +6,7 @@ package com.arcbees.gaestudio.client.application.profiler.details;
 
 import com.arcbees.gaestudio.client.application.event.StatementSelectedEvent;
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -18,10 +18,10 @@ public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView>
         implements DbOperationRecordProcessor, StatementSelectedEvent.StatementSelectedHandler {
 
     public interface MyView extends View {
-        void displayStatementDetails(DbOperationRecord record);
+        void displayStatementDetails(DbOperationRecordDTO record);
     }
 
-    private final HashMap<Long, DbOperationRecord> statementsById = new HashMap<Long, DbOperationRecord>();
+    private final HashMap<Long, DbOperationRecordDTO> statementsById = new HashMap<Long, DbOperationRecordDTO>();
 
     @Inject
     public DetailsPresenter(final EventBus eventBus, final MyView view) {
@@ -35,7 +35,7 @@ public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView>
     }
 
     @Override
-    public void processDbOperationRecord(DbOperationRecord record) {
+    public void processDbOperationRecord(DbOperationRecordDTO record) {
         statementsById.put(record.getStatementId(), record);
     }
 

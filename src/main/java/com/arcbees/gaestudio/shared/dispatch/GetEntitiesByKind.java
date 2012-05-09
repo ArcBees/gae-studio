@@ -4,7 +4,7 @@
 
 package com.arcbees.gaestudio.shared.dispatch;
 
-import com.arcbees.gaestudio.shared.dto.entity.Entity;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 import com.gwtplatform.dispatch.annotation.GenDispatch;
 import com.gwtplatform.dispatch.annotation.In;
 import com.gwtplatform.dispatch.annotation.Optional;
@@ -27,6 +27,6 @@ public class GetEntitiesByKind {
     Integer limit;
     
     @Out(1)
-    ArrayList<Entity> entities;
+    ArrayList<EntityDTO> entities;
 
 }

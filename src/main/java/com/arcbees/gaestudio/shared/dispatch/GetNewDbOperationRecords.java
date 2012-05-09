@@ -4,7 +4,7 @@
 
 package com.arcbees.gaestudio.shared.dispatch;
 
-import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.gwtplatform.dispatch.annotation.GenDispatch;
 import com.gwtplatform.dispatch.annotation.In;
 import com.gwtplatform.dispatch.annotation.Optional;
@@ -23,6 +23,6 @@ public class GetNewDbOperationRecords {
     Integer maxResults;
     
     @Out(2)
-    ArrayList<DbOperationRecord> records;
+    ArrayList<DbOperationRecordDTO> records;
     
 }

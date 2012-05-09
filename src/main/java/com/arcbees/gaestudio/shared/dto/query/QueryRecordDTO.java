@@ -16,37 +16,37 @@
 
 package com.arcbees.gaestudio.shared.dto.query;
 
-import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
+import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDTO;
 
-public class QueryRecord extends DbOperationRecord {
+public class QueryRecordDTO extends DbOperationRecordDTO {
 
     private static final long serialVersionUID = -5801060359687948701L;
 
-    private Query query;
+    private QueryDTO query;
 
-    private QueryResult queryResult;
+    private QueryResultDTO queryResult;
 
     @SuppressWarnings("unused")
-    protected QueryRecord() {
+    protected QueryRecordDTO() {
     }
 
-    public QueryRecord(Query query, QueryResult queryResult,
-                       //StackTraceElement[] stackTrace,
-                       Long requestId,
-                       Long statementId,
-                       Integer executionTimeMs) {
-        super(//stackTrace,
-                requestId, statementId, executionTimeMs);
+    public QueryRecordDTO(QueryDTO query, QueryResultDTO queryResult,
+                          StackTraceElementDTO callerStackTraceElement,
+                          Long requestId,
+                          Long statementId,
+                          Integer executionTimeMs) {
+        super(callerStackTraceElement, requestId, statementId, executionTimeMs);
         this.query = query;
         this.queryResult = queryResult;
     }
 
 
-    public Query getQuery() {
+    public QueryDTO getQuery() {
         return query;
     }
 
-    public QueryResult getQueryResult() {
+    public QueryResultDTO getQueryResult() {
         return queryResult;
     }
 

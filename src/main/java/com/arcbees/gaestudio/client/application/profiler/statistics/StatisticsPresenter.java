@@ -5,8 +5,8 @@
 package com.arcbees.gaestudio.client.application.profiler.statistics;
 
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
-import com.arcbees.gaestudio.shared.dto.query.QueryRecord;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
+import com.arcbees.gaestudio.shared.dto.query.QueryRecordDTO;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -43,15 +43,15 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
     }
 
     @Override
-    public void processDbOperationRecord(DbOperationRecord record) {
+    public void processDbOperationRecord(DbOperationRecordDTO record) {
         final long requestId = record.getRequestId();
         
         knownRequestIds.add(requestId);
         statementCount++;
         totalExecutionTimeMs += record.getExecutionTimeMs();
         
-        if (record instanceof QueryRecord) {
-            QueryRecord queryRecord = (QueryRecord)record;
+        if (record instanceof QueryRecordDTO) {
+            QueryRecordDTO queryRecord = (QueryRecordDTO)record;
             totalObjectsRetrieved += queryRecord.getQueryResult().getResultSize();
             totalDataReceived += queryRecord.getQueryResult().getSerializedSize();
         }
