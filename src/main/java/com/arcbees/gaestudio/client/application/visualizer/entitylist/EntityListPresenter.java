@@ -32,6 +32,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Inject
     public EntityListPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
         super(eventBus, view);
+
         this.dispatcher = dispatcher;
     }
 

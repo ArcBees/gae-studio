@@ -31,6 +31,7 @@ public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView>
     @Override
     protected void onBind() {
         super.onBind();
+
         addRegisteredHandler(StatementSelectedEvent.getType(), this);
     }
 

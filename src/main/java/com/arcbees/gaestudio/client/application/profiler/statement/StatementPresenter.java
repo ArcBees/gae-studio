@@ -22,6 +22,7 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
 
     public interface MyView extends View, HasUiHandlers<StatementUiHandlers> {
         Long getCurrentlyDisplayedRequestId();
+
         void displayStatementsForRequest(Long requestId, ArrayList<DbOperationRecordDTO> statements);
     }
 

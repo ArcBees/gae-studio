@@ -5,6 +5,7 @@
 package com.arcbees.gaestudio.client.application.ui;
 
 public class SelectableLabelServant {
+
     private BaseLabel selectedBaseLabel;
 
     public void select(BaseLabel baseLabel){
@@ -14,4 +15,5 @@ public class SelectableLabelServant {
         selectedBaseLabel = baseLabel;
         baseLabel.setSelected(true);
     }
+    
 }

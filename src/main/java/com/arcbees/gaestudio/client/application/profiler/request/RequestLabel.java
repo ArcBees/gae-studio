@@ -21,6 +21,7 @@ public class RequestLabel extends BaseLabel {
     public RequestLabel(final Resources resources, @Assisted final RequestStatistics requestStatistics,
                         @Assisted final LabelCallback callback) {
         super(resources, callback);
+
         updateContent(requestStatistics);
     }
 

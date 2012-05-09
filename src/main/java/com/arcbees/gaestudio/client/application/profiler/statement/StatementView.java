@@ -40,6 +40,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
                          final Resources resources, final ProfilerLabelFactory profilerLabelFactory,
                          final SelectableLabelServant selectableLabelServant) {
         super(uiHandlersStrategy);
+
         this.resources = resources;
         this.profilerLabelFactory = profilerLabelFactory;
         this.selectableLabelServant = selectableLabelServant;

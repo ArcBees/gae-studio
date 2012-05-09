@@ -35,6 +35,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                           final Resources resources, final VisualizerLabelFactory visualizerLabelFactory,
                           final SelectableLabelServant selectableLabelServant) {
         super(uiHandlersStrategy);
+
         this.resources = resources;
         this.visualizerLabelFactory = visualizerLabelFactory;
         this.selectableLabelServant = selectableLabelServant;

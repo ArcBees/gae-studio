@@ -21,6 +21,7 @@ public class StatementLabel extends BaseLabel {
     public StatementLabel(final Resources resources, final RecordFormatter recordFormatter,
                           @Assisted final DbOperationRecordDTO record, @Assisted final LabelCallback callback) {
         super(resources, callback);
+
         this.recordFormatter = recordFormatter;
         updateContent(record);
     }

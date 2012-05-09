@@ -17,6 +17,7 @@ public class KindLabel extends BaseLabel {
     public KindLabel(final Resources resources, @Assisted final String kind,
                      @Assisted final LabelCallback callback) {
         super(resources, callback);
+
         updateContent(kind);
     }
 

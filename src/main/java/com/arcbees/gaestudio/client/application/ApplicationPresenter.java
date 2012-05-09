@@ -33,6 +33,7 @@ public class ApplicationPresenter extends
     public ApplicationPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
                                 final HeaderPresenter headerPresenter) {
         super(eventBus, view, proxy);
+
         this.headerPresenter = headerPresenter;
     }
 

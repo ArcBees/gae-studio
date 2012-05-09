@@ -35,6 +35,7 @@ public class RequestView extends ViewWithUiHandlers<RequestUiHandlers> implement
                        final Resources resources, final ProfilerLabelFactory labelFactory,
                        final SelectableLabelServant selectableLabelServant) {
         super(uiHandlersStrategy);
+
         this.resources = resources;
         this.labelFactory = labelFactory;
         this.selectableLabelServant = selectableLabelServant;

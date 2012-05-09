@@ -32,6 +32,7 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
                         final Resources resources, final VisualizerLabelFactory visualizerLabelFactory,
                         final SelectableLabelServant selectableLabelServant) {
         super(uiHandlersStrategy);
+
         this.resources = resources;
         this.visualizerLabelFactory = visualizerLabelFactory;
         this.selectableLabelServant = selectableLabelServant;

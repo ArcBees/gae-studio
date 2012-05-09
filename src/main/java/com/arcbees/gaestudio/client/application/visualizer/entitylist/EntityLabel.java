@@ -18,6 +18,7 @@ public class EntityLabel extends BaseLabel {
     public EntityLabel(final Resources resources, @Assisted final EntityDTO entity,
                        @Assisted final LabelCallback callback) {
         super(resources, callback);
+
         updateContent(entity);
     }
 
