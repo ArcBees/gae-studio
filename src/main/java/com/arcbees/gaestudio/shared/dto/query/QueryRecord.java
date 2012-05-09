@@ -17,6 +17,7 @@
 package com.arcbees.gaestudio.shared.dto.query;
 
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
+import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDTO;
 
 public class QueryRecord extends DbOperationRecord {
 
@@ -31,12 +32,11 @@ public class QueryRecord extends DbOperationRecord {
     }
 
     public QueryRecord(Query query, QueryResult queryResult,
-                       //StackTraceElement[] stackTrace,
+                       StackTraceElementDTO callerStackTraceElement,
                        Long requestId,
                        Long statementId,
                        Integer executionTimeMs) {
-        super(//stackTrace,
-                requestId, statementId, executionTimeMs);
+        super(callerStackTraceElement, requestId, statementId, executionTimeMs);
         this.query = query;
         this.queryResult = queryResult;
     }

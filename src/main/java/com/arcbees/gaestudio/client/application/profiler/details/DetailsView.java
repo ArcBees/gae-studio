@@ -3,6 +3,7 @@ package com.arcbees.gaestudio.client.application.profiler.details;
 import com.arcbees.core.client.mvp.ViewImpl;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecord;
 import com.arcbees.gaestudio.shared.formatters.RecordFormatter;
+import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDTO;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTML;
@@ -17,6 +18,9 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
     @UiField
     HTML statement;
 
+    @UiField
+    HTML callLocation;
+
     private final RecordFormatter recordFormatter;
 
     @Inject
@@ -28,6 +32,23 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
     @Override
     public void displayStatementDetails(DbOperationRecord record) {
         statement.setHTML(recordFormatter.formatRecord(record));
+        callLocation.setHTML(tempFormatCaller(record.getCallerStackTraceElement()));
+    }
+
+    // TODO this is just a quick hack
+    private String tempFormatCaller(StackTraceElementDTO caller) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("Class:");
+        builder.append(caller.getClassName());
+        builder.append(" Method:");
+        builder.append(caller.getMethodName());
+        builder.append(" Filename:");
+        builder.append(caller.getFileName());
+        builder.append(" Line#:");
+        builder.append(caller.getLineNumber());
+
+        return builder.toString();
     }
 
 }
