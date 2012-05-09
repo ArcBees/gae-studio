@@ -4,13 +4,10 @@ import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.ui.BaseLabel;
-import com.arcbees.gaestudio.client.application.ui.LabelCallback;
+import com.arcbees.gaestudio.client.application.ui.SelectableLabelCallback;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerLabelFactory;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -47,22 +44,14 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
         }
     }
 
-    private KindLabel createKindElement(final String kind) {
-        return visualizerLabelFactory.createKind(kind, new LabelCallback<String>() {
+    private KindLabel createKindElement(String kind) {
+        return visualizerLabelFactory.createKind(kind, new SelectableLabelCallback<String> () {
             @Override
-            public void onClick(BaseLabel baseLabel, String id) {
-                onKindClicked(kind, baseLabel);
+            public void onClick(BaseLabel baseLabel, String kind) {
+                super.onClick(baseLabel, kind);
+                getUiHandlers().onKindClicked(kind);
             }
         });
-    }
-
-    private void onKindClicked(String kind, BaseLabel baseLabel) {
-        getUiHandlers().onKindClicked(kind);
-        if (selectedBaseLabel != null) {
-            selectedBaseLabel.setSelected(false);
-        }
-        selectedBaseLabel = baseLabel;
-        baseLabel.setSelected(true);
     }
 
 }

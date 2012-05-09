@@ -3,9 +3,9 @@ package com.arcbees.gaestudio.client.application.profiler.statement;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
-import com.arcbees.gaestudio.client.application.ui.BaseLabel;
-import com.arcbees.gaestudio.client.application.ui.LabelCallback;
 import com.arcbees.gaestudio.client.application.profiler.ProfilerLabelFactory;
+import com.arcbees.gaestudio.client.application.ui.BaseLabel;
+import com.arcbees.gaestudio.client.application.ui.SelectableLabelCallback;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -32,7 +32,6 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     private final ProfilerLabelFactory profilerLabelFactory;
     private final List<Long> statementElements = new ArrayList<Long>();
     private Long currentlyDisplayedRequestId = -1L;
-    private BaseLabel<Long> selectedBaseLabel;
 
     @Inject
     public StatementView(final Binder uiBinder, final UiHandlersStrategy<StatementUiHandlers> uiHandlersStrategy,
@@ -75,23 +74,15 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     }
 
     private void createAndInsertStatementElement(DbOperationRecordDTO statement) {
-        StatementLabel statementLabel = profilerLabelFactory.createStatement(statement, new LabelCallback<Long>() {
+        StatementLabel statementLabel = profilerLabelFactory.createStatement(statement, new SelectableLabelCallback<Long>() {
             @Override
             public void onClick(BaseLabel element, Long statementId) {
-                onStatementClicked(element, statementId);
+                super.onClick(element, statementId);
+                getUiHandlers().onStatementClicked(statementId);
             }
         });
         statementList.add(statementLabel);
         statementElements.add(statement.getStatementId());
-    }
-
-    private void onStatementClicked(BaseLabel baseLabel, Long statementId) {
-        getUiHandlers().onStatementClicked(statementId);
-        if (selectedBaseLabel != null) {
-            selectedBaseLabel.setSelected(false);
-        }
-        selectedBaseLabel = baseLabel;
-        baseLabel.setSelected(true);
     }
 
     private class StatementIdComparator implements Comparator<DbOperationRecordDTO> {
