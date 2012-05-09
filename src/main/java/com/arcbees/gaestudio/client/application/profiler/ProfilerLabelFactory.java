@@ -12,8 +12,8 @@ import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 
 public interface ProfilerLabelFactory {
 
-    RequestLabel createRequest(final RequestStatistics requestStatistics, final LabelCallback<Long> callback);
+    RequestLabel createRequest(final RequestStatistics requestStatistics, final LabelCallback callback);
 
-    StatementLabel createStatement(final DbOperationRecordDTO record, final LabelCallback<Long> callback);
+    StatementLabel createStatement(final DbOperationRecordDTO record, final LabelCallback callback);
 
 }

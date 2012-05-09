@@ -4,17 +4,14 @@
 
 package com.arcbees.gaestudio.client.application.ui;
 
-public abstract class SelectableLabelCallback<T> implements LabelCallback<T>{
+public class SelectableLabelServant {
+    private BaseLabel selectedBaseLabel;
 
-    BaseLabel<T> selectedBaseLabel;
-
-    @Override
-    public void onClick(BaseLabel baseLabel, T id){
+    public void select(BaseLabel baseLabel){
         if (selectedBaseLabel != null) {
             selectedBaseLabel.setSelected(false);
         }
         selectedBaseLabel = baseLabel;
         baseLabel.setSelected(true);
     }
-
 }

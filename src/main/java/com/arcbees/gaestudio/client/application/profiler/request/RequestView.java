@@ -5,7 +5,8 @@ import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.profiler.ProfilerLabelFactory;
 import com.arcbees.gaestudio.client.application.ui.BaseLabel;
-import com.arcbees.gaestudio.client.application.ui.SelectableLabelCallback;
+import com.arcbees.gaestudio.client.application.ui.LabelCallback;
+import com.arcbees.gaestudio.client.application.ui.SelectableLabelServant;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -26,14 +27,17 @@ public class RequestView extends ViewWithUiHandlers<RequestUiHandlers> implement
     Resources resources;
 
     private final ProfilerLabelFactory labelFactory;
+    private final SelectableLabelServant selectableLabelServant;
     private final HashMap<Long, RequestLabel> requestElements = new HashMap<Long, RequestLabel>();
 
     @Inject
     public RequestView(final Binder uiBinder, final UiHandlersStrategy<RequestUiHandlers> uiHandlersStrategy,
-                       final Resources resources, final ProfilerLabelFactory labelFactory) {
+                       final Resources resources, final ProfilerLabelFactory labelFactory,
+                       final SelectableLabelServant selectableLabelServant) {
         super(uiHandlersStrategy);
         this.resources = resources;
         this.labelFactory = labelFactory;
+        this.selectableLabelServant = selectableLabelServant;
         initWidget(uiBinder.createAndBindUi(this));
     }
 
@@ -56,12 +60,12 @@ public class RequestView extends ViewWithUiHandlers<RequestUiHandlers> implement
         }
     }
 
-    private RequestLabel createRequestElement(RequestStatistics request) {
-        return labelFactory.createRequest(request, new SelectableLabelCallback<Long> () {
+    private RequestLabel createRequestElement(final RequestStatistics request) {
+        return labelFactory.createRequest(request, new LabelCallback() {
             @Override
-            public void onClick(BaseLabel baseLabel, Long requestId) {
-                super.onClick(baseLabel, requestId);
-                getUiHandlers().onRequestClicked(requestId);
+            public void onClick(BaseLabel baseLabel) {
+                selectableLabelServant.select(baseLabel);
+                getUiHandlers().onRequestClicked(request.getRequestId());
             }
         });
     }

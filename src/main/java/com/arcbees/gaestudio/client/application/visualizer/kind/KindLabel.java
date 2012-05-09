@@ -11,12 +11,12 @@ import com.google.inject.assistedinject.Assisted;
 
 import javax.inject.Inject;
 
-public class KindLabel extends BaseLabel<String> {
+public class KindLabel extends BaseLabel {
 
     @Inject
     public KindLabel(final Resources resources, @Assisted final String kind,
-                     @Assisted final LabelCallback<String> callback) {
-        super(resources, kind, callback);
+                     @Assisted final LabelCallback callback) {
+        super(resources, callback);
         updateContent(kind);
     }
 

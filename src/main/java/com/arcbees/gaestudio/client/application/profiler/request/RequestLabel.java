@@ -13,14 +13,14 @@ import com.google.inject.assistedinject.Assisted;
 
 import javax.inject.Inject;
 
-public class RequestLabel extends BaseLabel<Long> {
+public class RequestLabel extends BaseLabel {
 
     private static final NumberFormat numberFormat = TimeNumberFormat.getFormat();
 
     @Inject
     public RequestLabel(final Resources resources, @Assisted final RequestStatistics requestStatistics,
-                        @Assisted final LabelCallback<Long> callback) {
-        super(resources, requestStatistics.getRequestId(), callback);
+                        @Assisted final LabelCallback callback) {
+        super(resources, callback);
         updateContent(requestStatistics);
     }
 

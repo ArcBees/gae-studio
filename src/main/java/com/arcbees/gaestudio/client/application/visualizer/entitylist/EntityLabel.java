@@ -12,12 +12,12 @@ import com.google.inject.assistedinject.Assisted;
 
 import javax.inject.Inject;
 
-public class EntityLabel extends BaseLabel<EntityDTO> {
+public class EntityLabel extends BaseLabel {
 
     @Inject
     public EntityLabel(final Resources resources, @Assisted final EntityDTO entity,
-                       @Assisted final LabelCallback<EntityDTO> callback) {
-        super(resources, entity, callback);
+                       @Assisted final LabelCallback callback) {
+        super(resources, callback);
         updateContent(entity);
     }
 

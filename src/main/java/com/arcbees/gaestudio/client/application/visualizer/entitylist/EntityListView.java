@@ -4,7 +4,8 @@ import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.ui.BaseLabel;
-import com.arcbees.gaestudio.client.application.ui.SelectableLabelCallback;
+import com.arcbees.gaestudio.client.application.ui.LabelCallback;
+import com.arcbees.gaestudio.client.application.ui.SelectableLabelServant;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerLabelFactory;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -28,13 +29,16 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     Resources resources;
 
     private final VisualizerLabelFactory visualizerLabelFactory;
+    private final SelectableLabelServant selectableLabelServant;
 
     @Inject
     public EntityListView(final Binder uiBinder, final UiHandlersStrategy<EntityListUiHandlers> uiHandlersStrategy,
-                          final Resources resources, final VisualizerLabelFactory visualizerLabelFactory) {
+                          final Resources resources, final VisualizerLabelFactory visualizerLabelFactory,
+                          final SelectableLabelServant selectableLabelServant) {
         super(uiHandlersStrategy);
         this.resources = resources;
         this.visualizerLabelFactory = visualizerLabelFactory;
+        this.selectableLabelServant = selectableLabelServant;
         initWidget(uiBinder.createAndBindUi(this));
     }
 
@@ -53,10 +57,10 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     private EntityLabel createEntityElement(final EntityDTO entity) {
-        return visualizerLabelFactory.createEntity(entity, new SelectableLabelCallback<EntityDTO>() {
+        return visualizerLabelFactory.createEntity(entity, new LabelCallback() {
             @Override
-            public void onClick(BaseLabel baseLabel, EntityDTO entity) {
-                super.onClick(baseLabel, entity);
+            public void onClick(BaseLabel baseLabel) {
+                selectableLabelServant.select(baseLabel);
                 getUiHandlers().onEntityClicked(entity.getKey(), entity.getJson());
             }
         });

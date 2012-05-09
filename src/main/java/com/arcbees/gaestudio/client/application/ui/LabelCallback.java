@@ -4,8 +4,8 @@
 
 package com.arcbees.gaestudio.client.application.ui;
 
-public interface LabelCallback<T> {
+public interface LabelCallback {
 
-    void onClick(BaseLabel baseLabel, T id);
+    void onClick(BaseLabel baseLabel);
 
 }

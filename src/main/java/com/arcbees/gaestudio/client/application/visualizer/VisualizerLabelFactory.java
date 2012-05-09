@@ -11,8 +11,8 @@ import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 
 public interface VisualizerLabelFactory {
 
-    KindLabel createKind(final String kind, final LabelCallback<String> callback);
+    KindLabel createKind(final String kind, final LabelCallback callback);
 
-    EntityLabel createEntity(final EntityDTO entity, final LabelCallback<EntityDTO> callback);
+    EntityLabel createEntity(final EntityDTO entity, final LabelCallback callback);
 
 }

@@ -13,14 +13,14 @@ import com.google.inject.assistedinject.Assisted;
 
 import javax.inject.Inject;
 
-public class StatementLabel extends BaseLabel<Long> {
+public class StatementLabel extends BaseLabel {
 
     private final RecordFormatter recordFormatter;
 
     @Inject
     public StatementLabel(final Resources resources, final RecordFormatter recordFormatter,
-                          @Assisted final DbOperationRecordDTO record, @Assisted final LabelCallback<Long> callback) {
-        super(resources, record.getStatementId(), callback);
+                          @Assisted final DbOperationRecordDTO record, @Assisted final LabelCallback callback) {
+        super(resources, callback);
         this.recordFormatter = recordFormatter;
         updateContent(record);
     }
