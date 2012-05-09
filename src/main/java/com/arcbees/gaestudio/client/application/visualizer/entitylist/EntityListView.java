@@ -16,7 +16,6 @@ import com.google.inject.Inject;
 
 import java.util.ArrayList;
 
-// TODO see if I can factor out some of the common logic in the kind and entity list views
 public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
 
     public interface Binder extends UiBinder<Widget, EntityListView> {

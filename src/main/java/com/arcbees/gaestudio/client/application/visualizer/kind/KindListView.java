@@ -13,7 +13,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
-// TODO see if I can factor out some of the common logic in the kind and entity list views
 public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> implements KindListPresenter.MyView {
 
     public interface Binder extends UiBinder<Widget, KindListView> {
