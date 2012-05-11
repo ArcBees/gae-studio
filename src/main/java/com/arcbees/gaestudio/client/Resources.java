@@ -14,6 +14,12 @@ public interface Resources extends ClientBundle {
         String item();
         
         String selected();
+
+        String fleft();
+
+        String fright();
+
+        String clear();
     }
 
     public Styles styles();

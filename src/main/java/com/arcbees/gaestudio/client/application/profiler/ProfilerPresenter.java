@@ -5,6 +5,7 @@
 package com.arcbees.gaestudio.client.application.profiler;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
+import com.arcbees.gaestudio.client.application.event.RecordingToggledEvent;
 import com.arcbees.gaestudio.client.application.profiler.details.DetailsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.request.RequestPresenter;
 import com.arcbees.gaestudio.client.application.profiler.statement.StatementPresenter;
@@ -27,7 +28,8 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import java.util.ArrayList;
 
-public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, ProfilerPresenter.MyProxy> {
+public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, ProfilerPresenter.MyProxy> implements
+        RecordingToggledEvent.RecordingToggledHandler {
 
     public interface MyView extends View {
     }
@@ -51,6 +53,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
 
     private long lastDbOperationRecordId;
     private boolean isProcessing = false;
+    private boolean isRecording = false;
 
     @Inject
     public ProfilerPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
@@ -71,6 +74,11 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     @Override
+    public void onRecordingToggled(RecordingToggledEvent event) {
+        isRecording = event.isRecording();
+    }
+
+    @Override
     protected void revealInParent() {
         RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
     }
@@ -84,7 +92,8 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         setInSlot(TYPE_SetStatementPanelContent, statementPresenter);
         setInSlot(TYPE_SetDetailsPanelContent, detailsPresenter);
 
-        getNewDbOperationRecords();
+        addRegisteredHandler(RecordingToggledEvent.getType(), this);
+
         new Timer() {
             @Override
             public void run() {
@@ -96,22 +105,24 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     private void getNewDbOperationRecords() {
-        isProcessing = true;
-        dispatcher.execute(
-                new GetNewDbOperationRecordsAction.Builder(lastDbOperationRecordId).maxResults(100).build(),
-                new AsyncCallback<GetNewDbOperationRecordsResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        // TODO implement
-                        isProcessing = false;
-                    }
+        if (isRecording) {
+            isProcessing = true;
+            dispatcher.execute(
+                    new GetNewDbOperationRecordsAction.Builder(lastDbOperationRecordId).maxResults(100).build(),
+                    new AsyncCallback<GetNewDbOperationRecordsResult>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            // TODO implement
+                            isProcessing = false;
+                        }
 
-                    @Override
-                    public void onSuccess(GetNewDbOperationRecordsResult result) {
-                        processNewDbOperationRecords(result.getRecords());
-                        isProcessing = false;
-                    }
-                });
+                        @Override
+                        public void onSuccess(GetNewDbOperationRecordsResult result) {
+                            processNewDbOperationRecords(result.getRecords());
+                            isProcessing = false;
+                        }
+                    });
+        }
     }
 
     // TODO properly handle any missing records
