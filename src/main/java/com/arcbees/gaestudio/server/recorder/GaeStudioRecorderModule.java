@@ -48,7 +48,7 @@ public class GaeStudioRecorderModule extends AbstractModule {
                 .implement(DbOperationRecorderHook.class, DbOperationRecorderHook.class)
                 .build(DbOperationRecorderHookFactory.class));
 
-        bind(HookDriver.class).asEagerSingleton();
+        bind(HookRegistrar.class).asEagerSingleton();
     }
 
     @Provides

@@ -4,26 +4,16 @@
 
 package com.arcbees.gaestudio.server.recorder.authentication;
 
-import java.util.UUID;
-
 public class Listener {
     final private String id;
 
-    private Listener(String id) {
+    public Listener(String id) {
         this.id = id;
-    }
-    
-    public static Listener createExistingListener(String id){
-        return new Listener(id);
-    }
-
-    public static Listener createNewListener(){
-        return new Listener(UUID.randomUUID().toString());
     }
 
     @Override
     public boolean equals(Object o) {
-        if(o instanceof Listener == false){
+        if (o instanceof Listener == false) {
             return false;
         }
         Listener other = (Listener) o;
@@ -38,6 +28,6 @@ public class Listener {
 
     public String getId() {
         return id;
-    }    
-    
+    }
+
 }

@@ -12,14 +12,14 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
-public class HookDriver {
+public class HookRegistrar {
 
     private final Logger logger;
     final ApiProxyHook hook;
-    final Set<Listener> listeners = new HashSet<Listener>();
+    final Set<Listener> listeners = new HashSet<Listener>(); // TODO: Deal with synchronization
 
     @Inject
-    public HookDriver(final DbOperationRecorderHookFactory dbOperationRecorderHookFactory, final Logger logger) {
+    public HookRegistrar(final DbOperationRecorderHookFactory dbOperationRecorderHookFactory, final Logger logger) {
         this.logger = logger;
         hook = new ApiProxyHook(ApiProxy.getDelegate());
         hook.getHooks().put("datastore_v3", dbOperationRecorderHookFactory.create(hook.getBaseDelegate()));

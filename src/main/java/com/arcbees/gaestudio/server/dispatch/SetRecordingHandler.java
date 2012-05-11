@@ -4,7 +4,7 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
-import com.arcbees.gaestudio.server.recorder.HookDriver;
+import com.arcbees.gaestudio.server.recorder.HookRegistrar;
 import com.arcbees.gaestudio.server.recorder.authentication.Listener;
 import com.arcbees.gaestudio.server.recorder.authentication.ListenerProvider;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
@@ -14,24 +14,17 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-import java.util.logging.Logger;
-
-// TODO externalize magic strings
-// TODO add logging
 public class SetRecordingHandler
         extends AbstractActionHandler<SetRecordingAction, SetRecordingResult> {
 
-    private final Logger logger;
-    private final HookDriver hookDriver;
+    private final HookRegistrar hookRegistrar;
     private final ListenerProvider listenerProvider;
 
     @Inject
-    public SetRecordingHandler(final Logger logger, final HookDriver hookDriver,
-                               final ListenerProvider listenerProvider) {
+    public SetRecordingHandler(final HookRegistrar hookRegistrar, final ListenerProvider listenerProvider) {
         super(SetRecordingAction.class);
 
-        this.logger = logger;
-        this.hookDriver = hookDriver;
+        this.hookRegistrar = hookRegistrar;
         this.listenerProvider = listenerProvider;
     }
 
@@ -41,9 +34,9 @@ public class SetRecordingHandler
         Listener listener = listenerProvider.get();
 
         if (action.isStart()) {
-            hookDriver.putListener(listener);
+            hookRegistrar.putListener(listener);
         } else {
-            hookDriver.removeListener(listener);
+            hookRegistrar.removeListener(listener);
         }
 
         return new SetRecordingResult();

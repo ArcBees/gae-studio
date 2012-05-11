@@ -7,6 +7,7 @@ package com.arcbees.gaestudio.server.recorder.authentication;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.servlet.http.HttpSession;
+import java.util.UUID;
 
 public class ListenerProvider implements Provider<Listener> {
     public static final String LISTENER_ID_COOKIE = "LISTENER_ID";
@@ -22,13 +23,10 @@ public class ListenerProvider implements Provider<Listener> {
         HttpSession session = sessionProvider.get();
         String listenerId = (String) session.getAttribute(LISTENER_ID_COOKIE);
 
-        Listener listener;
         if (listenerId == null) {
-            listener = Listener.createNewListener();
-            session.setAttribute(LISTENER_ID_COOKIE, listener.getId());
-        } else {
-            listener = Listener.createExistingListener(listenerId);
+            listenerId = UUID.randomUUID().toString();
+            session.setAttribute(LISTENER_ID_COOKIE, listenerId);
         }
-        return listener;
+        return new Listener(listenerId);
     }
 }
