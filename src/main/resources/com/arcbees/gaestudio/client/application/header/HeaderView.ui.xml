@@ -19,8 +19,7 @@
 
     <g:HTMLPanel styleName="{style.header}">
         <div class="{resources.styles.fleft}">
-            <g:Button ui:field="startRecording">Start recording</g:Button>
-            <g:Button ui:field="stopRecording">Stop recording</g:Button>
+            <g:Button ui:field="recording"/>
         </div>
 
         <div class="{resources.styles.fright}">

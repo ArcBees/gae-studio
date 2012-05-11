@@ -31,8 +31,9 @@ import java.util.concurrent.TimeoutException;
 // TODO externalize magic strings
 // TODO cleanup
 public class ApiProxyHook extends BaseHook {
-    
+
     private Map<String, Delegate<Environment>> hooks;
+    boolean isRecording = false;
 
     public ApiProxyHook(Delegate<Environment> baseDelegate) {
         super(baseDelegate);
@@ -54,7 +55,7 @@ public class ApiProxyHook extends BaseHook {
     public Future<byte[]> makeAsyncCall(final Environment environment, final String packageName,
                                         final String methodName, final byte[] request,
                                         final ApiConfig apiConfig) {
-        
+
         if (areApiHooksDisabled(environment)) {
             return getBaseDelegate().makeAsyncCall(environment, packageName, methodName, request, apiConfig);
         }
@@ -82,21 +83,33 @@ public class ApiProxyHook extends BaseHook {
             }
 
             @Override
-            public byte[] get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+            public byte[] get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException,
+                    TimeoutException {
                 return new byte[0];  //To change body of implemented methods use File | Settings | File Templates.
             }
         };
 
         return future;
     }
-    
+
     public Map<String, Delegate<Environment>> getHooks() {
         return hooks;
     }
-    
+
     public boolean areApiHooksDisabled(Environment environment) {
-        Boolean setting = (Boolean)environment.getAttributes().get("GaeStudio.disableApiHooks");
-        return setting != null && setting;
+        return (isDisabledForRequest(environment) || !isRecording);
+    }
+
+    public void setRecording(boolean recording) {
+        isRecording = recording;
+    }
+
+    private Boolean isDisabledForRequest(Environment environment) {
+        Boolean setting = (Boolean) environment.getAttributes().get("GaeStudio.disableApiHooks");
+        if (setting != null && setting) {
+            return true;
+        }
+        return false;
     }
 
 }

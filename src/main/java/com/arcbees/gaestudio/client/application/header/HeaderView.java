@@ -20,10 +20,9 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     Resources resources;
 
     @UiField
-    Button stopRecording;
+    Button recording;
 
-    @UiField
-    Button startRecording;
+    private Boolean isRecording = false;
 
     @Inject
     public HeaderView(final Binder uiBinder, final Resources resources, final UiHandlersStrategy<HeaderUiHandlers>
@@ -32,24 +31,24 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
 
         this.resources = resources;
         initWidget(uiBinder.createAndBindUi(this));
+        setRecordingState();
     }
 
-    @UiHandler("startRecording")
-    void onStartRecordingClicked(ClickEvent event) {
-        setRecordingState(true);
-        getUiHandlers().onToggleRecording(true);
-    }
-
-    @UiHandler("stopRecording")
-    void onStopRecordingClicked(ClickEvent event) {
-        setRecordingState(false);
-        getUiHandlers().onToggleRecording(false);
+    @UiHandler("recording")
+    void onRecordingClicked(ClickEvent event) {
+        isRecording = !isRecording;
+        getUiHandlers().onToggleRecording(isRecording);
+        setRecordingState();
     }
 
     @Override
-    public void setRecordingState(boolean start) {
-        startRecording.setVisible(!start);
-        stopRecording.setVisible(start);
+    public void setPending(Boolean isPending) {
+        recording.setEnabled(!isPending);
+    }
+
+    public void setRecordingState() {
+        String recordingText = (isRecording) ? "Stop recording" : "Start recording";
+        recording.setText(recordingText);
     }
 
 }

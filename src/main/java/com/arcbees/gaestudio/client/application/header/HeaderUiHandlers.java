@@ -8,6 +8,6 @@ import com.gwtplatform.mvp.client.UiHandlers;
 
 public interface HeaderUiHandlers extends UiHandlers {
 
-    void onToggleRecording(boolean start);
+    void onToggleRecording(Boolean start);
 
 }

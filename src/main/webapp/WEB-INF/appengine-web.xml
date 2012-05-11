@@ -4,6 +4,7 @@
 	<application>gae-studio</application>
 	<version>1</version>
     <threadsafe>true</threadsafe>
+    <sessions-enabled>true</sessions-enabled>
 
 	<!-- Configure serving/caching of GWT files -->
 	<static-files>

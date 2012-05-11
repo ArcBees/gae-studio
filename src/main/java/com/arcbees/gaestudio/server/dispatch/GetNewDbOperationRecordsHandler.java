@@ -36,10 +36,8 @@ public class GetNewDbOperationRecordsHandler
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public GetNewDbOperationRecordsResult execute(GetNewDbOperationRecordsAction action, ExecutionContext context)
             throws ActionException {
-
         Long mostRecentId = getMostRecentId();
         if (mostRecentId == null) {
             logger.info("Could not find a mostRecentId");
