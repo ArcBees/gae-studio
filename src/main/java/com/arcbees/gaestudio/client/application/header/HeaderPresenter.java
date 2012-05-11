@@ -4,7 +4,7 @@
 
 package com.arcbees.gaestudio.client.application.header;
 
-import com.arcbees.gaestudio.client.application.event.RecordingToggledEvent;
+import com.arcbees.gaestudio.client.application.event.RecordingStateChangedEvent;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingResult;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -44,7 +44,7 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
                 @Override
                 public void onSuccess(SetRecordingResult result) {
                     getView().setPending(false);
-                    RecordingToggledEvent.fire(HeaderPresenter.this, start);
+                    RecordingStateChangedEvent.fire(HeaderPresenter.this, start);
                 }
             });
         }

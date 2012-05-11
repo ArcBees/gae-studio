@@ -19,6 +19,7 @@ public class HookRegistrar {
     final Set<Listener> listeners = new HashSet<Listener>(); // TODO: Deal with synchronization
 
     @Inject
+    @SuppressWarnings("unchecked")
     public HookRegistrar(final DbOperationRecorderHookFactory dbOperationRecorderHookFactory, final Logger logger) {
         this.logger = logger;
         hook = new ApiProxyHook(ApiProxy.getDelegate());

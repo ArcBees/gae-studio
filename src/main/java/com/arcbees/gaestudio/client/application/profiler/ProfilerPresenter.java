@@ -5,7 +5,7 @@
 package com.arcbees.gaestudio.client.application.profiler;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
-import com.arcbees.gaestudio.client.application.event.RecordingToggledEvent;
+import com.arcbees.gaestudio.client.application.event.RecordingStateChangedEvent;
 import com.arcbees.gaestudio.client.application.profiler.details.DetailsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.request.RequestPresenter;
 import com.arcbees.gaestudio.client.application.profiler.statement.StatementPresenter;
@@ -29,7 +29,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import java.util.ArrayList;
 
 public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, ProfilerPresenter.MyProxy> implements
-        RecordingToggledEvent.RecordingToggledHandler {
+        RecordingStateChangedEvent.RecordingStateChangedHandler {
 
     public interface MyView extends View {
     }
@@ -74,7 +74,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     @Override
-    public void onRecordingToggled(RecordingToggledEvent event) {
+    public void onRecordingStateChanged(RecordingStateChangedEvent event) {
         isRecording = event.isRecording();
     }
 
@@ -92,7 +92,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         setInSlot(TYPE_SetStatementPanelContent, statementPresenter);
         setInSlot(TYPE_SetDetailsPanelContent, detailsPresenter);
 
-        addRegisteredHandler(RecordingToggledEvent.getType(), this);
+        addRegisteredHandler(RecordingStateChangedEvent.getType(), this);
 
         new Timer() {
             @Override
