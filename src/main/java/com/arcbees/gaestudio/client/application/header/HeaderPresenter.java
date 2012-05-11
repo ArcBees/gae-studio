@@ -22,7 +22,6 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
     }
 
     private final DispatchAsync dispatcher;
-    private Boolean isPending = false;
 
     @Inject
     public HeaderPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
@@ -32,8 +31,7 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
 
     @Override
     public void onToggleRecording(final Boolean start) {
-        if (!isPending) {
-            getView().setPending(true);
+        getView().setPending(true);
             dispatcher.execute(new SetRecordingAction(start), new AsyncCallback<SetRecordingResult>() {
                 @Override
                 public void onFailure(Throwable caught) {
@@ -47,6 +45,5 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
                     RecordingStateChangedEvent.fire(HeaderPresenter.this, start);
                 }
             });
-        }
     }
 }
