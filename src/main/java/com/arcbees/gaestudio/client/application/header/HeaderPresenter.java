@@ -26,6 +26,7 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
     @Inject
     public HeaderPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
         super(eventBus, view);
+
         this.dispatcher = dispatcher;
     }
 

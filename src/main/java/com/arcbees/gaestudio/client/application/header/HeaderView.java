@@ -56,7 +56,7 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
         recording.setEnabled(!isPending);
     }
 
-    public void setRecordingState() {
+    private void setRecordingState() {
         String recordingText = (isRecording) ? "Stop recording" : "Start recording";
         recording.setText(recordingText);
     }

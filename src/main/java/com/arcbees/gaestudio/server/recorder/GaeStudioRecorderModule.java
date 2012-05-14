@@ -17,7 +17,8 @@
 package com.arcbees.gaestudio.server.recorder;
 
 import com.arcbees.gaestudio.server.guice.RequestIdProvider;
-import com.arcbees.gaestudio.server.recorder.authentication.AuthenticationModule;
+import com.arcbees.gaestudio.server.recorder.authentication.Listener;
+import com.arcbees.gaestudio.server.recorder.authentication.ListenerProvider;
 import com.arcbees.gaestudio.shared.formatters.ObjectifyRecordFormatter;
 import com.arcbees.gaestudio.shared.formatters.RecordFormatter;
 import com.arcbees.gaestudio.shared.util.SimpleStackInspector;
@@ -30,13 +31,13 @@ import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.RequestScoped;
 
+import javax.inject.Singleton;
+
 // TODO externalize magic strings
 public class GaeStudioRecorderModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        install(new AuthenticationModule());
-
         bind(Long.class).annotatedWith(Names.named("requestId")).toProvider(RequestIdProvider.class)
                 .in(RequestScoped.class);
 
@@ -49,6 +50,8 @@ public class GaeStudioRecorderModule extends AbstractModule {
                 .build(DbOperationRecorderHookFactory.class));
 
         bind(HookRegistrar.class).asEagerSingleton();
+        bind(ListenerProvider.class).in(Singleton.class);
+        bind(Listener.class).toProvider(ListenerProvider.class).in(RequestScoped.class);
     }
 
     @Provides
