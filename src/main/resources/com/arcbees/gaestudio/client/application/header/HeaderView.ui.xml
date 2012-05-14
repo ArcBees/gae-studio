@@ -1,20 +1,28 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
-    <ui:with type="com.arcbees.gaestudio.client.place.NameTokens" field="nameTokens" />
+    <ui:with field="resources" type="com.arcbees.gaestudio.client.Resources"/>
+    <ui:with type="com.arcbees.gaestudio.client.place.NameTokens" field="nameTokens"/>
 
     <ui:style>
-        .linkList {
-            float: right;
-        }
 
         .link {
             padding-right: 4px;
         }
+
+        .header {
+            line-height: 30px;
+            border-bottom: 8px solid #D0E4F6;
+        }
+
     </ui:style>
 
-    <g:HTMLPanel>
-        <div class="{style.linkList}">
+    <g:HTMLPanel styleName="{style.header}">
+        <div class="{resources.styles.fleft}">
+            <g:Button ui:field="recording"/>
+        </div>
+
+        <div class="{resources.styles.fright}">
             <g:InlineHyperlink targetHistoryToken="{nameTokens.getVisualizer}" styleName="{style.link}">
                 Visualizer
             </g:InlineHyperlink>
@@ -22,6 +30,8 @@
                 Profiler
             </g:InlineHyperlink>
         </div>
+
+        <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 
 </ui:UiBinder>

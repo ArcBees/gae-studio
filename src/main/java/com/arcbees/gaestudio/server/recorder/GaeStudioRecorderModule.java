@@ -17,19 +17,21 @@
 package com.arcbees.gaestudio.server.recorder;
 
 import com.arcbees.gaestudio.server.guice.RequestIdProvider;
+import com.arcbees.gaestudio.server.recorder.authentication.Listener;
+import com.arcbees.gaestudio.server.recorder.authentication.ListenerProvider;
 import com.arcbees.gaestudio.shared.formatters.ObjectifyRecordFormatter;
 import com.arcbees.gaestudio.shared.formatters.RecordFormatter;
 import com.arcbees.gaestudio.shared.util.SimpleStackInspector;
 import com.arcbees.gaestudio.shared.util.StackInspector;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
-import com.google.apphosting.api.ApiProxy;
 import com.google.inject.AbstractModule;
-import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.RequestScoped;
+
+import javax.inject.Singleton;
 
 // TODO externalize magic strings
 public class GaeStudioRecorderModule extends AbstractModule {
@@ -46,14 +48,10 @@ public class GaeStudioRecorderModule extends AbstractModule {
         install(new FactoryModuleBuilder()
                 .implement(DbOperationRecorderHook.class, DbOperationRecorderHook.class)
                 .build(DbOperationRecorderHookFactory.class));
-    }
 
-    @SuppressWarnings("unchecked")
-    public static void initialize(Injector injector) {
-        ApiProxyHook hook = new ApiProxyHook(ApiProxy.getDelegate());
-        hook.getHooks().put("datastore_v3",
-                injector.getProvider(DbOperationRecorderHookFactory.class).get().create(hook.getBaseDelegate()));
-        ApiProxy.setDelegate(hook);
+        bind(HookRegistrar.class).asEagerSingleton();
+        bind(ListenerProvider.class).in(Singleton.class);
+        bind(Listener.class).toProvider(ListenerProvider.class).in(RequestScoped.class);
     }
 
     @Provides

@@ -7,6 +7,7 @@ package com.arcbees.gaestudio.server.dispatch;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
+import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
 
 public class GaeStudioDispatchModule extends HandlerModule {
@@ -16,6 +17,7 @@ public class GaeStudioDispatchModule extends HandlerModule {
         bindHandler(GetNewDbOperationRecordsAction.class, GetNewDbOperationRecordsHandler.class);
         bindHandler(GetEntityKindsAction.class, GetEntityKindsHandler.class);
         bindHandler(GetEntitiesByKindAction.class, GetEntitiesByKindHandler.class);
+        bindHandler(SetRecordingAction.class, SetRecordingHandler.class);
     }
 
 }

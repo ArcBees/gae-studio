@@ -12,10 +12,22 @@
         padding: 0.5em;
     }
 
-    .item:hover{
+    .item:hover {
         background-color: #d3d3d3;
     }
 
-    .selected{
+    .selected {
         background-color: #888888;
+    }
+
+    .fleft {
+        float: left;
+    }
+
+    .fright {
+        float: right;
+    }
+
+    .clear {
+        clear: both;
     }

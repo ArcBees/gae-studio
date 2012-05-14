@@ -5,6 +5,7 @@
 package com.arcbees.gaestudio.client.application.profiler;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
+import com.arcbees.gaestudio.client.application.event.RecordingStateChangedEvent;
 import com.arcbees.gaestudio.client.application.profiler.details.DetailsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.request.RequestPresenter;
 import com.arcbees.gaestudio.client.application.profiler.statement.StatementPresenter;
@@ -27,7 +28,8 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 import java.util.ArrayList;
 
-public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, ProfilerPresenter.MyProxy> {
+public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, ProfilerPresenter.MyProxy> implements
+        RecordingStateChangedEvent.RecordingStateChangedHandler {
 
     public interface MyView extends View {
     }
@@ -41,15 +43,15 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     public static final Object TYPE_SetStatisticsPanelContent = new Object();
     public static final Object TYPE_SetStatementPanelContent = new Object();
     public static final Object TYPE_SetDetailsPanelContent = new Object();
+    private static final int TICK_DELTA_MILLISEC = 1000;
 
     private final DispatchAsync dispatcher;
-
     private final RequestPresenter requestPresenter;
     private final StatisticsPresenter statisticsPresenter;
     private final StatementPresenter statementPresenter;
     private final DetailsPresenter detailsPresenter;
 
-    private long lastDbOperationRecordId;
+    private long lastDbOperationRecordId = 0L;
     private boolean isProcessing = false;
 
     @Inject
@@ -61,13 +63,20 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         super(eventBus, view, proxy);
 
         this.dispatcher = dispatcher;
-
         this.requestPresenter = requestPresenter;
         this.statisticsPresenter = statisticsPresenter;
         this.statementPresenter = statementPresenter;
         this.detailsPresenter = detailsPresenter;
+    }
 
-        this.lastDbOperationRecordId = 0L;
+    @Override
+    public void onRecordingStateChanged(RecordingStateChangedEvent event) {
+        if (event.isStarting()) {
+            lastDbOperationRecordId = event.getCurrentRecordId();
+            tick.scheduleRepeating(TICK_DELTA_MILLISEC);
+        } else {
+            tick.cancel();
+        }
     }
 
     @Override
@@ -84,34 +93,28 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         setInSlot(TYPE_SetStatementPanelContent, statementPresenter);
         setInSlot(TYPE_SetDetailsPanelContent, detailsPresenter);
 
-        getNewDbOperationRecords();
-        new Timer() {
-            @Override
-            public void run() {
-                if (!isProcessing) {
-                    getNewDbOperationRecords();
-                }
-            }
-        }.scheduleRepeating(1000);
+        addRegisteredHandler(RecordingStateChangedEvent.getType(), this);
     }
 
     private void getNewDbOperationRecords() {
-        isProcessing = true;
-        dispatcher.execute(
-                new GetNewDbOperationRecordsAction.Builder(lastDbOperationRecordId).maxResults(100).build(),
-                new AsyncCallback<GetNewDbOperationRecordsResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        // TODO implement
-                        isProcessing = false;
-                    }
+        if (!isProcessing) {
+            isProcessing = true;
+            dispatcher.execute(
+                    new GetNewDbOperationRecordsAction.Builder(lastDbOperationRecordId).maxResults(100).build(),
+                    new AsyncCallback<GetNewDbOperationRecordsResult>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            // TODO implement
+                            isProcessing = false;
+                        }
 
-                    @Override
-                    public void onSuccess(GetNewDbOperationRecordsResult result) {
-                        processNewDbOperationRecords(result.getRecords());
-                        isProcessing = false;
-                    }
-                });
+                        @Override
+                        public void onSuccess(GetNewDbOperationRecordsResult result) {
+                            processNewDbOperationRecords(result.getRecords());
+                            isProcessing = false;
+                        }
+                    });
+        }
     }
 
     // TODO properly handle any missing records
@@ -140,4 +143,10 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         detailsPresenter.processDbOperationRecord(record);
     }
 
+    private Timer tick = new Timer() {
+        @Override
+        public void run() {
+            getNewDbOperationRecords();
+        }
+    };
 }

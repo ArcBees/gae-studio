@@ -70,12 +70,12 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     }
     
     private void recordOperation(DbOperationRecordDTO record) {
-        memcacheServiceProvider.get().put("db.operation.record." + record.getStatementId(), record,
+        memcacheServiceProvider.get().put(MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() + record.getStatementId(), record,
                 Expiration.byDeltaSeconds(60));
     }
 
     private long generateId() {
-        return memcacheServiceProvider.get().increment("db.operation.counter", 1L, 0L);
+        return memcacheServiceProvider.get().increment(MemcacheKey.DB_OPERATION_COUNTER.getName(), 1L, 0L);
     }
 
 }

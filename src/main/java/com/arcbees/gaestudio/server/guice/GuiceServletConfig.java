@@ -10,8 +10,6 @@ public class GuiceServletConfig extends GuiceServletContextListener {
     protected Injector getInjector() {
         Injector injector = Guice.createInjector(new ServerModule(), new DispatchServletModule());
 
-        GaeStudioModule.initialize(injector);
-
         return injector;
     }
 
