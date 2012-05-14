@@ -27,12 +27,12 @@ public class HookRegistrar {
         ApiProxy.setDelegate(hook);
     }
 
-    public void putListener(Listener listener) {
+    synchronized public void putListener(Listener listener) {
         listeners.add(listener);
         setRecording();
     }
 
-    public void removeListener(Listener listener) {
+    synchronized public void removeListener(Listener listener) {
         listeners.remove(listener);
         setRecording();
     }
