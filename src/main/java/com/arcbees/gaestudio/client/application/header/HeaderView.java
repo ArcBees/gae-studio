@@ -34,12 +34,14 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
 
         this.resources = resources;
         initWidget(uiBinder.createAndBindUi(this));
-        setRecordingState();
+        setRecordingState(false);
 
         Window.addCloseHandler(new CloseHandler<Window>() {
             @Override
             public void onClose(CloseEvent<Window> windowCloseEvent) {
-                getUiHandlers().onToggleRecording(false);
+                if (isRecording) {
+                    getUiHandlers().onToggleRecording(false);
+                }
             }
         });
     }
@@ -48,7 +50,6 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     void onRecordingClicked(ClickEvent event) {
         isRecording = !isRecording;
         getUiHandlers().onToggleRecording(isRecording);
-        setRecordingState();
     }
 
     @Override
@@ -56,7 +57,10 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
         recording.setEnabled(!isPending);
     }
 
-    private void setRecordingState() {
+    @Override
+    public void setRecordingState(Boolean isRecording) {
+        this.isRecording = isRecording;
+        setPending(false);
         String recordingText = (isRecording) ? "Stop recording" : "Start recording";
         recording.setText(recordingText);
     }

@@ -19,6 +19,8 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
 
     public interface MyView extends View, HasUiHandlers<HeaderUiHandlers> {
         void setPending(Boolean pending);
+
+        void setRecordingState(Boolean isRecording);
     }
 
     private final DispatchAsync dispatcher;
@@ -36,13 +38,12 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
             dispatcher.execute(new SetRecordingAction(start), new AsyncCallback<SetRecordingResult>() {
                 @Override
                 public void onFailure(Throwable caught) {
-                    getView().setPending(false);
-                    // TODO: Manage error
+                    getView().setRecordingState(!start);
                 }
 
                 @Override
                 public void onSuccess(SetRecordingResult result) {
-                    getView().setPending(false);
+                    getView().setRecordingState(start);
                     RecordingStateChangedEvent.fire(HeaderPresenter.this, start, result.getCurrentRecordId());
                 }
             });
