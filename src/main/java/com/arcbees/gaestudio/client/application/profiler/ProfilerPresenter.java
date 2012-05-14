@@ -43,17 +43,16 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     public static final Object TYPE_SetStatisticsPanelContent = new Object();
     public static final Object TYPE_SetStatementPanelContent = new Object();
     public static final Object TYPE_SetDetailsPanelContent = new Object();
+    private static final int TICK_DELTA_MILLISEC = 1000;
 
     private final DispatchAsync dispatcher;
-
     private final RequestPresenter requestPresenter;
     private final StatisticsPresenter statisticsPresenter;
     private final StatementPresenter statementPresenter;
     private final DetailsPresenter detailsPresenter;
 
-    private long lastDbOperationRecordId;
+    private long lastDbOperationRecordId = 0L;
     private boolean isProcessing = false;
-    private boolean isRecording = false;
 
     @Inject
     public ProfilerPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
@@ -64,18 +63,20 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         super(eventBus, view, proxy);
 
         this.dispatcher = dispatcher;
-
         this.requestPresenter = requestPresenter;
         this.statisticsPresenter = statisticsPresenter;
         this.statementPresenter = statementPresenter;
         this.detailsPresenter = detailsPresenter;
-
-        this.lastDbOperationRecordId = 0L;
     }
 
     @Override
     public void onRecordingStateChanged(RecordingStateChangedEvent event) {
-        isRecording = event.isRecording();
+        if (event.isStarting()) {
+            lastDbOperationRecordId = event.getCurrentRecordId();
+            tick.scheduleRepeating(TICK_DELTA_MILLISEC);
+        } else {
+            tick.cancel();
+        }
     }
 
     @Override
@@ -93,19 +94,10 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         setInSlot(TYPE_SetDetailsPanelContent, detailsPresenter);
 
         addRegisteredHandler(RecordingStateChangedEvent.getType(), this);
-
-        new Timer() {
-            @Override
-            public void run() {
-                if (!isProcessing) {
-                    getNewDbOperationRecords();
-                }
-            }
-        }.scheduleRepeating(1000);
     }
 
     private void getNewDbOperationRecords() {
-        if (isRecording) {
+        if (!isProcessing) {
             isProcessing = true;
             dispatcher.execute(
                     new GetNewDbOperationRecordsAction.Builder(lastDbOperationRecordId).maxResults(100).build(),
@@ -151,4 +143,10 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         detailsPresenter.processDbOperationRecord(record);
     }
 
+    private Timer tick = new Timer() {
+        @Override
+        public void run() {
+            getNewDbOperationRecords();
+        }
+    };
 }

@@ -42,7 +42,7 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
                 @Override
                 public void onSuccess(SetRecordingResult result) {
                     getView().setPending(false);
-                    RecordingStateChangedEvent.fire(HeaderPresenter.this, start);
+                    RecordingStateChangedEvent.fire(HeaderPresenter.this, start, result.getCurrentRecordId());
                 }
             });
     }

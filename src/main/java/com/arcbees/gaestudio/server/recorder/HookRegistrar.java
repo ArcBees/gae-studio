@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 public class HookRegistrar {
 
     private final Logger logger;
-    final ApiProxyHook hook;
-    final Set<Listener> listeners = new HashSet<Listener>(); // TODO: Deal with synchronization
+    private final ApiProxyHook hook;
+    private final Set<Listener> listeners = new HashSet<Listener>();
 
     @Inject
     @SuppressWarnings("unchecked")

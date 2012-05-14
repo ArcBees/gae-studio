@@ -9,8 +9,11 @@ import com.gwtplatform.dispatch.annotation.Order;
 
 @GenEvent
 public class RecordingStateChanged {
-    
+
     @Order(1)
-    boolean recording;
+    boolean starting;
+
+    @Order(2)
+    Long currentRecordId;
 
 }

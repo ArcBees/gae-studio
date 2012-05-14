@@ -4,6 +4,7 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import com.arcbees.gaestudio.server.recorder.MemcacheKey;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsResult;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
@@ -81,13 +82,13 @@ public class GetNewDbOperationRecordsHandler
     private List<String> getNewOperationRecordKeys(long beginId, long endId) {
         List<String> keys = new ArrayList<String>((int) (endId - beginId + 1));
         for (long i = beginId; i <= endId; ++i) {
-            keys.add("db.operation.record." + i);
+            keys.add(MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() + i);
         }
         return keys;
     }
 
     private Long getMostRecentId() {
-        return (Long) memcacheService.get("db.operation.counter");
+        return (Long) memcacheService.get(MemcacheKey.DB_OPERATION_COUNTER.getName());
     }
 
 }
