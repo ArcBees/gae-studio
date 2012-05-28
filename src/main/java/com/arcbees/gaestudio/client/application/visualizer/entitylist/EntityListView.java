@@ -76,8 +76,15 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 return entityDTO.getKey().getId().toString();
             }
         };
-
         entityTable.addColumn(idColumn, "ID");
+
+        TextColumn<EntityDTO> descriptionColumn = new TextColumn<EntityDTO>() {
+            @Override
+            public String getValue(EntityDTO entityDTO) {
+                return entityDTO.toString();
+            }
+        };
+        entityTable.addColumn(descriptionColumn);
     }
 
 }
