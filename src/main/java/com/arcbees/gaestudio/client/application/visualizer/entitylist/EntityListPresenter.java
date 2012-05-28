@@ -6,6 +6,7 @@ package com.arcbees.gaestudio.client.application.visualizer.entitylist;
 
 import com.arcbees.gaestudio.client.application.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.event.KindSelectedEvent;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
@@ -80,12 +81,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             dispatcher.execute(
                     new GetEntitiesByKindAction.Builder(currentKind).offset(range.getStart()).limit(range.getLength()
                     ).build(),
-                    new AsyncCallback<GetEntitiesByKindResult>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            // TODO implement
-                        }
-
+                    new AsyncCallbackImpl<GetEntitiesByKindResult>() {
                         @Override
                         public void onSuccess(GetEntitiesByKindResult result) {
                             onGetEntitiesSuccess(result, display);
