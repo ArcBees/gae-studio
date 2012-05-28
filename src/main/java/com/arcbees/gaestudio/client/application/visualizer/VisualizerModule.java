@@ -1,6 +1,7 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.core.client.mvp.uihandlers.ProviderUiHandlersStrategy;
+import com.arcbees.core.client.mvp.uihandlers.SetterUiHandlersStrategy;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.application.visualizer.entitydetails.EntityDetailsPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.entitydetails.EntityDetailsUiHandlers;
@@ -20,6 +21,7 @@ public class VisualizerModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
         install(new GinFactoryModuleBuilder().build(VisualizerLabelFactory.class));
+
         bind(new TypeLiteral<UiHandlersStrategy<KindListUiHandlers>>() {})
                 .to(new TypeLiteral<ProviderUiHandlersStrategy<KindListUiHandlers>>() {});
         bind(new TypeLiteral<UiHandlersStrategy<EntityListUiHandlers>>() {})
