@@ -38,23 +38,10 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Inject
     public EntityListPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
         super(eventBus, view);
-        getView().setUiHandlers(this);
 
         this.dispatcher = dispatcher;
 
-        AsyncDataProvider<EntityDTO> dataProvider = new AsyncDataProvider<EntityDTO>() {
-            @Override
-            protected void onRangeChanged(HasData<EntityDTO> display) {
-                load(display);
-            }
-        };
-        getView().setTableDataProvider(dataProvider);
-    }
-
-    @Override
-    protected void onBind() {
-        super.onBind();
-        addRegisteredHandler(KindSelectedEvent.getType(), this);
+        setTableDataProvider();
     }
 
     @Override
@@ -66,6 +53,23 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Override
     public void onEntityClicked(KeyDTO entityKey, String entityData) {
         getEventBus().fireEvent(new EntitySelectedEvent(entityKey, entityData));
+    }
+
+    @Override
+    protected void onBind() {
+        super.onBind();
+
+        addRegisteredHandler(KindSelectedEvent.getType(), this);
+    }
+
+    private void setTableDataProvider() {
+        AsyncDataProvider<EntityDTO> dataProvider = new AsyncDataProvider<EntityDTO>() {
+            @Override
+            protected void onRangeChanged(HasData<EntityDTO> display) {
+                load(display);
+            }
+        };
+        getView().setTableDataProvider(dataProvider);
     }
 
     private void load(final HasData<EntityDTO> display) {

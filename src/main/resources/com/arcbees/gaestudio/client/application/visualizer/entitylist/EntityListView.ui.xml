@@ -1,8 +1,11 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:cellview="urn:import:com.google.gwt.user.cellview.client">
 
     <g:HTMLPanel ui:field="panel">
         <h3>Entities</h3>
+        <cellview:SimplePager ui:field="pager" location="LEFT"/>
+        <cellview:CellTable ui:field="entityTable"/>
     </g:HTMLPanel>
 
 </ui:UiBinder>

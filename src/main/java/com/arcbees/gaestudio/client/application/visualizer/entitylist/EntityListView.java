@@ -25,12 +25,14 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     public interface Binder extends UiBinder<Widget, EntityListView> {
     }
 
-    private static final Range DEFAULT_RANGE = new Range(0, 10);
+    private static final Range DEFAULT_RANGE = new Range(0, 15);
 
     @UiField
     HTMLPanel panel;
-
-    private final CellTable<EntityDTO> entityTable;
+    @UiField
+    SimplePager pager;
+    @UiField
+    CellTable<EntityDTO> entityTable;
 
     @Inject
     public EntityListView(final Binder uiBinder, final UiHandlersStrategy<EntityListUiHandlers> uiHandlersStrategy) {
@@ -38,12 +40,22 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         initWidget(uiBinder.createAndBindUi(this));
 
-        entityTable = new CellTable<EntityDTO>();
-        panel.add(entityTable);
-
         setColumns();
-        setPager();
+        setSelectionModel();
+        pager.setDisplay(entityTable);
+    }
 
+    @Override
+    public void setTableDataProvider(AsyncDataProvider<EntityDTO> dataProvider) {
+        dataProvider.addDataDisplay(entityTable);
+    }
+
+    @Override
+    public void setNewKind() {
+        entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
+    }
+
+    private void setSelectionModel() {
         final SingleSelectionModel<EntityDTO> selectionModel = new SingleSelectionModel<EntityDTO>();
         selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
             @Override
@@ -57,16 +69,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         entityTable.setSelectionModel(selectionModel);
     }
 
-    @Override
-    public void setTableDataProvider(AsyncDataProvider<EntityDTO> dataProvider) {
-        dataProvider.addDataDisplay(entityTable);
-    }
-
-    @Override
-    public void setNewKind() {
-        entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
-    }
-
     private void setColumns() {
         TextColumn<EntityDTO> idColumn = new TextColumn<EntityDTO>() {
             @Override
@@ -76,12 +78,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         };
 
         entityTable.addColumn(idColumn, "ID");
-    }
-
-    private void setPager() {
-        SimplePager pager = new SimplePager();
-        pager.setDisplay(entityTable);
-        panel.add(pager);
     }
 
 }
