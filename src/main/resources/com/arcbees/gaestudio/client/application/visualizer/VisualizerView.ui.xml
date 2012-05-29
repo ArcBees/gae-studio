@@ -10,7 +10,7 @@
         </g:west>
         <g:center>
             <g:SplitLayoutPanel>
-                <g:north size="400">
+                <g:north size="450">
                     <g:SimplePanel ui:field="entityListPanel" />
                 </g:north>
                 <g:center>

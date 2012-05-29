@@ -1,6 +1,7 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.core.client.mvp.ViewImpl;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -40,4 +41,3 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     }
 
 }
-    

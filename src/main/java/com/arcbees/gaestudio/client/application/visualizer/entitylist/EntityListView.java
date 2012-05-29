@@ -10,8 +10,12 @@ import com.arcbees.gaestudio.client.application.visualizer.VisualizerLabelFactor
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.SimplePager;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.*;
 import com.google.inject.Inject;
 
 import java.util.ArrayList;
@@ -21,49 +25,66 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     public interface Binder extends UiBinder<Widget, EntityListView> {
     }
 
+    private static final Range DEFAULT_RANGE = new Range(0, 15);
+
     @UiField
-    HTMLPanel entityList;
-
-    @UiField(provided = true)
-    Resources resources;
-
-    private final VisualizerLabelFactory visualizerLabelFactory;
-    private final SelectableLabelServant selectableLabelServant;
+    HTMLPanel panel;
+    @UiField
+    SimplePager pager;
+    @UiField
+    CellTable<EntityDTO> entityTable;
 
     @Inject
-    public EntityListView(final Binder uiBinder, final UiHandlersStrategy<EntityListUiHandlers> uiHandlersStrategy,
-                          final Resources resources, final VisualizerLabelFactory visualizerLabelFactory,
-                          final SelectableLabelServant selectableLabelServant) {
+    public EntityListView(final Binder uiBinder, final UiHandlersStrategy<EntityListUiHandlers> uiHandlersStrategy) {
         super(uiHandlersStrategy);
 
-        this.resources = resources;
-        this.visualizerLabelFactory = visualizerLabelFactory;
-        this.selectableLabelServant = selectableLabelServant;
         initWidget(uiBinder.createAndBindUi(this));
+
+        setColumns();
+        setSelectionModel();
+        pager.setDisplay(entityTable);
     }
 
     @Override
-    public void displayEntities(ArrayList<EntityDTO> entities) {
-        entityList.clear();
-
-        if (entities == null) {
-            return;
-        }
-
-        // TODO use a cell table
-        for (EntityDTO entity : entities) {
-            entityList.add(createEntityElement(entity));
-        }
+    public void setTableDataProvider(AsyncDataProvider<EntityDTO> dataProvider) {
+        dataProvider.addDataDisplay(entityTable);
     }
 
-    private EntityLabel createEntityElement(final EntityDTO entity) {
-        return visualizerLabelFactory.createEntity(entity, new LabelCallback() {
+    @Override
+    public void setNewKind() {
+        entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
+    }
+
+    private void setSelectionModel() {
+        final SingleSelectionModel<EntityDTO> selectionModel = new SingleSelectionModel<EntityDTO>();
+        selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
             @Override
-            public void onClick(BaseLabel baseLabel) {
-                selectableLabelServant.select(baseLabel);
-                getUiHandlers().onEntityClicked(entity.getKey(), entity.getJson());
+            public void onSelectionChange(SelectionChangeEvent event) {
+                EntityDTO selected = selectionModel.getSelectedObject();
+                if (selected != null) {
+                    getUiHandlers().onEntityClicked(selected.getKey(), selected.getJson());
+                }
             }
         });
+        entityTable.setSelectionModel(selectionModel);
+    }
+
+    private void setColumns() {
+        TextColumn<EntityDTO> idColumn = new TextColumn<EntityDTO>() {
+            @Override
+            public String getValue(EntityDTO entityDTO) {
+                return entityDTO.getKey().getId().toString();
+            }
+        };
+        entityTable.addColumn(idColumn, "ID");
+
+        TextColumn<EntityDTO> descriptionColumn = new TextColumn<EntityDTO>() {
+            @Override
+            public String getValue(EntityDTO entityDTO) {
+                return entityDTO.toString();
+            }
+        };
+        entityTable.addColumn(descriptionColumn);
     }
 
 }
