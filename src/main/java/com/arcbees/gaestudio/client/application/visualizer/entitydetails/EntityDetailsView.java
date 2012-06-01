@@ -2,10 +2,13 @@ package com.arcbees.gaestudio.client.application.visualizer.entitydetails;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDTO;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -16,7 +19,11 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
     }
 
     @UiField
-    HTML entityDetails;
+    TextArea entityDetails;
+    @UiField
+    Button edit;
+
+    private EntityDTO currentEntityDTO;
 
     @Inject
     public EntityDetailsView(final Binder uiBinder,
@@ -26,8 +33,14 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
     }
 
     @Override
-    public void displayEntityDetails(KeyDTO entityKey, String entityData) {
-        entityDetails.setHTML(entityData);
+    public void displayEntityDetails(EntityDTO entityDTO) {
+        currentEntityDTO = entityDTO;
+        entityDetails.setText(entityDTO.getJson());
+    }
+
+    @UiHandler("edit")
+    void onEditClicked(ClickEvent event){
+        getUiHandlers().editEntity(currentEntityDTO);
     }
 
 }

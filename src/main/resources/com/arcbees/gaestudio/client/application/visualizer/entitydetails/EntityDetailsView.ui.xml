@@ -3,14 +3,16 @@
 
     <ui:style>
         .json {
-            white-space: pre;
             font-family: "Consolas", "Menlo", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
+            width: 100%;
+            height: 300px;
         }
     </ui:style>
 
     <g:HTMLPanel>
         <h3>Entity Details</h3>
-        <g:HTML ui:field="entityDetails" styleName="{style.json}" />
+          <g:Button ui:field="edit">Edit</g:Button>
+        <g:TextArea ui:field="entityDetails" styleName="{style.json}" />
     </g:HTMLPanel>
 
 </ui:UiBinder>

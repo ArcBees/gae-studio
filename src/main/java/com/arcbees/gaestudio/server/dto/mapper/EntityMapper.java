@@ -15,8 +15,9 @@ public class EntityMapper {
     
     public static EntityDTO mapDTO(Entity dbEntity) {
         // TODO see about reusing the Gson instance
+        // TODO Key switch and object class
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-        return new EntityDTO(mapKey(dbEntity.getKey()), gson.toJson(dbEntity));
+        return new EntityDTO(mapKey(dbEntity.getKey()), dbEntity.getClass().getName(), gson.toJson(dbEntity));
     }
     
     private static KeyDTO mapKey(Key dbKey) {

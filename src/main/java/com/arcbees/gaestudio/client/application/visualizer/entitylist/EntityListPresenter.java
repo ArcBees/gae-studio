@@ -10,8 +10,6 @@ import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDTO;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -52,8 +50,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
-    public void onEntityClicked(KeyDTO entityKey, String entityData) {
-        getEventBus().fireEvent(new EntitySelectedEvent(entityKey, entityData));
+    public void onEntityClicked(EntityDTO entityDTO) {
+        getEventBus().fireEvent(new EntitySelectedEvent(entityDTO));
     }
 
     @Override
