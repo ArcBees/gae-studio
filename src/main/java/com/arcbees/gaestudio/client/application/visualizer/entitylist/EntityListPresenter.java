@@ -7,11 +7,9 @@ package com.arcbees.gaestudio.client.application.visualizer.entitylist;
 import com.arcbees.gaestudio.client.application.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
-import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
+import com.arcbees.gaestudio.shared.dispatch.*;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDTO;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -31,6 +29,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void setNewKind();
 
         void setTableDataProvider(AsyncDataProvider<EntityDTO> dataProvider);
+
+        void setRowCount(Integer count);
     }
 
     private final DispatchAsync dispatcher;
@@ -48,12 +48,17 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Override
     public void onKindSelected(KindSelectedEvent event) {
         currentKind = event.getKind();
-        getView().setNewKind();
+        loadKind();
     }
 
     @Override
     public void onEntityClicked(KeyDTO entityKey, String entityData) {
         getEventBus().fireEvent(new EntitySelectedEvent(entityKey, entityData));
+    }
+
+    @Override
+    public void refreshData() {
+        loadKind();
     }
 
     @Override
@@ -67,13 +72,28 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         AsyncDataProvider<EntityDTO> dataProvider = new AsyncDataProvider<EntityDTO>() {
             @Override
             protected void onRangeChanged(HasData<EntityDTO> display) {
-                load(display);
+                loadPage(display);
             }
         };
         getView().setTableDataProvider(dataProvider);
     }
 
-    private void load(final HasData<EntityDTO> display) {
+    private void loadKind() {
+        setTotalCount();
+        getView().setNewKind();
+    }
+
+    private void setTotalCount() {
+        dispatcher.execute(new GetEntityCountByKindAction(currentKind),
+                new AsyncCallbackImpl<GetEntityCountByKindResult>() {
+                    @Override
+                    public void onSuccess(GetEntityCountByKindResult result) {
+                        getView().setRowCount(result.getCount());
+                    }
+                });
+    }
+
+    private void loadPage(final HasData<EntityDTO> display) {
         if (currentKind == null) {
             display.setRowCount(0);
         } else {
@@ -94,7 +114,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         Range range = display.getVisibleRange();
         ArrayList<EntityDTO> entities = result.getEntities();
 
-        display.setRowCount(range.getStart() + entities.size(), false);
         display.setRowData(range.getStart(), entities);
+        if (range.getStart() + entities.size() > display.getRowCount()) {
+            display.setRowCount(range.getStart() + entities.size(), false);
+        }
     }
 }

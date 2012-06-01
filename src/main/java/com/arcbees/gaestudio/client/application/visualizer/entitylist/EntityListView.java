@@ -2,23 +2,22 @@ package com.arcbees.gaestudio.client.application.visualizer.entitylist;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
-import com.arcbees.gaestudio.client.Resources;
-import com.arcbees.gaestudio.client.application.ui.BaseLabel;
-import com.arcbees.gaestudio.client.application.ui.LabelCallback;
-import com.arcbees.gaestudio.client.application.ui.SelectableLabelServant;
-import com.arcbees.gaestudio.client.application.visualizer.VisualizerLabelFactory;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.view.client.*;
+import com.google.gwt.view.client.AsyncDataProvider;
+import com.google.gwt.view.client.Range;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
-
-import java.util.ArrayList;
 
 public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
 
@@ -33,6 +32,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     SimplePager pager;
     @UiField
     CellTable<EntityDTO> entityTable;
+    @UiField
+    Button refresh;
 
     @Inject
     public EntityListView(final Binder uiBinder, final UiHandlersStrategy<EntityListUiHandlers> uiHandlersStrategy) {
@@ -51,8 +52,19 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
+    public void setRowCount(Integer count) {
+        entityTable.setRowCount(count, false);
+    }
+
+    @Override
     public void setNewKind() {
+        refresh.setVisible(true);
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
+    }
+
+    @UiHandler("refresh")
+    void onRefreshClicked(ClickEvent event){
+        getUiHandlers().refreshData();
     }
 
     private void setSelectionModel() {
