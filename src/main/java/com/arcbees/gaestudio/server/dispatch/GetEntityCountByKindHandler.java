@@ -27,7 +27,6 @@ public class GetEntityCountByKindHandler
     @Override
     public GetEntityCountByKindResult execute(GetEntityCountByKindAction action, ExecutionContext context)
             throws ActionException {
-
         DispatchHelper.disableApiHooks();
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
