@@ -4,6 +4,7 @@
 
     <g:HTMLPanel ui:field="panel">
         <h3>Entities</h3>
+        <g:Button ui:field="refresh" visible="false">Refresh</g:Button>
         <cellview:SimplePager ui:field="pager" location="LEFT"/>
         <cellview:CellTable ui:field="entityTable"/>
     </g:HTMLPanel>

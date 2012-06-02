@@ -7,4 +7,5 @@ public interface EntityListUiHandlers extends UiHandlers {
 
     void onEntityClicked(KeyDTO entityKey, String entityData);
 
+    void refreshData();
 }
