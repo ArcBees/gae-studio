@@ -57,4 +57,5 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
             }
         });
     }
+
 }

@@ -8,4 +8,5 @@ public interface EntityListUiHandlers extends UiHandlers {
     void onEntityClicked(EntityDTO entityDTO);
 
     void refreshData();
+
 }
