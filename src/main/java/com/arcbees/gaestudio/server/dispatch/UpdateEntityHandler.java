@@ -18,13 +18,18 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-// TODO add logging
+import java.util.logging.Logger;
+
 public class UpdateEntityHandler
         extends AbstractActionHandler<UpdateEntityAction, UpdateEntityResult> {
 
+    private final Logger logger;
+
     @Inject
-    public UpdateEntityHandler() {
+    public UpdateEntityHandler(final Logger logger) {
         super(UpdateEntityAction.class);
+
+        this.logger = logger;
     }
 
     @SuppressWarnings("unchecked")
@@ -40,10 +45,10 @@ public class UpdateEntityHandler
 
             DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
             datastore.put(entity);
+            logger.info("Entity saved");
         } catch (JsonSyntaxException e) {
             throw new ActionException("Error in json syntax");
         } catch (Exception e) {
-            e.printStackTrace();
             throw new ActionException("Unknown class");
         }
 
