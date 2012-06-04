@@ -14,6 +14,7 @@ public class GaeStudioDispatchModule extends HandlerModule {
         bindHandler(GetNewDbOperationRecordsAction.class, GetNewDbOperationRecordsHandler.class);
         bindHandler(GetEntityKindsAction.class, GetEntityKindsHandler.class);
         bindHandler(GetEntitiesByKindAction.class, GetEntitiesByKindHandler.class);
+        bindHandler(GetEntityCountByKindAction.class, GetEntityCountByKindHandler.class);
         bindHandler(SetRecordingAction.class, SetRecordingHandler.class);
         bindHandler(UpdateEntityAction.class, UpdateEntityHandler.class);
     }
