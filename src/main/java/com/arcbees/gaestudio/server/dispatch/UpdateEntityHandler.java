@@ -10,8 +10,8 @@ import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.GsonDatastoreFactory;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
@@ -32,21 +32,18 @@ public class UpdateEntityHandler
     public UpdateEntityResult execute(UpdateEntityAction action, ExecutionContext context)
             throws ActionException {
         DispatchHelper.disableApiHooks();
-
         EntityDTO entityDTO = action.getEntityDTO();
 
         try {
-            Class clazz = Class.forName(entityDTO.getClassName());
-
-            // TODO Will only work with bag of primitive, use a more sophisticated way to edit changes
-            Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-            Object object = gson.fromJson(entityDTO.getJson(), clazz);
+            Gson gson = GsonDatastoreFactory.create();
+            Entity entity = gson.fromJson(entityDTO.getJson(), Entity.class);
 
             DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-            datastore.put((Entity) clazz.cast(object));
+            datastore.put(entity);
         } catch (JsonSyntaxException e) {
             throw new ActionException("Error in json syntax");
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ActionException("Unknown class");
         }
 

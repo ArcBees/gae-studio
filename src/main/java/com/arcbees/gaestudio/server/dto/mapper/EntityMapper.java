@@ -3,9 +3,9 @@ package com.arcbees.gaestudio.server.dto.mapper;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDTO;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.GsonDatastoreFactory;
 import com.google.appengine.api.datastore.Key;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class EntityMapper {
     
@@ -14,10 +14,8 @@ public class EntityMapper {
     }
     
     public static EntityDTO mapDTO(Entity dbEntity) {
-        // TODO see about reusing the Gson instance
-        // TODO Key switch and object class
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-        return new EntityDTO(mapKey(dbEntity.getKey()), dbEntity.getClass().getName(), gson.toJson(dbEntity));
+        Gson gson = GsonDatastoreFactory.create();
+        return new EntityDTO(mapKey(dbEntity.getKey()), gson.toJson(dbEntity));
     }
     
     private static KeyDTO mapKey(Key dbKey) {

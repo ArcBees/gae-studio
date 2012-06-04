@@ -40,6 +40,7 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
 
     @UiHandler("edit")
     void onEditClicked(ClickEvent event){
+        currentEntityDTO.setJson(entityDetails.getValue());
         getUiHandlers().editEntity(currentEntityDTO);
     }
 
