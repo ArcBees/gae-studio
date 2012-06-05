@@ -2,11 +2,9 @@ package com.arcbees.gaestudio.client.application.visualizer.entitylist;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
-import com.arcbees.gaestudio.client.domain.EntityJsonParsed;
+import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDTO;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -34,15 +32,13 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private static final int PAGE_SIZE = 25;
     private static final Range DEFAULT_RANGE = new Range(0, PAGE_SIZE);
     private static final int NUMBER_OF_DEFAULT_COLUMNS = 2;
-    private static final String NULL_TAG = "<null>";
-    private static final String MISSING_TAG = "<missing>";
 
     @UiField
     HTMLPanel panel;
     @UiField
     SimplePager pager;
     @UiField
-    CellTable<EntityJsonParsed> entityTable;
+    CellTable<ParsedEntity> entityTable;
     @UiField
     Button refresh;
 
@@ -62,7 +58,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void setTableDataProvider(AsyncDataProvider<EntityJsonParsed> dataProvider) {
+    public void setTableDataProvider(AsyncDataProvider<ParsedEntity> dataProvider) {
         dataProvider.addDataDisplay(entityTable);
     }
 
@@ -79,43 +75,19 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void setData(Range range, List<EntityJsonParsed> entities, Set<String> properties) {
+    public void setData(Range range, List<ParsedEntity> entityEntities, Set<String> properties) {
         for (String property : properties) {
             if (!currentProperties.contains(property)) {
-                entityTable.addColumn(createColumnProperty(property), property);
+                entityTable.addColumn(new PropertyColumn(property), property);
                 currentProperties.add(property);
             }
         }
-        entityTable.setRowData(range.getStart(), entities);
+        entityTable.setRowData(range.getStart(), entityEntities);
     }
 
     @UiHandler("refresh")
     void onRefreshClicked(ClickEvent event) {
         getUiHandlers().refreshData();
-    }
-
-    private TextColumn<EntityJsonParsed> createColumnProperty(final String property) {
-        return new TextColumn<EntityJsonParsed>() {
-            @Override
-            public String getValue(EntityJsonParsed entityJsonParsed) {
-                if (entityJsonParsed.hasProperty(property)) {
-                    JSONValue value = entityJsonParsed.getProperty(property);
-                    if (value == null) {
-                        return NULL_TAG;
-                    } else if (value.isObject() != null) {
-                        JSONObject object = value.isObject();
-                        if (object.containsKey("kind") && object.containsKey("id")) {
-                            return object.get("kind").isString().stringValue() + ", " + object.get("id");
-                        }
-                    } else if (value.isString() != null) {
-                        return value.isString().stringValue();
-                    }
-                    return value.toString();
-                } else {
-                    return MISSING_TAG;
-                }
-            }
-        };
     }
 
     private void removeAllPropertyColumns() {
@@ -126,11 +98,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     private void setSelectionModel() {
-        final SingleSelectionModel<EntityJsonParsed> selectionModel = new SingleSelectionModel<EntityJsonParsed>();
+        final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
         selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
             @Override
             public void onSelectionChange(SelectionChangeEvent event) {
-                EntityJsonParsed selected = selectionModel.getSelectedObject();
+                ParsedEntity selected = selectionModel.getSelectedObject();
                 if (selected != null) {
                     getUiHandlers().onEntityClicked(selected);
                 }
@@ -140,20 +112,20 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     private void setDefaultColumns() {
-        TextColumn<EntityJsonParsed> idColumn = new TextColumn<EntityJsonParsed>() {
+        TextColumn<ParsedEntity> idColumn = new TextColumn<ParsedEntity>() {
             @Override
-            public String getValue(EntityJsonParsed EntityJsonParsed) {
+            public String getValue(ParsedEntity EntityJsonParsed) {
                 return EntityJsonParsed.getKey().getId().toString();
             }
         };
         entityTable.addColumn(idColumn, "ID");
 
-        TextColumn<EntityJsonParsed> parentColumn = new TextColumn<EntityJsonParsed>() {
+        TextColumn<ParsedEntity> parentColumn = new TextColumn<ParsedEntity>() {
             @Override
-            public String getValue(EntityJsonParsed EntityJsonParsed) {
+            public String getValue(ParsedEntity EntityJsonParsed) {
                 ParentKeyDTO parentKeyDTO = EntityJsonParsed.getKey().getParentKey();
                 if (parentKeyDTO == null) {
-                    return NULL_TAG;
+                    return "<null>";
                 }
                 return parentKeyDTO.getKind() + ", " + parentKeyDTO.getId();
             }

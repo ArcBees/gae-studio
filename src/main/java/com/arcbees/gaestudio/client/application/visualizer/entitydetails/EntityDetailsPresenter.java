@@ -5,7 +5,7 @@
 package com.arcbees.gaestudio.client.application.visualizer.entitydetails;
 
 import com.arcbees.gaestudio.client.application.event.EntitySelectedEvent;
-import com.arcbees.gaestudio.client.domain.EntityJsonParsed;
+import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
@@ -29,7 +29,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     }
 
     private final DispatchAsync dispatcher;
-    private EntityJsonParsed currentEntityJsonParsed;
+    private ParsedEntity currentParsedEntity;
 
     @Inject
     public EntityDetailsPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
@@ -47,13 +47,13 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
 
     @Override
     public void onEntitySelected(EntitySelectedEvent event) {
-        currentEntityJsonParsed = event.getEntityJsonParsed();
-        getView().displayEntityDetails(currentEntityJsonParsed.getJson());
+        currentParsedEntity = event.getParsedEntity();
+        getView().displayEntityDetails(currentParsedEntity.getJson());
     }
 
     @Override
     public void editEntity(String json) {
-        EntityDTO entityDTO = currentEntityJsonParsed.getEntityDTO();
+        EntityDTO entityDTO = currentParsedEntity.getEntityDTO();
         entityDTO.setJson(json);
         dispatcher.execute(new UpdateEntityAction(entityDTO), new AsyncCallback<UpdateEntityResult>() {
             @Override
@@ -63,7 +63,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
 
             @Override
             public void onSuccess(UpdateEntityResult result) {
-                currentEntityJsonParsed.parseJson();
+                currentParsedEntity.parseJson();
                 getView().hide();
             }
         });

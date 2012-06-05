@@ -6,7 +6,7 @@ package com.arcbees.gaestudio.client.application.visualizer.entitylist;
 
 import com.arcbees.gaestudio.client.application.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.event.KindSelectedEvent;
-import com.arcbees.gaestudio.client.domain.EntityJsonParsed;
+import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
@@ -34,11 +34,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     public interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind();
 
-        void setTableDataProvider(AsyncDataProvider<EntityJsonParsed> dataProvider);
+        void setTableDataProvider(AsyncDataProvider<ParsedEntity> dataProvider);
 
         void setRowCount(Integer count);
 
-        void setData(Range range, List<EntityJsonParsed> entities, Set<String> properties);
+        void setData(Range range, List<ParsedEntity> entityEntities, Set<String> properties);
     }
 
     private final DispatchAsync dispatcher;
@@ -60,8 +60,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
-    public void onEntityClicked(EntityJsonParsed entityJsonParsed) {
-        getEventBus().fireEvent(new EntitySelectedEvent(entityJsonParsed));
+    public void onEntityClicked(ParsedEntity parsedEntity) {
+        getEventBus().fireEvent(new EntitySelectedEvent(parsedEntity));
     }
 
     @Override
@@ -77,9 +77,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     private void setTableDataProvider() {
-        AsyncDataProvider<EntityJsonParsed> dataProvider = new AsyncDataProvider<EntityJsonParsed>() {
+        AsyncDataProvider<ParsedEntity> dataProvider = new AsyncDataProvider<ParsedEntity>() {
             @Override
-            protected void onRangeChanged(HasData<EntityJsonParsed> display) {
+            protected void onRangeChanged(HasData<ParsedEntity> display) {
                 loadPage(display);
             }
         };
@@ -101,7 +101,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                 });
     }
 
-    private void loadPage(final HasData<EntityJsonParsed> display) {
+    private void loadPage(final HasData<ParsedEntity> display) {
         if (currentKind == null) {
             display.setRowCount(0);
         } else {
@@ -118,17 +118,17 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         }
     }
 
-    private void onLoadPageSuccess(GetEntitiesByKindResult result, HasData<EntityJsonParsed> display) {
-        List<EntityJsonParsed> parsedEntities = new ArrayList<EntityJsonParsed>();
+    private void onLoadPageSuccess(GetEntitiesByKindResult result, HasData<ParsedEntity> display) {
+        List<ParsedEntity> parsedEntityEntities = new ArrayList<ParsedEntity>();
 
         Set<String> properties = new HashSet<String>();
         for (EntityDTO entityDTO : result.getEntities()) {
-            EntityJsonParsed entityJsonParsed = new EntityJsonParsed(entityDTO);
-            parsedEntities.add(entityJsonParsed);
-            properties.addAll(entityJsonParsed.propertyKeys());
+            ParsedEntity parsedEntity = new ParsedEntity(entityDTO);
+            parsedEntityEntities.add(parsedEntity);
+            properties.addAll(parsedEntity.propertyKeys());
         }
 
-        getView().setData(display.getVisibleRange(), parsedEntities, properties);
+        getView().setData(display.getVisibleRange(), parsedEntityEntities, properties);
     }
 
 }
