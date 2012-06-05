@@ -1,11 +1,11 @@
 package com.arcbees.gaestudio.client.application.visualizer.entitylist;
 
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.arcbees.gaestudio.client.domain.EntityJsonParsed;
 import com.gwtplatform.mvp.client.UiHandlers;
 
 public interface EntityListUiHandlers extends UiHandlers {
 
-    void onEntityClicked(EntityDTO entityDTO);
+    void onEntityClicked(EntityJsonParsed entityJsonParsed);
 
     void refreshData();
 

@@ -13,6 +13,7 @@
     <!-- Other module inherits                                      -->
     <inherits name='com.gwtplatform.dispatch.Dispatch'/>
     <inherits name="com.arcbees.core.Mvp"/>
+    <inherits name="com.google.gwt.json.JSON"/>
 
     <!-- Specify the app entry point class.                         -->
     <entry-point class='com.arcbees.gaestudio.client.GaeStudio'/>

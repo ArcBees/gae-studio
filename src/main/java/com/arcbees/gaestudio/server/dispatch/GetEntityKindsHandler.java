@@ -6,19 +6,12 @@ package com.arcbees.gaestudio.server.dispatch;
 
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.utils.SystemProperty;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 // TODO add logging
@@ -54,6 +47,7 @@ public class GetEntityKindsHandler
             kinds = new ArrayList<String>();
             // TODO externalize this
             kinds.add("Sprocket");
+            kinds.add("Complex");
 //        }
 
         return new GetEntityKindsResult(kinds);

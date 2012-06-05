@@ -6,6 +6,7 @@ package com.arcbees.gaestudio.client.application.visualizer.entitylist;
 
 import com.arcbees.gaestudio.client.application.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.event.KindSelectedEvent;
+import com.arcbees.gaestudio.client.domain.EntityJsonParsed;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
@@ -23,6 +24,9 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
         implements KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers {
@@ -30,9 +34,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     public interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind();
 
-        void setTableDataProvider(AsyncDataProvider<EntityDTO> dataProvider);
+        void setTableDataProvider(AsyncDataProvider<EntityJsonParsed> dataProvider);
 
         void setRowCount(Integer count);
+
+        void setData(Range range, List<EntityJsonParsed> entities, Set<String> properties);
     }
 
     private final DispatchAsync dispatcher;
@@ -54,8 +60,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
-    public void onEntityClicked(EntityDTO entityDTO) {
-        getEventBus().fireEvent(new EntitySelectedEvent(entityDTO));
+    public void onEntityClicked(EntityJsonParsed entityJsonParsed) {
+        getEventBus().fireEvent(new EntitySelectedEvent(entityJsonParsed));
     }
 
     @Override
@@ -71,9 +77,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     private void setTableDataProvider() {
-        AsyncDataProvider<EntityDTO> dataProvider = new AsyncDataProvider<EntityDTO>() {
+        AsyncDataProvider<EntityJsonParsed> dataProvider = new AsyncDataProvider<EntityJsonParsed>() {
             @Override
-            protected void onRangeChanged(HasData<EntityDTO> display) {
+            protected void onRangeChanged(HasData<EntityJsonParsed> display) {
                 loadPage(display);
             }
         };
@@ -95,7 +101,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                 });
     }
 
-    private void loadPage(final HasData<EntityDTO> display) {
+    private void loadPage(final HasData<EntityJsonParsed> display) {
         if (currentKind == null) {
             display.setRowCount(0);
         } else {
@@ -106,19 +112,23 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                     new AsyncCallbackImpl<GetEntitiesByKindResult>() {
                         @Override
                         public void onSuccess(GetEntitiesByKindResult result) {
-                            onGetEntitiesSuccess(result, display);
+                            onLoadPageSuccess(result, display);
                         }
                     });
         }
     }
 
-    private void onGetEntitiesSuccess(GetEntitiesByKindResult result, HasData<EntityDTO> display) {
-        Range range = display.getVisibleRange();
-        ArrayList<EntityDTO> entities = result.getEntities();
+    private void onLoadPageSuccess(GetEntitiesByKindResult result, HasData<EntityJsonParsed> display) {
+        List<EntityJsonParsed> parsedEntities = new ArrayList<EntityJsonParsed>();
 
-        display.setRowData(range.getStart(), entities);
-        if (range.getStart() + entities.size() > display.getRowCount()) {
-            display.setRowCount(range.getStart() + entities.size(), false);
+        Set<String> properties = new HashSet<String>();
+        for (EntityDTO entityDTO : result.getEntities()) {
+            EntityJsonParsed entityJsonParsed = new EntityJsonParsed(entityDTO);
+            parsedEntities.add(entityJsonParsed);
+            properties.addAll(entityJsonParsed.propertyKeys());
         }
+
+        getView().setData(display.getVisibleRange(), parsedEntities, properties);
     }
+
 }
