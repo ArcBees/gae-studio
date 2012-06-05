@@ -24,6 +24,9 @@ public class EntityMapper {
     }
 
     private static ParentKeyDTO mapParentKey(Key dbParentKey){
+        if(dbParentKey == null){
+            return null;
+        }
         return new ParentKeyDTO(dbParentKey.getKind(), dbParentKey.getId());
     }
     

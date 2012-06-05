@@ -30,11 +30,11 @@ public class KeyDTO implements Serializable {
         return id;
     }
 
-    public ParentKeyDTO getParentKeyDTO() {
+    public ParentKeyDTO getParentKey() {
         return parentKeyDTO;
     }
 
-    public void setParentKeyDTO(ParentKeyDTO parentKeyDTO) {
+    public void setParentKey(ParentKeyDTO parentKeyDTO) {
         this.parentKeyDTO = parentKeyDTO;
     }
 
