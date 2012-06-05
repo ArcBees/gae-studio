@@ -1,11 +1,12 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:cellview="urn:import:com.google.gwt.user.cellview.client">
 
     <ui:with field="resources" type="com.arcbees.gaestudio.client.Resources"/>
 
     <g:HTMLPanel>
         <h3>Entity Kinds</h3>
-        <g:HTMLPanel ui:field="kindList" styleName="{resources.styles.list}" />
+        <cellview:CellList ui:field="kinds" styleName="{resources.styles.list}" />
     </g:HTMLPanel>
 
 </ui:UiBinder>

@@ -11,7 +11,6 @@ import com.arcbees.gaestudio.client.application.visualizer.entitylist.EntityList
 import com.arcbees.gaestudio.client.application.visualizer.kind.KindListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.kind.KindListUiHandlers;
 import com.arcbees.gaestudio.client.application.visualizer.kind.KindListView;
-import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.TypeLiteral;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
@@ -19,8 +18,6 @@ public class VisualizerModule extends AbstractPresenterModule {
 
     @Override
     protected void configure() {
-        install(new GinFactoryModuleBuilder().build(VisualizerLabelFactory.class));
-
         bind(new TypeLiteral<UiHandlersStrategy<KindListUiHandlers>>() {})
                 .to(new TypeLiteral<ProviderUiHandlersStrategy<KindListUiHandlers>>() {});
         bind(new TypeLiteral<UiHandlersStrategy<EntityListUiHandlers>>() {})
