@@ -69,6 +69,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @Override
     public void setNewKind() {
+        panel.setVisible(true);
         removeAllPropertyColumns();
         refresh.setVisible(true);
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);

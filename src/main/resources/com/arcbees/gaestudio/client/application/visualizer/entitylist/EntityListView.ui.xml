@@ -2,7 +2,7 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:cellview="urn:import:com.google.gwt.user.cellview.client">
 
-    <g:HTMLPanel ui:field="panel">
+    <g:HTMLPanel ui:field="panel" visible="false">
         <h3>Entities</h3>
         <g:Button ui:field="refresh" visible="false">Refresh</g:Button>
         <cellview:SimplePager ui:field="pager" location="LEFT"/>
