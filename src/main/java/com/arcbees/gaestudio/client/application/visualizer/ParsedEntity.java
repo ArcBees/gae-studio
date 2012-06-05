@@ -50,4 +50,5 @@ public class ParsedEntity {
     public void parseJson() {
         jsonObject = JSONParser.parseStrict(getJson()).isObject();
     }
+
 }

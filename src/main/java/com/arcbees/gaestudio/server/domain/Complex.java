@@ -47,4 +47,5 @@ public class Complex {
     public void setDate(Date date) {
         this.date = date;
     }
+
 }

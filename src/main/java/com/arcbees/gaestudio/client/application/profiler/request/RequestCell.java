@@ -16,4 +16,5 @@ public class RequestCell extends AbstractCell<RequestStatistics> {
 
         safeHtmlBuilder.appendEscaped(content);
     }
+
 }

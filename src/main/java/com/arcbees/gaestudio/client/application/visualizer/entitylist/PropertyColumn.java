@@ -6,6 +6,7 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.cellview.client.TextColumn;
 
 public class PropertyColumn extends TextColumn<ParsedEntity> {
+
     private String property;
 
     public PropertyColumn(String property) {
@@ -39,4 +40,5 @@ public class PropertyColumn extends TextColumn<ParsedEntity> {
         }
         return text;
     }
+
 }
