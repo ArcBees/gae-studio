@@ -1,6 +1,8 @@
 package com.arcbees.gaestudio.server.servlet;
 
+import com.arcbees.gaestudio.server.domain.Complex;
 import com.arcbees.gaestudio.server.domain.Sprocket;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlecode.objectify.Objectify;
@@ -50,8 +52,11 @@ public class DataGenerator extends HttpServlet {
 
         if (objectify.query(Sprocket.class).count() == 0) {
             logger.info("Initializing seed data");
-            for (int i = 0; i < 100; ++i) {
-                objectify.put(new Sprocket("Sprocket #" + i));
+            for (int i = 0; i < 1500; ++i) {
+                Sprocket sprocket = new Sprocket("Sprocket #" + i);
+                objectify.put(sprocket);
+                Complex complex = new Complex(KeyFactory.createKey("Sprocket", sprocket.getId()));
+                objectify.put(complex);
             }
         }
     }
