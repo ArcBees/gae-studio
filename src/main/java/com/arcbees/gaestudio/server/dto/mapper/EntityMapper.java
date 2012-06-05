@@ -2,6 +2,7 @@ package com.arcbees.gaestudio.server.dto.mapper;
 
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDTO;
+import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDTO;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.GsonDatastoreFactory;
 import com.google.appengine.api.datastore.Key;
@@ -19,7 +20,11 @@ public class EntityMapper {
     }
     
     private static KeyDTO mapKey(Key dbKey) {
-        return new KeyDTO(dbKey.getKind(), dbKey.getId());
+        return new KeyDTO(dbKey.getKind(), dbKey.getId(), mapParentKey(dbKey.getParent()));
+    }
+
+    private static ParentKeyDTO mapParentKey(Key dbParentKey){
+        return new ParentKeyDTO(dbParentKey.getKind(), dbParentKey.getId());
     }
     
 }
