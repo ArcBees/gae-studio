@@ -1,7 +1,6 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.core.client.mvp.uihandlers.ProviderUiHandlersStrategy;
-import com.arcbees.core.client.mvp.uihandlers.SetterUiHandlersStrategy;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.application.visualizer.entitydetails.EntityDetailsPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.entitydetails.EntityDetailsUiHandlers;
@@ -33,8 +32,8 @@ public class VisualizerModule extends AbstractPresenterModule {
                 KindListView.class);
         bindSingletonPresenterWidget(EntityListPresenter.class, EntityListPresenter.MyView.class,
                 EntityListView.class);
-        bindSingletonPresenterWidget(EntityDetailsPresenter.class, EntityDetailsPresenter.MyView.class,
-                EntityDetailsView.class);
+        bind(EntityDetailsPresenter.class).asEagerSingleton();
+        bind(EntityDetailsPresenter.MyView.class).to(EntityDetailsView.class);
 
         bind(KindListUiHandlers.class).to(KindListPresenter.class);
         bind(EntityListUiHandlers.class).to(EntityListPresenter.class);

@@ -31,7 +31,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     public interface Binder extends UiBinder<Widget, EntityListView> {
     }
 
-    private static final int PAGE_SIZE = 10;
+    private static final int PAGE_SIZE = 25;
     private static final Range DEFAULT_RANGE = new Range(0, PAGE_SIZE);
     private static final int NUMBER_OF_DEFAULT_COLUMNS = 2;
     private static final String NULL_TAG = "<null>";

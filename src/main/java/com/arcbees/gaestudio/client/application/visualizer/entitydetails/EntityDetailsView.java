@@ -2,12 +2,13 @@ package com.arcbees.gaestudio.client.application.visualizer.entitydetails;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -22,8 +23,12 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
     TextArea entityDetails;
     @UiField
     Button edit;
-
-    private EntityDTO currentEntityDTO;
+    @UiField
+    PopupPanel popup;
+    @UiField
+    Button cancel;
+    @UiField
+    DivElement error;
 
     @Inject
     public EntityDetailsView(final Binder uiBinder,
@@ -33,15 +38,30 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
     }
 
     @Override
-    public void displayEntityDetails(EntityDTO entityDTO) {
-        currentEntityDTO = entityDTO;
-        entityDetails.setText(entityDTO.getJson());
+    public void displayEntityDetails(String json) {
+        error.setInnerText("");
+        popup.center();
+        entityDetails.setText(json);
+    }
+
+    @Override
+    public void hide() {
+        popup.hide();
+    }
+
+    @Override
+    public void showError(String message) {
+        error.setInnerText(message);
     }
 
     @UiHandler("edit")
-    void onEditClicked(ClickEvent event){
-        currentEntityDTO.setJson(entityDetails.getValue());
-        getUiHandlers().editEntity(currentEntityDTO);
+    void onEditClicked(ClickEvent event) {
+        getUiHandlers().editEntity(entityDetails.getValue());
+    }
+
+    @UiHandler("cancel")
+    void onCancelClicked(ClickEvent event) {
+        hide();
     }
 
 }

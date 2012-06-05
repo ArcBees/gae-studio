@@ -1,7 +1,6 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.core.client.mvp.ViewImpl;
-import com.google.gwt.dom.client.Style;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -18,9 +17,6 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     
     @UiField
     SimplePanel entityListPanel;
-    
-    @UiField
-    SimplePanel entityDetailsPanel;
 
     @Inject
     public VisualizerView(final Binder uiBinder) {
@@ -34,8 +30,6 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
                 kindListPanel.setWidget(content);
             } else if (slot == VisualizerPresenter.TYPE_SetEntityListPanelContent) {
                 entityListPanel.setWidget(content);
-            } else if (slot == VisualizerPresenter.TYPE_SetEntityDetailsPanelContent) {
-                entityDetailsPanel.setWidget(content);
             }
         }
     }

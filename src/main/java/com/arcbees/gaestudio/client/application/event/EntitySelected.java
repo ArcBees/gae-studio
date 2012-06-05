@@ -1,6 +1,6 @@
 package com.arcbees.gaestudio.client.application.event;
 
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.arcbees.gaestudio.client.domain.EntityJsonParsed;
 import com.gwtplatform.dispatch.annotation.GenEvent;
 import com.gwtplatform.dispatch.annotation.Order;
 
@@ -8,6 +8,6 @@ import com.gwtplatform.dispatch.annotation.Order;
 public class EntitySelected {
     
     @Order(1)
-    EntityDTO entityDTO;
+    EntityJsonParsed entityJsonParsed;
 
 }
