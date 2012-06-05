@@ -42,7 +42,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiField
     Button refresh;
 
-    private Set<String> currentProperties = new HashSet<String>();
+    private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
+    private final Set<String> currentProperties = new HashSet<String>();
 
     @Inject
     public EntityListView(final Binder uiBinder, final UiHandlersStrategy<EntityListUiHandlers> uiHandlersStrategy) {
@@ -99,14 +100,10 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     private void setSelectionModel() {
-        final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
         selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
             @Override
             public void onSelectionChange(SelectionChangeEvent event) {
-                ParsedEntity selected = selectionModel.getSelectedObject();
-                if (selected != null) {
-                    getUiHandlers().onEntityClicked(selected);
-                }
+                getUiHandlers().onEntityClicked(selectionModel.getSelectedObject());
             }
         });
         entityTable.setSelectionModel(selectionModel);
