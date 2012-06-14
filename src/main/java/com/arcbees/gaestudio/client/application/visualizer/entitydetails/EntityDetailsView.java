@@ -22,7 +22,7 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
     @UiField
     TextArea entityDetails;
     @UiField
-    Button edit;
+    Button save;
     @UiField
     PopupPanel popup;
     @UiField
@@ -54,7 +54,7 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
         error.setInnerText(message);
     }
 
-    @UiHandler("edit")
+    @UiHandler("save")
     void onEditClicked(ClickEvent event) {
         getUiHandlers().editEntity(entityDetails.getValue());
     }

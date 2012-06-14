@@ -24,7 +24,7 @@
         <g:PopupPanel visible="false" glassEnabled="true" modal="true" ui:field="popup" styleName="{style.popup}">
             <g:HTMLPanel>
                 <h3>Entity Details</h3>
-                <g:Button ui:field="edit">Edit</g:Button>
+                <g:Button ui:field="save">Save</g:Button>
                 <g:Button ui:field="cancel">Cancel</g:Button>
                 <hr/>
                 <div ui:field="error" class="{style.error}"/>
