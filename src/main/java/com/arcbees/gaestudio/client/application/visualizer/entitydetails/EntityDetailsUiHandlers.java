@@ -4,6 +4,6 @@ import com.gwtplatform.mvp.client.UiHandlers;
 
 public interface EntityDetailsUiHandlers extends UiHandlers {
 
-    void editEntity(String json);
+    void saveEntity(String json);
 
 }

@@ -4,6 +4,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.entitydetails;
 
+import com.arcbees.gaestudio.client.application.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
@@ -52,29 +53,34 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     }
 
     @Override
-    public void editEntity(String json) {
+    public void saveEntity(String json) {
         EntityDTO entityDTO = currentParsedEntity.getEntityDTO();
         entityDTO.setJson(json);
         dispatcher.execute(new UpdateEntityAction(entityDTO), new AsyncCallback<UpdateEntityResult>() {
             @Override
             public void onFailure(Throwable caught) {
-                onEditFailed(caught);
+                onSaveEntityFailed(caught);
             }
 
             @Override
             public void onSuccess(UpdateEntityResult result) {
-                currentParsedEntity.parseJson();
-                getView().hide();
+                onSaveEntitySucceeded();
             }
         });
     }
 
-    private void onEditFailed(Throwable caught) {
+    private void onSaveEntityFailed(Throwable caught) {
         String message = caught.getMessage();
         if (message == null) {
             message = "Unable to save the changes in the datastore";
         }
         getView().showError(message);
+    }
+
+    private void onSaveEntitySucceeded() {
+        currentParsedEntity.parseJson();
+        getView().hide();
+        EntitySavedEvent.fire(this);
     }
 
 }

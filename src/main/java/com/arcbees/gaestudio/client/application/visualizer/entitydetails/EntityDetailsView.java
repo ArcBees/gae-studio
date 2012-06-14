@@ -56,7 +56,7 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
 
     @UiHandler("save")
     void onEditClicked(ClickEvent event) {
-        getUiHandlers().editEntity(entityDetails.getValue());
+        getUiHandlers().saveEntity(entityDetails.getValue());
     }
 
     @UiHandler("cancel")

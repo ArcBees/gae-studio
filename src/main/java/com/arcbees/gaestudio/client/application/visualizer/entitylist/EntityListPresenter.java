@@ -4,6 +4,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.entitylist;
 
+import com.arcbees.gaestudio.client.application.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
@@ -29,7 +30,7 @@ import java.util.List;
 import java.util.Set;
 
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
-        implements KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers {
+        implements KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler {
 
     public interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind();
@@ -39,6 +40,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void setRowCount(Integer count);
 
         void setData(Range range, List<ParsedEntity> entityEntities, Set<String> properties);
+
+        void redrawTable();
     }
 
     private final DispatchAsync dispatcher;
@@ -70,10 +73,16 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
+    public void onEntitySaved(EntitySavedEvent event) {
+        getView().redrawTable();
+    }
+
+    @Override
     protected void onBind() {
         super.onBind();
 
         addRegisteredHandler(KindSelectedEvent.getType(), this);
+        addRegisteredHandler(EntitySavedEvent.getType(), this);
     }
 
     private void setTableDataProvider() {

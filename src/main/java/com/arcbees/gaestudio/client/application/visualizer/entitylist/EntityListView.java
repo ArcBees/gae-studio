@@ -87,6 +87,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         entityTable.setRowData(range.getStart(), entityEntities);
     }
 
+    @Override
+    public void redrawTable() {
+        entityTable.redraw();
+    }
+
     @UiHandler("refresh")
     void onRefreshClicked(ClickEvent event) {
         getUiHandlers().refreshData();
