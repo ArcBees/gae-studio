@@ -3,6 +3,7 @@ package com.arcbees.gaestudio.server.domain;
 import com.google.appengine.api.datastore.Key;
 import com.googlecode.objectify.annotation.Entity;
 
+import javax.persistence.Embedded;
 import javax.persistence.Id;
 import java.util.Date;
 
@@ -15,6 +16,9 @@ public class Complex {
     Key sprocketKey;
 
     Date date;
+
+    @Embedded
+    EmbeddedObject embeddedObject;
 
     public Complex() {
     }
@@ -46,6 +50,14 @@ public class Complex {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public EmbeddedObject getEmbeddedObject() {
+        return embeddedObject;
+    }
+
+    public void setEmbeddedObject(EmbeddedObject embeddedObject) {
+        this.embeddedObject = embeddedObject;
     }
 
 }

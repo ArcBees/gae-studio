@@ -1,6 +1,7 @@
 package com.arcbees.gaestudio.server.servlet;
 
 import com.arcbees.gaestudio.server.domain.Complex;
+import com.arcbees.gaestudio.server.domain.EmbeddedObject;
 import com.arcbees.gaestudio.server.domain.Sprocket;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.inject.Inject;
@@ -55,7 +56,9 @@ public class DataGenerator extends HttpServlet {
             for (int i = 0; i < 1500; ++i) {
                 Sprocket sprocket = new Sprocket("Sprocket #" + i);
                 objectify.put(sprocket);
+                EmbeddedObject embeddedObject = new EmbeddedObject("Object #"+i);
                 Complex complex = new Complex(KeyFactory.createKey("Sprocket", sprocket.getId()));
+                complex.setEmbeddedObject(embeddedObject);
                 objectify.put(complex);
             }
         }
