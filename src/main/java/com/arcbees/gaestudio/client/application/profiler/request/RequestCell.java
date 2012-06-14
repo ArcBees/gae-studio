@@ -11,10 +11,13 @@ public class RequestCell extends AbstractCell<RequestStatistics> {
 
     @Override
     public void render(Context context, RequestStatistics requestStatistics, SafeHtmlBuilder safeHtmlBuilder) {
-        String content = "Request #" + requestStatistics.getRequestId() + " - " + numberFormat.format
-                (requestStatistics.getExecutionTimeMs() / 1000.0) + " [" + requestStatistics.getStatementCount() + "]";
-
-        safeHtmlBuilder.appendEscaped(content);
+        safeHtmlBuilder.appendEscaped("Request #");
+        safeHtmlBuilder.append(requestStatistics.getRequestId());
+        safeHtmlBuilder.appendEscaped(" - ");
+        safeHtmlBuilder.appendEscaped(numberFormat.format(requestStatistics.getExecutionTimeMs() / 1000.0));
+        safeHtmlBuilder.appendEscaped(" [");
+        safeHtmlBuilder.append(requestStatistics.getStatementCount());
+        safeHtmlBuilder.appendEscaped("]");
     }
 
 }
