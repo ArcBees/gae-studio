@@ -4,6 +4,7 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
@@ -38,13 +39,14 @@ public class UpdateEntityHandler
             throws ActionException {
         DispatchHelper.disableApiHooks();
         EntityDTO entityDTO = action.getEntityDTO();
+        Entity dbEntity;
 
         try {
             Gson gson = GsonDatastoreFactory.create();
-            Entity entity = gson.fromJson(entityDTO.getJson(), Entity.class);
+            dbEntity = gson.fromJson(entityDTO.getJson(), Entity.class);
 
             DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-            datastore.put(entity);
+            datastore.put(dbEntity);
             logger.info("Entity saved");
         } catch (JsonSyntaxException e) {
             throw new ActionException("Error in json syntax");
@@ -52,7 +54,7 @@ public class UpdateEntityHandler
             throw new ActionException("Unknown class");
         }
 
-        return new UpdateEntityResult();
+        return new UpdateEntityResult(EntityMapper.mapDTO(dbEntity));
     }
 
     @Override

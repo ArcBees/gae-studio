@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class ParsedEntity {
 
-    private final EntityDTO entityDTO;
+    private EntityDTO entityDTO;
     private JSONObject jsonObject;
 
     public ParsedEntity(EntityDTO entityDTO){
@@ -33,6 +33,12 @@ public class ParsedEntity {
 
     public JSONObject getPropertyMap(){
         return jsonObject.get("propertyMap").isObject();
+    }
+
+    public void setEntityDTO(EntityDTO entityDTO) {
+        this.entityDTO = entityDTO;
+
+        parseJson();
     }
 
     public EntityDTO getEntityDTO() {

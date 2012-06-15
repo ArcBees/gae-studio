@@ -64,7 +64,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
 
             @Override
             public void onSuccess(UpdateEntityResult result) {
-                onSaveEntitySucceeded();
+                onSaveEntitySucceeded(result);
             }
         });
     }
@@ -77,10 +77,10 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
         getView().showError(message);
     }
 
-    private void onSaveEntitySucceeded() {
-        currentParsedEntity.parseJson();
+    private void onSaveEntitySucceeded(UpdateEntityResult result) {
+        EntityDTO newEntityDto = result.getResult();
+        EntitySavedEvent.fire(this, newEntityDto);
         getView().hide();
-        EntitySavedEvent.fire(this);
     }
 
 }

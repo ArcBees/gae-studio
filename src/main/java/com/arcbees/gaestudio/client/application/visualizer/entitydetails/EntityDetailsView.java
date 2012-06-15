@@ -34,6 +34,7 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
     public EntityDetailsView(final Binder uiBinder,
                              final UiHandlersStrategy<EntityDetailsUiHandlers> uiHandlersStrategy) {
         super(uiHandlersStrategy);
+
         initWidget(uiBinder.createAndBindUi(this));
     }
 

@@ -25,9 +25,7 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
         implements KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler {
@@ -39,9 +37,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         void setRowCount(Integer count);
 
-        void setData(Range range, List<ParsedEntity> entityEntities, Set<String> properties);
+        void setData(Range range, List<ParsedEntity> parsedEntities);
 
-        void redrawTable();
+        void addOrReplaceEntity(EntityDTO parsedEntity);
     }
 
     private final DispatchAsync dispatcher;
@@ -74,7 +72,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void onEntitySaved(EntitySavedEvent event) {
-        getView().redrawTable();
+        getView().addOrReplaceEntity(event.getEntityDTO());
     }
 
     @Override
@@ -130,14 +128,12 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private void onLoadPageSuccess(GetEntitiesByKindResult result, HasData<ParsedEntity> display) {
         List<ParsedEntity> parsedEntityEntities = new ArrayList<ParsedEntity>();
 
-        Set<String> properties = new HashSet<String>();
         for (EntityDTO entityDTO : result.getEntities()) {
             ParsedEntity parsedEntity = new ParsedEntity(entityDTO);
             parsedEntityEntities.add(parsedEntity);
-            properties.addAll(parsedEntity.propertyKeys());
         }
 
-        getView().setData(display.getVisibleRange(), parsedEntityEntities, properties);
+        getView().setData(display.getVisibleRange(), parsedEntityEntities);
     }
 
 }

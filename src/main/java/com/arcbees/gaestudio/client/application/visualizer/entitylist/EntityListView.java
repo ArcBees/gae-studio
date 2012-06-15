@@ -3,7 +3,9 @@ package com.arcbees.gaestudio.client.application.visualizer.entitylist;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDTO;
+import com.google.gwt.dom.client.TableRowElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -20,9 +22,12 @@ import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.google.gwt.query.client.GQuery.$;
 
 public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
 
@@ -77,24 +82,70 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void setData(Range range, List<ParsedEntity> entityEntities, Set<String> properties) {
+    public void setData(Range range, List<ParsedEntity> parsedEntities) {
+        Set<String> properties = new HashSet<String>();
+        for (ParsedEntity parsedEntity : parsedEntities) {
+            properties.addAll(parsedEntity.propertyKeys());
+        }
+
         for (String property : properties) {
             if (!currentProperties.contains(property)) {
                 entityTable.addColumn(new PropertyColumn(property), property);
                 currentProperties.add(property);
             }
         }
-        entityTable.setRowData(range.getStart(), entityEntities);
+        entityTable.setRowData(range.getStart(), parsedEntities);
+    }
+
+    public void redrawTable() {
+        entityTable.redraw();
     }
 
     @Override
-    public void redrawTable() {
-        entityTable.redraw();
+    public void addOrReplaceEntity(EntityDTO entityDTO) {
+        List<ParsedEntity> visibleParsedEntities = entityTable.getVisibleItems();
+
+        int rowIndex = 0;
+        boolean isReplace = false;
+        int i = 0;
+        while (!isReplace && i < visibleParsedEntities.size()) {
+            ParsedEntity parsedEntity = visibleParsedEntities.get(i);
+            if (parsedEntity.getKey().getId().equals(entityDTO.getKey().getId())) {
+                isReplace = true;
+                parsedEntity.setEntityDTO(entityDTO);
+                rowIndex = i;
+                redrawTable();
+            }
+
+            i++;
+        }
+
+        if (!isReplace) {
+            insertNewEntityAtTheTopOfTheCurrentPage(entityDTO, visibleParsedEntities);
+        }
+
+        highlightUpdatedOrInsertedLine(rowIndex);
     }
 
     @UiHandler("refresh")
     void onRefreshClicked(ClickEvent event) {
         getUiHandlers().refreshData();
+    }
+
+    private void insertNewEntityAtTheTopOfTheCurrentPage(EntityDTO entityDTO,
+                                                         List<ParsedEntity> visibleParsedEntities) {
+        List<ParsedEntity> newParsedEntities = new ArrayList<ParsedEntity>();
+        ParsedEntity newParsedEntity = new ParsedEntity(entityDTO);
+        newParsedEntities.add(newParsedEntity);
+        newParsedEntities.addAll(visibleParsedEntities);
+
+        setData(entityTable.getVisibleRange(), newParsedEntities);
+    }
+
+    private void highlightUpdatedOrInsertedLine(int rowIndex) {
+        TableRowElement tableRowElement = entityTable.getRowElement(rowIndex);
+        $(tableRowElement).animate("background-color: '#FFFF00'", 500).delay(500).animate("background-color: " +
+                "'#FFFFFF'", 500);
     }
 
     private void removeAllPropertyColumns() {
