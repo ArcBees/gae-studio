@@ -41,9 +41,6 @@ public class UpdateEntityHandler
 
         try {
             Gson gson = GsonDatastoreFactory.create();
-            // TODO: Key and embedded object are deserialized in a LinkedHashMap.
-            // Create a custom deserializer
-            // Actually, it's only work for object with primitive fields only.
             Entity entity = gson.fromJson(entityDTO.getJson(), Entity.class);
 
             DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

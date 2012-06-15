@@ -277,6 +277,12 @@
             <artifactId>appengine-api-1.0-sdk</artifactId>
             <version>${gae.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-testing</artifactId>
+            <version>${gae.version}</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- DI dependencies -->
         <dependency>

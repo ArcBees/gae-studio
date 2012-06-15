@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.google.storage.onestore.v3.OnestoreEntity;
 
 import java.lang.reflect.Modifier;
+import java.util.Map;
 
 public class GsonDatastoreFactory {
 
@@ -31,6 +32,7 @@ public class GsonDatastoreFactory {
         gsonBuilder.registerTypeAdapter(Entity.class, new EntityInstanceCreator());
         gsonBuilder.registerTypeAdapter(AppIdNamespace.class, new AppIdNamespaceInstanceCreator());
         gsonBuilder.registerTypeAdapter(Key.class, new KeyInstanceCreator());
+        gsonBuilder.registerTypeAdapter(Map.class, new PropertiesDeserializer());
 
         return gsonBuilder.create();
     }
