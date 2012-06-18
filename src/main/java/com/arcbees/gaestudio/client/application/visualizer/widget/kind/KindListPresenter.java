@@ -4,7 +4,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.kind;
 
-import com.arcbees.gaestudio.client.application.event.KindSelectedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
 import com.google.gwt.user.client.rpc.AsyncCallback;

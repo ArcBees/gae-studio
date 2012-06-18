@@ -4,10 +4,10 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import com.arcbees.gaestudio.client.application.event.EntitySavedEvent;
-import com.arcbees.gaestudio.client.application.event.EntitySelectedEvent;
-import com.arcbees.gaestudio.client.application.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
@@ -27,7 +27,6 @@ import com.gwtplatform.mvp.client.View;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Move logic in toolbar
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
         implements KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler {
 
