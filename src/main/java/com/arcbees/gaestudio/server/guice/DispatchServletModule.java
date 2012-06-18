@@ -1,8 +1,6 @@
 package com.arcbees.gaestudio.server.guice;
 
 import com.arcbees.gaestudio.server.servlet.DataGenerator;
-import com.google.inject.name.Names;
-import com.google.inject.servlet.RequestScoped;
 import com.google.inject.servlet.ServletModule;
 import com.gwtplatform.dispatch.server.guice.DispatchServiceImpl;
 import com.gwtplatform.dispatch.shared.ActionImpl;
