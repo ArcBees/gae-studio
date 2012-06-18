@@ -3,8 +3,11 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -19,6 +22,8 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     Resources resources;
     @UiField
     SimplePanel kinds;
+    @UiField
+    Button refresh;
 
     @Inject
     public VisualizerToolbarView(final Binder uiBinder, final Resources resources,
@@ -35,5 +40,10 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
         if(slot == VisualizerToolbarPresenter.TYPE_SetKindsContent){
             kinds.setWidget(content);
         }
+    }
+
+    @UiHandler("refresh")
+    void onRefreshClicked(ClickEvent event){
+        getUiHandlers().refresh();
     }
 }

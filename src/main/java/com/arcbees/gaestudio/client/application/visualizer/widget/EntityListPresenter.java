@@ -8,6 +8,7 @@ import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
-        implements KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler {
+        implements KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler, RefreshEntitiesEvent.RefreshEntitiesHandler {
 
     public interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind();
@@ -66,7 +67,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
-    public void refreshData() {
+    public void onRefreshEntities(RefreshEntitiesEvent event) {
         loadKind();
     }
 
@@ -81,6 +82,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(EntitySavedEvent.getType(), this);
+        addRegisteredHandler(RefreshEntitiesEvent.getType(), this);
     }
 
     private void setTableDataProvider() {

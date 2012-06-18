@@ -4,6 +4,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.widget.kind.KindListPresenter;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -27,6 +28,11 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
         super(eventBus, view);
 
         this.kindListPresenter = kindListPresenter;
+    }
+
+    @Override
+    public void refresh() {
+        RefreshEntitiesEvent.fire(this);
     }
 
     @Override

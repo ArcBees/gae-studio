@@ -7,6 +7,4 @@ public interface EntityListUiHandlers extends UiHandlers {
 
     void onEntityClicked(ParsedEntity parsedEntity);
 
-    void refreshData();
-
 }
