@@ -22,12 +22,12 @@ public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
         implements DbOperationRecordProcessor, RequestUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<RequestUiHandlers> {
-        void updateRequests(Iterable<RequestStatistics> requestStatistics);
+        void displayRequests(List<RequestStatistics> requestStatistics);
     }
 
-    private final Map<Long, RequestStatistics> statisticsByRequestId =
+    private final Map<Long, RequestStatistics> requestsByRequestId =
             new TreeMap<Long, RequestStatistics>();
-    private final List<RequestStatistics> requestStatisticsToDisplay = new ArrayList<RequestStatistics>();
+    private final List<RequestStatistics> requests = new ArrayList<RequestStatistics>();
 
     @Inject
     public RequestPresenter(final EventBus eventBus, final MyView view) {
@@ -38,21 +38,20 @@ public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
     public void processDbOperationRecord(DbOperationRecordDTO record) {
         final long requestId = record.getRequestId();
         RequestStatistics statistics;
-        if (!statisticsByRequestId.containsKey(requestId)) {
+        if (!requestsByRequestId.containsKey(requestId)) {
             statistics = new RequestStatistics(requestId, 1, record.getExecutionTimeMs());
-            statisticsByRequestId.put(requestId, statistics);
+            requestsByRequestId.put(requestId, statistics);
+            requests.add(statistics);
         } else {
-            statistics = statisticsByRequestId.get(requestId);
+            statistics = requestsByRequestId.get(requestId);
             statistics.incrementStatementCount();
             statistics.incrementExecutionTimeMs(record.getExecutionTimeMs());
         }
-        requestStatisticsToDisplay.add(statistics);
     }
 
     @Override
     public void displayNewDbOperationRecords() {
-        getView().updateRequests(requestStatisticsToDisplay);
-        requestStatisticsToDisplay.clear();
+        getView().displayRequests(requests);
     }
 
     @Override

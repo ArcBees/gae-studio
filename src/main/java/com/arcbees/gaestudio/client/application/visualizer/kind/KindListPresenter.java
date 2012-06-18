@@ -15,10 +15,12 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
+import java.util.List;
+
 public class KindListPresenter extends PresenterWidget<KindListPresenter.MyView> implements KindListUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<KindListUiHandlers> {
-        void updateKinds(Iterable<String> kinds);
+        void updateKinds(List<String> kinds);
     }
     
     private final DispatchAsync dispatcher;

@@ -3,14 +3,34 @@
 
     <ui:style>
         .json {
-            white-space: pre;
             font-family: "Consolas", "Menlo", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
+            width: 800px;
+            height: 600px;
+        }
+
+        .popup {
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+        }
+
+        .error {
+            color: #FF0000;
+            margin: 10px;
         }
     </ui:style>
 
     <g:HTMLPanel>
-        <h3>Entity Details</h3>
-        <g:HTML ui:field="entityDetails" styleName="{style.json}" />
+        <g:PopupPanel visible="false" glassEnabled="true" modal="true" ui:field="popup" styleName="{style.popup}">
+            <g:HTMLPanel>
+                <h3>Entity Details</h3>
+                <g:Button ui:field="save">Save</g:Button>
+                <g:Button ui:field="cancel">Cancel</g:Button>
+                <hr/>
+                <div ui:field="error" class="{style.error}"/>
+                <g:TextArea ui:field="entityDetails" styleName="{style.json}"/>
+            </g:HTMLPanel>
+        </g:PopupPanel>
     </g:HTMLPanel>
 
 </ui:UiBinder>

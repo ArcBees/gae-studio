@@ -14,7 +14,6 @@ import com.arcbees.gaestudio.client.application.profiler.statistics.StatisticsPr
 import com.arcbees.gaestudio.client.application.profiler.statistics.StatisticsView;
 import com.arcbees.gaestudio.shared.formatters.ObjectifyRecordFormatter;
 import com.arcbees.gaestudio.shared.formatters.RecordFormatter;
-import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.TypeLiteral;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
@@ -24,8 +23,6 @@ public class ProfilerModule extends AbstractPresenterModule {
 
     @Override
     protected void configure() {
-        install(new GinFactoryModuleBuilder().build(ProfilerLabelFactory.class));
-
         bind(RecordFormatter.class).to(ObjectifyRecordFormatter.class).in(Singleton.class);
 
         bind(new TypeLiteral<UiHandlersStrategy<RequestUiHandlers>>() {})

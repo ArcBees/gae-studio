@@ -1,7 +1,6 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.core.client.mvp.uihandlers.ProviderUiHandlersStrategy;
-import com.arcbees.core.client.mvp.uihandlers.SetterUiHandlersStrategy;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.application.visualizer.entitydetails.EntityDetailsPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.entitydetails.EntityDetailsUiHandlers;
@@ -12,7 +11,6 @@ import com.arcbees.gaestudio.client.application.visualizer.entitylist.EntityList
 import com.arcbees.gaestudio.client.application.visualizer.kind.KindListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.kind.KindListUiHandlers;
 import com.arcbees.gaestudio.client.application.visualizer.kind.KindListView;
-import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.TypeLiteral;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
@@ -20,8 +18,6 @@ public class VisualizerModule extends AbstractPresenterModule {
 
     @Override
     protected void configure() {
-        install(new GinFactoryModuleBuilder().build(VisualizerLabelFactory.class));
-
         bind(new TypeLiteral<UiHandlersStrategy<KindListUiHandlers>>() {})
                 .to(new TypeLiteral<ProviderUiHandlersStrategy<KindListUiHandlers>>() {});
         bind(new TypeLiteral<UiHandlersStrategy<EntityListUiHandlers>>() {})
@@ -33,8 +29,8 @@ public class VisualizerModule extends AbstractPresenterModule {
                 KindListView.class);
         bindSingletonPresenterWidget(EntityListPresenter.class, EntityListPresenter.MyView.class,
                 EntityListView.class);
-        bindSingletonPresenterWidget(EntityDetailsPresenter.class, EntityDetailsPresenter.MyView.class,
-                EntityDetailsView.class);
+        bind(EntityDetailsPresenter.class).asEagerSingleton();
+        bind(EntityDetailsPresenter.MyView.class).to(EntityDetailsView.class);
 
         bind(KindListUiHandlers.class).to(KindListPresenter.class);
         bind(EntityListUiHandlers.class).to(EntityListPresenter.class);

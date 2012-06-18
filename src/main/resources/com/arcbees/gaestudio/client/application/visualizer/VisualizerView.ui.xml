@@ -9,14 +9,7 @@
             <g:SimplePanel ui:field="kindListPanel" />
         </g:west>
         <g:center>
-            <g:SplitLayoutPanel>
-                <g:north size="450">
-                    <g:SimplePanel ui:field="entityListPanel" />
-                </g:north>
-                <g:center>
-                    <g:SimplePanel ui:field="entityDetailsPanel" />
-                </g:center>
-            </g:SplitLayoutPanel>
+            <g:SimplePanel ui:field="entityListPanel" />
         </g:center>
     </g:SplitLayoutPanel>
 
