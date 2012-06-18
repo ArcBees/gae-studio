@@ -2,7 +2,7 @@
  * Copyright 2012 ArcBees Inc.  All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.entitydetails;
+package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.event.EntitySelectedEvent;

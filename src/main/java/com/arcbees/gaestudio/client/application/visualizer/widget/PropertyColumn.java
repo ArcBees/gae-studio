@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.visualizer.entitylist;
+package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.google.gwt.json.client.JSONObject;
