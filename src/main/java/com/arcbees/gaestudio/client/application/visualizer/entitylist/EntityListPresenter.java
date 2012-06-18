@@ -27,6 +27,7 @@ import com.gwtplatform.mvp.client.View;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Move logic in toolbar
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
         implements KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler {
 
