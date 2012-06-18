@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.event;
+package com.arcbees.gaestudio.client.application.visualizer.event;
 
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 import com.gwtplatform.dispatch.annotation.GenEvent;
