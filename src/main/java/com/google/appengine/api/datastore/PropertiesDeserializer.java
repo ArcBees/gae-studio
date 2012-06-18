@@ -14,6 +14,7 @@ import java.util.Map;
 public class PropertiesDeserializer implements JsonDeserializer<Map> {
 
     @Override
+    @SuppressWarnings("unchecked")
     public Map deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws
             JsonParseException {
         Map<String, Object> properties = new HashMap<String, Object>();
