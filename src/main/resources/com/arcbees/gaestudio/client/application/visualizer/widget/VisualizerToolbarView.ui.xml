@@ -8,6 +8,8 @@
 
     </ui:style>
 
-    <g:HTMLPanel/>
+    <g:HTMLPanel>
+        <g:SimplePanel ui:field="kinds"/>
+    </g:HTMLPanel>
 
 </ui:UiBinder>

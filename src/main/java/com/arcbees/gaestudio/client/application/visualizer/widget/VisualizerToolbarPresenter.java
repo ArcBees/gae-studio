@@ -4,9 +4,9 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import com.arcbees.gaestudio.client.application.visualizer.widget.kind.KindListPresenter;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -17,12 +17,23 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     public interface MyView extends View, HasUiHandlers<VisualizerToolbarUiHandlers> {
     }
 
-    private final DispatchAsync dispatcher;
+    public static final Object TYPE_SetKindsContent = new Object();
+
+    private KindListPresenter kindListPresenter;
 
     @Inject
-    public VisualizerToolbarPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
+    public VisualizerToolbarPresenter(final EventBus eventBus, final MyView view,
+                                      final KindListPresenter kindListPresenter) {
         super(eventBus, view);
 
-        this.dispatcher = dispatcher;
+        this.kindListPresenter = kindListPresenter;
+    }
+
+    @Override
+    protected void onBind() {
+        super.onBind();
+
+        setInSlot(TYPE_SetKindsContent, kindListPresenter);
     }
 }
+

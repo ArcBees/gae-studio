@@ -2,7 +2,7 @@
  * Copyright 2012 ArcBees Inc.  All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.kind;
+package com.arcbees.gaestudio.client.application.visualizer.widget.kind;
 
 import com.arcbees.gaestudio.client.application.event.KindSelectedEvent;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
