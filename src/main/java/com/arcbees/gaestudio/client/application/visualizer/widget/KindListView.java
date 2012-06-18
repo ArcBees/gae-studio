@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.visualizer.widget.kind;
+package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
@@ -18,8 +18,6 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
     public interface Binder extends UiBinder<Widget, KindListView> {
     }
 
-    private static final String EMPTY_VALUE = "";
-
     @UiField
     ListBox kinds;
 
@@ -30,16 +28,14 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
         initWidget(uiBinder.createAndBindUi(this));
 
         kinds.addChangeHandler(this);
-        kinds.addItem("Choose an entity...", EMPTY_VALUE);
+        kinds.addItem("Choose an entity...", "");
     }
 
     @Override
     public void onChange(ChangeEvent event) {
         String selectedKind = kinds.getValue(kinds.getSelectedIndex());
 
-        if (!selectedKind.equals(EMPTY_VALUE)) {
-            getUiHandlers().onKindClicked(selectedKind);
-        }
+        getUiHandlers().onKindClicked(selectedKind);
     }
 
     @Override

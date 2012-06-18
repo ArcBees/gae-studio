@@ -76,6 +76,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
+    public void hideList() {
+        panel.setVisible(false);
+    }
+
+    @Override
     public void setData(Range range, List<ParsedEntity> parsedEntities) {
         Set<String> properties = new HashSet<String>();
         for (ParsedEntity parsedEntity : parsedEntities) {

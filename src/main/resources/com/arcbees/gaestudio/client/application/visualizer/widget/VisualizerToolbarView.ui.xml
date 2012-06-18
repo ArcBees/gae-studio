@@ -10,7 +10,7 @@
 
     <g:HTMLPanel>
         <g:SimplePanel ui:field="kinds"/>
-        <g:Button ui:field="refresh">Refresh</g:Button>
+        <g:Button ui:field="refresh" visible="false">Refresh</g:Button>
     </g:HTMLPanel>
 
 </ui:UiBinder>

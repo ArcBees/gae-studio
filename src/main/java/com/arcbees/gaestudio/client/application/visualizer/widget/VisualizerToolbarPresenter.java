@@ -4,8 +4,8 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
-import com.arcbees.gaestudio.client.application.visualizer.widget.kind.KindListPresenter;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -13,9 +13,10 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolbarPresenter.MyView> implements
-        VisualizerToolbarUiHandlers {
+        VisualizerToolbarUiHandlers, KindSelectedEvent.KindSelectedHandler{
 
     public interface MyView extends View, HasUiHandlers<VisualizerToolbarUiHandlers> {
+        void setKindSelected(boolean isSelected);
     }
 
     public static final Object TYPE_SetKindsContent = new Object();
@@ -36,10 +37,18 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     }
 
     @Override
+    public void onKindSelected(KindSelectedEvent event) {
+        String kind = event.getKind();
+        getView().setKindSelected(!kind.isEmpty());
+    }
+
+    @Override
     protected void onBind() {
         super.onBind();
 
         setInSlot(TYPE_SetKindsContent, kindListPresenter);
+
+        addRegisteredHandler(KindSelectedEvent.getType(), this);
     }
 }
 

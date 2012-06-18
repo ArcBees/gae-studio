@@ -27,8 +27,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
     @Inject
     public VisualizerToolbarView(final Binder uiBinder, final Resources resources,
-                                 final UiHandlersStrategy<VisualizerToolbarUiHandlers>
-                                         uiHandlersStrategy) {
+                                 final UiHandlersStrategy<VisualizerToolbarUiHandlers> uiHandlersStrategy) {
         super(uiHandlersStrategy);
 
         this.resources = resources;
@@ -36,14 +35,19 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     }
 
     @Override
+    public void setKindSelected(boolean isSelected) {
+        refresh.setVisible(isSelected);
+    }
+
+    @Override
     public void setInSlot(Object slot, Widget content) {
-        if(slot == VisualizerToolbarPresenter.TYPE_SetKindsContent){
+        if (slot == VisualizerToolbarPresenter.TYPE_SetKindsContent) {
             kinds.setWidget(content);
         }
     }
 
     @UiHandler("refresh")
-    void onRefreshClicked(ClickEvent event){
+    void onRefreshClicked(ClickEvent event) {
         getUiHandlers().refresh();
     }
 }

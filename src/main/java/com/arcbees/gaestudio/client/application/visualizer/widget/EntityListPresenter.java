@@ -29,7 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
-        implements KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler, RefreshEntitiesEvent.RefreshEntitiesHandler {
+        implements KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler,
+        RefreshEntitiesEvent.RefreshEntitiesHandler {
 
     public interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind();
@@ -41,6 +42,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void setData(Range range, List<ParsedEntity> parsedEntities);
 
         void addOrReplaceEntity(EntityDTO parsedEntity);
+
+        void hideList();
     }
 
     private final DispatchAsync dispatcher;
@@ -58,7 +61,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Override
     public void onKindSelected(KindSelectedEvent event) {
         currentKind = event.getKind();
-        loadKind();
+        if (currentKind.isEmpty()) {
+            hideList();
+        } else {
+            loadKind();
+        }
     }
 
     @Override
@@ -98,6 +105,10 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private void loadKind() {
         setTotalCount();
         getView().setNewKind();
+    }
+
+    private void hideList() {
+        getView().hideList();
     }
 
     private void setTotalCount() {
