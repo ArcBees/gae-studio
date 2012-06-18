@@ -6,11 +6,22 @@
 
     <ui:style>
 
+        .toolbar {
+            line-height: 30px;
+            border-bottom: 8px solid #D0E4F6;
+        }
+
+        .kinds {
+           float: left;
+            margin-right: 10px;
+        }
+
     </ui:style>
 
-    <g:HTMLPanel>
-        <g:SimplePanel ui:field="kinds"/>
+    <g:HTMLPanel styleName="{style.toolbar}">
+        <g:SimplePanel ui:field="kinds" styleName="{style.kinds}"/>
         <g:Button ui:field="refresh" visible="false">Refresh</g:Button>
+        <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 
 </ui:UiBinder>
