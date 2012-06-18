@@ -20,8 +20,10 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
     @UiField(provided = true)
     Resources resources;
+
     @UiField
     SimplePanel kinds;
+
     @UiField
     Button refresh;
 

@@ -48,7 +48,7 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
     }
 
     private void clearEntityList() {
-        // Remove all kind except the Choose an entity option
+        // Remove all kindw except the "Choose an entity" option
         for (int i = 1; i < kinds.getItemCount(); i++) {
             kinds.removeItem(i);
         }
