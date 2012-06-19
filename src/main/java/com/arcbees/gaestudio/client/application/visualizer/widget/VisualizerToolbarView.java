@@ -21,18 +21,18 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
     @UiField(provided = true)
     Resources resources;
-
     @UiField
     SimplePanel kinds;
-
     @UiField
     HTMLPanel buttons;
-
     @UiField
     Button refresh;
-
     @UiField
     Button create;
+    @UiField
+    Button edit;
+    @UiField
+    Button delete;
 
     @Inject
     public VisualizerToolbarView(final Binder uiBinder, final Resources resources,
@@ -63,5 +63,15 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     @UiHandler("create")
     void onCreateClicked(ClickEvent event){
         getUiHandlers().create();
+    }
+
+    @UiHandler("edit")
+    void onEditClicked(ClickEvent event){
+
+    }
+
+    @UiHandler("delete")
+    void onDeleteClicked(ClickEvent event){
+
     }
 }
