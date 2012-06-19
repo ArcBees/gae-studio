@@ -5,6 +5,7 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
@@ -69,7 +70,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
-    public void onEntityClicked(ParsedEntity parsedEntity) {
+    public void onEntitySelected(ParsedEntity parsedEntity) {
         getEventBus().fireEvent(new EntitySelectedEvent(parsedEntity));
     }
 
@@ -136,6 +137,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         }
                     });
         }
+        EntityPageLoadedEvent.fire(this);
     }
 
     private void onLoadPageSuccess(GetEntitiesByKindResult result, HasData<ParsedEntity> display) {

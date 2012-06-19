@@ -55,6 +55,18 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
         }
     }
 
+    @Override
+    public void enableContextualMenu() {
+        edit.setEnabled(true);
+        delete.setEnabled(true);
+    }
+
+    @Override
+    public void disableContextualMenu() {
+        edit.setEnabled(false);
+        delete.setEnabled(false);
+    }
+
     @UiHandler("refresh")
     void onRefreshClicked(ClickEvent event) {
         getUiHandlers().refresh();
@@ -67,11 +79,11 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
     @UiHandler("edit")
     void onEditClicked(ClickEvent event){
-
+       getUiHandlers().edit();
     }
 
     @UiHandler("delete")
     void onDeleteClicked(ClickEvent event){
-
+       getUiHandlers().delete();
     }
 }

@@ -5,6 +5,6 @@ import com.gwtplatform.mvp.client.UiHandlers;
 
 public interface EntityListUiHandlers extends UiHandlers {
 
-    void onEntityClicked(ParsedEntity parsedEntity);
+    void onEntitySelected(ParsedEntity parsedEntity);
 
 }

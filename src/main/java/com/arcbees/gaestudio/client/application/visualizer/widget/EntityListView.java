@@ -15,9 +15,9 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
-import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiField
     CellTable<ParsedEntity> entityTable;
 
-    private final NoSelectionModel<ParsedEntity> selectionModel = new NoSelectionModel<ParsedEntity>();
+    private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
     private final Set<String> currentProperties = new HashSet<String>();
 
     @Inject
@@ -154,7 +154,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
             @Override
             public void onSelectionChange(SelectionChangeEvent event) {
-                getUiHandlers().onEntityClicked(selectionModel.getLastSelectedObject());
+                getUiHandlers().onEntitySelected(selectionModel.getSelectedObject());
             }
         });
         entityTable.setSelectionModel(selectionModel);
