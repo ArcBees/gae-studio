@@ -3,6 +3,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.application.visualizer.widget.ui.PropertyColumn;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDTO;
 import com.google.gwt.dom.client.TableRowElement;
