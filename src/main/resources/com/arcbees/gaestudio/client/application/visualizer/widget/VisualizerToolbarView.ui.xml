@@ -12,7 +12,7 @@
         }
 
         .kinds {
-           float: left;
+            float: left;
             margin-right: 10px;
         }
 
@@ -20,7 +20,10 @@
 
     <g:HTMLPanel styleName="{style.toolbar}">
         <g:SimplePanel ui:field="kinds" styleName="{style.kinds}"/>
-        <g:Button ui:field="refresh" visible="false">Refresh</g:Button>
+        <g:HTMLPanel ui:field="buttons" visible="false">
+            <g:Button ui:field="refresh">Refresh</g:Button>
+            <g:Button ui:field="create">Create</g:Button>
+        </g:HTMLPanel>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 

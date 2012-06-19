@@ -10,4 +10,5 @@ public interface VisualizerToolbarUiHandlers extends UiHandlers {
 
     void refresh();
 
+    void create();
 }

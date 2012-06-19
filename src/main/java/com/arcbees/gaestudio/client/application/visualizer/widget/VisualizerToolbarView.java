@@ -8,6 +8,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -25,7 +26,13 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     SimplePanel kinds;
 
     @UiField
+    HTMLPanel buttons;
+
+    @UiField
     Button refresh;
+
+    @UiField
+    Button create;
 
     @Inject
     public VisualizerToolbarView(final Binder uiBinder, final Resources resources,
@@ -38,7 +45,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
     @Override
     public void setKindSelected(boolean isSelected) {
-        refresh.setVisible(isSelected);
+        buttons.setVisible(isSelected);
     }
 
     @Override
@@ -51,5 +58,10 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     @UiHandler("refresh")
     void onRefreshClicked(ClickEvent event) {
         getUiHandlers().refresh();
+    }
+
+    @UiHandler("create")
+    void onCreateClicked(ClickEvent event){
+        getUiHandlers().create();
     }
 }
