@@ -4,6 +4,7 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindAction;
@@ -24,6 +25,7 @@ public class GaeStudioDispatchModule extends HandlerModule {
         bindHandler(SetRecordingAction.class, SetRecordingHandler.class);
         bindHandler(UpdateEntityAction.class, UpdateEntityHandler.class);
         bindHandler(GetEmptyKindEntityAction.class, GetEmptyKindEntityHandler.class);
+        bindHandler(DeleteEntityAction.class, DeleteEntityHandler.class);
     }
 
 }

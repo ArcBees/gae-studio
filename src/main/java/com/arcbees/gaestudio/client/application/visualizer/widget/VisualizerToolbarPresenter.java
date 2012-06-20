@@ -6,11 +6,14 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
+import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
+import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
@@ -78,7 +81,19 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     @Override
     public void delete() {
         if (currentParsedEntity != null) {
-            //TODO
+            final EntityDTO entityDTO = currentParsedEntity.getEntityDTO();
+            dispatcher.execute(new DeleteEntityAction(entityDTO), new AsyncCallbackImpl
+                    <DeleteEntityResult>() {
+                @Override
+                public void onSuccess(DeleteEntityResult result) {
+                    EntityDeletedEvent.fire(VisualizerToolbarPresenter.this, entityDTO);
+                }
+                @Override
+                public void onFailure(Throwable caught) {
+                    super.onFailure(caught);
+                    // TODO: Show a message to the user
+                }
+            });
         }
     }
 
