@@ -2,12 +2,12 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
-import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
@@ -28,7 +28,7 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
     @UiField
     Button cancel;
     @UiField
-    DivElement error;
+    Label error;
 
     @Inject
     public EntityDetailsView(final Binder uiBinder,
@@ -40,7 +40,7 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
 
     @Override
     public void displayEntityDetails(String json) {
-        error.setInnerText("");
+        error.setVisible(false);
         popup.center();
         entityDetails.setText(json);
     }
@@ -52,7 +52,8 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
 
     @Override
     public void showError(String message) {
-        error.setInnerText(message);
+        error.setVisible(true);
+        error.setText(message);
     }
 
     @UiHandler("save")
