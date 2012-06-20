@@ -3,23 +3,17 @@
 
     <ui:style>
 
-        .container {
-            position: fixed;
-            top: 10px;
-            left: 0;
-            right: 0;
-            z-index: 100;
-        }
-
         .messages {
-            width: 350px;
+            position: fixed;
+            top: 80px;
+            right: 10px;
+            width: 300px;
             margin: 0 auto;
+            z-index: 1000;
         }
 
     </ui:style>
 
-    <g:HTMLPanel styleName="{style.container}">
-        <g:HTMLPanel ui:field="messages" styleName="{style.messages}"/>
-    </g:HTMLPanel>
+    <g:HTMLPanel ui:field="messages" styleName="{style.messages}"/>
 
 </ui:UiBinder>
