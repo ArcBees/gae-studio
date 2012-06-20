@@ -31,6 +31,7 @@ public class GaeStudio implements EntryPoint {
         DelayedBindRegistry.bind(ginjector);
 
         ginjector.getResources().styles().ensureInjected();
+        ginjector.getMessageResources().styles().ensureInjected();
 
         ginjector.getPlaceManager().revealCurrentPlace();
     }

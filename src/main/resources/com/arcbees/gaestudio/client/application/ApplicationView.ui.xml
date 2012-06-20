@@ -3,10 +3,13 @@
 
     <g:DockLayoutPanel unit="PX">
         <g:north size="38">
-            <g:SimplePanel ui:field="header" />
+            <g:HTMLPanel>
+                <g:SimplePanel ui:field="messages"/>
+                <g:SimplePanel ui:field="header"/>
+            </g:HTMLPanel>
         </g:north>
         <g:center>
-            <g:SimpleLayoutPanel ui:field="main" />
+            <g:SimpleLayoutPanel ui:field="main"/>
         </g:center>
     </g:DockLayoutPanel>
 

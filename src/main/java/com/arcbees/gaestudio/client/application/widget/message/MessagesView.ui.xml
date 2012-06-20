@@ -1,0 +1,25 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+    <ui:style>
+
+        .container {
+            position: fixed;
+            top: 10px;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .messages {
+            width: 350px;
+            margin: 0 auto;
+        }
+
+    </ui:style>
+
+    <g:HTMLPanel styleName="{style.container}">
+        <g:HTMLPanel ui:field="messages" styleName="{style.messages}"/>
+    </g:HTMLPanel>
+
+</ui:UiBinder>

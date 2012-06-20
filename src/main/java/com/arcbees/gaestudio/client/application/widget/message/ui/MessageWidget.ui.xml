@@ -1,0 +1,11 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder' xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <ui:with field="messageResources"
+             type="com.arcbees.gaestudio.client.application.widget.message.ui.MessageResources"/>
+
+    <g:HTMLPanel ui:field="messageBox" styleName="{messageResources.styles.message}" visible="false">
+        <g:InlineLabel ui:field="messageLabel"/>
+        <g:InlineHTML ui:field="close" styleName="{messageResources.styles.close}">X</g:InlineHTML>
+    </g:HTMLPanel>
+
+</ui:UiBinder>
