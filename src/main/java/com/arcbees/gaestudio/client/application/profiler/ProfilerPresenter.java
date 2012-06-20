@@ -5,11 +5,14 @@
 package com.arcbees.gaestudio.client.application.profiler;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
+import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.profiler.details.DetailsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
 import com.arcbees.gaestudio.client.application.profiler.request.RequestPresenter;
 import com.arcbees.gaestudio.client.application.profiler.statement.StatementPresenter;
 import com.arcbees.gaestudio.client.application.profiler.statistics.StatisticsPresenter;
+import com.arcbees.gaestudio.client.application.widget.message.Message;
+import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsResult;
@@ -104,8 +107,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                     new AsyncCallback<GetNewDbOperationRecordsResult>() {
                         @Override
                         public void onFailure(Throwable caught) {
-                            // TODO implement
-                            isProcessing = false;
+                            onGetNewDbOperationRecordsFailed();
                         }
 
                         @Override
@@ -115,6 +117,12 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                         }
                     });
         }
+    }
+
+    private void onGetNewDbOperationRecordsFailed() {
+        Message message = new Message("Error while fetching new records.", MessageStyle.ERROR);
+        DisplayMessageEvent.fire(this, message);
+        isProcessing = false;
     }
 
     // TODO properly handle any missing records
