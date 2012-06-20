@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 public class MessagesView extends ViewImpl implements MessagesPresenter.MyView {
+
     public interface Binder extends UiBinder<Widget, MessagesView> {
     }
 
@@ -30,4 +31,5 @@ public class MessagesView extends ViewImpl implements MessagesPresenter.MyView {
         MessageWidget messageWidget = messageWidgetFactory.createMessage(message);
         messages.add(messageWidget);
     }
+
 }

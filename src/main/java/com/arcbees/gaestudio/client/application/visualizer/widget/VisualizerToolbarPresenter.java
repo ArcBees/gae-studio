@@ -139,5 +139,6 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
         DisplayMessageEvent.fire(this, message);
         EntityDeletedEvent.fire(this, entityDTO);
     }
+
 }
 

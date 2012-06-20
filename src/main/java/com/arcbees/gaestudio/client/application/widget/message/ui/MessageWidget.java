@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class MessageWidget extends Composite {
+
     public interface Binder extends UiBinder<Widget, MessageWidget> {
     }
 
@@ -88,4 +89,5 @@ public class MessageWidget extends Composite {
             closeTimer.schedule(message.getCloseDelay().getDelay());
         }
     }
+
 }

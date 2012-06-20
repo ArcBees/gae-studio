@@ -8,6 +8,7 @@ import com.gwtplatform.mvp.client.View;
 
 public class MessagesPresenter extends PresenterWidget<MessagesPresenter.MyView>
         implements DisplayMessageEvent.DisplayMessageHandler {
+
     public interface MyView extends View {
         void addMessage(Message message);
     }
@@ -28,4 +29,5 @@ public class MessagesPresenter extends PresenterWidget<MessagesPresenter.MyView>
 
         addRegisteredHandler(DisplayMessageEvent.getType(), this);
     }
+
 }

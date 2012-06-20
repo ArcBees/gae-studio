@@ -9,4 +9,5 @@ public class DisplayMessage {
     
     @Order(1)
     Message message;
+
 }

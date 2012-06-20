@@ -86,4 +86,5 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     void onDeleteClicked(ClickEvent event){
        getUiHandlers().delete();
     }
+
 }

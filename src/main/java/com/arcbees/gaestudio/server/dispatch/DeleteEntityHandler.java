@@ -47,4 +47,5 @@ public class DeleteEntityHandler
     public void undo(DeleteEntityAction action, DeleteEntityResult result, ExecutionContext context) throws ActionException {
         // Nothing to do here
     }
+
 }

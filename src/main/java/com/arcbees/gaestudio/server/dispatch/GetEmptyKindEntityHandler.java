@@ -87,4 +87,5 @@ public class GetEmptyKindEntityHandler
             throws ActionException {
         // Nothing to do here
     }
+
 }
