@@ -36,7 +36,7 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
             } else if (slot == ApplicationPresenter.TYPE_SetHeaderContent) {
                 header.setWidget(content);
             } else if (slot == ApplicationPresenter.TYPE_SetMessagesContent) {
-               messages.setWidget(content);
+                messages.setWidget(content);
             }
         }
     }
