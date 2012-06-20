@@ -14,12 +14,12 @@ import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEve
 import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
-import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -63,8 +63,14 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     @Override
     public void create() {
         if (!currentKind.isEmpty()) {
-            dispatcher.execute(new GetEmptyKindEntityAction(currentKind), new AsyncCallbackImpl
-                    <GetEmptyKindEntityResult>() {
+            dispatcher.execute(new GetEmptyKindEntityAction(currentKind), new AsyncCallback<GetEmptyKindEntityResult>
+                    () {
+                @Override
+                public void onFailure(Throwable caught) {
+                    Message message = new Message("Unable to generate empty json", MessageStyle.ERROR);
+                    DisplayMessageEvent.fire(VisualizerToolbarPresenter.this, message);
+                }
+
                 @Override
                 public void onSuccess(GetEmptyKindEntityResult result) {
                     EntityDTO emptyEntityDto = result.getEntityDTO();
@@ -85,12 +91,12 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     public void delete() {
         if (currentParsedEntity != null) {
             final EntityDTO entityDTO = currentParsedEntity.getEntityDTO();
-            dispatcher.execute(new DeleteEntityAction(entityDTO), new AsyncCallbackImpl
-                    <DeleteEntityResult>() {
+            dispatcher.execute(new DeleteEntityAction(entityDTO), new AsyncCallback<DeleteEntityResult>() {
                 @Override
                 public void onSuccess(DeleteEntityResult result) {
                     onEntityDeletedSuccess(entityDTO);
                 }
+
                 @Override
                 public void onFailure(Throwable caught) {
                     Message message = new Message("Error while trying to delete the entity", MessageStyle.ERROR);
