@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.visualizer.entitydetails;
+package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;

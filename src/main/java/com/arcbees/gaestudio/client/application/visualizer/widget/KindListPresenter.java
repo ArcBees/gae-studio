@@ -2,9 +2,9 @@
  * Copyright 2012 ArcBees Inc.  All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.kind;
+package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import com.arcbees.gaestudio.client.application.event.KindSelectedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -53,7 +53,7 @@ public class KindListPresenter extends PresenterWidget<KindListPresenter.MyView>
 
     @Override
     public void onKindClicked(String kind) {
-        getEventBus().fireEvent(new KindSelectedEvent(kind));
+        KindSelectedEvent.fire(this, kind);
     }
 
 }

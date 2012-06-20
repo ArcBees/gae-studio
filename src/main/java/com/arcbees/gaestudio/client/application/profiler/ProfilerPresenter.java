@@ -5,8 +5,8 @@
 package com.arcbees.gaestudio.client.application.profiler;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
-import com.arcbees.gaestudio.client.application.event.RecordingStateChangedEvent;
 import com.arcbees.gaestudio.client.application.profiler.details.DetailsPresenter;
+import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
 import com.arcbees.gaestudio.client.application.profiler.request.RequestPresenter;
 import com.arcbees.gaestudio.client.application.profiler.statement.StatementPresenter;
 import com.arcbees.gaestudio.client.application.profiler.statistics.StatisticsPresenter;

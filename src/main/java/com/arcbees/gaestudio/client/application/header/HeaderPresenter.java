@@ -4,7 +4,7 @@
 
 package com.arcbees.gaestudio.client.application.header;
 
-import com.arcbees.gaestudio.client.application.event.RecordingStateChangedEvent;
+import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingResult;
 import com.google.gwt.user.client.rpc.AsyncCallback;

@@ -1,0 +1,27 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+    <ui:with field="resources" type="com.arcbees.gaestudio.client.Resources"/>
+    <ui:with type="com.arcbees.gaestudio.client.place.NameTokens" field="nameTokens"/>
+
+    <ui:style>
+
+        .toolbar {
+            line-height: 30px;
+            border-bottom: 8px solid #D0E4F6;
+        }
+
+        .kinds {
+           float: left;
+            margin-right: 10px;
+        }
+
+    </ui:style>
+
+    <g:HTMLPanel styleName="{style.toolbar}">
+        <g:SimplePanel ui:field="kinds" styleName="{style.kinds}"/>
+        <g:Button ui:field="refresh" visible="false">Refresh</g:Button>
+        <div class="{resources.styles.clear}"/>
+    </g:HTMLPanel>
+
+</ui:UiBinder>

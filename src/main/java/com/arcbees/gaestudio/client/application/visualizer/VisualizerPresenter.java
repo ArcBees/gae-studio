@@ -5,8 +5,8 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
-import com.arcbees.gaestudio.client.application.visualizer.entitylist.EntityListPresenter;
-import com.arcbees.gaestudio.client.application.visualizer.kind.KindListPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.widget.VisualizerToolbarPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -27,20 +27,20 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
     public interface MyProxy extends ProxyPlace<VisualizerPresenter> {
     }
 
-    public static final Object TYPE_SetKindListPanelContent = new Object();
     public static final Object TYPE_SetEntityListPanelContent = new Object();
+    public static final Object TYPE_SetToolbarContent = new Object();
 
-    private final KindListPresenter kindListPresenter;
     private final EntityListPresenter entityListPresenter;
+    private VisualizerToolbarPresenter visualizerToolbarPresenter;
 
     @Inject
     public VisualizerPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                               final KindListPresenter kindListPresenter,
-                               final EntityListPresenter entityListPresenter) {
+                               final EntityListPresenter entityListPresenter,
+                               final VisualizerToolbarPresenter visualizerToolbarPresenter) {
         super(eventBus, view, proxy);
 
-        this.kindListPresenter = kindListPresenter;
         this.entityListPresenter = entityListPresenter;
+        this.visualizerToolbarPresenter = visualizerToolbarPresenter;
     }
 
     @Override
@@ -52,8 +52,8 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
     protected void onBind() {
         super.onBind();
 
-        setInSlot(TYPE_SetKindListPanelContent, kindListPresenter);
         setInSlot(TYPE_SetEntityListPanelContent, entityListPresenter);
+        setInSlot(TYPE_SetToolbarContent, visualizerToolbarPresenter);
     }
 
 }

@@ -4,8 +4,8 @@
 
 package com.arcbees.gaestudio.client.application.profiler.details;
 
-import com.arcbees.gaestudio.client.application.event.StatementSelectedEvent;
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
+import com.arcbees.gaestudio.client.application.profiler.event.StatementSelectedEvent;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
