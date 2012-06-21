@@ -2,7 +2,7 @@
  * Copyright 2012 ArcBees Inc.  All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.header;
+package com.arcbees.gaestudio.client.application.widget;
 
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;

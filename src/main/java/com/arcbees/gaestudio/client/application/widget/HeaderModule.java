@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.header;
+package com.arcbees.gaestudio.client.application.widget;
 
 import com.arcbees.core.client.mvp.uihandlers.ProviderUiHandlersStrategy;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;

@@ -1,8 +1,8 @@
 package com.arcbees.gaestudio.client.application;
 
-import com.arcbees.gaestudio.client.application.header.HeaderModule;
 import com.arcbees.gaestudio.client.application.profiler.ProfilerModule;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerModule;
+import com.arcbees.gaestudio.client.application.widget.HeaderModule;
 import com.arcbees.gaestudio.client.application.widget.message.MessagesModule;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
