@@ -18,10 +18,6 @@
     </ui:style>
 
     <g:HTMLPanel styleName="{style.header}">
-        <div class="{resources.styles.fleft}">
-            <g:Button ui:field="recording"/>
-        </div>
-
         <div class="{resources.styles.fright}">
             <g:InlineHyperlink targetHistoryToken="{nameTokens.getVisualizer}" styleName="{style.link}">
                 Visualizer
@@ -30,7 +26,6 @@
                 Profiler
             </g:InlineHyperlink>
         </div>
-
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 

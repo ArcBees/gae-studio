@@ -8,4 +8,6 @@ import com.gwtplatform.mvp.client.UiHandlers;
 
 public interface ProfilerToolbarUiHandlers extends UiHandlers {
 
+    void onToggleRecording(Boolean start);
+
 }
