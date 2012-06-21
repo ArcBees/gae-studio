@@ -1,7 +1,7 @@
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
 import com.arcbees.core.client.mvp.ViewImpl;
-import com.arcbees.gaestudio.client.application.profiler.TimeNumberFormat;
+import com.arcbees.gaestudio.client.util.TimeNumberFormat;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
