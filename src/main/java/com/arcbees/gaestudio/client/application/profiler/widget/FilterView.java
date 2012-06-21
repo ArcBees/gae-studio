@@ -14,9 +14,9 @@ import com.google.inject.Inject;
 
 import java.util.List;
 
-public class RequestView extends ViewWithUiHandlers<RequestUiHandlers> implements RequestPresenter.MyView {
+public class FilterView extends ViewWithUiHandlers<FilterUiHandlers> implements FilterPresenter.MyView {
 
-    public interface Binder extends UiBinder<Widget, RequestView> {
+    public interface Binder extends UiBinder<Widget, FilterView> {
     }
 
     @UiField(provided = true)
@@ -29,8 +29,8 @@ public class RequestView extends ViewWithUiHandlers<RequestUiHandlers> implement
             SingleSelectionModel<RequestStatistics>();
 
     @Inject
-    public RequestView(final Binder uiBinder, final UiHandlersStrategy<RequestUiHandlers> uiHandlersStrategy,
-                       final Resources resources, final RequestCell requestCell) {
+    public FilterView(final Binder uiBinder, final UiHandlersStrategy<FilterUiHandlers> uiHandlersStrategy,
+                      final Resources resources, final RequestCell requestCell) {
         super(uiHandlersStrategy);
 
         this.resources = resources;

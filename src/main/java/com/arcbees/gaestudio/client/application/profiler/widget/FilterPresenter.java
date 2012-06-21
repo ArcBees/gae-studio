@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
-        implements DbOperationRecordProcessor, RequestUiHandlers {
+public class FilterPresenter extends PresenterWidget<FilterPresenter.MyView>
+        implements DbOperationRecordProcessor, FilterUiHandlers {
 
-    public interface MyView extends View, HasUiHandlers<RequestUiHandlers> {
+    public interface MyView extends View, HasUiHandlers<FilterUiHandlers> {
         void displayRequests(List<RequestStatistics> requestStatistics);
     }
 
@@ -30,7 +30,7 @@ public class RequestPresenter extends PresenterWidget<RequestPresenter.MyView>
     private final List<RequestStatistics> requests = new ArrayList<RequestStatistics>();
 
     @Inject
-    public RequestPresenter(final EventBus eventBus, final MyView view) {
+    public FilterPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
     }
     

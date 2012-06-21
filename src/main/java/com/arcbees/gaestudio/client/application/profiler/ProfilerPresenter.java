@@ -8,8 +8,8 @@ import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
 import com.arcbees.gaestudio.client.application.profiler.widget.DetailsPresenter;
+import com.arcbees.gaestudio.client.application.profiler.widget.FilterPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerToolbarPresenter;
-import com.arcbees.gaestudio.client.application.profiler.widget.RequestPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatementPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsPresenter;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
@@ -51,7 +51,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private static final int TICK_DELTA_MILLISEC = 1000;
 
     private final DispatchAsync dispatcher;
-    private final RequestPresenter requestPresenter;
+    private final FilterPresenter filterPresenter;
     private final StatisticsPresenter statisticsPresenter;
     private final StatementPresenter statementPresenter;
     private final DetailsPresenter detailsPresenter;
@@ -62,7 +62,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
 
     @Inject
     public ProfilerPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                             final DispatchAsync dispatcher, final RequestPresenter requestPresenter,
+                             final DispatchAsync dispatcher, final FilterPresenter filterPresenter,
                              final StatisticsPresenter statisticsPresenter,
                              final StatementPresenter statementPresenter,
                              final DetailsPresenter detailsPresenter,
@@ -70,7 +70,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         super(eventBus, view, proxy);
 
         this.dispatcher = dispatcher;
-        this.requestPresenter = requestPresenter;
+        this.filterPresenter = filterPresenter;
         this.statisticsPresenter = statisticsPresenter;
         this.statementPresenter = statementPresenter;
         this.detailsPresenter = detailsPresenter;
@@ -96,7 +96,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     protected void onBind() {
         super.onBind();
 
-        setInSlot(TYPE_SetRequestPanelContent, requestPresenter);
+        setInSlot(TYPE_SetRequestPanelContent, filterPresenter);
         setInSlot(TYPE_SetStatisticsPanelContent, statisticsPresenter);
         setInSlot(TYPE_SetStatementPanelContent, statementPresenter);
         setInSlot(TYPE_SetDetailsPanelContent, detailsPresenter);
@@ -144,14 +144,14 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     private void displayNewDbOperationRecords() {
-        requestPresenter.displayNewDbOperationRecords();
+        filterPresenter.displayNewDbOperationRecords();
         statisticsPresenter.displayNewDbOperationRecords();
         statementPresenter.displayNewDbOperationRecords();
         detailsPresenter.displayNewDbOperationRecords();
     }
 
     private void processDbOperationRecord(DbOperationRecordDTO record) {
-        requestPresenter.processDbOperationRecord(record);
+        filterPresenter.processDbOperationRecord(record);
         statisticsPresenter.processDbOperationRecord(record);
         statementPresenter.processDbOperationRecord(record);
         detailsPresenter.processDbOperationRecord(record);
