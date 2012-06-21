@@ -1,6 +1,14 @@
-    /*
-    * Copyright 2012 ArcBees Inc. All rights reserved.
-    */
+    .fleft {
+        float: left;
+    }
+
+    .fright {
+        float: right;
+    }
+
+    .clear {
+        clear: both;
+    }
 
     .list {
         position: absolute;
@@ -20,14 +28,11 @@
         background-color: #888888;
     }
 
-    .fleft {
-        float: left;
+    .toolbar {
+        line-height: 30px;
+        border-bottom: 8px solid #D0E4F6;
     }
 
-    .fright {
-        float: right;
-    }
-
-    .clear {
-        clear: both;
+    .toolbar button, .toolbar select {
+        margin-right: 5px;
     }

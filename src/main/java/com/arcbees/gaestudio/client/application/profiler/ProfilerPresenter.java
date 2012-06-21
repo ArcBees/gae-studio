@@ -8,6 +8,7 @@ import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
 import com.arcbees.gaestudio.client.application.profiler.widget.DetailsPresenter;
+import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerToolbarPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.RequestPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatementPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsPresenter;
@@ -46,6 +47,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     public static final Object TYPE_SetStatisticsPanelContent = new Object();
     public static final Object TYPE_SetStatementPanelContent = new Object();
     public static final Object TYPE_SetDetailsPanelContent = new Object();
+    public static final Object TYPE_SetToolbarContent = new Object();
     private static final int TICK_DELTA_MILLISEC = 1000;
 
     private final DispatchAsync dispatcher;
@@ -53,6 +55,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private final StatisticsPresenter statisticsPresenter;
     private final StatementPresenter statementPresenter;
     private final DetailsPresenter detailsPresenter;
+    private final ProfilerToolbarPresenter profilerToolbarPresenter;
 
     private long lastDbOperationRecordId = 0L;
     private boolean isProcessing = false;
@@ -62,7 +65,8 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                              final DispatchAsync dispatcher, final RequestPresenter requestPresenter,
                              final StatisticsPresenter statisticsPresenter,
                              final StatementPresenter statementPresenter,
-                             final DetailsPresenter detailsPresenter) {
+                             final DetailsPresenter detailsPresenter,
+                             final ProfilerToolbarPresenter profilerToolbarPresenter) {
         super(eventBus, view, proxy);
 
         this.dispatcher = dispatcher;
@@ -70,6 +74,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         this.statisticsPresenter = statisticsPresenter;
         this.statementPresenter = statementPresenter;
         this.detailsPresenter = detailsPresenter;
+        this.profilerToolbarPresenter = profilerToolbarPresenter;
     }
 
     @Override
@@ -95,6 +100,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         setInSlot(TYPE_SetStatisticsPanelContent, statisticsPresenter);
         setInSlot(TYPE_SetStatementPanelContent, statementPresenter);
         setInSlot(TYPE_SetDetailsPanelContent, detailsPresenter);
+        setInSlot(TYPE_SetToolbarContent, profilerToolbarPresenter);
 
         addRegisteredHandler(RecordingStateChangedEvent.getType(), this);
     }

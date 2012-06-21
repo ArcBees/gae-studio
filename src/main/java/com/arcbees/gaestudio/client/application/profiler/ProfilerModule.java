@@ -4,6 +4,9 @@ import com.arcbees.core.client.mvp.uihandlers.ProviderUiHandlersStrategy;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.application.profiler.widget.DetailsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.DetailsView;
+import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerToolbarPresenter;
+import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerToolbarUiHandlers;
+import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerToolbarView;
 import com.arcbees.gaestudio.client.application.profiler.widget.RequestPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.RequestUiHandlers;
 import com.arcbees.gaestudio.client.application.profiler.widget.RequestView;
@@ -29,6 +32,8 @@ public class ProfilerModule extends AbstractPresenterModule {
                 .to(new TypeLiteral<ProviderUiHandlersStrategy<RequestUiHandlers>>() {});
         bind(new TypeLiteral<UiHandlersStrategy<StatementUiHandlers>>() {})
                 .to(new TypeLiteral<ProviderUiHandlersStrategy<StatementUiHandlers>>() {});
+        bind(new TypeLiteral<UiHandlersStrategy<ProfilerToolbarUiHandlers>>(){})
+                .to(new TypeLiteral<ProviderUiHandlersStrategy<ProfilerToolbarUiHandlers>>(){});
 
         bindSingletonPresenterWidget(DetailsPresenter.class, DetailsPresenter.MyView.class,
                 DetailsView.class);
@@ -38,9 +43,12 @@ public class ProfilerModule extends AbstractPresenterModule {
                 StatementView.class);
         bindSingletonPresenterWidget(StatisticsPresenter.class, StatisticsPresenter.MyView.class,
                 StatisticsView.class);
+        bindSingletonPresenterWidget(ProfilerToolbarPresenter.class, ProfilerToolbarPresenter.MyView.class,
+                ProfilerToolbarView.class);
 
         bind(RequestUiHandlers.class).to(RequestPresenter.class);
         bind(StatementUiHandlers.class).to(StatementPresenter.class);
+        bind(ProfilerToolbarUiHandlers.class).to(ProfilerToolbarPresenter.class);
 
         bindPresenter(ProfilerPresenter.class, ProfilerPresenter.MyView.class,
                 ProfilerView.class, ProfilerPresenter.MyProxy.class);
