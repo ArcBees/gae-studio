@@ -18,11 +18,11 @@ import com.gwtplatform.mvp.client.View;
 public class ProfilerToolbarPresenter extends PresenterWidget<ProfilerToolbarPresenter.MyView> implements
         ProfilerToolbarUiHandlers {
 
-    private final DispatchAsync dispatcher;
-
     public interface MyView extends View, HasUiHandlers<ProfilerToolbarUiHandlers> {
         void setRecordingState(Boolean isRecording);
     }
+
+    private final DispatchAsync dispatcher;
 
     @Inject
     public ProfilerToolbarPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
