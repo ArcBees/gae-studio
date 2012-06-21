@@ -2,7 +2,7 @@
  * Copyright 2012 ArcBees Inc.  All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.profiler.details;
+package com.arcbees.gaestudio.client.application.profiler.widget;
 
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.client.application.profiler.event.StatementSelectedEvent;

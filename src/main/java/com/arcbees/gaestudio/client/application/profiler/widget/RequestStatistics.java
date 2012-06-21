@@ -2,7 +2,7 @@
  * Copyright 2012 ArcBees Inc. All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.profiler.request;
+package com.arcbees.gaestudio.client.application.profiler.widget;
 
 public class RequestStatistics {
 
@@ -16,23 +16,23 @@ public class RequestStatistics {
         this.executionTimeMs = executionTimeMs;
     }
 
-    long getRequestId() {
+    public long getRequestId() {
         return requestId;
     }
 
-    int getStatementCount() {
+    public int getStatementCount() {
         return statementCount;
     }
 
-    void incrementStatementCount() {
+    public void incrementStatementCount() {
         statementCount++;
     }
 
-    int getExecutionTimeMs() {
+    public int getExecutionTimeMs() {
         return executionTimeMs;
     }
 
-    void incrementExecutionTimeMs(int deltaTimeMs) {
+    public void incrementExecutionTimeMs(int deltaTimeMs) {
         executionTimeMs += deltaTimeMs;
     }
 

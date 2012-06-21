@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.profiler.statement;
+package com.arcbees.gaestudio.client.application.profiler.widget.ui;
 
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.arcbees.gaestudio.shared.formatters.RecordFormatter;

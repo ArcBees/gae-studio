@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.profiler.details;
+package com.arcbees.gaestudio.client.application.profiler.widget;
 
 import com.arcbees.core.client.mvp.ViewImpl;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;

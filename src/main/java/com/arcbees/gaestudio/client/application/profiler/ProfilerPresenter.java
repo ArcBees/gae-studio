@@ -6,11 +6,11 @@ package com.arcbees.gaestudio.client.application.profiler;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
-import com.arcbees.gaestudio.client.application.profiler.details.DetailsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
-import com.arcbees.gaestudio.client.application.profiler.request.RequestPresenter;
-import com.arcbees.gaestudio.client.application.profiler.statement.StatementPresenter;
-import com.arcbees.gaestudio.client.application.profiler.statistics.StatisticsPresenter;
+import com.arcbees.gaestudio.client.application.profiler.widget.DetailsPresenter;
+import com.arcbees.gaestudio.client.application.profiler.widget.RequestPresenter;
+import com.arcbees.gaestudio.client.application.profiler.widget.StatementPresenter;
+import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsPresenter;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
