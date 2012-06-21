@@ -1,7 +1,7 @@
 package com.arcbees.gaestudio.client.application.profiler.widget.ui;
 
+import com.arcbees.gaestudio.client.formatters.RecordFormatter;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
-import com.arcbees.gaestudio.shared.formatters.RecordFormatter;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 

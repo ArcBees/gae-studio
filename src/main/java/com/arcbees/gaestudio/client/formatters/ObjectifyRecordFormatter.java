@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.arcbees.gaestudio.shared.formatters;
+package com.arcbees.gaestudio.client.formatters;
 
 import com.arcbees.gaestudio.shared.dto.DeleteRecordDTO;
 import com.arcbees.gaestudio.shared.dto.GetRecordDTO;

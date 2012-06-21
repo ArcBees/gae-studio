@@ -15,8 +15,8 @@ import com.arcbees.gaestudio.client.application.profiler.widget.StatementUiHandl
 import com.arcbees.gaestudio.client.application.profiler.widget.StatementView;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsView;
-import com.arcbees.gaestudio.shared.formatters.ObjectifyRecordFormatter;
-import com.arcbees.gaestudio.shared.formatters.RecordFormatter;
+import com.arcbees.gaestudio.client.formatters.ObjectifyRecordFormatter;
+import com.arcbees.gaestudio.client.formatters.RecordFormatter;
 import com.google.inject.TypeLiteral;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
@@ -33,7 +33,7 @@ public class ProfilerModule extends AbstractPresenterModule {
         bind(new TypeLiteral<UiHandlersStrategy<StatementUiHandlers>>() {})
                 .to(new TypeLiteral<ProviderUiHandlersStrategy<StatementUiHandlers>>() {});
         bind(new TypeLiteral<UiHandlersStrategy<ProfilerToolbarUiHandlers>>(){})
-                .to(new TypeLiteral<ProviderUiHandlersStrategy<ProfilerToolbarUiHandlers>>(){});
+                .to(new TypeLiteral<ProviderUiHandlersStrategy<ProfilerToolbarUiHandlers>>() {});
 
         bindSingletonPresenterWidget(DetailsPresenter.class, DetailsPresenter.MyView.class,
                 DetailsView.class);
