@@ -11,7 +11,6 @@ import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
-import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 import java.util.ArrayList;
@@ -70,13 +69,6 @@ public class GetNewDbOperationRecordsHandler
         }
 
         return new GetNewDbOperationRecordsResult(records);
-    }
-
-    @Override
-    public void undo(GetNewDbOperationRecordsAction action, GetNewDbOperationRecordsResult result,
-                     ExecutionContext context)
-            throws ActionException {
-        // Nothing to do here
     }
 
     private List<String> getNewOperationRecordKeys(long beginId, long endId) {

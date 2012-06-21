@@ -14,7 +14,6 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
-import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 import java.util.ArrayList;
@@ -59,12 +58,6 @@ public class GetEntitiesByKindHandler
         }
         
         return new GetEntitiesByKindResult(entities);
-    }
-
-    @Override
-    public void undo(GetEntitiesByKindAction action, GetEntitiesByKindResult result, ExecutionContext context)
-            throws ActionException {
-        // Nothing to do here
     }
 
 }
