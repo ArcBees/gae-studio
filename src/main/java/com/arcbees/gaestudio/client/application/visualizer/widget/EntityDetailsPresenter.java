@@ -4,9 +4,12 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
+import com.arcbees.gaestudio.client.application.widget.message.Message;
+import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
@@ -19,7 +22,7 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresenter.MyView>
-        implements EntitySelectedEvent.EntitySelectedHandler, EntityDetailsUiHandlers {
+        implements EditEntityEvent.EditEntityHandler, EntityDetailsUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<EntityDetailsUiHandlers> {
         void displayEntityDetails(String json);
@@ -40,14 +43,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     }
 
     @Override
-    protected void onBind() {
-        super.onBind();
-
-        addRegisteredHandler(EntitySelectedEvent.getType(), this);
-    }
-
-    @Override
-    public void onEntitySelected(EntitySelectedEvent event) {
+    public void onEditEntity(EditEntityEvent event) {
         currentParsedEntity = event.getParsedEntity();
         getView().displayEntityDetails(currentParsedEntity.getJson());
     }
@@ -69,10 +65,17 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
         });
     }
 
+    @Override
+    protected void onBind() {
+        super.onBind();
+
+        addRegisteredHandler(EditEntityEvent.getType(), this);
+    }
+
     private void onSaveEntityFailed(Throwable caught) {
         String message = caught.getMessage();
         if (message == null) {
-            message = "Unable to save the changes in the datastore";
+            message = "Unable to save the changes in the datastore.";
         }
         getView().showError(message);
     }
@@ -80,6 +83,8 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     private void onSaveEntitySucceeded(UpdateEntityResult result) {
         EntityDTO newEntityDto = result.getResult();
         EntitySavedEvent.fire(this, newEntityDto);
+        Message message = new Message("Entity saved.", MessageStyle.SUCCESS);
+        DisplayMessageEvent.fire(this, message);
         getView().hide();
     }
 

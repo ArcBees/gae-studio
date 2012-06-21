@@ -5,6 +5,8 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
@@ -30,7 +32,7 @@ import java.util.List;
 
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
         implements KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler,
-        RefreshEntitiesEvent.RefreshEntitiesHandler {
+        RefreshEntitiesEvent.RefreshEntitiesHandler, EntityDeletedEvent.EntityDeletedHandler {
 
     public interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind();
@@ -44,6 +46,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void addOrReplaceEntity(EntityDTO parsedEntity);
 
         void hideList();
+
+        void removeEntity(EntityDTO entityDTO);
     }
 
     private final DispatchAsync dispatcher;
@@ -69,7 +73,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
-    public void onEntityClicked(ParsedEntity parsedEntity) {
+    public void onEntitySelected(ParsedEntity parsedEntity) {
         getEventBus().fireEvent(new EntitySelectedEvent(parsedEntity));
     }
 
@@ -84,11 +88,17 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
+    public void onEntityDeleted(EntityDeletedEvent event) {
+        getView().removeEntity(event.getEntityDTO());
+    }
+
+    @Override
     protected void onBind() {
         super.onBind();
 
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(EntitySavedEvent.getType(), this);
+        addRegisteredHandler(EntityDeletedEvent.getType(), this);
         addRegisteredHandler(RefreshEntitiesEvent.getType(), this);
     }
 
@@ -136,6 +146,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         }
                     });
         }
+        EntityPageLoadedEvent.fire(this);
     }
 
     private void onLoadPageSuccess(GetEntitiesByKindResult result, HasData<ParsedEntity> display) {

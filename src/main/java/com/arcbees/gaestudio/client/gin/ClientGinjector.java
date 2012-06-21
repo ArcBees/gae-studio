@@ -4,6 +4,7 @@ import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.profiler.ProfilerPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
+import com.arcbees.gaestudio.client.application.widget.message.ui.MessageResources;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
@@ -19,12 +20,13 @@ public interface ClientGinjector extends Ginjector {
 
     Resources getResources();
 
+    MessageResources getMessageResources();
+
     PlaceManager getPlaceManager();
 
     Provider<ApplicationPresenter> getAppPresenter();
 
     AsyncProvider<ProfilerPresenter> getProfilerPresenter();
-    
-    AsyncProvider<VisualizerPresenter> getVisualizerPresenter();
 
+    AsyncProvider<VisualizerPresenter> getVisualizerPresenter();
 }

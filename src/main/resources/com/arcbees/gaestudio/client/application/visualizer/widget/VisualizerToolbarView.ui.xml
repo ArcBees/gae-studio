@@ -11,16 +11,24 @@
             border-bottom: 8px solid #D0E4F6;
         }
 
+        .toolbar button, .toolbar select {
+            margin-right: 5px;
+        }
+
         .kinds {
-           float: left;
-            margin-right: 10px;
+            float: left;
         }
 
     </ui:style>
 
     <g:HTMLPanel styleName="{style.toolbar}">
         <g:SimplePanel ui:field="kinds" styleName="{style.kinds}"/>
-        <g:Button ui:field="refresh" visible="false">Refresh</g:Button>
+        <g:HTMLPanel ui:field="buttons" visible="false">
+            <g:Button ui:field="refresh">Refresh</g:Button>
+            <g:Button ui:field="create">Create</g:Button>
+            <g:Button ui:field="edit" enabled="false">Edit</g:Button>
+            <g:Button ui:field="delete" enabled="false">Delete</g:Button>
+        </g:HTMLPanel>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 

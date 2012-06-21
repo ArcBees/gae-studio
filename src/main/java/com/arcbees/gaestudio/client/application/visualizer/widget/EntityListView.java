@@ -6,7 +6,6 @@ import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.widget.ui.PropertyColumn;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDTO;
-import com.google.gwt.dom.client.TableRowElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -15,17 +14,15 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
-import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static com.google.gwt.query.client.GQuery.$;
 
 public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
 
@@ -43,7 +40,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiField
     CellTable<ParsedEntity> entityTable;
 
-    private final NoSelectionModel<ParsedEntity> selectionModel = new NoSelectionModel<ParsedEntity>();
+    private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
     private final Set<String> currentProperties = new HashSet<String>();
 
     @Inject
@@ -103,58 +100,62 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @Override
     public void addOrReplaceEntity(EntityDTO entityDTO) {
-        List<ParsedEntity> visibleParsedEntities = entityTable.getVisibleItems();
+        int rowIndex = getRowIndex(entityDTO);
 
-        int rowIndex = 0;
+        if (rowIndex == -1) {
+            insertNewEntityAtTheTopOfTheCurrentPage(entityDTO);
+        } else {
+            redrawTable();
+        }
+    }
+
+    @Override
+    public void removeEntity(EntityDTO entityDTO) {
+        int rowIndex = getRowIndex(entityDTO);
+
+        if (rowIndex >= 0) {
+            Range range = entityTable.getVisibleRange();
+            entityTable.setVisibleRangeAndClearData(range, true);
+        }
+    }
+
+    private int getRowIndex(EntityDTO entityDTO) {
+        List<ParsedEntity> visibleParsedEntities = entityTable.getVisibleItems();
+        int rowIndex = -1;
+
         boolean isReplace = false;
         int i = 0;
         while (!isReplace && i < visibleParsedEntities.size()) {
             ParsedEntity parsedEntity = visibleParsedEntities.get(i);
             if (parsedEntity.getKey().getId().equals(entityDTO.getKey().getId())) {
                 isReplace = true;
-                parsedEntity.setEntityDTO(entityDTO);
                 rowIndex = i;
-                redrawTable();
+                parsedEntity.setEntityDTO(entityDTO);
             }
 
             i++;
         }
 
-        if (!isReplace) {
-            insertNewEntityAtTheTopOfTheCurrentPage(entityDTO, visibleParsedEntities);
-        }
-
-        highlightUpdatedOrInsertedLine(rowIndex);
+        return rowIndex;
     }
 
-    private void insertNewEntityAtTheTopOfTheCurrentPage(EntityDTO entityDTO,
-                                                         List<ParsedEntity> visibleParsedEntities) {
-        List<ParsedEntity> newParsedEntities = new ArrayList<ParsedEntity>();
+    private void insertNewEntityAtTheTopOfTheCurrentPage(EntityDTO entityDTO) {
         ParsedEntity newParsedEntity = new ParsedEntity(entityDTO);
+
+        List<ParsedEntity> newParsedEntities = new ArrayList<ParsedEntity>();
         newParsedEntities.add(newParsedEntity);
-        newParsedEntities.addAll(visibleParsedEntities);
+        // getVisibleItems return an unmodifiable list
+        newParsedEntities.addAll(entityTable.getVisibleItems());
+        Range range = entityTable.getVisibleRange();
 
-        setData(entityTable.getVisibleRange(), newParsedEntities);
-    }
-
-    private void highlightUpdatedOrInsertedLine(int rowIndex) {
-        TableRowElement tableRowElement = entityTable.getRowElement(rowIndex);
-        $(tableRowElement).animate("background-color: '#FFFF00'", 500).delay(500).animate("background-color: " +
-                "'#FFFFFF'", 500);
-    }
-
-    private void removeAllPropertyColumns() {
-        while (entityTable.getColumnCount() != NUMBER_OF_DEFAULT_COLUMNS) {
-            entityTable.removeColumn(NUMBER_OF_DEFAULT_COLUMNS);
-        }
-        currentProperties.clear();
+        entityTable.setRowData(range.getStart(), newParsedEntities);
     }
 
     private void setSelectionModel() {
         selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
             @Override
             public void onSelectionChange(SelectionChangeEvent event) {
-                getUiHandlers().onEntityClicked(selectionModel.getLastSelectedObject());
+                getUiHandlers().onEntitySelected(selectionModel.getSelectedObject());
             }
         });
         entityTable.setSelectionModel(selectionModel);
@@ -180,6 +181,13 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             }
         };
         entityTable.addColumn(parentColumn, "Parent");
+    }
+
+    private void removeAllPropertyColumns() {
+        while (entityTable.getColumnCount() != NUMBER_OF_DEFAULT_COLUMNS) {
+            entityTable.removeColumn(NUMBER_OF_DEFAULT_COLUMNS);
+        }
+        currentProperties.clear();
     }
 
 }

@@ -13,16 +13,19 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 
     public interface Binder extends UiBinder<Widget, ApplicationView> {
     }
-    
+
     @UiField
     SimplePanel header;
 
     @UiField
     SimpleLayoutPanel main;
 
+    @UiField
+    SimplePanel messages;
+
     @Inject
     public ApplicationView(final Binder uiBinder) {
-       initWidget(uiBinder.createAndBindUi(this));
+        initWidget(uiBinder.createAndBindUi(this));
     }
 
     @Override
@@ -32,6 +35,8 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
                 main.setWidget(content);
             } else if (slot == ApplicationPresenter.TYPE_SetHeaderContent) {
                 header.setWidget(content);
+            } else if (slot == ApplicationPresenter.TYPE_SetMessagesContent) {
+                messages.setWidget(content);
             }
         }
     }

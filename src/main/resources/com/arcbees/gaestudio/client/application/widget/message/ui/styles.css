@@ -1,0 +1,30 @@
+.message {
+    position: relative;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border: solid 1px;
+}
+
+.close {
+    position: absolute;
+    font-weight: bold;
+    top: 5px;
+    right: 10px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.success {
+    color: #293a25;
+    background-color: #cee4c8;
+    border-color: #a2b89e;
+}
+
+.error {
+    color: #3a2a25;
+    background-color: #e4cfc8;
+    border-color: #b8a6a3;
+}
