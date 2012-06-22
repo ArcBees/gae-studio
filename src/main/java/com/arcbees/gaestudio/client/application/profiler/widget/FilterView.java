@@ -3,7 +3,7 @@ package com.arcbees.gaestudio.client.application.profiler.widget;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
-import com.arcbees.gaestudio.client.application.profiler.widget.ui.RequestCell;
+import com.arcbees.gaestudio.client.application.profiler.ui.RequestCell;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellList;

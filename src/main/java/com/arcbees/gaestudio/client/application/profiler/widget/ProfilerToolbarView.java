@@ -50,6 +50,13 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
         });
     }
 
+    @Override
+    public void setRecordingState(Boolean isRecording) {
+        this.isRecording = isRecording;
+        record.setEnabled(!isRecording);
+        stop.setEnabled(isRecording);
+    }
+
     @UiHandler("record")
     void onRecordClicked(ClickEvent event) {
         isRecording = true;
@@ -60,13 +67,6 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
     void onStopClicked(ClickEvent event) {
         isRecording = false;
         getUiHandlers().onToggleRecording(false);
-    }
-
-    @Override
-    public void setRecordingState(Boolean isRecording) {
-        this.isRecording = isRecording;
-        record.setEnabled(!isRecording);
-        stop.setEnabled(isRecording);
     }
 
 }

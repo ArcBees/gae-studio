@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.application.profiler.widget.ui;
+package com.arcbees.gaestudio.client.application.profiler.ui;
 
 import com.arcbees.gaestudio.client.application.profiler.widget.RequestStatistics;
 import com.arcbees.gaestudio.client.util.TimeNumberFormat;

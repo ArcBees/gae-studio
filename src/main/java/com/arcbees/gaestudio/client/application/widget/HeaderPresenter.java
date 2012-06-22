@@ -19,4 +19,5 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
     public HeaderPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
     }
+
 }
