@@ -12,9 +12,10 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
-        implements DbOperationRecordProcessor {
+        implements DbOperationRecordProcessor, FiltersUiHandlers {
 
     public interface MyView extends View {
+        Filter getCurrentlyDisplayedFilter();
     }
 
     public static final Object TYPE_SetRequestFilter = new Object();
@@ -41,9 +42,21 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
 
     @Override
     public void displayNewDbOperationRecords() {
-        // TODO: display for currently selected filter
-        requestFilterPresenter.displayNewDbOperationRecords();
-        methodFilterPresenter.displayNewDbOperationRecords();
+        Filter currentlyDisplayedFilter = getView().getCurrentlyDisplayedFilter();
+
+        switch (currentlyDisplayedFilter) {
+            case REQUEST:
+                requestFilterPresenter.displayNewDbOperationRecords();
+                break;
+            case METHOD:
+                methodFilterPresenter.displayNewDbOperationRecords();
+                break;
+        }
+    }
+
+    @Override
+    public void changeFilter() {
+        displayNewDbOperationRecords();
     }
 
     @Override
