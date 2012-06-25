@@ -17,7 +17,6 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
-import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 import java.util.Map;
@@ -80,12 +79,6 @@ public class GetEmptyKindEntityHandler
             // Otherwise set null
             return null;
         }
-    }
-
-    @Override
-    public void undo(GetEmptyKindEntityAction action, GetEmptyKindEntityResult result, ExecutionContext context)
-            throws ActionException {
-        // Nothing to do here
     }
 
 }

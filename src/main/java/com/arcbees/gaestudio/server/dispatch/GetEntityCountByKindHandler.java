@@ -12,7 +12,6 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
-import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 public class GetEntityCountByKindHandler
@@ -36,12 +35,6 @@ public class GetEntityCountByKindHandler
         Integer count = datastore.prepare(query).countEntities(fetchOptions);
 
         return new GetEntityCountByKindResult(count);
-    }
-
-    @Override
-    public void undo(GetEntityCountByKindAction action, GetEntityCountByKindResult result, ExecutionContext context)
-            throws ActionException {
-        // Nothing to do here
     }
 
 }

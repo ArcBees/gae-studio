@@ -8,7 +8,6 @@ import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
-import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 import java.util.ArrayList;
@@ -51,12 +50,6 @@ public class GetEntityKindsHandler
 //        }
 
         return new GetEntityKindsResult(kinds);
-    }
-
-    @Override
-    public void undo(GetEntityKindsAction action, GetEntityKindsResult result, ExecutionContext context)
-            throws ActionException {
-        // Nothing to do here
     }
 
 }

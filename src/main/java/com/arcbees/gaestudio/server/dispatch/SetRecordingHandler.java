@@ -13,7 +13,6 @@ import com.arcbees.gaestudio.shared.dispatch.SetRecordingResult;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
-import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 public class SetRecordingHandler
@@ -45,12 +44,6 @@ public class SetRecordingHandler
         }
 
         return new SetRecordingResult(getMostRecentId());
-    }
-
-    @Override
-    public void undo(SetRecordingAction setRecordingAction, SetRecordingResult setRecordingResult, ExecutionContext
-            executionContext) throws ActionException {
-        // Nothing to do here
     }
 
     private Long getMostRecentId() {

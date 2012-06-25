@@ -19,8 +19,6 @@ package com.arcbees.gaestudio.server.recorder;
 import com.arcbees.gaestudio.server.guice.RequestIdProvider;
 import com.arcbees.gaestudio.server.recorder.authentication.Listener;
 import com.arcbees.gaestudio.server.recorder.authentication.ListenerProvider;
-import com.arcbees.gaestudio.shared.formatters.ObjectifyRecordFormatter;
-import com.arcbees.gaestudio.shared.formatters.RecordFormatter;
 import com.arcbees.gaestudio.shared.util.SimpleStackInspector;
 import com.arcbees.gaestudio.shared.util.StackInspector;
 import com.google.appengine.api.memcache.MemcacheService;
@@ -43,7 +41,6 @@ public class GaeStudioRecorderModule extends AbstractModule {
 
         bind(StackInspector.class).to(SimpleStackInspector.class);
         bind(DbOperationRecorder.class).to(MemcacheDbOperationRecorder.class);
-        bind(RecordFormatter.class).to(ObjectifyRecordFormatter.class);
 
         install(new FactoryModuleBuilder()
                 .implement(DbOperationRecorderHook.class, DbOperationRecorderHook.class)

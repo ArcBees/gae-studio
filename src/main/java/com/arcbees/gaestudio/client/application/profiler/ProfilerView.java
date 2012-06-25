@@ -11,18 +11,21 @@ public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
 
     public interface Binder extends UiBinder<Widget, ProfilerView> {
     }
-    
+
     @UiField
     SimplePanel requestPanel;
-    
+
     @UiField
     SimplePanel statisticsPanel;
-    
+
     @UiField
     SimplePanel statementPanel;
-    
+
     @UiField
     SimplePanel detailsPanel;
+
+    @UiField
+    SimplePanel toolbarPanel;
 
     @Inject
     public ProfilerView(final Binder uiBinder) {
@@ -40,9 +43,10 @@ public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
                 statementPanel.setWidget(content);
             } else if (slot == ProfilerPresenter.TYPE_SetDetailsPanelContent) {
                 detailsPanel.setWidget(content);
+            } else if (slot == ProfilerPresenter.TYPE_SetToolbarContent) {
+                toolbarPanel.setWidget(content);
             }
         }
     }
 
 }
-    

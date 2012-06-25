@@ -1,6 +1,6 @@
 package com.arcbees.gaestudio.client.application;
 
-import com.arcbees.gaestudio.client.application.header.HeaderPresenter;
+import com.arcbees.gaestudio.client.application.widget.HeaderPresenter;
 import com.arcbees.gaestudio.client.application.widget.message.MessagesPresenter;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.inject.Inject;

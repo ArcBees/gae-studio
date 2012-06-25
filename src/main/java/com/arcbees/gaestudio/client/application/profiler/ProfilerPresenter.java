@@ -6,11 +6,12 @@ package com.arcbees.gaestudio.client.application.profiler;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
-import com.arcbees.gaestudio.client.application.profiler.details.DetailsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
-import com.arcbees.gaestudio.client.application.profiler.request.RequestPresenter;
-import com.arcbees.gaestudio.client.application.profiler.statement.StatementPresenter;
-import com.arcbees.gaestudio.client.application.profiler.statistics.StatisticsPresenter;
+import com.arcbees.gaestudio.client.application.profiler.widget.DetailsPresenter;
+import com.arcbees.gaestudio.client.application.profiler.widget.FilterPresenter;
+import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerToolbarPresenter;
+import com.arcbees.gaestudio.client.application.profiler.widget.StatementPresenter;
+import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsPresenter;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
@@ -46,30 +47,34 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     public static final Object TYPE_SetStatisticsPanelContent = new Object();
     public static final Object TYPE_SetStatementPanelContent = new Object();
     public static final Object TYPE_SetDetailsPanelContent = new Object();
+    public static final Object TYPE_SetToolbarContent = new Object();
     private static final int TICK_DELTA_MILLISEC = 1000;
 
     private final DispatchAsync dispatcher;
-    private final RequestPresenter requestPresenter;
+    private final FilterPresenter filterPresenter;
     private final StatisticsPresenter statisticsPresenter;
     private final StatementPresenter statementPresenter;
     private final DetailsPresenter detailsPresenter;
+    private final ProfilerToolbarPresenter profilerToolbarPresenter;
 
     private long lastDbOperationRecordId = 0L;
     private boolean isProcessing = false;
 
     @Inject
     public ProfilerPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                             final DispatchAsync dispatcher, final RequestPresenter requestPresenter,
+                             final DispatchAsync dispatcher, final FilterPresenter filterPresenter,
                              final StatisticsPresenter statisticsPresenter,
                              final StatementPresenter statementPresenter,
-                             final DetailsPresenter detailsPresenter) {
+                             final DetailsPresenter detailsPresenter,
+                             final ProfilerToolbarPresenter profilerToolbarPresenter) {
         super(eventBus, view, proxy);
 
         this.dispatcher = dispatcher;
-        this.requestPresenter = requestPresenter;
+        this.filterPresenter = filterPresenter;
         this.statisticsPresenter = statisticsPresenter;
         this.statementPresenter = statementPresenter;
         this.detailsPresenter = detailsPresenter;
+        this.profilerToolbarPresenter = profilerToolbarPresenter;
     }
 
     @Override
@@ -91,10 +96,11 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     protected void onBind() {
         super.onBind();
 
-        setInSlot(TYPE_SetRequestPanelContent, requestPresenter);
+        setInSlot(TYPE_SetRequestPanelContent, filterPresenter);
         setInSlot(TYPE_SetStatisticsPanelContent, statisticsPresenter);
         setInSlot(TYPE_SetStatementPanelContent, statementPresenter);
         setInSlot(TYPE_SetDetailsPanelContent, detailsPresenter);
+        setInSlot(TYPE_SetToolbarContent, profilerToolbarPresenter);
 
         addRegisteredHandler(RecordingStateChangedEvent.getType(), this);
     }
@@ -138,14 +144,14 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     private void displayNewDbOperationRecords() {
-        requestPresenter.displayNewDbOperationRecords();
+        filterPresenter.displayNewDbOperationRecords();
         statisticsPresenter.displayNewDbOperationRecords();
         statementPresenter.displayNewDbOperationRecords();
         detailsPresenter.displayNewDbOperationRecords();
     }
 
     private void processDbOperationRecord(DbOperationRecordDTO record) {
-        requestPresenter.processDbOperationRecord(record);
+        filterPresenter.processDbOperationRecord(record);
         statisticsPresenter.processDbOperationRecord(record);
         statementPresenter.processDbOperationRecord(record);
         detailsPresenter.processDbOperationRecord(record);

@@ -2,18 +2,8 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <ui:with field="resources" type="com.arcbees.gaestudio.client.Resources"/>
-    <ui:with type="com.arcbees.gaestudio.client.place.NameTokens" field="nameTokens"/>
 
     <ui:style>
-
-        .toolbar {
-            line-height: 30px;
-            border-bottom: 8px solid #D0E4F6;
-        }
-
-        .toolbar button, .toolbar select {
-            margin-right: 5px;
-        }
 
         .kinds {
             float: left;
@@ -21,7 +11,7 @@
 
     </ui:style>
 
-    <g:HTMLPanel styleName="{style.toolbar}">
+    <g:HTMLPanel styleName="{resources.styles.toolbar}">
         <g:SimplePanel ui:field="kinds" styleName="{style.kinds}"/>
         <g:HTMLPanel ui:field="buttons" visible="false">
             <g:Button ui:field="refresh">Refresh</g:Button>

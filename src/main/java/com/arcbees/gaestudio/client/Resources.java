@@ -10,17 +10,19 @@ import com.google.gwt.resources.client.CssResource;
 public interface Resources extends ClientBundle {
 
     public interface Styles extends CssResource {
-        String list();
-        
-        String item();
-        
-        String selected();
-
         String fleft();
 
         String fright();
 
         String clear();
+
+        String list();
+
+        String item();
+
+        String selected();
+
+        String toolbar();
     }
 
     public Styles styles();

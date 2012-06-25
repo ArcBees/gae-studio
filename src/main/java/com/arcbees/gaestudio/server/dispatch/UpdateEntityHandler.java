@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
-import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 import java.util.logging.Logger;
@@ -55,12 +54,6 @@ public class UpdateEntityHandler
         }
 
         return new UpdateEntityResult(EntityMapper.mapDTO(dbEntity));
-    }
-
-    @Override
-    public void undo(UpdateEntityAction action, UpdateEntityResult result, ExecutionContext context)
-            throws ActionException {
-        // Nothing to do here
     }
 
 }
