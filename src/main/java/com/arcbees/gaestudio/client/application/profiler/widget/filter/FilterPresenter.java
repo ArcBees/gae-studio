@@ -2,10 +2,11 @@
  * Copyright 2012 ArcBees Inc.  All rights reserved.
  */
 
-package com.arcbees.gaestudio.client.application.profiler.widget;
+package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.client.application.profiler.event.RequestSelectedEvent;
+import com.arcbees.gaestudio.client.application.profiler.widget.RequestStatistics;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;

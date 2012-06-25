@@ -10,7 +10,7 @@ public class RequestStatistics {
     private int statementCount;
     private int executionTimeMs;
 
-    RequestStatistics(long requestId, int statementCount, int executionTimeMs) {
+    public RequestStatistics(long requestId, int statementCount, int executionTimeMs) {
         this.requestId = requestId;
         this.statementCount = statementCount;
         this.executionTimeMs = executionTimeMs;
