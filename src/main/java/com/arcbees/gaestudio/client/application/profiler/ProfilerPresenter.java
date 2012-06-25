@@ -132,7 +132,6 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     // TODO properly handle any missing records
-    // TODO properly handle situations (such as resyncs) where the records come out of order
     private void processNewDbOperationRecords(ArrayList<DbOperationRecordDTO> records) {
         if (!records.isEmpty()) {
             for (DbOperationRecordDTO record : records) {
@@ -146,15 +145,11 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private void displayNewDbOperationRecords() {
         filterPresenter.displayNewDbOperationRecords();
         statisticsPresenter.displayNewDbOperationRecords();
-        statementPresenter.displayNewDbOperationRecords();
-        detailsPresenter.displayNewDbOperationRecords();
     }
 
     private void processDbOperationRecord(DbOperationRecordDTO record) {
         filterPresenter.processDbOperationRecord(record);
         statisticsPresenter.processDbOperationRecord(record);
-        statementPresenter.processDbOperationRecord(record);
-        detailsPresenter.processDbOperationRecord(record);
     }
 
     private Timer tick = new Timer() {

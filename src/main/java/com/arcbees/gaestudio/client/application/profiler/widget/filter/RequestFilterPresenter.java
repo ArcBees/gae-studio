@@ -5,7 +5,7 @@
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
-import com.arcbees.gaestudio.client.application.profiler.event.RequestSelectedEvent;
+import com.arcbees.gaestudio.client.application.profiler.event.FilterValueSelectedEvent;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -22,10 +22,10 @@ public class RequestFilterPresenter extends PresenterWidget<RequestFilterPresent
         implements DbOperationRecordProcessor, RequestFilterUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<RequestFilterUiHandlers> {
-        void displayRequests(List<RequestFilterValue> requestStatistics);
+        void displayRequests(List<FilterValue<Long>> requestStatistics);
     }
 
-    private final Map<Long, RequestFilterValue> requestsByRequestId = new TreeMap<Long, RequestFilterValue>();
+    private final Map<Long, FilterValue<Long>> requestsByRequestId = new TreeMap<Long, FilterValue<Long>>();
 
     @Inject
     public RequestFilterPresenter(final EventBus eventBus, final MyView view) {
@@ -36,10 +36,10 @@ public class RequestFilterPresenter extends PresenterWidget<RequestFilterPresent
     public void processDbOperationRecord(DbOperationRecordDTO record) {
         Long requestId = record.getRequestId();
 
-        RequestFilterValue filterValue = requestsByRequestId.get(requestId);
+        FilterValue<Long> filterValue = requestsByRequestId.get(requestId);
 
         if (filterValue == null) {
-            filterValue = new RequestFilterValue(requestId);
+            filterValue = new FilterValue<Long>(requestId);
             requestsByRequestId.put(requestId, filterValue);
         }
 
@@ -48,12 +48,12 @@ public class RequestFilterPresenter extends PresenterWidget<RequestFilterPresent
 
     @Override
     public void displayNewDbOperationRecords() {
-        getView().displayRequests(new ArrayList<RequestFilterValue>(requestsByRequestId.values()));
+        getView().displayRequests(new ArrayList<FilterValue<Long>>(requestsByRequestId.values()));
     }
 
     @Override
-    public void onRequestClicked(Long requestId) {
-        getEventBus().fireEvent(new RequestSelectedEvent(requestId));
+    public void onRequestClicked(FilterValue<Long> filterValue) {
+        FilterValueSelectedEvent.fire(this, filterValue);
     }
 
 }

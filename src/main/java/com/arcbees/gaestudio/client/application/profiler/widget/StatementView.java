@@ -4,6 +4,7 @@ import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.profiler.ui.StatementCell;
+import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterValue;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -13,9 +14,9 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> implements StatementPresenter.MyView {
 
@@ -24,11 +25,11 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
 
     @UiField(provided = true)
     Resources resources;
+
     @UiField(provided = true)
     CellList<DbOperationRecordDTO> statements;
 
     private final SingleSelectionModel<DbOperationRecordDTO> selectionModel = new SingleSelectionModel<DbOperationRecordDTO>();
-    private Long currentlyDisplayedRequestId = -1L;
 
     @Inject
     public StatementView(final Binder uiBinder, final UiHandlersStrategy<StatementUiHandlers> uiHandlersStrategy,
@@ -43,23 +44,15 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
             @Override
             public void onSelectionChange(SelectionChangeEvent event) {
                 DbOperationRecordDTO dbOperationRecordDTO = selectionModel.getSelectedObject();
-                getUiHandlers().onStatementClicked(dbOperationRecordDTO.getStatementId());
+                getUiHandlers().onStatementClicked(dbOperationRecordDTO);
             }
         });
         statements.setSelectionModel(selectionModel);
     }
 
     @Override
-    public Long getCurrentlyDisplayedRequestId() {
-        return currentlyDisplayedRequestId;
-    }
-
-    @Override
-    public void displayStatementsForRequest(Long requestId, ArrayList<DbOperationRecordDTO> statements) {
-        if (statements == null) {
-            return;
-        }
-
+    public void displayStatements(FilterValue filterValue) {
+        List statements = filterValue.getStatements();
         Collections.sort(statements, new StatementIdComparator());
 
         this.statements.setRowData(statements);

@@ -3,7 +3,7 @@ package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
-import com.arcbees.gaestudio.client.application.profiler.ui.FilterCell;
+import com.arcbees.gaestudio.client.application.profiler.ui.RequestFilterCell;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellList;
@@ -29,18 +29,18 @@ public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandler
     private final SingleSelectionModel<FilterValue<Long>> selectionModel = new SingleSelectionModel<FilterValue<Long>>();
 
     @Inject
-    public RequestFilterView(final Binder uiBinder, final Resources resources, final FilterCell<Long> filterCell,
+    public RequestFilterView(final Binder uiBinder, final Resources resources, final RequestFilterCell<Long> requestFilterCell,
                              final UiHandlersStrategy<RequestFilterUiHandlers> uiHandlersStrategy) {
         super(uiHandlersStrategy);
 
         this.resources = resources;
-        requests = new CellList<FilterValue<Long>>(filterCell);
+        requests = new CellList<FilterValue<Long>>(requestFilterCell);
         initWidget(uiBinder.createAndBindUi(this));
         initSelectionModel();
     }
 
     @Override
-    public void displayRequests(List<RequestFilterValue> filterValues) {
+    public void displayRequests(List<FilterValue<Long>> filterValues) {
         requests.setRowData(filterValues);
     }
 
@@ -49,7 +49,7 @@ public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandler
             @Override
             public void onSelectionChange(SelectionChangeEvent event) {
                 FilterValue<Long> filterValue = selectionModel.getSelectedObject();
-                getUiHandlers().onRequestClicked(filterValue.getKey());
+                getUiHandlers().onRequestClicked(filterValue);
             }
         });
         requests.setSelectionModel(selectionModel);
