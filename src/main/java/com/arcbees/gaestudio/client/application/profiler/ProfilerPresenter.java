@@ -11,7 +11,7 @@ import com.arcbees.gaestudio.client.application.profiler.widget.DetailsPresenter
 import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerToolbarPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatementPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsPresenter;
-import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterPresenter;
+import com.arcbees.gaestudio.client.application.profiler.widget.filter.FiltersPresenter;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
@@ -51,7 +51,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private static final int TICK_DELTA_MILLISEC = 1000;
 
     private final DispatchAsync dispatcher;
-    private final FilterPresenter filterPresenter;
+    private final FiltersPresenter filterPresenter;
     private final StatisticsPresenter statisticsPresenter;
     private final StatementPresenter statementPresenter;
     private final DetailsPresenter detailsPresenter;
@@ -62,7 +62,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
 
     @Inject
     public ProfilerPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                             final DispatchAsync dispatcher, final FilterPresenter filterPresenter,
+                             final DispatchAsync dispatcher, final FiltersPresenter filterPresenter,
                              final StatisticsPresenter statisticsPresenter,
                              final StatementPresenter statementPresenter,
                              final DetailsPresenter detailsPresenter,

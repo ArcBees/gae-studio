@@ -5,7 +5,6 @@
     <ui:with field="resources" type="com.arcbees.gaestudio.client.Resources"/>
 
     <g:HTMLPanel>
-        <h3>Requests</h3>
         <cellview:CellList ui:field="requests" styleName="{resources.styles.list}"/>
     </g:HTMLPanel>
 

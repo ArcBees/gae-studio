@@ -4,7 +4,6 @@ import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.profiler.ui.RequestCell;
-import com.arcbees.gaestudio.client.application.profiler.widget.RequestStatistics;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellList;
@@ -15,9 +14,9 @@ import com.google.inject.Inject;
 
 import java.util.List;
 
-public class FilterView extends ViewWithUiHandlers<FilterUiHandlers> implements FilterPresenter.MyView {
+public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandlers> implements RequestFilterPresenter.MyView {
 
-    public interface Binder extends UiBinder<Widget, FilterView> {
+    public interface Binder extends UiBinder<Widget, RequestFilterView> {
     }
 
     @UiField(provided = true)
@@ -30,8 +29,8 @@ public class FilterView extends ViewWithUiHandlers<FilterUiHandlers> implements 
             SingleSelectionModel<RequestStatistics>();
 
     @Inject
-    public FilterView(final Binder uiBinder, final UiHandlersStrategy<FilterUiHandlers> uiHandlersStrategy,
-                      final Resources resources, final RequestCell requestCell) {
+    public RequestFilterView(final Binder uiBinder, final UiHandlersStrategy<RequestFilterUiHandlers> uiHandlersStrategy,
+                             final Resources resources, final RequestCell requestCell) {
         super(uiHandlersStrategy);
 
         this.resources = resources;

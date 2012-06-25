@@ -6,7 +6,6 @@ package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.client.application.profiler.event.RequestSelectedEvent;
-import com.arcbees.gaestudio.client.application.profiler.widget.RequestStatistics;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -19,19 +18,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class FilterPresenter extends PresenterWidget<FilterPresenter.MyView>
-        implements DbOperationRecordProcessor, FilterUiHandlers {
+public class RequestFilterPresenter extends PresenterWidget<RequestFilterPresenter.MyView>
+        implements DbOperationRecordProcessor, RequestFilterUiHandlers {
 
-    public interface MyView extends View, HasUiHandlers<FilterUiHandlers> {
+    public interface MyView extends View, HasUiHandlers<RequestFilterUiHandlers> {
         void displayRequests(List<RequestStatistics> requestStatistics);
     }
 
     private final Map<Long, RequestStatistics> requestsByRequestId =
             new TreeMap<Long, RequestStatistics>();
-    private final List<RequestStatistics> requests = new ArrayList<RequestStatistics>();
 
     @Inject
-    public FilterPresenter(final EventBus eventBus, final MyView view) {
+    public RequestFilterPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
     }
     
@@ -42,7 +40,6 @@ public class FilterPresenter extends PresenterWidget<FilterPresenter.MyView>
         if (!requestsByRequestId.containsKey(requestId)) {
             statistics = new RequestStatistics(requestId, 1, record.getExecutionTimeMs());
             requestsByRequestId.put(requestId, statistics);
-            requests.add(statistics);
         } else {
             statistics = requestsByRequestId.get(requestId);
             statistics.incrementStatementCount();
@@ -52,7 +49,7 @@ public class FilterPresenter extends PresenterWidget<FilterPresenter.MyView>
 
     @Override
     public void displayNewDbOperationRecords() {
-        getView().displayRequests(requests);
+        getView().displayRequests(new ArrayList<RequestStatistics>(requestsByRequestId.values()));
     }
 
     @Override

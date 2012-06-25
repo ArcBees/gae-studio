@@ -12,9 +12,7 @@ import com.arcbees.gaestudio.client.application.profiler.widget.StatementUiHandl
 import com.arcbees.gaestudio.client.application.profiler.widget.StatementView;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsView;
-import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterPresenter;
-import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterUiHandlers;
-import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterView;
+import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterModule;
 import com.arcbees.gaestudio.client.formatters.ObjectifyRecordFormatter;
 import com.arcbees.gaestudio.client.formatters.RecordFormatter;
 import com.google.inject.TypeLiteral;
@@ -26,10 +24,10 @@ public class ProfilerModule extends AbstractPresenterModule {
 
     @Override
     protected void configure() {
+        install(new FilterModule());
+
         bind(RecordFormatter.class).to(ObjectifyRecordFormatter.class).in(Singleton.class);
 
-        bind(new TypeLiteral<UiHandlersStrategy<FilterUiHandlers>>() {})
-                .to(new TypeLiteral<ProviderUiHandlersStrategy<FilterUiHandlers>>() {});
         bind(new TypeLiteral<UiHandlersStrategy<StatementUiHandlers>>() {})
                 .to(new TypeLiteral<ProviderUiHandlersStrategy<StatementUiHandlers>>() {});
         bind(new TypeLiteral<UiHandlersStrategy<ProfilerToolbarUiHandlers>>(){})
@@ -37,8 +35,6 @@ public class ProfilerModule extends AbstractPresenterModule {
 
         bindSingletonPresenterWidget(DetailsPresenter.class, DetailsPresenter.MyView.class,
                 DetailsView.class);
-        bindSingletonPresenterWidget(FilterPresenter.class, FilterPresenter.MyView.class,
-                FilterView.class);
         bindSingletonPresenterWidget(StatementPresenter.class, StatementPresenter.MyView.class,
                 StatementView.class);
         bindSingletonPresenterWidget(StatisticsPresenter.class, StatisticsPresenter.MyView.class,
@@ -46,7 +42,6 @@ public class ProfilerModule extends AbstractPresenterModule {
         bindSingletonPresenterWidget(ProfilerToolbarPresenter.class, ProfilerToolbarPresenter.MyView.class,
                 ProfilerToolbarView.class);
 
-        bind(FilterUiHandlers.class).to(FilterPresenter.class);
         bind(StatementUiHandlers.class).to(StatementPresenter.class);
         bind(ProfilerToolbarUiHandlers.class).to(ProfilerToolbarPresenter.class);
 
