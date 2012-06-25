@@ -22,34 +22,33 @@ public class RequestFilterPresenter extends PresenterWidget<RequestFilterPresent
         implements DbOperationRecordProcessor, RequestFilterUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<RequestFilterUiHandlers> {
-        void displayRequests(List<RequestStatistics> requestStatistics);
+        void displayRequests(List<RequestFilterValue> requestStatistics);
     }
 
-    private final Map<Long, RequestStatistics> requestsByRequestId =
-            new TreeMap<Long, RequestStatistics>();
+    private final Map<Long, RequestFilterValue> requestsByRequestId = new TreeMap<Long, RequestFilterValue>();
 
     @Inject
     public RequestFilterPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
     }
-    
+
     @Override
     public void processDbOperationRecord(DbOperationRecordDTO record) {
-        final long requestId = record.getRequestId();
-        RequestStatistics statistics;
-        if (!requestsByRequestId.containsKey(requestId)) {
-            statistics = new RequestStatistics(requestId, 1, record.getExecutionTimeMs());
-            requestsByRequestId.put(requestId, statistics);
-        } else {
-            statistics = requestsByRequestId.get(requestId);
-            statistics.incrementStatementCount();
-            statistics.incrementExecutionTimeMs(record.getExecutionTimeMs());
+        Long requestId = record.getRequestId();
+
+        RequestFilterValue filterValue = requestsByRequestId.get(requestId);
+
+        if (filterValue == null) {
+            filterValue = new RequestFilterValue(requestId);
+            requestsByRequestId.put(requestId, filterValue);
         }
+
+        filterValue.addRecord(record);
     }
 
     @Override
     public void displayNewDbOperationRecords() {
-        getView().displayRequests(new ArrayList<RequestStatistics>(requestsByRequestId.values()));
+        getView().displayRequests(new ArrayList<RequestFilterValue>(requestsByRequestId.values()));
     }
 
     @Override
