@@ -4,10 +4,7 @@
     <ui:with field="resources" type="com.arcbees.gaestudio.client.Resources"/>
 
     <g:HTMLPanel>
-        <h3>by request</h3>
-        <g:SimplePanel ui:field="request"/>
-        <h3>by method</h3>
-        <g:SimplePanel ui:field="method"/>
+        <g:Tree ui:field="methods" styleName="{resources.styles.list}"/>
     </g:HTMLPanel>
 
 </ui:UiBinder>

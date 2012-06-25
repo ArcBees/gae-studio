@@ -18,24 +18,32 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
     }
 
     public static final Object TYPE_SetRequestFilter = new Object();
+    public static final Object TYPE_ClassMethodFilter = new Object();
 
     private final RequestFilterPresenter requestFilterPresenter;
+    private final MethodFilterPresenter methodFilterPresenter;
 
     @Inject
-    public FiltersPresenter(final EventBus eventBus, final MyView view, final RequestFilterPresenter requestFilterPresenter) {
+    public FiltersPresenter(final EventBus eventBus, final MyView view,
+                            final RequestFilterPresenter requestFilterPresenter,
+                            final MethodFilterPresenter methodFilterPresenter) {
         super(eventBus, view);
 
         this.requestFilterPresenter = requestFilterPresenter;
+        this.methodFilterPresenter = methodFilterPresenter;
     }
-    
+
     @Override
     public void processDbOperationRecord(DbOperationRecordDTO record) {
         requestFilterPresenter.processDbOperationRecord(record);
+        methodFilterPresenter.processDbOperationRecord(record);
     }
 
     @Override
     public void displayNewDbOperationRecords() {
+        // TODO: display for currently selected filter
         requestFilterPresenter.displayNewDbOperationRecords();
+        methodFilterPresenter.displayNewDbOperationRecords();
     }
 
     @Override
@@ -43,5 +51,6 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
         super.onBind();
 
         setInSlot(TYPE_SetRequestFilter, requestFilterPresenter);
+        setInSlot(TYPE_ClassMethodFilter, methodFilterPresenter);
     }
 }

@@ -19,6 +19,9 @@ public class FiltersView extends ViewImpl implements FiltersPresenter.MyView {
     @UiField
     SimplePanel request;
 
+    @UiField
+    SimplePanel method;
+
     @Inject
     public FiltersView(final Binder uiBinder, final Resources resources) {
         this.resources = resources;
@@ -30,6 +33,8 @@ public class FiltersView extends ViewImpl implements FiltersPresenter.MyView {
     public void setInSlot(Object slot, Widget content) {
         if (slot == FiltersPresenter.TYPE_SetRequestFilter) {
             request.setWidget(content);
+        } else if (slot == FiltersPresenter.TYPE_ClassMethodFilter) {
+            method.setWidget(content);
         }
     }
 
