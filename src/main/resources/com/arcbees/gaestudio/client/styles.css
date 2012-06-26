@@ -1,32 +1,55 @@
-    .fleft {
-        float: left;
-    }
+.fleft {
+    float: left;
+}
 
-    .fright {
-        float: right;
-    }
+.fright {
+    float: right;
+}
 
-    .clear {
-        clear: both;
-    }
+.clear {
+    clear: both;
+}
 
-    .list {
-        overflow: auto;
-    }
+.list {
+    overflow: auto;
+}
 
-    .item:hover {
-        background-color: #d3d3d3;
-    }
+.item:hover {
+    background-color: #d3d3d3;
+}
 
-    .selected {
-        background-color: #888888;
-    }
+.selected {
+    background-color: #888888;
+}
 
-    .toolbar {
-        line-height: 30px;
-        border-bottom: 8px solid #D0E4F6;
-    }
+.toolbar {
+    height: 30px;
+    line-height: 30px;
+    background-color: #3b3b3b;
+    color: #ffffff;
+}
 
-    .toolbar button, .toolbar select {
-        margin-right: 5px;
-    }
+.toolbarButton {
+    cursor: pointer;
+    padding: 0 13px;
+    float: left;
+    position: relative;
+}
+
+.toolbarButton:hover {
+}
+
+.toolbarButtonDisabled {
+    opacity: 0.4;
+}
+
+.tabs{
+    background-color: #8f8f8f;
+    font-size: 1.2em;
+    line-height: 28px;
+    margin-bottom: 5px;
+}
+
+.tabs > span {
+    padding: 0 20px;
+}

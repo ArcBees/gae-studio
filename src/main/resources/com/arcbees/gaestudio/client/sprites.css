@@ -1,0 +1,7 @@
+@sprite .topmenuBg {
+    gwt-image: "topmenuBg";
+}
+
+@sprite .topmenuBgHover:hover {
+    gwt-image: "topmenuBgHover";
+}

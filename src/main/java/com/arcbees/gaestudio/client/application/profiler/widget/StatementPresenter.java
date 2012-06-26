@@ -4,6 +4,7 @@
 
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
+import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.FilterValueSelectedEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.StatementSelectedEvent;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterValue;
@@ -15,10 +16,13 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 public class StatementPresenter extends PresenterWidget<StatementPresenter.MyView>
-        implements FilterValueSelectedEvent.FilterValueSelectedHandler, StatementUiHandlers {
+        implements FilterValueSelectedEvent.FilterValueSelectedHandler, StatementUiHandlers,
+        ClearOperationRecordsEvent.ClearOperationRecordsHandler {
 
     public interface MyView extends View, HasUiHandlers<StatementUiHandlers> {
         void displayStatements(FilterValue filterValue);
+
+        void clear();
     }
 
     @Inject
@@ -31,6 +35,7 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
         super.onBind();
 
         addRegisteredHandler(FilterValueSelectedEvent.getType(), this);
+        addRegisteredHandler(ClearOperationRecordsEvent.getType(), this);
     }
 
     @Override
@@ -44,4 +49,8 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
         StatementSelectedEvent.fire(this, record);
     }
 
+    @Override
+    public void onClearOperationRecords(ClearOperationRecordsEvent event) {
+        getView().clear();
+    }
 }
