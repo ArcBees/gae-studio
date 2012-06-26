@@ -52,5 +52,6 @@ public class ProfilerToolbarPresenter extends PresenterWidget<ProfilerToolbarPre
     public void clearOperationRecords() {
         ClearOperationRecordsEvent.fire(this);
     }
+
 }
 

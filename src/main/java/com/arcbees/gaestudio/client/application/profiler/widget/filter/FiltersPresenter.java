@@ -82,4 +82,5 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
         setInSlot(TYPE_MethodFilter, methodFilterPresenter);
         setInSlot(TYPE_TypeFilter, typeFilterPresenter);
     }
+
 }

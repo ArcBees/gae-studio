@@ -78,4 +78,5 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
         this.totalObjectsRetrieved = 0;
         this.totalDataReceived = 0;
     }
+
 }

@@ -91,4 +91,5 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
                 return request;
         }
     }
+
 }

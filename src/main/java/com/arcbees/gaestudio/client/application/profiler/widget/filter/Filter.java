@@ -15,4 +15,5 @@ public enum Filter {
     public String getText() {
         return text;
     }
+
 }

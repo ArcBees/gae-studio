@@ -48,4 +48,5 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
             methods.addItem(classTreeItem);
         }
     }
+
 }
