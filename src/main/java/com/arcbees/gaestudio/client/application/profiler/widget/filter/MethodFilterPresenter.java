@@ -61,6 +61,11 @@ public class MethodFilterPresenter extends PresenterWidget<MethodFilterPresenter
     }
 
     @Override
+    public void clearOperationRecords() {
+        statementsByMethodAndClass.clear();
+    }
+
+    @Override
     public void onRequestClicked(FilterValue<Long> filterValue) {
         FilterValueSelectedEvent.fire(this, filterValue);
     }

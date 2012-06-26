@@ -8,4 +8,6 @@ public interface DbOperationRecordProcessor {
 
     public void displayNewDbOperationRecords();
 
+    public void clearOperationRecords();
+
 }

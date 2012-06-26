@@ -63,6 +63,13 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
     }
 
     @Override
+    public void clearOperationRecords() {
+        requestFilterPresenter.clearOperationRecords();
+        methodFilterPresenter.clearOperationRecords();
+        typeFilterPresenter.clearOperationRecords();
+    }
+
+    @Override
     public void changeFilter() {
         displayNewDbOperationRecords();
     }

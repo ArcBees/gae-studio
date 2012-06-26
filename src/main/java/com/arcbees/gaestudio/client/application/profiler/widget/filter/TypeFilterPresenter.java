@@ -62,6 +62,11 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
     }
 
     @Override
+    public void clearOperationRecords() {
+        statementsByType.clear();
+    }
+
+    @Override
     public void onRequestClicked(FilterValue<String> filterValue) {
         FilterValueSelectedEvent.fire(this, filterValue);
     }

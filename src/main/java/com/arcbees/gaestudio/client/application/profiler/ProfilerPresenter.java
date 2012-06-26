@@ -6,6 +6,7 @@ package com.arcbees.gaestudio.client.application.profiler;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
+import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
 import com.arcbees.gaestudio.client.application.profiler.widget.DetailsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerToolbarPresenter;
@@ -33,7 +34,8 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import java.util.ArrayList;
 
 public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, ProfilerPresenter.MyProxy> implements
-        RecordingStateChangedEvent.RecordingStateChangedHandler {
+        RecordingStateChangedEvent.RecordingStateChangedHandler,
+        ClearOperationRecordsEvent.ClearOperationRecordsHandler {
 
     public interface MyView extends View {
     }
@@ -88,6 +90,11 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     @Override
+    public void onClearOperationRecords(ClearOperationRecordsEvent event) {
+        clearOperationRecords();
+    }
+
+    @Override
     protected void revealInParent() {
         RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
     }
@@ -103,6 +110,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         setInSlot(TYPE_SetToolbarContent, profilerToolbarPresenter);
 
         addRegisteredHandler(RecordingStateChangedEvent.getType(), this);
+        addRegisteredHandler(ClearOperationRecordsEvent.getType(), this);
     }
 
     private void getNewDbOperationRecords() {
@@ -150,6 +158,12 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private void processDbOperationRecord(DbOperationRecordDTO record) {
         filterPresenter.processDbOperationRecord(record);
         statisticsPresenter.processDbOperationRecord(record);
+    }
+
+    private void clearOperationRecords() {
+        filterPresenter.clearOperationRecords();
+        statisticsPresenter.clearOperationRecords();
+        displayNewDbOperationRecords();
     }
 
     private Timer tick = new Timer() {
