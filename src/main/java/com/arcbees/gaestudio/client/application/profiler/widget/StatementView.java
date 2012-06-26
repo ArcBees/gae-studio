@@ -50,6 +50,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
         statements.setSelectionModel(selectionModel);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void displayStatements(FilterValue filterValue) {
         List statements = filterValue.getStatements();
