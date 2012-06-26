@@ -6,7 +6,7 @@ import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
-public class RequestFilterCell<T> extends AbstractCell<FilterValue<Long>> {
+public class RequestFilterCell extends AbstractCell<FilterValue<Long>> {
 
     private static final NumberFormat numberFormat = TimeNumberFormat.getFormat();
 

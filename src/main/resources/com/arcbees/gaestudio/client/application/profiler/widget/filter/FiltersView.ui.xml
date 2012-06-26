@@ -19,6 +19,7 @@
         <g:ListBox ui:field="filters" styleName="{style.filters}"/>
         <g:SimplePanel ui:field="request"/>
         <g:SimplePanel ui:field="method" visible="false"/>
+        <g:SimplePanel ui:field="type" visible="false"/>
     </g:HTMLPanel>
 
 </ui:UiBinder>

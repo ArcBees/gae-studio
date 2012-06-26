@@ -19,25 +19,30 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
     }
 
     public static final Object TYPE_SetRequestFilter = new Object();
-    public static final Object TYPE_ClassMethodFilter = new Object();
+    public static final Object TYPE_MethodFilter = new Object();
+    public static final Object TYPE_TypeFilter = new Object();
 
     private final RequestFilterPresenter requestFilterPresenter;
     private final MethodFilterPresenter methodFilterPresenter;
+    private final TypeFilterPresenter typeFilterPresenter;
 
     @Inject
     public FiltersPresenter(final EventBus eventBus, final MyView view,
                             final RequestFilterPresenter requestFilterPresenter,
-                            final MethodFilterPresenter methodFilterPresenter) {
+                            final MethodFilterPresenter methodFilterPresenter,
+                            final TypeFilterPresenter typeFilterPresenter) {
         super(eventBus, view);
 
         this.requestFilterPresenter = requestFilterPresenter;
         this.methodFilterPresenter = methodFilterPresenter;
+        this.typeFilterPresenter = typeFilterPresenter;
     }
 
     @Override
     public void processDbOperationRecord(DbOperationRecordDTO record) {
         requestFilterPresenter.processDbOperationRecord(record);
         methodFilterPresenter.processDbOperationRecord(record);
+        typeFilterPresenter.processDbOperationRecord(record);
     }
 
     @Override
@@ -50,6 +55,9 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
                 break;
             case METHOD:
                 methodFilterPresenter.displayNewDbOperationRecords();
+                break;
+            case TYPE:
+                typeFilterPresenter.displayNewDbOperationRecords();
                 break;
         }
     }
@@ -64,6 +72,7 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
         super.onBind();
 
         setInSlot(TYPE_SetRequestFilter, requestFilterPresenter);
-        setInSlot(TYPE_ClassMethodFilter, methodFilterPresenter);
+        setInSlot(TYPE_MethodFilter, methodFilterPresenter);
+        setInSlot(TYPE_TypeFilter, typeFilterPresenter);
     }
 }

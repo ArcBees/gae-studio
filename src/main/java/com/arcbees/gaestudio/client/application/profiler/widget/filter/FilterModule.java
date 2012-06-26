@@ -29,6 +29,12 @@ public class FilterModule extends AbstractPresenterModule {
         bind(new TypeLiteral<UiHandlersStrategy<MethodFilterUiHandlers>>() {}).to(
                 new TypeLiteral<ProviderUiHandlersStrategy<MethodFilterUiHandlers>>() {});
         bind(MethodFilterUiHandlers.class).to(MethodFilterPresenter.class);
+
+        // By type
+        bindSingletonPresenterWidget(TypeFilterPresenter.class, TypeFilterPresenter.MyView.class, TypeFilterView.class);
+        bind(new TypeLiteral<UiHandlersStrategy<TypeFilterUiHandlers>>() {}).to(
+                new TypeLiteral<ProviderUiHandlersStrategy<TypeFilterUiHandlers>>() {});
+        bind(TypeFilterUiHandlers.class).to(TypeFilterPresenter.class);
     }
 
 }

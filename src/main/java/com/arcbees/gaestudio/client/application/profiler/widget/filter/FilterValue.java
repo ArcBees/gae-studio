@@ -15,7 +15,7 @@ public class FilterValue<T> {
     private int executionTimeMs = 0;
     private final List<DbOperationRecordDTO> statements = new ArrayList<DbOperationRecordDTO>();
 
-    protected FilterValue(T key) {
+    public FilterValue(T key) {
         this.key = key;
     }
 

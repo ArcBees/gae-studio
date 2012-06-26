@@ -26,6 +26,8 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
     SimplePanel method;
     @UiField
     ListBox filters;
+    @UiField
+    SimplePanel type;
 
     private Filter currentlySelectedFilter = Filter.REQUEST;
 
@@ -56,14 +58,17 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
     public void setInSlot(Object slot, Widget content) {
         if (slot == FiltersPresenter.TYPE_SetRequestFilter) {
             request.setWidget(content);
-        } else if (slot == FiltersPresenter.TYPE_ClassMethodFilter) {
+        } else if (slot == FiltersPresenter.TYPE_MethodFilter) {
             method.setWidget(content);
+        } else if (slot == FiltersPresenter.TYPE_TypeFilter) {
+            type.setWidget(content);
         }
     }
 
     private void initFilters() {
         filters.addItem(Filter.REQUEST.getText(), Filter.REQUEST.toString());
         filters.addItem(Filter.METHOD.getText(), Filter.METHOD.toString());
+        filters.addItem(Filter.TYPE.getText(), Filter.TYPE.toString());
         filters.addChangeHandler(this);
     }
 
@@ -80,6 +85,8 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
         switch (filter) {
             case METHOD:
                 return method;
+            case TYPE:
+                return type;
             default:
                 return request;
         }

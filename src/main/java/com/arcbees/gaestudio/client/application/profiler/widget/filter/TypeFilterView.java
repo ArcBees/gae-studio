@@ -3,7 +3,7 @@ package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
-import com.arcbees.gaestudio.client.application.profiler.ui.RequestFilterCell;
+import com.arcbees.gaestudio.client.application.profiler.ui.TypeFilterCell;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellList;
@@ -14,35 +14,34 @@ import com.google.inject.Inject;
 
 import java.util.List;
 
-public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandlers> implements RequestFilterPresenter
+public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> implements TypeFilterPresenter
         .MyView {
 
-    public interface Binder extends UiBinder<Widget, RequestFilterView> {
+    public interface Binder extends UiBinder<Widget, TypeFilterView> {
     }
 
     @UiField(provided = true)
-    CellList<FilterValue<Long>> requests;
+    CellList<FilterValue<String>> requests;
 
     @UiField(provided = true)
     Resources resources;
 
-    private final SingleSelectionModel<FilterValue<Long>> selectionModel = new
-            SingleSelectionModel<FilterValue<Long>>();
+    private final SingleSelectionModel<FilterValue<String>> selectionModel =
+            new SingleSelectionModel<FilterValue<String>>();
 
     @Inject
-    public RequestFilterView(final Binder uiBinder, final Resources resources,
-                             final RequestFilterCell requestFilterCell,
-                             final UiHandlersStrategy<RequestFilterUiHandlers> uiHandlersStrategy) {
+    public TypeFilterView(final Binder uiBinder, final Resources resources, final TypeFilterCell typeFilterCell,
+                          final UiHandlersStrategy<TypeFilterUiHandlers> uiHandlersStrategy) {
         super(uiHandlersStrategy);
 
         this.resources = resources;
-        requests = new CellList<FilterValue<Long>>(requestFilterCell);
+        requests = new CellList<FilterValue<String>>(typeFilterCell);
         initWidget(uiBinder.createAndBindUi(this));
         initSelectionModel();
     }
 
     @Override
-    public void display(List<FilterValue<Long>> filterValues) {
+    public void display(List<FilterValue<String>> filterValues) {
         requests.setRowData(filterValues);
     }
 
@@ -50,7 +49,7 @@ public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandler
         selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
             @Override
             public void onSelectionChange(SelectionChangeEvent event) {
-                FilterValue<Long> filterValue = selectionModel.getSelectedObject();
+                FilterValue<String> filterValue = selectionModel.getSelectedObject();
                 getUiHandlers().onRequestClicked(filterValue);
             }
         });
