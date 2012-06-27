@@ -2,18 +2,30 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <ui:style>
-        .inline {
-            display: inline;
+
+        .panel {
+            padding: 0 10px 10px 10px;
         }
+
     </ui:style>
 
-    <g:HTMLPanel>
+    <g:HTMLPanel styleName="{style.panel}">
         <h3>Statistics</h3>
-        <p>Total Requests: <g:HTML ui:field="requestCount" styleName="{style.inline}" /></p>
-        <p>Total Statements: <g:HTML ui:field="statementCount" styleName="{style.inline}" /></p>
-        <p>Total Execution Time: <g:HTML ui:field="totalExecutionTime" styleName="{style.inline}" /></p>
-        <p>Total Objects Retrieved: <g:HTML ui:field="totalObjectsRetrieved" styleName="{style.inline}" /></p>
-        <p>Total Data Received: <g:HTML ui:field="totalDataReceived" styleName="{style.inline}" /></p>
+        <p>Total Requests:
+            <g:InlineHTML ui:field="requestCount"/>
+        </p>
+        <p>Total Statements:
+            <g:InlineHTML ui:field="statementCount"/>
+        </p>
+        <p>Total Execution Time:
+            <g:InlineHTML ui:field="totalExecutionTime"/>
+        </p>
+        <p>Total Objects Retrieved:
+            <g:InlineHTML ui:field="totalObjectsRetrieved"/>
+        </p>
+        <p>Total Data Received:
+            <g:InlineHTML ui:field="totalDataReceived"/>
+        </p>
     </g:HTMLPanel>
 
 </ui:UiBinder>

@@ -12,8 +12,8 @@ import com.google.inject.Inject;
 
 import java.util.Map;
 
-public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers> implements MethodFilterPresenter
-        .MyView {
+public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
+        implements MethodFilterPresenter.MyView {
 
     public interface Binder extends UiBinder<Widget, MethodFilterView> {
     }
@@ -37,10 +37,10 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
     public void display(Map<String, Map<String, FilterValue<String>>> statementsByMethodAndClass) {
         methods.clear();
 
-        for(Map.Entry<String, Map<String, FilterValue<String>>> classFilter : statementsByMethodAndClass.entrySet()){
+        for (Map.Entry<String, Map<String, FilterValue<String>>> classFilter : statementsByMethodAndClass.entrySet()) {
             TreeItem classTreeItem = new TreeItem(classFilter.getKey());
 
-            for(String methodName : classFilter.getValue().keySet()){
+            for (String methodName : classFilter.getValue().keySet()) {
                 TreeItem methodTreeItem = new TreeItem(methodName);
                 classTreeItem.addItem(methodTreeItem);
             }

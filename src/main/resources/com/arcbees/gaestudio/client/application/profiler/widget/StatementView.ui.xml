@@ -4,9 +4,19 @@
 
     <ui:with field="resources" type="com.arcbees.gaestudio.client.Resources"/>
 
+    <ui:style>
+
+        .statements {
+            margin-left: 10px;
+        }
+
+    </ui:style>
+
     <g:HTMLPanel>
-        <h3>Statements</h3>
-        <cellview:CellList ui:field="statements" styleName="{resources.styles.list}"/>
+        <div class="{resources.styles.tabs}">
+            <span>Statements</span>
+        </div>
+        <cellview:CellList ui:field="statements" styleName="{resources.styles.list} {style.statements}"/>
     </g:HTMLPanel>
 
 </ui:UiBinder>

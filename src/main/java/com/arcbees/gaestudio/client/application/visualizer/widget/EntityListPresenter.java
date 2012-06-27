@@ -35,7 +35,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         RefreshEntitiesEvent.RefreshEntitiesHandler, EntityDeletedEvent.EntityDeletedHandler {
 
     public interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
-        void setNewKind();
+        void setNewKind(String currentKind);
 
         void setTableDataProvider(AsyncDataProvider<ParsedEntity> dataProvider);
 
@@ -114,7 +114,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     private void loadKind() {
         setTotalCount();
-        getView().setNewKind();
+        getView().setNewKind(currentKind);
     }
 
     private void hideList() {

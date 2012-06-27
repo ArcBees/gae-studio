@@ -4,6 +4,7 @@
 
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
+import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.StatementSelectedEvent;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.inject.Inject;
@@ -12,10 +13,13 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView>
-        implements StatementSelectedEvent.StatementSelectedHandler {
+        implements StatementSelectedEvent.StatementSelectedHandler,
+        ClearOperationRecordsEvent.ClearOperationRecordsHandler {
 
     public interface MyView extends View {
         void displayStatementDetails(DbOperationRecordDTO record);
+
+        void clear();
     }
 
     @Inject
@@ -28,6 +32,7 @@ public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView>
         super.onBind();
 
         addRegisteredHandler(StatementSelectedEvent.getType(), this);
+        addRegisteredHandler(ClearOperationRecordsEvent.getType(), this);
     }
 
     @Override
@@ -37,4 +42,8 @@ public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView>
         getView().displayStatementDetails(record);
     }
 
+    @Override
+    public void onClearOperationRecords(ClearOperationRecordsEvent event) {
+        getView().clear();
+    }
 }

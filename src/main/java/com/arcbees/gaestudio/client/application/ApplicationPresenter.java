@@ -45,7 +45,7 @@ public class ApplicationPresenter extends
     protected void revealInParent() {
         RevealRootLayoutContentEvent.fire(this, this);
     }
-    
+
     @Override
     protected void onBind() {
         super.onBind();

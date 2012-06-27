@@ -3,22 +3,9 @@
 
     <ui:with field="resources" type="com.arcbees.gaestudio.client.Resources"/>
 
-    <ui:style>
-
-        .kinds {
-            float: left;
-        }
-
-    </ui:style>
-
     <g:HTMLPanel styleName="{resources.styles.toolbar}">
-        <g:SimplePanel ui:field="kinds" styleName="{style.kinds}"/>
-        <g:HTMLPanel ui:field="buttons" visible="false">
-            <g:Button ui:field="refresh">Refresh</g:Button>
-            <g:Button ui:field="create">Create</g:Button>
-            <g:Button ui:field="edit" enabled="false">Edit</g:Button>
-            <g:Button ui:field="delete" enabled="false">Delete</g:Button>
-        </g:HTMLPanel>
+        <g:SimplePanel ui:field="kinds" styleName="{resources.styles.toolbarButton}"/>
+        <g:HTMLPanel ui:field="buttons" visible="false"/>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 

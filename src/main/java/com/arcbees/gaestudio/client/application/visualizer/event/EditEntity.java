@@ -6,7 +6,7 @@ import com.gwtplatform.dispatch.annotation.Order;
 
 @GenEvent
 public class EditEntity {
-    
+
     @Order(1)
     ParsedEntity parsedEntity;
 

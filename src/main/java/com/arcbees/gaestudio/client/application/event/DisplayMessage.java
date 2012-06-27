@@ -6,7 +6,7 @@ import com.gwtplatform.dispatch.annotation.Order;
 
 @GenEvent
 public class DisplayMessage {
-    
+
     @Order(1)
     Message message;
 

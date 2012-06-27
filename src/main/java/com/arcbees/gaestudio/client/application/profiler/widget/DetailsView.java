@@ -1,6 +1,7 @@
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
 import com.arcbees.core.client.mvp.ViewImpl;
+import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.formatters.RecordFormatter;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDTO;
@@ -14,17 +15,21 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
 
     public interface Binder extends UiBinder<Widget, DetailsView> {
     }
-    
+
     @UiField
     HTML statement;
 
     @UiField
     HTML callLocation;
 
+    @UiField(provided = true)
+    Resources resources;
+
     private final RecordFormatter recordFormatter;
 
     @Inject
-    public DetailsView(final Binder uiBinder, final RecordFormatter recordFormatter) {
+    public DetailsView(final Binder uiBinder, final Resources resources, final RecordFormatter recordFormatter) {
+        this.resources = resources;
         initWidget(uiBinder.createAndBindUi(this));
         this.recordFormatter = recordFormatter;
     }
@@ -33,6 +38,12 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
     public void displayStatementDetails(DbOperationRecordDTO record) {
         statement.setHTML(recordFormatter.formatRecord(record));
         callLocation.setHTML(tempFormatCaller(record.getCallerStackTraceElement()));
+    }
+
+    @Override
+    public void clear() {
+        statement.setHTML("");
+        callLocation.setHTML("");
     }
 
     // TODO this is just a quick hack

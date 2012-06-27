@@ -6,26 +6,42 @@
 
     <ui:style>
 
-        .link {
-            padding-right: 4px;
+        .header {
+            border-bottom: 1px solid #45a0ec;
+            position: relative;
+            line-height: 43px;
         }
 
-        .header {
-            line-height: 30px;
-            border-bottom: 8px solid #D0E4F6;
+        .header img, .header a{
+            float: right;
         }
+
+        .header > a {
+            display: block;
+            padding: 0 20px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .logo {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
 
     </ui:style>
 
-    <g:HTMLPanel styleName="{style.header}">
-        <div class="{resources.styles.fright}">
-            <g:InlineHyperlink targetHistoryToken="{nameTokens.getVisualizer}" styleName="{style.link}">
-                Visualizer
-            </g:InlineHyperlink>
-            <g:InlineHyperlink targetHistoryToken="{nameTokens.getProfiler}" styleName="{style.link}">
-                Profiler
-            </g:InlineHyperlink>
-        </div>
+    <g:HTMLPanel styleName="{style.header} {resources.sprites.topmenuBg}">
+        <g:Image resource="{resources.logo}" styleName="{style.logo}"/>
+        <g:InlineHyperlink targetHistoryToken="{nameTokens.getVisualizer}" styleName="{resources.sprites.topmenuBgHover}">
+            Visualizer
+        </g:InlineHyperlink>
+        <g:Image resource="{resources.topmenuSeparator}"/>
+        <g:InlineHyperlink targetHistoryToken="{nameTokens.getProfiler}" styleName="{resources.sprites.topmenuBgHover}">
+            Profiler
+        </g:InlineHyperlink>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 

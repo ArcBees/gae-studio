@@ -14,6 +14,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -29,7 +30,8 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     @UiField(provided = true)
     CellList<DbOperationRecordDTO> statements;
 
-    private final SingleSelectionModel<DbOperationRecordDTO> selectionModel = new SingleSelectionModel<DbOperationRecordDTO>();
+    private final SingleSelectionModel<DbOperationRecordDTO> selectionModel = new
+            SingleSelectionModel<DbOperationRecordDTO>();
 
     @Inject
     public StatementView(final Binder uiBinder, final UiHandlersStrategy<StatementUiHandlers> uiHandlersStrategy,
@@ -57,6 +59,11 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
         Collections.sort(statements, new StatementIdComparator());
 
         this.statements.setRowData(statements);
+    }
+
+    @Override
+    public void clear() {
+        statements.setRowData(new ArrayList<DbOperationRecordDTO>());
     }
 
     private class StatementIdComparator implements Comparator<DbOperationRecordDTO> {

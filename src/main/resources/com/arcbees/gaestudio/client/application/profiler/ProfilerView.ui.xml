@@ -2,7 +2,7 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <g:DockLayoutPanel>
-        <g:north size="38">
+        <g:north size="30">
             <g:SimplePanel ui:field="toolbarPanel"/>
         </g:north>
         <g:center>

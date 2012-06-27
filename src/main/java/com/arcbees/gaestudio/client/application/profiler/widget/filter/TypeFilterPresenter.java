@@ -78,7 +78,7 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
             return PUT;
         } else if (record instanceof DeleteRecordDTO) {
             return DELETE;
-        }  else if (record instanceof QueryRecordDTO) {
+        } else if (record instanceof QueryRecordDTO) {
             return QUERY;
         } else {
             return UNKNOWN;

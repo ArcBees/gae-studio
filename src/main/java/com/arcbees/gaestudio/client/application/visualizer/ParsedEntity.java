@@ -13,25 +13,25 @@ public class ParsedEntity {
     private EntityDTO entityDTO;
     private JSONObject jsonObject;
 
-    public ParsedEntity(EntityDTO entityDTO){
+    public ParsedEntity(EntityDTO entityDTO) {
         this.entityDTO = new EntityDTO(entityDTO.getKey(), entityDTO.getJson());
 
         parseJson();
     }
 
-    public Set<String> propertyKeys(){
+    public Set<String> propertyKeys() {
         return getPropertyMap().keySet();
     }
 
-    public Boolean hasProperty(String key){
+    public Boolean hasProperty(String key) {
         return getPropertyMap().containsKey(key);
     }
 
-    public JSONValue getProperty(String key){
+    public JSONValue getProperty(String key) {
         return getPropertyMap().get(key);
     }
 
-    public JSONObject getPropertyMap(){
+    public JSONObject getPropertyMap() {
         return jsonObject.get("propertyMap").isObject();
     }
 

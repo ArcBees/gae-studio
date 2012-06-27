@@ -11,7 +11,7 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
 
     public interface Binder extends UiBinder<Widget, VisualizerView> {
     }
-    
+
     @UiField
     SimplePanel entityListPanel;
 
@@ -28,7 +28,7 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
         if (content != null) {
             if (slot == VisualizerPresenter.TYPE_SetEntityListPanelContent) {
                 entityListPanel.setWidget(content);
-            }  else if(slot == VisualizerPresenter.TYPE_SetToolbarContent){
+            } else if (slot == VisualizerPresenter.TYPE_SetToolbarContent) {
                 toolbar.setWidget(content);
             }
         }

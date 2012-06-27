@@ -43,7 +43,8 @@ public class MessageWidget extends Composite {
     };
 
     @Inject
-    public MessageWidget(final Binder binder, final MessageResources messageResources, @Assisted final Message message) {
+    public MessageWidget(final Binder binder, final MessageResources messageResources,
+                         @Assisted final Message message) {
         this.messageResources = messageResources;
         this.message = message;
 

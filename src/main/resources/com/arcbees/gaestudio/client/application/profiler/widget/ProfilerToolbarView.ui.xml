@@ -3,10 +3,6 @@
 
     <ui:with field="resources" type="com.arcbees.gaestudio.client.Resources"/>
 
-    <g:HTMLPanel styleName="{resources.styles.toolbar}">
-        <g:Button ui:field="record">Record</g:Button>
-        <g:Button ui:field="stop">Stop</g:Button>
-        <g:Button ui:field="clear">Clear</g:Button>
-    </g:HTMLPanel>
+    <g:HTMLPanel ui:field="buttons" styleName="{resources.styles.toolbar}"/>
 
 </ui:UiBinder>

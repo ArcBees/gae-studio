@@ -12,6 +12,7 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.Range;
@@ -39,6 +40,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     SimplePager pager;
     @UiField
     CellTable<ParsedEntity> entityTable;
+    @UiField
+    InlineLabel entityName;
 
     private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
     private final Set<String> currentProperties = new HashSet<String>();
@@ -67,10 +70,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void setNewKind() {
+    public void setNewKind(String currentKind) {
         panel.setVisible(true);
         removeAllPropertyColumns();
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
+        entityName.setText(currentKind);
     }
 
     @Override
