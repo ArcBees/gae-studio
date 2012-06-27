@@ -6,12 +6,13 @@ package com.arcbees.gaestudio.client.application.profiler;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
+import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
 import com.arcbees.gaestudio.client.application.profiler.widget.DetailsPresenter;
-import com.arcbees.gaestudio.client.application.profiler.widget.FilterPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerToolbarPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatementPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsPresenter;
+import com.arcbees.gaestudio.client.application.profiler.widget.filter.FiltersPresenter;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
@@ -33,7 +34,8 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import java.util.ArrayList;
 
 public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, ProfilerPresenter.MyProxy> implements
-        RecordingStateChangedEvent.RecordingStateChangedHandler {
+        RecordingStateChangedEvent.RecordingStateChangedHandler,
+        ClearOperationRecordsEvent.ClearOperationRecordsHandler {
 
     public interface MyView extends View {
     }
@@ -51,7 +53,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private static final int TICK_DELTA_MILLISEC = 1000;
 
     private final DispatchAsync dispatcher;
-    private final FilterPresenter filterPresenter;
+    private final FiltersPresenter filterPresenter;
     private final StatisticsPresenter statisticsPresenter;
     private final StatementPresenter statementPresenter;
     private final DetailsPresenter detailsPresenter;
@@ -62,7 +64,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
 
     @Inject
     public ProfilerPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                             final DispatchAsync dispatcher, final FilterPresenter filterPresenter,
+                             final DispatchAsync dispatcher, final FiltersPresenter filterPresenter,
                              final StatisticsPresenter statisticsPresenter,
                              final StatementPresenter statementPresenter,
                              final DetailsPresenter detailsPresenter,
@@ -88,6 +90,11 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     @Override
+    public void onClearOperationRecords(ClearOperationRecordsEvent event) {
+        clearOperationRecords();
+    }
+
+    @Override
     protected void revealInParent() {
         RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
     }
@@ -103,6 +110,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         setInSlot(TYPE_SetToolbarContent, profilerToolbarPresenter);
 
         addRegisteredHandler(RecordingStateChangedEvent.getType(), this);
+        addRegisteredHandler(ClearOperationRecordsEvent.getType(), this);
     }
 
     private void getNewDbOperationRecords() {
@@ -132,7 +140,6 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     // TODO properly handle any missing records
-    // TODO properly handle situations (such as resyncs) where the records come out of order
     private void processNewDbOperationRecords(ArrayList<DbOperationRecordDTO> records) {
         if (!records.isEmpty()) {
             for (DbOperationRecordDTO record : records) {
@@ -146,15 +153,17 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private void displayNewDbOperationRecords() {
         filterPresenter.displayNewDbOperationRecords();
         statisticsPresenter.displayNewDbOperationRecords();
-        statementPresenter.displayNewDbOperationRecords();
-        detailsPresenter.displayNewDbOperationRecords();
     }
 
     private void processDbOperationRecord(DbOperationRecordDTO record) {
         filterPresenter.processDbOperationRecord(record);
         statisticsPresenter.processDbOperationRecord(record);
-        statementPresenter.processDbOperationRecord(record);
-        detailsPresenter.processDbOperationRecord(record);
+    }
+
+    private void clearOperationRecords() {
+        filterPresenter.clearOperationRecords();
+        statisticsPresenter.clearOperationRecords();
+        displayNewDbOperationRecords();
     }
 
     private Timer tick = new Timer() {

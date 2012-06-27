@@ -4,6 +4,7 @@
 
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
+import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingResult;
@@ -45,6 +46,11 @@ public class ProfilerToolbarPresenter extends PresenterWidget<ProfilerToolbarPre
                 RecordingStateChangedEvent.fire(ProfilerToolbarPresenter.this, start, result.getCurrentRecordId());
             }
         });
+    }
+
+    @Override
+    public void clearOperationRecords() {
+        ClearOperationRecordsEvent.fire(this);
     }
 
 }

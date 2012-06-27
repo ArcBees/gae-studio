@@ -45,8 +45,8 @@ public class GetEntityKindsHandler
             // Actually, it doesn't really work well anywhere: in GAE statistics aren't updated often enough
             kinds = new ArrayList<String>();
             // TODO externalize this
-            kinds.add("Sprocket");
-            kinds.add("Complex");
+            kinds.add("Driver");
+            kinds.add("Car");
 //        }
 
         return new GetEntityKindsResult(kinds);

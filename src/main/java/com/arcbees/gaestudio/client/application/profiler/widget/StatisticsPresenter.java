@@ -19,13 +19,17 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
 
     public interface MyView extends View {
         void updateRequestCount(Integer requestCount);
+
         void updateStatementCount(Integer statementCount);
+
         void updateTotalExecutionTimeMs(Integer totalExecutionTimeMs);
+
         void updateTotalObjectsRetrieved(Integer totalObjectsRetrieved);
+
         void updateTotalDataReceived(Integer totalDataReceived);
     }
 
-    private final HashSet<Long> knownRequestIds;
+    private final HashSet<Long> knownRequestIds = new HashSet<Long>();
     private Integer statementCount;
     private Integer totalExecutionTimeMs;
     private Integer totalObjectsRetrieved;
@@ -35,23 +39,19 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
     public StatisticsPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
 
-        this.knownRequestIds = new HashSet<Long>();
-        this.statementCount = 0;
-        this.totalExecutionTimeMs = 0;
-        this.totalObjectsRetrieved = 0;
-        this.totalDataReceived = 0;
+        initStats();
     }
 
     @Override
     public void processDbOperationRecord(DbOperationRecordDTO record) {
         final long requestId = record.getRequestId();
-        
+
         knownRequestIds.add(requestId);
         statementCount++;
         totalExecutionTimeMs += record.getExecutionTimeMs();
-        
+
         if (record instanceof QueryRecordDTO) {
-            QueryRecordDTO queryRecord = (QueryRecordDTO)record;
+            QueryRecordDTO queryRecord = (QueryRecordDTO) record;
             totalObjectsRetrieved += queryRecord.getQueryResult().getResultSize();
             totalDataReceived += queryRecord.getQueryResult().getSerializedSize();
         }
@@ -65,4 +65,18 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
         getView().updateTotalObjectsRetrieved(totalObjectsRetrieved);
         getView().updateTotalDataReceived(totalDataReceived);
     }
+
+    @Override
+    public void clearOperationRecords() {
+        initStats();
+    }
+
+    private void initStats() {
+        knownRequestIds.clear();
+        this.statementCount = 0;
+        this.totalExecutionTimeMs = 0;
+        this.totalObjectsRetrieved = 0;
+        this.totalDataReceived = 0;
+    }
+
 }

@@ -4,9 +4,9 @@
 
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
-import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
-import com.arcbees.gaestudio.client.application.profiler.event.RequestSelectedEvent;
+import com.arcbees.gaestudio.client.application.profiler.event.FilterValueSelectedEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.StatementSelectedEvent;
+import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterValue;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -14,20 +14,12 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class StatementPresenter extends PresenterWidget<StatementPresenter.MyView>
-        implements DbOperationRecordProcessor, RequestSelectedEvent.RequestSelectedHandler, StatementUiHandlers {
+        implements FilterValueSelectedEvent.FilterValueSelectedHandler, StatementUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<StatementUiHandlers> {
-        Long getCurrentlyDisplayedRequestId();
-
-        void displayStatementsForRequest(Long requestId, ArrayList<DbOperationRecordDTO> statements);
+        void displayStatements(FilterValue filterValue);
     }
-
-    private final HashMap<Long, ArrayList<DbOperationRecordDTO>> statementsByRequestId =
-            new HashMap<Long, ArrayList<DbOperationRecordDTO>>();
 
     @Inject
     public StatementPresenter(final EventBus eventBus, final MyView view) {
@@ -37,36 +29,19 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
     @Override
     protected void onBind() {
         super.onBind();
-        addRegisteredHandler(RequestSelectedEvent.getType(), this);
+
+        addRegisteredHandler(FilterValueSelectedEvent.getType(), this);
     }
 
     @Override
-    public void processDbOperationRecord(DbOperationRecordDTO record) {
-        final Long requestId = record.getRequestId();
-        if (statementsByRequestId.containsKey(requestId)) {
-            statementsByRequestId.get(requestId).add(record);
-        } else {
-            ArrayList<DbOperationRecordDTO> list = new ArrayList<DbOperationRecordDTO>();
-            list.add(record);
-            statementsByRequestId.put(requestId, list);
-        }
+    public void onFilterValueSelected(FilterValueSelectedEvent event) {
+        FilterValue filterValue = event.getFilterValue();
+        getView().displayStatements(filterValue);
     }
 
     @Override
-    public void displayNewDbOperationRecords() {
-        Long requestId = getView().getCurrentlyDisplayedRequestId();
-        getView().displayStatementsForRequest(requestId, statementsByRequestId.get(requestId));
-    }
-
-    @Override
-    public void onRequestSelected(RequestSelectedEvent event) {
-        Long requestId = event.getRequestId();
-        getView().displayStatementsForRequest(requestId, statementsByRequestId.get(requestId));
-    }
-
-    @Override
-    public void onStatementClicked(Long statementId) {
-        getEventBus().fireEvent(new StatementSelectedEvent(statementId));
+    public void onStatementClicked(DbOperationRecordDTO record) {
+        StatementSelectedEvent.fire(this, record);
     }
 
 }

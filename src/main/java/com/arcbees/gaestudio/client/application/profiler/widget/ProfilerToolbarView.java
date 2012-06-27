@@ -55,6 +55,7 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
         this.isRecording = isRecording;
         record.setEnabled(!isRecording);
         stop.setEnabled(isRecording);
+        clear.setEnabled(!isRecording);
     }
 
     @UiHandler("record")
@@ -67,6 +68,11 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
     void onStopClicked(ClickEvent event) {
         isRecording = false;
         getUiHandlers().onToggleRecording(false);
+    }
+
+    @UiHandler("clear")
+    void onClearClicked(ClickEvent event){
+        getUiHandlers().clearOperationRecords();
     }
 
 }

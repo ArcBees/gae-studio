@@ -1,0 +1,25 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+    <ui:with field="resources" type="com.arcbees.gaestudio.client.Resources"/>
+
+    <ui:style>
+
+        .filters {
+            font-weight: bold;
+            font-size: 1.2em;
+            background-color: #D0E4F6;
+            padding: 2px;
+            margin-bottom: 2px;
+        }
+
+    </ui:style>
+
+    <g:HTMLPanel>
+        <g:ListBox ui:field="filters" styleName="{style.filters}"/>
+        <g:SimplePanel ui:field="request"/>
+        <g:SimplePanel ui:field="method" visible="false"/>
+        <g:SimplePanel ui:field="type" visible="false"/>
+    </g:HTMLPanel>
+
+</ui:UiBinder>
