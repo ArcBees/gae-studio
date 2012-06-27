@@ -4,6 +4,6 @@ import com.gwtplatform.mvp.client.UiHandlers;
 
 public interface MethodFilterUiHandlers extends UiHandlers {
 
-    void onRequestClicked(FilterValue<Long> filterValue);
+    void onMethodClicked(String className, String methodName);
 
 }

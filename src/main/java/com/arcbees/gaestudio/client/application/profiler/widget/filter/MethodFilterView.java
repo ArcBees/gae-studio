@@ -3,6 +3,8 @@ package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.Resources;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Tree;
@@ -31,6 +33,20 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
 
         this.resources = resources;
         initWidget(uiBinder.createAndBindUi(this));
+
+        methods.addSelectionHandler(new SelectionHandler<TreeItem>() {
+            @Override
+            public void onSelection(SelectionEvent<TreeItem> event) {
+                TreeItem selectedItem = event.getSelectedItem();
+
+                if(isLeaf(selectedItem)){
+                    String className = getClassName(selectedItem);
+                    String methodName = selectedItem.getText();
+
+                    getUiHandlers().onMethodClicked(className, methodName);
+                }
+            }
+        });
     }
 
     @Override
@@ -47,6 +63,16 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
 
             methods.addItem(classTreeItem);
         }
+    }
+
+    private boolean isLeaf(TreeItem treeItem) {
+        return (treeItem.getParentItem() != null);
+    }
+
+    private String getClassName(TreeItem treeItem) {
+        TreeItem parentItem = treeItem.getParentItem();
+
+        return parentItem.getText();
     }
 
 }
