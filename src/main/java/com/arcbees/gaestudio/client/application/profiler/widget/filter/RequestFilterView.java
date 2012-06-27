@@ -14,8 +14,8 @@ import com.google.inject.Inject;
 
 import java.util.List;
 
-public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandlers> implements RequestFilterPresenter
-        .MyView {
+public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandlers>
+        implements RequestFilterPresenter.MyView {
 
     public interface Binder extends UiBinder<Widget, RequestFilterView> {
     }

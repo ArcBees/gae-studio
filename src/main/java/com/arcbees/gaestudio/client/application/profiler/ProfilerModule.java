@@ -30,7 +30,7 @@ public class ProfilerModule extends AbstractPresenterModule {
 
         bind(new TypeLiteral<UiHandlersStrategy<StatementUiHandlers>>() {})
                 .to(new TypeLiteral<ProviderUiHandlersStrategy<StatementUiHandlers>>() {});
-        bind(new TypeLiteral<UiHandlersStrategy<ProfilerToolbarUiHandlers>>(){})
+        bind(new TypeLiteral<UiHandlersStrategy<ProfilerToolbarUiHandlers>>() {})
                 .to(new TypeLiteral<ProviderUiHandlersStrategy<ProfilerToolbarUiHandlers>>() {});
 
         bindSingletonPresenterWidget(DetailsPresenter.class, DetailsPresenter.MyView.class,

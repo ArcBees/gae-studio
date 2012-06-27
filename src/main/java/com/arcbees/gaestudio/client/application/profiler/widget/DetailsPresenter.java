@@ -13,7 +13,8 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView>
-        implements StatementSelectedEvent.StatementSelectedHandler, ClearOperationRecordsEvent.ClearOperationRecordsHandler {
+        implements StatementSelectedEvent.StatementSelectedHandler,
+        ClearOperationRecordsEvent.ClearOperationRecordsHandler {
 
     public interface MyView extends View {
         void displayStatementDetails(DbOperationRecordDTO record);

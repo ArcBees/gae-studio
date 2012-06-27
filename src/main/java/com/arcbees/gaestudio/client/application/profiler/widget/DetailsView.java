@@ -15,7 +15,7 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
 
     public interface Binder extends UiBinder<Widget, DetailsView> {
     }
-    
+
     @UiField
     HTML statement;
 

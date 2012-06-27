@@ -21,7 +21,7 @@ public class MethodFilterPresenter extends PresenterWidget<MethodFilterPresenter
         implements DbOperationRecordProcessor, MethodFilterUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<MethodFilterUiHandlers> {
-        void display(Map<String, Map<String,FilterValue<String>>> statementsByMethodAndClass);
+        void display(Map<String, Map<String, FilterValue<String>>> statementsByMethodAndClass);
     }
 
     private final Map<String, Map<String, FilterValue<String>>> statementsByMethodAndClass = new TreeMap<String,

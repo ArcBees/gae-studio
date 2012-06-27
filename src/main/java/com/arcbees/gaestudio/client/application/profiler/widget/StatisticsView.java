@@ -15,19 +15,19 @@ public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyVi
 
     public interface Binder extends UiBinder<Widget, StatisticsView> {
     }
-    
+
     @UiField
     HTML requestCount;
-    
+
     @UiField
     HTML statementCount;
-    
+
     @UiField
     HTML totalExecutionTime;
-    
+
     @UiField
     HTML totalObjectsRetrieved;
-    
+
     @UiField
     HTML totalDataReceived;
 
