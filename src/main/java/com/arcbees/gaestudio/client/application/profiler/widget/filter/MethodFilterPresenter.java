@@ -70,7 +70,7 @@ public class MethodFilterPresenter extends PresenterWidget<MethodFilterPresenter
         if (statementsByMethodAndClass.containsKey(className)) {
             FilterValue<String> filterValue = statementsByMethodAndClass.get(className).get(methodName);
 
-            if(filterValue != null){
+            if (filterValue != null) {
                 FilterValueSelectedEvent.fire(this, filterValue);
             }
         }

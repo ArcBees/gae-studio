@@ -39,7 +39,7 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
             public void onSelection(SelectionEvent<TreeItem> event) {
                 TreeItem selectedItem = event.getSelectedItem();
 
-                if(isLeaf(selectedItem)){
+                if (isLeaf(selectedItem)) {
                     String className = getClassName(selectedItem);
                     String methodName = selectedItem.getText();
 
