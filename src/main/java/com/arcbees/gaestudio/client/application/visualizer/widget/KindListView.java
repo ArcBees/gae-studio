@@ -28,7 +28,6 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
         initWidget(uiBinder.createAndBindUi(this));
 
         kinds.addChangeHandler(this);
-        kinds.addItem("Choose an entity...", "");
     }
 
     @Override
@@ -48,10 +47,8 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
     }
 
     private void clearEntityList() {
-        // Remove all kindw except the "Choose an entity" option
-        for (int i = 1; i < kinds.getItemCount(); i++) {
-            kinds.removeItem(i);
-        }
+        kinds.clear();
+        kinds.addItem("Choose an entity...", "");
     }
 
 }
