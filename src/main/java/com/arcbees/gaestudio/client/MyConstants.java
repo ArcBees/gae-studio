@@ -46,10 +46,10 @@ public interface MyConstants extends Constants {
 
     Integer bytes();
 
-    String kilobytesAbbreviation();
+    String kibibytesAbbreviation();
 
-    String megabytesAbbreviation();
+    String mebibytesAbbreviation();
 
-    String gigabytesAbbreviation();
+    String gibibytesAbbreviation();
 
 }

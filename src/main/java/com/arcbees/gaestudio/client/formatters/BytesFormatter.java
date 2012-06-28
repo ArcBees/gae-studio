@@ -7,9 +7,9 @@ import javax.inject.Inject;
 
 public class BytesFormatter {
 
-    private static final int ONE_KB = 1024;
-    private static final int ONE_MB = ONE_KB * 1024;
-    private static final int ONE_GB = ONE_MB * 1024;
+    private static final int ONE_KiB = 1024;
+    private static final int ONE_MiB = ONE_KiB * 1024;
+    private static final int ONE_GiB = ONE_MiB * 1024;
     private static final String SIZE_PATTERN = "0.0";
 
     private final MyConstants myConstants;
@@ -20,11 +20,11 @@ public class BytesFormatter {
     }
 
     public String format(Integer bytes) {
-        if (bytes < ONE_KB) {
+        if (bytes < ONE_KiB) {
             return showInBytes(bytes);
-        } else if (bytes < ONE_MB) {
+        } else if (bytes < ONE_MiB) {
             return showInKilobytes(bytes);
-        } else if (bytes < ONE_GB) {
+        } else if (bytes < ONE_GiB) {
             return showInMegabytes(bytes);
         } else {
             return showInGigabytes(bytes);
@@ -36,15 +36,15 @@ public class BytesFormatter {
     }
 
     private String showInKilobytes(Integer bytes) {
-        return convert(bytes, ONE_KB) + " " + myConstants.kilobytesAbbreviation();
+        return convert(bytes, ONE_KiB) + " " + myConstants.kibibytesAbbreviation();
     }
 
     private String showInMegabytes(Integer bytes) {
-        return convert(bytes, ONE_MB) + " " + myConstants.megabytesAbbreviation();
+        return convert(bytes, ONE_MiB) + " " + myConstants.mebibytesAbbreviation();
     }
 
     private String showInGigabytes(Integer bytes) {
-        return convert(bytes, ONE_GB) + " " + myConstants.gigabytesAbbreviation();
+        return convert(bytes, ONE_GiB) + " " + myConstants.gibibytesAbbreviation();
     }
 
     private String convert(Integer bytes, Integer factor) {
