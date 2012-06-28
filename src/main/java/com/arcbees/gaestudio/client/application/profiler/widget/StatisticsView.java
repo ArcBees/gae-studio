@@ -1,6 +1,7 @@
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
 import com.arcbees.core.client.mvp.ViewImpl;
+import com.arcbees.gaestudio.client.util.BytesFormatter;
 import com.arcbees.gaestudio.client.util.TimeNumberFormat;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -10,8 +11,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyView {
-
-    private final NumberFormat numberFormat = TimeNumberFormat.getFormat();
 
     public interface Binder extends UiBinder<Widget, StatisticsView> {
     }
@@ -31,8 +30,12 @@ public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyVi
     @UiField
     HTML totalDataReceived;
 
+    private final NumberFormat numberFormat = TimeNumberFormat.getFormat();
+    private final BytesFormatter bytesFormatter;
+
     @Inject
-    public StatisticsView(final Binder uiBinder) {
+    public StatisticsView(final Binder uiBinder, final BytesFormatter bytesFormatter) {
+        this.bytesFormatter = bytesFormatter;
         initWidget(uiBinder.createAndBindUi(this));
 
         updateRequestCount(0);
@@ -64,8 +67,7 @@ public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyVi
 
     @Override
     public void updateTotalDataReceived(Integer totalDataReceived) {
-        // TODO this would be nicer if the units changed as the data grows (b, Kb, Mb, etc.)
-        this.totalDataReceived.setHTML(totalDataReceived.toString() + " bytes");
+        this.totalDataReceived.setHTML(bytesFormatter.format(totalDataReceived));
     }
 
 }
