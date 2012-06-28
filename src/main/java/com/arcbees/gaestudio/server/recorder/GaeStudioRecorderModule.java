@@ -52,7 +52,7 @@ public class GaeStudioRecorderModule extends AbstractModule {
     }
 
     @Provides
-    @RequestScoped
+    @Singleton
     private MemcacheService memcacheServiceProvider() {
         return MemcacheServiceFactory.getMemcacheService("gae.visualizer");
     }
