@@ -66,8 +66,14 @@ public class MethodFilterPresenter extends PresenterWidget<MethodFilterPresenter
     }
 
     @Override
-    public void onRequestClicked(FilterValue<Long> filterValue) {
-        FilterValueSelectedEvent.fire(this, filterValue);
+    public void onMethodClicked(String className, String methodName) {
+        if (statementsByMethodAndClass.containsKey(className)) {
+            FilterValue<String> filterValue = statementsByMethodAndClass.get(className).get(methodName);
+
+            if (filterValue != null) {
+                FilterValueSelectedEvent.fire(this, filterValue);
+            }
+        }
     }
 
 }
