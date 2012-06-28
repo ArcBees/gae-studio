@@ -5,6 +5,7 @@ import com.arcbees.gaestudio.client.application.ApplicationModule;
 import com.arcbees.gaestudio.client.place.ClientPlaceManager;
 import com.arcbees.gaestudio.client.place.DefaultPlace;
 import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.client.formatters.BytesFormatter;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import com.gwtplatform.mvp.client.gin.DefaultModule;
 
@@ -20,6 +21,7 @@ public class ClientModule extends AbstractPresenterModule {
         bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.profiler);
 
         bind(Resources.class).in(Singleton.class);
+        bind(BytesFormatter.class).in(Singleton.class);
     }
 
 }

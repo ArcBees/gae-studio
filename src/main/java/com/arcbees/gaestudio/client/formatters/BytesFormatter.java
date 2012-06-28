@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.client.util;
+package com.arcbees.gaestudio.client.formatters;
 
 import com.google.gwt.i18n.client.NumberFormat;
 
