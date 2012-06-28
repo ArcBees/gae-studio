@@ -44,7 +44,7 @@ public interface MyConstants extends Constants {
 
     String delete();
 
-    Integer bytes();
+    String bytes();
 
     String kibibytesAbbreviation();
 
