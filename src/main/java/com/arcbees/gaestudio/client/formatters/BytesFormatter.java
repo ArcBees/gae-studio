@@ -37,7 +37,7 @@ public class BytesFormatter {
         return convert(bytes, ONE_GB) + " Gb";
     }
 
-    private String convert(Integer bytes, Integer factor){
+    private String convert(Integer bytes, Integer factor) {
         NumberFormat formatter = NumberFormat.getFormat(SIZE_PATTERN);
         Double converted = (double) bytes / factor;
 
