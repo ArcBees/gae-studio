@@ -42,4 +42,12 @@ public interface MyConstants extends Constants {
     String edit();
 
     String delete();
+
+    Integer bytes();
+
+    String kilobytesAbbreviation();
+
+    String megabytesAbbreviation();
+
+    String gigabytesAbbreviation();
 }
