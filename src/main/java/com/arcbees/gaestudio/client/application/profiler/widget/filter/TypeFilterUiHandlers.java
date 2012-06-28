@@ -4,6 +4,6 @@ import com.gwtplatform.mvp.client.UiHandlers;
 
 public interface TypeFilterUiHandlers extends UiHandlers {
 
-    void onRequestClicked(FilterValue<String> filterValue);
+    void onRequestClicked(FilterValue<OperationType> filterValue);
 
 }

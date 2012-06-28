@@ -4,6 +4,7 @@
 
 package com.arcbees.gaestudio.client.application.profiler;
 
+import com.arcbees.gaestudio.client.MyConstants;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
@@ -55,6 +56,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private final DispatchAsync dispatcher;
     private final FiltersPresenter filterPresenter;
     private final StatisticsPresenter statisticsPresenter;
+    private final MyConstants myConstants;
     private final StatementPresenter statementPresenter;
     private final DetailsPresenter detailsPresenter;
     private final ProfilerToolbarPresenter profilerToolbarPresenter;
@@ -65,7 +67,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     @Inject
     public ProfilerPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
                              final DispatchAsync dispatcher, final FiltersPresenter filterPresenter,
-                             final StatisticsPresenter statisticsPresenter,
+                             final StatisticsPresenter statisticsPresenter, final MyConstants myConstants,
                              final StatementPresenter statementPresenter,
                              final DetailsPresenter detailsPresenter,
                              final ProfilerToolbarPresenter profilerToolbarPresenter) {
@@ -74,6 +76,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         this.dispatcher = dispatcher;
         this.filterPresenter = filterPresenter;
         this.statisticsPresenter = statisticsPresenter;
+        this.myConstants = myConstants;
         this.statementPresenter = statementPresenter;
         this.detailsPresenter = detailsPresenter;
         this.profilerToolbarPresenter = profilerToolbarPresenter;
@@ -134,7 +137,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     private void onGetNewDbOperationRecordsFailed() {
-        Message message = new Message("Error while fetching new records.", MessageStyle.ERROR);
+        Message message = new Message(myConstants.errorWhileGettingNewDbOperationRecords(), MessageStyle.ERROR);
         DisplayMessageEvent.fire(this, message);
         isProcessing = false;
     }

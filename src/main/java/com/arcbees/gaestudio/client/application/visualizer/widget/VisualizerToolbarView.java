@@ -2,6 +2,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
+import com.arcbees.gaestudio.client.MyConstants;
 import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
@@ -21,12 +22,13 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
     @UiField(provided = true)
     Resources resources;
-    private final UiFactory uiFactory;
     @UiField
     SimplePanel kinds;
     @UiField
     HTMLPanel buttons;
 
+    private final UiFactory uiFactory;
+    private final MyConstants myConstants;
     private final ToolbarButton refresh;
     private final ToolbarButton create;
     private final ToolbarButton edit;
@@ -34,11 +36,13 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
     @Inject
     public VisualizerToolbarView(final Binder uiBinder, final Resources resources, final UiFactory uiFactory,
-                                 final UiHandlersStrategy<VisualizerToolbarUiHandlers> uiHandlersStrategy) {
+                                 final UiHandlersStrategy<VisualizerToolbarUiHandlers> uiHandlersStrategy,
+                                 final MyConstants myConstants) {
         super(uiHandlersStrategy);
 
         this.resources = resources;
         this.uiFactory = uiFactory;
+        this.myConstants = myConstants;
         initWidget(uiBinder.createAndBindUi(this));
 
         refresh = createRefreshButton();
@@ -81,7 +85,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
 
     private ToolbarButton createRefreshButton() {
-        return uiFactory.createToolbarButton("Refresh", resources.refresh(),
+        return uiFactory.createToolbarButton(myConstants.refresh(), resources.refresh(),
                 new ToolbarButtonCallback() {
                     @Override
                     public void onClicked() {
@@ -92,7 +96,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
 
     private ToolbarButton createCreateButton() {
-        return uiFactory.createToolbarButton("Create", resources.create(),
+        return uiFactory.createToolbarButton(myConstants.create(), resources.create(),
                 new ToolbarButtonCallback() {
                     @Override
                     public void onClicked() {
@@ -103,7 +107,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
 
     private ToolbarButton createEditButton() {
-        return uiFactory.createToolbarButton("Edit", resources.edit(),
+        return uiFactory.createToolbarButton(myConstants.edit(), resources.edit(),
                 new ToolbarButtonCallback() {
                     @Override
                     public void onClicked() {
@@ -114,7 +118,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
 
     private ToolbarButton createDeleteButton() {
-        return uiFactory.createToolbarButton("Delete", resources.delete(),
+        return uiFactory.createToolbarButton(myConstants.delete(), resources.delete(),
                 new ToolbarButtonCallback() {
                     @Override
                     public void onClicked() {

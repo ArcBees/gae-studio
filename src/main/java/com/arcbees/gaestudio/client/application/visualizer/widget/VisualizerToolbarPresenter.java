@@ -4,6 +4,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import com.arcbees.gaestudio.client.MyConstants;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent;
@@ -43,16 +44,18 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
 
     private final DispatchAsync dispatcher;
     private final KindListPresenter kindListPresenter;
+    private final MyConstants myConstants;
     private String currentKind = "";
     private ParsedEntity currentParsedEntity;
 
     @Inject
     public VisualizerToolbarPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher,
-                                      final KindListPresenter kindListPresenter) {
+                                      final KindListPresenter kindListPresenter, final MyConstants myConstants) {
         super(eventBus, view);
 
         this.dispatcher = dispatcher;
         this.kindListPresenter = kindListPresenter;
+        this.myConstants = myConstants;
     }
 
     @Override
@@ -67,7 +70,7 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
                     () {
                 @Override
                 public void onFailure(Throwable caught) {
-                    Message message = new Message("Unable to generate empty json", MessageStyle.ERROR);
+                    Message message = new Message(myConstants.errorUnableToGenerateEmptyJson(), MessageStyle.ERROR);
                     DisplayMessageEvent.fire(VisualizerToolbarPresenter.this, message);
                 }
 
@@ -99,7 +102,7 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
 
                 @Override
                 public void onFailure(Throwable caught) {
-                    Message message = new Message("Error while trying to delete the entity", MessageStyle.ERROR);
+                    Message message = new Message(myConstants.errorEntityDelete(), MessageStyle.ERROR);
                     DisplayMessageEvent.fire(VisualizerToolbarPresenter.this, message);
                 }
             });
@@ -135,7 +138,7 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     }
 
     private void onEntityDeletedSuccess(EntityDTO entityDTO) {
-        Message message = new Message("Entity deleted", MessageStyle.SUCCESS);
+        Message message = new Message(myConstants.successEntityDelete(), MessageStyle.SUCCESS);
         DisplayMessageEvent.fire(this, message);
         EntityDeletedEvent.fire(this, entityDTO);
     }

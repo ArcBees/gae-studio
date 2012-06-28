@@ -2,6 +2,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
+import com.arcbees.gaestudio.client.MyConstants;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -21,9 +22,14 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
     @UiField
     ListBox kinds;
 
+    private final MyConstants myConstants;
+
     @Inject
-    public KindListView(final Binder uiBinder, final UiHandlersStrategy<KindListUiHandlers> uiHandlersStrategy) {
+    public KindListView(final Binder uiBinder, final UiHandlersStrategy<KindListUiHandlers> uiHandlersStrategy,
+                        final MyConstants myConstants) {
         super(uiHandlersStrategy);
+
+        this.myConstants = myConstants;
 
         initWidget(uiBinder.createAndBindUi(this));
 
@@ -48,7 +54,7 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
 
     private void clearEntityList() {
         kinds.clear();
-        kinds.addItem("Choose an entity...", "");
+        kinds.addItem(myConstants.chooseAnEntity(), "");
     }
 
 }

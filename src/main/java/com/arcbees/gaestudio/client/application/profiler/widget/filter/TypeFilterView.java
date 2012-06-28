@@ -21,13 +21,13 @@ public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> imp
     }
 
     @UiField(provided = true)
-    CellList<FilterValue<String>> requests;
+    CellList<FilterValue<OperationType>> requests;
 
     @UiField(provided = true)
     Resources resources;
 
-    private final SingleSelectionModel<FilterValue<String>> selectionModel =
-            new SingleSelectionModel<FilterValue<String>>();
+    private final SingleSelectionModel<FilterValue<OperationType>> selectionModel =
+            new SingleSelectionModel<FilterValue<OperationType>>();
 
     @Inject
     public TypeFilterView(final Binder uiBinder, final Resources resources, final TypeFilterCell typeFilterCell,
@@ -35,13 +35,13 @@ public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> imp
         super(uiHandlersStrategy);
 
         this.resources = resources;
-        requests = new CellList<FilterValue<String>>(typeFilterCell);
+        requests = new CellList<FilterValue<OperationType>>(typeFilterCell);
         initWidget(uiBinder.createAndBindUi(this));
         initSelectionModel();
     }
 
     @Override
-    public void display(List<FilterValue<String>> filterValues) {
+    public void display(List<FilterValue<OperationType>> filterValues) {
         requests.setRowData(filterValues);
     }
 
@@ -49,7 +49,7 @@ public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> imp
         selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
             @Override
             public void onSelectionChange(SelectionChangeEvent event) {
-                FilterValue<String> filterValue = selectionModel.getSelectedObject();
+                FilterValue<OperationType> filterValue = selectionModel.getSelectedObject();
                 getUiHandlers().onRequestClicked(filterValue);
             }
         });
