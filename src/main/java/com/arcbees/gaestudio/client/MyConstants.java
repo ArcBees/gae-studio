@@ -3,6 +3,7 @@ package com.arcbees.gaestudio.client;
 import com.google.gwt.i18n.client.Constants;
 
 public interface MyConstants extends Constants {
+
     String filterByRequest();
 
     String filterByMethod();
@@ -50,4 +51,5 @@ public interface MyConstants extends Constants {
     String megabytesAbbreviation();
 
     String gigabytesAbbreviation();
+
 }
