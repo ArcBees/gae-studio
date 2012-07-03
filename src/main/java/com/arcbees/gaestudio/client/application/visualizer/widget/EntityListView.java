@@ -3,7 +3,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.application.visualizer.widget.ui.PropertyColumn;
+import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDTO;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -43,12 +43,16 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiField
     InlineLabel entityName;
 
+    private final VisualizerUiFactory visualizerUiFactory;
     private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
     private final Set<String> currentProperties = new HashSet<String>();
 
     @Inject
-    public EntityListView(final Binder uiBinder, final UiHandlersStrategy<EntityListUiHandlers> uiHandlersStrategy) {
+    public EntityListView(final Binder uiBinder, final UiHandlersStrategy<EntityListUiHandlers> uiHandlersStrategy,
+                          final VisualizerUiFactory visualizerUiFactory) {
         super(uiHandlersStrategy);
+
+        this.visualizerUiFactory = visualizerUiFactory;
 
         initWidget(uiBinder.createAndBindUi(this));
 
@@ -91,7 +95,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         for (String property : properties) {
             if (!currentProperties.contains(property)) {
-                entityTable.addColumn(new PropertyColumn(property), property);
+                entityTable.addColumn(visualizerUiFactory.createPropertyColumn(property), property);
                 currentProperties.add(property);
             }
         }

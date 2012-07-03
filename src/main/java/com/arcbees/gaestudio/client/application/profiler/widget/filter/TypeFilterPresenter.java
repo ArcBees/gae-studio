@@ -26,16 +26,11 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
         implements DbOperationRecordProcessor, TypeFilterUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<TypeFilterUiHandlers> {
-        void display(List<FilterValue<String>> filterValues);
+        void display(List<FilterValue<OperationType>> filterValues);
     }
 
-    private static final String GET = "Get";
-    private static final String PUT = "Put";
-    private static final String DELETE = "Delete";
-    private static final String UNKNOWN = "Unknown";
-    private static final String QUERY = "Query";
-
-    private final Map<String, FilterValue<String>> statementsByType = new TreeMap<String, FilterValue<String>>();
+    private final Map<OperationType, FilterValue<OperationType>> statementsByType =
+            new TreeMap<OperationType, FilterValue<OperationType>>();
 
     @Inject
     public TypeFilterPresenter(final EventBus eventBus, final MyView view) {
@@ -44,12 +39,12 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
 
     @Override
     public void processDbOperationRecord(DbOperationRecordDTO record) {
-        String type = getType(record);
+        OperationType type = getType(record);
 
-        FilterValue<String> filterValue = statementsByType.get(type);
+        FilterValue<OperationType> filterValue = statementsByType.get(type);
 
         if (filterValue == null) {
-            filterValue = new FilterValue<String>(type);
+            filterValue = new FilterValue<OperationType>(type);
             statementsByType.put(type, filterValue);
         }
 
@@ -58,7 +53,7 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
 
     @Override
     public void displayNewDbOperationRecords() {
-        getView().display(new ArrayList<FilterValue<String>>(statementsByType.values()));
+        getView().display(new ArrayList<FilterValue<OperationType>>(statementsByType.values()));
     }
 
     @Override
@@ -67,21 +62,21 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
     }
 
     @Override
-    public void onRequestClicked(FilterValue<String> filterValue) {
+    public void onRequestClicked(FilterValue<OperationType> filterValue) {
         FilterValueSelectedEvent.fire(this, filterValue);
     }
 
-    private String getType(DbOperationRecordDTO record) {
+    private OperationType getType(DbOperationRecordDTO record) {
         if (record instanceof GetRecordDTO) {
-            return GET;
+            return OperationType.GET;
         } else if (record instanceof PutRecordDTO) {
-            return PUT;
+            return OperationType.PUT;
         } else if (record instanceof DeleteRecordDTO) {
-            return DELETE;
+            return OperationType.DELETE;
         } else if (record instanceof QueryRecordDTO) {
-            return QUERY;
+            return OperationType.QUERY;
         } else {
-            return UNKNOWN;
+            return OperationType.UNKNOWN;
         }
     }
 

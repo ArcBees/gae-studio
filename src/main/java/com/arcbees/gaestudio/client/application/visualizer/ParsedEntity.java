@@ -10,6 +10,8 @@ import java.util.Set;
 
 public class ParsedEntity {
 
+    private static final String PROPERTY_MAP = "propertyMap";
+
     private EntityDTO entityDTO;
     private JSONObject jsonObject;
 
@@ -32,7 +34,7 @@ public class ParsedEntity {
     }
 
     public JSONObject getPropertyMap() {
-        return jsonObject.get("propertyMap").isObject();
+        return jsonObject.get(PROPERTY_MAP).isObject();
     }
 
     public void setEntityDTO(EntityDTO entityDTO) {

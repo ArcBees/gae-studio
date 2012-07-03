@@ -2,6 +2,7 @@ package com.arcbees.gaestudio.client.application.profiler.widget;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
+import com.arcbees.gaestudio.client.MyConstants;
 import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
@@ -27,6 +28,7 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
     HTMLPanel buttons;
 
     private final UiFactory uiFactory;
+    private final MyConstants myConstants;
     private final ToolbarButton record;
     private final ToolbarButton stop;
     private final ToolbarButton clear;
@@ -34,11 +36,13 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
 
     @Inject
     public ProfilerToolbarView(final Binder uiBinder, final Resources resources, final UiFactory uiFactory,
-                               final UiHandlersStrategy<ProfilerToolbarUiHandlers> uiHandlersStrategy) {
+                               final UiHandlersStrategy<ProfilerToolbarUiHandlers> uiHandlersStrategy,
+                               final MyConstants myConstants) {
         super(uiHandlersStrategy);
 
         this.resources = resources;
         this.uiFactory = uiFactory;
+        this.myConstants = myConstants;
         initWidget(uiBinder.createAndBindUi(this));
 
         stopRecordindWhenWindowIsClosed();
@@ -66,7 +70,7 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
     }
 
     private ToolbarButton createRecordButton() {
-        return uiFactory.createToolbarButton("Record", resources.record(), new ToolbarButtonCallback() {
+        return uiFactory.createToolbarButton(myConstants.record(), resources.record(), new ToolbarButtonCallback() {
             @Override
             public void onClicked() {
                 isRecording = true;
@@ -76,7 +80,7 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
     }
 
     private ToolbarButton createStopButton() {
-        return uiFactory.createToolbarButton("Stop", resources.stop(), new ToolbarButtonCallback() {
+        return uiFactory.createToolbarButton(myConstants.stop(), resources.stop(), new ToolbarButtonCallback() {
             @Override
             public void onClicked() {
                 isRecording = false;
@@ -86,7 +90,7 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
     }
 
     private ToolbarButton createClearButton() {
-        return uiFactory.createToolbarButton("Clear", resources.delete(), new ToolbarButtonCallback() {
+        return uiFactory.createToolbarButton(myConstants.clear(), resources.delete(), new ToolbarButtonCallback() {
             @Override
             public void onClicked() {
                 getUiHandlers().clearOperationRecords();

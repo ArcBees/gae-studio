@@ -2,6 +2,7 @@ package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
 import com.arcbees.core.client.mvp.ViewWithUiHandlers;
 import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
+import com.arcbees.gaestudio.client.MyConstants;
 import com.arcbees.gaestudio.client.Resources;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -29,14 +30,16 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
     @UiField
     SimplePanel type;
 
+    private final MyConstants myConstants;
     private Filter currentlySelectedFilter = Filter.REQUEST;
 
     @Inject
-    public FiltersView(final Binder uiBinder, final Resources resources,
+    public FiltersView(final Binder uiBinder, final Resources resources, final MyConstants myConstants,
                        final UiHandlersStrategy<FiltersUiHandlers> uiHandlersStrategy) {
         super(uiHandlersStrategy);
 
         this.resources = resources;
+        this.myConstants = myConstants;
 
         initWidget(uiBinder.createAndBindUi(this));
         initFilters();
@@ -66,9 +69,9 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
     }
 
     private void initFilters() {
-        filters.addItem(Filter.REQUEST.getText(), Filter.REQUEST.toString());
-        filters.addItem(Filter.METHOD.getText(), Filter.METHOD.toString());
-        filters.addItem(Filter.TYPE.getText(), Filter.TYPE.toString());
+        filters.addItem(myConstants.filterByRequest(), Filter.REQUEST.toString());
+        filters.addItem(myConstants.filterByMethod(), Filter.METHOD.toString());
+        filters.addItem(myConstants.filterByType(), Filter.TYPE.toString());
         filters.addChangeHandler(this);
     }
 
