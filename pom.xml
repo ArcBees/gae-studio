@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.arcbees.gaestudio</groupId>
@@ -10,52 +10,60 @@
     <name>GAE Studio</name>
 
     <properties>
-        <target.jdk>1.6</target.jdk>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <gae.version>1.6.5</gae.version>
-        <gwt.version>2.4.0</gwt.version>
-        <gwt-maven-plugin.version>2.4.0</gwt-maven-plugin.version>
-        <arcbees-core.version>1.0-SNAPSHOT</arcbees-core.version>
-        <gwtp.version>0.7</gwtp.version>
-        <guice.version>3.0</guice.version>
+        <!-- client -->
+        <gwt.version>2.5.0</gwt.version>
+        <gwtp.version>1.0-RC-1</gwtp.version>
+        <gwtquery-version>1.1.0</gwtquery-version>
         <gin.version>1.5.0</gin.version>
-        <objectify.version>3.1</objectify.version>
+
+        <!-- server -->
+        <gae.version>1.7.4</gae.version>
+        <servlet-api.version>2.5</servlet-api.version>
+        <guava.version>11.0.1</guava.version>
+        <gson.version>2.1</gson.version>
+        <modelmapper.version>0.3.4</modelmapper.version>
+        <guice.version>3.0</guice.version>
+        <objectify.version>4.0b1</objectify.version>
         <junit.version>4.10</junit.version>
         <jukito.version>1.1</jukito.version>
+
+        <!-- maven -->
+        <gwt-maven-plugin.version>2.5.0</gwt-maven-plugin.version>
         <maven-surefire-plugin.version>2.6</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
         <maven-processor-plugin.version>2.0.5</maven-processor-plugin.version>
         <maven-resources-plugin.version>2.5</maven-resources-plugin.version>
         <maven-war-plugin.version>2.1.1</maven-war-plugin.version>
-        <maven-gae-plugin.version>0.9.2</maven-gae-plugin.version>
-        <servlet-api.version>2.5</servlet-api.version>
-        <guava.version>11.0.1</guava.version>
-        <gson.version>2.1</gson.version>
-        <modelmapper.version>0.3.4</modelmapper.version>
-        <gwtquery-version>1.1.0</gwtquery-version>
+        <maven-gae-plugin.version>0.9.5</maven-gae-plugin.version>
+
+        <target.jdk>1.6</target.jdk>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-        <gae.home>${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
+        <gae.home>
+            ${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}
+        </gae.home>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>sonatype.snapshots</id>
-            <name>Sonatype snapshot repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-            <snapshots>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>objectify-appengine</id>
-            <url>http://objectify-appengine.googlecode.com/svn/maven</url>
-        </repository>
-    </repositories>
-
     <build>
+        <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/*GwtTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
@@ -72,31 +80,11 @@
                     <extraJvmArgs>-Xmx512m -Xss2M</extraJvmArgs>
 
                     <compileReport>true</compileReport>
-
-                    <!-- UNCOMMENT THESE TO TURN ON INTERNATIONALIZATION
-                    <i18nConstantsBundles>
-                        <i18nConstantsBundle>com.arcbees.gaestudio.client.MyConstants</i18nConstantsBundle>
-                    </i18nConstantsBundles>
-                    <i18nMessagesBundles>
-                        <i18nMessagesBundle>com.arcbees.gaestudio.client.MyMessages</i18nMessagesBundle>
-                    </i18nMessagesBundles>
-                    -->
                 </configuration>
                 <executions>
                     <execution>
-                        <id>generate-sources</id>
-                        <phase>generate-sources</phase>
                         <goals>
-                            <!-- UNCOMMENT THIS TO TURN ON INTERNATIONALIZATION
-                            <goal>i18n</goal>
-                            -->
-                            <goal>resources</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>prepare-package</id>
-                        <phase>prepare-package</phase>
-                        <goals>
+                            <goal>test</goal>
                             <goal>compile</goal>
                         </goals>
                     </execution>
@@ -111,7 +99,6 @@
                     <source>${target.jdk}</source>
                     <target>${target.jdk}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
-                    <!-- Disable annotation processors during normal compilation -->
                     <proc>none</proc>
                 </configuration>
             </plugin>
@@ -179,21 +166,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                        <include>**/*TestCase.java</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/*GwtTest.java</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>net.kindleit</groupId>
                 <artifactId>maven-gae-plugin</artifactId>
                 <version>${maven-gae-plugin.version}</version>
@@ -203,7 +175,7 @@
                 <executions>
                     <execution>
                         <id>install-server-jar</id>
-                        <phase>validate</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>unpack</goal>
                         </goals>
@@ -217,8 +189,6 @@
                 </executions>
             </plugin>
         </plugins>
-
-        <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
     </build>
 
     <dependencies>
@@ -237,12 +207,6 @@
         </dependency>
 
         <!-- GWT-Platform dependencies -->
-        <dependency>
-            <groupId>com.arcbees.core</groupId>
-            <artifactId>arcbees-core</artifactId>
-            <version>${arcbees-core.version}</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>com.gwtplatform</groupId>
             <artifactId>gwtp-mvp-client</artifactId>
