@@ -1,6 +1,5 @@
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
-import com.arcbees.core.client.mvp.ViewImpl;
 import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.formatters.RecordFormatter;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
@@ -10,6 +9,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewImpl;
 
 public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
 
@@ -30,7 +30,9 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
     @Inject
     public DetailsView(final Binder uiBinder, final Resources resources, final RecordFormatter recordFormatter) {
         this.resources = resources;
+
         initWidget(uiBinder.createAndBindUi(this));
+
         this.recordFormatter = recordFormatter;
     }
 

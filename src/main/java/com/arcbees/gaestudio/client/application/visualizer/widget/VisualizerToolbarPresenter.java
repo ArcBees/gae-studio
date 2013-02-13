@@ -52,6 +52,8 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     public VisualizerToolbarPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher,
                                       final KindListPresenter kindListPresenter, final MyConstants myConstants) {
         super(eventBus, view);
+        
+        getView().setUiHandlers(this);
 
         this.dispatcher = dispatcher;
         this.kindListPresenter = kindListPresenter;

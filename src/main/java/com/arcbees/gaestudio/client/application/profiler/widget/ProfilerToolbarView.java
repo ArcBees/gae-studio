@@ -1,7 +1,5 @@
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
-import com.arcbees.core.client.mvp.ViewWithUiHandlers;
-import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.MyConstants;
 import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
@@ -15,6 +13,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHandlers> implements
         ProfilerToolbarPresenter.MyView {
@@ -36,13 +35,11 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
 
     @Inject
     public ProfilerToolbarView(final Binder uiBinder, final Resources resources, final UiFactory uiFactory,
-                               final UiHandlersStrategy<ProfilerToolbarUiHandlers> uiHandlersStrategy,
-                               final MyConstants myConstants) {
-        super(uiHandlersStrategy);
-
+            final MyConstants myConstants) {
         this.resources = resources;
         this.uiFactory = uiFactory;
         this.myConstants = myConstants;
+        
         initWidget(uiBinder.createAndBindUi(this));
 
         stopRecordindWhenWindowIsClosed();

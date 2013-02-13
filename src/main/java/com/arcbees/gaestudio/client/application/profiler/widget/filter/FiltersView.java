@@ -1,7 +1,5 @@
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
-import com.arcbees.core.client.mvp.ViewWithUiHandlers;
-import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.MyConstants;
 import com.arcbees.gaestudio.client.Resources;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -12,6 +10,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implements FiltersPresenter.MyView,
         ChangeHandler {
@@ -34,10 +33,7 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
     private Filter currentlySelectedFilter = Filter.REQUEST;
 
     @Inject
-    public FiltersView(final Binder uiBinder, final Resources resources, final MyConstants myConstants,
-                       final UiHandlersStrategy<FiltersUiHandlers> uiHandlersStrategy) {
-        super(uiHandlersStrategy);
-
+    public FiltersView(final Binder uiBinder, final Resources resources, final MyConstants myConstants) {
         this.resources = resources;
         this.myConstants = myConstants;
 
@@ -86,12 +82,12 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
 
     private Widget getPanelFromFilter(Filter filter) {
         switch (filter) {
-            case METHOD:
-                return method;
-            case TYPE:
-                return type;
-            default:
-                return request;
+        case METHOD:
+            return method;
+        case TYPE:
+            return type;
+        default:
+            return request;
         }
     }
 

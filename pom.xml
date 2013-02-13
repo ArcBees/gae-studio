@@ -49,6 +49,15 @@
     <build>
         <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
 
+        <resources>
+            <resource>
+                <directory>${project.build.directory}/generated-sources/apt</directory>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/generated-sources/gwt</directory>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

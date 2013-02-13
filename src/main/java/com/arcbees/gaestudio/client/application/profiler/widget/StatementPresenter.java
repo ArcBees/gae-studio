@@ -15,12 +15,12 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
-public class StatementPresenter extends PresenterWidget<StatementPresenter.MyView>
-        implements FilterValueSelectedEvent.FilterValueSelectedHandler, StatementUiHandlers,
+public class StatementPresenter extends PresenterWidget<StatementPresenter.MyView> implements
+        FilterValueSelectedEvent.FilterValueSelectedHandler, StatementUiHandlers,
         ClearOperationRecordsEvent.ClearOperationRecordsHandler {
 
     public interface MyView extends View, HasUiHandlers<StatementUiHandlers> {
-        void displayStatements(FilterValue filterValue);
+        void displayStatements(FilterValue<?> filterValue);
 
         void clear();
     }
@@ -28,6 +28,8 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
     @Inject
     public StatementPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
+        
+        getView().setUiHandlers(this);
     }
 
     @Override
@@ -40,7 +42,7 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
 
     @Override
     public void onFilterValueSelected(FilterValueSelectedEvent event) {
-        FilterValue filterValue = event.getFilterValue();
+        FilterValue<?> filterValue = event.getFilterValue();
         getView().displayStatements(filterValue);
     }
 

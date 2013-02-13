@@ -38,6 +38,8 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     @Inject
     public EntityDetailsPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
         super(eventBus, view);
+        
+        getView().setUiHandlers(this);
 
         this.dispatcher = dispatcher;
     }

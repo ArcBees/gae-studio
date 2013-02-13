@@ -1,7 +1,10 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import com.arcbees.core.client.mvp.ViewWithUiHandlers;
-import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
@@ -19,11 +22,7 @@ import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
 
@@ -48,10 +47,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final Set<String> currentProperties = new HashSet<String>();
 
     @Inject
-    public EntityListView(final Binder uiBinder, final UiHandlersStrategy<EntityListUiHandlers> uiHandlersStrategy,
-                          final VisualizerUiFactory visualizerUiFactory) {
-        super(uiHandlersStrategy);
-
+    public EntityListView(final Binder uiBinder, final VisualizerUiFactory visualizerUiFactory) {
         this.visualizerUiFactory = visualizerUiFactory;
 
         initWidget(uiBinder.createAndBindUi(this));

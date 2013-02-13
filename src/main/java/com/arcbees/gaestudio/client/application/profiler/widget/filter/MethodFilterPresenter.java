@@ -30,6 +30,8 @@ public class MethodFilterPresenter extends PresenterWidget<MethodFilterPresenter
     @Inject
     public MethodFilterPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
+        
+        getView().setUiHandlers(this);
     }
 
     @Override

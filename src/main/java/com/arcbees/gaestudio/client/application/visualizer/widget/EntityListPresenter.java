@@ -57,6 +57,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     public EntityListPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
         super(eventBus, view);
 
+        getView().setUiHandlers(this);
+        
         this.dispatcher = dispatcher;
 
         setTableDataProvider();

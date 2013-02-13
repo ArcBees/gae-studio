@@ -1,7 +1,7 @@
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
-import com.arcbees.core.client.mvp.ViewWithUiHandlers;
-import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
+import java.util.List;
+
 import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.profiler.ui.RequestFilterCell;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -11,11 +11,10 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
-import java.util.List;
-
-public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandlers>
-        implements RequestFilterPresenter.MyView {
+public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandlers> implements
+        RequestFilterPresenter.MyView {
 
     public interface Binder extends UiBinder<Widget, RequestFilterView> {
     }
@@ -26,18 +25,15 @@ public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandler
     @UiField(provided = true)
     Resources resources;
 
-    private final SingleSelectionModel<FilterValue<Long>> selectionModel = new
-            SingleSelectionModel<FilterValue<Long>>();
+    private final SingleSelectionModel<FilterValue<Long>> selectionModel = new SingleSelectionModel<FilterValue<Long>>();
 
     @Inject
-    public RequestFilterView(final Binder uiBinder, final Resources resources,
-                             final RequestFilterCell requestFilterCell,
-                             final UiHandlersStrategy<RequestFilterUiHandlers> uiHandlersStrategy) {
-        super(uiHandlersStrategy);
-
+    public RequestFilterView(final Binder uiBinder, final Resources resources, final RequestFilterCell requestFilterCell) {
         this.resources = resources;
         requests = new CellList<FilterValue<Long>>(requestFilterCell);
+
         initWidget(uiBinder.createAndBindUi(this));
+
         initSelectionModel();
     }
 

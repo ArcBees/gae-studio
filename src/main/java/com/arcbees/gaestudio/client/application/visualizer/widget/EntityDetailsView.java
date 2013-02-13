@@ -1,7 +1,5 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import com.arcbees.core.client.mvp.ViewWithUiHandlers;
-import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -12,6 +10,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandlers>
         implements EntityDetailsPresenter.MyView {
@@ -31,10 +30,7 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
     Label error;
 
     @Inject
-    public EntityDetailsView(final Binder uiBinder,
-                             final UiHandlersStrategy<EntityDetailsUiHandlers> uiHandlersStrategy) {
-        super(uiHandlersStrategy);
-
+    public EntityDetailsView(final Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
     }
 

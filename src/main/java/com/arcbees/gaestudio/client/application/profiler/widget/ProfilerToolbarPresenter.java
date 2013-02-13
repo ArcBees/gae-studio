@@ -29,6 +29,8 @@ public class ProfilerToolbarPresenter extends PresenterWidget<ProfilerToolbarPre
     public ProfilerToolbarPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
         super(eventBus, view);
 
+        getView().setUiHandlers(this);
+        
         this.dispatcher = dispatcher;
     }
 

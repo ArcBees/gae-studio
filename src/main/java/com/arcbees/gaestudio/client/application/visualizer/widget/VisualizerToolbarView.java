@@ -1,7 +1,5 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import com.arcbees.core.client.mvp.ViewWithUiHandlers;
-import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
 import com.arcbees.gaestudio.client.MyConstants;
 import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
@@ -13,6 +11,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarUiHandlers> implements
         VisualizerToolbarPresenter.MyView {
@@ -36,13 +35,11 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
     @Inject
     public VisualizerToolbarView(final Binder uiBinder, final Resources resources, final UiFactory uiFactory,
-                                 final UiHandlersStrategy<VisualizerToolbarUiHandlers> uiHandlersStrategy,
-                                 final MyConstants myConstants) {
-        super(uiHandlersStrategy);
-
+            final MyConstants myConstants) {
         this.resources = resources;
         this.uiFactory = uiFactory;
         this.myConstants = myConstants;
+
         initWidget(uiBinder.createAndBindUi(this));
 
         refresh = createRefreshButton();
@@ -83,48 +80,40 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
         delete.setEnabled(false);
     }
 
-
     private ToolbarButton createRefreshButton() {
-        return uiFactory.createToolbarButton(myConstants.refresh(), resources.refresh(),
-                new ToolbarButtonCallback() {
-                    @Override
-                    public void onClicked() {
-                        getUiHandlers().refresh();
-                    }
-                });
+        return uiFactory.createToolbarButton(myConstants.refresh(), resources.refresh(), new ToolbarButtonCallback() {
+            @Override
+            public void onClicked() {
+                getUiHandlers().refresh();
+            }
+        });
     }
-
 
     private ToolbarButton createCreateButton() {
-        return uiFactory.createToolbarButton(myConstants.create(), resources.create(),
-                new ToolbarButtonCallback() {
-                    @Override
-                    public void onClicked() {
-                        getUiHandlers().create();
-                    }
-                });
+        return uiFactory.createToolbarButton(myConstants.create(), resources.create(), new ToolbarButtonCallback() {
+            @Override
+            public void onClicked() {
+                getUiHandlers().create();
+            }
+        });
     }
-
 
     private ToolbarButton createEditButton() {
-        return uiFactory.createToolbarButton(myConstants.edit(), resources.edit(),
-                new ToolbarButtonCallback() {
-                    @Override
-                    public void onClicked() {
-                        getUiHandlers().edit();
-                    }
-                });
+        return uiFactory.createToolbarButton(myConstants.edit(), resources.edit(), new ToolbarButtonCallback() {
+            @Override
+            public void onClicked() {
+                getUiHandlers().edit();
+            }
+        });
     }
 
-
     private ToolbarButton createDeleteButton() {
-        return uiFactory.createToolbarButton(myConstants.delete(), resources.delete(),
-                new ToolbarButtonCallback() {
-                    @Override
-                    public void onClicked() {
-                        getUiHandlers().delete();
-                    }
-                });
+        return uiFactory.createToolbarButton(myConstants.delete(), resources.delete(), new ToolbarButtonCallback() {
+            @Override
+            public void onClicked() {
+                getUiHandlers().delete();
+            }
+        });
     }
 
 }

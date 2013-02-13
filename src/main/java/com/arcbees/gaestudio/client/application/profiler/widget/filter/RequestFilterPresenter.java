@@ -30,6 +30,8 @@ public class RequestFilterPresenter extends PresenterWidget<RequestFilterPresent
     @Inject
     public RequestFilterPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
+        
+        getView().setUiHandlers(this);
     }
 
     @Override

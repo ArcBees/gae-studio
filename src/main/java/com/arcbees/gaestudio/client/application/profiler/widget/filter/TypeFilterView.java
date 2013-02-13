@@ -1,7 +1,7 @@
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
-import com.arcbees.core.client.mvp.ViewWithUiHandlers;
-import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
+import java.util.List;
+
 import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.profiler.ui.TypeFilterCell;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -11,8 +11,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
-
-import java.util.List;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> implements TypeFilterPresenter
         .MyView {
@@ -30,13 +29,12 @@ public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> imp
             new SingleSelectionModel<FilterValue<OperationType>>();
 
     @Inject
-    public TypeFilterView(final Binder uiBinder, final Resources resources, final TypeFilterCell typeFilterCell,
-                          final UiHandlersStrategy<TypeFilterUiHandlers> uiHandlersStrategy) {
-        super(uiHandlersStrategy);
-
+    public TypeFilterView(final Binder uiBinder, final Resources resources, final TypeFilterCell typeFilterCell) {
         this.resources = resources;
         requests = new CellList<FilterValue<OperationType>>(typeFilterCell);
+        
         initWidget(uiBinder.createAndBindUi(this));
+        
         initSelectionModel();
     }
 
