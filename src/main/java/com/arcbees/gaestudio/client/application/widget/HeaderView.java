@@ -1,6 +1,6 @@
 package com.arcbees.gaestudio.client.application.widget;
 
-import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.AppResources;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
@@ -13,10 +13,10 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     }
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
 
     @Inject
-    public HeaderView(final Binder uiBinder, final Resources resources) {
+    public HeaderView(final Binder uiBinder, final AppResources resources) {
         this.resources = resources;
         
         initWidget(uiBinder.createAndBindUi(this));

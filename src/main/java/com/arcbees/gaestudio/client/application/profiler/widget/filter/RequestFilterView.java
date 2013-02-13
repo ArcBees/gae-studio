@@ -2,7 +2,7 @@ package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
 import java.util.List;
 
-import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.AppResources;
 import com.arcbees.gaestudio.client.application.profiler.ui.RequestFilterCell;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -23,12 +23,12 @@ public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandler
     CellList<FilterValue<Long>> requests;
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
 
     private final SingleSelectionModel<FilterValue<Long>> selectionModel = new SingleSelectionModel<FilterValue<Long>>();
 
     @Inject
-    public RequestFilterView(final Binder uiBinder, final Resources resources, final RequestFilterCell requestFilterCell) {
+    public RequestFilterView(final Binder uiBinder, final AppResources resources, final RequestFilterCell requestFilterCell) {
         this.resources = resources;
         requests = new CellList<FilterValue<Long>>(requestFilterCell);
 

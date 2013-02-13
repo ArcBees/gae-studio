@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.AppResources;
 import com.arcbees.gaestudio.client.application.profiler.ui.StatementCell;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterValue;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
@@ -24,7 +24,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     }
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
 
     @UiField(provided = true)
     CellList<DbOperationRecordDto> statements;
@@ -32,7 +32,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     private final SingleSelectionModel<DbOperationRecordDto> selectionModel = new SingleSelectionModel<DbOperationRecordDto>();
 
     @Inject
-    public StatementView(final Binder uiBinder, final Resources resources, final StatementCell statementCell) {
+    public StatementView(final Binder uiBinder, final AppResources resources, final StatementCell statementCell) {
         this.resources = resources;
         statements = new CellList<DbOperationRecordDto>(statementCell);
         

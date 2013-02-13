@@ -1,6 +1,6 @@
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
-import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.AppResources;
 import com.arcbees.gaestudio.client.formatters.RecordFormatter;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
@@ -23,12 +23,12 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
     HTML callLocation;
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
 
     private final RecordFormatter recordFormatter;
 
     @Inject
-    public DetailsView(final Binder uiBinder, final Resources resources, final RecordFormatter recordFormatter) {
+    public DetailsView(final Binder uiBinder, final AppResources resources, final RecordFormatter recordFormatter) {
         this.resources = resources;
 
         initWidget(uiBinder.createAndBindUi(this));

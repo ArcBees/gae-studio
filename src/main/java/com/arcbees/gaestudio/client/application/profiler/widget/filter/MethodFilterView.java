@@ -2,7 +2,7 @@ package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
 import java.util.Map;
 
-import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.AppResources;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -23,10 +23,10 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
     Tree methods;
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
 
     @Inject
-    public MethodFilterView(final Binder uiBinder, final Resources resources) {
+    public MethodFilterView(final Binder uiBinder, final AppResources resources) {
         this.resources = resources;
         
         initWidget(uiBinder.createAndBindUi(this));

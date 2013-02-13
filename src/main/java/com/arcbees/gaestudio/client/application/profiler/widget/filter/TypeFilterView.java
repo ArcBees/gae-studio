@@ -2,7 +2,7 @@ package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
 import java.util.List;
 
-import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.AppResources;
 import com.arcbees.gaestudio.client.application.profiler.ui.TypeFilterCell;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -23,13 +23,13 @@ public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> imp
     CellList<FilterValue<OperationType>> requests;
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
 
     private final SingleSelectionModel<FilterValue<OperationType>> selectionModel =
             new SingleSelectionModel<FilterValue<OperationType>>();
 
     @Inject
-    public TypeFilterView(final Binder uiBinder, final Resources resources, final TypeFilterCell typeFilterCell) {
+    public TypeFilterView(final Binder uiBinder, final AppResources resources, final TypeFilterCell typeFilterCell) {
         this.resources = resources;
         requests = new CellList<FilterValue<OperationType>>(typeFilterCell);
         

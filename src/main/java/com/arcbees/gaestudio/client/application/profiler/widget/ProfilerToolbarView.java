@@ -1,7 +1,7 @@
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
-import com.arcbees.gaestudio.client.MyConstants;
-import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.AppConstants;
+import com.arcbees.gaestudio.client.AppResources;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
@@ -22,20 +22,20 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
     }
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
     @UiField
     HTMLPanel buttons;
 
     private final UiFactory uiFactory;
-    private final MyConstants myConstants;
+    private final AppConstants myConstants;
     private final ToolbarButton record;
     private final ToolbarButton stop;
     private final ToolbarButton clear;
     private Boolean isRecording = false;
 
     @Inject
-    public ProfilerToolbarView(final Binder uiBinder, final Resources resources, final UiFactory uiFactory,
-            final MyConstants myConstants) {
+    public ProfilerToolbarView(final Binder uiBinder, final AppResources resources, final UiFactory uiFactory,
+            final AppConstants myConstants) {
         this.resources = resources;
         this.uiFactory = uiFactory;
         this.myConstants = myConstants;

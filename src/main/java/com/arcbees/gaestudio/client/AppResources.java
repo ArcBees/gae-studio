@@ -8,7 +8,7 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 
-public interface Resources extends ClientBundle {
+public interface AppResources extends ClientBundle {
 
     public interface Styles extends CssResource {
         String fleft();

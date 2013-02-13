@@ -2,7 +2,7 @@ package com.arcbees.gaestudio.client;
 
 import com.google.gwt.i18n.client.Constants;
 
-public interface MyConstants extends Constants {
+public interface AppConstants extends Constants {
 
     String filterByRequest();
 

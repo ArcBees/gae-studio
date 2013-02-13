@@ -1,7 +1,7 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import com.arcbees.gaestudio.client.MyConstants;
-import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.AppConstants;
+import com.arcbees.gaestudio.client.AppResources;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
@@ -20,22 +20,22 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     }
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
     @UiField
     SimplePanel kinds;
     @UiField
     HTMLPanel buttons;
 
     private final UiFactory uiFactory;
-    private final MyConstants myConstants;
+    private final AppConstants myConstants;
     private final ToolbarButton refresh;
     private final ToolbarButton create;
     private final ToolbarButton edit;
     private final ToolbarButton delete;
 
     @Inject
-    public VisualizerToolbarView(final Binder uiBinder, final Resources resources, final UiFactory uiFactory,
-            final MyConstants myConstants) {
+    public VisualizerToolbarView(final Binder uiBinder, final AppResources resources, final UiFactory uiFactory,
+            final AppConstants myConstants) {
         this.resources = resources;
         this.uiFactory = uiFactory;
         this.myConstants = myConstants;

@@ -1,6 +1,6 @@
 package com.arcbees.gaestudio.client.formatters;
 
-import com.arcbees.gaestudio.client.MyConstants;
+import com.arcbees.gaestudio.client.AppConstants;
 import com.google.gwt.i18n.client.NumberFormat;
 
 import javax.inject.Inject;
@@ -12,10 +12,10 @@ public class BytesFormatter {
     private static final int ONE_GiB = ONE_MiB * 1024;
     private static final String SIZE_PATTERN = "0.0";
 
-    private final MyConstants myConstants;
+    private final AppConstants myConstants;
 
     @Inject
-    public BytesFormatter(final MyConstants myConstants) {
+    public BytesFormatter(final AppConstants myConstants) {
         this.myConstants = myConstants;
     }
 

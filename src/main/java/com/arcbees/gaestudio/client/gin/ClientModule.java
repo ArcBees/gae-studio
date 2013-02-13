@@ -2,7 +2,9 @@ package com.arcbees.gaestudio.client.gin;
 
 import javax.inject.Singleton;
 
-import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.AppConstants;
+import com.arcbees.gaestudio.client.AppMessages;
+import com.arcbees.gaestudio.client.AppResources;
 import com.arcbees.gaestudio.client.application.ApplicationModule;
 import com.arcbees.gaestudio.client.formatters.BytesFormatter;
 import com.arcbees.gaestudio.client.place.NameTokens;
@@ -28,9 +30,10 @@ public class ClientModule extends AbstractPresenterModule {
         bindConstant().annotatedWith(UnauthorizedPlace.class).to(NameTokens.profiler);
 
         bind(BytesFormatter.class).in(Singleton.class);
+        bind(AppResources.class).in(Singleton.class);
+        bind(AppConstants.class).in(Singleton.class);
+        bind(AppMessages.class).in(Singleton.class);
         
-        // Resources
-        bind(Resources.class).in(Singleton.class);
         bind(ResourceLoader.class).asEagerSingleton();
     }
 }

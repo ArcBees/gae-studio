@@ -1,6 +1,6 @@
 package com.arcbees.gaestudio.client.application.profiler.ui;
 
-import com.arcbees.gaestudio.client.MyMessages;
+import com.arcbees.gaestudio.client.AppMessages;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterValue;
 import com.arcbees.gaestudio.client.util.TimeNumberFormat;
 import com.google.gwt.cell.client.AbstractCell;
@@ -12,10 +12,10 @@ import javax.inject.Inject;
 public class RequestFilterCell extends AbstractCell<FilterValue<Long>> {
 
     private static final NumberFormat numberFormat = TimeNumberFormat.getFormat();
-    private final MyMessages myMessages;
+    private final AppMessages myMessages;
 
     @Inject
-    public RequestFilterCell(final MyMessages myMessages) {
+    public RequestFilterCell(final AppMessages myMessages) {
         this.myMessages = myMessages;
     }
 

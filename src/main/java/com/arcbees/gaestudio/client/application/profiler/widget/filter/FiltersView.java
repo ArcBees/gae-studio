@@ -1,7 +1,7 @@
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
-import com.arcbees.gaestudio.client.MyConstants;
-import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.AppConstants;
+import com.arcbees.gaestudio.client.AppResources;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -19,7 +19,7 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
     }
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
     @UiField
     SimplePanel request;
     @UiField
@@ -29,11 +29,11 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
     @UiField
     SimplePanel type;
 
-    private final MyConstants myConstants;
+    private final AppConstants myConstants;
     private Filter currentlySelectedFilter = Filter.REQUEST;
 
     @Inject
-    public FiltersView(final Binder uiBinder, final Resources resources, final MyConstants myConstants) {
+    public FiltersView(final Binder uiBinder, final AppResources resources, final AppConstants myConstants) {
         this.resources = resources;
         this.myConstants = myConstants;
 

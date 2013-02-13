@@ -4,7 +4,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import com.arcbees.gaestudio.client.MyConstants;
+import com.arcbees.gaestudio.client.AppConstants;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent;
@@ -44,13 +44,13 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
 
     private final DispatchAsync dispatcher;
     private final KindListPresenter kindListPresenter;
-    private final MyConstants myConstants;
+    private final AppConstants myConstants;
     private String currentKind = "";
     private ParsedEntity currentParsedEntity;
 
     @Inject
     public VisualizerToolbarPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher,
-                                      final KindListPresenter kindListPresenter, final MyConstants myConstants) {
+                                      final KindListPresenter kindListPresenter, final AppConstants myConstants) {
         super(eventBus, view);
         
         getView().setUiHandlers(this);

@@ -1,6 +1,6 @@
 package com.arcbees.gaestudio.client.application.ui;
 
-import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.AppResources;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.resources.client.ImageResource;
@@ -21,7 +21,7 @@ public class ToolbarButton extends Composite {
     }
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
     @UiField
     HTMLPanel button;
     @UiField
@@ -30,7 +30,7 @@ public class ToolbarButton extends Composite {
     InlineLabel text;
 
     @Inject
-    public ToolbarButton(final Binder binder, final Resources resources, @Assisted final String text,
+    public ToolbarButton(final Binder binder, final AppResources resources, @Assisted final String text,
                          @Assisted final ImageResource imageResource, @Assisted final ToolbarButtonCallback callback) {
         this.resources = resources;
 

@@ -61,6 +61,18 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${target.jdk}</source>
+                    <target>${target.jdk}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <proc>none</proc>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
@@ -78,15 +90,25 @@
                 <artifactId>gwt-maven-plugin</artifactId>
                 <version>${gwt-maven-plugin.version}</version>
                 <configuration>
+                    <strict>true</strict>
+                    <testTimeOut>180</testTimeOut>
+                    <includes>**/*GwtTest.java</includes>
+                    <mode>htmlunit</mode>
+
+                    <extraJvmArgs>-Xss1024k -Xmx1024m -XX:MaxPermSize=256m</extraJvmArgs>
+                    <logLevel>INFO</logLevel>
+                    <style>${gwt.style}</style>
+
+                    <copyWebapp>true</copyWebapp>
+                    <hostedWebapp>${webappDirectory}</hostedWebapp>
+
+                    <server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
                     <appEngineVersion>${gae.version}</appEngineVersion>
                     <appEngineHome>${gae.home}</appEngineHome>
-                    <server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
+                    <extraJvmArgs>-Dappengine.sdk.root=${gae.home}</extraJvmArgs>
 
-                    <hostedWebapp>${webappDirectory}</hostedWebapp>
                     <runTarget>gae-studio.html</runTarget>
-
-                    <testTimeOut>180</testTimeOut>
-                    <extraJvmArgs>-Xmx512m -Xss2M</extraJvmArgs>
+                    <module>com.arcbees.gaestudio.GaeStudio</module>
 
                     <compileReport>true</compileReport>
                 </configuration>
@@ -98,18 +120,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${target.jdk}</source>
-                    <target>${target.jdk}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <proc>none</proc>
-                </configuration>
             </plugin>
 
             <!-- Run annotation processors on src/home/java sources -->
@@ -153,6 +163,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Copy the generated classses -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -172,6 +183,29 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!-- Run annotation processors on src/home/java sources -->
+            <plugin>
+                <groupId>org.bsc.maven</groupId>
+                <artifactId>maven-processor-plugin</artifactId>
+                <version>2.1.0</version>
+                <executions>
+                    <execution>
+                        <id>process</id>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.gwtplatform</groupId>
+                        <artifactId>gwtp-processors</artifactId>
+                        <version>${gwtp.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>
@@ -198,6 +232,36 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <!-- Eclipse generate-resources on build -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.bsc.maven</groupId>
+                                        <artifactId>maven-processor-plugin</artifactId>
+                                        <versionRange>[2.0.5,)</versionRange>
+                                        <goals>
+                                            <goal>generate-sources</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute />
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <dependencies>
@@ -330,6 +394,5 @@
             <version>${jukito.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 </project>
