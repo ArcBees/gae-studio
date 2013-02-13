@@ -18,7 +18,7 @@ package com.arcbees.gaestudio.client;
 
 import com.google.gwt.junit.client.GWTTestCase;
 
-public class SandboxGwtTest extends GWTTestCase {
+public class CompileGwtTest extends GWTTestCase {
     @Override
     public String getModuleName() {
         return "com.arcbees.gaestudio.GaeStudio";

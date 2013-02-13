@@ -99,6 +99,7 @@
                 <artifactId>gwt-maven-plugin</artifactId>
                 <version>${gwt-maven-plugin.version}</version>
                 <configuration>
+                    <gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>
                     <strict>true</strict>
                     <testTimeOut>180</testTimeOut>
                     <includes>**/*GwtTest.java</includes>
@@ -204,7 +205,7 @@
                 <executions>
                     <execution>
                         <id>install-server-jar</id>
-                        <phase>verify</phase>
+                        <phase>validate</phase>
                         <goals>
                             <goal>unpack</goal>
                         </goals>
@@ -221,7 +222,6 @@
 
         <pluginManagement>
             <plugins>
-                <!-- Eclipse generate-resources on build -->
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
@@ -236,6 +236,19 @@
                                         <versionRange>[2.0.5,)</versionRange>
                                         <goals>
                                             <goal>generate-sources</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute />
+                                    </action>
+                                </pluginExecution>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>net.kindleit</groupId>
+                                        <artifactId>maven-gae-plugin</artifactId>
+                                        <versionRange>[0.9.5,)</versionRange>
+                                        <goals>
+                                            <goal>unpack</goal>
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
