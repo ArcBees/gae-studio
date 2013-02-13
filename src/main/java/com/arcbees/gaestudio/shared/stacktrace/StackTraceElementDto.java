@@ -6,7 +6,7 @@ package com.arcbees.gaestudio.shared.stacktrace;
 
 import java.io.Serializable;
 
-public class StackTraceElementDTO implements Serializable {
+public class StackTraceElementDto implements Serializable {
 
     private static final long serialVersionUID = 6687981285760829193L;
 
@@ -16,10 +16,10 @@ public class StackTraceElementDTO implements Serializable {
     private String methodName;
 
     @SuppressWarnings("unused")
-    protected StackTraceElementDTO() {
+    protected StackTraceElementDto() {
     }
 
-    public StackTraceElementDTO(String className, String fileName, int lineNumber, String methodName) {
+    public StackTraceElementDto(String className, String fileName, int lineNumber, String methodName) {
         this.className = className;
         this.fileName = fileName;
         this.lineNumber = lineNumber;

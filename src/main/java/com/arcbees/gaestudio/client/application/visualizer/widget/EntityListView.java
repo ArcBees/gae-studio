@@ -7,8 +7,8 @@ import java.util.Set;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
-import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDTO;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -103,7 +103,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void addOrReplaceEntity(EntityDTO entityDTO) {
+    public void addOrReplaceEntity(EntityDto entityDTO) {
         int rowIndex = getRowIndex(entityDTO);
 
         if (rowIndex == -1) {
@@ -114,7 +114,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void removeEntity(EntityDTO entityDTO) {
+    public void removeEntity(EntityDto entityDTO) {
         int rowIndex = getRowIndex(entityDTO);
 
         if (rowIndex >= 0) {
@@ -123,7 +123,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         }
     }
 
-    private int getRowIndex(EntityDTO entityDTO) {
+    private int getRowIndex(EntityDto entityDTO) {
         List<ParsedEntity> visibleParsedEntities = entityTable.getVisibleItems();
         int rowIndex = -1;
 
@@ -143,7 +143,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         return rowIndex;
     }
 
-    private void insertNewEntityAtTheTopOfTheCurrentPage(EntityDTO entityDTO) {
+    private void insertNewEntityAtTheTopOfTheCurrentPage(EntityDto entityDTO) {
         ParsedEntity newParsedEntity = new ParsedEntity(entityDTO);
 
         List<ParsedEntity> newParsedEntities = new ArrayList<ParsedEntity>();
@@ -177,7 +177,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         TextColumn<ParsedEntity> parentColumn = new TextColumn<ParsedEntity>() {
             @Override
             public String getValue(ParsedEntity EntityJsonParsed) {
-                ParentKeyDTO parentKeyDTO = EntityJsonParsed.getKey().getParentKey();
+                ParentKeyDto parentKeyDTO = EntityJsonParsed.getKey().getParentKey();
                 if (parentKeyDTO == null) {
                     return "<null>";
                 }

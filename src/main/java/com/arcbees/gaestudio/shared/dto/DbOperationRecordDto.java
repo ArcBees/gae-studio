@@ -16,13 +16,13 @@
 
 package com.arcbees.gaestudio.shared.dto;
 
-import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDTO;
+import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
 
 import java.io.Serializable;
 
-public abstract class DbOperationRecordDTO implements Serializable {
+public abstract class DbOperationRecordDto implements Serializable {
 
-    private StackTraceElementDTO callerStackTraceElement;
+    private StackTraceElementDto callerStackTraceElement;
     
     private Long requestId;
     
@@ -31,13 +31,13 @@ public abstract class DbOperationRecordDTO implements Serializable {
     private Integer executionTimeMs;
 
     @SuppressWarnings("unused")
-    protected DbOperationRecordDTO() {
+    protected DbOperationRecordDto() {
         this.requestId = -1L;
         this.statementId = -1L;
         this.executionTimeMs = -1;
     }
 
-    protected DbOperationRecordDTO(StackTraceElementDTO callerStackTraceElement,
+    protected DbOperationRecordDto(StackTraceElementDto callerStackTraceElement,
                                    Long requestId, Long statementId, Integer executionTimeMs) {
         this.callerStackTraceElement = callerStackTraceElement;
         this.requestId = requestId;
@@ -45,7 +45,7 @@ public abstract class DbOperationRecordDTO implements Serializable {
         this.executionTimeMs = executionTimeMs;
     }
 
-    public StackTraceElementDTO getCallerStackTraceElement() {
+    public StackTraceElementDto getCallerStackTraceElement() {
         return callerStackTraceElement;
     }
 

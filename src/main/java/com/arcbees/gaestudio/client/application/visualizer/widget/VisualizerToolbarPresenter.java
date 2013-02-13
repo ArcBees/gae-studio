@@ -19,7 +19,7 @@ import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityResult;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -78,7 +78,7 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
 
                 @Override
                 public void onSuccess(GetEmptyKindEntityResult result) {
-                    EntityDTO emptyEntityDto = result.getEntityDTO();
+                    EntityDto emptyEntityDto = result.getEntityDTO();
                     EditEntityEvent.fire(VisualizerToolbarPresenter.this, new ParsedEntity(emptyEntityDto));
                 }
             });
@@ -95,7 +95,7 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     @Override
     public void delete() {
         if (currentParsedEntity != null) {
-            final EntityDTO entityDTO = currentParsedEntity.getEntityDTO();
+            final EntityDto entityDTO = currentParsedEntity.getEntityDTO();
             dispatcher.execute(new DeleteEntityAction(entityDTO), new AsyncCallback<DeleteEntityResult>() {
                 @Override
                 public void onSuccess(DeleteEntityResult result) {
@@ -139,7 +139,7 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
         addRegisteredHandler(EntityPageLoadedEvent.getType(), this);
     }
 
-    private void onEntityDeletedSuccess(EntityDTO entityDTO) {
+    private void onEntityDeletedSuccess(EntityDto entityDTO) {
         Message message = new Message(myConstants.successEntityDelete(), MessageStyle.SUCCESS);
         DisplayMessageEvent.fire(this, message);
         EntityDeletedEvent.fire(this, entityDTO);

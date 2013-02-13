@@ -16,7 +16,7 @@ import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindResult;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -43,11 +43,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         void setData(Range range, List<ParsedEntity> parsedEntities);
 
-        void addOrReplaceEntity(EntityDTO parsedEntity);
+        void addOrReplaceEntity(EntityDto parsedEntity);
 
         void hideList();
 
-        void removeEntity(EntityDTO entityDTO);
+        void removeEntity(EntityDto entityDTO);
     }
 
     private final DispatchAsync dispatcher;
@@ -154,7 +154,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private void onLoadPageSuccess(GetEntitiesByKindResult result, HasData<ParsedEntity> display) {
         List<ParsedEntity> parsedEntityEntities = new ArrayList<ParsedEntity>();
 
-        for (EntityDTO entityDTO : result.getEntities()) {
+        for (EntityDto entityDTO : result.getEntities()) {
             ParsedEntity parsedEntity = new ParsedEntity(entityDTO);
             parsedEntityEntities.add(parsedEntity);
         }

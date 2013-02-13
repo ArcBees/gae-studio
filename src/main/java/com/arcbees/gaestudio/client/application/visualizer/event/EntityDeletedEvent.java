@@ -1,23 +1,23 @@
 package com.arcbees.gaestudio.client.application.visualizer.event;
 
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class EntityDeletedEvent extends GwtEvent<EntityDeletedEvent.EntityDeletedHandler> {
-    private EntityDTO entityDTO;
+    private EntityDto entityDTO;
 
     protected EntityDeletedEvent() {
         // Possibly for serialization.
     }
 
-    public EntityDeletedEvent(EntityDTO entityDTO) {
+    public EntityDeletedEvent(EntityDto entityDTO) {
         this.entityDTO = entityDTO;
     }
 
-    public static void fire(HasHandlers source, EntityDTO entityDTO) {
+    public static void fire(HasHandlers source, EntityDto entityDTO) {
         EntityDeletedEvent eventInstance = new EntityDeletedEvent(entityDTO);
         source.fireEvent(eventInstance);
     }
@@ -50,7 +50,7 @@ public class EntityDeletedEvent extends GwtEvent<EntityDeletedEvent.EntityDelete
         handler.onEntityDeleted(this);
     }
 
-    public EntityDTO getEntityDTO() {
+    public EntityDto getEntityDTO() {
         return entityDTO;
     }
 

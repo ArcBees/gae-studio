@@ -4,7 +4,7 @@
 
 package com.arcbees.gaestudio.server.dto.mapper;
 
-import com.arcbees.gaestudio.shared.dto.query.QueryResultDTO;
+import com.arcbees.gaestudio.shared.dto.query.QueryResultDto;
 import com.google.apphosting.api.DatastorePb;
 
 public class QueryResultMapper {
@@ -13,11 +13,11 @@ public class QueryResultMapper {
     private QueryResultMapper() {
     }
     
-    public static QueryResultDTO mapDTO(DatastorePb.QueryResult queryResult) {
+    public static QueryResultDto mapDTO(DatastorePb.QueryResult queryResult) {
         Integer resultSize = queryResult.resultSize();
         Integer serializedSize = queryResult.getSerializedSize();
 
-        return new QueryResultDTO(resultSize, serializedSize);
+        return new QueryResultDto(resultSize, serializedSize);
     }
     
 }

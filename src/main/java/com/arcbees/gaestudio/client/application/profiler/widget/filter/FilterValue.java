@@ -4,7 +4,7 @@
 
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ public class FilterValue<T> {
 
     private T key;
     private int executionTimeMs = 0;
-    private final List<DbOperationRecordDTO> statements = new ArrayList<DbOperationRecordDTO>();
+    private final List<DbOperationRecordDto> statements = new ArrayList<DbOperationRecordDto>();
 
     public FilterValue(T key) {
         this.key = key;
@@ -27,12 +27,12 @@ public class FilterValue<T> {
         return executionTimeMs;
     }
 
-    public void addRecord(DbOperationRecordDTO record) {
+    public void addRecord(DbOperationRecordDto record) {
         statements.add(record);
         executionTimeMs += record.getExecutionTimeMs();
     }
 
-    public List<DbOperationRecordDTO> getStatements() {
+    public List<DbOperationRecordDto> getStatements() {
         return statements;
     }
 

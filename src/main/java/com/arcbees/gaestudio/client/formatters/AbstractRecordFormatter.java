@@ -16,24 +16,24 @@
 
 package com.arcbees.gaestudio.client.formatters;
 
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.arcbees.gaestudio.shared.dto.DeleteRecordDTO;
-import com.arcbees.gaestudio.shared.dto.GetRecordDTO;
-import com.arcbees.gaestudio.shared.dto.PutRecordDTO;
-import com.arcbees.gaestudio.shared.dto.query.QueryRecordDTO;
+import com.arcbees.gaestudio.shared.dto.GetRecordDto;
+import com.arcbees.gaestudio.shared.dto.PutRecordDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 
 public abstract class AbstractRecordFormatter implements RecordFormatter {
 
     @Override
-    public String formatRecord(DbOperationRecordDTO record) {
+    public String formatRecord(DbOperationRecordDto record) {
         if (record instanceof DeleteRecordDTO) {
             return formatRecord((DeleteRecordDTO)record);
-        } else if (record instanceof GetRecordDTO) {
-            return formatRecord((GetRecordDTO)record);
-        } else if (record instanceof PutRecordDTO) {
-            return formatRecord((PutRecordDTO)record);
-        } else if (record instanceof QueryRecordDTO) {
-            return formatRecord((QueryRecordDTO)record);
+        } else if (record instanceof GetRecordDto) {
+            return formatRecord((GetRecordDto)record);
+        } else if (record instanceof PutRecordDto) {
+            return formatRecord((PutRecordDto)record);
+        } else if (record instanceof QueryRecordDto) {
+            return formatRecord((QueryRecordDto)record);
         } else {
             throw new ClassCastException(
                     "Could not cast " + record.getClass().getName() + " to a known record type");

@@ -8,7 +8,7 @@ import java.util.List;
 import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.profiler.ui.StatementCell;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterValue;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellList;
@@ -27,21 +27,21 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     Resources resources;
 
     @UiField(provided = true)
-    CellList<DbOperationRecordDTO> statements;
+    CellList<DbOperationRecordDto> statements;
 
-    private final SingleSelectionModel<DbOperationRecordDTO> selectionModel = new SingleSelectionModel<DbOperationRecordDTO>();
+    private final SingleSelectionModel<DbOperationRecordDto> selectionModel = new SingleSelectionModel<DbOperationRecordDto>();
 
     @Inject
     public StatementView(final Binder uiBinder, final Resources resources, final StatementCell statementCell) {
         this.resources = resources;
-        statements = new CellList<DbOperationRecordDTO>(statementCell);
+        statements = new CellList<DbOperationRecordDto>(statementCell);
         
         initWidget(uiBinder.createAndBindUi(this));
 
         selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
             @Override
             public void onSelectionChange(SelectionChangeEvent event) {
-                DbOperationRecordDTO dbOperationRecordDTO = selectionModel.getSelectedObject();
+                DbOperationRecordDto dbOperationRecordDTO = selectionModel.getSelectedObject();
                 getUiHandlers().onStatementClicked(dbOperationRecordDTO);
             }
         });
@@ -59,12 +59,12 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
 
     @Override
     public void clear() {
-        statements.setRowData(new ArrayList<DbOperationRecordDTO>());
+        statements.setRowData(new ArrayList<DbOperationRecordDto>());
     }
 
-    private class StatementIdComparator implements Comparator<DbOperationRecordDTO> {
+    private class StatementIdComparator implements Comparator<DbOperationRecordDto> {
         @Override
-        public int compare(DbOperationRecordDTO o1, DbOperationRecordDTO o2) {
+        public int compare(DbOperationRecordDto o1, DbOperationRecordDto o2) {
             return o1.getStatementId().compareTo(o2.getStatementId());
         }
     }

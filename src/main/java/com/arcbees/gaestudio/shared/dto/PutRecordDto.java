@@ -19,9 +19,9 @@ package com.arcbees.gaestudio.shared.dto;
 //import com.google.apphosting.api.DatastorePb.PutRequest;
 //import com.google.apphosting.api.DatastorePb.PutResponse;
 
-import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDTO;
+import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
 
-public class PutRecordDTO extends DbOperationRecordDTO {
+public class PutRecordDto extends DbOperationRecordDto {
 
     private static final long serialVersionUID = 3745865294476274476L;
     
@@ -30,11 +30,11 @@ public class PutRecordDTO extends DbOperationRecordDTO {
 //    private final PutResponse putResponse;
 
     @SuppressWarnings("unused")
-    protected PutRecordDTO() {
+    protected PutRecordDto() {
     }
 
-    public PutRecordDTO(//PutRequest putRequest, PutResponse putResponse,
-                        StackTraceElementDTO callerStackTraceElement,
+    public PutRecordDto(//PutRequest putRequest, PutResponse putResponse,
+                        StackTraceElementDto callerStackTraceElement,
                         Long requestId,
                         Long statementId,
                         Integer executionTimeMs) {

@@ -2,8 +2,8 @@ package com.arcbees.gaestudio.client.application.profiler.widget;
 
 import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.formatters.RecordFormatter;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
-import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDTO;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
+import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTML;
@@ -37,7 +37,7 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
     }
 
     @Override
-    public void displayStatementDetails(DbOperationRecordDTO record) {
+    public void displayStatementDetails(DbOperationRecordDto record) {
         statement.setHTML(recordFormatter.formatRecord(record));
         callLocation.setHTML(tempFormatCaller(record.getCallerStackTraceElement()));
     }
@@ -49,7 +49,7 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
     }
 
     // TODO this is just a quick hack
-    private String tempFormatCaller(StackTraceElementDTO caller) {
+    private String tempFormatCaller(StackTraceElementDto caller) {
         StringBuilder builder = new StringBuilder();
 
         builder.append("Class:");

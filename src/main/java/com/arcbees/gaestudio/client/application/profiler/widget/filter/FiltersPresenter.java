@@ -5,7 +5,7 @@
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -42,7 +42,7 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
     }
 
     @Override
-    public void processDbOperationRecord(DbOperationRecordDTO record) {
+    public void processDbOperationRecord(DbOperationRecordDto record) {
         requestFilterPresenter.processDbOperationRecord(record);
         methodFilterPresenter.processDbOperationRecord(record);
         typeFilterPresenter.processDbOperationRecord(record);

@@ -6,24 +6,24 @@ package com.arcbees.gaestudio.shared.dto.entity;
 
 import java.io.Serializable;
 
-public class EntityDTO implements Serializable {
+public class EntityDto implements Serializable {
 
     private static final long serialVersionUID = 353724233366838753L;
     
-    private KeyDTO key;
+    private KeyDto key;
     
     private String json;
 
     @SuppressWarnings("unused")
-    protected EntityDTO() {
+    protected EntityDto() {
     }
 
-    public EntityDTO(KeyDTO key, String json) {
+    public EntityDto(KeyDto key, String json) {
         this.key = key;
         this.json = json;
     }
 
-    public KeyDTO getKey() {
+    public KeyDto getKey() {
         return key;
     }
 

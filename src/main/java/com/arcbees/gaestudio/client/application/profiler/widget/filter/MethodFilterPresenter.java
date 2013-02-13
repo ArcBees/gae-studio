@@ -6,8 +6,8 @@ package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.client.application.profiler.event.FilterValueSelectedEvent;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
-import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDTO;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
+import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -35,8 +35,8 @@ public class MethodFilterPresenter extends PresenterWidget<MethodFilterPresenter
     }
 
     @Override
-    public void processDbOperationRecord(DbOperationRecordDTO record) {
-        StackTraceElementDTO stackTraceElementDTO = record.getCallerStackTraceElement();
+    public void processDbOperationRecord(DbOperationRecordDto record) {
+        StackTraceElementDto stackTraceElementDTO = record.getCallerStackTraceElement();
         String className = stackTraceElementDTO.getClassName();
 
         Map<String, FilterValue<String>> statementsByMethod = statementsByMethodAndClass.get(className);

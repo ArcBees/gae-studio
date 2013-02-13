@@ -1,23 +1,23 @@
 package com.arcbees.gaestudio.client.application.visualizer.event;
 
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class EntitySavedEvent extends GwtEvent<EntitySavedEvent.EntitySavedHandler> {
-    private EntityDTO entityDTO;
+    private EntityDto entityDTO;
 
     protected EntitySavedEvent() {
         // Possibly for serialization.
     }
 
-    public EntitySavedEvent(com.arcbees.gaestudio.shared.dto.entity.EntityDTO entityDTO) {
+    public EntitySavedEvent(com.arcbees.gaestudio.shared.dto.entity.EntityDto entityDTO) {
         this.entityDTO = entityDTO;
     }
 
-    public static void fire(HasHandlers source, com.arcbees.gaestudio.shared.dto.entity.EntityDTO entityDTO) {
+    public static void fire(HasHandlers source, com.arcbees.gaestudio.shared.dto.entity.EntityDto entityDTO) {
         EntitySavedEvent eventInstance = new EntitySavedEvent(entityDTO);
         source.fireEvent(eventInstance);
     }
@@ -50,7 +50,7 @@ public class EntitySavedEvent extends GwtEvent<EntitySavedEvent.EntitySavedHandl
         handler.onEntitySaved(this);
     }
 
-    public com.arcbees.gaestudio.shared.dto.entity.EntityDTO getEntityDTO() {
+    public com.arcbees.gaestudio.shared.dto.entity.EntityDto getEntityDTO() {
         return entityDTO;
     }
 

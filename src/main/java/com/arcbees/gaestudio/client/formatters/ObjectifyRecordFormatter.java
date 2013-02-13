@@ -17,28 +17,28 @@
 package com.arcbees.gaestudio.client.formatters;
 
 import com.arcbees.gaestudio.shared.dto.DeleteRecordDTO;
-import com.arcbees.gaestudio.shared.dto.GetRecordDTO;
-import com.arcbees.gaestudio.shared.dto.PutRecordDTO;
-import com.arcbees.gaestudio.shared.dto.query.QueryDTO;
-import com.arcbees.gaestudio.shared.dto.query.QueryFilterDTO;
-import com.arcbees.gaestudio.shared.dto.query.QueryFilterOperatorDTO;
-import com.arcbees.gaestudio.shared.dto.query.QueryOrderDTO;
-import com.arcbees.gaestudio.shared.dto.query.QueryOrderDirectionDTO;
-import com.arcbees.gaestudio.shared.dto.query.QueryRecordDTO;
+import com.arcbees.gaestudio.shared.dto.GetRecordDto;
+import com.arcbees.gaestudio.shared.dto.PutRecordDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryFilterDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryFilterOperatorDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryOrderDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryOrderDirectionDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 
 import java.util.HashMap;
 
 public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
     
-    private static final HashMap<QueryFilterOperatorDTO, String> FILTER_OP_SYMBOLS =
-            new HashMap<QueryFilterOperatorDTO, String>();
+    private static final HashMap<QueryFilterOperatorDto, String> FILTER_OP_SYMBOLS =
+            new HashMap<QueryFilterOperatorDto, String>();
 
     static {
-        FILTER_OP_SYMBOLS.put(QueryFilterOperatorDTO.EQUAL, "=");
-        FILTER_OP_SYMBOLS.put(QueryFilterOperatorDTO.GREATER_THAN, ">");
-        FILTER_OP_SYMBOLS.put(QueryFilterOperatorDTO.GREATER_THAN_OR_EQUAL, ">=");
-        FILTER_OP_SYMBOLS.put(QueryFilterOperatorDTO.LESS_THAN, "<");
-        FILTER_OP_SYMBOLS.put(QueryFilterOperatorDTO.LESS_THAN_OR_EQUAL, "<=");
+        FILTER_OP_SYMBOLS.put(QueryFilterOperatorDto.EQUAL, "=");
+        FILTER_OP_SYMBOLS.put(QueryFilterOperatorDto.GREATER_THAN, ">");
+        FILTER_OP_SYMBOLS.put(QueryFilterOperatorDto.GREATER_THAN_OR_EQUAL, ">=");
+        FILTER_OP_SYMBOLS.put(QueryFilterOperatorDto.LESS_THAN, "<");
+        FILTER_OP_SYMBOLS.put(QueryFilterOperatorDto.LESS_THAN_OR_EQUAL, "<=");
     }
     
     @Override
@@ -47,19 +47,19 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
     }
 
     @Override
-    public String formatRecord(GetRecordDTO record) {
+    public String formatRecord(GetRecordDto record) {
         return "Get record formatting not implemented yet";
     }
 
     @Override
-    public String formatRecord(PutRecordDTO record) {
+    public String formatRecord(PutRecordDto record) {
         return "Put record formatting not implemented yet";
     }
 
     @Override
-    public String formatRecord(QueryRecordDTO record) {
+    public String formatRecord(QueryRecordDto record) {
         final StringBuilder builder = new StringBuilder();
-        final QueryDTO query = record.getQuery();
+        final QueryDto query = record.getQuery();
 
         builder.append("query(");
         if (query.getKind() != null) {
@@ -74,7 +74,7 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
             builder.append(")");
         }
         
-        for (QueryFilterDTO filter : query.getFilters()) {
+        for (QueryFilterDto filter : query.getFilters()) {
             builder.append(".filter(\"");
             builder.append(filter.getProperty());
             builder.append(" ");
@@ -84,9 +84,9 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
             builder.append(")");
         }
 
-        for (QueryOrderDTO order : query.getOrders()) {
+        for (QueryOrderDto order : query.getOrders()) {
             builder.append(".order(\"");
-            if (order.getDirection() == QueryOrderDirectionDTO.DESCENDING) {
+            if (order.getDirection() == QueryOrderDirectionDto.DESCENDING) {
                 builder.append("-");
             }
             builder.append(order.getProperty());
@@ -109,7 +109,7 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
 
     }
     
-    private String operatorToString(QueryFilterOperatorDTO operator) {
+    private String operatorToString(QueryFilterOperatorDto operator) {
         return FILTER_OP_SYMBOLS.containsKey(operator)
                 ? FILTER_OP_SYMBOLS.get(operator)
                 : operator.toString();

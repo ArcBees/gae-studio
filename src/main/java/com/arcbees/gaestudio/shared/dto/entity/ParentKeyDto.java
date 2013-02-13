@@ -2,17 +2,17 @@ package com.arcbees.gaestudio.shared.dto.entity;
 
 import java.io.Serializable;
 
-public class ParentKeyDTO implements Serializable {
+public class ParentKeyDto implements Serializable {
 
     private String kind;
 
     private Long id;
 
     @SuppressWarnings("unused")
-    protected ParentKeyDTO() {
+    protected ParentKeyDto() {
     }
 
-    public ParentKeyDTO(String kind, Long id) {
+    public ParentKeyDto(String kind, Long id) {
         this.kind = kind;
         this.id = id;
     }

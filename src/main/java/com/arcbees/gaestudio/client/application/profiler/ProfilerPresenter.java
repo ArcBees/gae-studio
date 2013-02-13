@@ -19,7 +19,7 @@ import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsResult;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -143,9 +143,9 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     // TODO properly handle any missing records
-    private void processNewDbOperationRecords(ArrayList<DbOperationRecordDTO> records) {
+    private void processNewDbOperationRecords(ArrayList<DbOperationRecordDto> records) {
         if (!records.isEmpty()) {
-            for (DbOperationRecordDTO record : records) {
+            for (DbOperationRecordDto record : records) {
                 processDbOperationRecord(record);
                 lastDbOperationRecordId = Math.max(lastDbOperationRecordId, record.getStatementId());
             }
@@ -158,7 +158,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         statisticsPresenter.displayNewDbOperationRecords();
     }
 
-    private void processDbOperationRecord(DbOperationRecordDTO record) {
+    private void processDbOperationRecord(DbOperationRecordDto record) {
         filterPresenter.processDbOperationRecord(record);
         statisticsPresenter.processDbOperationRecord(record);
     }

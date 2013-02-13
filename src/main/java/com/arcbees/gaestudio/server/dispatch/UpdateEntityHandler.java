@@ -7,7 +7,7 @@ package com.arcbees.gaestudio.server.dispatch;
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityResult;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -37,7 +37,7 @@ public class UpdateEntityHandler
     public UpdateEntityResult execute(UpdateEntityAction action, ExecutionContext context)
             throws ActionException {
         DispatchHelper.disableApiHooks();
-        EntityDTO entityDTO = action.getEntityDTO();
+        EntityDto entityDTO = action.getEntityDTO();
         Entity dbEntity;
 
         try {

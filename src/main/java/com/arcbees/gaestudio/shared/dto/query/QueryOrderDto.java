@@ -6,19 +6,19 @@ package com.arcbees.gaestudio.shared.dto.query;
 
 import java.io.Serializable;
 
-public class QueryOrderDTO implements Serializable {
+public class QueryOrderDto implements Serializable {
 
     private static final long serialVersionUID = 6799347670763722667L;
 
-    private QueryOrderDirectionDTO direction;
+    private QueryOrderDirectionDto direction;
 
     private String property;
     
     @SuppressWarnings("unused")
-    protected QueryOrderDTO() {
+    protected QueryOrderDto() {
     }
     
-    public QueryOrderDTO(QueryOrderDirectionDTO direction, String property) {
+    public QueryOrderDto(QueryOrderDirectionDto direction, String property) {
         this.direction = direction;
         this.property = property;
     }
@@ -27,7 +27,7 @@ public class QueryOrderDTO implements Serializable {
         return property;
     }
 
-    public QueryOrderDirectionDTO getDirection() {
+    public QueryOrderDirectionDto getDirection() {
         return direction;
     }
 

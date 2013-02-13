@@ -1,23 +1,23 @@
 package com.arcbees.gaestudio.client.application.profiler.event;
 
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class StatementSelectedEvent extends GwtEvent<StatementSelectedEvent.StatementSelectedHandler> {
-    private DbOperationRecordDTO record;
+    private DbOperationRecordDto record;
 
     protected StatementSelectedEvent() {
         // Possibly for serialization.
     }
 
-    public StatementSelectedEvent(DbOperationRecordDTO record) {
+    public StatementSelectedEvent(DbOperationRecordDto record) {
         this.record = record;
     }
 
-    public static void fire(HasHandlers source, DbOperationRecordDTO record) {
+    public static void fire(HasHandlers source, DbOperationRecordDto record) {
         StatementSelectedEvent eventInstance = new StatementSelectedEvent(record);
         source.fireEvent(eventInstance);
     }
@@ -50,7 +50,7 @@ public class StatementSelectedEvent extends GwtEvent<StatementSelectedEvent.Stat
         handler.onStatementSelected(this);
     }
 
-    public DbOperationRecordDTO getRecord() {
+    public DbOperationRecordDto getRecord() {
         return record;
     }
 

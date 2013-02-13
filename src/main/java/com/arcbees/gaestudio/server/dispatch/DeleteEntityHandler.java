@@ -6,8 +6,8 @@ package com.arcbees.gaestudio.server.dispatch;
 
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDTO;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Key;
@@ -33,8 +33,8 @@ public class DeleteEntityHandler
         DispatchHelper.disableApiHooks();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-        EntityDTO entityDTO = action.getEntityDTO();
-        KeyDTO keyDTO = entityDTO.getKey();
+        EntityDto entityDTO = action.getEntityDTO();
+        KeyDto keyDTO = entityDTO.getKey();
         Key key = KeyFactory.createKey(keyDTO.getKind(), keyDTO.getId());
 
         datastore.delete(key);

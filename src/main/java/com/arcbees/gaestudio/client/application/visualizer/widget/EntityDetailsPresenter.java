@@ -12,7 +12,7 @@ import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityResult;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -52,7 +52,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
 
     @Override
     public void saveEntity(String json) {
-        EntityDTO entityDTO = currentParsedEntity.getEntityDTO();
+        EntityDto entityDTO = currentParsedEntity.getEntityDTO();
         entityDTO.setJson(json);
         dispatcher.execute(new UpdateEntityAction(entityDTO), new AsyncCallback<UpdateEntityResult>() {
             @Override
@@ -83,7 +83,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     }
 
     private void onSaveEntitySucceeded(UpdateEntityResult result) {
-        EntityDTO newEntityDto = result.getResult();
+        EntityDto newEntityDto = result.getResult();
         EntitySavedEvent.fire(this, newEntityDto);
         Message message = new Message("Entity saved.", MessageStyle.SUCCESS);
         DisplayMessageEvent.fire(this, message);
