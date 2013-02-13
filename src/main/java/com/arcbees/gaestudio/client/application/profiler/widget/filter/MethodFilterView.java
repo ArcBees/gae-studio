@@ -2,7 +2,7 @@ package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
 import java.util.Map;
 
-import com.arcbees.gaestudio.client.AppResources;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;

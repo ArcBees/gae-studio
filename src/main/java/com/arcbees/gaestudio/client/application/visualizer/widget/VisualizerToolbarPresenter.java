@@ -4,7 +4,6 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import com.arcbees.gaestudio.client.AppConstants;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent;
@@ -15,6 +14,7 @@ import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEve
 import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
+import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;

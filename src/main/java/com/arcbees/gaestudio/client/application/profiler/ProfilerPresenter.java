@@ -4,7 +4,6 @@
 
 package com.arcbees.gaestudio.client.application.profiler;
 
-import com.arcbees.gaestudio.client.AppConstants;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
@@ -17,6 +16,7 @@ import com.arcbees.gaestudio.client.application.profiler.widget.filter.FiltersPr
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsResult;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;

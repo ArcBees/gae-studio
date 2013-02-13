@@ -1,6 +1,6 @@
 package com.arcbees.gaestudio.client.application.ui;
 
-import com.arcbees.gaestudio.client.AppResources;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.resources.client.ImageResource;

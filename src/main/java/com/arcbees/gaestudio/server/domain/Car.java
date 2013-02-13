@@ -2,8 +2,7 @@ package com.arcbees.gaestudio.server.domain;
 
 import com.google.appengine.api.datastore.Key;
 import com.googlecode.objectify.annotation.Entity;
-
-import javax.persistence.Id;
+import com.googlecode.objectify.annotation.Id;
 
 @Entity
 public class Car {

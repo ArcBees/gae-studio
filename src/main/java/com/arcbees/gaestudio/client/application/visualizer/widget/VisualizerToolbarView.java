@@ -1,10 +1,10 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import com.arcbees.gaestudio.client.AppConstants;
-import com.arcbees.gaestudio.client.AppResources;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
+import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;

@@ -1,6 +1,6 @@
 package com.arcbees.gaestudio.client.application.widget;
 
-import com.arcbees.gaestudio.client.AppResources;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;

@@ -1,9 +1,8 @@
-package com.arcbees.gaestudio.client;
+package com.arcbees.gaestudio.client.resources;
 
 import com.google.gwt.i18n.client.Constants;
 
 public interface AppConstants extends Constants {
-
     String filterByRequest();
 
     String filterByMethod();
@@ -51,5 +50,4 @@ public interface AppConstants extends Constants {
     String mebibytesAbbreviation();
 
     String gibibytesAbbreviation();
-
 }

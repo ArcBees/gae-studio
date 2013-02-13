@@ -2,8 +2,8 @@ package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
 import java.util.List;
 
-import com.arcbees.gaestudio.client.AppResources;
 import com.arcbees.gaestudio.client.application.profiler.ui.RequestFilterCell;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellList;

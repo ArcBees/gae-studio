@@ -2,12 +2,12 @@ package com.arcbees.gaestudio.client.gin;
 
 import javax.inject.Singleton;
 
-import com.arcbees.gaestudio.client.AppConstants;
-import com.arcbees.gaestudio.client.AppMessages;
-import com.arcbees.gaestudio.client.AppResources;
 import com.arcbees.gaestudio.client.application.ApplicationModule;
 import com.arcbees.gaestudio.client.formatters.BytesFormatter;
 import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.resources.AppMessages;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.gwtplatform.dispatch.client.gin.DispatchAsyncModule;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.ErrorPlace;

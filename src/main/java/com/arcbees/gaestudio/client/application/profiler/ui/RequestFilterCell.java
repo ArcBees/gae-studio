@@ -1,7 +1,7 @@
 package com.arcbees.gaestudio.client.application.profiler.ui;
 
-import com.arcbees.gaestudio.client.AppMessages;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterValue;
+import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.util.TimeNumberFormat;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.i18n.client.NumberFormat;

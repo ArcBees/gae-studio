@@ -2,7 +2,7 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:cellview="urn:import:com.google.gwt.user.cellview.client">
 
-    <ui:with field="resources" type="com.arcbees.gaestudio.client.AppResources"/>
+    <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
 
     <ui:style>
 

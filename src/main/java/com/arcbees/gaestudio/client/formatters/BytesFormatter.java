@@ -1,6 +1,6 @@
 package com.arcbees.gaestudio.client.formatters;
 
-import com.arcbees.gaestudio.client.AppConstants;
+import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.google.gwt.i18n.client.NumberFormat;
 
 import javax.inject.Inject;

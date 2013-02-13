@@ -21,7 +21,7 @@ import com.google.gwt.junit.client.GWTTestCase;
 public class SandboxGwtTest extends GWTTestCase {
     @Override
     public String getModuleName() {
-        return "com.gwtplatform.samples.basic.Gwtpsample";
+        return "com.arcbees.gaestudio.GaeStudio";
     }
 
     public void testSandbox() {
