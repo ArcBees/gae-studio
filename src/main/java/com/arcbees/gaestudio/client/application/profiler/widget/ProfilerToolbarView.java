@@ -17,7 +17,6 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHandlers> implements
         ProfilerToolbarPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, ProfilerToolbarView> {
     }
 

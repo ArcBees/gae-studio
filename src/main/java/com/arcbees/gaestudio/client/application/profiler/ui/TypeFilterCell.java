@@ -9,7 +9,6 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import javax.inject.Inject;
 
 public class TypeFilterCell extends AbstractCell<FilterValue<OperationType>> {
-
     private final AppConstants myConstants;
 
     @Inject
@@ -39,5 +38,4 @@ public class TypeFilterCell extends AbstractCell<FilterValue<OperationType>> {
                 return myConstants.unknownOperationType();
         }
     }
-
 }

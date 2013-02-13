@@ -31,7 +31,6 @@ import com.gwtplatform.mvp.client.View;
 public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolbarPresenter.MyView> implements
         VisualizerToolbarUiHandlers, KindSelectedEvent.KindSelectedHandler, EntitySelectedEvent.EntitySelectedHandler,
         EntityPageLoadedEvent.EntityPageLoadedHandler {
-
     public interface MyView extends View, HasUiHandlers<VisualizerToolbarUiHandlers> {
         void setKindSelected(boolean isSelected);
 
@@ -144,6 +143,4 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
         DisplayMessageEvent.fire(this, message);
         EntityDeletedEvent.fire(this, entityDTO);
     }
-
 }
-

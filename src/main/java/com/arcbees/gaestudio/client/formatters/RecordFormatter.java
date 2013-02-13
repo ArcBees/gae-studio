@@ -23,15 +23,13 @@ import com.arcbees.gaestudio.shared.dto.PutRecordDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 
 public interface RecordFormatter {
+    String formatRecord(DeleteRecordDTO record);
     
-    public String formatRecord(DeleteRecordDTO record);
+    String formatRecord(GetRecordDto record);
+
+    String formatRecord(PutRecordDto record);
+
+    String formatRecord(QueryRecordDto record);
     
-    public String formatRecord(GetRecordDto record);
-
-    public String formatRecord(PutRecordDto record);
-
-    public String formatRecord(QueryRecordDto record);
-    
-    public String formatRecord(DbOperationRecordDto record);
-
+    String formatRecord(DbOperationRecordDto record);
 }

@@ -14,7 +14,6 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implements FiltersPresenter.MyView,
         ChangeHandler {
-
     public interface Binder extends UiBinder<Widget, FiltersView> {
     }
 
@@ -90,5 +89,4 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
             return request;
         }
     }
-
 }

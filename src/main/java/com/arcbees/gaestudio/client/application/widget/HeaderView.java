@@ -8,7 +8,6 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements HeaderPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, HeaderView> {
     }
 
@@ -21,5 +20,4 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
         
         initWidget(uiBinder.createAndBindUi(this));
     }
-
 }

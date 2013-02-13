@@ -6,7 +6,6 @@ import com.googlecode.objectify.annotation.Id;
 
 @Entity
 public class Car {
-
     @Id
     private Long id;
     private String manufacturer;
@@ -63,5 +62,4 @@ public class Car {
     public void setDriverKey(Key driverKey) {
         this.driverKey = driverKey;
     }
-
 }

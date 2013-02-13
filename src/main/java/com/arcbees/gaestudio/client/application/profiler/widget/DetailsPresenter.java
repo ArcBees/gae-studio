@@ -12,10 +12,8 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
-public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView>
-        implements StatementSelectedEvent.StatementSelectedHandler,
-        ClearOperationRecordsEvent.ClearOperationRecordsHandler {
-
+public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView> implements
+        StatementSelectedEvent.StatementSelectedHandler, ClearOperationRecordsEvent.ClearOperationRecordsHandler {
     public interface MyView extends View {
         void displayStatementDetails(DbOperationRecordDto record);
 

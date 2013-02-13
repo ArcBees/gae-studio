@@ -13,9 +13,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
-public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> implements TypeFilterPresenter
-        .MyView {
-
+public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> implements TypeFilterPresenter.MyView {
     public interface Binder extends UiBinder<Widget, TypeFilterView> {
     }
 
@@ -25,16 +23,16 @@ public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> imp
     @UiField(provided = true)
     AppResources resources;
 
-    private final SingleSelectionModel<FilterValue<OperationType>> selectionModel =
+    private final SingleSelectionModel<FilterValue<OperationType>> selectionModel = 
             new SingleSelectionModel<FilterValue<OperationType>>();
 
     @Inject
     public TypeFilterView(final Binder uiBinder, final AppResources resources, final TypeFilterCell typeFilterCell) {
         this.resources = resources;
         requests = new CellList<FilterValue<OperationType>>(typeFilterCell);
-        
+
         initWidget(uiBinder.createAndBindUi(this));
-        
+
         initSelectionModel();
     }
 
@@ -53,5 +51,4 @@ public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> imp
         });
         requests.setSelectionModel(selectionModel);
     }
-
 }

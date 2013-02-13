@@ -16,7 +16,6 @@ import com.google.inject.assistedinject.Assisted;
 import javax.inject.Inject;
 
 public class ToolbarButton extends Composite {
-
     public interface Binder extends UiBinder<Widget, ToolbarButton> {
     }
 
@@ -54,5 +53,4 @@ public class ToolbarButton extends Composite {
             button.addStyleName(resources.styles().toolbarButtonDisabled());
         }
     }
-
 }

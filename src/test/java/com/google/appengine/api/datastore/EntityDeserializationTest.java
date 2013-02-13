@@ -15,8 +15,7 @@ import static org.junit.Assert.assertTrue;
  * @link https://developers.google.com/appengine/docs/java/tools/localunittesting for detail on unit testing with
  * appengine
  */
-public class EntityDeserializationTestInt {
-
+public class EntityDeserializationTest {
     private static final String jsonEntity = "{\n" +
             "  \"key\": {\n" +
             "    \"parentKey\": null,\n" +
@@ -68,5 +67,4 @@ public class EntityDeserializationTestInt {
         assertEquals("Jun 14, 2012 4:43:27 PM", entity.getProperty("date"));
         assertTrue(entity.getProperty("sprocketKey") instanceof Key);
     }
-
 }

@@ -37,7 +37,6 @@ import java.util.ArrayList;
 public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, ProfilerPresenter.MyProxy> implements
         RecordingStateChangedEvent.RecordingStateChangedHandler,
         ClearOperationRecordsEvent.ClearOperationRecordsHandler {
-
     public interface MyView extends View {
     }
 

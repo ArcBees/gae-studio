@@ -22,11 +22,9 @@ package com.arcbees.gaestudio.shared.dto;
 import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
 
 public class DeleteRecordDTO extends DbOperationRecordDto {
-
     private static final long serialVersionUID = 3745865294476274476L;
 
 //    private final DeleteRequest deleteRequest;
-//
 //    private final DeleteResponse deleteResponse;
 
     @SuppressWarnings("unused")
@@ -48,5 +46,4 @@ public class DeleteRecordDTO extends DbOperationRecordDto {
 //    public DeleteResponse getDeleteResponse() {
 //        return deleteResponse;
 //    }
-
 }

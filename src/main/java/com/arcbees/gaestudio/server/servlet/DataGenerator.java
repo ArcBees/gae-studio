@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 
 @Singleton
 public class DataGenerator extends HttpServlet {
-
     private final Logger logger;
 
     private final Random random;
@@ -30,13 +29,13 @@ public class DataGenerator extends HttpServlet {
     @Inject
     public DataGenerator(final Logger logger) {
         this.logger = logger;
-        
+
         random = new Random();
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, 
+        IOException {
         Objectify objectify = ObjectifyService.factory().begin();
         initializeSeedData(objectify);
 
@@ -64,5 +63,4 @@ public class DataGenerator extends HttpServlet {
             }
         }
     }
-
 }

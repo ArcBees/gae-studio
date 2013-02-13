@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class QueryDto implements Serializable {
-
     private static final long serialVersionUID = -7429048102343532748L;
 
     private String kind;
@@ -55,5 +54,4 @@ public class QueryDto implements Serializable {
     public Integer getLimit() {
         return limit;
     }
-
 }

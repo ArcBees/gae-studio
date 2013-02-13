@@ -3,13 +3,10 @@ package com.arcbees.gaestudio.shared.dto.entity;
 import java.io.Serializable;
 
 public class KeyDto implements Serializable {
-
     private static final long serialVersionUID = -6988501130987934034L;
     
     private String kind;
-
     private Long id;
-
     private ParentKeyDto parentKeyDTO;
 
     @SuppressWarnings("unused")
@@ -37,5 +34,4 @@ public class KeyDto implements Serializable {
     public void setParentKey(ParentKeyDto parentKeyDTO) {
         this.parentKeyDTO = parentKeyDTO;
     }
-
 }

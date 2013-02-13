@@ -16,7 +16,6 @@ import java.util.HashSet;
 
 public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyView>
         implements DbOperationRecordProcessor {
-
     public interface MyView extends View {
         void updateRequestCount(Integer requestCount);
 
@@ -78,5 +77,4 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
         this.totalObjectsRetrieved = 0;
         this.totalDataReceived = 0;
     }
-
 }

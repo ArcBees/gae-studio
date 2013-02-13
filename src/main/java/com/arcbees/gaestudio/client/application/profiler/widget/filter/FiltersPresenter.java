@@ -14,7 +14,6 @@ import com.gwtplatform.mvp.client.View;
 
 public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
         implements DbOperationRecordProcessor, FiltersUiHandlers {
-
     public interface MyView extends View, HasUiHandlers<FiltersUiHandlers> {
         Filter getCurrentlyDisplayedFilter();
     }
@@ -85,5 +84,4 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
         setInSlot(TYPE_MethodFilter, methodFilterPresenter);
         setInSlot(TYPE_TypeFilter, typeFilterPresenter);
     }
-
 }

@@ -14,7 +14,6 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandlers>
         implements EntityDetailsPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, EntityDetailsView> {
     }
 
@@ -61,5 +60,4 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
     void onCancelClicked(ClickEvent event) {
         hide();
     }
-
 }

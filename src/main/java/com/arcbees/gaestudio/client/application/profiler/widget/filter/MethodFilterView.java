@@ -15,7 +15,6 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
         implements MethodFilterPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, MethodFilterView> {
     }
 
@@ -51,6 +50,7 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
         methods.clear();
 
         for (Map.Entry<String, Map<String, FilterValue<String>>> classFilter : statementsByMethodAndClass.entrySet()) {
+            // TODO TreeItem deprecated
             TreeItem classTreeItem = new TreeItem(classFilter.getKey());
 
             for (String methodName : classFilter.getValue().keySet()) {
@@ -71,5 +71,4 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
 
         return parentItem.getText();
     }
-
 }

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilterValue<T> {
-
     private T key;
     private int executionTimeMs = 0;
     private final List<DbOperationRecordDto> statements = new ArrayList<DbOperationRecordDto>();
@@ -39,5 +38,4 @@ public class FilterValue<T> {
     public int getStatementCount() {
         return statements.size();
     }
-
 }

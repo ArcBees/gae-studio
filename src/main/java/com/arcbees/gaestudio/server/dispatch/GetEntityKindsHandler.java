@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 // TODO add logging
 public class GetEntityKindsHandler
         extends AbstractActionHandler<GetEntityKindsAction, GetEntityKindsResult> {
-    
     private final Logger logger;
 
     @Inject
@@ -51,5 +50,4 @@ public class GetEntityKindsHandler
 
         return new GetEntityKindsResult(kinds);
     }
-
 }

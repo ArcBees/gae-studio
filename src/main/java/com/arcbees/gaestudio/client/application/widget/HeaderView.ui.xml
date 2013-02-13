@@ -1,11 +1,8 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:with type="com.arcbees.gaestudio.client.place.NameTokens" field="nameTokens"/>
-
     <ui:style>
-
         .header {
             border-bottom: 1px solid #45a0ec;
             position: relative;
@@ -29,10 +26,7 @@
             bottom: 0;
             left: 0;
         }
-
-
     </ui:style>
-
     <g:HTMLPanel styleName="{style.header} {resources.sprites.topmenuBg}">
         <g:Image resource="{resources.logo}" styleName="{style.logo}"/>
         <g:InlineHyperlink targetHistoryToken="{nameTokens.getVisualizer}" styleName="{resources.sprites.topmenuBgHover}">
@@ -44,5 +38,4 @@
         </g:InlineHyperlink>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
-
 </ui:UiBinder>

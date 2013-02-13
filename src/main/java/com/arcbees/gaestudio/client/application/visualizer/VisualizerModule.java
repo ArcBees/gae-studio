@@ -13,7 +13,6 @@ import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class VisualizerModule extends AbstractPresenterModule {
-
     @Override
     protected void configure() {
         install(new GinFactoryModuleBuilder().build(VisualizerUiFactory.class));
@@ -30,5 +29,4 @@ public class VisualizerModule extends AbstractPresenterModule {
         bind(EntityDetailsPresenter.class).asEagerSingleton();
         bind(EntityDetailsPresenter.MyView.class).to(EntityDetailsView.class);
     }
-
 }

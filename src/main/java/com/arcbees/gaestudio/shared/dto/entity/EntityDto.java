@@ -7,7 +7,6 @@ package com.arcbees.gaestudio.shared.dto.entity;
 import java.io.Serializable;
 
 public class EntityDto implements Serializable {
-
     private static final long serialVersionUID = 353724233366838753L;
     
     private KeyDto key;
@@ -34,5 +33,4 @@ public class EntityDto implements Serializable {
     public void setJson(String json) {
         this.json = json;
     }
-
 }

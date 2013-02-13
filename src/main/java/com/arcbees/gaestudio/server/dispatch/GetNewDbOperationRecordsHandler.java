@@ -20,9 +20,8 @@ import java.util.logging.Logger;
 
 // TODO externalize magic strings
 // TODO add logging
-public class GetNewDbOperationRecordsHandler
-        extends AbstractActionHandler<GetNewDbOperationRecordsAction, GetNewDbOperationRecordsResult> {
-
+public class GetNewDbOperationRecordsHandler extends
+        AbstractActionHandler<GetNewDbOperationRecordsAction, GetNewDbOperationRecordsResult> {
     private final Logger logger;
 
     private final MemcacheService memcacheService;
@@ -46,9 +45,8 @@ public class GetNewDbOperationRecordsHandler
 
         long beginId = action.getLastId() + 1;
         // TODO if there is a big difference between beginId and the most recent id, binary search for the true start
-        long endId = action.getMaxResults() != null
-                ? Math.min(action.getLastId() + action.getMaxResults(), getMostRecentId())
-                : getMostRecentId();
+        long endId = action.getMaxResults() != null ? Math.min(action.getLastId() + action.getMaxResults(),
+                getMostRecentId()) : getMostRecentId();
 
         if (beginId > endId) {
             logger.info("No new records since last poll");
@@ -59,7 +57,7 @@ public class GetNewDbOperationRecordsHandler
 
         Map<String, Object> recordsByKey = memcacheService.getAll(getNewOperationRecordKeys(beginId, endId));
         // TODO trimming missing results only from the end of the range is incorrect, as there are scenarios
-        // in which there could be missing records in the middle.  We need a better approach to this that
+        // in which there could be missing records in the middle. We need a better approach to this that
         // always retrieves all missing records.
 
         // TODO optimize this
@@ -82,5 +80,4 @@ public class GetNewDbOperationRecordsHandler
     private Long getMostRecentId() {
         return (Long) memcacheService.get(MemcacheKey.DB_OPERATION_COUNTER.getName());
     }
-
 }

@@ -23,7 +23,6 @@ import com.gwtplatform.mvp.client.View;
 
 public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresenter.MyView>
         implements EditEntityEvent.EditEntityHandler, EntityDetailsUiHandlers {
-
     public interface MyView extends View, HasUiHandlers<EntityDetailsUiHandlers> {
         void displayEntityDetails(String json);
 
@@ -89,5 +88,4 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
         DisplayMessageEvent.fire(this, message);
         getView().hide();
     }
-
 }

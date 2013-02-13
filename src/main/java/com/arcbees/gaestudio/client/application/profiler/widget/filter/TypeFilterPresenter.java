@@ -24,7 +24,6 @@ import java.util.TreeMap;
 
 public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyView>
         implements DbOperationRecordProcessor, TypeFilterUiHandlers {
-
     public interface MyView extends View, HasUiHandlers<TypeFilterUiHandlers> {
         void display(List<FilterValue<OperationType>> filterValues);
     }
@@ -81,5 +80,4 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
             return OperationType.UNKNOWN;
         }
     }
-
 }

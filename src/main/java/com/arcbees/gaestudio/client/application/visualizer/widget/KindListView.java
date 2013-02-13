@@ -14,7 +14,6 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> implements KindListPresenter.MyView,
         ChangeHandler {
-
     public interface Binder extends UiBinder<Widget, KindListView> {
     }
 
@@ -52,5 +51,4 @@ public class KindListView extends ViewWithUiHandlers<KindListUiHandlers> impleme
         kinds.clear();
         kinds.addItem(myConstants.chooseAnEntity(), "");
     }
-
 }

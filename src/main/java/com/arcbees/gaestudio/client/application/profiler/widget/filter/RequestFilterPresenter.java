@@ -20,7 +20,6 @@ import java.util.TreeMap;
 
 public class RequestFilterPresenter extends PresenterWidget<RequestFilterPresenter.MyView>
         implements DbOperationRecordProcessor, RequestFilterUiHandlers {
-
     public interface MyView extends View, HasUiHandlers<RequestFilterUiHandlers> {
         void display(List<FilterValue<Long>> filterValues);
     }
@@ -63,5 +62,4 @@ public class RequestFilterPresenter extends PresenterWidget<RequestFilterPresent
     public void onRequestClicked(FilterValue<Long> filterValue) {
         FilterValueSelectedEvent.fire(this, filterValue);
     }
-
 }

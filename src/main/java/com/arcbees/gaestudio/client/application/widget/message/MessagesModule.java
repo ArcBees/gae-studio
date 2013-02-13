@@ -8,7 +8,6 @@ import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import javax.inject.Singleton;
 
 public class MessagesModule extends AbstractPresenterModule {
-
     @Override
     protected void configure() {
         install(new GinFactoryModuleBuilder().build(MessageWidgetFactory.class));
@@ -17,5 +16,4 @@ public class MessagesModule extends AbstractPresenterModule {
 
         bindSingletonPresenterWidget(MessagesPresenter.class, MessagesPresenter.MyView.class, MessagesView.class);
     }
-
 }

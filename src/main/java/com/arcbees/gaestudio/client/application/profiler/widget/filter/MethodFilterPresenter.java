@@ -19,7 +19,6 @@ import java.util.TreeMap;
 
 public class MethodFilterPresenter extends PresenterWidget<MethodFilterPresenter.MyView>
         implements DbOperationRecordProcessor, MethodFilterUiHandlers {
-
     public interface MyView extends View, HasUiHandlers<MethodFilterUiHandlers> {
         void display(Map<String, Map<String, FilterValue<String>>> statementsByMethodAndClass);
     }
@@ -77,5 +76,4 @@ public class MethodFilterPresenter extends PresenterWidget<MethodFilterPresenter
             }
         }
     }
-
 }

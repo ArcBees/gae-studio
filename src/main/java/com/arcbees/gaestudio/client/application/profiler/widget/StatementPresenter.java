@@ -18,7 +18,6 @@ import com.gwtplatform.mvp.client.View;
 public class StatementPresenter extends PresenterWidget<StatementPresenter.MyView> implements
         FilterValueSelectedEvent.FilterValueSelectedHandler, StatementUiHandlers,
         ClearOperationRecordsEvent.ClearOperationRecordsHandler {
-
     public interface MyView extends View, HasUiHandlers<StatementUiHandlers> {
         void displayStatements(FilterValue<?> filterValue);
 

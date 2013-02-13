@@ -1,8 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-
     <ui:style>
-
         .json {
             font-family: "Consolas", "Menlo", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
             width: 800px;
@@ -27,7 +25,6 @@
         }
 
     </ui:style>
-
     <g:HTMLPanel>
         <g:PopupPanel visible="false" glassEnabled="true" modal="true" ui:field="popup" styleName="{style.popup}">
             <g:HTMLPanel>
@@ -40,5 +37,4 @@
             </g:HTMLPanel>
         </g:PopupPanel>
     </g:HTMLPanel>
-
 </ui:UiBinder>

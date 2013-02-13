@@ -10,16 +10,13 @@ import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 public class ApplicationView extends ViewImpl implements ApplicationPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, ApplicationView> {
     }
 
     @UiField
     SimplePanel header;
-
     @UiField
     SimpleLayoutPanel main;
-
     @UiField
     SimplePanel messages;
 
@@ -30,14 +27,14 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 
     @Override
     public void setInSlot(Object slot, Widget content) {
-        if (content != null) {
-            if (slot == ApplicationPresenter.TYPE_SetMainContent) {
-                main.setWidget(content);
-            } else if (slot == ApplicationPresenter.TYPE_SetHeaderContent) {
-                header.setWidget(content);
-            } else if (slot == ApplicationPresenter.TYPE_SetMessagesContent) {
-                messages.setWidget(content);
-            }
+        if (slot == ApplicationPresenter.TYPE_SetMainContent) {
+            main.setWidget(content);
+        } else if (slot == ApplicationPresenter.TYPE_SetHeaderContent) {
+            header.setWidget(content);
+        } else if (slot == ApplicationPresenter.TYPE_SetMessagesContent) {
+            messages.setWidget(content);
+        } else {
+            super.setInSlot(slot, content);
         }
     }
 }

@@ -8,7 +8,6 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import javax.inject.Inject;
 
 public class StatementCell extends AbstractCell<DbOperationRecordDto> {
-
     private RecordFormatter recordFormatter;
 
     @Inject
@@ -20,5 +19,4 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
     public void render(Context context, DbOperationRecordDto record, SafeHtmlBuilder safeHtmlBuilder) {
         safeHtmlBuilder.appendEscaped(recordFormatter.formatRecord(record));
     }
-
 }

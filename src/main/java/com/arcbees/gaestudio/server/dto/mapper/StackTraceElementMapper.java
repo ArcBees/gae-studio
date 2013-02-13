@@ -7,7 +7,6 @@ package com.arcbees.gaestudio.server.dto.mapper;
 import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
 
 public class StackTraceElementMapper {
-
     @SuppressWarnings("unused")
     private StackTraceElementMapper() {
     }
@@ -16,5 +15,4 @@ public class StackTraceElementMapper {
         return new StackTraceElementDto(stackTraceElement.getClassName(), stackTraceElement.getFileName(),
                 stackTraceElement.getLineNumber(), stackTraceElement.getMethodName());
     }
-
 }

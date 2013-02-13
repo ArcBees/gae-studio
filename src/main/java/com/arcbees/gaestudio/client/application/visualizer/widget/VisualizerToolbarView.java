@@ -15,7 +15,6 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarUiHandlers> implements
         VisualizerToolbarPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, VisualizerToolbarView> {
     }
 
@@ -115,5 +114,4 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
             }
         });
     }
-
 }

@@ -8,13 +8,11 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, VisualizerView> {
     }
 
     @UiField
     SimplePanel entityListPanel;
-
     @UiField
     SimplePanel toolbar;
 
@@ -33,5 +31,4 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
             }
         }
     }
-
 }

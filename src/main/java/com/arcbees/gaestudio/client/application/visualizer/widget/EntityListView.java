@@ -25,7 +25,6 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, EntityListView> {
     }
 
@@ -193,5 +192,4 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         }
         currentProperties.clear();
     }
-
 }

@@ -30,10 +30,9 @@ import com.gwtplatform.mvp.client.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
-        implements KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler,
+public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView> implements
+        KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler,
         RefreshEntitiesEvent.RefreshEntitiesHandler, EntityDeletedEvent.EntityDeletedHandler {
-
     public interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
 
@@ -58,7 +57,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         super(eventBus, view);
 
         getView().setUiHandlers(this);
-        
+
         this.dispatcher = dispatcher;
 
         setTableDataProvider();
@@ -139,9 +138,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         } else {
             Range range = display.getVisibleRange();
             dispatcher.execute(
-                    new GetEntitiesByKindAction.Builder(currentKind).offset(range.getStart()).limit(range.getLength()
-                    ).build(),
-                    new AsyncCallbackImpl<GetEntitiesByKindResult>() {
+                    new GetEntitiesByKindAction.Builder(currentKind).offset(range.getStart()).limit(range.getLength())
+                            .build(), new AsyncCallbackImpl<GetEntitiesByKindResult>() {
                         @Override
                         public void onSuccess(GetEntitiesByKindResult result) {
                             onLoadPageSuccess(result, display);
@@ -161,5 +159,4 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         getView().setData(display.getVisibleRange(), parsedEntityEntities);
     }
-
 }

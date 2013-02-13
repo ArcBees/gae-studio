@@ -7,7 +7,6 @@ package com.arcbees.gaestudio.shared.dto.query;
 import java.io.Serializable;
 
 public class QueryFilterDto implements Serializable {
-
     private static final long serialVersionUID = 1284195709357989944L;
 
     private String property;
@@ -35,5 +34,4 @@ public class QueryFilterDto implements Serializable {
     public String getValue() {
         return value;
     }
-
 }

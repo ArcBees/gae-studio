@@ -12,7 +12,6 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, DetailsView> {
     }
 
@@ -63,5 +62,4 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
 
         return builder.toString();
     }
-
 }

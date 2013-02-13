@@ -19,7 +19,6 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> implements StatementPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, StatementView> {
     }
 
@@ -50,7 +49,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
 
     @SuppressWarnings("unchecked")
     @Override
-    public void displayStatements(FilterValue filterValue) {
+    public void displayStatements(FilterValue<?> filterValue) {
         List statements = filterValue.getStatements();
         Collections.sort(statements, new StatementIdComparator());
 
@@ -68,5 +67,4 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
             return o1.getStatementId().compareTo(o2.getStatementId());
         }
     }
-
 }

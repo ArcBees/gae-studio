@@ -6,7 +6,6 @@ import com.google.inject.Provider;
 
 // TODO externalize magic strings
 public class RequestIdProvider implements Provider<Long> {
-    
     private final MemcacheService memcacheService;
 
     @Inject
@@ -18,5 +17,4 @@ public class RequestIdProvider implements Provider<Long> {
     public Long get() {
         return memcacheService.increment("request.counter", 1L, 0L);
     }
-
 }

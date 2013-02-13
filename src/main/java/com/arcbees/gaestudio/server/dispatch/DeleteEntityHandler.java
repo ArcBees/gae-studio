@@ -18,18 +18,14 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 import java.util.logging.Logger;
 
-public class DeleteEntityHandler
-        extends AbstractActionHandler<DeleteEntityAction, DeleteEntityResult> {
-
+public class DeleteEntityHandler extends AbstractActionHandler<DeleteEntityAction, DeleteEntityResult> {
     @Inject
     public DeleteEntityHandler(final Logger logger) {
         super(DeleteEntityAction.class);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public DeleteEntityResult execute(DeleteEntityAction action, ExecutionContext context)
-            throws ActionException {
+    public DeleteEntityResult execute(DeleteEntityAction action, ExecutionContext context) throws ActionException {
         DispatchHelper.disableApiHooks();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
@@ -43,8 +39,8 @@ public class DeleteEntityHandler
     }
 
     @Override
-    public void undo(DeleteEntityAction action, DeleteEntityResult result, ExecutionContext context) throws ActionException {
+    public void undo(DeleteEntityAction action, DeleteEntityResult result, ExecutionContext context)
+            throws ActionException {
         // Nothing to do here
     }
-
 }

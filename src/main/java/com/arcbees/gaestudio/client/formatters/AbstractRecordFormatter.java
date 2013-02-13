@@ -23,21 +23,18 @@ import com.arcbees.gaestudio.shared.dto.PutRecordDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 
 public abstract class AbstractRecordFormatter implements RecordFormatter {
-
     @Override
     public String formatRecord(DbOperationRecordDto record) {
         if (record instanceof DeleteRecordDTO) {
-            return formatRecord((DeleteRecordDTO)record);
+            return formatRecord((DeleteRecordDTO) record);
         } else if (record instanceof GetRecordDto) {
-            return formatRecord((GetRecordDto)record);
+            return formatRecord((GetRecordDto) record);
         } else if (record instanceof PutRecordDto) {
-            return formatRecord((PutRecordDto)record);
+            return formatRecord((PutRecordDto) record);
         } else if (record instanceof QueryRecordDto) {
-            return formatRecord((QueryRecordDto)record);
+            return formatRecord((QueryRecordDto) record);
         } else {
-            throw new ClassCastException(
-                    "Could not cast " + record.getClass().getName() + " to a known record type");
+            throw new ClassCastException("Could not cast " + record.getClass().getName() + " to a known record type");
         }
     }
-    
 }

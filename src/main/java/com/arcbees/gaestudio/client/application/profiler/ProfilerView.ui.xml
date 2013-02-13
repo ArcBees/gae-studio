@@ -1,6 +1,5 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-
     <g:DockLayoutPanel>
         <g:north size="30">
             <g:SimplePanel ui:field="toolbarPanel"/>
@@ -30,5 +29,4 @@
             </g:SplitLayoutPanel>
         </g:center>
     </g:DockLayoutPanel>
-
 </ui:UiBinder>

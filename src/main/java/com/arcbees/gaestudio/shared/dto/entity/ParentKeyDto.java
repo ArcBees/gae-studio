@@ -3,9 +3,7 @@ package com.arcbees.gaestudio.shared.dto.entity;
 import java.io.Serializable;
 
 public class ParentKeyDto implements Serializable {
-
     private String kind;
-
     private Long id;
 
     @SuppressWarnings("unused")
@@ -24,5 +22,4 @@ public class ParentKeyDto implements Serializable {
     public Long getId() {
         return id;
     }
-
 }

@@ -1,10 +1,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
-
     <ui:style>
-
         .text {
             padding-left: 22px;
         }
@@ -14,14 +11,11 @@
             left: 13px;
             top: 4px;
         }
-
     </ui:style>
-
     <g:HTMLPanel ui:field="button" styleName="{resources.styles.toolbarButton}">
         <div class="{style.image}">
             <g:Image ui:field="image"/>
         </div>
         <g:InlineLabel ui:field="text" styleName="{style.text}"/>
     </g:HTMLPanel>
-
 </ui:UiBinder>

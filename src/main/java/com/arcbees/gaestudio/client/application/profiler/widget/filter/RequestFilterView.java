@@ -15,7 +15,6 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandlers> implements
         RequestFilterPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, RequestFilterView> {
     }
 
@@ -52,5 +51,4 @@ public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandler
         });
         requests.setSelectionModel(selectionModel);
     }
-
 }

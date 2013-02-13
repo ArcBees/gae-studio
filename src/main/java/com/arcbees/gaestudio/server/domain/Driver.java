@@ -9,7 +9,6 @@ import com.googlecode.objectify.annotation.Id;
 
 @Entity
 public class Driver {
-
     @Id
     private Long id;
     private String firstName;
@@ -67,5 +66,4 @@ public class Driver {
     public void setAccountBalance(Money accountBalance) {
         this.accountBalance = accountBalance;
     }
-
 }

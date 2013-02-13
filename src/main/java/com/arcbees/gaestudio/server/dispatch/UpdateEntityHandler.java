@@ -20,9 +20,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 import java.util.logging.Logger;
 
-public class UpdateEntityHandler
-        extends AbstractActionHandler<UpdateEntityAction, UpdateEntityResult> {
-
+public class UpdateEntityHandler extends AbstractActionHandler<UpdateEntityAction, UpdateEntityResult> {
     private final Logger logger;
 
     @Inject
@@ -32,10 +30,8 @@ public class UpdateEntityHandler
         this.logger = logger;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public UpdateEntityResult execute(UpdateEntityAction action, ExecutionContext context)
-            throws ActionException {
+    public UpdateEntityResult execute(UpdateEntityAction action, ExecutionContext context) throws ActionException {
         DispatchHelper.disableApiHooks();
         EntityDto entityDTO = action.getEntityDTO();
         Entity dbEntity;
@@ -55,5 +51,4 @@ public class UpdateEntityHandler
 
         return new UpdateEntityResult(EntityMapper.mapDTO(dbEntity));
     }
-
 }

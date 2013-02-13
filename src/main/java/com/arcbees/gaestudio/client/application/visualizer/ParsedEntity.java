@@ -9,7 +9,6 @@ import com.google.gwt.json.client.JSONValue;
 import java.util.Set;
 
 public class ParsedEntity {
-
     private static final String PROPERTY_MAP = "propertyMap";
 
     private EntityDto entityDTO;
@@ -58,5 +57,4 @@ public class ParsedEntity {
     public void parseJson() {
         jsonObject = JSONParser.parseStrict(getJson()).isObject();
     }
-
 }

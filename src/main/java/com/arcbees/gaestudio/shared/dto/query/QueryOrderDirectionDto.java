@@ -5,9 +5,6 @@
 package com.arcbees.gaestudio.shared.dto.query;
 
 public enum QueryOrderDirectionDto {
-
     ASCENDING,
-
     DESCENDING
-
 }

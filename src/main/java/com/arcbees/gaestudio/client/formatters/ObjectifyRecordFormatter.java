@@ -29,7 +29,6 @@ import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 import java.util.HashMap;
 
 public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
-    
     private static final HashMap<QueryFilterOperatorDto, String> FILTER_OP_SYMBOLS =
             new HashMap<QueryFilterOperatorDto, String>();
 
@@ -114,6 +113,5 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
                 ? FILTER_OP_SYMBOLS.get(operator)
                 : operator.toString();
     }
-
 }
 

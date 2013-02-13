@@ -18,7 +18,6 @@ import com.google.inject.name.Named;
 
 // TODO externalize magic literals
 public class MemcacheDbOperationRecorder implements DbOperationRecorder {
-    
     private final Provider<MemcacheService> memcacheServiceProvider;
     
     private final Provider<Long> requestIdProvider;
@@ -77,6 +76,5 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     private long generateId() {
         return memcacheServiceProvider.get().increment(MemcacheKey.DB_OPERATION_COUNTER.getName(), 1L, 0L);
     }
-
 }
 

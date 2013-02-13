@@ -22,11 +22,9 @@ package com.arcbees.gaestudio.shared.dto;
 import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
 
 public class GetRecordDto extends DbOperationRecordDto {
-
     private static final long serialVersionUID = -7824011424844857721L;
 
 //    private final GetRequest getRequest;
-//
 //    private final GetResponse getResponse;
 
     @SuppressWarnings("unused")
@@ -50,5 +48,4 @@ public class GetRecordDto extends DbOperationRecordDto {
 //    public GetResponse getGetResponse() {
 //        return getResponse;
 //    }
-
 }

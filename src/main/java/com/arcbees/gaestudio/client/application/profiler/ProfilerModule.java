@@ -18,7 +18,6 @@ import com.arcbees.gaestudio.client.formatters.RecordFormatter;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class ProfilerModule extends AbstractPresenterModule {
-
     @Override
     protected void configure() {
         install(new FilterModule());
@@ -40,5 +39,4 @@ public class ProfilerModule extends AbstractPresenterModule {
         bindPresenter(ProfilerPresenter.class, ProfilerPresenter.MyView.class,
                 ProfilerView.class, ProfilerPresenter.MyProxy.class);
     }
-
 }

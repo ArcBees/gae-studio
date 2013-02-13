@@ -7,7 +7,6 @@ package com.arcbees.gaestudio.shared.stacktrace;
 import java.io.Serializable;
 
 public class StackTraceElementDto implements Serializable {
-
     private static final long serialVersionUID = 6687981285760829193L;
 
     private String className;
@@ -41,5 +40,4 @@ public class StackTraceElementDto implements Serializable {
     public String getMethodName() {
         return methodName;
     }
-
 }

@@ -6,7 +6,6 @@ import com.google.gwt.i18n.client.NumberFormat;
 import javax.inject.Inject;
 
 public class BytesFormatter {
-
     private static final int ONE_KiB = 1024;
     private static final int ONE_MiB = ONE_KiB * 1024;
     private static final int ONE_GiB = ONE_MiB * 1024;
@@ -53,5 +52,4 @@ public class BytesFormatter {
 
         return formatter.format(converted);
     }
-
 }

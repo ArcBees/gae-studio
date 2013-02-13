@@ -8,7 +8,6 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, ProfilerView> {
     }
 
@@ -44,5 +43,4 @@ public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
             }
         }
     }
-
 }

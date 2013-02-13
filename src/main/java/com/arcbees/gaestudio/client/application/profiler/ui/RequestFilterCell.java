@@ -10,7 +10,6 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import javax.inject.Inject;
 
 public class RequestFilterCell extends AbstractCell<FilterValue<Long>> {
-
     private static final NumberFormat numberFormat = TimeNumberFormat.getFormat();
     private final AppMessages myMessages;
 
@@ -28,5 +27,4 @@ public class RequestFilterCell extends AbstractCell<FilterValue<Long>> {
         safeHtmlBuilder.append(filterValue.getStatementCount());
         safeHtmlBuilder.appendEscaped("]");
     }
-
 }

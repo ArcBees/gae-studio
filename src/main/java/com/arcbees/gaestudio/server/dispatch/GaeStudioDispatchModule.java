@@ -15,7 +15,6 @@ import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
 
 public class GaeStudioDispatchModule extends HandlerModule {
-
     @Override
     protected void configureHandlers() {
         bindHandler(GetNewDbOperationRecordsAction.class, GetNewDbOperationRecordsHandler.class);
@@ -27,5 +26,4 @@ public class GaeStudioDispatchModule extends HandlerModule {
         bindHandler(GetEmptyKindEntityAction.class, GetEmptyKindEntityHandler.class);
         bindHandler(DeleteEntityAction.class, DeleteEntityHandler.class);
     }
-
 }

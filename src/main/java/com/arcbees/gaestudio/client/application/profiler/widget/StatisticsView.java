@@ -11,7 +11,6 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, StatisticsView> {
     }
 
@@ -70,5 +69,4 @@ public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyVi
     public void updateTotalDataReceived(Integer totalDataReceived) {
         this.totalDataReceived.setHTML(bytesFormatter.format(totalDataReceived));
     }
-
 }

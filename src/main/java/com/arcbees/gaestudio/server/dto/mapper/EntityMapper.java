@@ -9,7 +9,6 @@ import com.google.appengine.api.datastore.Key;
 import com.google.gson.Gson;
 
 public class EntityMapper {
-    
     @SuppressWarnings("unused")
     private EntityMapper() {
     }
@@ -28,6 +27,5 @@ public class EntityMapper {
             return null;
         }
         return new ParentKeyDto(dbParentKey.getKind(), dbParentKey.getId());
-    }
-    
+    }    
 }

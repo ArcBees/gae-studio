@@ -21,9 +21,8 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 import java.util.Map;
 
-public class GetEmptyKindEntityHandler
-        extends AbstractActionHandler<GetEmptyKindEntityAction, GetEmptyKindEntityResult> {
-
+public class GetEmptyKindEntityHandler extends
+        AbstractActionHandler<GetEmptyKindEntityAction, GetEmptyKindEntityResult> {
     @Inject
     public GetEmptyKindEntityHandler() {
         super(GetEmptyKindEntityAction.class);
@@ -80,5 +79,4 @@ public class GetEmptyKindEntityHandler
             return null;
         }
     }
-
 }
