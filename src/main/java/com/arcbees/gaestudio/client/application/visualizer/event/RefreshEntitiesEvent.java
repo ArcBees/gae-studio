@@ -43,19 +43,4 @@ public class RefreshEntitiesEvent extends GwtEvent<RefreshEntitiesEvent.RefreshE
     protected void dispatch(RefreshEntitiesHandler handler) {
         handler.onRefreshEntities(this);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return "RefreshEntitiesEvent[" + "]";
-    }
 }

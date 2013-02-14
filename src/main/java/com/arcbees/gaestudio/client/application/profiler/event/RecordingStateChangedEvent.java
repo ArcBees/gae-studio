@@ -59,36 +59,4 @@ public class RecordingStateChangedEvent extends GwtEvent<RecordingStateChangedEv
     public Long getCurrentRecordId() {
         return currentRecordId;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        RecordingStateChangedEvent other = (RecordingStateChangedEvent) obj;
-        if (starting != other.starting)
-            return false;
-        if (currentRecordId == null) {
-            if (other.currentRecordId != null)
-                return false;
-        } else if (!currentRecordId.equals(other.currentRecordId))
-            return false;
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hashCode = 23;
-        hashCode = (hashCode * 37) + new Boolean(starting).hashCode();
-        hashCode = (hashCode * 37) + (currentRecordId == null ? 1 : currentRecordId.hashCode());
-        return hashCode;
-    }
-
-    @Override
-    public String toString() {
-        return "RecordingStateChangedEvent[" + starting + "," + currentRecordId + "]";
-    }
 }

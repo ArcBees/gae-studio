@@ -54,33 +54,4 @@ public class EntitySelectedEvent extends GwtEvent<EntitySelectedEvent.EntitySele
     public com.arcbees.gaestudio.client.application.visualizer.ParsedEntity getParsedEntity() {
         return parsedEntity;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        EntitySelectedEvent other = (EntitySelectedEvent) obj;
-        if (parsedEntity == null) {
-            if (other.parsedEntity != null)
-                return false;
-        } else if (!parsedEntity.equals(other.parsedEntity))
-            return false;
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hashCode = 23;
-        hashCode = (hashCode * 37) + (parsedEntity == null ? 1 : parsedEntity.hashCode());
-        return hashCode;
-    }
-
-    @Override
-    public String toString() {
-        return "EntitySelectedEvent[" + parsedEntity + "]";
-    }
 }
