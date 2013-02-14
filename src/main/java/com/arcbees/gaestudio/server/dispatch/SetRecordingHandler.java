@@ -15,16 +15,14 @@ import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class SetRecordingHandler
-        extends AbstractActionHandler<SetRecordingAction, SetRecordingResult> {
-
+public class SetRecordingHandler extends AbstractActionHandler<SetRecordingAction, SetRecordingResult> {
     private final HookRegistrar hookRegistrar;
     private final ListenerProvider listenerProvider;
     private final MemcacheService memcacheService;
 
     @Inject
     public SetRecordingHandler(final HookRegistrar hookRegistrar, final ListenerProvider listenerProvider,
-                               final MemcacheService memcacheService) {
+            final MemcacheService memcacheService) {
         super(SetRecordingAction.class);
 
         this.hookRegistrar = hookRegistrar;
@@ -33,8 +31,7 @@ public class SetRecordingHandler
     }
 
     @Override
-    public SetRecordingResult execute(SetRecordingAction action, ExecutionContext context)
-            throws ActionException {
+    public SetRecordingResult execute(SetRecordingAction action, ExecutionContext context) throws ActionException {
         Listener listener = listenerProvider.get();
 
         if (action.isStarting()) {
@@ -53,5 +50,4 @@ public class SetRecordingHandler
         }
         return mostRecentId;
     }
-
 }

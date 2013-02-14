@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 
 @Singleton
 public class DataGenerator extends HttpServlet {
-
     private final Logger logger;
 
     private final Random random;
@@ -30,18 +29,19 @@ public class DataGenerator extends HttpServlet {
     @Inject
     public DataGenerator(final Logger logger) {
         this.logger = logger;
+
         random = new Random();
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, 
+        IOException {
         Objectify objectify = ObjectifyService.factory().begin();
         initializeSeedData(objectify);
 
         int numStatements = random.nextInt(10);
         for (int i = 0; i < numStatements; ++i) {
-            objectify.query(Car.class).filter("year", 2000 + i).get();
+            objectify.load().type(Car.class).filter("year", 2000 + i).first().get();
         }
 
         logger.info("Fired off " + numStatements + " queries");
@@ -50,18 +50,17 @@ public class DataGenerator extends HttpServlet {
     }
 
     private void initializeSeedData(Objectify objectify) {
-        if (objectify.query(Driver.class).count() == 0) {
+        if (objectify.load().type(Driver.class).count() == 0) {
             logger.info("Initializing seed data");
             for (int i = 0; i < 50; ++i) {
                 Money accountBalance = new Money(i + 1.5d, Currency.USD);
                 Driver driver = new Driver("John", "Doe #" + i, new Date(), accountBalance);
-                objectify.put(driver);
+                objectify.save().entities(driver);
 
                 Key driverKey = KeyFactory.createKey("Driver", driver.getId());
                 Car car = new Car("Tooa", "Tera", 2000 + i % 10, driverKey);
-                objectify.put(car);
+                objectify.save().entities(car);
             }
         }
     }
-
 }

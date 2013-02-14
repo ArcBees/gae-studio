@@ -8,19 +8,18 @@ import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRec
 import com.arcbees.gaestudio.client.application.profiler.event.FilterValueSelectedEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.StatementSelectedEvent;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterValue;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
-public class StatementPresenter extends PresenterWidget<StatementPresenter.MyView>
-        implements FilterValueSelectedEvent.FilterValueSelectedHandler, StatementUiHandlers,
+public class StatementPresenter extends PresenterWidget<StatementPresenter.MyView> implements
+        FilterValueSelectedEvent.FilterValueSelectedHandler, StatementUiHandlers,
         ClearOperationRecordsEvent.ClearOperationRecordsHandler {
-
     public interface MyView extends View, HasUiHandlers<StatementUiHandlers> {
-        void displayStatements(FilterValue filterValue);
+        void displayStatements(FilterValue<?> filterValue);
 
         void clear();
     }
@@ -28,6 +27,8 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
     @Inject
     public StatementPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
+        
+        getView().setUiHandlers(this);
     }
 
     @Override
@@ -40,12 +41,12 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
 
     @Override
     public void onFilterValueSelected(FilterValueSelectedEvent event) {
-        FilterValue filterValue = event.getFilterValue();
+        FilterValue<?> filterValue = event.getFilterValue();
         getView().displayStatements(filterValue);
     }
 
     @Override
-    public void onStatementClicked(DbOperationRecordDTO record) {
+    public void onStatementClicked(DbOperationRecordDto record) {
         StatementSelectedEvent.fire(this, record);
     }
 

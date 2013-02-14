@@ -1,9 +1,7 @@
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
-import com.arcbees.core.client.mvp.ViewWithUiHandlers;
-import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
-import com.arcbees.gaestudio.client.MyConstants;
-import com.arcbees.gaestudio.client.Resources;
+import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -12,15 +10,15 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implements FiltersPresenter.MyView,
         ChangeHandler {
-
     public interface Binder extends UiBinder<Widget, FiltersView> {
     }
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
     @UiField
     SimplePanel request;
     @UiField
@@ -30,14 +28,11 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
     @UiField
     SimplePanel type;
 
-    private final MyConstants myConstants;
+    private final AppConstants myConstants;
     private Filter currentlySelectedFilter = Filter.REQUEST;
 
     @Inject
-    public FiltersView(final Binder uiBinder, final Resources resources, final MyConstants myConstants,
-                       final UiHandlersStrategy<FiltersUiHandlers> uiHandlersStrategy) {
-        super(uiHandlersStrategy);
-
+    public FiltersView(final Binder uiBinder, final AppResources resources, final AppConstants myConstants) {
         this.resources = resources;
         this.myConstants = myConstants;
 
@@ -86,13 +81,12 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
 
     private Widget getPanelFromFilter(Filter filter) {
         switch (filter) {
-            case METHOD:
-                return method;
-            case TYPE:
-                return type;
-            default:
-                return request;
+        case METHOD:
+            return method;
+        case TYPE:
+            return type;
+        default:
+            return request;
         }
     }
-
 }

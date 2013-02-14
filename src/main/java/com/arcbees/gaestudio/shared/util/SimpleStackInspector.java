@@ -21,7 +21,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class SimpleStackInspector implements StackInspector {
-
     // TODO support wildcards, also externalize to configuration
     private static final String _IGNORED_PACKAGES[] = {
             "java.lang",
@@ -56,5 +55,4 @@ public class SimpleStackInspector implements StackInspector {
         int lastDotIndex = className.lastIndexOf('.');
         return lastDotIndex != -1 ? className.substring(0, lastDotIndex) : "";
     }
-
 }

@@ -1,0 +1,26 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:style>
+        .panel {
+            padding: 0 10px 10px 10px;
+        }
+    </ui:style>
+    <g:HTMLPanel styleName="{style.panel}">
+        <h3>Statistics</h3>
+        <p>Total Requests:
+            <g:InlineHTML ui:field="requestCount"/>
+        </p>
+        <p>Total Statements:
+            <g:InlineHTML ui:field="statementCount"/>
+        </p>
+        <p>Total Execution Time:
+            <g:InlineHTML ui:field="totalExecutionTime"/>
+        </p>
+        <p>Total Objects Retrieved:
+            <g:InlineHTML ui:field="totalObjectsRetrieved"/>
+        </p>
+        <p>Total Data Received:
+            <g:InlineHTML ui:field="totalDataReceived"/>
+        </p>
+    </g:HTMLPanel>
+</ui:UiBinder>

@@ -9,7 +9,6 @@ import com.google.inject.assistedinject.Assisted;
 import javax.inject.Inject;
 
 public class PropertyColumn extends TextColumn<ParsedEntity> {
-
     private String property;
 
     @Inject
@@ -44,5 +43,4 @@ public class PropertyColumn extends TextColumn<ParsedEntity> {
         }
         return text;
     }
-
 }

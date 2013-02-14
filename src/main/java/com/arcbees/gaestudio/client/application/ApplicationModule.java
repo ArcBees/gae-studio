@@ -9,7 +9,6 @@ import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class ApplicationModule extends AbstractPresenterModule {
-
     @Override
     protected void configure() {
         install(new HeaderModule());
@@ -21,5 +20,4 @@ public class ApplicationModule extends AbstractPresenterModule {
         bindPresenter(ApplicationPresenter.class, ApplicationPresenter.MyView.class, ApplicationView.class,
                 ApplicationPresenter.MyProxy.class);
     }
-
 }

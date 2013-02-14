@@ -1,8 +1,8 @@
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
-import com.arcbees.core.client.mvp.ViewWithUiHandlers;
-import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
-import com.arcbees.gaestudio.client.Resources;
+import java.util.Map;
+
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -11,12 +11,10 @@ import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-
-import java.util.Map;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
         implements MethodFilterPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, MethodFilterView> {
     }
 
@@ -24,14 +22,12 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
     Tree methods;
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
 
     @Inject
-    public MethodFilterView(final Binder uiBinder, final Resources resources,
-                            final UiHandlersStrategy<MethodFilterUiHandlers> uiHandlersStrategy) {
-        super(uiHandlersStrategy);
-
+    public MethodFilterView(final Binder uiBinder, final AppResources resources) {
         this.resources = resources;
+        
         initWidget(uiBinder.createAndBindUi(this));
 
         methods.addSelectionHandler(new SelectionHandler<TreeItem>() {
@@ -54,6 +50,7 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
         methods.clear();
 
         for (Map.Entry<String, Map<String, FilterValue<String>>> classFilter : statementsByMethodAndClass.entrySet()) {
+            // TODO TreeItem deprecated
             TreeItem classTreeItem = new TreeItem(classFilter.getKey());
 
             for (String methodName : classFilter.getValue().keySet()) {
@@ -74,5 +71,4 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
 
         return parentItem.getText();
     }
-
 }

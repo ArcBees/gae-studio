@@ -1,29 +1,25 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module rename-to='gaestudio'>
-    <!-- Inherit the core Web Toolkit stuff.                        -->
-    <inherits name='com.google.gwt.inject.Inject'/>
+    <!-- Inherit the core Web Toolkit stuff. -->
+    <inherits name='com.google.gwt.inject.Inject' />
 
-    <!-- Inherit the default GWT style sheet.  You can change       -->
-    <!-- the theme of your GWT application by uncommenting          -->
-    <!-- any one of the following lines.                            -->
-    <inherits name='com.google.gwt.user.theme.standard.Standard'/>
-    <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
-    <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+    <!-- Inherit the default GWT style sheet. -->
+    <inherits name='com.google.gwt.user.theme.standard.Standard' />
 
-    <!-- Other module inherits                                      -->
-    <inherits name='com.gwtplatform.dispatch.Dispatch'/>
-    <inherits name="com.arcbees.core.Mvp"/>
-    <inherits name="com.google.gwt.json.JSON"/>
-    <inherits name="com.google.gwt.query.Query"/>
+    <!-- Other module inherits -->
+    <inherits name='com.gwtplatform.dispatch.Dispatch' />
+    <inherits name="com.google.gwt.json.JSON" />
+    <inherits name="com.google.gwt.query.Query" />
 
-    <!-- Specify the app entry point class.                         -->
-    <entry-point class='com.arcbees.gaestudio.client.GaeStudio'/>
+    <inherits name='com.gwtplatform.mvp.MvpWithEntryPoint' />
 
-    <!-- Specify the paths for translatable code                    -->
-    <source path='client'/>
-    <source path='shared'/>
+    <!-- Specify the paths for translatable code -->
+    <source path='client' />
+    <source path='shared' />
 
-    <define-configuration-property name='gin.ginjector' is-multi-valued='false'/>
-    <set-configuration-property name='gin.ginjector' value='com.arcbees.gaestudio.client.gin.ClientGinjector'/>
-
+    <set-configuration-property name="gin.ginjector.modules" 
+                                value="com.arcbees.gaestudio.client.gin.ClientModule" />
+                                
+    <set-configuration-property name="gin.ginjector.extensions"
+                                value="com.arcbees.gaestudio.client.gin.GinjectorExtension" />
 </module>

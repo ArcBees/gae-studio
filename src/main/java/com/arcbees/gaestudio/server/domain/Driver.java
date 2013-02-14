@@ -1,14 +1,14 @@
 package com.arcbees.gaestudio.server.domain;
 
-import com.googlecode.objectify.annotation.Entity;
+import java.util.Date;
 
 import javax.persistence.Embedded;
-import javax.persistence.Id;
-import java.util.Date;
+
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 @Entity
 public class Driver {
-
     @Id
     private Long id;
     private String firstName;
@@ -66,5 +66,4 @@ public class Driver {
     public void setAccountBalance(Money accountBalance) {
         this.accountBalance = accountBalance;
     }
-
 }

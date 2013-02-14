@@ -5,16 +5,16 @@
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
         implements DbOperationRecordProcessor, FiltersUiHandlers {
-
-    public interface MyView extends View {
+    public interface MyView extends View, HasUiHandlers<FiltersUiHandlers> {
         Filter getCurrentlyDisplayedFilter();
     }
 
@@ -32,6 +32,8 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
                             final MethodFilterPresenter methodFilterPresenter,
                             final TypeFilterPresenter typeFilterPresenter) {
         super(eventBus, view);
+        
+        getView().setUiHandlers(this);
 
         this.requestFilterPresenter = requestFilterPresenter;
         this.methodFilterPresenter = methodFilterPresenter;
@@ -39,7 +41,7 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
     }
 
     @Override
-    public void processDbOperationRecord(DbOperationRecordDTO record) {
+    public void processDbOperationRecord(DbOperationRecordDto record) {
         requestFilterPresenter.processDbOperationRecord(record);
         methodFilterPresenter.processDbOperationRecord(record);
         typeFilterPresenter.processDbOperationRecord(record);
@@ -82,5 +84,4 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
         setInSlot(TYPE_MethodFilter, methodFilterPresenter);
         setInSlot(TYPE_TypeFilter, typeFilterPresenter);
     }
-
 }

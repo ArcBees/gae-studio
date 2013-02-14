@@ -1,0 +1,21 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:cellview="urn:import:com.google.gwt.user.cellview.client">
+    <ui:style>
+        .entityTable td, .entityTable td:hover {
+            border: none;
+            line-height: 16px;
+        }
+
+        .heading {
+           margin-left: 40px;
+        }
+    </ui:style>
+    <g:HTMLPanel ui:field="panel" visible="false">
+        <div class="{style.heading}">
+            <h3>Entity : <g:InlineLabel ui:field="entityName"/></h3>
+            <cellview:SimplePager ui:field="pager" location="LEFT"/>
+        </div>
+        <cellview:CellTable ui:field="entityTable" styleName="{style.entityTable}"/>
+    </g:HTMLPanel>
+</ui:UiBinder>

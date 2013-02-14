@@ -1,6 +1,5 @@
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
-import com.arcbees.core.client.mvp.ViewImpl;
 import com.arcbees.gaestudio.client.formatters.BytesFormatter;
 import com.arcbees.gaestudio.client.util.TimeNumberFormat;
 import com.google.gwt.i18n.client.NumberFormat;
@@ -9,9 +8,9 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewImpl;
 
 public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, StatisticsView> {
     }
 
@@ -36,6 +35,7 @@ public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyVi
     @Inject
     public StatisticsView(final Binder uiBinder, final BytesFormatter bytesFormatter) {
         this.bytesFormatter = bytesFormatter;
+        
         initWidget(uiBinder.createAndBindUi(this));
 
         updateRequestCount(0);
@@ -69,5 +69,4 @@ public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyVi
     public void updateTotalDataReceived(Integer totalDataReceived) {
         this.totalDataReceived.setHTML(bytesFormatter.format(totalDataReceived));
     }
-
 }

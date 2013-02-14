@@ -11,7 +11,6 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> implements HeaderUiHandlers {
-
     public interface MyView extends View, HasUiHandlers<HeaderUiHandlers> {
     }
 
@@ -19,5 +18,4 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
     public HeaderPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
     }
-
 }

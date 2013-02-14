@@ -14,15 +14,13 @@ import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetEntityCountByKindHandler
-        extends AbstractActionHandler<GetEntityCountByKindAction, GetEntityCountByKindResult> {
-
+public class GetEntityCountByKindHandler extends
+        AbstractActionHandler<GetEntityCountByKindAction, GetEntityCountByKindResult> {
     @Inject
     public GetEntityCountByKindHandler() {
         super(GetEntityCountByKindAction.class);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public GetEntityCountByKindResult execute(GetEntityCountByKindAction action, ExecutionContext context)
             throws ActionException {
@@ -36,5 +34,4 @@ public class GetEntityCountByKindHandler
 
         return new GetEntityCountByKindResult(count);
     }
-
 }

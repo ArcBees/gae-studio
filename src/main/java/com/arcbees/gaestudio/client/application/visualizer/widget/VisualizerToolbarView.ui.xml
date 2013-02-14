@@ -1,0 +1,9 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <g:HTMLPanel styleName="{resources.styles.toolbar}">
+        <g:SimplePanel ui:field="kinds" styleName="{resources.styles.toolbarButton}"/>
+        <g:HTMLPanel ui:field="buttons" visible="false"/>
+        <div class="{resources.styles.clear}"/>
+    </g:HTMLPanel>
+</ui:UiBinder>

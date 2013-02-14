@@ -1,7 +1,7 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDTO;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
@@ -9,14 +9,13 @@ import com.google.gwt.json.client.JSONValue;
 import java.util.Set;
 
 public class ParsedEntity {
-
     private static final String PROPERTY_MAP = "propertyMap";
 
-    private EntityDTO entityDTO;
+    private EntityDto entityDTO;
     private JSONObject jsonObject;
 
-    public ParsedEntity(EntityDTO entityDTO) {
-        this.entityDTO = new EntityDTO(entityDTO.getKey(), entityDTO.getJson());
+    public ParsedEntity(EntityDto entityDTO) {
+        this.entityDTO = new EntityDto(entityDTO.getKey(), entityDTO.getJson());
 
         parseJson();
     }
@@ -37,17 +36,17 @@ public class ParsedEntity {
         return jsonObject.get(PROPERTY_MAP).isObject();
     }
 
-    public void setEntityDTO(EntityDTO entityDTO) {
+    public void setEntityDTO(EntityDto entityDTO) {
         this.entityDTO = entityDTO;
 
         parseJson();
     }
 
-    public EntityDTO getEntityDTO() {
+    public EntityDto getEntityDTO() {
         return entityDTO;
     }
 
-    public KeyDTO getKey() {
+    public KeyDto getKey() {
         return entityDTO.getKey();
     }
 
@@ -58,5 +57,4 @@ public class ParsedEntity {
     public void parseJson() {
         jsonObject = JSONParser.parseStrict(getJson()).isObject();
     }
-
 }

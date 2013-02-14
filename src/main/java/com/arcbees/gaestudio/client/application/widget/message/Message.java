@@ -1,7 +1,6 @@
 package com.arcbees.gaestudio.client.application.widget.message;
 
 public class Message {
-
     private final String message;
     private final MessageStyle style;
     private final MessageCloseDelay closeDelay;
@@ -27,5 +26,4 @@ public class Message {
     public MessageCloseDelay getCloseDelay() {
         return closeDelay;
     }
-
 }

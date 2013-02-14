@@ -18,7 +18,6 @@ import com.gwtplatform.mvp.client.View;
 
 public class ProfilerToolbarPresenter extends PresenterWidget<ProfilerToolbarPresenter.MyView> implements
         ProfilerToolbarUiHandlers {
-
     public interface MyView extends View, HasUiHandlers<ProfilerToolbarUiHandlers> {
         void setRecordingState(Boolean isRecording);
     }
@@ -29,6 +28,8 @@ public class ProfilerToolbarPresenter extends PresenterWidget<ProfilerToolbarPre
     public ProfilerToolbarPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
         super(eventBus, view);
 
+        getView().setUiHandlers(this);
+        
         this.dispatcher = dispatcher;
     }
 
@@ -52,6 +53,5 @@ public class ProfilerToolbarPresenter extends PresenterWidget<ProfilerToolbarPre
     public void clearOperationRecords() {
         ClearOperationRecordsEvent.fire(this);
     }
-
 }
 

@@ -6,11 +6,11 @@ package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.client.application.profiler.event.FilterValueSelectedEvent;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.arcbees.gaestudio.shared.dto.DeleteRecordDTO;
-import com.arcbees.gaestudio.shared.dto.GetRecordDTO;
-import com.arcbees.gaestudio.shared.dto.PutRecordDTO;
-import com.arcbees.gaestudio.shared.dto.query.QueryRecordDTO;
+import com.arcbees.gaestudio.shared.dto.GetRecordDto;
+import com.arcbees.gaestudio.shared.dto.PutRecordDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -24,7 +24,6 @@ import java.util.TreeMap;
 
 public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyView>
         implements DbOperationRecordProcessor, TypeFilterUiHandlers {
-
     public interface MyView extends View, HasUiHandlers<TypeFilterUiHandlers> {
         void display(List<FilterValue<OperationType>> filterValues);
     }
@@ -35,10 +34,12 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
     @Inject
     public TypeFilterPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
+        
+        getView().setUiHandlers(this);
     }
 
     @Override
-    public void processDbOperationRecord(DbOperationRecordDTO record) {
+    public void processDbOperationRecord(DbOperationRecordDto record) {
         OperationType type = getType(record);
 
         FilterValue<OperationType> filterValue = statementsByType.get(type);
@@ -66,18 +67,17 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
         FilterValueSelectedEvent.fire(this, filterValue);
     }
 
-    private OperationType getType(DbOperationRecordDTO record) {
-        if (record instanceof GetRecordDTO) {
+    private OperationType getType(DbOperationRecordDto record) {
+        if (record instanceof GetRecordDto) {
             return OperationType.GET;
-        } else if (record instanceof PutRecordDTO) {
+        } else if (record instanceof PutRecordDto) {
             return OperationType.PUT;
         } else if (record instanceof DeleteRecordDTO) {
             return OperationType.DELETE;
-        } else if (record instanceof QueryRecordDTO) {
+        } else if (record instanceof QueryRecordDto) {
             return OperationType.QUERY;
         } else {
             return OperationType.UNKNOWN;
         }
     }
-
 }

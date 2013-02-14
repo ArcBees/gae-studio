@@ -7,7 +7,7 @@ package com.arcbees.gaestudio.server.dispatch;
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.FetchOptions;
@@ -21,11 +21,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 // TODO add logging
-public class GetEntitiesByKindHandler
-        extends AbstractActionHandler<GetEntitiesByKindAction, GetEntitiesByKindResult> {
-    
+public class GetEntitiesByKindHandler extends AbstractActionHandler<GetEntitiesByKindAction, GetEntitiesByKindResult> {
     private final Logger logger;
-    
+
     @Inject
     public GetEntitiesByKindHandler(final Logger logger) {
         super(GetEntitiesByKindAction.class);
@@ -36,11 +34,10 @@ public class GetEntitiesByKindHandler
     @Override
     public GetEntitiesByKindResult execute(GetEntitiesByKindAction action, ExecutionContext context)
             throws ActionException {
-
         DispatchHelper.disableApiHooks();
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        
+
         FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
         if (action.getOffset() != null) {
             fetchOptions.offset(action.getOffset());
@@ -51,13 +48,12 @@ public class GetEntitiesByKindHandler
 
         Query query = new Query(action.getKind());
         List<com.google.appengine.api.datastore.Entity> results = datastore.prepare(query).asList(fetchOptions);
-        
-        ArrayList<EntityDTO> entities = new ArrayList<EntityDTO>(results.size());
+
+        ArrayList<EntityDto> entities = new ArrayList<EntityDto>(results.size());
         for (com.google.appengine.api.datastore.Entity dbEntity : results) {
             entities.add(EntityMapper.mapDTO(dbEntity));
         }
-        
+
         return new GetEntitiesByKindResult(entities);
     }
-
 }

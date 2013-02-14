@@ -1,19 +1,18 @@
 package com.arcbees.gaestudio.client.application.profiler.ui;
 
-import com.arcbees.gaestudio.client.MyConstants;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterValue;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.OperationType;
+import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
 import javax.inject.Inject;
 
 public class TypeFilterCell extends AbstractCell<FilterValue<OperationType>> {
-
-    private final MyConstants myConstants;
+    private final AppConstants myConstants;
 
     @Inject
-    public TypeFilterCell(final MyConstants myConstants){
+    public TypeFilterCell(final AppConstants myConstants){
         this.myConstants = myConstants;
     }
 
@@ -39,5 +38,4 @@ public class TypeFilterCell extends AbstractCell<FilterValue<OperationType>> {
                 return myConstants.unknownOperationType();
         }
     }
-
 }

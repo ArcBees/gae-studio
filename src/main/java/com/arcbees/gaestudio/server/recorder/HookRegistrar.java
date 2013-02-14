@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 public class HookRegistrar {
-
     private final Logger logger;
     private final ApiProxyHook hook;
     private final Set<Listener> listeners = new HashSet<Listener>();
@@ -46,5 +45,4 @@ public class HookRegistrar {
             logger.info("Recording, " + listeners.size() + " listeners left");
         }
     }
-
 }

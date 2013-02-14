@@ -1,7 +1,6 @@
 package com.arcbees.gaestudio.client.application.widget.message;
 
 public enum MessageCloseDelay {
-
     NEVER(0),
     DEFAULT(5000),
     LONG(20000);
@@ -15,5 +14,4 @@ public enum MessageCloseDelay {
     public int getDelay() {
         return delay;
     }
-
 }

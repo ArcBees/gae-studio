@@ -13,9 +13,7 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.gwtplatform.mvp.client.proxy.RevealRootLayoutContentEvent;
 
-public class ApplicationPresenter extends
-        Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy> {
-
+public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy> {
     public interface MyView extends View {
     }
 
@@ -34,7 +32,7 @@ public class ApplicationPresenter extends
 
     @Inject
     public ApplicationPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                                final HeaderPresenter headerPresenter, final MessagesPresenter messagesPresenter) {
+            final HeaderPresenter headerPresenter, final MessagesPresenter messagesPresenter) {
         super(eventBus, view, proxy);
 
         this.headerPresenter = headerPresenter;
@@ -53,5 +51,4 @@ public class ApplicationPresenter extends
         setInSlot(TYPE_SetHeaderContent, headerPresenter);
         setInSlot(TYPE_SetMessagesContent, messagesPresenter);
     }
-
 }

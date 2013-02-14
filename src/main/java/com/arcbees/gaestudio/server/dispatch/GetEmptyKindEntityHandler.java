@@ -7,7 +7,7 @@ package com.arcbees.gaestudio.server.dispatch;
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityResult;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -21,9 +21,8 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 import java.util.Map;
 
-public class GetEmptyKindEntityHandler
-        extends AbstractActionHandler<GetEmptyKindEntityAction, GetEmptyKindEntityResult> {
-
+public class GetEmptyKindEntityHandler extends
+        AbstractActionHandler<GetEmptyKindEntityAction, GetEmptyKindEntityResult> {
     @Inject
     public GetEmptyKindEntityHandler() {
         super(GetEmptyKindEntityAction.class);
@@ -48,7 +47,7 @@ public class GetEmptyKindEntityHandler
             // And call method metadata.toEntity
         }
 
-        EntityDTO entityDTO = EntityMapper.mapDTO(emptyEntity);
+        EntityDto entityDTO = EntityMapper.mapDTO(emptyEntity);
         return new GetEmptyKindEntityResult(entityDTO);
     }
 
@@ -80,5 +79,4 @@ public class GetEmptyKindEntityHandler
             return null;
         }
     }
-
 }

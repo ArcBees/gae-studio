@@ -33,7 +33,6 @@ import com.google.inject.assistedinject.Assisted;
 import java.util.logging.Logger;
 
 public class DbOperationRecorderHook extends BaseHook {
-
     private final Logger logger;
 
     private final DbOperationRecorder dbOperationRecorder;
@@ -139,5 +138,4 @@ public class DbOperationRecorderHook extends BaseHook {
 
         return result;
     }
-
 }

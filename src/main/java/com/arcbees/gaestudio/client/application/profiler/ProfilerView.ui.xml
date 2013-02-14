@@ -1,0 +1,32 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <g:DockLayoutPanel>
+        <g:north size="30">
+            <g:SimplePanel ui:field="toolbarPanel"/>
+        </g:north>
+        <g:center>
+            <g:SplitLayoutPanel>
+                <g:west size="300">
+                    <g:SplitLayoutPanel>
+                        <g:center>
+                            <g:SimplePanel ui:field="requestPanel"/>
+                        </g:center>
+                        <g:south size="350">
+                            <g:SimplePanel ui:field="statisticsPanel"/>
+                        </g:south>
+                    </g:SplitLayoutPanel>
+                </g:west>
+                <g:center>
+                    <g:SplitLayoutPanel>
+                        <g:center>
+                            <g:SimplePanel ui:field="statementPanel"/>
+                        </g:center>
+                        <g:south size="400">
+                            <g:SimplePanel ui:field="detailsPanel"/>
+                        </g:south>
+                    </g:SplitLayoutPanel>
+                </g:center>
+            </g:SplitLayoutPanel>
+        </g:center>
+    </g:DockLayoutPanel>
+</ui:UiBinder>

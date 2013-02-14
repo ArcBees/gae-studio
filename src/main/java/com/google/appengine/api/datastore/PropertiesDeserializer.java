@@ -12,7 +12,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class PropertiesDeserializer implements JsonDeserializer<Map> {
-
     @Override
     @SuppressWarnings("unchecked")
     public Map deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws
@@ -46,5 +45,4 @@ public class PropertiesDeserializer implements JsonDeserializer<Map> {
         }
         return false;
     }
-
 }

@@ -1,12 +1,10 @@
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
-import com.arcbees.core.client.mvp.ViewWithUiHandlers;
-import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
-import com.arcbees.gaestudio.client.MyConstants;
-import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
+import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -15,34 +13,32 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHandlers> implements
         ProfilerToolbarPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, ProfilerToolbarView> {
     }
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
     @UiField
     HTMLPanel buttons;
 
     private final UiFactory uiFactory;
-    private final MyConstants myConstants;
+    private final AppConstants myConstants;
     private final ToolbarButton record;
     private final ToolbarButton stop;
     private final ToolbarButton clear;
     private Boolean isRecording = false;
 
     @Inject
-    public ProfilerToolbarView(final Binder uiBinder, final Resources resources, final UiFactory uiFactory,
-                               final UiHandlersStrategy<ProfilerToolbarUiHandlers> uiHandlersStrategy,
-                               final MyConstants myConstants) {
-        super(uiHandlersStrategy);
-
+    public ProfilerToolbarView(final Binder uiBinder, final AppResources resources, final UiFactory uiFactory,
+            final AppConstants myConstants) {
         this.resources = resources;
         this.uiFactory = uiFactory;
         this.myConstants = myConstants;
+        
         initWidget(uiBinder.createAndBindUi(this));
 
         stopRecordindWhenWindowIsClosed();

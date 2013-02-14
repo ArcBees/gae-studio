@@ -1,18 +1,17 @@
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
-import com.arcbees.core.client.mvp.ViewImpl;
-import com.arcbees.gaestudio.client.Resources;
 import com.arcbees.gaestudio.client.formatters.RecordFormatter;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
-import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDTO;
+import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
+import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewImpl;
 
 public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, DetailsView> {
     }
 
@@ -23,19 +22,21 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
     HTML callLocation;
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
 
     private final RecordFormatter recordFormatter;
 
     @Inject
-    public DetailsView(final Binder uiBinder, final Resources resources, final RecordFormatter recordFormatter) {
+    public DetailsView(final Binder uiBinder, final AppResources resources, final RecordFormatter recordFormatter) {
         this.resources = resources;
+
         initWidget(uiBinder.createAndBindUi(this));
+
         this.recordFormatter = recordFormatter;
     }
 
     @Override
-    public void displayStatementDetails(DbOperationRecordDTO record) {
+    public void displayStatementDetails(DbOperationRecordDto record) {
         statement.setHTML(recordFormatter.formatRecord(record));
         callLocation.setHTML(tempFormatCaller(record.getCallerStackTraceElement()));
     }
@@ -47,7 +48,7 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
     }
 
     // TODO this is just a quick hack
-    private String tempFormatCaller(StackTraceElementDTO caller) {
+    private String tempFormatCaller(StackTraceElementDto caller) {
         StringBuilder builder = new StringBuilder();
 
         builder.append("Class:");
@@ -61,5 +62,4 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
 
         return builder.toString();
     }
-
 }

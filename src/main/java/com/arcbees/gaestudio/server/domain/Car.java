@@ -2,12 +2,10 @@ package com.arcbees.gaestudio.server.domain;
 
 import com.google.appengine.api.datastore.Key;
 import com.googlecode.objectify.annotation.Entity;
-
-import javax.persistence.Id;
+import com.googlecode.objectify.annotation.Id;
 
 @Entity
 public class Car {
-
     @Id
     private Long id;
     private String manufacturer;
@@ -64,5 +62,4 @@ public class Car {
     public void setDriverKey(Key driverKey) {
         this.driverKey = driverKey;
     }
-
 }

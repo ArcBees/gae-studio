@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 public class BaseHook implements Delegate<Environment> {
-
     private final Delegate<Environment> baseDelegate;
 
     public BaseHook(Delegate<Environment> baseDelegate) {
@@ -50,6 +49,5 @@ public class BaseHook implements Delegate<Environment> {
     
     public Delegate<Environment> getBaseDelegate() {
         return baseDelegate;
-    }
-    
+    }    
 }

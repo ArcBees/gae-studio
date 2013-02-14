@@ -6,8 +6,7 @@ import com.gwtplatform.dispatch.shared.Action;
 import com.gwtplatform.dispatch.shared.ActionException;
 import com.gwtplatform.dispatch.shared.Result;
 
-public abstract class AbstractActionHandler<A extends Action<R>, R extends Result>
-        implements ActionHandler<A, R> {
+public abstract class AbstractActionHandler<A extends Action<R>, R extends Result> implements ActionHandler<A, R> {
     private final Class<A> actionType;
 
     public AbstractActionHandler(Class<A> actionType) {
@@ -19,7 +18,6 @@ public abstract class AbstractActionHandler<A extends Action<R>, R extends Resul
     }
 
     @Override
-    public void undo(A action, R result, ExecutionContext context)
-            throws ActionException {
+    public void undo(A action, R result, ExecutionContext context) throws ActionException {
     }
 }

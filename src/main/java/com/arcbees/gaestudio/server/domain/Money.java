@@ -1,7 +1,6 @@
 package com.arcbees.gaestudio.server.domain;
 
 public class Money {
-
     private Long amount;
     private Currency currency;
 
@@ -28,5 +27,4 @@ public class Money {
     public void setCurrency(Currency currency) {
         this.currency = currency;
     }
-
 }

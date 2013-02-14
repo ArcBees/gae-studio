@@ -33,7 +33,6 @@ import javax.inject.Singleton;
 
 // TODO externalize magic strings
 public class GaeStudioRecorderModule extends AbstractModule {
-
     @Override
     protected void configure() {
         bind(Long.class).annotatedWith(Names.named("requestId")).toProvider(RequestIdProvider.class)
@@ -56,5 +55,4 @@ public class GaeStudioRecorderModule extends AbstractModule {
     private MemcacheService memcacheServiceProvider() {
         return MemcacheServiceFactory.getMemcacheService("gae.visualizer");
     }
-
 }

@@ -17,7 +17,5 @@
 package com.arcbees.gaestudio.shared.util;
 
 public interface StackInspector {
-
     StackTraceElement getCaller(StackTraceElement[] stackTrace);
-
 }

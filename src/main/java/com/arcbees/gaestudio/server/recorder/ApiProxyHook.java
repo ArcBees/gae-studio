@@ -31,7 +31,6 @@ import java.util.concurrent.TimeoutException;
 // TODO externalize magic strings
 // TODO cleanup
 public class ApiProxyHook extends BaseHook {
-
     private Map<String, Delegate<Environment>> hooks;
     boolean isRecording = false;
 
@@ -111,5 +110,4 @@ public class ApiProxyHook extends BaseHook {
         }
         return false;
     }
-
 }

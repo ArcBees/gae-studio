@@ -18,7 +18,6 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, VisualizerPresenter.MyProxy> {
-
     public interface MyView extends View {
     }
 
@@ -55,5 +54,4 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
         setInSlot(TYPE_SetEntityListPanelContent, entityListPresenter);
         setInSlot(TYPE_SetToolbarContent, visualizerToolbarPresenter);
     }
-
 }

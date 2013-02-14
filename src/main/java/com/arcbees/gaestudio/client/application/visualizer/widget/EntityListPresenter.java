@@ -16,7 +16,7 @@ import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindResult;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDTO;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -30,10 +30,9 @@ import com.gwtplatform.mvp.client.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
-        implements KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler,
+public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView> implements
+        KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler,
         RefreshEntitiesEvent.RefreshEntitiesHandler, EntityDeletedEvent.EntityDeletedHandler {
-
     public interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
 
@@ -43,11 +42,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         void setData(Range range, List<ParsedEntity> parsedEntities);
 
-        void addOrReplaceEntity(EntityDTO parsedEntity);
+        void addOrReplaceEntity(EntityDto parsedEntity);
 
         void hideList();
 
-        void removeEntity(EntityDTO entityDTO);
+        void removeEntity(EntityDto entityDTO);
     }
 
     private final DispatchAsync dispatcher;
@@ -56,6 +55,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Inject
     public EntityListPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
         super(eventBus, view);
+
+        getView().setUiHandlers(this);
 
         this.dispatcher = dispatcher;
 
@@ -137,9 +138,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         } else {
             Range range = display.getVisibleRange();
             dispatcher.execute(
-                    new GetEntitiesByKindAction.Builder(currentKind).offset(range.getStart()).limit(range.getLength()
-                    ).build(),
-                    new AsyncCallbackImpl<GetEntitiesByKindResult>() {
+                    new GetEntitiesByKindAction.Builder(currentKind).offset(range.getStart()).limit(range.getLength())
+                            .build(), new AsyncCallbackImpl<GetEntitiesByKindResult>() {
                         @Override
                         public void onSuccess(GetEntitiesByKindResult result) {
                             onLoadPageSuccess(result, display);
@@ -152,12 +152,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private void onLoadPageSuccess(GetEntitiesByKindResult result, HasData<ParsedEntity> display) {
         List<ParsedEntity> parsedEntityEntities = new ArrayList<ParsedEntity>();
 
-        for (EntityDTO entityDTO : result.getEntities()) {
+        for (EntityDto entityDTO : result.getEntities()) {
             ParsedEntity parsedEntity = new ParsedEntity(entityDTO);
             parsedEntityEntities.add(parsedEntity);
         }
 
         getView().setData(display.getVisibleRange(), parsedEntityEntities);
     }
-
 }

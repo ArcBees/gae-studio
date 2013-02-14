@@ -1,11 +1,14 @@
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
-import com.arcbees.core.client.mvp.ViewWithUiHandlers;
-import com.arcbees.core.client.mvp.uihandlers.UiHandlersStrategy;
-import com.arcbees.gaestudio.client.Resources;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import com.arcbees.gaestudio.client.application.profiler.ui.StatementCell;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterValue;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
+import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellList;
@@ -13,39 +16,31 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> implements StatementPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, StatementView> {
     }
 
     @UiField(provided = true)
-    Resources resources;
+    AppResources resources;
 
     @UiField(provided = true)
-    CellList<DbOperationRecordDTO> statements;
+    CellList<DbOperationRecordDto> statements;
 
-    private final SingleSelectionModel<DbOperationRecordDTO> selectionModel = new
-            SingleSelectionModel<DbOperationRecordDTO>();
+    private final SingleSelectionModel<DbOperationRecordDto> selectionModel = new SingleSelectionModel<DbOperationRecordDto>();
 
     @Inject
-    public StatementView(final Binder uiBinder, final UiHandlersStrategy<StatementUiHandlers> uiHandlersStrategy,
-                         final Resources resources, final StatementCell statementCell) {
-        super(uiHandlersStrategy);
-
+    public StatementView(final Binder uiBinder, final AppResources resources, final StatementCell statementCell) {
         this.resources = resources;
-        statements = new CellList<DbOperationRecordDTO>(statementCell);
+        statements = new CellList<DbOperationRecordDto>(statementCell);
+        
         initWidget(uiBinder.createAndBindUi(this));
 
         selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
             @Override
             public void onSelectionChange(SelectionChangeEvent event) {
-                DbOperationRecordDTO dbOperationRecordDTO = selectionModel.getSelectedObject();
+                DbOperationRecordDto dbOperationRecordDTO = selectionModel.getSelectedObject();
                 getUiHandlers().onStatementClicked(dbOperationRecordDTO);
             }
         });
@@ -54,7 +49,7 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
 
     @SuppressWarnings("unchecked")
     @Override
-    public void displayStatements(FilterValue filterValue) {
+    public void displayStatements(FilterValue<?> filterValue) {
         List statements = filterValue.getStatements();
         Collections.sort(statements, new StatementIdComparator());
 
@@ -63,14 +58,13 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
 
     @Override
     public void clear() {
-        statements.setRowData(new ArrayList<DbOperationRecordDTO>());
+        statements.setRowData(new ArrayList<DbOperationRecordDto>());
     }
 
-    private class StatementIdComparator implements Comparator<DbOperationRecordDTO> {
+    private class StatementIdComparator implements Comparator<DbOperationRecordDto> {
         @Override
-        public int compare(DbOperationRecordDTO o1, DbOperationRecordDTO o2) {
+        public int compare(DbOperationRecordDto o1, DbOperationRecordDto o2) {
             return o1.getStatementId().compareTo(o2.getStatementId());
         }
     }
-
 }

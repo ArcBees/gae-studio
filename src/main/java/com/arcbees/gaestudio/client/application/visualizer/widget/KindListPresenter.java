@@ -18,7 +18,6 @@ import com.gwtplatform.mvp.client.View;
 import java.util.List;
 
 public class KindListPresenter extends PresenterWidget<KindListPresenter.MyView> implements KindListUiHandlers {
-
     public interface MyView extends View, HasUiHandlers<KindListUiHandlers> {
         void updateKinds(List<String> kinds);
     }
@@ -28,6 +27,8 @@ public class KindListPresenter extends PresenterWidget<KindListPresenter.MyView>
     @Inject
     public KindListPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
         super(eventBus, view);
+        
+        getView().setUiHandlers(this);
 
         this.dispatcher = dispatcher;
     }
@@ -50,5 +51,4 @@ public class KindListPresenter extends PresenterWidget<KindListPresenter.MyView>
     public void onKindClicked(String kind) {
         KindSelectedEvent.fire(this, kind);
     }
-
 }

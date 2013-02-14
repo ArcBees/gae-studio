@@ -5,8 +5,8 @@
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
-import com.arcbees.gaestudio.shared.dto.query.QueryRecordDTO;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -16,7 +16,6 @@ import java.util.HashSet;
 
 public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyView>
         implements DbOperationRecordProcessor {
-
     public interface MyView extends View {
         void updateRequestCount(Integer requestCount);
 
@@ -43,15 +42,15 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
     }
 
     @Override
-    public void processDbOperationRecord(DbOperationRecordDTO record) {
+    public void processDbOperationRecord(DbOperationRecordDto record) {
         final long requestId = record.getRequestId();
 
         knownRequestIds.add(requestId);
         statementCount++;
         totalExecutionTimeMs += record.getExecutionTimeMs();
 
-        if (record instanceof QueryRecordDTO) {
-            QueryRecordDTO queryRecord = (QueryRecordDTO) record;
+        if (record instanceof QueryRecordDto) {
+            QueryRecordDto queryRecord = (QueryRecordDto) record;
             totalObjectsRetrieved += queryRecord.getQueryResult().getResultSize();
             totalDataReceived += queryRecord.getQueryResult().getSerializedSize();
         }
@@ -78,5 +77,4 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
         this.totalObjectsRetrieved = 0;
         this.totalDataReceived = 0;
     }
-
 }

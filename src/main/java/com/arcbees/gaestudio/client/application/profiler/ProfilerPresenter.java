@@ -4,7 +4,6 @@
 
 package com.arcbees.gaestudio.client.application.profiler;
 
-import com.arcbees.gaestudio.client.MyConstants;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
@@ -17,9 +16,10 @@ import com.arcbees.gaestudio.client.application.profiler.widget.filter.FiltersPr
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsResult;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDTO;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -37,7 +37,6 @@ import java.util.ArrayList;
 public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, ProfilerPresenter.MyProxy> implements
         RecordingStateChangedEvent.RecordingStateChangedHandler,
         ClearOperationRecordsEvent.ClearOperationRecordsHandler {
-
     public interface MyView extends View {
     }
 
@@ -56,7 +55,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private final DispatchAsync dispatcher;
     private final FiltersPresenter filterPresenter;
     private final StatisticsPresenter statisticsPresenter;
-    private final MyConstants myConstants;
+    private final AppConstants myConstants;
     private final StatementPresenter statementPresenter;
     private final DetailsPresenter detailsPresenter;
     private final ProfilerToolbarPresenter profilerToolbarPresenter;
@@ -67,7 +66,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     @Inject
     public ProfilerPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
                              final DispatchAsync dispatcher, final FiltersPresenter filterPresenter,
-                             final StatisticsPresenter statisticsPresenter, final MyConstants myConstants,
+                             final StatisticsPresenter statisticsPresenter, final AppConstants myConstants,
                              final StatementPresenter statementPresenter,
                              final DetailsPresenter detailsPresenter,
                              final ProfilerToolbarPresenter profilerToolbarPresenter) {
@@ -143,9 +142,9 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     // TODO properly handle any missing records
-    private void processNewDbOperationRecords(ArrayList<DbOperationRecordDTO> records) {
+    private void processNewDbOperationRecords(ArrayList<DbOperationRecordDto> records) {
         if (!records.isEmpty()) {
-            for (DbOperationRecordDTO record : records) {
+            for (DbOperationRecordDto record : records) {
                 processDbOperationRecord(record);
                 lastDbOperationRecordId = Math.max(lastDbOperationRecordId, record.getStatementId());
             }
@@ -158,7 +157,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         statisticsPresenter.displayNewDbOperationRecords();
     }
 
-    private void processDbOperationRecord(DbOperationRecordDTO record) {
+    private void processDbOperationRecord(DbOperationRecordDto record) {
         filterPresenter.processDbOperationRecord(record);
         statisticsPresenter.processDbOperationRecord(record);
     }

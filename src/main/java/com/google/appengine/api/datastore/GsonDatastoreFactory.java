@@ -10,7 +10,6 @@ import java.lang.reflect.Modifier;
 import java.util.Map;
 
 public class GsonDatastoreFactory {
-
     private static ExclusionStrategy entityProtoExclusionStrategy = new ExclusionStrategy() {
         @Override
         public boolean shouldSkipField(FieldAttributes f) {
@@ -36,5 +35,4 @@ public class GsonDatastoreFactory {
 
         return gsonBuilder.create();
     }
-
 }

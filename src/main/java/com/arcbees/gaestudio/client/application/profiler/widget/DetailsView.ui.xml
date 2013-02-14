@@ -1,0 +1,21 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <ui:style>
+        .content {
+            margin-left: 10px;
+        }
+    </ui:style>
+    <g:HTMLPanel>
+        <div class="{resources.styles.tabs}">
+            <span>Details</span>
+        </div>
+
+        <div class="{style.content}">
+            <h3>Statement</h3>
+            <g:HTML ui:field="statement"/>
+            <h3>Call Location</h3>
+            <g:HTML ui:field="callLocation"/>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>
