@@ -1,0 +1,3 @@
+rule com.** ws.com.@1
+rule org.** ws.org.@1
+
