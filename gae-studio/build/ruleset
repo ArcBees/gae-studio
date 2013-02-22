@@ -1,3 +1,3 @@
-rule com.** ws.com.@1
-rule org.** ws.org.@1
+rule com.** gaestudio.com.@1
+rule org.** gaestudio.org.@1
 

@@ -18,4 +18,4 @@ echo "\nCP=$CP\n"
 
 
 # change package path jar
-java -jar jarjar-1.4.jar process ruleset gaestudio.jar garstudio-app.jar
+java -jar jarjar-1.4.jar process ruleset gaestudio.jar gae-studio-app.jar
