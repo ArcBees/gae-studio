@@ -12,7 +12,7 @@
     <properties>
         <!-- client -->
         <gwt.version>2.5.0</gwt.version>
-        <gwtp.version>1.0-RC-1</gwtp.version>
+        <gwtp.version>1.0-RC-2</gwtp.version>
         <gwtquery.version>1.3.1</gwtquery.version>
         <gin.version>2.0.0</gin.version>
 
@@ -58,12 +58,6 @@
                     <include>**/*.properties</include>
                     <include>**/*.css</include>
                 </includes>
-            </resource>
-            <resource>
-                <directory>${project.build.directory}/generated-sources/apt</directory>
-            </resource>
-            <resource>
-                <directory>${project.build.directory}/generated-sources/gwt</directory>
             </resource>
         </resources>
 
@@ -153,28 +147,6 @@
                         <version>${gwtp.version}</version>
                     </dependency>
                 </dependencies>
-            </plugin>
-
-            <!-- Copy the generated classses -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>${project.build.directory}/generated-sources/apt</source>
-                                <source>${project.build.directory}/generated-sources/gwt</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
 
             <plugin>
