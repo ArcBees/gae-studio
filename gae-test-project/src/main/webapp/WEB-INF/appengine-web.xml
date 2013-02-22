@@ -5,6 +5,9 @@
 	<version>1</version>
     
     <threadsafe>true</threadsafe>
+    
+    <!-- For GAE Studio -->
+    <sessions-enabled>true</sessions-enabled>
 
     <!-- Configure serving/caching of GWT files -->
 	<static-files>
