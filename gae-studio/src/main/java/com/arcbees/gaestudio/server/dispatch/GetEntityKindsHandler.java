@@ -4,14 +4,14 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import java.util.ArrayList;
+import java.util.logging.Logger;
+
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
-
-import java.util.ArrayList;
-import java.util.logging.Logger;
 
 // TODO add logging
 public class GetEntityKindsHandler

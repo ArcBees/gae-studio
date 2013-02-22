@@ -4,6 +4,9 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
@@ -26,9 +29,6 @@ import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView> implements
         KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler,

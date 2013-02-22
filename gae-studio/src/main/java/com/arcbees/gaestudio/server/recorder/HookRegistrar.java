@@ -4,13 +4,14 @@
 
 package com.arcbees.gaestudio.server.recorder;
 
-import com.arcbees.gaestudio.server.recorder.authentication.Listener;
-import com.google.apphosting.api.ApiProxy;
-
-import javax.inject.Inject;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
+
+import javax.inject.Inject;
+
+import com.arcbees.gaestudio.server.recorder.authentication.Listener;
+import com.google.apphosting.api.ApiProxy;
 
 public class HookRegistrar {
     private final Logger logger;

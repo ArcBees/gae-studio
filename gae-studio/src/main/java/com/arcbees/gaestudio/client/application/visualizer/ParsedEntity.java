@@ -1,12 +1,12 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
+import java.util.Set;
+
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
-
-import java.util.Set;
 
 public class ParsedEntity {
     private static final String PROPERTY_MAP = "propertyMap";

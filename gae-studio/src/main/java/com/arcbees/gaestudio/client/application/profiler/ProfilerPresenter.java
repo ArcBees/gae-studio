@@ -4,6 +4,8 @@
 
 package com.arcbees.gaestudio.client.application.profiler;
 
+import java.util.ArrayList;
+
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
@@ -31,8 +33,6 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
-
-import java.util.ArrayList;
 
 public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, ProfilerPresenter.MyProxy> implements
         RecordingStateChangedEvent.RecordingStateChangedHandler,

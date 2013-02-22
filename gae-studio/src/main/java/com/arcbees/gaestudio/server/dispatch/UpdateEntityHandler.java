@@ -4,6 +4,8 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import java.util.logging.Logger;
+
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityResult;
@@ -17,8 +19,6 @@ import com.google.gson.JsonSyntaxException;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
-
-import java.util.logging.Logger;
 
 public class UpdateEntityHandler extends AbstractActionHandler<UpdateEntityAction, UpdateEntityResult> {
     private final Logger logger;

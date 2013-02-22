@@ -16,6 +16,8 @@
 
 package com.arcbees.gaestudio.server.recorder;
 
+import java.util.logging.Logger;
+
 import com.google.apphosting.api.ApiProxy.ApiProxyException;
 import com.google.apphosting.api.ApiProxy.Delegate;
 import com.google.apphosting.api.ApiProxy.Environment;
@@ -29,8 +31,6 @@ import com.google.apphosting.api.DatastorePb.Query;
 import com.google.apphosting.api.DatastorePb.QueryResult;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-
-import java.util.logging.Logger;
 
 public class DbOperationRecorderHook extends BaseHook {
     private final Logger logger;

@@ -1,9 +1,9 @@
 package com.arcbees.gaestudio.client.formatters;
 
+import javax.inject.Inject;
+
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.google.gwt.i18n.client.NumberFormat;
-
-import javax.inject.Inject;
 
 public class BytesFormatter {
     private static final int ONE_KiB = 1024;

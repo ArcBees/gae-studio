@@ -1,8 +1,9 @@
 package com.arcbees.gaestudio.shared.dispatch;
 
+import com.arcbees.gaestudio.shared.dispatch.util.GaeStudioActionImpl;
 import com.gwtplatform.dispatch.shared.Action;
 
-public class GetNewDbOperationRecordsAction implements Action<GetNewDbOperationRecordsResult> {
+public class GetNewDbOperationRecordsAction extends GaeStudioActionImpl<GetNewDbOperationRecordsResult> {
     private Long lastId;
     private Integer maxResults;
 
@@ -40,56 +41,11 @@ public class GetNewDbOperationRecordsAction implements Action<GetNewDbOperationR
         this.maxResults = builder.maxResults;
     }
 
-    @Override
-    public String getServiceName() {
-        return Action.DEFAULT_SERVICE_NAME + "GetNewDbOperationRecords";
-    }
-
-    @Override
-    public boolean isSecured() {
-        return false;
-    }
-
     public Long getLastId() {
         return lastId;
     }
 
     public Integer getMaxResults() {
         return maxResults;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        GetNewDbOperationRecordsAction other = (GetNewDbOperationRecordsAction) obj;
-        if (lastId == null) {
-            if (other.lastId != null)
-                return false;
-        } else if (!lastId.equals(other.lastId))
-            return false;
-        if (maxResults == null) {
-            if (other.maxResults != null)
-                return false;
-        } else if (!maxResults.equals(other.maxResults))
-            return false;
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hashCode = 23;
-        hashCode = (hashCode * 37) + (lastId == null ? 1 : lastId.hashCode());
-        hashCode = (hashCode * 37) + (maxResults == null ? 1 : maxResults.hashCode());
-        return hashCode;
-    }
-
-    @Override
-    public String toString() {
-        return "GetNewDbOperationRecordsAction[" + lastId + "," + maxResults + "]";
     }
 }

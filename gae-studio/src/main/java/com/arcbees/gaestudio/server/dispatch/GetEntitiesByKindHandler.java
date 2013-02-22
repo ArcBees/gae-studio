@@ -4,6 +4,10 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
@@ -15,10 +19,6 @@ import com.google.appengine.api.datastore.Query;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
 
 // TODO add logging
 public class GetEntitiesByKindHandler extends AbstractActionHandler<GetEntitiesByKindAction, GetEntitiesByKindResult> {

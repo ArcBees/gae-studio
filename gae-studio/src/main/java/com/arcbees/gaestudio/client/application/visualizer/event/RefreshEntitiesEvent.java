@@ -2,9 +2,8 @@ package com.arcbees.gaestudio.client.application.visualizer.event;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
-import com.google.web.bindery.event.shared.HandlerRegistration;
-
 import com.google.gwt.event.shared.HasHandlers;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class RefreshEntitiesEvent extends GwtEvent<RefreshEntitiesEvent.RefreshEntitiesHandler> {
     public RefreshEntitiesEvent() {

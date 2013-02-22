@@ -4,15 +4,15 @@
 
 package com.arcbees.gaestudio.server.dto.mapper;
 
+import java.util.ArrayList;
+
 import com.arcbees.gaestudio.shared.dto.query.QueryDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryFilterDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryFilterOperatorDto;
-import com.arcbees.gaestudio.shared.dto.query.QueryOrderDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryOrderDirectionDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryOrderDto;
 import com.google.apphosting.api.DatastorePb;
 import com.google.storage.onestore.v3.OnestoreEntity;
-
-import java.util.ArrayList;
 
 public class QueryMapper {
     @SuppressWarnings("unused")
