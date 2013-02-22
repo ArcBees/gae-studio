@@ -2,7 +2,6 @@ package com.arcbees.gaestudio.shared.dispatch;
 
 import com.arcbees.gaestudio.shared.dispatch.util.GaeStudioActionImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.gwtplatform.dispatch.shared.Action;
 
 public class UpdateEntityAction extends GaeStudioActionImpl<UpdateEntityResult> {
     private EntityDto entityDTO;

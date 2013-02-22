@@ -7,7 +7,7 @@ import com.google.inject.servlet.GuiceServletContextListener;
 public class GuiceServletConfig extends GuiceServletContextListener {
     @Override
     protected Injector getInjector() {
-        Injector injector = Guice.createInjector(new ServerModule(), new DispatchServletModule());
+        Injector injector = Guice.createInjector(new GaeStudioServerModule());
 
         return injector;
     }

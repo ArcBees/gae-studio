@@ -1,7 +1,6 @@
 package com.arcbees.gaestudio.shared.dispatch;
 
 import com.arcbees.gaestudio.shared.dispatch.util.GaeStudioActionImpl;
-import com.gwtplatform.dispatch.shared.Action;
 
 public class GetEntitiesByKindAction extends GaeStudioActionImpl<GetEntitiesByKindResult> { 
   private String kind;
