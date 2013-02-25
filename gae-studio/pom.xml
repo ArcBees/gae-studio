@@ -297,7 +297,8 @@
     </dependencies>
 
     <profiles>
-        <!-- 1. 'mvn resources:copy-resources -Pcopy-gwt-module' -->
+        <!-- 1. 'mvn package' -->
+        <!-- 2. 'mvn resources:copy-resources -Pcopy-gwt-module' -->
         <profile>
             <id>copy-gwt-module</id>
             <build>
@@ -322,7 +323,7 @@
             </build>
         </profile>
 
-        <!-- 2. 'mvn resources:copy-resources -Pcopy-classes' -->
+        <!-- 3. 'mvn resources:copy-resources -Pcopy-classes' -->
         <profile>
             <id>copy-classes</id>
             <build>
@@ -343,7 +344,7 @@
             </build>
         </profile>
         
-        <!-- 3. 'mvn jar:jar -Pcreate-jar' -->
+        <!-- 4. 'mvn jar:jar -Pcreate-jar' -->
         <profile>
             <id>create-jar</id>
             <build>
