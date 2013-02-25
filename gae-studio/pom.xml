@@ -123,8 +123,8 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>test</goal>
                             <goal>compile</goal>
+                            <goal>test</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -152,33 +152,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!-- Clean webapp from meta-inf -->
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.4.1</version>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>src/main/resources/META-INF/webapp</directory>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-
-            <!-- Copy the gwt module into meta-inf -->
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <outputDirectory>src/main/resources/META-INF/webapp</outputDirectory>
-                    <resources>
-                        <resource>
-                            <directory>${webappDirectory}</directory>
-                        </resource>
-                    </resources>
-                </configuration>
             </plugin>
 
             <!-- 'mvn jar:jar' to package jar -->
@@ -322,4 +295,50 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>copy-gwt-module</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.6</version>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/build-jar/META-INF</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${webappDirectory}</directory>
+                                    <excludes>
+                                        <exclude>**META-INF/**</exclude>
+                                        <exclude>**WEB-INF/**</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        <profile>
+            <id>copy-classes</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.6</version>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/build-jar</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${webappDirectory}/WEB-INF/classes</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
