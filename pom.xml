@@ -11,6 +11,7 @@
     
     <modules>
         <module>gae-studio</module>
+        <module>gae-studio-test-project-guice</module>
     </modules>
     
 </project>

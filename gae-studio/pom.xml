@@ -298,57 +298,41 @@
 
     <profiles>
         <!-- 1. 'mvn package' -->
-        <!-- 2. 'mvn resources:copy-resources -Pcopy-gwt-module' -->
+        <!-- 2. 'mvn resources:copy-resources jar:jar -Pbuild-jar' -->
         <profile>
-            <id>copy-gwt-module</id>
+            <id>build-jar</id>
             <build>
                 <plugins>
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
                         <version>2.6</version>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/build-jar/META-INF</outputDirectory>
+                            <outputDirectory>target/build-jar</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${webappDirectory}</directory>
+                                    <targetPath>META-INF</targetPath>
                                     <excludes>
                                         <exclude>**META-INF/**</exclude>
                                         <exclude>**WEB-INF/**</exclude>
                                     </excludes>
                                 </resource>
-                            </resources>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <!-- 3. 'mvn resources:copy-resources -Pcopy-classes' -->
-        <profile>
-            <id>copy-classes</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <version>2.6</version>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/build-jar</outputDirectory>
-                            <resources>
                                 <resource>
                                     <directory>${webappDirectory}/WEB-INF/classes</directory>
                                 </resource>
                             </resources>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <id>build-jar</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
-                </plugins>
-            </build>
-        </profile>
-        
-        <!-- 4. 'mvn jar:jar -Pcreate-jar' -->
-        <profile>
-            <id>create-jar</id>
-            <build>
-                <plugins>
+
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jar-plugin</artifactId>
@@ -356,6 +340,15 @@
                         <configuration>
                             <classesDirectory>${project.build.directory}/build-jar</classesDirectory>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <id>build-jar</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>

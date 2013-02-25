@@ -3,12 +3,16 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.arcbees.project</groupId>
-    <artifactId>GAE-Studio-Test</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <parent>
+        <groupId>com.arcbees.gaestudio</groupId>
+        <artifactId>gae-studio-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>gae-studio-test-project-guice</artifactId>
     <packaging>war</packaging>
-    <name>GWTP AppEngine Objectify</name>
-    <description>GWTP AppEngine Objectify with dispatch and login</description>
+    <name>GAE Studio Test Project Guice</name>
+    <description>Test GAE Studio in a guice configuration.</description>
 
     <properties>
         <!-- client -->
@@ -302,6 +306,11 @@
         </dependency>
 
         <!-- GAE Studio -->
+        <dependency>
+            <groupId>com.arcbees.gaestudio</groupId>
+            <artifactId>gae-studio</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>

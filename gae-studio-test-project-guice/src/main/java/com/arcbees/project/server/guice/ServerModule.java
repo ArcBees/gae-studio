@@ -16,6 +16,7 @@
 
 package com.arcbees.project.server.guice;
 
+import com.arcbees.gaestudio.server.guice.GaeStudioServerModule;
 import com.arcbees.project.server.authentication.AuthenticationModule;
 import com.arcbees.project.server.dispatch.DispatchHandlersModule;
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
@@ -26,7 +27,7 @@ public class ServerModule extends HandlerModule {
         install(new DispatchHandlersModule());
         install(new AuthenticationModule());
         
-        // TODO Prototype
-        install(new com.arcbees.gaestudio.server.guice.GaeStudioServerModule());
+        // GAE-Studio Guice Bootstrapping
+        install(new GaeStudioServerModule());
     }
 }
