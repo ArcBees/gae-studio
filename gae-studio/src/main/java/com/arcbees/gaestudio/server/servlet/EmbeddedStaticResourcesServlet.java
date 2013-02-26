@@ -30,15 +30,11 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, 
-        IOException {
-        System.out.println("uri=" + request.getRequestURI());
-
+            IOException {
         String uri = request.getRequestURI();
         uri = uri.replace(DispatchServletModule.EMBEDDED_PATH, "");
 
         String basePath = getBaseJarPath();
-
-        System.out.println("basePath=" + basePath);
 
         String path = "";
         if (uri.length() < 3 || uri.contains("gae-studio.html")) {
@@ -52,8 +48,6 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
         } else {
             path = basePath + uri;
         }
-
-        System.out.println("path=" + path);
 
         response.setContentType(getMimeType(path));
 
@@ -77,8 +71,6 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
         } else if (path.contains(".js")) {
             mimeType = "application/javascript";
         }
-
-        System.out.println("mime=" + mimeType);
 
         return mimeType;
     }
