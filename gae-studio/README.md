@@ -12,7 +12,7 @@
 <sessions-enabled>true</sessions-enabled>
 ```
 
-* 1. Install the `GaeStudioServerModule()` into the apps server module. 
+* Install the `GaeStudioServerModule()` into the apps server module. 
 ```java
 public class ServerModule extends HandlerModule {
     @Override
