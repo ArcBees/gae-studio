@@ -8,7 +8,7 @@ import com.gwtplatform.dispatch.server.guice.DispatchServiceImpl;
 import com.gwtplatform.dispatch.shared.ActionImpl;
 
 public class DispatchServletModule extends ServletModule {
-    public static final CharSequence EMBEDDED_PATH = "gae-studio-admin";
+    public static final String EMBEDDED_PATH = "gae-studio-admin";
 
     @Override
     public void configureServlets() {

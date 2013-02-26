@@ -26,7 +26,6 @@ public class ServerModule extends HandlerModule {
 }
 ```
 
-
 #Contributing
 
 ##Install Jar
