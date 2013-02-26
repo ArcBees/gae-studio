@@ -17,8 +17,8 @@ import com.arcbees.gaestudio.server.guice.GaeStudioServerModule;
 import com.google.inject.Singleton;
 
 @Singleton
-public class StaticResourcesServlet extends HttpServlet {
-    private static final Logger logger = Logger.getLogger(StaticResourcesServlet.class.getSimpleName());
+public class EmbeddedStaticResourcesServlet extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(EmbeddedStaticResourcesServlet.class.getSimpleName());
     
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -34,7 +34,7 @@ public class StaticResourcesServlet extends HttpServlet {
         System.out.println("uri=" + request.getRequestURI());
 
         String uri = request.getRequestURI();
-        uri = uri.replace(DispatchServletModule.EMBEDDED_PATH + "/", "");
+        uri = uri.replace(DispatchServletModule.EMBEDDED_PATH, "");
 
         String basePath = getBaseJarPath();
 
