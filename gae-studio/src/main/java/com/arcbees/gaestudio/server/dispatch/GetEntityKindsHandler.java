@@ -71,7 +71,6 @@ public class GetEntityKindsHandler
 
         ArrayList<String> kinds = Lists.newArrayList(iterator);
 
-
         return new GetEntityKindsResult(kinds);
     }
 }
