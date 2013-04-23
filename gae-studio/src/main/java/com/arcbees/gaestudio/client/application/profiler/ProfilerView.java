@@ -18,6 +18,7 @@ package com.arcbees.gaestudio.client.application.profiler;
 
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -44,7 +45,7 @@ public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
     }
 
     @Override
-    public void setInSlot(Object slot, Widget content) {
+    public void setInSlot(Object slot, IsWidget content) {
         if (content != null) {
             if (slot == ProfilerPresenter.TYPE_SetRequestPanelContent) {
                 requestPanel.setWidget(content);
