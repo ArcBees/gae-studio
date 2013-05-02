@@ -30,6 +30,7 @@
         <objectify.version>4.0b1</objectify.version>
         <junit.version>4.10</junit.version>
         <jukito.version>1.1</jukito.version>
+        <gae-runtime.version>1.7.7.1</gae-runtime.version>
 
         <!-- maven -->
         <gwt-maven-plugin.version>2.5.0</gwt-maven-plugin.version>
@@ -141,7 +142,7 @@
                     <dependency>
                         <groupId>net.kindleit</groupId>
                         <artifactId>gae-runtime</artifactId>
-                        <version>1.7.7</version>
+                        <version>${gae-runtime.version}</version>
                         <type>pom</type>
                     </dependency>
                 </dependencies>
