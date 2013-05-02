@@ -45,7 +45,6 @@ public class GetEntityKindsHandler
     @Override
     public GetEntityKindsResult execute(GetEntityKindsAction action, ExecutionContext context)
             throws ActionException {
-
         DispatchHelper.disableApiHooks();
 
         Query query = new Query(Entities.KIND_METADATA_KIND);
@@ -53,14 +52,13 @@ public class GetEntityKindsHandler
 
         Iterable<Entity> entityIterable = datastoreService.prepare(query).asIterable();
 
-        Iterable<String> iterator = Iterables.transform(entityIterable,
-                new Function<Entity, String>() {
+        Iterable<String> iterator = Iterables.transform(entityIterable, new Function<Entity, String>() {
             @Override
             public String apply(@Nullable Entity entity) {
                 String kindName;
 
                 if (entity != null) {
-                    kindName =  entity.getKey().getName();
+                    kindName = entity.getKey().getName();
                 } else {
                     kindName = "";
                 }
