@@ -64,8 +64,10 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final Set<String> currentProperties = new HashSet<String>();
 
     @Inject
-    public EntityListView(final Binder uiBinder, final VisualizerUiFactory visualizerUiFactory,
-                          AppResources appResources, CustomCellTable customCellTable) {
+    public EntityListView(Binder uiBinder,
+                          VisualizerUiFactory visualizerUiFactory,
+                          AppResources appResources,
+                          CustomCellTable customCellTable) {
         this.visualizerUiFactory = visualizerUiFactory;
 
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, customCellTable);
