@@ -41,6 +41,8 @@ public interface AppResources extends ClientBundle {
         String toolbarButtonDisabled();
 
         String tabs();
+
+        String wordWrap();
     }
 
     public interface Sprites extends CssResource {

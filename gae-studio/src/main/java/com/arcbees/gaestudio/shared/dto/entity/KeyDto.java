@@ -16,11 +16,9 @@
 
 package com.arcbees.gaestudio.shared.dto.entity;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class KeyDto implements Serializable {
-    private static final long serialVersionUID = -6988501130987934034L;
-    
+public class KeyDto implements IsSerializable {
     private String kind;
     private Long id;
     private ParentKeyDto parentKeyDTO;
