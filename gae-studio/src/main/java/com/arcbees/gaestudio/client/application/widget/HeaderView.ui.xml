@@ -13,6 +13,10 @@
             float: right;
         }
 
+        .header > a:first-of-type {
+            margin-right: 1px;
+        }
+
         .header > a {
             display: block;
             color: #ffffff;
@@ -21,7 +25,6 @@
             font-size: 18px;
             cursor: pointer;
             position: relative;
-            margin-right: 1px;
         }
 
         .header > a:before, .header > a:after {
@@ -43,7 +46,8 @@
         }
 
         .header > a:before {
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.35);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+
             -webkit-transform: rotateX(0deg) translateZ(25px);
             -moz-transform: rotateX(0deg) translateZ(25px);
             -o-transform: rotateX(0deg) translateZ(25px);
@@ -96,8 +100,9 @@
         <g:Image resource="{resources.logo}" styleName="{style.logo}"/>
         <g:InlineHyperlink targetHistoryToken="{nameTokens.getVisualizer}"
                            styleName="{resources.sprites.topmenuBgHover}" title="Visualizer" text="Visualiser"/>
-        <g:InlineHyperlink targetHistoryToken="{nameTokens.getVisualizer}"
-                           styleName="{resources.sprites.topmenuBgHover} {resources.sprites.topmenuBgActive}" title="Visualizer" text="Visualiser"/>
+        <img src="{resources.topmenuSeparator.getSafeUri}"/>
+        <g:InlineHyperlink targetHistoryToken="{nameTokens.getProfiler}"
+                           styleName="{resources.sprites.topmenuBgHover}" title="Profiler" text="Profiler"/>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

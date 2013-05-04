@@ -63,6 +63,9 @@ public interface AppResources extends ClientBundle {
     @ImageResource.ImageOptions(repeatStyle = ImageResource.RepeatStyle.Horizontal)
     ImageResource topmenuBgHover();
 
+    @ImageResource.ImageOptions(repeatStyle = ImageResource.RepeatStyle.Horizontal)
+    ImageResource topmenuBgActive();
+
     ImageResource logo();
 
     ImageResource topmenuSeparator();
