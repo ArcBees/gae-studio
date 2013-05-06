@@ -17,6 +17,7 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.VisualizerToolbarPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
@@ -38,20 +39,26 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
     public interface MyProxy extends ProxyPlace<VisualizerPresenter> {
     }
 
-    public static final Object TYPE_SetEntityListPanelContent = new Object();
-    public static final Object TYPE_SetToolbarContent = new Object();
+    public static final Object SLOT_ENTITIES = new Object();
+    public static final Object SLOT_TOOLBAR = new Object();
+    public static final Object SLOT_KINDS = new Object();
 
     private final EntityListPresenter entityListPresenter;
-    private VisualizerToolbarPresenter visualizerToolbarPresenter;
+    private final VisualizerToolbarPresenter visualizerToolbarPresenter;
+    private final SidebarPresenter sidebarPresenter;
 
     @Inject
-    public VisualizerPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                               final EntityListPresenter entityListPresenter,
-                               final VisualizerToolbarPresenter visualizerToolbarPresenter) {
+    public VisualizerPresenter(EventBus eventBus,
+                               MyView view,
+                               MyProxy proxy,
+                               EntityListPresenter entityListPresenter,
+                               VisualizerToolbarPresenter visualizerToolbarPresenter,
+                               SidebarPresenter sidebarPresenter) {
         super(eventBus, view, proxy);
 
         this.entityListPresenter = entityListPresenter;
         this.visualizerToolbarPresenter = visualizerToolbarPresenter;
+        this.sidebarPresenter = sidebarPresenter;
     }
 
     @Override
@@ -63,7 +70,8 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
     protected void onBind() {
         super.onBind();
 
-        setInSlot(TYPE_SetEntityListPanelContent, entityListPresenter);
-        setInSlot(TYPE_SetToolbarContent, visualizerToolbarPresenter);
+        setInSlot(SLOT_ENTITIES, entityListPresenter);
+        setInSlot(SLOT_TOOLBAR, visualizerToolbarPresenter);
+        setInSlot(SLOT_KINDS, sidebarPresenter);
     }
 }

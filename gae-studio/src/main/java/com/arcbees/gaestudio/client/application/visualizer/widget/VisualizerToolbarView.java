@@ -24,8 +24,6 @@ import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
@@ -37,8 +35,6 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
     @UiField(provided = true)
     AppResources resources;
-    @UiField
-    SimplePanel kinds;
     @UiField
     HTMLPanel buttons;
 
@@ -75,13 +71,6 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     @Override
     public void setKindSelected(boolean isSelected) {
         buttons.setVisible(isSelected);
-    }
-
-    @Override
-    public void setInSlot(Object slot, IsWidget content) {
-        if (slot == VisualizerToolbarPresenter.TYPE_SetKindsContent) {
-            kinds.setWidget(content);
-        }
     }
 
     @Override

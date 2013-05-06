@@ -43,6 +43,10 @@ public interface AppResources extends ClientBundle {
         String tabs();
 
         String wordWrap();
+
+        String kindListElement();
+
+        String kindListElementHovered();
     }
 
     public interface Sprites extends CssResource {

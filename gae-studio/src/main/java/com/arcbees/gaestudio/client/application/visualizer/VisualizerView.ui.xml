@@ -20,7 +20,7 @@
     </ui:style>
     <g:HTMLPanel addStyleNames="{style.root}">
         <g:SimplePanel ui:field="toolbar"/>
-        <g:SimplePanel addStyleNames="{style.entityTypeSelector}"/>
+        <g:SimplePanel addStyleNames="{style.entityTypeSelector}" ui:field="entityTypesSidebar"/>
         <g:SimplePanel ui:field="entityListPanel" addStyleNames="{style.entityListPanel}"/>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
