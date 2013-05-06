@@ -8,7 +8,11 @@
         }
 
         .heading {
-           margin-left: 40px;
+            margin-left: 40px;
+        }
+
+        .wrapper {
+            overflow-x: scroll;
         }
     </ui:style>
     <g:HTMLPanel ui:field="panel" visible="false">
@@ -16,6 +20,9 @@
             <h3>Entity : <g:InlineLabel ui:field="entityName"/></h3>
             <cellview:SimplePager ui:field="pager" location="LEFT"/>
         </div>
-        <cellview:CellTable ui:field="entityTable" styleName="{style.entityTable}"/>
+
+        <div class="{style.wrapper}">
+            <cellview:CellTable ui:field="entityTable" styleName="{style.entityTable}"/>
+        </div>
     </g:HTMLPanel>
 </ui:UiBinder>

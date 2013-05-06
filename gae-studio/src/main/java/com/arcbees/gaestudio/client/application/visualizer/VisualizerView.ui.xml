@@ -1,7 +1,27 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <g:HTMLPanel>
+    <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <ui:style>
+        .entityListPanel {
+            float: right;
+            width: 90%;
+        }
+
+        .entityTypeSelector {
+            float: left;
+            width: 10%;
+            background-color: #ebebeb;
+            height: 100%;
+        }
+
+        .root {
+            overflow: hidden;
+        }
+    </ui:style>
+    <g:HTMLPanel addStyleNames="{style.root}">
         <g:SimplePanel ui:field="toolbar"/>
-        <g:SimplePanel ui:field="entityListPanel" />
+        <g:SimplePanel addStyleNames="{style.entityTypeSelector}"/>
+        <g:SimplePanel ui:field="entityListPanel" addStyleNames="{style.entityListPanel}"/>
+        <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

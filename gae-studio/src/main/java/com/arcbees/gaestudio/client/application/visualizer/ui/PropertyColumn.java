@@ -46,17 +46,9 @@ public class PropertyColumn extends TextColumn<ParsedEntity> {
             } else if (value.isString() != null) {
                 return value.isString().stringValue();
             }
-            return displayUnhandledTypeField(value);
+            return value.toString();
         } else {
             return "<missing>";
         }
-    }
-
-    private String displayUnhandledTypeField(JSONValue value) {
-        String text = value.toString();
-        if (text.length() > 20) {
-            return text.substring(0, 20) + "...";
-        }
-        return text;
     }
 }

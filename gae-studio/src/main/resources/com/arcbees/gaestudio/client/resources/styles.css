@@ -43,7 +43,7 @@
     opacity: 0.4;
 }
 
-.tabs{
+.tabs {
     background-color: #8f8f8f;
     font-size: 1.2em;
     line-height: 28px;
@@ -52,4 +52,9 @@
 
 .tabs > span {
     padding: 0 20px;
+}
+
+.wordWrap {
+    width: 100%;
+    word-wrap: break-word;
 }

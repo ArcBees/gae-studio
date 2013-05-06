@@ -32,10 +32,6 @@
         <g:InlineHyperlink targetHistoryToken="{nameTokens.getVisualizer}" styleName="{resources.sprites.topmenuBgHover}">
             Visualizer
         </g:InlineHyperlink>
-        <g:Image resource="{resources.topmenuSeparator}"/>
-        <g:InlineHyperlink targetHistoryToken="{nameTokens.getProfiler}" styleName="{resources.sprites.topmenuBgHover}">
-            Profiler
-        </g:InlineHyperlink>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

@@ -18,13 +18,17 @@ package com.arcbees.gaestudio.client.gin;
 
 import com.arcbees.gaestudio.client.application.widget.message.ui.MessageResources;
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.client.resources.CustomCellTable;
 import com.google.inject.Inject;
 
 public class ResourceLoader {
     @Inject
-    public ResourceLoader(AppResources resources, MessageResources messageResources) {
+    public ResourceLoader(AppResources resources,
+                          MessageResources messageResources,
+                          CustomCellTable customCellTable) {
         resources.styles().ensureInjected();
         resources.sprites().ensureInjected();
+        customCellTable.cellTableStyle().ensureInjected();
         messageResources.styles().ensureInjected();
     }
 }

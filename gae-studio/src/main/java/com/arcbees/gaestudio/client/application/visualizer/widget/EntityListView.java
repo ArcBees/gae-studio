@@ -23,6 +23,8 @@ import java.util.Set;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
+import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.client.resources.CustomCellTable;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -52,7 +54,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     HTMLPanel panel;
     @UiField
     SimplePager pager;
-    @UiField
+    @UiField(provided = true)
     CellTable<ParsedEntity> entityTable;
     @UiField
     InlineLabel entityName;
@@ -62,14 +64,19 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final Set<String> currentProperties = new HashSet<String>();
 
     @Inject
-    public EntityListView(final Binder uiBinder, final VisualizerUiFactory visualizerUiFactory) {
+    public EntityListView(Binder uiBinder,
+                          VisualizerUiFactory visualizerUiFactory,
+                          AppResources appResources,
+                          CustomCellTable customCellTable) {
         this.visualizerUiFactory = visualizerUiFactory;
+
+        entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, customCellTable);
 
         initWidget(uiBinder.createAndBindUi(this));
 
         setSelectionModel();
         pager.setDisplay(entityTable);
-        entityTable.setPageSize(PAGE_SIZE);
+        entityName.setStyleName(appResources.styles().wordWrap());
         pager.setPageSize(PAGE_SIZE);
         setDefaultColumns();
     }
