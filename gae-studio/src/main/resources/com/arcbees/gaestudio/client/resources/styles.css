@@ -44,6 +44,7 @@
 
 .toolbarButtonDisabled {
     opacity: 0.4;
+    cursor: auto;
 }
 
 .tabs {
@@ -82,7 +83,7 @@
 
 .kindListElement span{
     padding: 3px 8px;
-    line-height: 24px;
+    line-height: 28px;
 }
 
 .kindListElement:hover {
@@ -121,3 +122,60 @@
     height: 100%;
     z-index: 20;
 }
+
+.entityTypeSelector {
+    float: left;
+    width: 10%;
+    background-color: #ebebeb;
+    height: 100%;
+    position: relative;
+    z-index: 50;
+}
+
+.entityTypeSelector > div {
+    border-right: 1px solid #dbdbdb;
+    height: 100%;
+}
+
+.entityTypeSelectorEmpty {
+    content: "No entity type detected";
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    border-right: 1px solid transparent;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.85);
+    background-color: transparent;
+    display: inline-block;
+    padding: 3px 8px 3px 8px;
+    line-height: 28px;
+}
+
+.hiddenOverlay{
+    position: relative;
+}
+
+.hiddenOverlay > div:before{
+    height: 100%;
+    width: 100%;
+    background-color: inherit;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    content: "";
+    opacity: 1;
+
+    transition: all .5s ease;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+}
+
+.hiddenOverlay.revealOverlay > div:before{
+    opacity: 0;
+}
+
+.hiddenOverlay.revealUnderOverlay > div:before{
+    display: none;
+}
+

@@ -1,9 +1,5 @@
 package com.arcbees.gaestudio.client.application.visualizer.sidebar;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.query.client.Function;
@@ -12,8 +8,13 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+
+import javax.inject.Inject;
+import java.util.List;
 
 import static com.google.gwt.query.client.GQuery.$;
 
@@ -32,6 +33,12 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private final KindTemplate kindTemplate;
     private final AppResources appResources;
 
+    private String emptyListTypeStyleName;
+    private String rootListTypeStyleName;
+    private String hiddenOverlay;
+    private String revealOverlay;
+    private String revealUnderOverlay;
+
     @Inject
     public SidebarView(Binder binder,
                        KindTemplate kindTemplate,
@@ -40,6 +47,12 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         this.appResources = appResources;
 
         initWidget(binder.createAndBindUi(this));
+
+        emptyListTypeStyleName = appResources.styles().entityTypeSelectorEmpty();
+        rootListTypeStyleName = appResources.styles().entityTypeSelector();
+        hiddenOverlay = appResources.styles().hiddenOverlay();
+        revealOverlay = appResources.styles().revealOverlay();
+        revealUnderOverlay = appResources.styles().revealUnderOverlay();
     }
 
     @Override
@@ -64,9 +77,33 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         });
     }
 
+    @Override
+    public void clearKindsList() {
+        $("." + emptyListTypeStyleName).removeClass(emptyListTypeStyleName);
+        $("." + rootListTypeStyleName + " > div > div").remove();
+    }
+
+    @Override
+    public void addEmptyEntityListStyle() {
+        $(root).addClass(emptyListTypeStyleName);
+    }
+
     private void setActive(Event e) {
+        revealEntityDivNToolbar();
         String activeClass = appResources.styles().kindListElementHovered();
         $(root).children().removeClass(activeClass);
         $(e).addClass(activeClass);
+    }
+
+    private void revealEntityDivNToolbar() {
+        $("." + hiddenOverlay).addClass(revealOverlay);
+
+        Timer timer = new Timer() {
+            public void run() {
+                $("." + hiddenOverlay).addClass(revealUnderOverlay);
+            }
+        };
+
+        timer.schedule(500);
     }
 }
