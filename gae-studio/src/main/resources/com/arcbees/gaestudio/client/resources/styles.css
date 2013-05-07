@@ -30,6 +30,7 @@
     line-height: 30px;
     background-color: #3b3b3b;
     color: #ffffff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 
 .toolbarButton {
@@ -162,7 +163,9 @@
     top: 0;
     left: 0;
     z-index: 30;
-    content: "";
+    content: "\2190 Choose one of the entity kind to the left";
+    margin-left: 10%;
+    padding-left: 8px;
     opacity: 1;
 
     transition: all .5s ease;
