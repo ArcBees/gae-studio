@@ -1,14 +1,15 @@
+##Requirements
+The project in which you want to plug GAE Studio must repect the following conditions:
+
+1. It must use Guice on the server-side
+2. It must use the Java App Engine datastore
+
 ##Installing GAE Studio
 1. Clone the gae-studio code
 2. cd {cloned folder}
 3. Install gae-studio to your local .m2: `mvn clean install -Pbuild-jar`
 
 ##Plugging GAE Studio in your project
-Your project must repect the following conditions:
-
-1. It must use Guice on the server-side
-2. It must use the Java App Engine datastore
-
 To plug GAE Studio into your project, follow these steps:
 
 *. Modify the appengine-web.xml file and turn on sessions.
