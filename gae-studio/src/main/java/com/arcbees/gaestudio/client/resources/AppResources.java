@@ -43,6 +43,10 @@ public interface AppResources extends ClientBundle {
         String tabs();
 
         String wordWrap();
+
+        String profilerPlaceHolder();
+
+        String profilerDockTemporary();
     }
 
     public interface Sprites extends CssResource {
