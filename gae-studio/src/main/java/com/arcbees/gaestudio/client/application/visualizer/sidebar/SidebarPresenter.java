@@ -17,7 +17,6 @@ import com.gwtplatform.mvp.client.View;
 
 public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> implements SidebarUiHandlers {
     public interface MyView extends View, HasUiHandlers<SidebarUiHandlers> {
-
         void updateKinds(List<String> kinds);
     }
 
