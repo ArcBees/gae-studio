@@ -51,23 +51,21 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
         void disableContextualMenu();
     }
 
-    public static final Object TYPE_SetKindsContent = new Object();
-
     private final DispatchAsync dispatcher;
-    private final KindListPresenter kindListPresenter;
     private final AppConstants myConstants;
     private String currentKind = "";
     private ParsedEntity currentParsedEntity;
 
     @Inject
-    public VisualizerToolbarPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher,
-                                      final KindListPresenter kindListPresenter, final AppConstants myConstants) {
+    public VisualizerToolbarPresenter(EventBus eventBus,
+                                      MyView view,
+                                      DispatchAsync dispatcher,
+                                      AppConstants myConstants) {
         super(eventBus, view);
-        
+
         getView().setUiHandlers(this);
 
         this.dispatcher = dispatcher;
-        this.kindListPresenter = kindListPresenter;
         this.myConstants = myConstants;
     }
 
@@ -142,8 +140,6 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     @Override
     protected void onBind() {
         super.onBind();
-
-        setInSlot(TYPE_SetKindsContent, kindListPresenter);
 
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(EntitySelectedEvent.getType(), this);

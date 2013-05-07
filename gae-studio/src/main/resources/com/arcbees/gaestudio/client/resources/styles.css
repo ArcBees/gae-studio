@@ -1,3 +1,6 @@
+@def blue #3595E6;
+@def lightGrey #DEDEDE;
+
 .fleft {
     float: left;
 }
@@ -57,4 +60,14 @@
 .wordWrap {
     width: 100%;
     word-wrap: break-word;
+}
+
+.kindListElement:hover {
+    background-color: #d2d2d2;
+    cursor: pointer;
+}
+
+.kindListElement:active, .kindListElement.kindListElementHovered {
+    background-color: blue;
+    color: lightGrey;
 }

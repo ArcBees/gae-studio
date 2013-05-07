@@ -32,6 +32,8 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     SimplePanel entityListPanel;
     @UiField
     SimplePanel toolbar;
+    @UiField
+    SimplePanel entityTypesSidebar;
 
     @Inject
     public VisualizerView(final Binder uiBinder) {
@@ -41,10 +43,12 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     @Override
     public void setInSlot(Object slot, IsWidget content) {
         if (content != null) {
-            if (slot == VisualizerPresenter.TYPE_SetEntityListPanelContent) {
+            if (slot == VisualizerPresenter.SLOT_ENTITIES) {
                 entityListPanel.setWidget(content);
-            } else if (slot == VisualizerPresenter.TYPE_SetToolbarContent) {
+            } else if (slot == VisualizerPresenter.SLOT_TOOLBAR) {
                 toolbar.setWidget(content);
+            } else if (slot == VisualizerPresenter.SLOT_KINDS) {
+                entityTypesSidebar.setWidget(content);
             }
         }
     }
