@@ -1,6 +1,8 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <g:DockLayoutPanel>
+    <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <g:HTMLPanel><div class="{resources.styles.profilerPlaceHolder}">Coming up really soon!</div>
+    <g:DockLayoutPanel addStyleNames="{resources.styles.profilerDockTemporary}">
         <g:north size="30">
             <g:SimplePanel ui:field="toolbarPanel"/>
         </g:north>
@@ -29,4 +31,5 @@
             </g:SplitLayoutPanel>
         </g:center>
     </g:DockLayoutPanel>
+    </g:HTMLPanel>
 </ui:UiBinder>
