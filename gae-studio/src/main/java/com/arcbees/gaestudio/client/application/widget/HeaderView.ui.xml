@@ -98,11 +98,13 @@
     </ui:style>
     <g:HTMLPanel styleName="{style.header} {resources.sprites.topmenuBg}">
         <g:Image resource="{resources.logo}" styleName="{style.logo}"/>
-        <g:InlineHyperlink targetHistoryToken="{nameTokens.getVisualizer}"
-                           styleName="{resources.sprites.topmenuBgHover}" title="Visualizer" text="Visualiser"/>
+        <a href="#{nameTokens.getVisualizer}" class="{resources.sprites.topmenuBgHover} visualizer" title="Visualizer">
+            Visualizer
+        </a>
         <img src="{resources.topmenuSeparator.getSafeUri}"/>
-        <g:InlineHyperlink targetHistoryToken="{nameTokens.getProfiler}"
-                           styleName="{resources.sprites.topmenuBgHover}" title="Profiler" text="Profiler"/>
+        <a href="#{nameTokens.getProfiler}" class="{resources.sprites.topmenuBgHover} profiler" title="Profiler">
+            Profiler
+        </a>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

@@ -23,6 +23,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
+import static com.google.gwt.query.client.GQuery.$;
+
 public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements HeaderPresenter.MyView {
     public interface Binder extends UiBinder<Widget, HeaderView> {
     }
@@ -30,10 +32,21 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     @UiField(provided = true)
     AppResources resources;
 
+    private final String activeStyleName;
+
     @Inject
-    public HeaderView(final Binder uiBinder, final AppResources resources) {
+    public HeaderView(Binder uiBinder,
+                      AppResources resources) {
         this.resources = resources;
-        
+
         initWidget(uiBinder.createAndBindUi(this));
+
+        activeStyleName = resources.sprites().topmenuBgActive();
+    }
+
+    @Override
+    public void activateCurrentLink(String nameTokens) {
+        $("." + activeStyleName).removeClass(activeStyleName);
+        $("." + nameTokens).addClass(activeStyleName);
     }
 }
