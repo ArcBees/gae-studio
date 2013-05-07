@@ -19,8 +19,6 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     public interface MyView extends View, HasUiHandlers<SidebarUiHandlers> {
         void updateKinds(List<String> kinds);
 
-        void clearKindsList();
-
         void addEmptyEntityListStyle();
     }
 
@@ -52,12 +50,10 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
                     @Override
                     public void onFailure(Throwable caught) {
                         getView().addEmptyEntityListStyle();
-                        Window.alert("Failed getting Entity Kinds: " + caught.getMessage());
                     }
 
                     @Override
                     public void onSuccess(GetEntityKindsResult result) {
-                        getView().clearKindsList();
                         getView().updateKinds(result.getKinds());
                     }
                 });

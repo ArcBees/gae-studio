@@ -33,11 +33,11 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private final KindTemplate kindTemplate;
     private final AppResources appResources;
 
-    private String emptyListTypeStyleName;
-    private String rootListTypeStyleName;
-    private String hiddenOverlay;
-    private String revealOverlay;
-    private String revealUnderOverlay;
+    private final String emptyListTypeStyleName;
+    private final String rootListTypeStyleName;
+    private final String hiddenOverlay;
+    private final String revealOverlay;
+    private final String revealUnderOverlay;
 
     @Inject
     public SidebarView(Binder binder,
@@ -57,6 +57,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     @Override
     public void updateKinds(List<String> kinds) {
+        clearKindsList();
+
         for (String kind : kinds) {
             String cssClass = appResources.styles().kindListElement();
             String html = kindTemplate.create(kind, cssClass).asString();
@@ -77,7 +79,6 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         });
     }
 
-    @Override
     public void clearKindsList() {
         $("." + emptyListTypeStyleName).removeClass(emptyListTypeStyleName);
         $("." + rootListTypeStyleName + " > div > div").remove();
