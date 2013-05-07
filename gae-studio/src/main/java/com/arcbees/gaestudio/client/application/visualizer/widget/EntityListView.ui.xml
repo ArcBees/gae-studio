@@ -10,10 +10,6 @@
         .heading {
             margin-left: 40px;
         }
-
-        .wrapper {
-            overflow-x: auto;
-        }
     </ui:style>
     <g:HTMLPanel ui:field="panel" visible="false">
         <div class="{style.heading}">
@@ -21,8 +17,6 @@
             <cellview:SimplePager ui:field="pager" location="LEFT"/>
         </div>
 
-        <div class="{style.wrapper}">
-            <cellview:CellTable ui:field="entityTable" styleName="{style.entityTable}"/>
-        </div>
+        <cellview:CellTable ui:field="entityTable" styleName="{style.entityTable}"/>
     </g:HTMLPanel>
 </ui:UiBinder>
