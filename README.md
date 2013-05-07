@@ -38,7 +38,7 @@ public class ServerModule extends HandlerModule {
 ```
 
 ##Running GAE Studio
-1. Start the project in which you plugged GAE Studio
+1. Compile and run the project in which you plugged GAE Studio
 2. Header over to `{your application's domain}/gae-studio-admin`
 3. Grab a beer
 
