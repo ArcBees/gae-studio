@@ -1,5 +1,5 @@
 @def blue #3595E6;
-@def lightGrey #DEDEDE;
+@def lightGrey #ececec;
 
 .fleft {
     float: left;
@@ -62,14 +62,43 @@
     word-wrap: break-word;
 }
 
+.kindListElement {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    border-right: 1px solid transparent;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.85);
+    background-color: transparent;
+
+
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    transition: all .25s ease;
+    -webkit-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    -o-transition: all .25s ease;
+}
+
+.kindListElement span{
+    padding: 3px 8px;
+    line-height: 24px;
+}
+
 .kindListElement:hover {
-    background-color: #d2d2d2;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    background-color: rgba(210, 210, 210, 0.65);
     cursor: pointer;
 }
 
 .kindListElement:active, .kindListElement.kindListElementHovered {
     background-color: blue;
     color: lightGrey;
+    text-shadow: 1px 1px 1px rgba(27, 27, 27, 0.55);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-left: none;
 }
 
 .profilerPlaceHolder {

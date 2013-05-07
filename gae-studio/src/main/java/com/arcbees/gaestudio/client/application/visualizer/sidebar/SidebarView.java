@@ -19,7 +19,7 @@ import static com.google.gwt.query.client.GQuery.$;
 
 public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implements SidebarPresenter.MyView {
     public interface KindTemplate extends SafeHtmlTemplates {
-        @SafeHtmlTemplates.Template("<div class=\"{1}\">{0}</div>")
+        @SafeHtmlTemplates.Template("<div class=\"{1}\"><span>{0}</span></div>")
         SafeHtml create(String kindName, String cssClass);
     }
 
@@ -56,7 +56,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 setActive(e);
                 Element el = (Element) e.getCurrentEventTarget().cast();
 
-                String kind = el.getInnerHTML();
+                String kind = $("span", el).html();
 
                 getUiHandlers().displayEntitiesOfSelectedKind(kind);
                 return true;
