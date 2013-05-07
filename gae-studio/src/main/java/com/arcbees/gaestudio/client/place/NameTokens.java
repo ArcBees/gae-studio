@@ -19,6 +19,7 @@ package com.arcbees.gaestudio.client.place;
 public class NameTokens {
     public static final String visualizer = "visualizer";
     public static final String profiler = "profiler";
+    public static final String entity = "entity";
 
     public static String getVisualizer() {
         return visualizer;
@@ -26,5 +27,9 @@ public class NameTokens {
 
     public static String getProfiler() {
         return profiler;
+    }
+
+    public static String getEntity() {
+        return entity;
     }
 }

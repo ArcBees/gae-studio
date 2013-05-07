@@ -16,6 +16,7 @@
 
 package com.arcbees.gaestudio.client.application;
 
+import com.arcbees.gaestudio.client.application.entity.EntityModule;
 import com.arcbees.gaestudio.client.application.profiler.ProfilerModule;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerModule;
@@ -31,6 +32,7 @@ public class ApplicationModule extends AbstractPresenterModule {
         install(new ProfilerModule());
         install(new VisualizerModule());
         install(new MessagesModule());
+        install(new EntityModule());
         install(new GinFactoryModuleBuilder().build(UiFactory.class));
 
         bindPresenter(ApplicationPresenter.class, ApplicationPresenter.MyView.class, ApplicationView.class,
