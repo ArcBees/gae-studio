@@ -23,7 +23,9 @@ import com.google.inject.Inject;
 
 public class ResourceLoader {
     @Inject
-    public ResourceLoader(AppResources resources, MessageResources messageResources, CustomCellTable customCellTable) {
+    public ResourceLoader(AppResources resources,
+                          MessageResources messageResources,
+                          CustomCellTable customCellTable) {
         resources.styles().ensureInjected();
         resources.sprites().ensureInjected();
         customCellTable.cellTableStyle().ensureInjected();

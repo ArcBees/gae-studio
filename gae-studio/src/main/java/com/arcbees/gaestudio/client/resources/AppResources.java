@@ -47,6 +47,10 @@ public interface AppResources extends ClientBundle {
         String profilerPlaceHolder();
 
         String profilerDockTemporary();
+
+        String kindListElement();
+
+        String kindListElementHovered();
     }
 
     public interface Sprites extends CssResource {

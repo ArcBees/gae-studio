@@ -7,6 +7,6 @@ public interface CustomCellTable extends CellTable.Resources {
     }
 
     @Override
-    @Source({ CellTable.Style.DEFAULT_CSS, "com/arcbees/gaestudio/client/resources/cellTableStyles.css" })
+    @Source({ CellTable.Style.DEFAULT_CSS, "cellTableStyles.css" })
     TableStyle cellTableStyle();
 }
