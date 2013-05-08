@@ -49,7 +49,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
                 new AsyncCallback<GetEntityKindsResult>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        getView().addEmptyEntityListStyle();
+                        Window.alert("Failed getting Entity Kinds: " + caught.getMessage());
                     }
 
                     @Override

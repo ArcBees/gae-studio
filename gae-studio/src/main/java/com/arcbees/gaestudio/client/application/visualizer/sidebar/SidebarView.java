@@ -9,6 +9,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
@@ -66,6 +67,10 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
             $(root).append(html);
         }
 
+        if($("." + rootListTypeStyleName + " > div > div").length() < 1){
+            addEmptyEntityListStyle();
+        }
+
         $("div", root).click(new Function() {
             @Override
             public boolean f(Event e) {
@@ -81,14 +86,12 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     }
 
     public void clearKindsList() {
-        $("." + emptyListTypeStyleName).removeClass(emptyListTypeStyleName);
-//        $("." + rootListTypeStyleName + " > div > div").remove();
         $("." + rootListTypeStyleName + " > div").html("<span class='" + kindHeaderStyleName + "'>Kinds</span>");
     }
 
     @Override
     public void addEmptyEntityListStyle() {
-        $(root).addClass(emptyListTypeStyleName);
+        $(root).html("<span class='" + kindHeaderStyleName + "'>Kinds</span>"+"<span class='" + emptyListTypeStyleName + "'>No entity type detected</span>");
     }
 
     private void setActive(Event e) {
