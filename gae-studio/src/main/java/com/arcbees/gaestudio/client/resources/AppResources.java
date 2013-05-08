@@ -51,6 +51,16 @@ public interface AppResources extends ClientBundle {
         String kindListElement();
 
         String kindListElementHovered();
+
+        String entityTypeSelectorEmpty();
+
+        String entityTypeSelector();
+
+        String hiddenOverlay();
+
+        String revealOverlay();
+
+        String revealUnderOverlay();
     }
 
     public interface Sprites extends CssResource {
