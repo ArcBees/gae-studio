@@ -49,6 +49,9 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
             .Type<RevealContentHandler<?>>();
     public static final Object SLOT_TOOLBAR = new Object();
     public static final Object SLOT_KINDS = new Object();
+    @ContentSlot
+    public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_ENTITY_DETAILS = new GwtEvent
+            .Type<RevealContentHandler<?>>();
 
     private final EntityListPresenter entityListPresenter;
     private final VisualizerToolbarPresenter visualizerToolbarPresenter;

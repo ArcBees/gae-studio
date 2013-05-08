@@ -12,6 +12,7 @@
     <inherits name="com.google.gwt.query.Query" />
 
     <inherits name='com.gwtplatform.mvp.MvpWithEntryPoint' />
+    <inherits name="com.google.common.collect.Collect"/>
 
     <!-- Specify the paths for translatable code -->
     <source path='client' />

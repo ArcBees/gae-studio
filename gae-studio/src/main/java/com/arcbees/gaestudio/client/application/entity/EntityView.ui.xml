@@ -1,6 +1,10 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <g:HTMLPanel>
-        <g:Label ui:field="textLabel"/>
-    </g:HTMLPanel>
+    <ui:style>
+        .root {
+            overflow-x: scroll;
+        }
+    </ui:style>
+
+    <g:SimplePanel ui:field="root" addStyleNames="{style.root}"/>
 </ui:UiBinder>
