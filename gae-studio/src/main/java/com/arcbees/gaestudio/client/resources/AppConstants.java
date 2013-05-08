@@ -66,4 +66,6 @@ public interface AppConstants extends Constants {
     String mebibytesAbbreviation();
 
     String gibibytesAbbreviation();
+
+    String failedGettingEntity();
 }

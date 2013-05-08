@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CustomCellTable;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -48,7 +47,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     private static final int PAGE_SIZE = 25;
     private static final Range DEFAULT_RANGE = new Range(0, PAGE_SIZE);
-    private static final int NUMBER_OF_DEFAULT_COLUMNS = 2;
 
     @UiField
     HTMLPanel panel;
@@ -59,17 +57,12 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiField
     InlineLabel entityName;
 
-    private final VisualizerUiFactory visualizerUiFactory;
     private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
-    private final Set<String> currentProperties = new HashSet<String>();
 
     @Inject
     public EntityListView(Binder uiBinder,
-                          VisualizerUiFactory visualizerUiFactory,
                           AppResources appResources,
                           CustomCellTable customCellTable) {
-        this.visualizerUiFactory = visualizerUiFactory;
-
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, customCellTable);
 
         initWidget(uiBinder.createAndBindUi(this));
@@ -94,7 +87,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @Override
     public void setNewKind(String currentKind) {
         panel.setVisible(true);
-        removeAllPropertyColumns();
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
         entityName.setText(currentKind);
     }
@@ -106,17 +98,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @Override
     public void setData(Range range, List<ParsedEntity> parsedEntities) {
-        Set<String> properties = new HashSet<String>();
-        for (ParsedEntity parsedEntity : parsedEntities) {
-            properties.addAll(parsedEntity.propertyKeys());
-        }
-
-        for (String property : properties) {
-            if (!currentProperties.contains(property)) {
-                entityTable.addColumn(visualizerUiFactory.createPropertyColumn(property), property);
-                currentProperties.add(property);
-            }
-        }
         entityTable.setRowData(range.getStart(), parsedEntities);
     }
 
@@ -190,29 +171,34 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private void setDefaultColumns() {
         TextColumn<ParsedEntity> idColumn = new TextColumn<ParsedEntity>() {
             @Override
-            public String getValue(ParsedEntity EntityJsonParsed) {
-                return EntityJsonParsed.getKey().getId().toString();
+            public String getValue(ParsedEntity entityJsonParsed) {
+                return entityJsonParsed.getKey().getId().toString();
             }
         };
         entityTable.addColumn(idColumn, "ID");
 
-        TextColumn<ParsedEntity> parentColumn = new TextColumn<ParsedEntity>() {
+        TextColumn<ParsedEntity> parentKindColumn = new TextColumn<ParsedEntity>() {
             @Override
-            public String getValue(ParsedEntity EntityJsonParsed) {
-                ParentKeyDto parentKeyDTO = EntityJsonParsed.getKey().getParentKey();
+            public String getValue(ParsedEntity entityJsonParsed) {
+                ParentKeyDto parentKeyDTO = entityJsonParsed.getKey().getParentKey();
                 if (parentKeyDTO == null) {
                     return "<null>";
                 }
-                return parentKeyDTO.getKind() + ", " + parentKeyDTO.getId();
+                return parentKeyDTO.getKind();
             }
         };
-        entityTable.addColumn(parentColumn, "Parent");
-    }
+        entityTable.addColumn(parentKindColumn, "Parent Kind");
 
-    private void removeAllPropertyColumns() {
-        while (entityTable.getColumnCount() != NUMBER_OF_DEFAULT_COLUMNS) {
-            entityTable.removeColumn(NUMBER_OF_DEFAULT_COLUMNS);
-        }
-        currentProperties.clear();
+        TextColumn<ParsedEntity> parentIdColumn = new TextColumn<ParsedEntity>() {
+            @Override
+            public String getValue(ParsedEntity entityJsonParsed) {
+                ParentKeyDto parentKeyDTO = entityJsonParsed.getKey().getParentKey();
+                if (parentKeyDTO == null) {
+                    return "<null>";
+                }
+                return parentKeyDTO.getId().toString();
+            }
+        };
+        entityTable.addColumn(parentIdColumn, "Parent ID");
     }
 }
