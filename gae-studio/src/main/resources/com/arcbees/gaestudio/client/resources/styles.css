@@ -1,6 +1,10 @@
 @def blue #3595E6;
 @def lightGrey #ececec;
 
+body, * {
+    font-family: Arial, Abel, Verdana, sans-serif;
+}
+
 .fleft {
     float: left;
 }
@@ -73,6 +77,20 @@
 .wordWrap {
     width: 100%;
     word-wrap: break-word;
+}
+
+.kindHeaderElement {
+    line-height: 24px;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 3px 8px;
+    color: rgb(43, 43, 43);
+    background-color: rgba(85, 85, 85, 0.2);
+
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .kindListElement {

@@ -61,6 +61,8 @@ public interface AppResources extends ClientBundle {
         String revealOverlay();
 
         String revealUnderOverlay();
+
+        String kindHeaderElement();
     }
 
     public interface Sprites extends CssResource {
