@@ -31,6 +31,8 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
 
+import static com.google.gwt.query.client.GQuery.$;
+
 public class ToolbarButton extends Composite {
     public interface Binder extends UiBinder<Widget, ToolbarButton> {
     }

@@ -32,7 +32,7 @@
         }
 
         .menu > a:before, .menu > a:after {
-            content: attr(title);
+            content: attr(data-foo);
             position: absolute;
             top: 0;
             left: 0;
@@ -108,11 +108,11 @@
             <g:Image resource="{resources.logo}"/>
         </a>
         <div class="{style.menu}">
-            <a href="#{nameTokens.getVisualizer}" class="{resources.sprites.topmenuBgHover} visualizer" title="Visualizer">
+            <a href="#{nameTokens.getVisualizer}" class="{resources.sprites.topmenuBgHover} visualizer" data-foo="Visualizer">
                 Visualizer
             </a>
             <img src="{resources.topmenuSeparator.getSafeUri}"/>
-            <a href="#{nameTokens.getProfiler}" class="{resources.sprites.topmenuBgHover} profiler" title="Profiler">
+            <a href="#{nameTokens.getProfiler}" class="{resources.sprites.topmenuBgHover} profiler" data-foo="Profiler">
                 Profiler
             </a>
         </div>

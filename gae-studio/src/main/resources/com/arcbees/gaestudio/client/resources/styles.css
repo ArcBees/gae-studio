@@ -38,6 +38,12 @@
     padding: 0 13px;
     float: left;
     position: relative;
+    background: transparent;
+
+    transition: all .25s ease;
+    -webkit-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    -o-transition: all .25s ease;
 }
 
 .toolbarButton:hover {
@@ -45,12 +51,12 @@
 }
 
 .toolbarButtonDisabled {
-    opacity: 0.4;
-    cursor: auto;
+    cursor: default;
+    opacity: .4;
 }
 
 .toolbarButtonDisabled:hover {
-     background: none;
+    background: none;
 }
 
 .tabs {
@@ -136,6 +142,7 @@
     height: 100%;
     position: relative;
     z-index: 50;
+    overflow-y: auto;
 }
 
 .entityTypeSelector > div {
