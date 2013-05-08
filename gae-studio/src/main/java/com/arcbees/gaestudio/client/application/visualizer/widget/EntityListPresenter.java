@@ -24,14 +24,15 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEv
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
+import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -41,9 +42,16 @@ import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+
+import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView> implements
-        KindSelectedEvent.KindSelectedHandler, EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler,
+        EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler,
         RefreshEntitiesEvent.RefreshEntitiesHandler, EntityDeletedEvent.EntityDeletedHandler {
     public interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
@@ -62,37 +70,48 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     private final DispatchAsync dispatcher;
+    private final PlaceManager placeManager;
+
     private String currentKind;
 
     @Inject
-    public EntityListPresenter(final EventBus eventBus, final MyView view, final DispatchAsync dispatcher) {
+    EntityListPresenter(EventBus eventBus,
+                        MyView view,
+                        DispatchAsync dispatcher,
+                        PlaceManager placeManager) {
         super(eventBus, view);
 
-        getView().setUiHandlers(this);
-
+        this.placeManager = placeManager;
         this.dispatcher = dispatcher;
+
+        getView().setUiHandlers(this);
 
         setTableDataProvider();
     }
 
     @Override
-    public void onKindSelected(KindSelectedEvent event) {
-        currentKind = event.getKind();
-        if (currentKind.isEmpty()) {
-            hideList();
-        } else {
-            loadKind();
-        }
-    }
-
-    @Override
     public void onEntitySelected(ParsedEntity parsedEntity) {
         getEventBus().fireEvent(new EntitySelectedEvent(parsedEntity));
+
+        revealEntityPlace(parsedEntity);
     }
 
     @Override
     public void onRefreshEntities(RefreshEntitiesEvent event) {
         loadKind();
+    }
+
+    public void setCurrentKind(String currentKind) {
+        this.currentKind = currentKind;
+    }
+
+    public void loadKind() {
+        setTotalCount();
+        getView().setNewKind(currentKind);
+    }
+
+    public void hideList() {
+        getView().hideList();
     }
 
     @Override
@@ -109,7 +128,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     protected void onBind() {
         super.onBind();
 
-        addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(EntitySavedEvent.getType(), this);
         addRegisteredHandler(EntityDeletedEvent.getType(), this);
         addRegisteredHandler(RefreshEntitiesEvent.getType(), this);
@@ -123,15 +141,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             }
         };
         getView().setTableDataProvider(dataProvider);
-    }
-
-    private void loadKind() {
-        setTotalCount();
-        getView().setNewKind(currentKind);
-    }
-
-    private void hideList() {
-        getView().hideList();
     }
 
     private void setTotalCount() {
@@ -152,11 +161,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             dispatcher.execute(
                     new GetEntitiesByKindAction.Builder(currentKind).offset(range.getStart()).limit(range.getLength())
                             .build(), new AsyncCallbackImpl<GetEntitiesByKindResult>() {
-                        @Override
-                        public void onSuccess(GetEntitiesByKindResult result) {
-                            onLoadPageSuccess(result, display);
-                        }
-                    });
+                @Override
+                public void onSuccess(GetEntitiesByKindResult result) {
+                    onLoadPageSuccess(result, display);
+                }
+            });
         }
         EntityPageLoadedEvent.fire(this);
     }
@@ -170,5 +179,21 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         }
 
         getView().setData(display.getVisibleRange(), parsedEntityEntities);
+    }
+
+    private void revealEntityPlace(ParsedEntity parsedEntity) {
+        EntityDto entityDto = parsedEntity.getEntityDTO();
+        KeyDto keyDto = entityDto.getKey();
+
+        PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.entity)
+                .with(KIND, keyDto.getKind())
+                .with(ID, Long.toString(keyDto.getId()));
+
+        if (keyDto.getParentKey() != null) {
+            builder = builder.with(PARENT_KIND, keyDto.getParentKey().getKind())
+                    .with(PARENT_ID, Long.toString(keyDto.getParentKey().getId()));
+        }
+
+        placeManager.revealPlace(builder.build());
     }
 }

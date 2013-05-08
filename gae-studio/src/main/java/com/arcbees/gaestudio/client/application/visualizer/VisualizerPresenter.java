@@ -17,20 +17,25 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.VisualizerToolbarPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
+import com.google.gwt.event.shared.GwtEvent;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
-public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, VisualizerPresenter.MyProxy> {
+public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
+        VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler {
     public interface MyView extends View {
     }
 
@@ -39,7 +44,9 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
     public interface MyProxy extends ProxyPlace<VisualizerPresenter> {
     }
 
-    public static final Object SLOT_ENTITIES = new Object();
+    @ContentSlot
+    public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_ENTITIES = new GwtEvent
+            .Type<RevealContentHandler<?>>();
     public static final Object SLOT_TOOLBAR = new Object();
     public static final Object SLOT_KINDS = new Object();
 
@@ -73,5 +80,19 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
         setInSlot(SLOT_ENTITIES, entityListPresenter);
         setInSlot(SLOT_TOOLBAR, visualizerToolbarPresenter);
         setInSlot(SLOT_KINDS, sidebarPresenter);
+
+        addRegisteredHandler(KindSelectedEvent.getType(), this);
+    }
+
+    @Override
+    public void onKindSelected(KindSelectedEvent event) {
+        setInSlot(SLOT_ENTITIES, entityListPresenter);
+
+        entityListPresenter.setCurrentKind(event.getKind());
+        if (event.getKind().isEmpty()) {
+            entityListPresenter.hideList();
+        } else {
+            entityListPresenter.loadKind();
+        }
     }
 }
