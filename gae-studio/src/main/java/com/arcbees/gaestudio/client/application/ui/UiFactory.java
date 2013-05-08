@@ -20,6 +20,6 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 
 public interface UiFactory {
-    ToolbarButton createToolbarButton(final String text, final String stylename,
+    ToolbarButton createToolbarButton(final String text, final ImageResource imageResource,
             final ToolbarButtonCallback callback);
 }

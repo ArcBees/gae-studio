@@ -41,11 +41,16 @@
 }
 
 .toolbarButton:hover {
+    background: #606060;
 }
 
 .toolbarButtonDisabled {
     opacity: 0.4;
     cursor: auto;
+}
+
+.toolbarButtonDisabled:hover {
+     background: none;
 }
 
 .tabs {

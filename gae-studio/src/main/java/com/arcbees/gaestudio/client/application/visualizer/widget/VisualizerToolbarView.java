@@ -86,7 +86,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     }
 
     private ToolbarButton createRefreshButton() {
-        return uiFactory.createToolbarButton(myConstants.refresh(), resources.sprites().refresh(), new ToolbarButtonCallback() {
+        return uiFactory.createToolbarButton(myConstants.refresh(), resources.refresh(), new ToolbarButtonCallback() {
             @Override
             public void onClicked() {
                 getUiHandlers().refresh();
@@ -95,7 +95,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     }
 
     private ToolbarButton createCreateButton() {
-        return uiFactory.createToolbarButton(myConstants.create(), resources.sprites().create(), new ToolbarButtonCallback() {
+        return uiFactory.createToolbarButton(myConstants.create(), resources.create(), new ToolbarButtonCallback() {
             @Override
             public void onClicked() {
                 getUiHandlers().create();
@@ -104,7 +104,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     }
 
     private ToolbarButton createEditButton() {
-        return uiFactory.createToolbarButton(myConstants.edit(), resources.sprites().edit(), new ToolbarButtonCallback() {
+        return uiFactory.createToolbarButton(myConstants.edit(), resources.edit(), new ToolbarButtonCallback() {
             @Override
             public void onClicked() {
                 getUiHandlers().edit();
@@ -113,7 +113,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     }
 
     private ToolbarButton createDeleteButton() {
-        return uiFactory.createToolbarButton(myConstants.delete(), resources.sprites().delete(), new ToolbarButtonCallback() {
+        return uiFactory.createToolbarButton(myConstants.delete(), resources.delete(), new ToolbarButtonCallback() {
             @Override
             public void onClicked() {
                 getUiHandlers().delete();
