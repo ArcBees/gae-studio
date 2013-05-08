@@ -39,20 +39,21 @@ public class ToolbarButton extends Composite {
     AppResources resources;
     @UiField
     HTMLPanel button;
-    @UiField
-    Image image;
+//    @UiField
+//    Image image;
     @UiField
     InlineLabel text;
 
     @Inject
     public ToolbarButton(final Binder binder, final AppResources resources, @Assisted final String text,
-                         @Assisted final ImageResource imageResource, @Assisted final ToolbarButtonCallback callback) {
+                         @Assisted final String stylename , @Assisted final ToolbarButtonCallback callback) {
         this.resources = resources;
 
         initWidget(binder.createAndBindUi(this));
 
         this.text.setText(text);
-        this.image.setResource(imageResource);
+        this.text.addStyleName(stylename);
+//        this.image.setResource(imageResource);
 
         button.addDomHandler(new ClickHandler() {
             @Override

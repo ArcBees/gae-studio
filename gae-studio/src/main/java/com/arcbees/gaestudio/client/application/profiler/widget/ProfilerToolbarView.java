@@ -82,7 +82,7 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
     }
 
     private ToolbarButton createRecordButton() {
-        return uiFactory.createToolbarButton(myConstants.record(), resources.record(), new ToolbarButtonCallback() {
+        return uiFactory.createToolbarButton(myConstants.record(), resources.sprites().record(), new ToolbarButtonCallback() {
             @Override
             public void onClicked() {
                 isRecording = true;
@@ -92,7 +92,7 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
     }
 
     private ToolbarButton createStopButton() {
-        return uiFactory.createToolbarButton(myConstants.stop(), resources.stop(), new ToolbarButtonCallback() {
+        return uiFactory.createToolbarButton(myConstants.stop(), resources.sprites().stop(), new ToolbarButtonCallback() {
             @Override
             public void onClicked() {
                 isRecording = false;
@@ -102,7 +102,7 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
     }
 
     private ToolbarButton createClearButton() {
-        return uiFactory.createToolbarButton(myConstants.clear(), resources.delete(), new ToolbarButtonCallback() {
+        return uiFactory.createToolbarButton(myConstants.clear(), resources.sprites().delete(), new ToolbarButtonCallback() {
             @Override
             public void onClicked() {
                 getUiHandlers().clearOperationRecords();

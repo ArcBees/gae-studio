@@ -16,9 +16,10 @@
 
 package com.arcbees.gaestudio.client.application.ui;
 
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 
 public interface UiFactory {
-    ToolbarButton createToolbarButton(final String text, final ImageResource imageResource,
+    ToolbarButton createToolbarButton(final String text, final String stylename,
             final ToolbarButtonCallback callback);
 }

@@ -72,7 +72,7 @@
     text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.85);
     background-color: transparent;
 
-    overflow:hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 
@@ -82,7 +82,7 @@
     -o-transition: all .25s ease;
 }
 
-.kindListElement span{
+.kindListElement span {
     padding: 3px 8px;
     line-height: 28px;
 }
@@ -150,11 +150,11 @@
     line-height: 28px;
 }
 
-.hiddenOverlay{
+.hiddenOverlay {
     position: relative;
 }
 
-.hiddenOverlay > div:before{
+.hiddenOverlay > div:before {
     height: 100%;
     width: 100%;
     background-color: inherit;
@@ -174,11 +174,11 @@
     -o-transition: all .5s ease;
 }
 
-.hiddenOverlay.revealOverlay > div:before{
+.hiddenOverlay.revealOverlay > div:before {
     opacity: 0;
 }
 
-.hiddenOverlay.revealUnderOverlay > div:before{
+.hiddenOverlay.revealUnderOverlay > div:before {
     display: none;
 }
 

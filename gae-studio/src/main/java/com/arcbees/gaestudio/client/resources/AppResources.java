@@ -69,6 +69,18 @@ public interface AppResources extends ClientBundle {
         String topmenuBgHover();
 
         String topmenuBgActive();
+
+        String record();
+
+        String stop();
+
+        String delete();
+
+        String refresh();
+
+        String edit();
+
+        String create();
     }
 
     public Styles styles();

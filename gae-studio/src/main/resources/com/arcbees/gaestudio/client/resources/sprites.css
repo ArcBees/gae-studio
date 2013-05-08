@@ -6,7 +6,30 @@
     gwt-image: "topmenuBgHover";
 }
 
-
 @sprite .topmenuBgHover.topmenuBgActive:before {
     gwt-image: "topmenuBgActive";
+}
+
+@sprite .record {
+    gwt-image: "record";
+}
+
+@sprite .stop {
+    gwt-image: "stop";
+}
+
+@sprite .delete {
+    gwt-image: "delete";
+}
+
+@sprite .refresh {
+    gwt-image: "refresh";
+}
+
+@sprite .edit {
+    gwt-image: "edit";
+}
+
+@sprite .create {
+    gwt-image: "create";
 }
