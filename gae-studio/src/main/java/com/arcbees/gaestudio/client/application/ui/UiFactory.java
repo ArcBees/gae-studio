@@ -16,7 +16,6 @@
 
 package com.arcbees.gaestudio.client.application.ui;
 
-import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 
 public interface UiFactory {
