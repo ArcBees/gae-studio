@@ -12,6 +12,7 @@
         }
     </ui:style>
     <g:HTMLPanel ui:field="panel" visible="false">
+
         <div class="{style.heading}">
             <h3>Entity : <g:InlineLabel ui:field="entityName"/></h3>
             <cellview:SimplePager ui:field="pager" location="LEFT"/>

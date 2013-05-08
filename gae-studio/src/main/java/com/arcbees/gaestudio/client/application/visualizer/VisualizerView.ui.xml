@@ -7,25 +7,13 @@
             width: 90%;
         }
 
-        .entityTypeSelector {
-            float: left;
-            width: 10%;
-            background-color: #ebebeb;
-            height: 100%;
-        }
-
-        .entityTypeSelector > div {
-            border-right: 1px solid #dbdbdb;
-            height:  100%;
-        }
-
         .root {
             overflow: hidden;
         }
     </ui:style>
     <g:HTMLPanel addStyleNames="{style.root}">
-        <g:SimplePanel ui:field="toolbar"/>
-        <g:SimplePanel addStyleNames="{style.entityTypeSelector}" ui:field="entityTypesSidebar"/>
+        <g:SimplePanel ui:field="entityTypesSidebar" addStyleNames="{resources.styles.entityTypeSelector}"/>
+        <g:SimplePanel ui:field="toolbar" addStyleNames="{resources.styles.hiddenOverlay}"/>
         <g:SimplePanel ui:field="entityListPanel" addStyleNames="{style.entityListPanel}"/>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>

@@ -18,6 +18,8 @@ import com.gwtplatform.mvp.client.View;
 public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> implements SidebarUiHandlers {
     public interface MyView extends View, HasUiHandlers<SidebarUiHandlers> {
         void updateKinds(List<String> kinds);
+
+        void addEmptyEntityListStyle();
     }
 
     private final DispatchAsync dispatcher;
@@ -47,7 +49,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
                 new AsyncCallback<GetEntityKindsResult>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        Window.alert("Failed getting Entity Kinds: " + caught.getMessage());
+                        getView().addEmptyEntityListStyle();
                     }
 
                     @Override
