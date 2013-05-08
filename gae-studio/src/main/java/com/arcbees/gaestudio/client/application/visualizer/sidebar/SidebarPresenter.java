@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
 import com.google.gwt.user.client.Window;
@@ -46,13 +47,8 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
 
         dispatcher.execute(
                 new GetEntityKindsAction(),
-                new AsyncCallback<GetEntityKindsResult>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        getView().addEmptyEntityListStyle();
-                    }
-
-                    @Override
+                new AsyncCallbackImpl<GetEntityKindsResult>("Failed getting Entity Kinds: ") {
+                   @Override
                     public void onSuccess(GetEntityKindsResult result) {
                         getView().updateKinds(result.getKinds());
                     }
