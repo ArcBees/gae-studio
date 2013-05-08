@@ -38,14 +38,25 @@
     padding: 0 13px;
     float: left;
     position: relative;
+    background: transparent;
+
+    transition: all .25s ease;
+    -webkit-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    -o-transition: all .25s ease;
 }
 
 .toolbarButton:hover {
+    background: #606060;
 }
 
 .toolbarButtonDisabled {
-    opacity: 0.4;
-    cursor: auto;
+    cursor: default;
+    opacity: .4;
+}
+
+.toolbarButtonDisabled:hover {
+    background: none;
 }
 
 .tabs {
@@ -72,7 +83,7 @@
     text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.85);
     background-color: transparent;
 
-    overflow:hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 
@@ -82,7 +93,7 @@
     -o-transition: all .25s ease;
 }
 
-.kindListElement span{
+.kindListElement span {
     padding: 3px 8px;
     line-height: 28px;
 }
@@ -131,6 +142,7 @@
     height: 100%;
     position: relative;
     z-index: 50;
+    overflow-y: auto;
 }
 
 .entityTypeSelector > div {
@@ -152,11 +164,11 @@
     line-height: 28px;
 }
 
-.hiddenOverlay{
+.hiddenOverlay {
     position: relative;
 }
 
-.hiddenOverlay > div:before{
+.hiddenOverlay > div:before {
     height: 100%;
     width: 100%;
     background-color: inherit;
@@ -176,11 +188,11 @@
     -o-transition: all .5s ease;
 }
 
-.hiddenOverlay.revealOverlay > div:before{
+.hiddenOverlay.revealOverlay > div:before {
     opacity: 0;
 }
 
-.hiddenOverlay.revealUnderOverlay > div:before{
+.hiddenOverlay.revealUnderOverlay > div:before {
     display: none;
 }
 

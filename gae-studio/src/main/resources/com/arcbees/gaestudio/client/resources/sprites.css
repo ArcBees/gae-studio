@@ -6,7 +6,6 @@
     gwt-image: "topmenuBgHover";
 }
 
-
 @sprite .topmenuBgHover.topmenuBgActive:before {
     gwt-image: "topmenuBgActive";
 }
