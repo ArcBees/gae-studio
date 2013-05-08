@@ -6,6 +6,7 @@ import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
+import com.arcbees.gaestudio.client.util.Console;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -27,7 +28,7 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
 public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPresenter.MyProxy> {
     public interface MyView extends View {
-        void showEntity(String json);
+        void showEntity(EntityDto entityDto);
     }
 
     @ProxyStandard
@@ -44,7 +45,7 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
                     MyProxy proxy,
                     DispatchAsync dispatchAsync,
                     AppConstants appConstants) {
-        super(eventBus, view, proxy, VisualizerPresenter.SLOT_ENTITIES);
+        super(eventBus, view, proxy, VisualizerPresenter.SLOT_ENTITY_DETAILS);
 
         this.dispatchAsync = dispatchAsync;
         this.appConstants = appConstants;
@@ -86,6 +87,6 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     }
 
     private void displayEntityDto(EntityDto entityDto) {
-        getView().showEntity(entityDto.getJson());
+        getView().showEntity(entityDto);
     }
 }

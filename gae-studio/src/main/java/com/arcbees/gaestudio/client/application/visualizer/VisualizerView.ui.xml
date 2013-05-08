@@ -3,8 +3,8 @@
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:style>
         .entityListPanel {
-            float: right;
-            width: 90%;
+            float: left;
+            width: 15%;
         }
 
         .root {
@@ -15,6 +15,7 @@
         <g:SimplePanel ui:field="entityTypesSidebar" addStyleNames="{resources.styles.entityTypeSelector}"/>
         <g:SimplePanel ui:field="toolbar" addStyleNames="{resources.styles.hiddenOverlay}"/>
         <g:SimplePanel ui:field="entityListPanel" addStyleNames="{style.entityListPanel}"/>
+        <g:SimplePanel ui:field="entityDetailsPanel"/>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

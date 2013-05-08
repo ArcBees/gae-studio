@@ -1,0 +1,50 @@
+package com.arcbees.gaestudio.client.application.entity;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.google.common.collect.Lists;
+
+public class KeyValuePairBuilder {
+    public List<KeyValuePair> fromParsedEntity(ParsedEntity parsedEntity) {
+        List<KeyValuePair> keyValuePairs = new ArrayList<KeyValuePair>();
+
+        Set<String> properties = parsedEntity.propertyKeys();
+        List<String> propertiesList = Lists.newArrayList(properties);
+        Collections.sort(propertiesList);
+
+        for (String prop : propertiesList) {
+            String val = parsedEntity.getProperty(prop).toString();
+            val = cleanupValue(val);
+
+            KeyValuePair keyValuePair = new KeyValuePair(prop, val);
+            keyValuePairs.add(keyValuePair);
+        }
+
+        return keyValuePairs;
+    }
+
+    private String cleanupValue(String val) {
+        val = val.replace("{\"value\":", "");
+        val = removeTrailingCurlyBracket(val);
+        return val;
+    }
+
+    private String removeTrailingCurlyBracket(String val) {
+        boolean lastCharIsCurlyBracket = val.charAt(val.length() - 1) == '}';
+
+        if (lastCharIsCurlyBracket) {
+            val = removeLastCharacter(val);
+        }
+
+        return val;
+    }
+
+    private String removeLastCharacter(String val) {
+        val = val.substring(0, val.length() - 1);
+        return val;
+    }
+}

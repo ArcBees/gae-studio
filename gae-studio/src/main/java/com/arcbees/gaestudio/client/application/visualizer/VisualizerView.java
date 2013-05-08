@@ -34,6 +34,8 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     SimplePanel toolbar;
     @UiField
     SimplePanel entityTypesSidebar;
+    @UiField
+    SimplePanel entityDetailsPanel;
 
     @Inject
     public VisualizerView(final Binder uiBinder) {
@@ -49,6 +51,8 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
                 toolbar.setWidget(content);
             } else if (slot == VisualizerPresenter.SLOT_KINDS) {
                 entityTypesSidebar.setWidget(content);
+            } else if (slot == VisualizerPresenter.SLOT_ENTITY_DETAILS) {
+                entityDetailsPanel.setWidget(content);
             }
         }
     }
