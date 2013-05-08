@@ -2,7 +2,7 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:style>
         .root {
-            overflow-x: scroll;
+            overflow-x: auto;
         }
     </ui:style>
 
