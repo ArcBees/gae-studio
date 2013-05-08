@@ -24,6 +24,16 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         SafeHtml create(String kindName, String cssClass);
     }
 
+    public interface KindHeaderTemplate extends SafeHtmlTemplates {
+        @SafeHtmlTemplates.Template("<span class='{0}'>Kinds</span>")
+        SafeHtml create(String cssClassHeader);
+    }
+
+    public interface EmptyKindsTemplate extends SafeHtmlTemplates {
+        @SafeHtmlTemplates.Template("<span class='{0}'>Kinds</span><span class='{1}'>No entity type detected</span>")
+        SafeHtml create(String cssClassHeader, String cssClassEmpty);
+    }
+
     interface Binder extends UiBinder<HTMLPanel, SidebarView> {
     }
 
@@ -31,6 +41,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     HTMLPanel root;
 
     private final KindTemplate kindTemplate;
+    private final KindHeaderTemplate kindHeaderTemplate;
+    private final EmptyKindsTemplate emptyKindsTemplate;
     private final AppResources appResources;
 
     private final String emptyListTypeStyleName;
@@ -43,8 +55,12 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     @Inject
     public SidebarView(Binder binder,
                        KindTemplate kindTemplate,
+                       KindHeaderTemplate kindHeaderTemplate,
+                       EmptyKindsTemplate emptyKindsTemplate,
                        AppResources appResources) {
         this.kindTemplate = kindTemplate;
+        this.kindHeaderTemplate = kindHeaderTemplate;
+        this.emptyKindsTemplate = emptyKindsTemplate;
         this.appResources = appResources;
 
         initWidget(binder.createAndBindUi(this));
@@ -86,12 +102,16 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     }
 
     public void clearKindsList() {
-        $("." + rootListTypeStyleName + " > div").html("<span class='" + kindHeaderStyleName + "'>Kinds</span>");
+        String html = kindHeaderTemplate.create(kindHeaderStyleName).asString();
+
+        $("." + rootListTypeStyleName + " > div").html(html);
     }
 
     @Override
     public void addEmptyEntityListStyle() {
-        $(root).html("<span class='" + kindHeaderStyleName + "'>Kinds</span>"+"<span class='" + emptyListTypeStyleName + "'>No entity type detected</span>");
+        String html = emptyKindsTemplate.create(kindHeaderStyleName, emptyListTypeStyleName).asString();
+
+        $("." + rootListTypeStyleName + " > div").html(html);
     }
 
     private void setActive(Event e) {
