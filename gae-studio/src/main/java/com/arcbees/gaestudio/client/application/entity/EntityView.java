@@ -16,7 +16,7 @@ public class EntityView extends ViewImpl implements EntityPresenter.MyView {
     Label textLabel;
 
     @Inject
-    public EntityView(Binder binder) {
+    EntityView(Binder binder) {
         initWidget(binder.createAndBindUi(this));
     }
 

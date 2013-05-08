@@ -16,10 +16,24 @@
 
 package com.arcbees.gaestudio.client.util;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public abstract class AsyncCallbackImpl<T> implements AsyncCallback<T> {
+    private final String message;
+
+    public AsyncCallbackImpl() {
+        message = null;
+    }
+
+    public AsyncCallbackImpl(String failureMessage) {
+        this.message = failureMessage;
+    }
+
     @Override
     public void onFailure(Throwable caught) {
+        if (message != null) {
+            Window.alert(message + ", exception: " + caught.getMessage());
+        }
     }
 }

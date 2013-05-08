@@ -75,10 +75,10 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private String currentKind;
 
     @Inject
-    public EntityListPresenter(EventBus eventBus,
-                               MyView view,
-                               DispatchAsync dispatcher,
-                               PlaceManager placeManager) {
+    EntityListPresenter(EventBus eventBus,
+                        MyView view,
+                        DispatchAsync dispatcher,
+                        PlaceManager placeManager) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
@@ -161,11 +161,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             dispatcher.execute(
                     new GetEntitiesByKindAction.Builder(currentKind).offset(range.getStart()).limit(range.getLength())
                             .build(), new AsyncCallbackImpl<GetEntitiesByKindResult>() {
-                        @Override
-                        public void onSuccess(GetEntitiesByKindResult result) {
-                            onLoadPageSuccess(result, display);
-                        }
-                    });
+                @Override
+                public void onSuccess(GetEntitiesByKindResult result) {
+                    onLoadPageSuccess(result, display);
+                }
+            });
         }
         EntityPageLoadedEvent.fire(this);
     }
@@ -185,15 +185,15 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         EntityDto entityDto = parsedEntity.getEntityDTO();
         KeyDto keyDto = entityDto.getKey();
 
-        PlaceRequest placeRequest = new PlaceRequest(NameTokens.entity)
+        PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.entity)
                 .with(KIND, keyDto.getKind())
                 .with(ID, Long.toString(keyDto.getId()));
 
         if (keyDto.getParentKey() != null) {
-            placeRequest = placeRequest.with(PARENT_KIND, keyDto.getParentKey().getKind())
+            builder = builder.with(PARENT_KIND, keyDto.getParentKey().getKind())
                     .with(PARENT_ID, Long.toString(keyDto.getParentKey().getId()));
         }
 
-        placeManager.revealPlace(placeRequest);
+        placeManager.revealPlace(builder.build());
     }
 }

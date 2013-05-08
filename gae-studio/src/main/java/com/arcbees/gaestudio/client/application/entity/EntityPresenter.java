@@ -4,14 +4,13 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
-import com.arcbees.gaestudio.client.place.ParameterTokens;
+import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
@@ -37,15 +36,18 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     }
 
     private final DispatchAsync dispatchAsync;
+    private final AppConstants appConstants;
 
     @Inject
-    public EntityPresenter(EventBus eventBus,
-                           MyView view,
-                           MyProxy proxy,
-                           DispatchAsync dispatchAsync) {
+    EntityPresenter(EventBus eventBus,
+                    MyView view,
+                    MyProxy proxy,
+                    DispatchAsync dispatchAsync,
+                    AppConstants appConstants) {
         super(eventBus, view, proxy, VisualizerPresenter.SLOT_ENTITIES);
 
         this.dispatchAsync = dispatchAsync;
+        this.appConstants = appConstants;
     }
 
     @Override
@@ -73,12 +75,9 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
         GetEntityDtoAction getEntityDtoAction = new GetEntityDtoAction();
         getEntityDtoAction.setKeyDto(keyDto);
 
-        dispatchAsync.execute(getEntityDtoAction, new AsyncCallback<GetEntityDtoResult>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                Window.alert("Failed getting entity: " + caught.getMessage());
-            }
+        String failureMessage = appConstants.failedGettingEntity();
 
+        dispatchAsync.execute(getEntityDtoAction, new AsyncCallbackImpl<GetEntityDtoResult>(failureMessage) {
             @Override
             public void onSuccess(GetEntityDtoResult result) {
                 displayEntityDto(result.getEntityDto());
