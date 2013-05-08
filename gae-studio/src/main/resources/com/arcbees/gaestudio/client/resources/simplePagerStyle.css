@@ -1,0 +1,15 @@
+.pageDetails {
+    color: red;
+}
+
+.button {
+    background-color: green;
+}
+
+.disabledButton {
+    margin-top: 10px;
+}
+
+/*
+http://google-web-toolkit.googlecode.com/svn/javadoc/latest/com/google/gwt/user/cellview/client/SimplePager.Resources.html
+*/

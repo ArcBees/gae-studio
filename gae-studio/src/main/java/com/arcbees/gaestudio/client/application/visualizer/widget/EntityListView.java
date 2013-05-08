@@ -17,13 +17,11 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CustomCellTable;
+import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -32,7 +30,6 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.Range;
@@ -50,26 +47,24 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @UiField
     HTMLPanel panel;
-    @UiField
+    @UiField(provided = true)
     SimplePager pager;
     @UiField(provided = true)
     CellTable<ParsedEntity> entityTable;
-    @UiField
-    InlineLabel entityName;
 
     private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
 
     @Inject
     public EntityListView(Binder uiBinder,
-                          AppResources appResources,
-                          CustomCellTable customCellTable) {
+                          CustomCellTable customCellTable,
+                          PagerResources pagerResources) {
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, customCellTable);
+        pager = new SimplePager(SimplePager.TextLocation.LEFT, pagerResources, true, 1000, true);
 
         initWidget(uiBinder.createAndBindUi(this));
 
         setSelectionModel();
         pager.setDisplay(entityTable);
-        entityName.setStyleName(appResources.styles().wordWrap());
         pager.setPageSize(PAGE_SIZE);
         setDefaultColumns();
     }
@@ -88,7 +83,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     public void setNewKind(String currentKind) {
         panel.setVisible(true);
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
-        entityName.setText(currentKind);
     }
 
     @Override

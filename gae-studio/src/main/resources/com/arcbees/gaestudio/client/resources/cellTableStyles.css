@@ -1,3 +1,19 @@
 .cellTableCell {
     word-break: break-word;
 }
+
+.cellTableSelectedRow {
+    background-color: yellow;
+}
+
+.cellTableEvenRow {
+    background-color: red;
+}
+
+.cellTableOddRow {
+    background-color: blue;
+}
+
+/*
+http://google-web-toolkit.googlecode.com/svn/javadoc/latest/com/google/gwt/user/cellview/client/CellTable.Style.html
+*/
