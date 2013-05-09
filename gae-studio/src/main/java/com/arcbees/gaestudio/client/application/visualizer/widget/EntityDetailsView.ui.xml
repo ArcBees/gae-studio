@@ -9,8 +9,9 @@
 
         .popup {
             padding: 20px;
-            background-color: #ffffff;
+            background-color: #EBEBEB;
             border-radius: 10px;
+            z-index: 110;
         }
 
         .error {
@@ -24,9 +25,15 @@
             -moz-border-radius: 5px;
         }
 
+        .glassPanel {
+            position: relative;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
     </ui:style>
     <g:HTMLPanel>
-        <g:PopupPanel visible="false" glassEnabled="true" modal="true" ui:field="popup" styleName="{style.popup}">
+        <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{style.glassPanel}" modal="true" ui:field="popup" styleName="{style.popup}">
             <g:HTMLPanel>
                 <h3>Entity Details</h3>
                 <g:Button ui:field="save">Save</g:Button>
