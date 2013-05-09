@@ -32,5 +32,5 @@ public interface DbOperationRecorder {
 
     void recordDbOperation(PutRequest request, PutResponse response, int executionTimeMs);
 
-    void recordDbOperation(Query query, QueryResult queryResult, int executionTimeMs);    
+    void recordDbOperation(Query query, QueryResult queryResult, int executionTimeMs);
 }

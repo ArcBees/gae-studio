@@ -23,11 +23,11 @@ public class QueryOrderDto implements Serializable {
 
     private QueryOrderDirectionDto direction;
     private String property;
-    
+
     @SuppressWarnings("unused")
     protected QueryOrderDto() {
     }
-    
+
     public QueryOrderDto(QueryOrderDirectionDto direction, String property) {
         this.direction = direction;
         this.property = property;

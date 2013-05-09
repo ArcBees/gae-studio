@@ -99,12 +99,12 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
 
     private Widget getPanelFromFilter(Filter filter) {
         switch (filter) {
-        case METHOD:
-            return method;
-        case TYPE:
-            return type;
-        default:
-            return request;
+            case METHOD:
+                return method;
+            case TYPE:
+                return type;
+            default:
+                return request;
         }
     }
 }

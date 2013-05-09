@@ -35,7 +35,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> implements StatementPresenter.MyView {
-    public interface Binder extends UiBinder<Widget, StatementView> {
+    interface Binder extends UiBinder<Widget, StatementView> {
     }
 
     @UiField(provided = true)
@@ -44,13 +44,16 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     @UiField(provided = true)
     CellList<DbOperationRecordDto> statements;
 
-    private final SingleSelectionModel<DbOperationRecordDto> selectionModel = new SingleSelectionModel<DbOperationRecordDto>();
+    private final SingleSelectionModel<DbOperationRecordDto> selectionModel = new
+            SingleSelectionModel<DbOperationRecordDto>();
 
     @Inject
-    public StatementView(final Binder uiBinder, final AppResources resources, final StatementCell statementCell) {
+    StatementView(Binder uiBinder,
+                  AppResources resources,
+                  StatementCell statementCell) {
         this.resources = resources;
         statements = new CellList<DbOperationRecordDto>(statementCell);
-        
+
         initWidget(uiBinder.createAndBindUi(this));
 
         selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {

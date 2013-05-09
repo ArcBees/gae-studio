@@ -34,11 +34,9 @@ import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetEntityKindsHandler
-        extends AbstractActionHandler<GetEntityKindsAction, GetEntityKindsResult> {
-
+public class GetEntityKindsHandler extends AbstractActionHandler<GetEntityKindsAction, GetEntityKindsResult> {
     @Inject
-    public GetEntityKindsHandler() {
+    GetEntityKindsHandler() {
         super(GetEntityKindsAction.class);
     }
 

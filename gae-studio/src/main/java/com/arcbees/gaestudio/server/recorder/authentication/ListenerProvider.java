@@ -27,7 +27,7 @@ public class ListenerProvider implements Provider<Listener> {
     private final Provider<HttpSession> sessionProvider;
 
     @Inject
-    public ListenerProvider(final Provider<HttpSession> sessionProvider) {
+    ListenerProvider(Provider<HttpSession> sessionProvider) {
         this.sessionProvider = sessionProvider;
     }
 

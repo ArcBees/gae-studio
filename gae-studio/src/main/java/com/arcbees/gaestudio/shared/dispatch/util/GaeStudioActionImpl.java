@@ -21,7 +21,7 @@ import com.gwtplatform.dispatch.shared.Result;
 
 /**
  * Base abstract implementation of {@link com.gwtplatform.dispatch.shared.Action}.
- * 
+ *
  * @param <R> The {@link com.gwtplatform.dispatch.shared.Result} type returned.
  */
 public abstract class GaeStudioActionImpl<R extends Result> implements Action<R> {

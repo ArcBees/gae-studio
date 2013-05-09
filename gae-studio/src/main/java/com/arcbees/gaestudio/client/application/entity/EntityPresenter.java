@@ -6,7 +6,6 @@ import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
-import com.arcbees.gaestudio.client.util.Console;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -27,13 +26,13 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
 public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPresenter.MyProxy> {
-    public interface MyView extends View {
+    interface MyView extends View {
         void showEntity(EntityDto entityDto);
     }
 
     @ProxyStandard
     @NameToken(NameTokens.entity)
-    public interface MyProxy extends ProxyPlace<EntityPresenter> {
+    interface MyProxy extends ProxyPlace<EntityPresenter> {
     }
 
     private final DispatchAsync dispatchAsync;

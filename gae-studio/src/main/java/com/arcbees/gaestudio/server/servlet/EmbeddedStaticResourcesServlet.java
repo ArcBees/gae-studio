@@ -35,17 +35,17 @@ import com.google.inject.Singleton;
 @Singleton
 public class EmbeddedStaticResourcesServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(EmbeddedStaticResourcesServlet.class.getSimpleName());
-    
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        
+
         String message = "**** Find GAE Studio located at this path /" + DispatchServletModule.EMBEDDED_PATH + " ****";
         logger.info(message);
     }
-    
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
         String uri = request.getRequestURI();
         uri = uri.replace(DispatchServletModule.EMBEDDED_PATH, "");
@@ -60,7 +60,7 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
         } else if (uri.contains("favicon.ico")) {
             path = basePath + "/favicon.ico";
         } else if (uri.contains("module_")) {
-            path = basePath + uri; 
+            path = basePath + uri;
         } else {
             path = basePath + uri;
         }

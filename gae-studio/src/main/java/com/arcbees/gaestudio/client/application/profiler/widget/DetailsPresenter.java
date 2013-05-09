@@ -26,23 +26,16 @@ import com.gwtplatform.mvp.client.View;
 
 public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView> implements
         StatementSelectedEvent.StatementSelectedHandler, ClearOperationRecordsEvent.ClearOperationRecordsHandler {
-    public interface MyView extends View {
+    interface MyView extends View {
         void displayStatementDetails(DbOperationRecordDto record);
 
         void clear();
     }
 
     @Inject
-    public DetailsPresenter(final EventBus eventBus, final MyView view) {
+    DetailsPresenter(EventBus eventBus,
+                     MyView view) {
         super(eventBus, view);
-    }
-
-    @Override
-    protected void onBind() {
-        super.onBind();
-
-        addRegisteredHandler(StatementSelectedEvent.getType(), this);
-        addRegisteredHandler(ClearOperationRecordsEvent.getType(), this);
     }
 
     @Override
@@ -55,5 +48,13 @@ public class DetailsPresenter extends PresenterWidget<DetailsPresenter.MyView> i
     @Override
     public void onClearOperationRecords(ClearOperationRecordsEvent event) {
         getView().clear();
+    }
+
+    @Override
+    protected void onBind() {
+        super.onBind();
+
+        addRegisteredHandler(StatementSelectedEvent.getType(), this);
+        addRegisteredHandler(ClearOperationRecordsEvent.getType(), this);
     }
 }

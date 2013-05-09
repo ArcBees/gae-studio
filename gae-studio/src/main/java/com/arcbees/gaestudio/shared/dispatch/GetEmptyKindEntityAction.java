@@ -28,8 +28,8 @@ public class GetEmptyKindEntityAction extends GaeStudioActionImpl<GetEmptyKindEn
     public GetEmptyKindEntityAction(String kind) {
         this.kind = kind;
     }
-    
+
     public String getKind() {
-      return kind;
+        return kind;
     }
 }

@@ -28,7 +28,7 @@ import com.gwtplatform.mvp.client.View;
 
 public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyView>
         implements DbOperationRecordProcessor {
-    public interface MyView extends View {
+    interface MyView extends View {
         void updateRequestCount(Integer requestCount);
 
         void updateStatementCount(Integer statementCount);
@@ -47,7 +47,8 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
     private Integer totalDataReceived;
 
     @Inject
-    public StatisticsPresenter(final EventBus eventBus, final MyView view) {
+    StatisticsPresenter(EventBus eventBus,
+                        MyView view) {
         super(eventBus, view);
 
         initStats();

@@ -73,10 +73,10 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @Inject
     EntityListView(Binder uiBinder,
-            AppResources appResources,
-            CustomCellTable customCellTable,
-            VisualizerUiFactory visualizerUiFactory,
-            EntityListTooltipResources entityListTooltipResources) {
+                   AppResources appResources,
+                   CustomCellTable customCellTable,
+                   VisualizerUiFactory visualizerUiFactory,
+                   EntityListTooltipResources entityListTooltipResources) {
         this.visualizerUiFactory = visualizerUiFactory;
         this.entityListTooltipResources = entityListTooltipResources;
 

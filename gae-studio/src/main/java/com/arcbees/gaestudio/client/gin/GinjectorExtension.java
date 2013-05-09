@@ -21,5 +21,6 @@ import com.arcbees.gaestudio.client.resources.AppMessages;
 
 public interface GinjectorExtension {
     AppConstants getAppConstants();
+
     AppMessages getAppMessages();
 }

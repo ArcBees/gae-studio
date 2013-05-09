@@ -45,7 +45,7 @@ public class JsonContainer extends Composite implements AttachEvent.Handler {
 
     @Inject
     JsonContainer(Binder binder,
-            @Assisted String jsonContent) {
+                  @Assisted String jsonContent) {
         initWidget(binder.createAndBindUi(this));
 
         this.jsonContent.setHTML(prettifyJson(jsonContent));

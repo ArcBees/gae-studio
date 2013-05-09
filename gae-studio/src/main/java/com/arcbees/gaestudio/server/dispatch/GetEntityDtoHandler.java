@@ -18,9 +18,8 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 public class GetEntityDtoHandler extends AbstractActionHandler<GetEntityDtoAction, GetEntityDtoResult> {
-
     @Inject
-    public GetEntityDtoHandler() {
+    GetEntityDtoHandler() {
         super(GetEntityDtoAction.class);
     }
 

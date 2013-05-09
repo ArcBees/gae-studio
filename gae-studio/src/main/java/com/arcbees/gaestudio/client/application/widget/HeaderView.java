@@ -26,7 +26,7 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements HeaderPresenter.MyView {
-    public interface Binder extends UiBinder<Widget, HeaderView> {
+    interface Binder extends UiBinder<Widget, HeaderView> {
     }
 
     @UiField(provided = true)
@@ -35,8 +35,8 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     private final String activeStyleName;
 
     @Inject
-    public HeaderView(Binder uiBinder,
-                      AppResources resources) {
+    HeaderView(Binder uiBinder,
+               AppResources resources) {
         this.resources = resources;
 
         initWidget(uiBinder.createAndBindUi(this));

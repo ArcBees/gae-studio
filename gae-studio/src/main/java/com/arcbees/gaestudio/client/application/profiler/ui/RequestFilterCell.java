@@ -30,7 +30,7 @@ public class RequestFilterCell extends AbstractCell<FilterValue<Long>> {
     private final AppMessages myMessages;
 
     @Inject
-    public RequestFilterCell(final AppMessages myMessages) {
+    public RequestFilterCell(AppMessages myMessages) {
         this.myMessages = myMessages;
     }
 

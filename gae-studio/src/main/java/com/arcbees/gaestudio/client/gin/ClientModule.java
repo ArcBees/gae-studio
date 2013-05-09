@@ -41,7 +41,7 @@ public class ClientModule extends AbstractPresenterModule {
         install(new ApplicationModule());
 
         bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.visualizer);
-        
+
         // TODO
         bindConstant().annotatedWith(ErrorPlace.class).to(NameTokens.visualizer);
         bindConstant().annotatedWith(UnauthorizedPlace.class).to(NameTokens.visualizer);
@@ -51,7 +51,7 @@ public class ClientModule extends AbstractPresenterModule {
         bind(AppConstants.class).in(Singleton.class);
         bind(AppMessages.class).in(Singleton.class);
         bind(CustomCellTable.class).in(Singleton.class);
-        
+
         bind(ResourceLoader.class).asEagerSingleton();
     }
 }

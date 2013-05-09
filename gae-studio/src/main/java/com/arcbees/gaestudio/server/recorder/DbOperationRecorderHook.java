@@ -34,13 +34,14 @@ import com.google.inject.assistedinject.Assisted;
 
 public class DbOperationRecorderHook extends BaseHook {
     private final Logger logger;
-
     private final DbOperationRecorder dbOperationRecorder;
 
     @Inject
-    public DbOperationRecorderHook(final Logger logger, final DbOperationRecorder dbOperationRecorder,
-                                   @Assisted Delegate<Environment> baseDelegate) {
+    DbOperationRecorderHook(Logger logger,
+                            DbOperationRecorder dbOperationRecorder,
+                            @Assisted Delegate<Environment> baseDelegate) {
         super(baseDelegate);
+
         this.logger = logger;
         this.dbOperationRecorder = dbOperationRecorder;
     }
@@ -81,7 +82,7 @@ public class DbOperationRecorderHook extends BaseHook {
 
         return result;
     }
-    
+
     private byte[] handleQuery(Environment environment, byte[] request) {
         Query query = new Query();
         query.mergeFrom(request);
@@ -95,7 +96,7 @@ public class DbOperationRecorderHook extends BaseHook {
 
         QueryResult queryResult = new QueryResult();
         queryResult.mergeFrom(result);
-        
+
         dbOperationRecorder.recordDbOperation(query, queryResult, (int) (end - start));
 
         return result;
@@ -130,7 +131,7 @@ public class DbOperationRecorderHook extends BaseHook {
         long end = System.currentTimeMillis();
 
         logger.info("Executed Put in " + (end - start) + "ms");
-        
+
         PutResponse putResponse = new PutResponse();
         putResponse.mergeFrom(result);
 

@@ -30,25 +30,18 @@ import com.gwtplatform.mvp.client.View;
 public class StatementPresenter extends PresenterWidget<StatementPresenter.MyView> implements
         FilterValueSelectedEvent.FilterValueSelectedHandler, StatementUiHandlers,
         ClearOperationRecordsEvent.ClearOperationRecordsHandler {
-    public interface MyView extends View, HasUiHandlers<StatementUiHandlers> {
+    interface MyView extends View, HasUiHandlers<StatementUiHandlers> {
         void displayStatements(FilterValue<?> filterValue);
 
         void clear();
     }
 
     @Inject
-    public StatementPresenter(final EventBus eventBus, final MyView view) {
+    StatementPresenter(EventBus eventBus,
+                       MyView view) {
         super(eventBus, view);
-        
+
         getView().setUiHandlers(this);
-    }
-
-    @Override
-    protected void onBind() {
-        super.onBind();
-
-        addRegisteredHandler(FilterValueSelectedEvent.getType(), this);
-        addRegisteredHandler(ClearOperationRecordsEvent.getType(), this);
     }
 
     @Override
@@ -65,5 +58,13 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
     @Override
     public void onClearOperationRecords(ClearOperationRecordsEvent event) {
         getView().clear();
+    }
+
+    @Override
+    protected void onBind() {
+        super.onBind();
+
+        addRegisteredHandler(FilterValueSelectedEvent.getType(), this);
+        addRegisteredHandler(ClearOperationRecordsEvent.getType(), this);
     }
 }

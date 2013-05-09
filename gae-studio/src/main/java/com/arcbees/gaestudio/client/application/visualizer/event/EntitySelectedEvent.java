@@ -34,7 +34,7 @@ public class EntitySelectedEvent extends GwtEvent<EntitySelectedEvent.EntitySele
     }
 
     public static void fire(HasHandlers source,
-            com.arcbees.gaestudio.client.application.visualizer.ParsedEntity parsedEntity) {
+                            com.arcbees.gaestudio.client.application.visualizer.ParsedEntity parsedEntity) {
         EntitySelectedEvent eventInstance = new EntitySelectedEvent(parsedEntity);
         source.fireEvent(eventInstance);
     }
