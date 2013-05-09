@@ -58,8 +58,8 @@ public class BaseHook implements Delegate<Environment> {
     public List<Thread> getRequestThreads(Environment environment) {
         return baseDelegate.getRequestThreads(environment);
     }
-    
+
     public Delegate<Environment> getBaseDelegate() {
         return baseDelegate;
-    }    
+    }
 }

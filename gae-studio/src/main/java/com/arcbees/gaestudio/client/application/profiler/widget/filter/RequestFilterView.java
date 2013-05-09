@@ -40,10 +40,12 @@ public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandler
     @UiField(provided = true)
     AppResources resources;
 
-    private final SingleSelectionModel<FilterValue<Long>> selectionModel = new SingleSelectionModel<FilterValue<Long>>();
+    private final SingleSelectionModel<FilterValue<Long>> selectionModel = new
+            SingleSelectionModel<FilterValue<Long>>();
 
     @Inject
-    public RequestFilterView(final Binder uiBinder, final AppResources resources, final RequestFilterCell requestFilterCell) {
+    public RequestFilterView(final Binder uiBinder, final AppResources resources,
+                             final RequestFilterCell requestFilterCell) {
         this.resources = resources;
         requests = new CellList<FilterValue<Long>>(requestFilterCell);
 

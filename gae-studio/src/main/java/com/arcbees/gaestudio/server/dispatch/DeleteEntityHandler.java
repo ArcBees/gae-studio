@@ -32,7 +32,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 public class DeleteEntityHandler extends AbstractActionHandler<DeleteEntityAction, DeleteEntityResult> {
     @Inject
-    public DeleteEntityHandler(final Logger logger) {
+    DeleteEntityHandler(Logger logger) {
         super(DeleteEntityAction.class);
     }
 

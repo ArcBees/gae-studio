@@ -27,7 +27,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 public class ApplicationView extends ViewImpl implements ApplicationPresenter.MyView {
-    public interface Binder extends UiBinder<Widget, ApplicationView> {
+    interface Binder extends UiBinder<Widget, ApplicationView> {
     }
 
     @UiField
@@ -38,7 +38,7 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
     SimplePanel messages;
 
     @Inject
-    public ApplicationView(final Binder uiBinder) {
+    ApplicationView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
     }
 

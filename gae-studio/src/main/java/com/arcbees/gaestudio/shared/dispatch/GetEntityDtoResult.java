@@ -6,7 +6,7 @@ import com.gwtplatform.dispatch.shared.Result;
 public class GetEntityDtoResult implements Result {
     private EntityDto entityDto;
 
-    public GetEntityDtoResult(){
+    public GetEntityDtoResult() {
     }
 
     public EntityDto getEntityDto() {

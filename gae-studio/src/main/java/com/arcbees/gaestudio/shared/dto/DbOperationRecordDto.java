@@ -35,7 +35,7 @@ public abstract class DbOperationRecordDto implements Serializable {
     }
 
     protected DbOperationRecordDto(StackTraceElementDto callerStackTraceElement, Long requestId, Long statementId,
-            Integer executionTimeMs) {
+                                   Integer executionTimeMs) {
         this.callerStackTraceElement = callerStackTraceElement;
         this.requestId = requestId;
         this.statementId = statementId;

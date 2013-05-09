@@ -14,22 +14,24 @@
  * the License.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer;
+package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.VisualizerView;
 import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarModule;
 import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
-import com.arcbees.gaestudio.client.application.visualizer.widget.VisualizerWidgetModule;
 import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
-public class VisualizerModule extends AbstractPresenterModule {
+public class VisualizerWidgetModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
-        install(new GinFactoryModuleBuilder().build(VisualizerUiFactory.class));
-        install(new SidebarModule());
-        install(new VisualizerWidgetModule());
+        bindSingletonPresenterWidget(EntityListPresenter.class, EntityListPresenter.MyView.class,
+                EntityListView.class);
+        bindSingletonPresenterWidget(VisualizerToolbarPresenter.class, VisualizerToolbarPresenter.MyView.class,
+                VisualizerToolbarView.class);
 
-        bindPresenter(VisualizerPresenter.class, VisualizerPresenter.MyView.class,
-                VisualizerView.class, VisualizerPresenter.MyProxy.class);
+        bind(EntityDetailsPresenter.class).asEagerSingleton();
+        bind(EntityDetailsPresenter.MyView.class).to(EntityDetailsView.class);
     }
 }

@@ -46,7 +46,7 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
     @Inject
     public TypeFilterPresenter(final EventBus eventBus, final MyView view) {
         super(eventBus, view);
-        
+
         getView().setUiHandlers(this);
     }
 

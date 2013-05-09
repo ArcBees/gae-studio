@@ -32,7 +32,8 @@ public class HookRegistrar {
 
     @Inject
     @SuppressWarnings("unchecked")
-    public HookRegistrar(final DbOperationRecorderHookFactory dbOperationRecorderHookFactory, final Logger logger) {
+    HookRegistrar(DbOperationRecorderHookFactory dbOperationRecorderHookFactory,
+                  Logger logger) {
         this.logger = logger;
         hook = new ApiProxyHook(ApiProxy.getDelegate());
         hook.getHooks().put("datastore_v3", dbOperationRecorderHookFactory.create(hook.getBaseDelegate()));

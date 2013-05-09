@@ -36,12 +36,12 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler {
-    public interface MyView extends View {
+    interface MyView extends View {
     }
 
     @ProxyCodeSplit
     @NameToken(NameTokens.visualizer)
-    public interface MyProxy extends ProxyPlace<VisualizerPresenter> {
+    interface MyProxy extends ProxyPlace<VisualizerPresenter> {
     }
 
     @ContentSlot
@@ -58,12 +58,12 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     private final SidebarPresenter sidebarPresenter;
 
     @Inject
-    public VisualizerPresenter(EventBus eventBus,
-                               MyView view,
-                               MyProxy proxy,
-                               EntityListPresenter entityListPresenter,
-                               VisualizerToolbarPresenter visualizerToolbarPresenter,
-                               SidebarPresenter sidebarPresenter) {
+    VisualizerPresenter(EventBus eventBus,
+                        MyView view,
+                        MyProxy proxy,
+                        EntityListPresenter entityListPresenter,
+                        VisualizerToolbarPresenter visualizerToolbarPresenter,
+                        SidebarPresenter sidebarPresenter) {
         super(eventBus, view, proxy);
 
         this.entityListPresenter = entityListPresenter;

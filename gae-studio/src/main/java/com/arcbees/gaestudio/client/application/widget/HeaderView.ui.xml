@@ -108,7 +108,8 @@
             <g:Image resource="{resources.logo}"/>
         </a>
         <div class="{style.menu}">
-            <a href="#{nameTokens.getVisualizer}" class="{resources.sprites.topmenuBgHover} visualizer" data-foo="Visualizer">
+            <a href="#{nameTokens.getVisualizer}" class="{resources.sprites.topmenuBgHover} visualizer"
+               data-foo="Visualizer">
                 Visualizer
             </a>
             <img src="{resources.topmenuSeparator.getSafeUri}"/>

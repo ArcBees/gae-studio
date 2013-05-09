@@ -49,12 +49,12 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, ProfilerPresenter.MyProxy> implements
         RecordingStateChangedEvent.RecordingStateChangedHandler,
         ClearOperationRecordsEvent.ClearOperationRecordsHandler {
-    public interface MyView extends View {
+    interface MyView extends View {
     }
 
     @ProxyCodeSplit
     @NameToken(NameTokens.profiler)
-    public interface MyProxy extends ProxyPlace<ProfilerPresenter> {
+    interface MyProxy extends ProxyPlace<ProfilerPresenter> {
     }
 
     public static final Object TYPE_SetRequestPanelContent = new Object();
@@ -76,12 +76,16 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private boolean isProcessing = false;
 
     @Inject
-    public ProfilerPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                             final DispatchAsync dispatcher, final FiltersPresenter filterPresenter,
-                             final StatisticsPresenter statisticsPresenter, final AppConstants myConstants,
-                             final StatementPresenter statementPresenter,
-                             final DetailsPresenter detailsPresenter,
-                             final ProfilerToolbarPresenter profilerToolbarPresenter) {
+    ProfilerPresenter(EventBus eventBus,
+                      MyView view,
+                      MyProxy proxy,
+                      DispatchAsync dispatcher,
+                      FiltersPresenter filterPresenter,
+                      StatisticsPresenter statisticsPresenter,
+                      AppConstants myConstants,
+                      StatementPresenter statementPresenter,
+                      DetailsPresenter detailsPresenter,
+                      ProfilerToolbarPresenter profilerToolbarPresenter) {
         super(eventBus, view, proxy);
 
         this.dispatcher = dispatcher;

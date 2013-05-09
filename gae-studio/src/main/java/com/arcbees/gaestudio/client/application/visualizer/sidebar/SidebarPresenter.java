@@ -8,8 +8,6 @@ import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEve
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -17,7 +15,7 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> implements SidebarUiHandlers {
-    public interface MyView extends View, HasUiHandlers<SidebarUiHandlers> {
+    interface MyView extends View, HasUiHandlers<SidebarUiHandlers> {
         void updateKinds(List<String> kinds);
 
         void addEmptyEntityListStyle();
@@ -48,7 +46,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         dispatcher.execute(
                 new GetEntityKindsAction(),
                 new AsyncCallbackImpl<GetEntityKindsResult>("Failed getting Entity Kinds: ") {
-                   @Override
+                    @Override
                     public void onSuccess(GetEntityKindsResult result) {
                         getView().updateKinds(result.getKinds());
                     }

@@ -25,16 +25,16 @@ import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> implements HeaderUiHandlers {
-    public interface MyView extends View, HasUiHandlers<HeaderUiHandlers> {
+    interface MyView extends View, HasUiHandlers<HeaderUiHandlers> {
         void activateCurrentLink(String nameToken);
     }
 
     private final PlaceManager placeManager;
 
     @Inject
-    public HeaderPresenter(EventBus eventBus,
-                           MyView view,
-                           PlaceManager placeManager) {
+    HeaderPresenter(EventBus eventBus,
+                    MyView view,
+                    PlaceManager placeManager) {
         super(eventBus, view);
 
         this.placeManager = placeManager;

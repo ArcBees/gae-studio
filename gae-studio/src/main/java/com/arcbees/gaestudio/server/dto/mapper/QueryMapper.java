@@ -62,36 +62,36 @@ public class QueryMapper {
 
     private static QueryFilterOperatorDto convertFilterOperator(DatastorePb.Query.Filter.Operator operator) {
         switch (operator) {
-        case EQUAL:
-            return QueryFilterOperatorDto.EQUAL;
+            case EQUAL:
+                return QueryFilterOperatorDto.EQUAL;
 
-        case GREATER_THAN:
-            return QueryFilterOperatorDto.GREATER_THAN;
+            case GREATER_THAN:
+                return QueryFilterOperatorDto.GREATER_THAN;
 
-        case GREATER_THAN_OR_EQUAL:
-            return QueryFilterOperatorDto.GREATER_THAN_OR_EQUAL;
+            case GREATER_THAN_OR_EQUAL:
+                return QueryFilterOperatorDto.GREATER_THAN_OR_EQUAL;
 
-        case LESS_THAN:
-            return QueryFilterOperatorDto.LESS_THAN;
+            case LESS_THAN:
+                return QueryFilterOperatorDto.LESS_THAN;
 
-        case LESS_THAN_OR_EQUAL:
-            return QueryFilterOperatorDto.LESS_THAN_OR_EQUAL;
+            case LESS_THAN_OR_EQUAL:
+                return QueryFilterOperatorDto.LESS_THAN_OR_EQUAL;
 
-        default:
-            throw new IllegalArgumentException("Unknown query filter operator: " + operator);
+            default:
+                throw new IllegalArgumentException("Unknown query filter operator: " + operator);
         }
     }
 
     private static QueryOrderDirectionDto convertOrderDirection(DatastorePb.Query.Order.Direction direction) {
         switch (direction) {
-        case ASCENDING:
-            return QueryOrderDirectionDto.ASCENDING;
+            case ASCENDING:
+                return QueryOrderDirectionDto.ASCENDING;
 
-        case DESCENDING:
-            return QueryOrderDirectionDto.DESCENDING;
+            case DESCENDING:
+                return QueryOrderDirectionDto.DESCENDING;
 
-        default:
-            throw new IllegalArgumentException("Unknown query order direction: " + direction);
+            default:
+                throw new IllegalArgumentException("Unknown query order direction: " + direction);
         }
     }
 

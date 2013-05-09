@@ -26,10 +26,10 @@ import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetEntityCountByKindHandler extends
-        AbstractActionHandler<GetEntityCountByKindAction, GetEntityCountByKindResult> {
+public class GetEntityCountByKindHandler
+        extends AbstractActionHandler<GetEntityCountByKindAction, GetEntityCountByKindResult> {
     @Inject
-    public GetEntityCountByKindHandler() {
+    GetEntityCountByKindHandler() {
         super(GetEntityCountByKindAction.class);
     }
 

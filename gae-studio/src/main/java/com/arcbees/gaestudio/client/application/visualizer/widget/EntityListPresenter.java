@@ -53,7 +53,7 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView> implements
         EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler,
         RefreshEntitiesEvent.RefreshEntitiesHandler, EntityDeletedEvent.EntityDeletedHandler {
-    public interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
+    interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
 
         void setTableDataProvider(AsyncDataProvider<ParsedEntity> dataProvider);

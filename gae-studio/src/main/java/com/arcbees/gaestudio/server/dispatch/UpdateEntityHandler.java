@@ -36,7 +36,7 @@ public class UpdateEntityHandler extends AbstractActionHandler<UpdateEntityActio
     private final Logger logger;
 
     @Inject
-    public UpdateEntityHandler(final Logger logger) {
+    UpdateEntityHandler(Logger logger) {
         super(UpdateEntityAction.class);
 
         this.logger = logger;

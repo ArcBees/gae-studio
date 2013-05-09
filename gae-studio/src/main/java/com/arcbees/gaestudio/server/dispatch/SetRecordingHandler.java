@@ -33,8 +33,9 @@ public class SetRecordingHandler extends AbstractActionHandler<SetRecordingActio
     private final MemcacheService memcacheService;
 
     @Inject
-    public SetRecordingHandler(final HookRegistrar hookRegistrar, final ListenerProvider listenerProvider,
-            final MemcacheService memcacheService) {
+    SetRecordingHandler(HookRegistrar hookRegistrar,
+                        ListenerProvider listenerProvider,
+                        MemcacheService memcacheService) {
         super(SetRecordingAction.class);
 
         this.hookRegistrar = hookRegistrar;

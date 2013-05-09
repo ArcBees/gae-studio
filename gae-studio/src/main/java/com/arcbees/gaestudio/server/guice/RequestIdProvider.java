@@ -25,7 +25,7 @@ public class RequestIdProvider implements Provider<Long> {
     private final MemcacheService memcacheService;
 
     @Inject
-    public RequestIdProvider(final MemcacheService memcacheService) {
+    RequestIdProvider(MemcacheService memcacheService) {
         this.memcacheService = memcacheService;
     }
 

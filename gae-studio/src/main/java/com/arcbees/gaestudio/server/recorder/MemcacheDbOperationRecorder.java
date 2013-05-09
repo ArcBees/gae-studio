@@ -35,15 +35,13 @@ import com.google.inject.name.Named;
 // TODO externalize magic literals
 public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     private final Provider<MemcacheService> memcacheServiceProvider;
-    
     private final Provider<Long> requestIdProvider;
-
     private final StackInspector stackInspector;
 
     @Inject
-    public MemcacheDbOperationRecorder(final Provider<MemcacheService> memcacheServiceProvider,
-                                       final @Named("requestId") Provider<Long> requestIdProvider,
-                                       final StackInspector stackInspector) {
+    MemcacheDbOperationRecorder(Provider<MemcacheService> memcacheServiceProvider,
+                                @Named("requestId") Provider<Long> requestIdProvider,
+                                StackInspector stackInspector) {
         this.memcacheServiceProvider = memcacheServiceProvider;
         this.requestIdProvider = requestIdProvider;
         this.stackInspector = stackInspector;
@@ -83,9 +81,10 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
                 StackTraceElementMapper.mapDTO(stackInspector.getCaller(Thread.currentThread().getStackTrace())),
                 requestIdProvider.get(), generateId(), executionTimeMs));
     }
-    
+
     private void recordOperation(DbOperationRecordDto record) {
-        memcacheServiceProvider.get().put(MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() + record.getStatementId(), record,
+        memcacheServiceProvider.get().put(MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() + record.getStatementId(),
+                record,
                 Expiration.byDeltaSeconds(60));
     }
 

@@ -12,7 +12,7 @@
         }
 
         .content {
-           margin-left: 15px;
+            margin-left: 15px;
         }
     </ui:style>
     <g:HTMLPanel>

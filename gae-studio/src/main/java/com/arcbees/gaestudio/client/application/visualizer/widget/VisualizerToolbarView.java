@@ -30,7 +30,7 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarUiHandlers> implements
         VisualizerToolbarPresenter.MyView {
-    public interface Binder extends UiBinder<Widget, VisualizerToolbarView> {
+    interface Binder extends UiBinder<Widget, VisualizerToolbarView> {
     }
 
     @UiField(provided = true)
@@ -46,8 +46,10 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     private final ToolbarButton delete;
 
     @Inject
-    public VisualizerToolbarView(final Binder uiBinder, final AppResources resources, final UiFactory uiFactory,
-            final AppConstants myConstants) {
+    VisualizerToolbarView(Binder uiBinder,
+                          AppResources resources,
+                          UiFactory uiFactory,
+                          AppConstants myConstants) {
         this.resources = resources;
         this.uiFactory = uiFactory;
         this.myConstants = myConstants;

@@ -39,7 +39,8 @@ public class GetNewDbOperationRecordsHandler extends
     private final MemcacheService memcacheService;
 
     @Inject
-    public GetNewDbOperationRecordsHandler(final Logger logger, final MemcacheService memcacheService) {
+    GetNewDbOperationRecordsHandler(Logger logger,
+                                    MemcacheService memcacheService) {
         super(GetNewDbOperationRecordsAction.class);
 
         this.logger = logger;
