@@ -1,10 +1,30 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:style>
         .json {
             font-family: "Consolas", "Menlo", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
+
             width: 800px;
             height: 600px;
+
+            padding: 8px;
+            border: 1px solid black;
+
+            background: rgb(117, 117, 117);
+            color: #ffffff;
+            -webkit-appearance: none;
+            box-shadow: inset 0 0 5px 0 black;
+
+            transition: all .25s ease;
+            -webkit-transition: all .25s ease;
+            -moz-transition: all .25s ease;
+            -o-transition: all .25s ease;
+        }
+
+        .json:focus {
+            outline: none;
+            box-shadow: inset 0 0 10px 0 black;
         }
 
         .popup {
@@ -31,16 +51,44 @@
             background: rgba(0, 0, 0, 0.4);
         }
 
+        .popup button {
+            padding: 5px 10px 5px 10px;
+            font-size: 1.3em;
+            background: #3595E6;
+            margin: 0px 6px 0px 0px;
+            border: 1px solid #919191;
+            color: #EBEBEB;
+
+            -webkit-box-shadow: inset 0 2px 6px -1px rgba(255, 255, 255, 0.7);
+            -moz-box-shadow: inset 0 2px 6px -1px rgba(255, 255, 255, 0.7);
+            box-shadow: inset 0 2px 6px -1px rgba(255, 255, 255, 0.7);
+        }
+
+        .popup button:hover {
+            color: #DFDFDF;
+
+            -webkit-box-shadow: inset 0 1px 5px -1px rgba(182, 182, 182, 0.3), 0px 3px 7px -3px rgba(0, 0, 0, 1);
+            -moz-box-shadow: inset 0 1px 5px -1px rgba(182, 182, 182, 0.3), 0px 3px 7px -3px rgba(0, 0, 0, 1);
+            box-shadow: inset 0 1px 5px -1px rgba(182, 182, 182, 0.3), 0px 3px 7px -3px rgba(0, 0, 0, 1);
+        }
+
+        .buttonContainer {
+            float: right;
+            margin-top: 6px;
+        }
+
     </ui:style>
     <g:HTMLPanel>
-        <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{style.glassPanel}" modal="true" ui:field="popup" styleName="{style.popup}">
+        <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{style.glassPanel}" modal="true"
+                      ui:field="popup" styleName="{style.popup}">
             <g:HTMLPanel>
                 <h3>Entity Details</h3>
-                <g:Button ui:field="save">Save</g:Button>
-                <g:Button ui:field="cancel">Cancel</g:Button>
-                <hr/>
                 <g:Label ui:field="error" styleName="{style.error}"/>
                 <g:TextArea ui:field="entityDetails" styleName="{style.json}"/>
+                <div class="{style.buttonContainer}">
+                    <g:Button ui:field="save" styleName="{res.styles.toolbarButton}">Save</g:Button>
+                    <g:Button ui:field="cancel" styleName="{res.styles.toolbarButton}">Cancel</g:Button>
+                </div>
             </g:HTMLPanel>
         </g:PopupPanel>
     </g:HTMLPanel>

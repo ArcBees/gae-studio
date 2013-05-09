@@ -16,11 +16,13 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.ui.JsonContainer;
 import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
-import com.arcbees.gaestudio.client.resources.AppResources;
-import com.arcbees.gaestudio.client.resources.CustomCellTable;
+import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.EntityListTooltipResources;
 import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -43,9 +45,6 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.google.gwt.query.client.GQuery.$;
 
@@ -71,8 +70,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @Inject
     EntityListView(Binder uiBinder,
-                   AppResources appResources,
-                   CustomCellTable customCellTable,
+                   CellTableResource cellTableResource,
                    VisualizerUiFactory visualizerUiFactory,
                    EntityListTooltipResources entityListTooltipResources,
                    PagerResources pagerResources) {
@@ -80,7 +78,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         this.visualizerUiFactory = visualizerUiFactory;
         this.entityListTooltipResources = entityListTooltipResources;
 
-        entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, customCellTable);
+        entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
             @Override
             public void onAttachOrDetach(AttachEvent event) {
