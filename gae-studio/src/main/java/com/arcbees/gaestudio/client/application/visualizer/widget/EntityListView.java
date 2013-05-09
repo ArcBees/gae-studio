@@ -17,7 +17,9 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.ui.JsonContainer;
@@ -62,8 +64,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     SimplePager pager;
     @UiField(provided = true)
     CellTable<ParsedEntity> entityTable;
-    @UiField
-    InlineLabel entityName;
 
     private final VisualizerUiFactory visualizerUiFactory;
     private final EntityListTooltipResources entityListTooltipResources;
@@ -92,7 +92,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         setSelectionModel();
         pager.setDisplay(entityTable);
-        entityName.setStyleName(appResources.styles().wordWrap());
         pager.setPageSize(PAGE_SIZE);
         setDefaultColumns();
     }
