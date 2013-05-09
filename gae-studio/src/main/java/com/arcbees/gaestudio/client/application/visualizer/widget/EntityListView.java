@@ -17,16 +17,14 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.ui.JsonContainer;
 import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
-import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.EntityListTooltipResources;
+import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.arcbees.gquery.tooltip.client.Tooltip;
@@ -39,7 +37,6 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
@@ -60,7 +57,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @UiField
     HTMLPanel panel;
-    @UiField
+    @UiField(provided = true)
     SimplePager pager;
     @UiField(provided = true)
     CellTable<ParsedEntity> entityTable;
@@ -73,12 +70,14 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @Inject
     EntityListView(Binder uiBinder,
-            AppResources appResources,
-            CellTableResource cellTableResource,
-            VisualizerUiFactory visualizerUiFactory,
-            EntityListTooltipResources entityListTooltipResources) {
+                   CellTableResource cellTableResource,
+                   VisualizerUiFactory visualizerUiFactory,
+                   EntityListTooltipResources entityListTooltipResources,
+                   PagerResources pagerResources) {
         this.visualizerUiFactory = visualizerUiFactory;
         this.entityListTooltipResources = entityListTooltipResources;
+
+        pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
 
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
@@ -110,7 +109,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     public void setNewKind(String currentKind) {
         panel.setVisible(true);
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
-        entityName.setText(currentKind);
     }
 
     @Override
