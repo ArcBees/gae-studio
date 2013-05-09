@@ -14,10 +14,12 @@
  * the License.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.ui;
+package com.arcbees.gaestudio.client.resources;
 
-public interface VisualizerUiFactory {
-    PropertyColumn createPropertyColumn(String property);
+import com.arcbees.gquery.tooltip.client.TooltipResources;
 
-    JsonContainer createJsonContainer(String jsonContent);
+public interface EntityListTooltipResources extends TooltipResources {
+    @Override
+    @Source("com/arcbees/gaestudio/client/resources/EntityListTooltip.css")
+    TooltipStyle css();
 }

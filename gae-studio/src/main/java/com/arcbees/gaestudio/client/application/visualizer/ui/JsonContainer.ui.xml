@@ -1,0 +1,19 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:style>
+        .content {
+            max-height: 255px;
+            text-align: left;
+            overflow: hidden;
+        }
+
+        .dots {
+            text-align: left;
+            display: block;
+        }
+    </ui:style>
+    <g:HTMLPanel ui:field="container">
+        <g:HTML ui:field="jsonContent" styleName="{style.content}"/>
+        <g:Label ui:field="more" styleName="{style.dots}" text="[...]"/>
+    </g:HTMLPanel>
+</ui:UiBinder>

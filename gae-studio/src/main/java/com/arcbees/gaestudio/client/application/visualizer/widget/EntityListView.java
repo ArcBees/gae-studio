@@ -17,15 +17,20 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.application.visualizer.ui.JsonContainer;
+import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CustomCellTable;
+import com.arcbees.gaestudio.client.resources.EntityListTooltipResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
+import com.arcbees.gquery.tooltip.client.Tooltip;
+import com.arcbees.gquery.tooltip.client.TooltipOptions;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -33,6 +38,7 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.Range;
@@ -41,8 +47,10 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
+import static com.google.gwt.query.client.GQuery.$;
+
 public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
-    public interface Binder extends UiBinder<Widget, EntityListView> {
+    interface Binder extends UiBinder<Widget, EntityListView> {
     }
 
     private static final int PAGE_SIZE = 25;
@@ -57,13 +65,28 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiField
     InlineLabel entityName;
 
+    private final VisualizerUiFactory visualizerUiFactory;
+    private final EntityListTooltipResources entityListTooltipResources;
     private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
 
+    private Tooltip tooltip;
+
     @Inject
-    public EntityListView(Binder uiBinder,
-                          AppResources appResources,
-                          CustomCellTable customCellTable) {
+    EntityListView(Binder uiBinder,
+            AppResources appResources,
+            CustomCellTable customCellTable,
+            VisualizerUiFactory visualizerUiFactory,
+            EntityListTooltipResources entityListTooltipResources) {
+        this.visualizerUiFactory = visualizerUiFactory;
+        this.entityListTooltipResources = entityListTooltipResources;
+
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, customCellTable);
+        entityTable.addAttachHandler(new AttachEvent.Handler() {
+            @Override
+            public void onAttachOrDetach(AttachEvent event) {
+                onEditTableAttachedOrDetached(event.isAttached());
+            }
+        });
 
         initWidget(uiBinder.createAndBindUi(this));
 
@@ -200,5 +223,45 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             }
         };
         entityTable.addColumn(parentIdColumn, "Parent ID");
+    }
+
+    private void onEditTableAttachedOrDetached(boolean attached) {
+        if (attached) {
+            initTooltip();
+        } else {
+            detachTooltip();
+        }
+    }
+
+    private void detachTooltip() {
+        tooltip.destroy();
+    }
+
+    private void initTooltip() {
+        TooltipOptions options = new TooltipOptions()
+                .withTrigger(TooltipOptions.TooltipTrigger.HOVER)
+                .withSelector("tbody tr")
+                .withResources(entityListTooltipResources)
+                .withContainer("element")
+                .withPlacement(TooltipOptions.TooltipPlacement.RIGHT)
+                .withContent(new TooltipOptions.TooltipWidgetContentProvider() {
+                    @Override
+                    public IsWidget getContent(Element element) {
+                        return createEntityContent(element);
+                    }
+                });
+
+        tooltip = $(entityTable).as(Tooltip.Tooltip).tooltip(options);
+    }
+
+    private IsWidget createEntityContent(Element element) {
+        int absoluteRowIndex = Integer.valueOf($(element).attr("__gwt_row"));
+        int pageStartIndex = entityTable.getVisibleRange().getStart();
+        int relativeIndex = absoluteRowIndex - pageStartIndex;
+
+        ParsedEntity parsedEntity = entityTable.getVisibleItem(relativeIndex);
+        JsonContainer container = visualizerUiFactory.createJsonContainer(parsedEntity.getJson());
+        container.addAttachHandler(container);
+        return container;
     }
 }
