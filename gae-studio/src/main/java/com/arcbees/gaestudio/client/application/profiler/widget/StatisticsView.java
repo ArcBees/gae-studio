@@ -27,7 +27,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyView {
-    public interface Binder extends UiBinder<Widget, StatisticsView> {
+    interface Binder extends UiBinder<Widget, StatisticsView> {
     }
 
     @UiField
@@ -49,9 +49,10 @@ public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyVi
     private final BytesFormatter bytesFormatter;
 
     @Inject
-    public StatisticsView(final Binder uiBinder, final BytesFormatter bytesFormatter) {
+    StatisticsView(Binder uiBinder,
+                   BytesFormatter bytesFormatter) {
         this.bytesFormatter = bytesFormatter;
-        
+
         initWidget(uiBinder.createAndBindUi(this));
 
         updateRequestCount(0);

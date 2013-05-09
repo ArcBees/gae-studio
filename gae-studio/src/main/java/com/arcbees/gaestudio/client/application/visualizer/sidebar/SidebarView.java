@@ -1,5 +1,9 @@
 package com.arcbees.gaestudio.client.application.visualizer.sidebar;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.query.client.Function;
@@ -9,27 +13,23 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
-
-import javax.inject.Inject;
-import java.util.List;
 
 import static com.google.gwt.query.client.GQuery.$;
 
 public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implements SidebarPresenter.MyView {
-    public interface KindTemplate extends SafeHtmlTemplates {
+    interface KindTemplate extends SafeHtmlTemplates {
         @SafeHtmlTemplates.Template("<div class=\"{1}\"><span>{0}</span></div>")
         SafeHtml create(String kindName, String cssClass);
     }
 
-    public interface KindHeaderTemplate extends SafeHtmlTemplates {
+    interface KindHeaderTemplate extends SafeHtmlTemplates {
         @SafeHtmlTemplates.Template("<span class='{0}'>Kinds</span>")
         SafeHtml create(String cssClassHeader);
     }
 
-    public interface EmptyKindsTemplate extends SafeHtmlTemplates {
+    interface EmptyKindsTemplate extends SafeHtmlTemplates {
         @SafeHtmlTemplates.Template("<span class='{0}'>Kinds</span><span class='{1}'>No entity type detected</span>")
         SafeHtml create(String cssClassHeader, String cssClassEmpty);
     }
@@ -53,11 +53,11 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private final String kindHeaderStyleName;
 
     @Inject
-    public SidebarView(Binder binder,
-                       KindTemplate kindTemplate,
-                       KindHeaderTemplate kindHeaderTemplate,
-                       EmptyKindsTemplate emptyKindsTemplate,
-                       AppResources appResources) {
+    SidebarView(Binder binder,
+                KindTemplate kindTemplate,
+                KindHeaderTemplate kindHeaderTemplate,
+                EmptyKindsTemplate emptyKindsTemplate,
+                AppResources appResources) {
         this.kindTemplate = kindTemplate;
         this.kindHeaderTemplate = kindHeaderTemplate;
         this.emptyKindsTemplate = emptyKindsTemplate;
@@ -83,7 +83,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
             $(root).append(html);
         }
 
-        if($("." + rootListTypeStyleName + " > div > div").length() < 1){
+        if ($("." + rootListTypeStyleName + " > div > div").length() < 1) {
             addEmptyEntityListStyle();
         }
 

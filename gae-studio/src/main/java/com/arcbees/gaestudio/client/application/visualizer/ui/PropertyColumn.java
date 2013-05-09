@@ -28,7 +28,7 @@ public class PropertyColumn extends TextColumn<ParsedEntity> {
     private String property;
 
     @Inject
-    public PropertyColumn(@Assisted String property) {
+    PropertyColumn(@Assisted String property) {
         this.property = property;
     }
 

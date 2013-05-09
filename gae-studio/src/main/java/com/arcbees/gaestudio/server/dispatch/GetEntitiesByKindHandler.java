@@ -37,8 +37,9 @@ public class GetEntitiesByKindHandler extends AbstractActionHandler<GetEntitiesB
     private final Logger logger;
 
     @Inject
-    public GetEntitiesByKindHandler(final Logger logger) {
+    GetEntitiesByKindHandler(Logger logger) {
         super(GetEntitiesByKindAction.class);
+
         this.logger = logger;
     }
 

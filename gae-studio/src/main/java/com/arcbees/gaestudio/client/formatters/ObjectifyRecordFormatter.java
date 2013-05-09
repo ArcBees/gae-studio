@@ -39,7 +39,7 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
         FILTER_OP_SYMBOLS.put(QueryFilterOperatorDto.LESS_THAN, "<");
         FILTER_OP_SYMBOLS.put(QueryFilterOperatorDto.LESS_THAN_OR_EQUAL, "<=");
     }
-    
+
     @Override
     public String formatRecord(DeleteRecordDTO record) {
         return "Delete record formatting not implemented yet";
@@ -72,7 +72,7 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
             builder.append(query.getAncestor());
             builder.append(")");
         }
-        
+
         for (QueryFilterDto filter : query.getFilters()) {
             builder.append(".filter(\"");
             builder.append(filter.getProperty());
@@ -107,7 +107,7 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
         return builder.toString();
 
     }
-    
+
     private String operatorToString(QueryFilterOperatorDto operator) {
         return FILTER_OP_SYMBOLS.containsKey(operator)
                 ? FILTER_OP_SYMBOLS.get(operator)

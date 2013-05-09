@@ -30,7 +30,7 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandlers>
         implements EntityDetailsPresenter.MyView {
-    public interface Binder extends UiBinder<Widget, EntityDetailsView> {
+    interface Binder extends UiBinder<Widget, EntityDetailsView> {
     }
 
     @UiField
@@ -45,7 +45,7 @@ public class EntityDetailsView extends ViewWithUiHandlers<EntityDetailsUiHandler
     Label error;
 
     @Inject
-    public EntityDetailsView(final Binder uiBinder) {
+    EntityDetailsView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
     }
 

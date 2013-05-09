@@ -31,7 +31,7 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
         implements MethodFilterPresenter.MyView {
-    public interface Binder extends UiBinder<Widget, MethodFilterView> {
+    interface Binder extends UiBinder<Widget, MethodFilterView> {
     }
 
     @UiField
@@ -41,9 +41,10 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
     AppResources resources;
 
     @Inject
-    public MethodFilterView(final Binder uiBinder, final AppResources resources) {
+    MethodFilterView(Binder uiBinder,
+                     AppResources resources) {
         this.resources = resources;
-        
+
         initWidget(uiBinder.createAndBindUi(this));
 
         methods.addSelectionHandler(new SelectionHandler<TreeItem>() {

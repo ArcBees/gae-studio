@@ -36,7 +36,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class GetEmptyKindEntityHandler extends
         AbstractActionHandler<GetEmptyKindEntityAction, GetEmptyKindEntityResult> {
     @Inject
-    public GetEmptyKindEntityHandler() {
+    GetEmptyKindEntityHandler() {
         super(GetEmptyKindEntityAction.class);
     }
 

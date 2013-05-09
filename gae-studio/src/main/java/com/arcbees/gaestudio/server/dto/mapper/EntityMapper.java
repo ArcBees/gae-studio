@@ -28,20 +28,20 @@ public class EntityMapper {
     @SuppressWarnings("unused")
     private EntityMapper() {
     }
-    
+
     public static EntityDto mapDTO(Entity dbEntity) {
         Gson gson = GsonDatastoreFactory.create();
         return new EntityDto(mapKey(dbEntity.getKey()), gson.toJson(dbEntity));
     }
-    
+
     private static KeyDto mapKey(Key dbKey) {
         return new KeyDto(dbKey.getKind(), dbKey.getId(), mapParentKey(dbKey.getParent()));
     }
 
-    private static ParentKeyDto mapParentKey(Key dbParentKey){
-        if(dbParentKey == null){
+    private static ParentKeyDto mapParentKey(Key dbParentKey) {
+        if (dbParentKey == null) {
             return null;
         }
         return new ParentKeyDto(dbParentKey.getKind(), dbParentKey.getId());
-    }    
+    }
 }

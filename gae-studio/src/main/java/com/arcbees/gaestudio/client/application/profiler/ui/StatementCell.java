@@ -27,7 +27,7 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
     private RecordFormatter recordFormatter;
 
     @Inject
-    public StatementCell(final RecordFormatter recordFormatter) {
+    public StatementCell(RecordFormatter recordFormatter) {
         this.recordFormatter = recordFormatter;
     }
 

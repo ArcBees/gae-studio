@@ -24,12 +24,13 @@ import com.gwtplatform.mvp.client.View;
 
 public class MessagesPresenter extends PresenterWidget<MessagesPresenter.MyView>
         implements DisplayMessageEvent.DisplayMessageHandler {
-    public interface MyView extends View {
+    interface MyView extends View {
         void addMessage(Message message);
     }
 
     @Inject
-    public MessagesPresenter(final EventBus eventBus, final MyView view) {
+    MessagesPresenter(EventBus eventBus,
+                      MyView view) {
         super(eventBus, view);
     }
 

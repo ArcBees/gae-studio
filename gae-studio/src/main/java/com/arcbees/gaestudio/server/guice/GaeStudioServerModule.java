@@ -26,7 +26,7 @@ public class GaeStudioServerModule extends HandlerModule {
     protected void configureHandlers() {
         ObjectifyService.register(Driver.class);
         ObjectifyService.register(Car.class);
-        
+
         install(new DispatchServletModule());
         install(new GaeStudioModule());
     }

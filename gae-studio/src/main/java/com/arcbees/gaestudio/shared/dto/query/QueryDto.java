@@ -28,11 +28,11 @@ public class QueryDto implements Serializable {
     private ArrayList<QueryOrderDto> orders;
     private Integer offset;
     private Integer limit;
-    
+
     @SuppressWarnings("unused")
     protected QueryDto() {
     }
-    
+
     public QueryDto(String kind, String ancestor, ArrayList<QueryFilterDto> filters, ArrayList<QueryOrderDto> orders,
                     Integer offset, Integer limit) {
         this.kind = kind;

@@ -25,7 +25,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
-    public interface Binder extends UiBinder<Widget, ProfilerView> {
+    interface Binder extends UiBinder<Widget, ProfilerView> {
     }
 
     @UiField
@@ -40,7 +40,7 @@ public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
     SimplePanel toolbarPanel;
 
     @Inject
-    public ProfilerView(final Binder uiBinder) {
+    ProfilerView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
     }
 

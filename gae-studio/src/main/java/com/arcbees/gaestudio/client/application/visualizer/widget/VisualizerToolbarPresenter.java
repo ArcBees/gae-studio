@@ -43,7 +43,7 @@ import com.gwtplatform.mvp.client.View;
 public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolbarPresenter.MyView> implements
         VisualizerToolbarUiHandlers, KindSelectedEvent.KindSelectedHandler, EntitySelectedEvent.EntitySelectedHandler,
         EntityPageLoadedEvent.EntityPageLoadedHandler {
-    public interface MyView extends View, HasUiHandlers<VisualizerToolbarUiHandlers> {
+    interface MyView extends View, HasUiHandlers<VisualizerToolbarUiHandlers> {
         void setKindSelected(boolean isSelected);
 
         void enableContextualMenu();
@@ -57,10 +57,10 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     private ParsedEntity currentParsedEntity;
 
     @Inject
-    public VisualizerToolbarPresenter(EventBus eventBus,
-                                      MyView view,
-                                      DispatchAsync dispatcher,
-                                      AppConstants myConstants) {
+    VisualizerToolbarPresenter(EventBus eventBus,
+                               MyView view,
+                               DispatchAsync dispatcher,
+                               AppConstants myConstants) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);
