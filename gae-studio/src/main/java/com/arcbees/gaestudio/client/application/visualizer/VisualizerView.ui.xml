@@ -11,7 +11,7 @@
         }
 
         .entityDetailsPanel {
-            margin-top: 93px;
+            margin-top: 37px;
         }
     </ui:style>
     <g:HTMLPanel addStyleNames="{style.root}">
