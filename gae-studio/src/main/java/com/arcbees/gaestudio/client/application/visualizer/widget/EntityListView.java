@@ -16,15 +16,13 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.ui.JsonContainer;
 import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CustomCellTable;
 import com.arcbees.gaestudio.client.resources.EntityListTooltipResources;
+import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.arcbees.gquery.tooltip.client.Tooltip;
@@ -37,7 +35,6 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
@@ -46,6 +43,9 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.google.gwt.query.client.GQuery.$;
 
@@ -58,12 +58,10 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @UiField
     HTMLPanel panel;
-    @UiField
+    @UiField(provided = true)
     SimplePager pager;
     @UiField(provided = true)
     CellTable<ParsedEntity> entityTable;
-    @UiField
-    InlineLabel entityName;
 
     private final VisualizerUiFactory visualizerUiFactory;
     private final EntityListTooltipResources entityListTooltipResources;
@@ -73,10 +71,12 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @Inject
     EntityListView(Binder uiBinder,
-            AppResources appResources,
-            CustomCellTable customCellTable,
-            VisualizerUiFactory visualizerUiFactory,
-            EntityListTooltipResources entityListTooltipResources) {
+                   AppResources appResources,
+                   CustomCellTable customCellTable,
+                   VisualizerUiFactory visualizerUiFactory,
+                   EntityListTooltipResources entityListTooltipResources,
+                   PagerResources pagerResources) {
+        pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
         this.visualizerUiFactory = visualizerUiFactory;
         this.entityListTooltipResources = entityListTooltipResources;
 
@@ -92,7 +92,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         setSelectionModel();
         pager.setDisplay(entityTable);
-        entityName.setStyleName(appResources.styles().wordWrap());
         pager.setPageSize(PAGE_SIZE);
         setDefaultColumns();
     }
@@ -111,7 +110,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     public void setNewKind(String currentKind) {
         panel.setVisible(true);
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
-        entityName.setText(currentKind);
     }
 
     @Override
