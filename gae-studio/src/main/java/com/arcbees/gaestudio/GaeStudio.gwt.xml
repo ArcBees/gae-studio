@@ -13,6 +13,7 @@
 
     <inherits name='com.gwtplatform.mvp.MvpWithEntryPoint' />
     <inherits name="com.google.common.collect.Collect"/>
+    <inherits name="com.arcbees.gquery.tooltip.Tooltip"/>
 
     <!-- Specify the paths for translatable code -->
     <source path='client' />
