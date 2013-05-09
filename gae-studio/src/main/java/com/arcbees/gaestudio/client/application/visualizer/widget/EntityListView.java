@@ -23,7 +23,7 @@ import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.ui.JsonContainer;
 import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
 import com.arcbees.gaestudio.client.resources.AppResources;
-import com.arcbees.gaestudio.client.resources.CustomCellTable;
+import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.EntityListTooltipResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
@@ -74,13 +74,13 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @Inject
     EntityListView(Binder uiBinder,
             AppResources appResources,
-            CustomCellTable customCellTable,
+            CellTableResource cellTableResource,
             VisualizerUiFactory visualizerUiFactory,
             EntityListTooltipResources entityListTooltipResources) {
         this.visualizerUiFactory = visualizerUiFactory;
         this.entityListTooltipResources = entityListTooltipResources;
 
-        entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, customCellTable);
+        entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
             @Override
             public void onAttachOrDetach(AttachEvent event) {

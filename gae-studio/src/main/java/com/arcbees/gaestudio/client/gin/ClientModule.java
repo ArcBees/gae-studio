@@ -24,7 +24,7 @@ import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.resources.AppResources;
-import com.arcbees.gaestudio.client.resources.CustomCellTable;
+import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.gwtplatform.dispatch.client.gin.DispatchAsyncModule;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.ErrorPlace;
@@ -50,7 +50,7 @@ public class ClientModule extends AbstractPresenterModule {
         bind(AppResources.class).in(Singleton.class);
         bind(AppConstants.class).in(Singleton.class);
         bind(AppMessages.class).in(Singleton.class);
-        bind(CustomCellTable.class).in(Singleton.class);
+        bind(CellTableResource.class).in(Singleton.class);
         
         bind(ResourceLoader.class).asEagerSingleton();
     }

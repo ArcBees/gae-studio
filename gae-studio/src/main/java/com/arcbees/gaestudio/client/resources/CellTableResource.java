@@ -2,7 +2,7 @@ package com.arcbees.gaestudio.client.resources;
 
 import com.google.gwt.user.cellview.client.CellTable;
 
-public interface CustomCellTable extends CellTable.Resources {
+public interface CellTableResource extends CellTable.Resources {
     interface TableStyle extends CellTable.Style {
     }
 

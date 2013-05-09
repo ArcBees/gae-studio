@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -22,12 +23,16 @@ public class EntityView extends ViewImpl implements EntityPresenter.MyView {
     SimplePanel root;
 
     private final KeyValuePairBuilder keyValuePairBuilder;
+    private final int pageSize = 15;
+    private final CellTableResource cellTableResource;
     private CellTable<KeyValuePair> table;
 
     @Inject
     EntityView(Binder binder,
-               KeyValuePairBuilder keyValuePairBuilder) {
+               KeyValuePairBuilder keyValuePairBuilder,
+               CellTableResource cellTableResource) {
         this.keyValuePairBuilder = keyValuePairBuilder;
+        this.cellTableResource = cellTableResource;
 
         initWidget(binder.createAndBindUi(this));
 
@@ -49,7 +54,7 @@ public class EntityView extends ViewImpl implements EntityPresenter.MyView {
             }
         };
 
-        table = new CellTable<KeyValuePair>();
+        table = new CellTable<KeyValuePair>(pageSize, cellTableResource);
 
         table.addColumn(keyColumn, "Key");
         table.addColumn(valueColumn, "Value");
