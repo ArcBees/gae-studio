@@ -3,7 +3,6 @@
              xmlns:cellview="urn:import:com.google.gwt.user.cellview.client">
     <ui:style>
         .heading {
-            margin-left: 22px;
         }
     </ui:style>
     <g:HTMLPanel ui:field="panel" visible="false">

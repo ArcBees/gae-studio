@@ -24,6 +24,7 @@ import com.arcbees.gaestudio.client.resources.CustomCellTable;
 import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
+import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -59,7 +60,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                           CustomCellTable customCellTable,
                           PagerResources pagerResources) {
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, customCellTable);
-        pager = new SimplePager(SimplePager.TextLocation.LEFT, pagerResources, true, 1000, true);
+        pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
 
         initWidget(uiBinder.createAndBindUi(this));
 

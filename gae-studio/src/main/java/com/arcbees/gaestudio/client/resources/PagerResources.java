@@ -13,9 +13,6 @@ public interface PagerResources extends SimplePager.Resources {
     PageStyles simplePagerStyle();
 
     @Override
-    ImageResource simplePagerFastForward();
-
-    @Override
     ImageResource simplePagerPreviousPage();
 
     @Override
@@ -38,7 +35,4 @@ public interface PagerResources extends SimplePager.Resources {
 
     @Override
     ImageResource simplePagerFirstPage();
-
-    @Override
-    ImageResource simplePagerFastForwardDisabled();
 }

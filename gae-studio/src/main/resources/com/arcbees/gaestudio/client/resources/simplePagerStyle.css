@@ -1,15 +1,50 @@
 .pageDetails {
-    color: red;
+    background: #e6e6e6;
+    color: #646464;
+    display: inline-block;
+    font-weight: bold;
+    padding: 0px 5px;
+    margin: 5px;
+    line-height: 27px;
+
+    -webkit-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
+    -moz-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
+    text-shadow: 1px 0px 2px rgba(255, 255, 255, 0.20);
+
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
 
 .button {
-    background-color: green;
+    width: 27px;
+    height: 27px;
+    display: inline-block;
+    overflow: hidden;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.button img {
+    position: relative;
+    top: -27px;
+}
+
+.button:hover img {
+    position: relative;
+    top: 0px;
 }
 
 .disabledButton {
-    margin-top: 10px;
+    cursor: default;
+    opacity: .25;
 }
 
-/*
-http://google-web-toolkit.googlecode.com/svn/javadoc/latest/com/google/gwt/user/cellview/client/SimplePager.Resources.html
-*/
+.disabledButton:hover img, .disabledButton img {
+    top: 0;
+}
+
+    /*
+    http://google-web-toolkit.googlecode.com/svn/javadoc/latest/com/google/gwt/user/cellview/client/SimplePager.Resources.html
+    */
