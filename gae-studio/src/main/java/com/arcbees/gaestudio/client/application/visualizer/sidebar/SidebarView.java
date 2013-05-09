@@ -24,6 +24,16 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         SafeHtml create(String kindName, String cssClass);
     }
 
+    public interface KindHeaderTemplate extends SafeHtmlTemplates {
+        @SafeHtmlTemplates.Template("<span class='{0}'>Kinds</span>")
+        SafeHtml create(String cssClassHeader);
+    }
+
+    public interface EmptyKindsTemplate extends SafeHtmlTemplates {
+        @SafeHtmlTemplates.Template("<span class='{0}'>Kinds</span><span class='{1}'>No entity type detected</span>")
+        SafeHtml create(String cssClassHeader, String cssClassEmpty);
+    }
+
     interface Binder extends UiBinder<HTMLPanel, SidebarView> {
     }
 
@@ -31,28 +41,36 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     HTMLPanel root;
 
     private final KindTemplate kindTemplate;
+    private final KindHeaderTemplate kindHeaderTemplate;
+    private final EmptyKindsTemplate emptyKindsTemplate;
     private final AppResources appResources;
 
     private final String emptyListTypeStyleName;
     private final String rootListTypeStyleName;
-    private final String hiddenOverlay;
-    private final String revealOverlay;
-    private final String revealUnderOverlay;
+    private final String hiddenOverlayStyleName;
+    private final String revealOverlayStyleName;
+    private final String revealUnderOverlayStyleName;
+    private final String kindHeaderStyleName;
 
     @Inject
     public SidebarView(Binder binder,
                        KindTemplate kindTemplate,
+                       KindHeaderTemplate kindHeaderTemplate,
+                       EmptyKindsTemplate emptyKindsTemplate,
                        AppResources appResources) {
         this.kindTemplate = kindTemplate;
+        this.kindHeaderTemplate = kindHeaderTemplate;
+        this.emptyKindsTemplate = emptyKindsTemplate;
         this.appResources = appResources;
 
         initWidget(binder.createAndBindUi(this));
 
         emptyListTypeStyleName = appResources.styles().entityTypeSelectorEmpty();
         rootListTypeStyleName = appResources.styles().entityTypeSelector();
-        hiddenOverlay = appResources.styles().hiddenOverlay();
-        revealOverlay = appResources.styles().revealOverlay();
-        revealUnderOverlay = appResources.styles().revealUnderOverlay();
+        hiddenOverlayStyleName = appResources.styles().hiddenOverlay();
+        revealOverlayStyleName = appResources.styles().revealOverlay();
+        revealUnderOverlayStyleName = appResources.styles().revealUnderOverlay();
+        kindHeaderStyleName = appResources.styles().kindHeaderElement();
     }
 
     @Override
@@ -63,6 +81,10 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
             String cssClass = appResources.styles().kindListElement();
             String html = kindTemplate.create(kind, cssClass).asString();
             $(root).append(html);
+        }
+
+        if($("." + rootListTypeStyleName + " > div > div").length() < 1){
+            addEmptyEntityListStyle();
         }
 
         $("div", root).click(new Function() {
@@ -80,13 +102,16 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     }
 
     public void clearKindsList() {
-        $("." + emptyListTypeStyleName).removeClass(emptyListTypeStyleName);
-        $("." + rootListTypeStyleName + " > div > div").remove();
+        String html = kindHeaderTemplate.create(kindHeaderStyleName).asString();
+
+        $("." + rootListTypeStyleName + " > div").html(html);
     }
 
     @Override
     public void addEmptyEntityListStyle() {
-        $(root).addClass(emptyListTypeStyleName);
+        String html = emptyKindsTemplate.create(kindHeaderStyleName, emptyListTypeStyleName).asString();
+
+        $("." + rootListTypeStyleName + " > div").html(html);
     }
 
     private void setActive(Event e) {
@@ -97,11 +122,11 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     }
 
     private void revealEntityDivNToolbar() {
-        $("." + hiddenOverlay).addClass(revealOverlay);
+        $("." + hiddenOverlayStyleName).addClass(revealOverlayStyleName);
 
         Timer timer = new Timer() {
             public void run() {
-                $("." + hiddenOverlay).addClass(revealUnderOverlay);
+                $("." + hiddenOverlayStyleName).addClass(revealUnderOverlayStyleName);
             }
         };
 
