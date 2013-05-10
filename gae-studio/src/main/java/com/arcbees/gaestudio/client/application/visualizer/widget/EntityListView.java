@@ -19,6 +19,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.ui.JsonContainer;
 import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.EntityListTooltipResources;
 import com.arcbees.gaestudio.client.resources.PagerResources;
@@ -28,6 +29,7 @@ import com.arcbees.gquery.tooltip.client.Tooltip;
 import com.arcbees.gquery.tooltip.client.TooltipOptions;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent;
+import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -42,6 +44,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +60,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiField
     HTMLPanel panel;
     @UiField(provided = true)
-    @UiField(provided = true)
     SimplePager pager;
     @UiField(provided = true)
     CellTable<ParsedEntity> entityTable;
@@ -65,19 +67,29 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final VisualizerUiFactory visualizerUiFactory;
     private final EntityListTooltipResources entityListTooltipResources;
     private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
+    private final String firstTableStyleName;
+    private final String secondTableStyleName;
+    private final String firstTableFixStyleName;
+    private final String secondTableFixStyleName;
 
     private Tooltip tooltip;
 
     @Inject
     EntityListView(Binder uiBinder,
-                        CellTableResource cellTableResource,
+                   CellTableResource cellTableResource,
                    VisualizerUiFactory visualizerUiFactory,
                    EntityListTooltipResources entityListTooltipResources,
-                   PagerResources pagerResources) {
+                   PagerResources pagerResources,
+                   AppResources appResources) {
         this.visualizerUiFactory = visualizerUiFactory;
         this.entityListTooltipResources = entityListTooltipResources;
 
         pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
+
+        this.firstTableStyleName = appResources.styles().firstTable();
+        this.secondTableStyleName = appResources.styles().secondTable();
+        this.firstTableFixStyleName = appResources.styles().firstTableFix();
+        this.secondTableFixStyleName = appResources.styles().secondTableFix();
 
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
@@ -241,6 +253,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 .withResources(entityListTooltipResources)
                 .withContainer("element")
                 .withPlacement(TooltipOptions.TooltipPlacement.RIGHT)
+                .withAnimation(false)
                 .withContent(new TooltipOptions.TooltipWidgetContentProvider() {
                     @Override
                     public IsWidget getContent(Element element) {
@@ -251,6 +264,23 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         tooltip = $(entityTable).as(Tooltip.Tooltip).tooltip(options);
     }
 
+    private void bindGwtQuery() {
+        $("." + firstTableStyleName + " tbody tr").hover(new Function() {
+               @Override
+               public void f() {
+                   $("." + firstTableStyleName).addClass(firstTableFixStyleName);
+                   $("." + secondTableStyleName).addClass(secondTableFixStyleName);
+               }
+           }, new Function() {
+               @Override
+               public void f() {
+                   $("." + firstTableStyleName).removeClass(firstTableFixStyleName);
+                   $("." + secondTableStyleName).removeClass(secondTableFixStyleName);
+               }
+           }
+        );
+    }
+
     private IsWidget createEntityContent(Element element) {
         int absoluteRowIndex = Integer.valueOf($(element).attr("__gwt_row"));
         int pageStartIndex = entityTable.getVisibleRange().getStart();
@@ -259,6 +289,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         ParsedEntity parsedEntity = entityTable.getVisibleItem(relativeIndex);
         JsonContainer container = visualizerUiFactory.createJsonContainer(parsedEntity.getJson());
         container.addAttachHandler(container);
+        bindGwtQuery();
         return container;
     }
 }

@@ -1,6 +1,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:cellview="urn:import:com.google.gwt.user.cellview.client">
+    <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:style>
         .heading {
             margin-left: 5px;
@@ -12,6 +13,6 @@
             <cellview:SimplePager ui:field="pager"/>
         </div>
 
-        <cellview:CellTable ui:field="entityTable"/>
+        <cellview:CellTable ui:field="entityTable" styleName="{resources.styles.firstTable}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

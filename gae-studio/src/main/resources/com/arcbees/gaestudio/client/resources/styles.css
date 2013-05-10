@@ -240,4 +240,17 @@ body, * {
 .hiddenOverlay.revealUnderOverlay > div:before {
     display: none;
 }
+.firstTable, .secondTable{}
 
+.secondTable table{
+    /*left: -1px;*/
+}
+
+.firstTableFix thead tr th:last-of-type{
+    /*padding-right: 16px;*/
+}
+
+.secondTableFix table{
+    position: relative;
+    left: -1px;
+}
