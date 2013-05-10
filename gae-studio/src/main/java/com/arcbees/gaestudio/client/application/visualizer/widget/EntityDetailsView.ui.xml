@@ -13,7 +13,7 @@
             padding: 8px;
             border: 1px solid white;
 
-            background: rgb(117, 117, 117);
+            background: #757575;
             color: #ffffff;
             -webkit-appearance: none;
 
@@ -73,7 +73,7 @@
 
         .popup button {
             padding: 5px 10px 5px 10px;
-            border: 1px solid rgb(46, 95, 133);
+            border: 1px solid #2E5F85;
 
             font-size: 1.3em;
             background: #3595E6;

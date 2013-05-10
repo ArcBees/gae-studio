@@ -18,8 +18,10 @@
     <g:HTMLPanel addStyleNames="{style.root} {resources.styles.noOverflow}">
         <g:SimplePanel ui:field="entityTypesSidebar" addStyleNames="{resources.styles.entityTypeSelector}"/>
         <g:SimplePanel ui:field="toolbar" addStyleNames="{resources.styles.hiddenOverlay}"/>
-        <g:SimplePanel ui:field="entityListPanel" addStyleNames="{style.entityListPanel} {resources.styles.hiddenOverlay}"/>
-        <g:SimplePanel ui:field="entityDetailsPanel" addStyleNames="{style.entityDetailsPanel} {resources.styles.secondTable}"/>
+        <g:SimplePanel ui:field="entityListPanel"
+                       addStyleNames="{style.entityListPanel} {resources.styles.hiddenOverlay}"/>
+        <g:SimplePanel ui:field="entityDetailsPanel"
+                       addStyleNames="{style.entityDetailsPanel} {resources.styles.secondTable}"/>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

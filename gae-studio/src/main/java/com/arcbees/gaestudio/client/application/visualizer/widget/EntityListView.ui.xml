@@ -3,7 +3,7 @@
              xmlns:cellview="urn:import:com.google.gwt.user.cellview.client">
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:style>
-        .heading table{
+        .heading table {
             margin: 0 auto;
         }
     </ui:style>
