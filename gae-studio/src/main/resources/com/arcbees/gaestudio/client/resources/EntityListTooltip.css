@@ -7,11 +7,12 @@
     opacity: 0;
     filter: literal("alpha(opacity=0)");
     visibility: visible;
+    text-shadow: 1px 1px 1px rgba(27, 27, 27, 0.55);
 }
 
 .tooltip.in {
-    opacity: 0.8;
-    filter: literal("alpha(opacity=80)");
+    opacity: 0.85;
+    filter: literal("alpha(opacity=85)");
 }
 
 .tooltip.top {

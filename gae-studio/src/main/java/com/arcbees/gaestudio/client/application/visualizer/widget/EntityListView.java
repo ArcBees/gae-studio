@@ -15,6 +15,7 @@ import java.util.List;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.ui.JsonContainer;
 import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.EntityListTooltipResources;
 import com.arcbees.gaestudio.client.resources.PagerResources;
@@ -24,6 +25,7 @@ import com.arcbees.gquery.tooltip.client.Tooltip;
 import com.arcbees.gquery.tooltip.client.TooltipOptions;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent;
+import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -58,6 +60,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final VisualizerUiFactory visualizerUiFactory;
     private final EntityListTooltipResources entityListTooltipResources;
     private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
+    private final String firstTableStyleName;
+    private final String secondTableStyleName;
+    private final String secondTableFixStyleName;
+    private final String pagerStyleName;
+    private final String pagerFixStyleName;
 
     private Tooltip tooltip;
 
@@ -66,10 +73,17 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                    CellTableResource cellTableResource,
                    VisualizerUiFactory visualizerUiFactory,
                    EntityListTooltipResources entityListTooltipResources,
-                   PagerResources pagerResources) {
+                   PagerResources pagerResources,
+                   AppResources appResources) {
         pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
         this.visualizerUiFactory = visualizerUiFactory;
         this.entityListTooltipResources = entityListTooltipResources;
+
+        this.firstTableStyleName = appResources.styles().firstTable();
+        this.secondTableStyleName = appResources.styles().secondTable();
+        this.secondTableFixStyleName = appResources.styles().secondTableFix();
+        this.pagerStyleName = appResources.styles().pager();
+        this.pagerFixStyleName = appResources.styles().pagerFix();
 
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
@@ -233,6 +247,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 .withResources(entityListTooltipResources)
                 .withContainer("element")
                 .withPlacement(TooltipOptions.TooltipPlacement.RIGHT)
+                .withAnimation(false)
                 .withContent(new TooltipOptions.TooltipWidgetContentProvider() {
                     @Override
                     public IsWidget getContent(Element element) {
@@ -251,6 +266,24 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         ParsedEntity parsedEntity = entityTable.getVisibleItem(relativeIndex);
         JsonContainer container = visualizerUiFactory.createJsonContainer(parsedEntity.getJson());
         container.addAttachHandler(container);
+        bindGwtQuery();
         return container;
+    }
+
+    private void bindGwtQuery() {
+        $("." + firstTableStyleName + " tbody tr").hover(new Function() {
+                                                             @Override
+                                                             public void f() {
+                                                                 $("." + pagerStyleName).addClass(pagerFixStyleName);
+                                                                 $("." + secondTableStyleName).addClass(secondTableFixStyleName);
+                                                             }
+                                                         }, new Function() {
+                                                             @Override
+                                                             public void f() {
+                                                                 $("." + pagerStyleName).removeClass(pagerFixStyleName);
+                                                                 $("." + secondTableStyleName).removeClass(secondTableFixStyleName);
+                                                             }
+                                                         }
+        );
     }
 }

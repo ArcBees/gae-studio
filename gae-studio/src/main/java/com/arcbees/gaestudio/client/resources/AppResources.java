@@ -56,6 +56,18 @@ public interface AppResources extends ClientBundle {
         String revealUnderOverlay();
 
         String kindHeaderElement();
+
+        String firstTable();
+
+        String secondTable();
+
+        String secondTableFix();
+
+        String pager();
+
+        String pagerFix();
+
+        String noOverflow();
     }
 
     public interface Sprites extends CssResource {
