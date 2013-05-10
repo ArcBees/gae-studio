@@ -7,11 +7,9 @@
         }
     </ui:style>
     <g:HTMLPanel ui:field="panel" visible="false">
-
         <div class="{style.heading}">
-            <cellview:SimplePager ui:field="pager"/>
+            <cellview:SimplePager location="CENTER" ui:field="pager"/>
         </div>
-
         <cellview:CellTable ui:field="entityTable"/>
     </g:HTMLPanel>
 </ui:UiBinder>

@@ -16,11 +16,6 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
-import com.arcbees.gaestudio.client.application.visualizer.VisualizerView;
-import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarModule;
-import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
-import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class VisualizerWidgetModule extends AbstractPresenterModule {
