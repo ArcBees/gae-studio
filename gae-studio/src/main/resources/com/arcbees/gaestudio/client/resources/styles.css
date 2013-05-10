@@ -241,7 +241,7 @@ body, * {
     display: none;
 }
 
-.firstTable, .secondTable, .pager {
+.firstTable, .secondTable, .pager, .secondTableHidden {
     overflow: visible;
 }
 
@@ -256,6 +256,10 @@ body, * {
 .secondTableFix table {
     position: relative;
     left: -1px;
+}
+
+.secondTableHidden {
+    display: none;
 }
 
 .pagerFix{

@@ -68,6 +68,8 @@ public interface AppResources extends ClientBundle {
         String pagerFix();
 
         String noOverflow();
+
+        String secondTableHidden();
     }
 
     public interface Sprites extends CssResource {

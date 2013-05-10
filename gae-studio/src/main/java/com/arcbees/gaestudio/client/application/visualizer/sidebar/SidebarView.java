@@ -60,6 +60,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private final String revealOverlayStyleName;
     private final String revealUnderOverlayStyleName;
     private final String kindHeaderStyleName;
+    private final String secondTableStyleName;
+    private final String secondTableHiddenStyleName;
 
     @Inject
     SidebarView(Binder binder,
@@ -74,6 +76,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
         initWidget(binder.createAndBindUi(this));
 
+        secondTableStyleName = appResources.styles().secondTable();
+        secondTableHiddenStyleName = appResources.styles().secondTableHidden();
         emptyListTypeStyleName = appResources.styles().entityTypeSelectorEmpty();
         rootListTypeStyleName = appResources.styles().entityTypeSelector();
         hiddenOverlayStyleName = appResources.styles().hiddenOverlay();
@@ -99,6 +103,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         $("div", root).click(new Function() {
             @Override
             public boolean f(Event e) {
+                $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
+
                 setActive(e);
                 Element el = (Element) e.getCurrentEventTarget().cast();
 
