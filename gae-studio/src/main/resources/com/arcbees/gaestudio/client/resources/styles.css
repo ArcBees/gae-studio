@@ -260,3 +260,7 @@ body, * {
 .pagerFix{
     padding-right: 1px;
 }
+
+.noOverflow{
+    overflow: visible;
+}

@@ -16,6 +16,8 @@
 
 package com.arcbees.gaestudio.client.application.visualizer;
 
+import com.arcbees.gaestudio.client.resources.AppResources;
+import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -24,7 +26,9 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyView {
+import static com.google.gwt.query.client.GQuery.$;
+
+public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyView, AttachEvent.Handler {
     interface Binder extends UiBinder<Widget, VisualizerView> {
     }
 
@@ -37,9 +41,23 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     @UiField
     SimplePanel entityDetailsPanel;
 
+    private final String noOverflowStyleName;
+
     @Inject
-    VisualizerView(Binder uiBinder) {
+    VisualizerView(Binder uiBinder,
+                   AppResources appResources) {
         initWidget(uiBinder.createAndBindUi(this));
+
+        noOverflowStyleName = appResources.styles().noOverflow();
+
+        asWidget().addAttachHandler(this);
+    }
+
+    @Override
+    public void onAttachOrDetach(AttachEvent attachEvent) {
+        if (attachEvent.isAttached()) {
+            bindGwtQuery();
+        }
     }
 
     @Override
@@ -55,5 +73,12 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
                 entityDetailsPanel.setWidget(content);
             }
         }
+    }
+
+    private void bindGwtQuery() {
+        $("." + noOverflowStyleName).css("overflow", "visible");
+        $("." + noOverflowStyleName).parent("div").css("overflow", "visible");
+        $("." + noOverflowStyleName).parents("div").css("overflow", "visible");
+        $("." + noOverflowStyleName).parents("div").parents("div").css("overflow", "visible");
     }
 }

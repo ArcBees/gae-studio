@@ -73,6 +73,8 @@ public interface AppResources extends ClientBundle {
         String pager();
 
         String pagerFix();
+
+        String noOverflow();
     }
 
     public interface Sprites extends CssResource {
