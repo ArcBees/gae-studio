@@ -69,8 +69,6 @@ public interface AppResources extends ClientBundle {
         String secondTable();
 
         String secondTableFix();
-
-        String firstTableFix();
     }
 
     public interface Sprites extends CssResource {

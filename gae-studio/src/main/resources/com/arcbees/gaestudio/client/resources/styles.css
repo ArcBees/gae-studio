@@ -240,17 +240,19 @@ body, * {
 .hiddenOverlay.revealUnderOverlay > div:before {
     display: none;
 }
-.firstTable, .secondTable{}
 
-.secondTable table{
-    /*left: -1px;*/
+.firstTable, .secondTable {
 }
 
-.firstTableFix thead tr th:last-of-type{
-    /*padding-right: 16px;*/
+.firstTable {
+    margin-right: -1px;
 }
 
-.secondTableFix table{
+.firstTable tbody tr:hover {
+    cursor: pointer;
+}
+
+.secondTableFix table {
     position: relative;
     left: -1px;
 }

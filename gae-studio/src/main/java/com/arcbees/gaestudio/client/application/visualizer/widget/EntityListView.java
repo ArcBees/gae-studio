@@ -69,7 +69,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
     private final String firstTableStyleName;
     private final String secondTableStyleName;
-    private final String firstTableFixStyleName;
     private final String secondTableFixStyleName;
 
     private Tooltip tooltip;
@@ -88,7 +87,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         this.firstTableStyleName = appResources.styles().firstTable();
         this.secondTableStyleName = appResources.styles().secondTable();
-        this.firstTableFixStyleName = appResources.styles().firstTableFix();
         this.secondTableFixStyleName = appResources.styles().secondTableFix();
 
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
@@ -268,13 +266,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         $("." + firstTableStyleName + " tbody tr").hover(new Function() {
                @Override
                public void f() {
-                   $("." + firstTableStyleName).addClass(firstTableFixStyleName);
                    $("." + secondTableStyleName).addClass(secondTableFixStyleName);
                }
            }, new Function() {
                @Override
                public void f() {
-                   $("." + firstTableStyleName).removeClass(firstTableFixStyleName);
                    $("." + secondTableStyleName).removeClass(secondTableFixStyleName);
                }
            }

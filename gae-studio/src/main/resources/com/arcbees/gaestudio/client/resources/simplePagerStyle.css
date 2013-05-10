@@ -4,7 +4,7 @@
     display: inline-block;
     font-weight: bold;
     padding: 0px 5px;
-    margin: 5px;
+    margin: 10px 5px;
     line-height: 27px;
 
     -webkit-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
@@ -23,7 +23,8 @@
     display: inline-block;
     overflow: hidden;
     cursor: pointer;
-    margin: 5px;
+    margin: 10px 5px;
+
 }
 
 .button img {

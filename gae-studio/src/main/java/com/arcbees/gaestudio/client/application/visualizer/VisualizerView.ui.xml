@@ -4,6 +4,7 @@
     <ui:style>
         .entityListPanel {
             float: left;
+            margin: 0 15px;
         }
 
         .root {
@@ -11,7 +12,7 @@
         }
 
         .entityDetailsPanel {
-            margin-top: 37px;
+            margin-top: 47px;
         }
     </ui:style>
     <g:HTMLPanel addStyleNames="{style.root}">
