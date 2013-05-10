@@ -44,9 +44,6 @@ import java.util.List;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
-
-    private String pagerButtons;
-
     interface Binder extends UiBinder<Widget, EntityListView> {
     }
 
