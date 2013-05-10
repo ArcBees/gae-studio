@@ -70,6 +70,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final String firstTableStyleName;
     private final String secondTableStyleName;
     private final String secondTableFixStyleName;
+    private final String pagerStyleName;
+    private final String pagerFixStyleName;
 
     private Tooltip tooltip;
 
@@ -87,6 +89,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         this.firstTableStyleName = appResources.styles().firstTable();
         this.secondTableStyleName = appResources.styles().secondTable();
         this.secondTableFixStyleName = appResources.styles().secondTableFix();
+        this.pagerStyleName = appResources.styles().pager();
+        this.pagerFixStyleName = appResources.styles().pagerFix();
 
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
@@ -265,11 +269,13 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         $("." + firstTableStyleName + " tbody tr").hover(new Function() {
                @Override
                public void f() {
+                   $("." + pagerStyleName).addClass(pagerFixStyleName);
                    $("." + secondTableStyleName).addClass(secondTableFixStyleName);
                }
            }, new Function() {
                @Override
                public void f() {
+                   $("." + pagerStyleName).removeClass(pagerFixStyleName);
                    $("." + secondTableStyleName).removeClass(secondTableFixStyleName);
                }
            }

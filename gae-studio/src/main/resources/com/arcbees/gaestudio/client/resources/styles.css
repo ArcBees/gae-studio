@@ -241,7 +241,7 @@ body, * {
     display: none;
 }
 
-.firstTable, .secondTable {
+.firstTable, .secondTable, .pager {
 }
 
 .firstTable {
@@ -255,4 +255,8 @@ body, * {
 .secondTableFix table {
     position: relative;
     left: -1px;
+}
+
+.pagerFix{
+    padding-right: 1px;
 }

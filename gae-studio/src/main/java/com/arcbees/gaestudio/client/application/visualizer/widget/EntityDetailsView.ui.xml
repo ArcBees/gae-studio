@@ -11,12 +11,19 @@
             display: block;
 
             padding: 8px;
-            border: 1px solid black;
+            border: 1px solid white;
 
             background: rgb(117, 117, 117);
             color: #ffffff;
             -webkit-appearance: none;
-            box-shadow: inset 0 0 5px 0 black;
+
+            -webkit-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.6);
+            -moz-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.6);
+            box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.6);
+
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
 
             transition: all .25s ease;
             -webkit-transition: all .25s ease;
@@ -26,7 +33,9 @@
 
         .json:focus {
             outline: none;
-            box-shadow: inset 0 0 10px 0 black;
+            -webkit-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.6);
+            -moz-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.6);
+            box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.6);
         }
 
         .popup {
@@ -34,6 +43,9 @@
             background-color: #EBEBEB;
             border-radius: 10px;
             z-index: 110;
+            -webkit-shadow: 0px 1px 16px -2px rgba(0, 0, 0, 0.35);
+            -moz-shadow: 0px 1px 16px -2px rgba(0, 0, 0, 0.35);
+            box-shadow: 0px 1px 16px -2px rgba(0, 0, 0, 0.35);
         }
 
         h3 {
@@ -61,23 +73,34 @@
 
         .popup button {
             padding: 5px 10px 5px 10px;
-            border: 1px solid #919191;
+            border: 1px solid rgb(46, 95, 133);
 
             font-size: 1.3em;
             background: #3595E6;
             color: #EBEBEB;
 
-            -webkit-box-shadow: inset 0 2px 6px -1px rgba(255, 255, 255, 0.7);
-            -moz-box-shadow: inset 0 2px 6px -1px rgba(255, 255, 255, 0.7);
-            box-shadow: inset 0 2px 6px -1px rgba(255, 255, 255, 0.7);
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.30);
+
+            -webkit-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.4), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
+            -moz-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.4), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
+            box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.4), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
         }
 
         .popup button:hover {
             color: #DFDFDF;
+            border: 1px solid #313131;
 
-            -webkit-box-shadow: inset 0 1px 5px -1px rgba(182, 182, 182, 0.3), 0px 3px 7px -3px rgba(0, 0, 0, 1);
-            -moz-box-shadow: inset 0 1px 5px -1px rgba(182, 182, 182, 0.3), 0px 3px 7px -3px rgba(0, 0, 0, 1);
-            box-shadow: inset 0 1px 5px -1px rgba(182, 182, 182, 0.3), 0px 3px 7px -3px rgba(0, 0, 0, 1);
+            -webkit-box-shadow: inset 0 2px 3px -1px rgba(182, 182, 182, 0.3), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: inset 0 2px 3px -1px rgba(182, 182, 182, 0.3), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
+            box-shadow: inset 0 2px 3px -1px rgba(182, 182, 182, 0.3), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
+        }
+
+        .popup button:active {
+            border: 1px solid #272727;
+
+            -webkit-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
+            -moz-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
+            box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
         }
 
         .buttonContainer {

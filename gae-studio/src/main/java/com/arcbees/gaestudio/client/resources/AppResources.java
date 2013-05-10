@@ -69,6 +69,10 @@ public interface AppResources extends ClientBundle {
         String secondTable();
 
         String secondTableFix();
+
+        String pager();
+
+        String pagerFix();
     }
 
     public interface Sprites extends CssResource {
