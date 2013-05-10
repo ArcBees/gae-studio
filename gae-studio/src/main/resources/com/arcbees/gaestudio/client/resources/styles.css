@@ -1,5 +1,5 @@
-@def blue #3595E6;
-@def lightGrey #ececec;
+@eval blue com.arcbees.gaestudio.client.resources.Colors.blue;
+@eval lightGrey com.arcbees.gaestudio.client.resources.Colors.lightGrey;
 
 body, * {
     font-family: Arial, Abel, Verdana, sans-serif;

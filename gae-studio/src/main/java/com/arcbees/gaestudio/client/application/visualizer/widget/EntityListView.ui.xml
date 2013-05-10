@@ -3,15 +3,13 @@
              xmlns:cellview="urn:import:com.google.gwt.user.cellview.client">
     <ui:style>
         .heading {
-            margin-left: 22px;
+            margin-left: 5px;
         }
     </ui:style>
     <g:HTMLPanel ui:field="panel" visible="false">
-
         <div class="{style.heading}">
-            <cellview:SimplePager location="CENTER" ui:field="pager"/>
+            <cellview:SimplePager ui:field="pager"/>
         </div>
-
         <cellview:CellTable ui:field="entityTable"/>
     </g:HTMLPanel>
 </ui:UiBinder>
