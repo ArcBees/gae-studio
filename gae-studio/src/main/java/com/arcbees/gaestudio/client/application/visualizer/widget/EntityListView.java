@@ -38,13 +38,15 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.gwt.query.client.GQuery.$;
 
 public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
+
+    private String pagerButtons;
+
     interface Binder extends UiBinder<Widget, EntityListView> {
     }
 
@@ -66,6 +68,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final String secondTableFixStyleName;
     private final String secondTableHiddenStyleName;
     private final String pagerStyleName;
+    private final String pagerButtons;
     private final String pagerFixStyleName;
 
     private Tooltip tooltip;
@@ -87,6 +90,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         this.secondTableHiddenStyleName = appResources.styles().secondTableHidden();
         this.pagerStyleName = appResources.styles().pager();
         this.pagerFixStyleName = appResources.styles().pagerFix();
+        this.pagerButtons = "." + pagerStyleName + " tbody tr td img";
 
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
@@ -283,7 +287,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             }
         });
 
-        $("." + pagerStyleName + " tbody tr td img").click(new Function() {
+        $(pagerButtons).click(new Function() {
             @Override
             public void f() {
                 $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
