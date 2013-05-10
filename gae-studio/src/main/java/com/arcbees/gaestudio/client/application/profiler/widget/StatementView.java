@@ -44,8 +44,8 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     @UiField(provided = true)
     CellList<DbOperationRecordDto> statements;
 
-    private final SingleSelectionModel<DbOperationRecordDto> selectionModel = new
-            SingleSelectionModel<DbOperationRecordDto>();
+    private final SingleSelectionModel<DbOperationRecordDto> selectionModel =
+            new SingleSelectionModel<DbOperationRecordDto>();
 
     @Inject
     StatementView(Binder uiBinder,
