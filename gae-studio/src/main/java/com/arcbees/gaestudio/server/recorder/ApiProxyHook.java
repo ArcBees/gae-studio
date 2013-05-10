@@ -51,29 +51,32 @@ public class ApiProxyHook extends BaseHook {
     }
 
     @Override
-    public Future<byte[]> makeAsyncCall(final Environment environment, final String packageName,
-                                        final String methodName, final byte[] request,
-                                        final ApiConfig apiConfig) {
+    public Future<byte[]> makeAsyncCall(final Environment environment,
+                                        final String packageName,
+                                        final String methodName,
+                                        final byte[] request,
+                                        ApiConfig apiConfig) {
 
         if (areApiHooksDisabled(environment)) {
             return getBaseDelegate().makeAsyncCall(environment, packageName, methodName, request, apiConfig);
         }
 
         // TODO flesh this out and make sure it works in all scenarios
-        Future<byte[]> future = new Future<byte[]>() {
+
+        return new Future<byte[]>() {
             @Override
             public boolean cancel(boolean mayInterruptIfRunning) {
-                return false;  //To change body of implemented methods use File | Settings | File Templates.
+                return false;
             }
 
             @Override
             public boolean isCancelled() {
-                return false;  //To change body of implemented methods use File | Settings | File Templates.
+                return false;
             }
 
             @Override
             public boolean isDone() {
-                return false;  //To change body of implemented methods use File | Settings | File Templates.
+                return false;
             }
 
             @Override
@@ -84,11 +87,9 @@ public class ApiProxyHook extends BaseHook {
             @Override
             public byte[] get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException,
                     TimeoutException {
-                return new byte[0];  //To change body of implemented methods use File | Settings | File Templates.
+                return new byte[0];
             }
         };
-
-        return future;
     }
 
     public Map<String, Delegate<Environment>> getHooks() {

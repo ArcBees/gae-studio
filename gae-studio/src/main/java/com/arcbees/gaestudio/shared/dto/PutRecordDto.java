@@ -21,6 +21,7 @@ package com.arcbees.gaestudio.shared.dto;
 
 import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
 
+// TODO : Complete
 public class PutRecordDto extends DbOperationRecordDto {
     private static final long serialVersionUID = 3745865294476274476L;
 
