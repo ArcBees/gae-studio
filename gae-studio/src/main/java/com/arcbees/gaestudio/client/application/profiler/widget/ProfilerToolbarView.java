@@ -33,7 +33,7 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHandlers> implements
         ProfilerToolbarPresenter.MyView {
-    public interface Binder extends UiBinder<Widget, ProfilerToolbarView> {
+    interface Binder extends UiBinder<Widget, ProfilerToolbarView> {
     }
 
     @UiField(provided = true)
@@ -49,12 +49,14 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
     private Boolean isRecording = false;
 
     @Inject
-    public ProfilerToolbarView(final Binder uiBinder, final AppResources resources, final UiFactory uiFactory,
-            final AppConstants myConstants) {
+    ProfilerToolbarView(Binder uiBinder,
+                        AppResources resources,
+                        UiFactory uiFactory,
+                        AppConstants myConstants) {
         this.resources = resources;
         this.uiFactory = uiFactory;
         this.myConstants = myConstants;
-        
+
         initWidget(uiBinder.createAndBindUi(this));
 
         stopRecordindWhenWindowIsClosed();
@@ -68,6 +70,14 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
         buttons.add(clear);
 
         setRecordingState(false);
+    }
+
+    @Override
+    public void setRecordingState(Boolean isRecording) {
+        this.isRecording = isRecording;
+        record.setEnabled(!isRecording);
+        stop.setEnabled(isRecording);
+        clear.setEnabled(!isRecording);
     }
 
     private void stopRecordindWhenWindowIsClosed() {
@@ -108,13 +118,5 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
                 getUiHandlers().clearOperationRecords();
             }
         });
-    }
-
-    @Override
-    public void setRecordingState(Boolean isRecording) {
-        this.isRecording = isRecording;
-        record.setEnabled(!isRecording);
-        stop.setEnabled(isRecording);
-        clear.setEnabled(!isRecording);
     }
 }

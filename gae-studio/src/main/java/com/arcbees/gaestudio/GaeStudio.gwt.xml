@@ -1,27 +1,27 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module rename-to='module_gaestudio'>
     <!-- Inherit the core Web Toolkit stuff. -->
-    <inherits name='com.google.gwt.inject.Inject' />
+    <inherits name='com.google.gwt.inject.Inject'/>
 
     <!-- Inherit the default GWT style sheet. -->
-    <inherits name='com.google.gwt.user.theme.standard.Standard' />
+    <inherits name='com.google.gwt.user.theme.standard.Standard'/>
 
     <!-- Other module inherits -->
-    <inherits name='com.gwtplatform.dispatch.Dispatch' />
-    <inherits name="com.google.gwt.json.JSON" />
-    <inherits name="com.google.gwt.query.Query" />
+    <inherits name='com.gwtplatform.dispatch.Dispatch'/>
+    <inherits name="com.google.gwt.json.JSON"/>
+    <inherits name="com.google.gwt.query.Query"/>
 
-    <inherits name='com.gwtplatform.mvp.MvpWithEntryPoint' />
+    <inherits name='com.gwtplatform.mvp.MvpWithEntryPoint'/>
     <inherits name="com.google.common.collect.Collect"/>
     <inherits name="com.arcbees.gquery.tooltip.Tooltip"/>
 
     <!-- Specify the paths for translatable code -->
-    <source path='client' />
-    <source path='shared' />
+    <source path='client'/>
+    <source path='shared'/>
 
-    <set-configuration-property name="gin.ginjector.modules" 
-                                value="com.arcbees.gaestudio.client.gin.ClientModule" />
-                                
+    <set-configuration-property name="gin.ginjector.modules"
+                                value="com.arcbees.gaestudio.client.gin.ClientModule"/>
+
     <set-configuration-property name="gin.ginjector.extensions"
-                                value="com.arcbees.gaestudio.client.gin.GinjectorExtension" />
+                                value="com.arcbees.gaestudio.client.gin.GinjectorExtension"/>
 </module>

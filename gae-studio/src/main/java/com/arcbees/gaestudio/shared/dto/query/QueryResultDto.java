@@ -20,14 +20,14 @@ import java.io.Serializable;
 
 public class QueryResultDto implements Serializable {
     private static final long serialVersionUID = -3499363771373323522L;
-    
-    private Integer resultSize;   
+
+    private Integer resultSize;
     private Integer serializedSize;
 
     @SuppressWarnings("unused")
     protected QueryResultDto() {
     }
-    
+
     public QueryResultDto(Integer resultSize, Integer serializedSize) {
         this.resultSize = resultSize;
         this.serializedSize = serializedSize;

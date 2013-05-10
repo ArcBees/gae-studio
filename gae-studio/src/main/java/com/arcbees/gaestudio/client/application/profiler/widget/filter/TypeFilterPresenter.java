@@ -36,7 +36,7 @@ import com.gwtplatform.mvp.client.View;
 
 public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyView>
         implements DbOperationRecordProcessor, TypeFilterUiHandlers {
-    public interface MyView extends View, HasUiHandlers<TypeFilterUiHandlers> {
+    interface MyView extends View, HasUiHandlers<TypeFilterUiHandlers> {
         void display(List<FilterValue<OperationType>> filterValues);
     }
 
@@ -44,9 +44,10 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
             new TreeMap<OperationType, FilterValue<OperationType>>();
 
     @Inject
-    public TypeFilterPresenter(final EventBus eventBus, final MyView view) {
+    TypeFilterPresenter(EventBus eventBus,
+                        MyView view) {
         super(eventBus, view);
-        
+
         getView().setUiHandlers(this);
     }
 

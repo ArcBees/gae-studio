@@ -62,8 +62,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     SimplePager pager;
     @UiField(provided = true)
     CellTable<ParsedEntity> entityTable;
-    @UiField
-    InlineLabel entityName;
 
     private final VisualizerUiFactory visualizerUiFactory;
     private final EntityListTooltipResources entityListTooltipResources;
@@ -73,10 +71,10 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @Inject
     EntityListView(Binder uiBinder,
-            AppResources appResources,
-            CustomCellTable customCellTable,
-            VisualizerUiFactory visualizerUiFactory,
-            EntityListTooltipResources entityListTooltipResources) {
+                   AppResources appResources,
+                   CustomCellTable customCellTable,
+                   VisualizerUiFactory visualizerUiFactory,
+                   EntityListTooltipResources entityListTooltipResources) {
         this.visualizerUiFactory = visualizerUiFactory;
         this.entityListTooltipResources = entityListTooltipResources;
 
@@ -92,7 +90,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         setSelectionModel();
         pager.setDisplay(entityTable);
-        entityName.setStyleName(appResources.styles().wordWrap());
         pager.setPageSize(PAGE_SIZE);
         setDefaultColumns();
     }
@@ -111,7 +108,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     public void setNewKind(String currentKind) {
         panel.setVisible(true);
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
-        entityName.setText(currentKind);
     }
 
     @Override

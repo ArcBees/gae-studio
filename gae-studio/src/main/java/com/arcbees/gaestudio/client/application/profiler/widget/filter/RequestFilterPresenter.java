@@ -32,16 +32,17 @@ import com.gwtplatform.mvp.client.View;
 
 public class RequestFilterPresenter extends PresenterWidget<RequestFilterPresenter.MyView>
         implements DbOperationRecordProcessor, RequestFilterUiHandlers {
-    public interface MyView extends View, HasUiHandlers<RequestFilterUiHandlers> {
+    interface MyView extends View, HasUiHandlers<RequestFilterUiHandlers> {
         void display(List<FilterValue<Long>> filterValues);
     }
 
     private final Map<Long, FilterValue<Long>> statementsByRequest = new TreeMap<Long, FilterValue<Long>>();
 
     @Inject
-    public RequestFilterPresenter(final EventBus eventBus, final MyView view) {
+    RequestFilterPresenter(EventBus eventBus,
+                           MyView view) {
         super(eventBus, view);
-        
+
         getView().setUiHandlers(this);
     }
 

@@ -32,7 +32,7 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implements FiltersPresenter.MyView,
         ChangeHandler {
-    public interface Binder extends UiBinder<Widget, FiltersView> {
+    interface Binder extends UiBinder<Widget, FiltersView> {
     }
 
     @UiField(provided = true)
@@ -50,7 +50,9 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
     private Filter currentlySelectedFilter = Filter.REQUEST;
 
     @Inject
-    public FiltersView(final Binder uiBinder, final AppResources resources, final AppConstants myConstants) {
+    FiltersView(Binder uiBinder,
+                AppResources resources,
+                AppConstants myConstants) {
         this.resources = resources;
         this.myConstants = myConstants;
 
@@ -99,12 +101,12 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
 
     private Widget getPanelFromFilter(Filter filter) {
         switch (filter) {
-        case METHOD:
-            return method;
-        case TYPE:
-            return type;
-        default:
-            return request;
+            case METHOD:
+                return method;
+            case TYPE:
+                return type;
+            default:
+                return request;
         }
     }
 }

@@ -29,9 +29,9 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
-public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandlers> implements
-        RequestFilterPresenter.MyView {
-    public interface Binder extends UiBinder<Widget, RequestFilterView> {
+public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandlers>
+        implements RequestFilterPresenter.MyView {
+    interface Binder extends UiBinder<Widget, RequestFilterView> {
     }
 
     @UiField(provided = true)
@@ -40,10 +40,13 @@ public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandler
     @UiField(provided = true)
     AppResources resources;
 
-    private final SingleSelectionModel<FilterValue<Long>> selectionModel = new SingleSelectionModel<FilterValue<Long>>();
+    private final SingleSelectionModel<FilterValue<Long>> selectionModel = new
+            SingleSelectionModel<FilterValue<Long>>();
 
     @Inject
-    public RequestFilterView(final Binder uiBinder, final AppResources resources, final RequestFilterCell requestFilterCell) {
+    RequestFilterView(Binder uiBinder,
+                      AppResources resources,
+                      RequestFilterCell requestFilterCell) {
         this.resources = resources;
         requests = new CellList<FilterValue<Long>>(requestFilterCell);
 

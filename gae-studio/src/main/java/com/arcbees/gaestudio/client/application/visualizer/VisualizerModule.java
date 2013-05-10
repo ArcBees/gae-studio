@@ -18,12 +18,7 @@ package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarModule;
 import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
-import com.arcbees.gaestudio.client.application.visualizer.widget.EntityDetailsPresenter;
-import com.arcbees.gaestudio.client.application.visualizer.widget.EntityDetailsView;
-import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListPresenter;
-import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListView;
-import com.arcbees.gaestudio.client.application.visualizer.widget.VisualizerToolbarPresenter;
-import com.arcbees.gaestudio.client.application.visualizer.widget.VisualizerToolbarView;
+import com.arcbees.gaestudio.client.application.visualizer.widget.VisualizerWidgetModule;
 import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
@@ -32,15 +27,9 @@ public class VisualizerModule extends AbstractPresenterModule {
     protected void configure() {
         install(new GinFactoryModuleBuilder().build(VisualizerUiFactory.class));
         install(new SidebarModule());
+        install(new VisualizerWidgetModule());
 
         bindPresenter(VisualizerPresenter.class, VisualizerPresenter.MyView.class,
                 VisualizerView.class, VisualizerPresenter.MyProxy.class);
-        bindSingletonPresenterWidget(EntityListPresenter.class, EntityListPresenter.MyView.class,
-                EntityListView.class);
-        bindSingletonPresenterWidget(VisualizerToolbarPresenter.class, VisualizerToolbarPresenter.MyView.class,
-                VisualizerToolbarView.class);
-
-        bind(EntityDetailsPresenter.class).asEagerSingleton();
-        bind(EntityDetailsPresenter.MyView.class).to(EntityDetailsView.class);
     }
 }

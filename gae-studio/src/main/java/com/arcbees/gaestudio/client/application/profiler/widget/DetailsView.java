@@ -28,7 +28,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
-    public interface Binder extends UiBinder<Widget, DetailsView> {
+    interface Binder extends UiBinder<Widget, DetailsView> {
     }
 
     @UiField
@@ -43,7 +43,9 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
     private final RecordFormatter recordFormatter;
 
     @Inject
-    public DetailsView(final Binder uiBinder, final AppResources resources, final RecordFormatter recordFormatter) {
+    DetailsView(Binder uiBinder,
+                AppResources resources,
+                RecordFormatter recordFormatter) {
         this.resources = resources;
 
         initWidget(uiBinder.createAndBindUi(this));

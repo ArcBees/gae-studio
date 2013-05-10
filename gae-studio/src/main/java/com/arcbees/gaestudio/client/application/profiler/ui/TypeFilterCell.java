@@ -28,7 +28,7 @@ public class TypeFilterCell extends AbstractCell<FilterValue<OperationType>> {
     private final AppConstants myConstants;
 
     @Inject
-    public TypeFilterCell(final AppConstants myConstants){
+    public TypeFilterCell(AppConstants myConstants) {
         this.myConstants = myConstants;
     }
 
@@ -41,9 +41,9 @@ public class TypeFilterCell extends AbstractCell<FilterValue<OperationType>> {
     }
 
     private String getOperationTypeText(OperationType operationType) {
-        switch (operationType){
+        switch (operationType) {
             case GET:
-               return myConstants.getOperationType();
+                return myConstants.getOperationType();
             case DELETE:
                 return myConstants.deleteOperationType();
             case PUT:

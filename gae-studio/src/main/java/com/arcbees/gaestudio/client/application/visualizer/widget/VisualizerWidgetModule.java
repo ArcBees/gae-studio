@@ -16,9 +16,17 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.gwtplatform.mvp.client.UiHandlers;
+import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
-interface EntityListUiHandlers extends UiHandlers {
-    void onEntitySelected(ParsedEntity parsedEntity);
+public class VisualizerWidgetModule extends AbstractPresenterModule {
+    @Override
+    protected void configure() {
+        bindSingletonPresenterWidget(EntityListPresenter.class, EntityListPresenter.MyView.class,
+                EntityListView.class);
+        bindSingletonPresenterWidget(VisualizerToolbarPresenter.class, VisualizerToolbarPresenter.MyView.class,
+                VisualizerToolbarView.class);
+
+        bind(EntityDetailsPresenter.class).asEagerSingleton();
+        bind(EntityDetailsPresenter.MyView.class).to(EntityDetailsView.class);
+    }
 }

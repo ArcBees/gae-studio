@@ -20,7 +20,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class EntityDto implements IsSerializable {
     private KeyDto key;
-    
+
     private String json;
 
     @SuppressWarnings("unused")

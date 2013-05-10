@@ -25,7 +25,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyView {
-    public interface Binder extends UiBinder<Widget, VisualizerView> {
+    interface Binder extends UiBinder<Widget, VisualizerView> {
     }
 
     @UiField
@@ -38,7 +38,7 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     SimplePanel entityDetailsPanel;
 
     @Inject
-    public VisualizerView(final Binder uiBinder) {
+    VisualizerView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
     }
 

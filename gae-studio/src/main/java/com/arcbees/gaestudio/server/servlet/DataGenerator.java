@@ -40,19 +40,18 @@ import com.googlecode.objectify.ObjectifyService;
 @Singleton
 public class DataGenerator extends HttpServlet {
     private final Logger logger;
-
     private final Random random;
 
     @Inject
-    public DataGenerator(final Logger logger) {
+    DataGenerator(Logger logger) {
         this.logger = logger;
 
         random = new Random();
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, 
-        IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+            IOException {
         Objectify objectify = ObjectifyService.factory().begin();
         initializeSeedData(objectify);
 

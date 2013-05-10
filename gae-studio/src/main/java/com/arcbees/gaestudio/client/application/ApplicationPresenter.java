@@ -30,7 +30,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.gwtplatform.mvp.client.proxy.RevealRootLayoutContentEvent;
 
 public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy> {
-    public interface MyView extends View {
+    interface MyView extends View {
     }
 
     @ContentSlot
@@ -40,15 +40,18 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     public static final Object TYPE_SetMessagesContent = new Object();
 
     @ProxyStandard
-    public interface MyProxy extends Proxy<ApplicationPresenter> {
+    interface MyProxy extends Proxy<ApplicationPresenter> {
     }
 
     private final HeaderPresenter headerPresenter;
     private final MessagesPresenter messagesPresenter;
 
     @Inject
-    public ApplicationPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-            final HeaderPresenter headerPresenter, final MessagesPresenter messagesPresenter) {
+    ApplicationPresenter(EventBus eventBus,
+                         MyView view,
+                         MyProxy proxy,
+                         HeaderPresenter headerPresenter,
+                         MessagesPresenter messagesPresenter) {
         super(eventBus, view, proxy);
 
         this.headerPresenter = headerPresenter;

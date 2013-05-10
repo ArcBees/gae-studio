@@ -16,8 +16,6 @@
 
 package com.arcbees.gaestudio.client.application.widget.message.ui;
 
-import static com.google.gwt.query.client.GQuery.$;
-
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.widget.message.Message;
@@ -35,8 +33,10 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
 
+import static com.google.gwt.query.client.GQuery.$;
+
 public class MessageWidget extends Composite {
-    public interface Binder extends UiBinder<Widget, MessageWidget> {
+    interface Binder extends UiBinder<Widget, MessageWidget> {
     }
 
     @UiField
@@ -58,8 +58,9 @@ public class MessageWidget extends Composite {
     };
 
     @Inject
-    public MessageWidget(final Binder binder, final MessageResources messageResources,
-                         @Assisted final Message message) {
+    MessageWidget(Binder binder,
+                  MessageResources messageResources,
+                  @Assisted Message message) {
         this.messageResources = messageResources;
         this.message = message;
 

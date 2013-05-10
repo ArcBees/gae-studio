@@ -26,7 +26,7 @@ import com.gwtplatform.mvp.client.View;
 
 public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
         implements DbOperationRecordProcessor, FiltersUiHandlers {
-    public interface MyView extends View, HasUiHandlers<FiltersUiHandlers> {
+    interface MyView extends View, HasUiHandlers<FiltersUiHandlers> {
         Filter getCurrentlyDisplayedFilter();
     }
 
@@ -39,12 +39,13 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
     private final TypeFilterPresenter typeFilterPresenter;
 
     @Inject
-    public FiltersPresenter(final EventBus eventBus, final MyView view,
-                            final RequestFilterPresenter requestFilterPresenter,
-                            final MethodFilterPresenter methodFilterPresenter,
-                            final TypeFilterPresenter typeFilterPresenter) {
+    FiltersPresenter(EventBus eventBus,
+                     MyView view,
+                     RequestFilterPresenter requestFilterPresenter,
+                     MethodFilterPresenter methodFilterPresenter,
+                     TypeFilterPresenter typeFilterPresenter) {
         super(eventBus, view);
-        
+
         getView().setUiHandlers(this);
 
         this.requestFilterPresenter = requestFilterPresenter;

@@ -34,6 +34,16 @@ public class EntityView extends ViewImpl implements EntityPresenter.MyView {
         initTable();
     }
 
+    @Override
+    public void showEntity(EntityDto entityDto) {
+        ParsedEntity parsedEntity = new ParsedEntity(entityDto);
+
+        List<KeyValuePair> keyValuePairs = keyValuePairBuilder.fromParsedEntity(parsedEntity);
+
+        table.setVisibleRangeAndClearData(new Range(0, keyValuePairs.size()), false);
+        table.setRowData(0, keyValuePairs);
+    }
+
     private void initTable() {
         TextColumn<KeyValuePair> keyColumn = new TextColumn<KeyValuePair>() {
             @Override
@@ -55,15 +65,5 @@ public class EntityView extends ViewImpl implements EntityPresenter.MyView {
         table.addColumn(valueColumn, "Value");
 
         root.setWidget(table);
-    }
-
-    @Override
-    public void showEntity(EntityDto entityDto) {
-        ParsedEntity parsedEntity = new ParsedEntity(entityDto);
-
-        List<KeyValuePair> keyValuePairs = keyValuePairBuilder.fromParsedEntity(parsedEntity);
-
-        table.setVisibleRangeAndClearData(new Range(0, keyValuePairs.size()), false);
-        table.setRowData(0, keyValuePairs);
     }
 }
