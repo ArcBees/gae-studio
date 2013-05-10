@@ -2,24 +2,15 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:cellview="urn:import:com.google.gwt.user.cellview.client">
     <ui:style>
-        .entityTable td, .entityTable td:hover {
-            border: none;
-            line-height: 16px;
-        }
-
         .heading {
-            margin-left: 40px;
         }
     </ui:style>
     <g:HTMLPanel ui:field="panel" visible="false">
 
         <div class="{style.heading}">
-            <h3>Entity :
-                <g:InlineLabel ui:field="entityName"/>
-            </h3>
-            <cellview:SimplePager ui:field="pager" location="LEFT"/>
+            <cellview:SimplePager ui:field="pager"/>
         </div>
 
-        <cellview:CellTable ui:field="entityTable" styleName="{style.entityTable}"/>
+        <cellview:CellTable ui:field="entityTable"/>
     </g:HTMLPanel>
 </ui:UiBinder>

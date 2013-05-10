@@ -1,3 +1,15 @@
 .cellTableCell {
     word-break: break-word;
 }
+
+.cellTableSelectedRow {
+    background-color: yellow;
+}
+
+.cellTableEvenRow {
+    background-color: red;
+}
+
+.cellTableOddRow {
+    background-color: blue;
+}

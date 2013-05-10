@@ -18,8 +18,11 @@ package com.arcbees.gaestudio.client.application.visualizer.ui;
 
 import javax.inject.Inject;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.logical.shared.AttachEvent;
+import com.google.gwt.query.client.Properties;
+import com.google.gwt.query.client.js.JsUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -64,7 +67,7 @@ public class JsonContainer extends Composite implements AttachEvent.Handler {
     }
 
     private void maybeShowHasMore() {
-        Integer maxHeight = Integer.valueOf($(jsonContent).css("max-height").replace("px", ""));
+        Integer maxHeight = (int) $(jsonContent).cur("max-height", true);
         more.setVisible($(jsonContent).height() == maxHeight);
     }
 
@@ -72,8 +75,12 @@ public class JsonContainer extends Composite implements AttachEvent.Handler {
         return stringify(json).replace("\n", "<br/>").replace("\\\"", "\"").replace(" ", "&nbsp;");
     }
 
-    private native String stringify(String json) /*-{
-        var jsonValue = JSON.parse(json);
-        return JSON.stringify(jsonValue.propertyMap, null, 4);
+    private String stringify(String json) {
+        Properties p = JsUtils.parseJSON(json);
+        return stringify(p.getJavaScriptObject("propertyMap"));
+    }
+
+    private native String stringify(JavaScriptObject jso) /*-{
+        return JSON.stringify(jso, null, 4);
     }-*/;
 }
