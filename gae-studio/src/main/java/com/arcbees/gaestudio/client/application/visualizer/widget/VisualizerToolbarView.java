@@ -21,6 +21,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
+import static com.google.gwt.query.client.GQuery.$;
+
 public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarUiHandlers> implements
         VisualizerToolbarPresenter.MyView {
     interface Binder extends UiBinder<Widget, VisualizerToolbarView> {
@@ -37,6 +39,8 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     private final ToolbarButton create;
     private final ToolbarButton edit;
     private final ToolbarButton delete;
+    private final String secondTableStyleName;
+    private final String secondTableHiddenStyleName;
 
     @Inject
     VisualizerToolbarView(Binder uiBinder,
@@ -48,6 +52,9 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
         this.myConstants = myConstants;
 
         initWidget(uiBinder.createAndBindUi(this));
+
+        secondTableStyleName = resources.styles().secondTable();
+        secondTableHiddenStyleName = resources.styles().secondTableHidden();
 
         refresh = createRefreshButton();
         create = createCreateButton();
@@ -85,6 +92,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
             @Override
             public void onClicked() {
                 getUiHandlers().refresh();
+                $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
             }
         });
     }
