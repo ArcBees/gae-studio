@@ -67,6 +67,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final String pagerStyleName;
     private final String pagerButtons;
     private final String pagerFixStyleName;
+    private final String firstTableRow;
 
     private Tooltip tooltip;
 
@@ -88,6 +89,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         this.pagerStyleName = appResources.styles().pager();
         this.pagerFixStyleName = appResources.styles().pagerFix();
         this.pagerButtons = "." + pagerStyleName + " tbody tr td img";
+        this.firstTableRow = "." + firstTableStyleName + " tbody tr";
 
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
@@ -277,7 +279,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     private void bindGwtQuery() {
-        $("." + firstTableStyleName + " tbody tr").click(new Function() {
+        $(firstTableRow).click(new Function() {
             @Override
             public void f() {
                 $("." + secondTableHiddenStyleName).removeClass(secondTableHiddenStyleName);
@@ -291,7 +293,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             }
         });
 
-        $("." + firstTableStyleName + " tbody tr").hover(new Function() {
+        $(firstTableRow).hover(new Function() {
                                                              @Override
                                                              public void f() {
                                                                  $("." + pagerStyleName).addClass(pagerFixStyleName);
