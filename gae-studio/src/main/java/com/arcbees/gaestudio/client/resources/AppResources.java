@@ -70,6 +70,16 @@ public interface AppResources extends ClientBundle {
         String noOverflow();
 
         String secondTableHidden();
+
+        String entityListPanel();
+
+        String entityListContainerSelected();
+
+        String backButton();
+
+        String entityDetailPanel();
+
+        String entityContainer();
     }
 
     public interface Sprites extends CssResource {
@@ -108,4 +118,8 @@ public interface AppResources extends ClientBundle {
     ImageResource edit();
 
     ImageResource create();
+
+    ImageResource back_rl();
+
+    ImageResource back_up();
 }

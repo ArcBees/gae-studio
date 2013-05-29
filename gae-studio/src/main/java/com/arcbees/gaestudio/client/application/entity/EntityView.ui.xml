@@ -4,6 +4,10 @@
         .root {
             overflow-x: auto;
         }
+
+        .root table {
+            width: 100%;
+        }
     </ui:style>
 
     <g:SimplePanel ui:field="root" addStyleNames="{style.root}"/>

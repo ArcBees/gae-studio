@@ -60,6 +60,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final VisualizerUiFactory visualizerUiFactory;
     private final EntityListTooltipResources entityListTooltipResources;
     private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
+    private final String entityContainerStyleName;
+    private final String entityListContainerSelectedStyleName;
     private final String firstTableStyleName;
     private final String secondTableStyleName;
     private final String secondTableFixStyleName;
@@ -82,6 +84,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         this.visualizerUiFactory = visualizerUiFactory;
         this.entityListTooltipResources = entityListTooltipResources;
 
+        this.entityContainerStyleName = appResources.styles().entityContainer();
+        this.entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
         this.firstTableStyleName = appResources.styles().firstTable();
         this.secondTableStyleName = appResources.styles().secondTable();
         this.secondTableFixStyleName = appResources.styles().secondTableFix();
@@ -283,6 +287,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             @Override
             public void f() {
                 $("." + secondTableHiddenStyleName).removeClass(secondTableHiddenStyleName);
+                $("." + entityContainerStyleName).addClass(entityListContainerSelectedStyleName);
             }
         });
 
