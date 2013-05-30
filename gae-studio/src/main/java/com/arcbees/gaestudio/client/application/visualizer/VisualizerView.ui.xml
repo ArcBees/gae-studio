@@ -21,9 +21,7 @@
                 <g:SimplePanel ui:field="entityDetailsPanel"
                                addStyleNames="{style.entityDetailsPanel} {resources.styles.secondTable}"/>
             </div>
-
         </div>
-
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 </ui:UiBinder>
