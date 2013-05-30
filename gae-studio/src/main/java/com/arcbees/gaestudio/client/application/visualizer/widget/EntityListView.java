@@ -64,11 +64,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final String entityListContainerSelectedStyleName;
     private final String firstTableStyleName;
     private final String secondTableStyleName;
-    private final String secondTableFixStyleName;
     private final String secondTableHiddenStyleName;
     private final String pagerStyleName;
     private final String pagerButtons;
-    private final String pagerFixStyleName;
     private final String firstTableRow;
 
     private Tooltip tooltip;
@@ -88,10 +86,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         this.entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
         this.firstTableStyleName = appResources.styles().firstTable();
         this.secondTableStyleName = appResources.styles().secondTable();
-        this.secondTableFixStyleName = appResources.styles().secondTableFix();
         this.secondTableHiddenStyleName = appResources.styles().secondTableHidden();
         this.pagerStyleName = appResources.styles().pager();
-        this.pagerFixStyleName = appResources.styles().pagerFix();
         this.pagerButtons = "." + pagerStyleName + " tbody tr td img";
         this.firstTableRow = "." + firstTableStyleName + " tbody tr";
 
@@ -297,20 +293,5 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
             }
         });
-
-        $(firstTableRow).hover(new Function() {
-                                   @Override
-                                   public void f() {
-                                       $("." + pagerStyleName).addClass(pagerFixStyleName);
-                                       $("." + secondTableStyleName).addClass(secondTableFixStyleName);
-                                   }
-                               }, new Function() {
-                                   @Override
-                                   public void f() {
-                                       $("." + pagerStyleName).removeClass(pagerFixStyleName);
-                                       $("." + secondTableStyleName).removeClass(secondTableFixStyleName);
-                                   }
-                               }
-        );
     }
 }

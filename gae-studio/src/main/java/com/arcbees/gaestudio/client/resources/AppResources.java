@@ -61,11 +61,7 @@ public interface AppResources extends ClientBundle {
 
         String secondTable();
 
-        String secondTableFix();
-
         String pager();
-
-        String pagerFix();
 
         String noOverflow();
 

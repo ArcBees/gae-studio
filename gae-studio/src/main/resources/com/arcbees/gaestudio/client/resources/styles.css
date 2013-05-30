@@ -307,17 +307,8 @@ body, * {
     cursor: pointer;
 }
 
-.secondTableFix table {
-    position: relative;
-    left: -1px;
-}
-
 .secondTableHidden {
     display: none;
-}
-
-.pagerFix{
-    padding-right: 1px;
 }
 
 .noOverflow{
