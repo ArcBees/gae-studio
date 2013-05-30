@@ -212,7 +212,7 @@ body, * {
 }
 
 .entityListPanel {
-    width: 100%;
+    width: 101%;
     position: absolute;
     left: 0%;
     top: 0;
@@ -236,7 +236,7 @@ body, * {
 }
 
 .entityListContainerSelected .entityListPanel{
-    left: -100%;
+    left: -101%;
 }
 
 .entityListContainerSelected .entityDetailPanel{
@@ -244,6 +244,7 @@ body, * {
 }
 
 .entityContainer {
+    height: 100%;
     width: 90%;
     float: left;
     display: block;
@@ -296,6 +297,10 @@ body, * {
 
 .firstTable {
     margin-right: -1px;
+}
+
+.firstTable thead tr:after {
+    content: "";
 }
 
 .firstTable tbody tr:hover {

@@ -16,7 +16,7 @@
 }
 
 .tooltip.top {
-    margin-top: -3px;
+    margin-top: 17px;
 }
 
 .tooltip.right {
@@ -24,7 +24,7 @@
 }
 
 .tooltip.bottom {
-    margin-top: 3px;
+    margin-top: -17px;
 }
 
 .tooltip.left {

@@ -257,7 +257,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 .withSelector("tbody tr")
                 .withResources(entityListTooltipResources)
                 .withContainer("element")
-                .withPlacement(TooltipOptions.TooltipPlacement.RIGHT)
+                .withPlacement(TooltipOptions.TooltipPlacement.BOTTOM)
                 .withAnimation(false)
                 .withOffset(new GQuery.Offset(0, 5))
                 .withContent(new TooltipOptions.TooltipWidgetContentProvider() {
@@ -278,11 +278,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         ParsedEntity parsedEntity = entityTable.getVisibleItem(relativeIndex);
         JsonContainer container = visualizerUiFactory.createJsonContainer(parsedEntity.getJson());
         container.addAttachHandler(container);
-        bindGwtQuery();
+        bindGwtQueryWidget();
         return container;
     }
 
-    private void bindGwtQuery() {
+    private void bindGwtQueryWidget() {
         $(firstTableRow).click(new Function() {
             @Override
             public void f() {
@@ -299,18 +299,18 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         });
 
         $(firstTableRow).hover(new Function() {
-                                                             @Override
-                                                             public void f() {
-                                                                 $("." + pagerStyleName).addClass(pagerFixStyleName);
-                                                                 $("." + secondTableStyleName).addClass(secondTableFixStyleName);
-                                                             }
-                                                         }, new Function() {
-                                                             @Override
-                                                             public void f() {
-                                                                 $("." + pagerStyleName).removeClass(pagerFixStyleName);
-                                                                 $("." + secondTableStyleName).removeClass(secondTableFixStyleName);
-                                                             }
-                                                         }
+                                   @Override
+                                   public void f() {
+                                       $("." + pagerStyleName).addClass(pagerFixStyleName);
+                                       $("." + secondTableStyleName).addClass(secondTableFixStyleName);
+                                   }
+                               }, new Function() {
+                                   @Override
+                                   public void f() {
+                                       $("." + pagerStyleName).removeClass(pagerFixStyleName);
+                                       $("." + secondTableStyleName).removeClass(secondTableFixStyleName);
+                                   }
+                               }
         );
     }
 }
