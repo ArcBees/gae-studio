@@ -41,6 +41,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     private final ToolbarButton delete;
     private final String secondTableStyleName;
     private final String secondTableHiddenStyleName;
+    private final String entityListContainerSelectedStyleName;
 
     @Inject
     VisualizerToolbarView(Binder uiBinder,
@@ -55,6 +56,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
         secondTableStyleName = resources.styles().secondTable();
         secondTableHiddenStyleName = resources.styles().secondTableHidden();
+        entityListContainerSelectedStyleName = resources.styles().entityListContainerSelected();
 
         refresh = createRefreshButton();
         create = createCreateButton();
@@ -93,6 +95,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
             public void onClicked() {
                 getUiHandlers().refresh();
                 $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
+                $("." + entityListContainerSelectedStyleName).removeClass(entityListContainerSelectedStyleName);
             }
         });
     }

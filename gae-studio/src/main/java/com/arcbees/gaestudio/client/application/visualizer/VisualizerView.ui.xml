@@ -2,26 +2,26 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:style>
-        .entityListPanel {
-            float: left;
-            margin: 0 15px;
-        }
-
         .root {
             overflow: visible;
         }
 
         .entityDetailsPanel {
-            margin-top: 47px;
+            width: 100%;
         }
     </ui:style>
     <g:HTMLPanel addStyleNames="{style.root} {resources.styles.noOverflow}">
         <g:SimplePanel ui:field="entityTypesSidebar" addStyleNames="{resources.styles.entityTypeSelector}"/>
         <g:SimplePanel ui:field="toolbar" addStyleNames="{resources.styles.hiddenOverlay}"/>
-        <g:SimplePanel ui:field="entityListPanel"
-                       addStyleNames="{style.entityListPanel} {resources.styles.hiddenOverlay}"/>
-        <g:SimplePanel ui:field="entityDetailsPanel"
-                       addStyleNames="{style.entityDetailsPanel} {resources.styles.secondTable}"/>
+        <div class="{resources.styles.entityContainer}">
+            <g:SimplePanel ui:field="entityListPanel"
+                           addStyleNames="{resources.styles.entityListPanel} {resources.styles.hiddenOverlay}"/>
+            <div class="{resources.styles.entityDetailPanel}">
+                <a class="{resources.styles.backButton}"></a>
+                <g:SimplePanel ui:field="entityDetailsPanel"
+                               addStyleNames="{style.entityDetailsPanel} {resources.styles.secondTable}"/>
+            </div>
+        </div>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

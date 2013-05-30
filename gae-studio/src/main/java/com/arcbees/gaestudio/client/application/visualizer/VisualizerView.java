@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.logical.shared.AttachEvent;
+import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -35,6 +36,8 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     SimplePanel entityDetailsPanel;
 
     private final String noOverflowStyleName;
+    private final String entityListContainerSelectedStyleName;
+    private final String backButtonStyleName;
 
     @Inject
     VisualizerView(Binder uiBinder,
@@ -42,6 +45,8 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
         initWidget(uiBinder.createAndBindUi(this));
 
         noOverflowStyleName = appResources.styles().noOverflow();
+        entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
+        backButtonStyleName = appResources.styles().backButton();
 
         asWidget().addAttachHandler(this);
     }
@@ -69,6 +74,13 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     }
 
     private void bindGwtQuery() {
+        $("." + backButtonStyleName).click(new Function() {
+            @Override
+            public void f() {
+                $("." + entityListContainerSelectedStyleName).removeClass(entityListContainerSelectedStyleName);
+            }
+        });
+
         $("." + noOverflowStyleName).css("overflow", "visible");
         $("." + noOverflowStyleName).parent("div").css("overflow", "visible");
         $("." + noOverflowStyleName).parents("div").css("overflow", "visible");
