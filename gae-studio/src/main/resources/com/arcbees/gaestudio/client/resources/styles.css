@@ -5,6 +5,10 @@ body, * {
     font-family: Arial, Abel, Verdana, sans-serif;
 }
 
+body{
+    background: #ebebeb;
+}
+
 .fleft {
     float: left;
 }
@@ -111,7 +115,7 @@ body, * {
     font-weight: bold;
     padding: 3px 8px;
     color: #2b2b2b;
-    background-color: rgba(85, 85, 85, 0.2);
+    background: rgb(241, 241, 241);
 
     display: block;
     overflow: hidden;
@@ -123,9 +127,8 @@ body, * {
     width: 100%;
     border-top: 1px solid rgba(255, 255, 255, 0.5);
     border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-    border-right: 1px solid transparent;
     text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.85);
-    background-color: transparent;
+    background-color: #e3e3e3;
 
     overflow: hidden;
     text-overflow: ellipsis;
@@ -145,7 +148,8 @@ body, * {
 .kindListElement:hover {
     border-top: 1px solid rgba(255, 255, 255, 0.3);
     border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-    background-color: rgba(210, 210, 210, 0.65);
+    background-color: #fdfdfd;
+
     cursor: pointer;
 }
 
@@ -182,26 +186,24 @@ body, * {
 .entityTypeSelector {
     float: left;
     width: 10%;
-    background-color: #ebebeb;
+    background: #e0e0e0;
     height: 100%;
     position: relative;
     z-index: 50;
     overflow-y: auto;
 
-    -webkit-box-shadow: 4px 0 10px -5px rgba(0, 0, 0, 0.7);
-    -moz-box-shadow: 4px 0 10px -5px rgba(0, 0, 0, 0.7);
-    box-shadow: 4px 0 10px -5px rgba(0, 0, 0, 0.7);
+    -webkit-box-shadow: 4px 7px 10px -5px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 4px 7px 10px -5px rgba(0, 0, 0, 0.7);
+    box-shadow: 4px 7px 10px -5px rgba(0, 0, 0, 0.7);
 }
 
 .entityTypeSelector > div {
-    border-right: 1px solid #dbdbdb;
     height: 100%;
 }
 
 .entityTypeSelectorEmpty {
     border-top: 1px solid rgba(255, 255, 255, 0.5);
     border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-    border-right: 1px solid transparent;
 
     text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.85);
     background-color: transparent;
@@ -228,6 +230,7 @@ body, * {
     position: absolute;
     left: 100%;
     top: 0;
+    background: #ebebeb;
 
     transition: left .5s ease;
     -webkit-transition: left .5s ease;
@@ -244,7 +247,7 @@ body, * {
 }
 
 .entityContainer {
-    height: 100%;
+    min-height: 95%;
     width: 90%;
     float: left;
     display: block;
@@ -259,7 +262,7 @@ body, * {
 
 .hiddenOverlay > div:before {
     height: 100%;
-    width: 100%;
+    width: 88%;
     background-color: inherit;
     display: block;
     position: absolute;
@@ -292,6 +295,9 @@ body, * {
 
 .firstTable, .secondTable {
     width: 100%;
+    -webkit-box-shadow: 0 4px 12px -4px #888888;
+    -moz-box-shadow: 0 4px 12px -4px #888888;
+    box-shadow: 0 4px 12px -4px #888888;
 }
 
 
