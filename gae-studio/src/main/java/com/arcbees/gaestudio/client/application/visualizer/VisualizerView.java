@@ -34,6 +34,8 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     SimplePanel entityTypesSidebar;
     @UiField
     SimplePanel entityDetailsPanel;
+    @UiField
+    SimplePanel entityDeletionPanel;
 
     private final String noOverflowStyleName;
     private final String entityListContainerSelectedStyleName;
@@ -69,6 +71,9 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
                 entityTypesSidebar.setWidget(content);
             } else if (slot == VisualizerPresenter.SLOT_ENTITY_DETAILS) {
                 entityDetailsPanel.setWidget(content);
+            }
+            } else if (slot == VisualizerPresenter.SLOT_ENTITY_DELETION) {
+                entityDeletionPanel.setWidget(content);
             }
         }
     }

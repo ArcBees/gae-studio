@@ -1,0 +1,83 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <ui:style>
+        .popup {
+            padding: 20px;
+            background-color: #EBEBEB;
+            border-radius: 10px;
+            z-index: 110;
+            -webkit-shadow: 0px 1px 16px -2px rgba(0, 0, 0, 0.35);
+            -moz-shadow: 0px 1px 16px -2px rgba(0, 0, 0, 0.35);
+            box-shadow: 0px 1px 16px -2px rgba(0, 0, 0, 0.35);
+        }
+
+        h3 {
+            margin: 0px 0px 10px 0px;
+        }
+
+        .glassPanel {
+            position: relative;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .popup button {
+            padding: 5px 10px 5px 10px;
+            border: 1px solid #355b87;
+
+            font-size: 1.3em;
+            background: #1397ff;
+            color: #EBEBEB;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.30);
+
+            -webkit-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
+            -moz-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
+            box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup button:hover {
+            color: #DFDFDF;
+            border: 1px solid #1a3160;
+            background: #21a8ff;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.50);
+
+            -webkit-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
+            box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
+        }
+
+        .popup button:active {
+            border: 1px solid #1c1c1c;
+            background: #104b74;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.75);
+
+            -webkit-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
+            -moz-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
+            box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
+        }
+
+        .buttonContainer {
+            margin: auto;
+            margin-top: 10px;
+        }
+
+        .buttonContainer button {
+            margin: 0px;
+        }
+
+        .buttonContainer > :first-child {
+            margin-right: 6px;
+        }
+    </ui:style>
+    <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{style.glassPanel}" modal="true"
+                  ui:field="popup" styleName="{style.popup}">
+        <g:HTMLPanel>
+            <h3>Are you sure you want to delete this Entity?</h3>
+            <div class="{style.buttonContainer}">
+                <g:Button ui:field="delete" styleName="{res.styles.toolbarButton}">Delete</g:Button>
+                <g:Button ui:field="cancel" styleName="{res.styles.toolbarButton}">Cancel</g:Button>
+            </div>
+        </g:HTMLPanel>
+    </g:PopupPanel>
+</ui:UiBinder>
