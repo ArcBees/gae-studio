@@ -4,7 +4,7 @@
     <ui:with type="com.arcbees.gaestudio.client.place.NameTokens" field="nameTokens"/>
     <ui:style>
         .header {
-            border-bottom: 1px solid #2D9AF5;
+            border-bottom: 1px solid #2d9af5;
             position: relative;
             line-height: 50px;
         }
@@ -23,7 +23,7 @@
 
         .menu > a {
             display: block;
-            color: #ffffff;
+            color: white;
             padding: 0 20px;
             text-decoration: none;
             font-size: 18px;
