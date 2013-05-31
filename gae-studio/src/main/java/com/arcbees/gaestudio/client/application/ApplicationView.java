@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.application;
 
+import javax.inject.Inject;
+
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -18,8 +20,6 @@ import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
-
-import javax.inject.Inject;
 
 import static com.google.gwt.query.client.GQuery.$;
 
