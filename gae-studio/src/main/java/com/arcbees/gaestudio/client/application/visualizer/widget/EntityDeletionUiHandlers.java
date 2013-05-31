@@ -12,5 +12,5 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 import com.gwtplatform.mvp.client.UiHandlers;
 
 interface EntityDeletionUiHandlers extends UiHandlers {
-    void saveEntity(String json);
+    void deleteEntity();
 }

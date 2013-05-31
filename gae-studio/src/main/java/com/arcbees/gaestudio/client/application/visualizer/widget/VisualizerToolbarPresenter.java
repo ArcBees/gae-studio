@@ -11,12 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.*;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;
@@ -25,6 +20,7 @@ import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -97,20 +93,23 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     @Override
     public void delete() {
         if (currentParsedEntity != null) {
-            final EntityDto entityDTO = currentParsedEntity.getEntityDTO();
-            dispatcher.execute(new DeleteEntityAction(entityDTO), new AsyncCallback<DeleteEntityResult>() {
-                @Override
-                public void onSuccess(DeleteEntityResult result) {
-                    onEntityDeletedSuccess(entityDTO);
-                }
-
-                @Override
-                public void onFailure(Throwable caught) {
-                    Message message = new Message(myConstants.errorEntityDelete(), MessageStyle.ERROR);
-                    DisplayMessageEvent.fire(VisualizerToolbarPresenter.this, message);
-                }
-            });
+            DeleteEntityEvent.fire(this, currentParsedEntity);
         }
+//        if (currentParsedEntity != null) {
+//            final EntityDto entityDTO = currentParsedEntity.getEntityDTO();
+//            dispatcher.execute(new DeleteEntityAction(entityDTO), new AsyncCallback<DeleteEntityResult>() {
+//                @Override
+//                public void onSuccess(DeleteEntityResult result) {
+//                    onEntityDeletedSuccess(entityDTO);
+//                }
+//
+//                @Override
+//                public void onFailure(Throwable caught) {
+//                    Message message = new Message(myConstants.errorEntityDelete(), MessageStyle.ERROR);
+//                    DisplayMessageEvent.fire(VisualizerToolbarPresenter.this, message);
+//                }
+//            });
+//        }
     }
 
     @Override

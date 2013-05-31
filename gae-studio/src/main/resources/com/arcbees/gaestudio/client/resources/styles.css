@@ -331,3 +331,8 @@ body{
 @sprite .backButton:hover{
     gwt-image: "back_rl";
 }
+
+@url whiteTextCursor whiteTextCursorResource;
+.json, .json:selection {
+    cursor: whiteTextCursor, text;
+}

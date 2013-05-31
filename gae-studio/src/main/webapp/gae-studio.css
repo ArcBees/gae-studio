@@ -1,2 +1,4 @@
 /* Add css rules here for your application. */
-
+.cursorBox{
+    cursor: url("WEB-INF/textcursor.png"), text;
+}

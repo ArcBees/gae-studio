@@ -58,8 +58,9 @@
         }
 
         .buttonContainer {
-            margin: auto;
-            margin-top: 10px;
+            padding-top: 5px;
+            width: 50%;
+            margin: 0 auto;
         }
 
         .buttonContainer button {

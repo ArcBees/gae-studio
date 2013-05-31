@@ -29,6 +29,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
@@ -151,12 +152,12 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @Override
     public void removeEntity(EntityDto entityDTO) {
-        int rowIndex = getRowIndex(entityDTO);
-
-        if (rowIndex >= 0) {
-            Range range = entityTable.getVisibleRange();
-            entityTable.setVisibleRangeAndClearData(range, true);
-        }
+//        int rowIndex = getRowIndex(entityDTO);
+//
+//        if (rowIndex >= 0) {
+//            Range range = entityTable.getVisibleRange();
+//            entityTable.setVisibleRangeAndClearData(range, true);
+//        }
     }
 
     private int getRowIndex(EntityDto entityDTO) {

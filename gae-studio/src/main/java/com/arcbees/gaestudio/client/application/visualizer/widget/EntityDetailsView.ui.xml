@@ -124,7 +124,7 @@
         <g:HTMLPanel>
             <h3>Entity Details</h3>
             <g:Label ui:field="error" styleName="{style.error}"/>
-            <g:TextArea ui:field="entityDetails" styleName="{style.json}"/>
+            <g:TextArea ui:field="entityDetails" styleName="{style.json} {res.styles.json}"/>
             <div class="{style.buttonContainer}">
                 <g:Button ui:field="save" styleName="{res.styles.toolbarButton}">Save</g:Button>
                 <g:Button ui:field="cancel" styleName="{res.styles.toolbarButton}">Cancel</g:Button>

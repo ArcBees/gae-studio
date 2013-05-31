@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.resources;
 
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.DataResource;
 import com.google.gwt.resources.client.ImageResource;
 
 public interface AppResources extends ClientBundle {
@@ -76,6 +77,8 @@ public interface AppResources extends ClientBundle {
         String entityDetailPanel();
 
         String entityContainer();
+
+        String json();
     }
 
     public interface Sprites extends CssResource {
@@ -118,4 +121,7 @@ public interface AppResources extends ClientBundle {
     ImageResource back_rl();
 
     ImageResource back_up();
+
+    @Source("textcursor.png")
+    DataResource whiteTextCursorResource();
 }

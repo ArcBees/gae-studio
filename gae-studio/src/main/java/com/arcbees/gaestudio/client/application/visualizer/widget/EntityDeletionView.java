@@ -9,10 +9,12 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
@@ -34,7 +36,8 @@ public class EntityDeletionView extends ViewWithUiHandlers<EntityDeletionUiHandl
         initWidget(uiBinder.createAndBindUi(this));
     }
 
-    private void displayEntityDeletion(String json) {
+    @Override
+    public void displayEntityDeletion(ParsedEntity p) {
         popup.center();
     }
 
@@ -43,10 +46,9 @@ public class EntityDeletionView extends ViewWithUiHandlers<EntityDeletionUiHandl
         popup.hide();
     }
 
-
     @UiHandler("delete")
-    void onEditClicked(ClickEvent event) {
-        getUiHandlers().saveEntity(" ");
+    void onDeletionClicked(ClickEvent event) {
+        getUiHandlers().deleteEntity();
     }
 
     @UiHandler("cancel")

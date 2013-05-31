@@ -20,6 +20,7 @@
                 <a class="{resources.styles.backButton}"></a>
                 <g:SimplePanel ui:field="entityDetailsPanel"
                                addStyleNames="{style.entityDetailsPanel} {resources.styles.secondTable}"/>
+                <g:SimplePanel ui:field="entityDeletionPanel" addStyleNames="{style.entityDetailsPanel}"/>
             </div>
         </div>
         <div class="{resources.styles.clear}"/>

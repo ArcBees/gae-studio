@@ -71,7 +71,6 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
                 entityTypesSidebar.setWidget(content);
             } else if (slot == VisualizerPresenter.SLOT_ENTITY_DETAILS) {
                 entityDetailsPanel.setWidget(content);
-            }
             } else if (slot == VisualizerPresenter.SLOT_ENTITY_DELETION) {
                 entityDeletionPanel.setWidget(content);
             }
