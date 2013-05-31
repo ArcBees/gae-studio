@@ -9,23 +9,18 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
-import java.util.ArrayList;
-
-import javax.annotation.Nullable;
-
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entities;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.*;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
 
 public class GetEntityKindsHandler extends AbstractActionHandler<GetEntityKindsAction, GetEntityKindsResult> {
     @Inject

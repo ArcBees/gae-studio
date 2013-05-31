@@ -9,10 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.sidebar;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
@@ -22,6 +18,9 @@ import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
+
+import javax.inject.Inject;
+import java.util.List;
 
 public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> implements SidebarUiHandlers {
     interface MyView extends View, HasUiHandlers<SidebarUiHandlers> {

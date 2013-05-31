@@ -9,13 +9,13 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.ui;
 
-import javax.inject.Inject;
-
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.inject.assistedinject.Assisted;
+
+import javax.inject.Inject;
 
 public class PropertyColumn extends TextColumn<ParsedEntity> {
     private String property;

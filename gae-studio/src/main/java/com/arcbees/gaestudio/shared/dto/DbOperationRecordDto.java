@@ -9,9 +9,9 @@
 
 package com.arcbees.gaestudio.shared.dto;
 
-import java.io.Serializable;
-
 import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
+
+import java.io.Serializable;
 
 public abstract class DbOperationRecordDto implements Serializable {
     private StackTraceElementDto callerStackTraceElement;

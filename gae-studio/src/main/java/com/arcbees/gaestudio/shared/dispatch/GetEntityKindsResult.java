@@ -9,9 +9,9 @@
 
 package com.arcbees.gaestudio.shared.dispatch;
 
-import java.util.ArrayList;
-
 import com.gwtplatform.dispatch.shared.Result;
+
+import java.util.ArrayList;
 
 public class GetEntityKindsResult implements Result {
     private ArrayList<java.lang.String> kinds;

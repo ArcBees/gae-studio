@@ -6,7 +6,7 @@
             overflow: visible;
         }
 
-        .entityDetailsPanel {
+        .entityPanel {
             width: 100%;
         }
     </ui:style>
@@ -19,8 +19,8 @@
             <div class="{resources.styles.entityDetailPanel}">
                 <a class="{resources.styles.backButton}"></a>
                 <g:SimplePanel ui:field="entityDetailsPanel"
-                               addStyleNames="{style.entityDetailsPanel} {resources.styles.secondTable}"/>
-                <g:SimplePanel ui:field="entityDeletionPanel" addStyleNames="{style.entityDetailsPanel}"/>
+                               addStyleNames="{style.entityPanel} {resources.styles.secondTable}"/>
+                <g:SimplePanel ui:field="entityDeletionPanel" addStyleNames="{style.entityPanel}"/>
             </div>
         </div>
         <div class="{resources.styles.clear}"/>

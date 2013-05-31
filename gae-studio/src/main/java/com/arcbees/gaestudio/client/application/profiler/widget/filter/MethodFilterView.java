@@ -9,8 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
-import java.util.Map;
-
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
@@ -21,6 +19,8 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+
+import java.util.Map;
 
 public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
         implements MethodFilterPresenter.MyView {

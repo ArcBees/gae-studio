@@ -9,8 +9,6 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
-import java.util.logging.Logger;
-
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -22,6 +20,8 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
+
+import java.util.logging.Logger;
 
 public class DeleteEntityHandler extends AbstractActionHandler<DeleteEntityAction, DeleteEntityResult> {
     @Inject

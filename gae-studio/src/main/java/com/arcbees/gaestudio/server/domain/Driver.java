@@ -9,12 +9,11 @@
 
 package com.arcbees.gaestudio.server.domain;
 
-import java.util.Date;
-
-import javax.persistence.Embedded;
-
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+
+import javax.persistence.Embedded;
+import java.util.Date;
 
 @Entity
 public class Driver {

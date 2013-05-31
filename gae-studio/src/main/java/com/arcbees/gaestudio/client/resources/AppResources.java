@@ -78,7 +78,11 @@ public interface AppResources extends ClientBundle {
 
         String entityContainer();
 
-        String json();
+        String popup();
+
+        String glassPanel();
+
+        String cursorWhite();
     }
 
     public interface Sprites extends CssResource {

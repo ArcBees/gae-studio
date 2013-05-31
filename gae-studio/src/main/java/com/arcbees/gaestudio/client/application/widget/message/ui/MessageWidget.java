@@ -9,8 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.widget.message.ui;
 
-import javax.inject.Inject;
-
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageCloseDelay;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -19,12 +17,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.InlineHTML;
-import com.google.gwt.user.client.ui.InlineLabel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
 import com.google.inject.assistedinject.Assisted;
+
+import javax.inject.Inject;
 
 import static com.google.gwt.query.client.GQuery.$;
 

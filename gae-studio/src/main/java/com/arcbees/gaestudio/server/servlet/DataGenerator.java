@@ -9,16 +9,6 @@
 
 package com.arcbees.gaestudio.server.servlet;
 
-import java.io.IOException;
-import java.util.Date;
-import java.util.Random;
-import java.util.logging.Logger;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.arcbees.gaestudio.server.domain.Car;
 import com.arcbees.gaestudio.server.domain.Currency;
 import com.arcbees.gaestudio.server.domain.Driver;
@@ -29,6 +19,15 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Random;
+import java.util.logging.Logger;
 
 @Singleton
 public class DataGenerator extends HttpServlet {

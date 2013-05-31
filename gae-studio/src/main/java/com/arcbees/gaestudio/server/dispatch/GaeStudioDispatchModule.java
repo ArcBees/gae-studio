@@ -9,15 +9,7 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
-import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
-import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
-import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
+import com.arcbees.gaestudio.shared.dispatch.*;
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
 
 public class GaeStudioDispatchModule extends HandlerModule {

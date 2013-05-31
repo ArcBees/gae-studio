@@ -9,8 +9,6 @@
 
 package com.arcbees.gaestudio.server.recorder;
 
-import javax.inject.Singleton;
-
 import com.arcbees.gaestudio.server.guice.RequestIdProvider;
 import com.arcbees.gaestudio.server.recorder.authentication.Listener;
 import com.arcbees.gaestudio.server.recorder.authentication.ListenerProvider;
@@ -23,6 +21,8 @@ import com.google.inject.Provides;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.RequestScoped;
+
+import javax.inject.Singleton;
 
 // TODO externalize magic strings
 public class GaeStudioRecorderModule extends AbstractModule {

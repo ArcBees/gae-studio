@@ -9,8 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.entity;
 
-import javax.inject.Inject;
-
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
@@ -29,10 +27,9 @@ import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
-import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
+import javax.inject.Inject;
+
+import static com.arcbees.gaestudio.client.place.ParameterTokens.*;
 
 public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPresenter.MyProxy> {
     interface MyView extends View {

@@ -12,18 +12,13 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntityEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
-import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
-import com.arcbees.gaestudio.shared.dispatch.UpdateEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -66,7 +61,7 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
 
     @Override
     public void deleteEntity() {
-                if (currentParsedEntity != null) {
+        if (currentParsedEntity != null) {
             final EntityDto entityDTO = currentParsedEntity.getEntityDTO();
             dispatcher.execute(new DeleteEntityAction(entityDTO), new AsyncCallback<DeleteEntityResult>() {
                 @Override

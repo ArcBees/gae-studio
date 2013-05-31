@@ -9,9 +9,9 @@
 
 package com.arcbees.gaestudio.shared.dispatch;
 
-import java.util.ArrayList;
-
 import com.gwtplatform.dispatch.shared.Result;
+
+import java.util.ArrayList;
 
 public class GetNewDbOperationRecordsResult implements Result {
     private ArrayList<com.arcbees.gaestudio.shared.dto.DbOperationRecordDto> records;

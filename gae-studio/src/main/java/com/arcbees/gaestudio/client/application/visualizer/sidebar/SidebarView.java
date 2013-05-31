@@ -9,10 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.sidebar;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.query.client.Function;
@@ -24,6 +20,9 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+
+import javax.inject.Inject;
+import java.util.List;
 
 import static com.google.gwt.query.client.GQuery.$;
 

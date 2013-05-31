@@ -11,15 +11,17 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
-public class EntityDeletionView extends ViewWithUiHandlers<EntityDeletionUiHandlers>
+public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUiHandlers>
         implements EntityDeletionPresenter.MyView {
     interface Binder extends UiBinder<Widget, EntityDeletionView> {
     }
@@ -32,7 +34,8 @@ public class EntityDeletionView extends ViewWithUiHandlers<EntityDeletionUiHandl
     Button cancel;
 
     @Inject
-    EntityDeletionView(Binder uiBinder) {
+    EntityDeletionView(Binder uiBinder, EventBus eventBus) {
+        super(eventBus);
         initWidget(uiBinder.createAndBindUi(this));
     }
 

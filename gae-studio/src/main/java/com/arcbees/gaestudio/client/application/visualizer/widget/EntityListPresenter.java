@@ -9,15 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.*;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
@@ -38,10 +31,10 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.arcbees.gaestudio.client.place.ParameterTokens.*;
 
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView> implements
         EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler,
