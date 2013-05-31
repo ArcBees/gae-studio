@@ -31,7 +31,7 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
         implements DeleteEntityEvent.DeleteEntityHandler, EntityDeletionUiHandlers {
 
     interface MyView extends View, HasUiHandlers<EntityDeletionUiHandlers> {
-        void displayEntityDeletion(ParsedEntity p);
+        void displayEntityDeletion(ParsedEntity parsedEntity);
 
         void hide();
     }
