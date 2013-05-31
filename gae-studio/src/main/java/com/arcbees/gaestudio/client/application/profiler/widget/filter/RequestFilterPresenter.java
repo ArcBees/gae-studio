@@ -9,6 +9,11 @@
 
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.client.application.profiler.event.FilterValueSelectedEvent;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
@@ -17,11 +22,6 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class RequestFilterPresenter extends PresenterWidget<RequestFilterPresenter.MyView>
         implements DbOperationRecordProcessor, RequestFilterUiHandlers {

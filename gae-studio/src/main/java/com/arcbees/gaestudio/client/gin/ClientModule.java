@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.gin;
 
+import javax.inject.Singleton;
+
 import com.arcbees.gaestudio.client.application.ApplicationModule;
 import com.arcbees.gaestudio.client.formatters.BytesFormatter;
 import com.arcbees.gaestudio.client.place.NameTokens;
@@ -23,8 +25,6 @@ import com.gwtplatform.mvp.client.annotations.UnauthorizedPlace;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import com.gwtplatform.mvp.client.gin.DefaultModule;
 import com.gwtplatform.mvp.client.proxy.DefaultPlaceManager;
-
-import javax.inject.Singleton;
 
 public class ClientModule extends AbstractPresenterModule {
     @Override

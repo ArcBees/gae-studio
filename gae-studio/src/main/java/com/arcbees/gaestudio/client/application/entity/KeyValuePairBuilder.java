@@ -9,13 +9,13 @@
 
 package com.arcbees.gaestudio.client.application.entity;
 
-import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.google.common.collect.Lists;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
+import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.google.common.collect.Lists;
 
 public class KeyValuePairBuilder {
     public List<KeyValuePair> fromParsedEntity(ParsedEntity parsedEntity) {

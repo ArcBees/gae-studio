@@ -9,6 +9,9 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.ui.JsonContainer;
 import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
@@ -38,9 +41,6 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.google.gwt.query.client.GQuery.$;
 

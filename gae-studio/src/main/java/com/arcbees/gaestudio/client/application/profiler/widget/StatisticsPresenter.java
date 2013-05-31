@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
+import java.util.HashSet;
+
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
@@ -16,8 +18,6 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
-
-import java.util.HashSet;
 
 public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyView>
         implements DbOperationRecordProcessor {

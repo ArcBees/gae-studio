@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.ui;
 
+import javax.inject.Inject;
+
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -17,8 +19,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.assistedinject.Assisted;
-
-import javax.inject.Inject;
 
 public class ToolbarButton extends Composite {
     interface Binder extends UiBinder<Widget, ToolbarButton> {

@@ -9,12 +9,12 @@
 
 package com.arcbees.gaestudio.client.application.widget.message;
 
+import javax.inject.Singleton;
+
 import com.arcbees.gaestudio.client.application.widget.message.ui.MessageResources;
 import com.arcbees.gaestudio.client.application.widget.message.ui.MessageWidgetFactory;
 import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
-
-import javax.inject.Singleton;
 
 public class MessagesModule extends AbstractPresenterModule {
     @Override

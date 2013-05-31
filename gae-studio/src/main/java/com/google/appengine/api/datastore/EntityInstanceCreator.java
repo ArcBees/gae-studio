@@ -9,9 +9,9 @@
 
 package com.google.appengine.api.datastore;
 
-import com.google.gson.InstanceCreator;
-
 import java.lang.reflect.Type;
+
+import com.google.gson.InstanceCreator;
 
 public class EntityInstanceCreator implements InstanceCreator<Entity> {
     @Override

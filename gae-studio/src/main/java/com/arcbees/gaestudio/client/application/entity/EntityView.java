@@ -9,6 +9,10 @@
 
 package com.arcbees.gaestudio.client.application.entity;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -19,9 +23,6 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.view.client.Range;
 import com.gwtplatform.mvp.client.ViewImpl;
-
-import javax.inject.Inject;
-import java.util.List;
 
 public class EntityView extends ViewImpl implements EntityPresenter.MyView {
     interface Binder extends UiBinder<SimplePanel, EntityView> {

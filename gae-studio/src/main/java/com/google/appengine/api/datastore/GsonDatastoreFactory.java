@@ -9,14 +9,14 @@
 
 package com.google.appengine.api.datastore;
 
+import java.lang.reflect.Modifier;
+import java.util.Map;
+
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.storage.onestore.v3.OnestoreEntity;
-
-import java.lang.reflect.Modifier;
-import java.util.Map;
 
 public class GsonDatastoreFactory {
     private static ExclusionStrategy entityProtoExclusionStrategy = new ExclusionStrategy() {

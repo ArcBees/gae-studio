@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import java.util.Map;
+
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityResult;
@@ -17,8 +19,6 @@ import com.google.appengine.api.datastore.*;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
-
-import java.util.Map;
 
 public class GetEmptyKindEntityHandler extends
         AbstractActionHandler<GetEmptyKindEntityAction, GetEmptyKindEntityResult> {

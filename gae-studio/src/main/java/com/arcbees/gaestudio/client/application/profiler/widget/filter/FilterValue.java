@@ -9,10 +9,10 @@
 
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 
 public class FilterValue<T> {
     private T key;

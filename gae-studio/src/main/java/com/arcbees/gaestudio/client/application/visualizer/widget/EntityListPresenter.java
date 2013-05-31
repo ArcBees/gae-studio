@@ -9,6 +9,9 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.*;
 import com.arcbees.gaestudio.client.place.NameTokens;
@@ -30,9 +33,6 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.arcbees.gaestudio.client.place.ParameterTokens.*;
 

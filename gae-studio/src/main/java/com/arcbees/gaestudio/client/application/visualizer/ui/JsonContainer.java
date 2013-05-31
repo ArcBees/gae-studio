@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.ui;
 
+import javax.inject.Inject;
+
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.logical.shared.AttachEvent;
@@ -18,8 +20,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.assistedinject.Assisted;
-
-import javax.inject.Inject;
 
 import static com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import static com.google.gwt.query.client.GQuery.$;

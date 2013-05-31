@@ -9,6 +9,11 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
+
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsResult;
@@ -17,11 +22,6 @@ import com.google.appengine.api.memcache.MemcacheService;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
 
 // TODO externalize magic strings
 // TODO add logging

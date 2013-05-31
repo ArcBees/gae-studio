@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.entity;
 
+import javax.inject.Inject;
+
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
@@ -26,8 +28,6 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-
-import javax.inject.Inject;
 
 import static com.arcbees.gaestudio.client.place.ParameterTokens.*;
 

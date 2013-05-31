@@ -9,12 +9,12 @@
 
 package com.google.appengine.api.datastore;
 
-import com.google.gson.*;
-
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import com.google.gson.*;
 
 public class PropertiesDeserializer implements JsonDeserializer<Map> {
     @Override

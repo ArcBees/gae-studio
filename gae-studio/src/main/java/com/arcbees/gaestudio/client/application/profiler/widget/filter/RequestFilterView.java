@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
+import java.util.List;
+
 import com.arcbees.gaestudio.client.application.profiler.ui.RequestFilterCell;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -19,8 +21,6 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
-
-import java.util.List;
 
 public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandlers>
         implements RequestFilterPresenter.MyView {

@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import javax.inject.Inject;
+
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoResult;
@@ -18,8 +20,6 @@ import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.google.appengine.api.datastore.*;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
-
-import javax.inject.Inject;
 
 public class GetEntityDtoHandler extends AbstractActionHandler<GetEntityDtoAction, GetEntityDtoResult> {
     @Inject

@@ -9,13 +9,13 @@
 
 package com.arcbees.gaestudio.client.application.profiler;
 
+import javax.inject.Singleton;
+
 import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerWidgetModule;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterModule;
 import com.arcbees.gaestudio.client.formatters.ObjectifyRecordFormatter;
 import com.arcbees.gaestudio.client.formatters.RecordFormatter;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
-
-import javax.inject.Singleton;
 
 public class ProfilerModule extends AbstractPresenterModule {
     @Override
