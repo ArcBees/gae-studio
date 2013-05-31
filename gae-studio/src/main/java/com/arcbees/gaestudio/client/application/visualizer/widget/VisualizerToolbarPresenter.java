@@ -95,21 +95,6 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
         if (currentParsedEntity != null) {
             DeleteEntityEvent.fire(this, currentParsedEntity);
         }
-//        if (currentParsedEntity != null) {
-//            final EntityDto entityDTO = currentParsedEntity.getEntityDTO();
-//            dispatcher.execute(new DeleteEntityAction(entityDTO), new AsyncCallback<DeleteEntityResult>() {
-//                @Override
-//                public void onSuccess(DeleteEntityResult result) {
-//                    onEntityDeletedSuccess(entityDTO);
-//                }
-//
-//                @Override
-//                public void onFailure(Throwable caught) {
-//                    Message message = new Message(myConstants.errorEntityDelete(), MessageStyle.ERROR);
-//                    DisplayMessageEvent.fire(VisualizerToolbarPresenter.this, message);
-//                }
-//            });
-//        }
     }
 
     @Override
@@ -136,11 +121,5 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(EntitySelectedEvent.getType(), this);
         addRegisteredHandler(EntityPageLoadedEvent.getType(), this);
-    }
-
-    private void onEntityDeletedSuccess(EntityDto entityDTO) {
-        Message message = new Message(myConstants.successEntityDelete(), MessageStyle.SUCCESS);
-        DisplayMessageEvent.fire(this, message);
-        EntityDeletedEvent.fire(this, entityDTO);
     }
 }

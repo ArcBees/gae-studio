@@ -49,6 +49,7 @@ public class EntityDeletionView extends ViewWithUiHandlers<EntityDeletionUiHandl
     @UiHandler("delete")
     void onDeletionClicked(ClickEvent event) {
         getUiHandlers().deleteEntity();
+        hide();
     }
 
     @UiHandler("cancel")
