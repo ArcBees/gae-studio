@@ -9,7 +9,14 @@
 
 package com.arcbees.gaestudio.server.recorder;
 
-import com.google.apphosting.api.DatastorePb.*;
+import com.google.apphosting.api.DatastorePb.DeleteRequest;
+import com.google.apphosting.api.DatastorePb.DeleteResponse;
+import com.google.apphosting.api.DatastorePb.GetRequest;
+import com.google.apphosting.api.DatastorePb.GetResponse;
+import com.google.apphosting.api.DatastorePb.PutRequest;
+import com.google.apphosting.api.DatastorePb.PutResponse;
+import com.google.apphosting.api.DatastorePb.Query;
+import com.google.apphosting.api.DatastorePb.QueryResult;
 
 public interface DbOperationRecorder {
     void recordDbOperation(DeleteRequest request, DeleteResponse response, int executionTimeMs);

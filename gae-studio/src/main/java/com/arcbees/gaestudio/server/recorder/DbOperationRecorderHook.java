@@ -14,7 +14,14 @@ import java.util.logging.Logger;
 import com.google.apphosting.api.ApiProxy.ApiProxyException;
 import com.google.apphosting.api.ApiProxy.Delegate;
 import com.google.apphosting.api.ApiProxy.Environment;
-import com.google.apphosting.api.DatastorePb.*;
+import com.google.apphosting.api.DatastorePb.DeleteRequest;
+import com.google.apphosting.api.DatastorePb.DeleteResponse;
+import com.google.apphosting.api.DatastorePb.GetRequest;
+import com.google.apphosting.api.DatastorePb.GetResponse;
+import com.google.apphosting.api.DatastorePb.PutRequest;
+import com.google.apphosting.api.DatastorePb.PutResponse;
+import com.google.apphosting.api.DatastorePb.Query;
+import com.google.apphosting.api.DatastorePb.QueryResult;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 

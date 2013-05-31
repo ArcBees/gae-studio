@@ -12,7 +12,11 @@ package com.arcbees.gaestudio.server.recorder;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import com.google.apphosting.api.ApiProxy.*;
+import com.google.apphosting.api.ApiProxy.ApiConfig;
+import com.google.apphosting.api.ApiProxy.ApiProxyException;
+import com.google.apphosting.api.ApiProxy.Delegate;
+import com.google.apphosting.api.ApiProxy.Environment;
+import com.google.apphosting.api.ApiProxy.LogRecord;
 
 public class BaseHook implements Delegate<Environment> {
     private final Delegate<Environment> baseDelegate;

@@ -11,7 +11,12 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.application.visualizer.event.*;
+import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntityEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;

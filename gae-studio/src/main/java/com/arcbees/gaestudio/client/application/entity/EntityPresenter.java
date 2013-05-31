@@ -29,7 +29,10 @@ import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
-import static com.arcbees.gaestudio.client.place.ParameterTokens.*;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
 public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPresenter.MyProxy> {
     interface MyView extends View {
