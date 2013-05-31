@@ -1,5 +1,7 @@
-@eval blue com.arcbees.gaestudio.client.resources.Colors.blue;
-@eval lightGrey com.arcbees.gaestudio.client.resources.Colors.lightGrey;
+@eval colorBlue com.arcbees.gaestudio.client.resources.Colors.colorBlue;
+@eval colorLightGrey com.arcbees.gaestudio.client.resources.Colors.colorLightGrey;
+@eval colorLightGreyEB com.arcbees.gaestudio.client.resources.Colors.colorLightGreyEB;
+@eval colorGrey2B com.arcbees.gaestudio.client.resources.Colors.colorGrey2B;
 
 .cellTableCell {
     word-break: break-word;
@@ -26,7 +28,7 @@
 }
 
 .cellTableEvenRow {
-    background-color: #ebebeb;
+    background-color: colorLightGreyEB;
 }
 
 .cellTableCell {
@@ -53,8 +55,8 @@
 }
 
 .cellTableSelectedRow .cellTableCell {
-    background-color: blue;
-    color: lightGrey;
+    background-color: colorBlue;
+    color: colorLightGrey;
     text-shadow: 1px 1px 1px rgba(27, 27, 27, 0.55);
 
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -63,13 +65,13 @@
 }
 
 .cellTableHeader{
-    color: #2b2b2b;
+    color: colorGrey2B;
     font-size: 15px;
     font-weight: bold;
     line-height: 30px;
 
     padding: 3px 8px;
-    background-color: #DCDCDC;
+    background-color: #dcdcdc;
 
     overflow: hidden;
     text-overflow: ellipsis;
