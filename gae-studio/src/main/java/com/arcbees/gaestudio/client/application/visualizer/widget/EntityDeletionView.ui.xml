@@ -21,7 +21,7 @@
         }
     </ui:style>
     <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{res.styles.glassPanel}" modal="true"
-                  ui:field="popup" styleName="{res.styles.popup}">
+                  styleName="{res.styles.popup}" autoHideEnabled="true">
         <g:HTMLPanel>
             <h3>Are you sure you want to delete this Entity?</h3>
             <div class="{style.buttonContainer}">

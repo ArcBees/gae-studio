@@ -29,8 +29,6 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
     @UiField
     Button delete;
     @UiField
-    PopupPanel popup;
-    @UiField
     Button cancel;
 
     @Inject
@@ -41,22 +39,17 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
 
     @Override
     public void displayEntityDeletion(ParsedEntity p) {
-        popup.center();
-    }
-
-    @Override
-    public void hide() {
-        popup.hide();
+        asPopupPanel().center();
     }
 
     @UiHandler("delete")
     void onDeletionClicked(ClickEvent event) {
         getUiHandlers().deleteEntity();
-        hide();
+        asPopupPanel().hide();
     }
 
     @UiHandler("cancel")
     void onCancelClicked(ClickEvent event) {
-        hide();
+        asPopupPanel().hide();
     }
 }

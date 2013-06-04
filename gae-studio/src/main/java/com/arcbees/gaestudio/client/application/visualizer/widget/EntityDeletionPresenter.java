@@ -29,7 +29,6 @@ import com.gwtplatform.mvp.client.View;
 
 public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPresenter.MyView>
         implements DeleteEntityEvent.DeleteEntityHandler, EntityDeletionUiHandlers {
-
     interface MyView extends View, HasUiHandlers<EntityDeletionUiHandlers> {
         void displayEntityDeletion(ParsedEntity parsedEntity);
 
