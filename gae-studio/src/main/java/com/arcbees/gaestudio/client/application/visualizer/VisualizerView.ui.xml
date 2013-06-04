@@ -8,6 +8,7 @@
 
         .entityPanel {
             width: 100%;
+            clear: both;
         }
     </ui:style>
     <g:HTMLPanel addStyleNames="{style.root} {resources.styles.noOverflow}">
@@ -18,6 +19,9 @@
                            addStyleNames="{resources.styles.entityListPanel} {resources.styles.hiddenOverlay}"/>
             <div class="{resources.styles.entityDetailPanel}">
                 <a class="{resources.styles.backButton}"></a>
+                <p class="{resources.styles.isDisplaying}">
+                    Displaying entity <b class="{resources.styles.idBold}">ID #</b> of the kind <b class="{resources.styles.kindBold}">Lol</b>
+                </p>
                 <g:SimplePanel ui:field="entityDetailsPanel"
                                addStyleNames="{style.entityPanel} {resources.styles.secondTable}"/>
                 <g:SimplePanel ui:field="entityDeletionPanel" addStyleNames="{style.entityPanel}"/>
