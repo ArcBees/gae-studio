@@ -21,5 +21,8 @@ public class VisualizerWidgetModule extends AbstractPresenterModule {
 
         bind(EntityDetailsPresenter.class).asEagerSingleton();
         bind(EntityDetailsPresenter.MyView.class).to(EntityDetailsView.class);
+
+        bind(EntityDeletionPresenter.class).asEagerSingleton();
+        bind(EntityDeletionPresenter.MyView.class).to(EntityDeletionView.class);
     }
 }

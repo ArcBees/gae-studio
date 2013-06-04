@@ -11,8 +11,8 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntityEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
@@ -20,8 +20,6 @@ import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntities
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -97,19 +95,7 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     @Override
     public void delete() {
         if (currentParsedEntity != null) {
-            final EntityDto entityDTO = currentParsedEntity.getEntityDTO();
-            dispatcher.execute(new DeleteEntityAction(entityDTO), new AsyncCallback<DeleteEntityResult>() {
-                @Override
-                public void onSuccess(DeleteEntityResult result) {
-                    onEntityDeletedSuccess(entityDTO);
-                }
-
-                @Override
-                public void onFailure(Throwable caught) {
-                    Message message = new Message(myConstants.errorEntityDelete(), MessageStyle.ERROR);
-                    DisplayMessageEvent.fire(VisualizerToolbarPresenter.this, message);
-                }
-            });
+            DeleteEntityEvent.fire(this, currentParsedEntity);
         }
     }
 
@@ -137,11 +123,5 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(EntitySelectedEvent.getType(), this);
         addRegisteredHandler(EntityPageLoadedEvent.getType(), this);
-    }
-
-    private void onEntityDeletedSuccess(EntityDto entityDTO) {
-        Message message = new Message(myConstants.successEntityDelete(), MessageStyle.SUCCESS);
-        DisplayMessageEvent.fire(this, message);
-        EntityDeletedEvent.fire(this, entityDTO);
     }
 }
