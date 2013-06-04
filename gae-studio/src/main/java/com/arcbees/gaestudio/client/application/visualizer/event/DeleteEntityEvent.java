@@ -16,14 +16,42 @@ import com.google.gwt.event.shared.HasHandlers;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class DeleteEntityEvent extends GwtEvent<DeleteEntityEvent.DeleteEntityHandler> {
+    public interface DeleteEntityHandler extends EventHandler {
+        public void onDeleteEntity(DeleteEntityEvent event);
+    }
+
+    public interface HasDeleteEntityHandlers extends HasHandlers {
+        HandlerRegistration addDeleteEntityHandler(DeleteEntityHandler handler);
+    }
+
+    private static final Type<DeleteEntityHandler> TYPE = new Type<DeleteEntityHandler>();
+
     private ParsedEntity parsedEntity;
 
     protected DeleteEntityEvent() {
         // Possibly for serialization.
     }
 
+    @Override
+    protected void dispatch(DeleteEntityHandler handler) {
+        handler.onDeleteEntity(this);
+    }
+
+    @Override
+    public Type<DeleteEntityHandler> getAssociatedType() {
+        return TYPE;
+    }
+
     public DeleteEntityEvent(ParsedEntity parsedEntity) {
         this.parsedEntity = parsedEntity;
+    }
+
+    public ParsedEntity getParsedEntity() {
+        return parsedEntity;
+    }
+
+    public static Type<DeleteEntityHandler> getType() {
+        return TYPE;
     }
 
     public static void fire(HasHandlers source, ParsedEntity parsedEntity) {
@@ -33,33 +61,5 @@ public class DeleteEntityEvent extends GwtEvent<DeleteEntityEvent.DeleteEntityHa
 
     public static void fire(HasHandlers source, DeleteEntityEvent eventInstance) {
         source.fireEvent(eventInstance);
-    }
-
-    public interface HasDeleteEntityHandlers extends HasHandlers {
-        HandlerRegistration addDeleteEntityHandler(DeleteEntityHandler handler);
-    }
-
-    public interface DeleteEntityHandler extends EventHandler {
-        public void onDeleteEntity(DeleteEntityEvent event);
-    }
-
-    private static final Type<DeleteEntityHandler> TYPE = new Type<DeleteEntityHandler>();
-
-    public static Type<DeleteEntityHandler> getType() {
-        return TYPE;
-    }
-
-    @Override
-    public Type<DeleteEntityHandler> getAssociatedType() {
-        return TYPE;
-    }
-
-    @Override
-    protected void dispatch(DeleteEntityHandler handler) {
-        handler.onDeleteEntity(this);
-    }
-
-    public ParsedEntity getParsedEntity() {
-        return parsedEntity;
     }
 }
