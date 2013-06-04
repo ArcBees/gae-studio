@@ -33,8 +33,6 @@ public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHa
     @UiField
     Button save;
     @UiField
-    PopupPanel popup;
-    @UiField
     Button cancel;
     @UiField
     Label error;
@@ -47,14 +45,9 @@ public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHa
 
     @Override
     public void displayEntityDetails(String json) {
+        asPopupPanel().center();
         error.setVisible(false);
-        popup.center();
         entityDetails.setText(json);
-    }
-
-    @Override
-    public void hide() {
-        popup.hide();
     }
 
     @Override
@@ -70,6 +63,6 @@ public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHa
 
     @UiHandler("cancel")
     void onCancelClicked(ClickEvent event) {
-        hide();
+        asPopupPanel().hide();
     }
 }

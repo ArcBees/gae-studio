@@ -69,7 +69,7 @@
         }
     </ui:style>
     <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{res.styles.glassPanel}" modal="true"
-                  ui:field="popup" styleName="{res.styles.popup}"  autoHideEnabled="true">
+                  styleName="{res.styles.popup}"  autoHideEnabled="true">
         <g:HTMLPanel>
             <h3>Entity Details</h3>
             <g:Label ui:field="error" styleName="{style.error}"/>
