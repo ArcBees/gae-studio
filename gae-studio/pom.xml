@@ -3,36 +3,30 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>com.arcbees.gaestudio</groupId>
-        <artifactId>gae-studio-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-
+    <groupId>com.arcbees.gaestudio</groupId>
     <artifactId>gae-studio</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>GAE Studio</name>
 
     <properties>
         <!-- client -->
         <gwt.version>2.5.1</gwt.version>
-        <gwtp.version>1.0-RC-3.1</gwtp.version>
-        <gwtquery.version>1.3.1</gwtquery.version>
+        <gwtp.version>1.0</gwtp.version>
+        <gwtquery.version>1.3.3</gwtquery.version>
         <gin.version>2.0.0</gin.version>
-        <gwt.style>DETAILED</gwt.style>
         <gquery-plugins.version>1.0</gquery-plugins.version>
 
         <!-- server -->
-        <gae.version>1.7.7.1</gae.version>
+        <gae.version>1.8.1</gae.version>
         <servlet-api.version>2.5</servlet-api.version>
         <guava.version>14.0.1</guava.version>
         <gson.version>2.2.2</gson.version>
         <modelmapper.version>0.3.4</modelmapper.version>
         <guice.version>3.0</guice.version>
-        <objectify.version>4.0b1</objectify.version>
+        <objectify.version>4.0b3</objectify.version>
         <junit.version>4.11</junit.version>
-        <jukito.version>1.1.2</jukito.version>
-        <gae-runtime.version>1.7.7.1</gae-runtime.version>
+        <jukito.version>1.2</jukito.version>
         <persistence-api.version>1.0.2</persistence-api.version>
         <jsr305.version>2.0.1</jsr305.version>
 
@@ -43,7 +37,6 @@
         <maven-processor-plugin.version>2.0.5</maven-processor-plugin.version>
         <maven-resources-plugin.version>2.5</maven-resources-plugin.version>
         <maven-war-plugin.version>2.1.1</maven-war-plugin.version>
-        <maven-gae-plugin.version>0.9.6</maven-gae-plugin.version>
         <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
 
         <target.jdk>1.6</target.jdk>
@@ -105,13 +98,9 @@
                 <configuration>
                     <gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>
                     <strict>true</strict>
-                    <testTimeOut>180</testTimeOut>
-                    <includes>**/*GwtTest.java</includes>
-                    <mode>htmlunit</mode>
 
                     <extraJvmArgs>-Xss1024k -Xmx1024m -XX:MaxPermSize=256m</extraJvmArgs>
                     <logLevel>INFO</logLevel>
-                    <style>${gwt.style}</style>
 
                     <copyWebapp>true</copyWebapp>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
@@ -137,35 +126,9 @@
             </plugin>
 
             <plugin>
-                <groupId>net.kindleit</groupId>
-                <artifactId>maven-gae-plugin</artifactId>
-                <version>${maven-gae-plugin.version}</version>
-                <configuration>
-                    <sdkDir>${gae.home}</sdkDir>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.kindleit</groupId>
-                        <artifactId>gae-runtime</artifactId>
-                        <version>${gae-runtime.version}</version>
-                        <type>pom</type>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>install-server-jar</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>deploy</id>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <groupId>com.google.appengine</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>${gae.version}</version>
             </plugin>
 
             <!-- 'mvn jar:jar' to package jar -->
@@ -179,20 +142,6 @@
     </build>
 
     <dependencies>
-        <!-- Google Web Toolkit dependencies -->
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-            <version>${gwt.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-servlet</artifactId>
-            <version>${gwt.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
         <!-- GWT-Platform dependencies -->
         <dependency>
             <groupId>com.gwtplatform</groupId>
@@ -221,6 +170,20 @@
             <artifactId>gwtp-processors</artifactId>
             <version>${gwtp.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- Google Web Toolkit dependencies -->
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwt.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>${gwt.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- GAE dependencies -->
@@ -292,6 +255,7 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava-gwt</artifactId>
             <version>${guava.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -302,6 +266,7 @@
             <groupId>com.arcbees.gquery</groupId>
             <artifactId>tooltip</artifactId>
             <version>${gquery-plugins.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.googlecode.gwtquery</groupId>
