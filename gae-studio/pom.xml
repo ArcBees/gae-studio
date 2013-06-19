@@ -6,8 +6,15 @@
     <groupId>com.arcbees.gaestudio</groupId>
     <artifactId>gae-studio</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+
+    <packaging>pom</packaging>
     <name>GAE Studio</name>
+
+    <modules>
+        <module>gae-studio-server</module>
+        <module>gae-studio-client</module>
+        <module>gae-studio-webapp</module>
+    </modules>
 
     <properties>
         <!-- client -->
@@ -22,13 +29,11 @@
         <servlet-api.version>2.5</servlet-api.version>
         <guava.version>14.0.1</guava.version>
         <gson.version>2.2.2</gson.version>
-        <modelmapper.version>0.3.4</modelmapper.version>
         <guice.version>3.0</guice.version>
         <objectify.version>4.0b3</objectify.version>
         <junit.version>4.11</junit.version>
         <jukito.version>1.2</jukito.version>
         <persistence-api.version>1.0.2</persistence-api.version>
-        <jsr305.version>2.0.1</jsr305.version>
 
         <!-- maven -->
         <gwt-maven-plugin.version>2.5.0</gwt-maven-plugin.version>
@@ -49,352 +54,28 @@
         </gae.home>
     </properties>
 
-    <build>
-        <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+    <dependencyManagement>
+        <dependencies>
+            <!-- GWT-Platform dependencies -->
+            <dependency>
+                <groupId>com.gwtplatform</groupId>
+                <artifactId>gwtp-dispatch-shared</artifactId>
+                <version>${gwtp.version}</version>
+            </dependency>
 
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.png</include>
-                    <include>**/*.jpg</include>
-                    <include>**/*.properties</include>
-                    <include>**/*.css</include>
-                </includes>
-            </resource>
-        </resources>
+            <!-- DI dependencies -->
+            <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice</artifactId>
+                <version>${guice.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject.extensions</groupId>
+                <artifactId>guice-assistedinject</artifactId>
+                <version>${guice.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${target.jdk}</source>
-                    <target>${target.jdk}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <proc>none</proc>
-                </configuration>
-            </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/*GwtTest.java</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>gwt-maven-plugin</artifactId>
-                <version>${gwt-maven-plugin.version}</version>
-                <configuration>
-                    <gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>
-                    <strict>true</strict>
-
-                    <extraJvmArgs>-Xss1024k -Xmx1024m -XX:MaxPermSize=256m</extraJvmArgs>
-                    <logLevel>INFO</logLevel>
-
-                    <copyWebapp>true</copyWebapp>
-                    <hostedWebapp>${webappDirectory}</hostedWebapp>
-
-                    <server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
-                    <appEngineVersion>${gae.version}</appEngineVersion>
-                    <appEngineHome>${gae.home}</appEngineHome>
-                    <extraJvmArgs>-Dappengine.sdk.root=${gae.home}</extraJvmArgs>
-
-                    <runTarget>gae-studio.html</runTarget>
-                    <module>com.arcbees.gaestudio.GaeStudio</module>
-
-                    <compileReport>true</compileReport>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>test</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>com.google.appengine</groupId>
-                <artifactId>appengine-maven-plugin</artifactId>
-                <version>${gae.version}</version>
-            </plugin>
-
-            <!-- 'mvn jar:jar' to package jar -->
-            <!-- 'mvn clean package jar:jar' -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven-jar-plugin.version}</version>
-            </plugin>
-        </plugins>
-    </build>
-
-    <dependencies>
-        <!-- GWT-Platform dependencies -->
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-mvp-client</artifactId>
-            <version>${gwtp.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-client</artifactId>
-            <version>${gwtp.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-server-guice</artifactId>
-            <version>${gwtp.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-shared</artifactId>
-            <version>${gwtp.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-processors</artifactId>
-            <version>${gwtp.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Google Web Toolkit dependencies -->
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-            <version>${gwt.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-servlet</artifactId>
-            <version>${gwt.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- GAE dependencies -->
-        <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-api-1.0-sdk</artifactId>
-            <version>${gae.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-api-stubs</artifactId>
-            <version>${gae.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-testing</artifactId>
-            <version>${gae.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- DI dependencies -->
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-servlet</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-assistedinject</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt.inject</groupId>
-            <artifactId>gin</artifactId>
-            <version>${gin.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Persistence dependencies -->
-        <dependency>
-            <groupId>com.googlecode.objectify</groupId>
-            <artifactId>objectify</artifactId>
-            <version>${objectify.version}</version>
-        </dependency>
-
-        <!-- Other dependencies -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${servlet-api.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>${persistence-api.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava-gwt</artifactId>
-            <version>${guava.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>${gson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.arcbees.gquery</groupId>
-            <artifactId>tooltip</artifactId>
-            <version>${gquery-plugins.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.gwtquery</groupId>
-            <artifactId>gwtquery</artifactId>
-            <version>${gwtquery.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>jsr305</artifactId>
-            <version>${jsr305.version}</version>
-        </dependency>
-
-        <!-- Test dependencies -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jukito</groupId>
-            <artifactId>jukito</artifactId>
-            <version>${jukito.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <profiles>
-        <!-- 1. 'mvn package' -->
-        <!-- 2. 'mvn resources:copy-resources jar:jar -Pbuild-jar' -->
-        <profile>
-            <id>build-jar</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <version>2.6</version>
-                        <configuration>
-                            <outputDirectory>target/build-jar</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${webappDirectory}</directory>
-                                    <targetPath>META-INF</targetPath>
-                                    <excludes>
-                                        <exclude>**META-INF/**</exclude>
-                                        <exclude>**WEB-INF/**</exclude>
-                                    </excludes>
-                                </resource>
-                                <resource>
-                                    <directory>${webappDirectory}/WEB-INF/classes</directory>
-                                </resource>
-                            </resources>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>build-jar</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-jar-plugin</artifactId>
-                        <version>${maven-jar-plugin.version}</version>
-                        <configuration>
-                            <classesDirectory>${project.build.directory}/build-jar</classesDirectory>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>build-jar</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-install-plugin</artifactId>
-                        <version>2.3.1</version>
-                        <executions>
-                            <execution>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>install-file</goal>
-                                </goals>
-                                <configuration>
-                                    <packaging>jar</packaging>
-                                    <artifactId>${project.artifactId}</artifactId>
-                                    <groupId>${project.groupId}</groupId>
-                                    <version>${project.version}</version>
-                                    <file>${project.build.directory}/${project.artifactId}-${project.version}.jar</file>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-deploy-plugin</artifactId>
-                        <version>2.7</version>
-                        <executions>
-                            <execution>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>deploy-file</goal>
-                                </goals>
-                                <configuration>
-                                    <packaging>jar</packaging>
-                                    <generatePom>true</generatePom>
-                                    <url>${project.distributionManagement.repository.url}</url>
-                                    <artifactId>${project.artifactId}</artifactId>
-                                    <groupId>${project.groupId}</groupId>
-                                    <version>${project.version}</version>
-                                    <file>${project.build.directory}/${project.artifactId}-${project.version}.jar</file>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
