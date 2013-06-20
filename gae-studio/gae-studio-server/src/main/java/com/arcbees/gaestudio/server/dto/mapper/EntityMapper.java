@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.dto.mapper;
 
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
@@ -28,7 +29,7 @@ public class EntityMapper {
     }
 
     private static KeyDto mapKey(Key dbKey) {
-        return new KeyDto(dbKey.getKind(), dbKey.getId(), mapParentKey(dbKey.getParent()));
+        return new KeyDto(dbKey.getKind(), dbKey.getId(), mapParentKey(dbKey.getParent()), mapNamespace(dbKey));
     }
 
     private static ParentKeyDto mapParentKey(Key dbParentKey) {
@@ -36,5 +37,12 @@ public class EntityMapper {
             return null;
         }
         return new ParentKeyDto(dbParentKey.getKind(), dbParentKey.getId());
+    }
+
+    private static AppIdNamespaceDto mapNamespace(Key dbNamespaceKey) {
+        if (dbNamespaceKey == null) {
+            return null;
+        }
+        return new AppIdNamespaceDto(dbNamespaceKey.getAppId(), dbNamespaceKey.getNamespace());
     }
 }

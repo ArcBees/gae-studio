@@ -38,8 +38,10 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
+import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
@@ -180,7 +182,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.entity)
                 .with(KIND, keyDto.getKind())
-                .with(ID, Long.toString(keyDto.getId()));
+                .with(ID, Long.toString(keyDto.getId()))
+                .with(NAMESPACE, keyDto.getAppIdNamespaceDTO().getNamespace())
+                .with(APP_ID, keyDto.getAppIdNamespaceDTO().getAppId());
 
         if (keyDto.getParentKey() != null) {
             builder = builder.with(PARENT_KIND, keyDto.getParentKey().getKind())

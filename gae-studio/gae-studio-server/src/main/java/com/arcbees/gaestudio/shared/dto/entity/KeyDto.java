@@ -15,15 +15,20 @@ public class KeyDto implements Serializable {
     private String kind;
     private Long id;
     private ParentKeyDto parentKeyDTO;
+    private AppIdNamespaceDto appIdNamespaceDTO;
 
     @SuppressWarnings("unused")
     protected KeyDto() {
     }
 
-    public KeyDto(String kind, Long id, ParentKeyDto parentKeyDTO) {
+    public KeyDto(String kind,
+                  Long id,
+                  ParentKeyDto parentKeyDTO,
+                  AppIdNamespaceDto appIdNamespaceDTO) {
         this.kind = kind;
         this.id = id;
         this.parentKeyDTO = parentKeyDTO;
+        this.appIdNamespaceDTO = appIdNamespaceDTO;
     }
 
     public String getKind() {
@@ -40,5 +45,13 @@ public class KeyDto implements Serializable {
 
     public void setParentKey(ParentKeyDto parentKeyDTO) {
         this.parentKeyDTO = parentKeyDTO;
+    }
+
+    public AppIdNamespaceDto getAppIdNamespaceDTO() {
+        return appIdNamespaceDTO;
+    }
+
+    public void setAppIdNamespaceDTO(AppIdNamespaceDto appIdNamespaceDTO) {
+        this.appIdNamespaceDTO = appIdNamespaceDTO;
     }
 }

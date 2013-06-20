@@ -19,7 +19,9 @@ import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.EntityListTooltipResources;
 import com.arcbees.gaestudio.client.resources.PagerResources;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.arcbees.gquery.tooltip.client.Tooltip;
 import com.arcbees.gquery.tooltip.client.TooltipOptions;
@@ -239,6 +241,16 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             }
         };
         entityTable.addColumn(parentIdColumn, "Parent ID");
+
+        TextColumn<ParsedEntity> namespaceColumn = new TextColumn<ParsedEntity>() {
+            @Override
+            public String getValue(ParsedEntity entityJsonParsed) {
+                KeyDto keyDto = entityJsonParsed.getKey();
+                AppIdNamespaceDto appIdNamespaceDto = keyDto.getAppIdNamespaceDTO();
+                return appIdNamespaceDto.getNamespace();
+            }
+        };
+        entityTable.addColumn(namespaceColumn, "Namespace");
     }
 
     private void onEditTableAttachedOrDetached(boolean attached) {
