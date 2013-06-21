@@ -13,7 +13,6 @@
     <modules>
         <module>gae-studio-server</module>
         <module>gae-studio-client</module>
-        <module>gae-studio-webapp</module>
     </modules>
 
     <properties>
@@ -76,6 +75,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-
 </project>

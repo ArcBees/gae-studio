@@ -15,14 +15,14 @@ import com.google.inject.servlet.ServletModule;
 import com.gwtplatform.dispatch.server.guice.DispatchServiceImpl;
 import com.gwtplatform.dispatch.shared.ActionImpl;
 
-public class DispatchServletModule extends ServletModule {
+public class GaeStudioServletModule extends ServletModule {
     public static final String EMBEDDED_PATH = "gae-studio-admin";
 
     @Override
     public void configureServlets() {
         // Embedded App Paths
-        serve("/gae-studio*/" + GaeStudioActionImpl.GAE_STUDIO + ActionImpl.DEFAULT_SERVICE_NAME + "*").with(
+        serve("/" + EMBEDDED_PATH + "/" + GaeStudioActionImpl.GAE_STUDIO + ActionImpl.DEFAULT_SERVICE_NAME + "*").with(
                 DispatchServiceImpl.class);
-        serve("/" + EMBEDDED_PATH).with(EmbeddedStaticResourcesServlet.class);
+        serve("/" + EMBEDDED_PATH + "/").with(EmbeddedStaticResourcesServlet.class);
     }
 }

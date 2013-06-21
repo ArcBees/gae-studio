@@ -11,50 +11,38 @@ package com.arcbees.gaestudio.server.servlet;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Logger;
 
 import javax.inject.Singleton;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.arcbees.gaestudio.server.guice.DispatchServletModule;
-import com.arcbees.gaestudio.server.guice.GaeStudioServerModule;
+import com.arcbees.gaestudio.server.guice.GaeStudioModule;
+import com.arcbees.gaestudio.server.guice.GaeStudioServletModule;
 
 @Singleton
 public class EmbeddedStaticResourcesServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(EmbeddedStaticResourcesServlet.class.getSimpleName());
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-
-        String message = "**** Find GAE Studio located at this path /" + DispatchServletModule.EMBEDDED_PATH + " ****";
-        logger.info(message);
-    }
-
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
         String uri = request.getRequestURI();
         logger.info("request.getRequestURI: " + uri);
-        uri = uri.replace(DispatchServletModule.EMBEDDED_PATH, "");
-        logger.info("uri.replace(DispatchServletModule.EMBEDDED_PATH, \"\"); " + uri);
+
         String basePath = getBaseJarPath();
         logger.info("getBaseJarPath(); " + basePath);
-        String path = "";
-        if (uri.length() < 3 || uri.contains("gae-studio.html")) {
-            path = basePath + "/gae-studio.html";
+
+        String path;
+        if (uri.contains("gae-studio.html")) {
+            path = basePath + "gae-studio.html";
         } else if (uri.contains("favicon.ico")) {
-            path = basePath + "/favicon.ico";
-        } else if (uri.contains("module_")) {
-            path = basePath + uri;
+            path = basePath + "favicon.ico";
         } else {
-            path = basePath + uri;
+            path = basePath + "gae-studio.html";
         }
 
         response.setContentType(getMimeType(path));
@@ -68,37 +56,24 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
         String mimeType = "text/plain";
         if (path.contains(".html")) {
             mimeType = "text/html";
-        } else if (path.contains(".css")) {
-            mimeType = "text/css";
-        } else if (path.contains(".jpeg") || path.contains(".jpg")) {
-            mimeType = "image/jpeg";
-        } else if (path.contains(".png")) {
-            mimeType = "image/png";
-        } else if (path.contains(".gif")) {
-            mimeType = "image/gif";
-        } else if (path.contains(".js")) {
-            mimeType = "application/javascript";
+        } else if (path.contains(".ico")) {
+            mimeType = "image/x-icon";
         }
 
         return mimeType;
     }
 
     public String getBaseJarPath() {
-        Class<GaeStudioServerModule> clazz = GaeStudioServerModule.class;
-        String classJarPath = clazz.getResource("GaeStudioServerModule.class").toString();
-        String baseJarPath = classJarPath.substring(0, classJarPath.lastIndexOf("!") + 1) + "/META-INF";
+        Class<GaeStudioModule> clazz = GaeStudioModule.class;
+        String classJarPath = clazz.getResource("GaeStudioModule.class").toString();
+        String baseJarPath = classJarPath.substring(0, classJarPath.lastIndexOf("!") + 1) + "/";
         return baseJarPath;
     }
 
-    public void writeFileToResponse(HttpServletResponse response, String path) throws MalformedURLException,
-            IOException {
-        InputStream inputStream = null;
+    public void writeFileToResponse(HttpServletResponse response, String path) throws IOException {
+        InputStream inputStream;
         logger.info("PATH: " + path);
-        try {
-            inputStream = new URL(path).openStream();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        inputStream = new URL(path).openStream();
 
         int b;
         while ((b = inputStream.read()) != -1) {

@@ -18,14 +18,14 @@
             <!-- Bundle sources with the jar, so they are visible to GWT's compiler -->
             <resource>
                 <directory>src/main/java</directory>
-                <excludes>
+                <!--<excludes>
                     <exclude>com/arcbees/gaestudio/server/**</exclude>
                     <exclude>com/google/appengine/api/datastore/**</exclude>
-                </excludes>
+                </excludes> -->
             </resource>
 
             <resource>
-                <directory>src/main/webapp</directory>
+                <directory>src/main/resources</directory>
             </resource>
         </resources>
     </build>
