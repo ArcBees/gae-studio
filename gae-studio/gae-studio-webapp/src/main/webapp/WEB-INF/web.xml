@@ -5,11 +5,6 @@
 
     <display-name>GAE Studio</display-name>
 
-    <!-- Default page to serve -->
-    <welcome-file-list>
-        <welcome-file>gae-studio.html</welcome-file>
-    </welcome-file-list>
-
     <!--
         This Guice listener hijacks all further filters and servlets. Extra
         filters and servlets have to be configured in your

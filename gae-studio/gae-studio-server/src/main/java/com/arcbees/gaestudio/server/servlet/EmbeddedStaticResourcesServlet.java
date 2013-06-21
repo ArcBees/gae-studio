@@ -41,15 +41,14 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
         String uri = request.getRequestURI();
+        logger.info("request.getRequestURI: " + uri);
         uri = uri.replace(DispatchServletModule.EMBEDDED_PATH, "");
-
+        logger.info("uri.replace(DispatchServletModule.EMBEDDED_PATH, \"\"); " + uri);
         String basePath = getBaseJarPath();
-
+        logger.info("getBaseJarPath(); " + basePath);
         String path = "";
         if (uri.length() < 3 || uri.contains("gae-studio.html")) {
             path = basePath + "/gae-studio.html";
-        } else if (uri.contains("gae-studio.css")) {
-            path = basePath + "/gae-studio.css";
         } else if (uri.contains("favicon.ico")) {
             path = basePath + "/favicon.ico";
         } else if (uri.contains("module_")) {
@@ -94,6 +93,7 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
     public void writeFileToResponse(HttpServletResponse response, String path) throws MalformedURLException,
             IOException {
         InputStream inputStream = null;
+        logger.info("PATH: " + path);
         try {
             inputStream = new URL(path).openStream();
         } catch (Exception e) {
