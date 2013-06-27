@@ -14,18 +14,16 @@
     <name>GAE-Studio Server</name>
 
     <build>
+        <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+
         <resources>
             <!-- Bundle sources with the jar, so they are visible to GWT's compiler -->
             <resource>
                 <directory>src/main/java</directory>
-                <!--<excludes>
+                <excludes>
                     <exclude>com/arcbees/gaestudio/server/**</exclude>
                     <exclude>com/google/appengine/api/datastore/**</exclude>
-                </excludes> -->
-            </resource>
-
-            <resource>
-                <directory>src/main/resources</directory>
+                </excludes>
             </resource>
         </resources>
     </build>

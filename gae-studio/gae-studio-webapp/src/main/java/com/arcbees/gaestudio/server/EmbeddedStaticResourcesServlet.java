@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.servlet;
+package com.arcbees.gaestudio.server;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,29 +20,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.arcbees.gaestudio.server.guice.GaeStudioModule;
-import com.arcbees.gaestudio.server.guice.GaeStudioServletModule;
-
 @Singleton
 public class EmbeddedStaticResourcesServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(EmbeddedStaticResourcesServlet.class.getSimpleName());
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-            IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         String uri = request.getRequestURI();
         logger.info("request.getRequestURI: " + uri);
+        uri = uri.replace("/gae-studio-admin/", "");
 
         String basePath = getBaseJarPath();
         logger.info("getBaseJarPath(); " + basePath);
 
         String path;
-        if (uri.contains("gae-studio.html")) {
+        if (uri.isEmpty()) {
             path = basePath + "gae-studio.html";
-        } else if (uri.contains("favicon.ico")) {
-            path = basePath + "favicon.ico";
         } else {
-            path = basePath + "gae-studio.html";
+            path = basePath + uri;
         }
 
         response.setContentType(getMimeType(path));
@@ -58,6 +55,16 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
             mimeType = "text/html";
         } else if (path.contains(".ico")) {
             mimeType = "image/x-icon";
+        } else if (path.contains(".css")) {
+            mimeType = "text/css";
+        } else if (path.contains(".jpeg") || path.contains(".jpg")) {
+            mimeType = "image/jpeg";
+        } else if (path.contains(".png")) {
+            mimeType = "image/png";
+        } else if (path.contains(".gif")) {
+            mimeType = "image/gif";
+        } else if (path.contains(".js")) {
+            mimeType = "application/javascript";
         }
 
         return mimeType;
@@ -66,13 +73,12 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
     public String getBaseJarPath() {
         Class<GaeStudioModule> clazz = GaeStudioModule.class;
         String classJarPath = clazz.getResource("GaeStudioModule.class").toString();
-        String baseJarPath = classJarPath.substring(0, classJarPath.lastIndexOf("!") + 1) + "/";
-        return baseJarPath;
+
+        return classJarPath.substring(0, classJarPath.lastIndexOf("!") + 1) + "/";
     }
 
     public void writeFileToResponse(HttpServletResponse response, String path) throws IOException {
         InputStream inputStream;
-        logger.info("PATH: " + path);
         inputStream = new URL(path).openStream();
 
         int b;

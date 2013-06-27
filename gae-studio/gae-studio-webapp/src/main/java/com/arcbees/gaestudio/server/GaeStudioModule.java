@@ -7,16 +7,16 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.guice;
+package com.arcbees.gaestudio.server;
 
-import com.arcbees.gaestudio.server.dispatch.GaeStudioDispatchModule;
-import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
-import com.google.inject.AbstractModule;
+import com.arcbees.gaestudio.server.guice.DispatchServletModule;
+import com.google.inject.servlet.ServletModule;
 
-public class GaeStudioModule extends AbstractModule {
+public class GaeStudioModule extends ServletModule {
     @Override
-    protected void configure() {
-        install(new GaeStudioRecorderModule());
-        install(new GaeStudioDispatchModule());
+    protected void configureServlets() {
+        serve("/" + DispatchServletModule.EMBEDDED_PATH + "*").with(EmbeddedStaticResourcesServlet.class);
+
+        install(new DispatchServletModule());
     }
 }

@@ -13,6 +13,7 @@
     <modules>
         <module>gae-studio-server</module>
         <module>gae-studio-client</module>
+        <module>gae-studio-webapp</module>
     </modules>
 
     <properties>
@@ -35,11 +36,10 @@
         <persistence-api.version>1.0.2</persistence-api.version>
 
         <!-- maven -->
-        <gwt-maven-plugin.version>2.5.0</gwt-maven-plugin.version>
         <maven-surefire-plugin.version>2.6</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
         <maven-processor-plugin.version>2.0.5</maven-processor-plugin.version>
-        <maven-resources-plugin.version>2.5</maven-resources-plugin.version>
+        <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
         <maven-war-plugin.version>2.1.1</maven-war-plugin.version>
         <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
 

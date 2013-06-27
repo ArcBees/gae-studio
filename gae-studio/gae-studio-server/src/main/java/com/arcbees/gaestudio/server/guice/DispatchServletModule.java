@@ -9,20 +9,22 @@
 
 package com.arcbees.gaestudio.server.guice;
 
-import com.arcbees.gaestudio.server.servlet.EmbeddedStaticResourcesServlet;
+import com.arcbees.gaestudio.server.dispatch.GaeStudioDispatchModule;
+import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
 import com.arcbees.gaestudio.shared.dispatch.util.GaeStudioActionImpl;
 import com.google.inject.servlet.ServletModule;
 import com.gwtplatform.dispatch.server.guice.DispatchServiceImpl;
 import com.gwtplatform.dispatch.shared.ActionImpl;
 
-public class GaeStudioServletModule extends ServletModule {
+public class DispatchServletModule extends ServletModule {
     public static final String EMBEDDED_PATH = "gae-studio-admin";
 
     @Override
     public void configureServlets() {
-        // Embedded App Paths
         serve("/" + EMBEDDED_PATH + "/" + GaeStudioActionImpl.GAE_STUDIO + ActionImpl.DEFAULT_SERVICE_NAME + "*").with(
                 DispatchServiceImpl.class);
-        serve("/" + EMBEDDED_PATH + "/").with(EmbeddedStaticResourcesServlet.class);
+
+        install(new GaeStudioRecorderModule());
+        install(new GaeStudioDispatchModule());
     }
 }
