@@ -9,11 +9,9 @@
 
 package com.arcbees.gaestudio.shared.dto.query;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class QueryResultDto implements Serializable {
-    private static final long serialVersionUID = -3499363771373323522L;
-
+public class QueryResultDto implements IsSerializable {
     private Integer resultSize;
     private Integer serializedSize;
 

@@ -9,19 +9,17 @@
 
 package com.arcbees.gaestudio.shared.dto.query;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class QueryOrderDto implements Serializable {
-    private static final long serialVersionUID = 6799347670763722667L;
-
-    private QueryOrderDirectionDto direction;
+public class QueryOrderDto implements IsSerializable {
+    private QueryOrderDirection direction;
     private String property;
 
     @SuppressWarnings("unused")
     protected QueryOrderDto() {
     }
 
-    public QueryOrderDto(QueryOrderDirectionDto direction, String property) {
+    public QueryOrderDto(QueryOrderDirection direction, String property) {
         this.direction = direction;
         this.property = property;
     }
@@ -30,7 +28,7 @@ public class QueryOrderDto implements Serializable {
         return property;
     }
 
-    public QueryOrderDirectionDto getDirection() {
+    public QueryOrderDirection getDirection() {
         return direction;
     }
 }

@@ -9,9 +9,9 @@
 
 package com.arcbees.gaestudio.shared.dto.entity;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class AppIdNamespaceDto implements Serializable {
+public class AppIdNamespaceDto implements IsSerializable {
     private String appId;
     private String namespace;
 
