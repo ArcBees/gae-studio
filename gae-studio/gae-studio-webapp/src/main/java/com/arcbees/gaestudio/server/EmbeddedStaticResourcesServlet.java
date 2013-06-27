@@ -72,14 +72,13 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
 
     public String getBaseJarPath() {
         Class<GaeStudioModule> clazz = GaeStudioModule.class;
-        String classJarPath = clazz.getResource("GaeStudioModule.class").toString();
+        String classJarPath = clazz.getResource(clazz.getSimpleName() + ".class").toString();
 
         return classJarPath.substring(0, classJarPath.lastIndexOf("!") + 1) + "/";
     }
 
     public void writeFileToResponse(HttpServletResponse response, String path) throws IOException {
-        InputStream inputStream;
-        inputStream = new URL(path).openStream();
+        InputStream inputStream = new URL(path).openStream();
 
         int b;
         while ((b = inputStream.read()) != -1) {
