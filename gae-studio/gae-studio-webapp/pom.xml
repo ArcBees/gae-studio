@@ -74,7 +74,6 @@
                             <logLevel>INFO</logLevel>
 
                             <copyWebapp>true</copyWebapp>
-                            <hostedWebapp>${webappDirectory}</hostedWebapp>
 
                             <module>com.arcbees.gaestudio.GaeStudio</module>
 
@@ -95,13 +94,12 @@
                         <artifactId>maven-jar-plugin</artifactId>
                         <version>${maven-jar-plugin.version}</version>
                         <configuration>
-                            <classesDirectory>${webappDirectory}</classesDirectory>
-
                             <excludes>
                                 <exclude>**META-INF/**</exclude>
                                 <exclude>**WEB-INF/**</exclude>
                             </excludes>
                         </configuration>
+
                         <executions>
                             <execution>
                                 <id>build-jar</id>
