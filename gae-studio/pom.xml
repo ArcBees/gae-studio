@@ -36,11 +36,9 @@
         <persistence-api.version>1.0.2</persistence-api.version>
 
         <!-- maven -->
-        <maven-surefire-plugin.version>2.6</maven-surefire-plugin.version>
+        <jarjar-maven-plugin.version>1.7</jarjar-maven-plugin.version>
         <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
-        <maven-processor-plugin.version>2.0.5</maven-processor-plugin.version>
-        <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
-        <maven-war-plugin.version>2.1.1</maven-war-plugin.version>
+        <maven-shade-plugin.version>2.1</maven-shade-plugin.version>
         <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
 
         <target.jdk>1.6</target.jdk>
@@ -52,27 +50,4 @@
             ${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}
         </gae.home>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <!-- GWT-Platform dependencies -->
-            <dependency>
-                <groupId>com.gwtplatform</groupId>
-                <artifactId>gwtp-dispatch-shared</artifactId>
-                <version>${gwtp.version}</version>
-            </dependency>
-
-            <!-- DI dependencies -->
-            <dependency>
-                <groupId>com.google.inject</groupId>
-                <artifactId>guice</artifactId>
-                <version>${guice.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.inject.extensions</groupId>
-                <artifactId>guice-assistedinject</artifactId>
-                <version>${guice.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 </project>

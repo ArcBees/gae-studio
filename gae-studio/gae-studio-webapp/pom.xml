@@ -15,6 +15,27 @@
 
     <build>
         <outputDirectory>${webappDirectory}</outputDirectory>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven-shade-plugin.version}</version>
+                <configuration>
+                    <minimizeJar>true</minimizeJar>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>build-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
     <dependencies>
@@ -34,6 +55,7 @@
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
+            <version>${guice.version}</version>
         </dependency>
     </dependencies>
 
@@ -44,12 +66,6 @@
             <id>build-jar</id>
 
             <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                    </resource>
-                </resources>
-
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>

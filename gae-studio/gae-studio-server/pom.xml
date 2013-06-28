@@ -18,6 +18,7 @@
         <dependency>
             <groupId>com.gwtplatform</groupId>
             <artifactId>gwtp-dispatch-shared</artifactId>
+            <version>${gwtp.version}</version>
         </dependency>
         <dependency>
             <groupId>com.gwtplatform</groupId>
@@ -26,11 +27,6 @@
         </dependency>
 
         <!-- Google Web Toolkit dependencies -->
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-            <version>${gwt.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-servlet</artifactId>
@@ -63,10 +59,12 @@
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
+            <version>${guice.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-assistedinject</artifactId>
+            <version>${guice.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
@@ -79,7 +77,6 @@
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>${servlet-api.version}</version>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>

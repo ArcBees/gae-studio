@@ -23,11 +23,6 @@ To plug GAE Studio into your project, follow these steps:
     <artifactId>gae-studio-webapp</artifactId>
     <version>${gaestudio.version}</version>
 </dependency>
-<dependency>
-    <groupId>com.arcbees.gaestudio</groupId>
-    <artifactId>gae-studio-server</artifactId>
-    <version>${gaestudio.version}</version>
-</dependency>
 ```
 
 *. Install the `GaeStudioModule()` into the app's server module.
