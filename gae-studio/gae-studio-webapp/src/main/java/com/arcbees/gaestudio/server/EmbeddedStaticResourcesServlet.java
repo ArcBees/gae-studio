@@ -7,53 +7,37 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.servlet;
+package com.arcbees.gaestudio.server;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Logger;
 
 import javax.inject.Singleton;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.arcbees.gaestudio.server.guice.DispatchServletModule;
-import com.arcbees.gaestudio.server.guice.GaeStudioServerModule;
 
 @Singleton
 public class EmbeddedStaticResourcesServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(EmbeddedStaticResourcesServlet.class.getSimpleName());
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        String message = "**** Find GAE Studio located at this path /" + DispatchServletModule.EMBEDDED_PATH + " ****";
-        logger.info(message);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-            IOException {
         String uri = request.getRequestURI();
-        uri = uri.replace(DispatchServletModule.EMBEDDED_PATH, "");
+        logger.info("request.getRequestURI: " + uri);
+        uri = uri.replace("/gae-studio-admin/", "");
 
         String basePath = getBaseJarPath();
+        logger.info("getBaseJarPath(); " + basePath);
 
-        String path = "";
-        if (uri.length() < 3 || uri.contains("gae-studio.html")) {
-            path = basePath + "/gae-studio.html";
-        } else if (uri.contains("gae-studio.css")) {
-            path = basePath + "/gae-studio.css";
-        } else if (uri.contains("favicon.ico")) {
-            path = basePath + "/favicon.ico";
-        } else if (uri.contains("module_")) {
-            path = basePath + uri;
+        String path;
+        if (uri.isEmpty()) {
+            path = basePath + "gae-studio.html";
         } else {
             path = basePath + uri;
         }
@@ -69,6 +53,8 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
         String mimeType = "text/plain";
         if (path.contains(".html")) {
             mimeType = "text/html";
+        } else if (path.contains(".ico")) {
+            mimeType = "image/x-icon";
         } else if (path.contains(".css")) {
             mimeType = "text/css";
         } else if (path.contains(".jpeg") || path.contains(".jpg")) {
@@ -85,20 +71,14 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
     }
 
     public String getBaseJarPath() {
-        Class<GaeStudioServerModule> clazz = GaeStudioServerModule.class;
-        String classJarPath = clazz.getResource("GaeStudioServerModule.class").toString();
-        String baseJarPath = classJarPath.substring(0, classJarPath.lastIndexOf("!") + 1) + "/META-INF";
-        return baseJarPath;
+        Class<GaeStudioModule> clazz = GaeStudioModule.class;
+        String classJarPath = clazz.getResource(clazz.getSimpleName() + ".class").toString();
+
+        return classJarPath.substring(0, classJarPath.lastIndexOf("!") + 1) + "/";
     }
 
-    public void writeFileToResponse(HttpServletResponse response, String path) throws MalformedURLException,
-            IOException {
-        InputStream inputStream = null;
-        try {
-            inputStream = new URL(path).openStream();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void writeFileToResponse(HttpServletResponse response, String path) throws IOException {
+        InputStream inputStream = new URL(path).openStream();
 
         int b;
         while ((b = inputStream.read()) != -1) {

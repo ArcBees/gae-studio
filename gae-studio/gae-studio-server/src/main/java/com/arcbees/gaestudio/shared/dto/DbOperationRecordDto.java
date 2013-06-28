@@ -9,11 +9,10 @@
 
 package com.arcbees.gaestudio.shared.dto;
 
-import java.io.Serializable;
-
 import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public abstract class DbOperationRecordDto implements Serializable {
+public abstract class DbOperationRecordDto implements IsSerializable {
     private StackTraceElementDto callerStackTraceElement;
 
     private Long requestId;
@@ -27,7 +26,9 @@ public abstract class DbOperationRecordDto implements Serializable {
         this.executionTimeMs = -1;
     }
 
-    protected DbOperationRecordDto(StackTraceElementDto callerStackTraceElement, Long requestId, Long statementId,
+    protected DbOperationRecordDto(StackTraceElementDto callerStackTraceElement,
+                                   Long requestId,
+                                   Long statementId,
                                    Integer executionTimeMs) {
         this.callerStackTraceElement = callerStackTraceElement;
         this.requestId = requestId;

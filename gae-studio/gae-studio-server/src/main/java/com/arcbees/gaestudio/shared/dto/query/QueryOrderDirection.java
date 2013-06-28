@@ -7,16 +7,9 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.guice;
+package com.arcbees.gaestudio.shared.dto.query;
 
-import com.arcbees.gaestudio.server.dispatch.GaeStudioDispatchModule;
-import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
-import com.google.inject.AbstractModule;
-
-public class GaeStudioModule extends AbstractModule {
-    @Override
-    protected void configure() {
-        install(new GaeStudioRecorderModule());
-        install(new GaeStudioDispatchModule());
-    }
+public enum QueryOrderDirection {
+    ASCENDING,
+    DESCENDING
 }
