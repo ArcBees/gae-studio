@@ -9,21 +9,26 @@
 
 package com.arcbees.gaestudio.shared.dto.entity;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class KeyDto implements Serializable {
+public class KeyDto implements IsSerializable {
     private String kind;
     private Long id;
-    private ParentKeyDto parentKeyDTO;
+    private ParentKeyDto parentKeyDto;
+    private AppIdNamespaceDto appIdNamespaceDto;
 
     @SuppressWarnings("unused")
     protected KeyDto() {
     }
 
-    public KeyDto(String kind, Long id, ParentKeyDto parentKeyDTO) {
+    public KeyDto(String kind,
+                  Long id,
+                  ParentKeyDto parentKeyDto,
+                  AppIdNamespaceDto appIdNamespaceDto) {
         this.kind = kind;
         this.id = id;
-        this.parentKeyDTO = parentKeyDTO;
+        this.parentKeyDto = parentKeyDto;
+        this.appIdNamespaceDto = appIdNamespaceDto;
     }
 
     public String getKind() {
@@ -35,10 +40,18 @@ public class KeyDto implements Serializable {
     }
 
     public ParentKeyDto getParentKey() {
-        return parentKeyDTO;
+        return parentKeyDto;
     }
 
-    public void setParentKey(ParentKeyDto parentKeyDTO) {
-        this.parentKeyDTO = parentKeyDTO;
+    public void setParentKey(ParentKeyDto parentKeyDto) {
+        this.parentKeyDto = parentKeyDto;
+    }
+
+    public AppIdNamespaceDto getAppIdNamespaceDto() {
+        return appIdNamespaceDto;
+    }
+
+    public void setAppIdNamespaceDto(AppIdNamespaceDto appIdNamespaceDto) {
+        this.appIdNamespaceDto = appIdNamespaceDto;
     }
 }

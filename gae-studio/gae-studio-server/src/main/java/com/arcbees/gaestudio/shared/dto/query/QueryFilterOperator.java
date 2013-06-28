@@ -7,17 +7,12 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.guice;
+package com.arcbees.gaestudio.shared.dto.query;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.servlet.GuiceServletContextListener;
-
-public class GuiceServletConfig extends GuiceServletContextListener {
-    @Override
-    protected Injector getInjector() {
-        Injector injector = Guice.createInjector(new GaeStudioServerModule());
-
-        return injector;
-    }
+public enum QueryFilterOperator {
+    EQUAL,
+    GREATER_THAN,
+    GREATER_THAN_OR_EQUAL,
+    LESS_THAN,
+    LESS_THAN_OR_EQUAL
 }

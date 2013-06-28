@@ -13,8 +13,6 @@ import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
 
 public class QueryRecordDto extends DbOperationRecordDto {
-    private static final long serialVersionUID = -5801060359687948701L;
-
     private QueryDto query;
     private QueryResultDto queryResult;
 

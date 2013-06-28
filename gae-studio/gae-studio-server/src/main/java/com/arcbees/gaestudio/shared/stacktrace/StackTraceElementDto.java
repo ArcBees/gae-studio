@@ -9,11 +9,9 @@
 
 package com.arcbees.gaestudio.shared.stacktrace;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class StackTraceElementDto implements Serializable {
-    private static final long serialVersionUID = 6687981285760829193L;
-
+public class StackTraceElementDto implements IsSerializable {
     private String className;
     private String fileName;
     private int lineNumber;

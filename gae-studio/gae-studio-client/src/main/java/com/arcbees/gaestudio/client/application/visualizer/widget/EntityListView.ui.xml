@@ -11,6 +11,9 @@
     <g:HTMLPanel ui:field="panel" visible="false">
         <div class="{style.heading} {resources.styles.pager}">
             <cellview:SimplePager ui:field="pager"/>
+            <p class="{resources.styles.isDisplaying}">
+                Displaying entities of the kind <b class="{resources.styles.kindBold}">Kind</b>
+            </p>
         </div>
         <cellview:CellTable ui:field="entityTable" styleName="{resources.styles.firstTable}"/>
     </g:HTMLPanel>

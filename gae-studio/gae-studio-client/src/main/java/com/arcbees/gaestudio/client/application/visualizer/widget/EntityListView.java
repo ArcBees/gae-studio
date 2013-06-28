@@ -19,7 +19,9 @@ import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.EntityListTooltipResources;
 import com.arcbees.gaestudio.client.resources.PagerResources;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.arcbees.gquery.tooltip.client.Tooltip;
 import com.arcbees.gquery.tooltip.client.TooltipOptions;
@@ -67,8 +69,15 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final String secondTableStyleName;
     private final String secondTableHiddenStyleName;
     private final String pagerStyleName;
+    private final String kindStyleName;
+    private final String idStyleName;
+    private final String namespaceStyleName;
+    private final String namespaceSpanStyleName;
     private final String pagerButtons;
     private final String firstTableRow;
+    private final String isNull = "<null>";
+    private final String isUndefined = "<undefined>";
+
 
     private Tooltip tooltip;
 
@@ -89,6 +98,10 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         this.secondTableStyleName = appResources.styles().secondTable();
         this.secondTableHiddenStyleName = appResources.styles().secondTableHidden();
         this.pagerStyleName = appResources.styles().pager();
+        this.kindStyleName = appResources.styles().kindBold();
+        this.idStyleName = appResources.styles().idBold();
+        this.namespaceStyleName = appResources.styles().namespaceBold();
+        this.namespaceSpanStyleName = appResources.styles().namespace();
         this.pagerButtons = "." + pagerStyleName + " tbody tr td img";
         this.firstTableRow = "." + firstTableStyleName + " tbody tr";
 
@@ -122,6 +135,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @Override
     public void setNewKind(String currentKind) {
         panel.setVisible(true);
+        $("." + kindStyleName).html(currentKind);
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
     }
 
@@ -216,7 +230,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             public String getValue(ParsedEntity entityJsonParsed) {
                 ParentKeyDto parentKeyDTO = entityJsonParsed.getKey().getParentKey();
                 if (parentKeyDTO == null) {
-                    return "<null>";
+                    return isNull;
                 }
                 return parentKeyDTO.getKind();
             }
@@ -228,12 +242,28 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             public String getValue(ParsedEntity entityJsonParsed) {
                 ParentKeyDto parentKeyDTO = entityJsonParsed.getKey().getParentKey();
                 if (parentKeyDTO == null) {
-                    return "<null>";
+                    return isNull;
                 }
                 return parentKeyDTO.getId().toString();
             }
         };
         entityTable.addColumn(parentIdColumn, "Parent ID");
+
+        TextColumn<ParsedEntity> namespaceColumn = new TextColumn<ParsedEntity>() {
+            @Override
+            public String getValue(ParsedEntity entityJsonParsed) {
+                KeyDto keyDto = entityJsonParsed.getKey();
+                AppIdNamespaceDto appIdNamespaceDto = keyDto.getAppIdNamespaceDto();
+                String namespace = appIdNamespaceDto.getNamespace();
+                if (namespace == null) {
+                    namespace = isNull;
+                } else if (namespace.isEmpty()) {
+                    namespace = isUndefined;
+                }
+                return namespace;
+            }
+        };
+        entityTable.addColumn(namespaceColumn, "Namespace");
     }
 
     private void onEditTableAttachedOrDetached(boolean attached) {
@@ -282,9 +312,17 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private void bindGwtQueryWidget() {
         $(firstTableRow).click(new Function() {
             @Override
-            public void f() {
+            public void f(Element e) {
                 $("." + secondTableHiddenStyleName).removeClass(secondTableHiddenStyleName);
                 $("." + entityContainerStyleName).addClass(entityListContainerSelectedStyleName);
+                $("." + idStyleName).text("ID " + $(e).children("td:first-of-type").text());
+                $("." + namespaceStyleName).text($(e).children("td:last-of-type").text());
+
+                if ($("." + namespaceStyleName).text().equals(isUndefined)) {
+                    $("." + namespaceSpanStyleName).hide();
+                } else {
+                    $("." + namespaceSpanStyleName).show();
+                }
             }
         });
 

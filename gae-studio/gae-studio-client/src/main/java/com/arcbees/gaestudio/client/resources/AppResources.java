@@ -83,6 +83,16 @@ public interface AppResources extends ClientBundle {
         String glassPanel();
 
         String cursorWhite();
+
+        String kindBold();
+
+        String idBold();
+
+        String isDisplaying();
+
+        String namespaceBold();
+
+        String namespace();
     }
 
     public interface Sprites extends CssResource {

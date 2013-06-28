@@ -9,9 +9,9 @@
 
 package com.arcbees.gaestudio.shared.dto.entity;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class EntityDto implements Serializable {
+public class EntityDto implements IsSerializable {
     private KeyDto key;
 
     private String json;

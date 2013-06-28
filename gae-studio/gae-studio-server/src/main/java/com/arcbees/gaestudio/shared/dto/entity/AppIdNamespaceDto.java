@@ -7,20 +7,28 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared.dto;
+package com.arcbees.gaestudio.shared.dto.entity;
 
-import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-// TODO : Complete
-public class DeleteRecordDTO extends DbOperationRecordDto {
+public class AppIdNamespaceDto implements IsSerializable {
+    private String appId;
+    private String namespace;
+
     @SuppressWarnings("unused")
-    protected DeleteRecordDTO() {
+    protected AppIdNamespaceDto() {
     }
 
-    public DeleteRecordDTO(StackTraceElementDto callerStackTraceElement,
-                           Long requestId,
-                           Long statementId,
-                           Integer executionTimeMs) {
-        super(callerStackTraceElement, requestId, statementId, executionTimeMs);
+    public AppIdNamespaceDto(String appId, String namespace) {
+        this.appId = appId;
+        this.namespace = namespace;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public String getNamespace() {
+        return namespace;
     }
 }

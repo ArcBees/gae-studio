@@ -9,12 +9,11 @@
 
 package com.arcbees.gaestudio.shared.dto.query;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class QueryDto implements Serializable {
-    private static final long serialVersionUID = -7429048102343532748L;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
+public class QueryDto implements IsSerializable {
     private String kind;
     private String ancestor;
     private ArrayList<QueryFilterDto> filters;

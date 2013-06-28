@@ -17,6 +17,7 @@ import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoResult;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
@@ -33,6 +34,8 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
 
 public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPresenter.MyProxy> {
     interface MyView extends View {
@@ -71,6 +74,8 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
         String id = request.getParameter(ID, null);
         String parentKind = request.getParameter(PARENT_KIND, null);
         String parentId = request.getParameter(PARENT_ID, null);
+        String namespace = request.getParameter(NAMESPACE, null);
+        String appId = request.getParameter(APP_ID, null);
 
         ParentKeyDto parentKeyDto;
         if (parentKind != null && parentId != null) {
@@ -79,7 +84,9 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
             parentKeyDto = null;
         }
 
-        KeyDto keyDto = new KeyDto(kind, Long.valueOf(id), parentKeyDto);
+        AppIdNamespaceDto appIdNamespaceDto = new AppIdNamespaceDto(appId, namespace);
+
+        KeyDto keyDto = new KeyDto(kind, Long.valueOf(id), parentKeyDto, appIdNamespaceDto);
 
         GetEntityDtoAction getEntityDtoAction = new GetEntityDtoAction();
         getEntityDtoAction.setKeyDto(keyDto);

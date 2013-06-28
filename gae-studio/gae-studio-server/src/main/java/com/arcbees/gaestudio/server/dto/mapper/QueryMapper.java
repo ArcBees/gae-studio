@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 import com.arcbees.gaestudio.shared.dto.query.QueryDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryFilterDto;
-import com.arcbees.gaestudio.shared.dto.query.QueryFilterOperatorDto;
-import com.arcbees.gaestudio.shared.dto.query.QueryOrderDirectionDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryFilterOperator;
+import com.arcbees.gaestudio.shared.dto.query.QueryOrderDirection;
 import com.arcbees.gaestudio.shared.dto.query.QueryOrderDto;
 import com.google.apphosting.api.DatastorePb;
 import com.google.storage.onestore.v3.OnestoreEntity;
@@ -33,7 +33,7 @@ public class QueryMapper {
             // TODO find out why this is an array
             OnestoreEntity.Property property = filter.getProperty(0);
             String propertyName = property.getName();
-            QueryFilterOperatorDto operator = convertFilterOperator(filter.getOpEnum());
+            QueryFilterOperator operator = convertFilterOperator(filter.getOpEnum());
             String value = valueToString(property.getValue());
 
             filterList.add(new QueryFilterDto(propertyName, operator, value));
@@ -41,7 +41,7 @@ public class QueryMapper {
 
         final ArrayList<QueryOrderDto> orderList = new ArrayList<QueryOrderDto>();
         for (DatastorePb.Query.Order order : query.orders()) {
-            QueryOrderDirectionDto direction = convertOrderDirection(order.getDirectionEnum());
+            QueryOrderDirection direction = convertOrderDirection(order.getDirectionEnum());
             String property = order.getProperty();
 
             orderList.add(new QueryOrderDto(direction, property));
@@ -53,35 +53,35 @@ public class QueryMapper {
         return new QueryDto(kind, ancestor, filterList, orderList, offset, limit);
     }
 
-    private static QueryFilterOperatorDto convertFilterOperator(DatastorePb.Query.Filter.Operator operator) {
+    private static QueryFilterOperator convertFilterOperator(DatastorePb.Query.Filter.Operator operator) {
         switch (operator) {
             case EQUAL:
-                return QueryFilterOperatorDto.EQUAL;
+                return QueryFilterOperator.EQUAL;
 
             case GREATER_THAN:
-                return QueryFilterOperatorDto.GREATER_THAN;
+                return QueryFilterOperator.GREATER_THAN;
 
             case GREATER_THAN_OR_EQUAL:
-                return QueryFilterOperatorDto.GREATER_THAN_OR_EQUAL;
+                return QueryFilterOperator.GREATER_THAN_OR_EQUAL;
 
             case LESS_THAN:
-                return QueryFilterOperatorDto.LESS_THAN;
+                return QueryFilterOperator.LESS_THAN;
 
             case LESS_THAN_OR_EQUAL:
-                return QueryFilterOperatorDto.LESS_THAN_OR_EQUAL;
+                return QueryFilterOperator.LESS_THAN_OR_EQUAL;
 
             default:
                 throw new IllegalArgumentException("Unknown query filter operator: " + operator);
         }
     }
 
-    private static QueryOrderDirectionDto convertOrderDirection(DatastorePb.Query.Order.Direction direction) {
+    private static QueryOrderDirection convertOrderDirection(DatastorePb.Query.Order.Direction direction) {
         switch (direction) {
             case ASCENDING:
-                return QueryOrderDirectionDto.ASCENDING;
+                return QueryOrderDirection.ASCENDING;
 
             case DESCENDING:
-                return QueryOrderDirectionDto.DESCENDING;
+                return QueryOrderDirection.DESCENDING;
 
             default:
                 throw new IllegalArgumentException("Unknown query order direction: " + direction);

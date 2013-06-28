@@ -17,14 +17,20 @@ To plug GAE Studio into your project, follow these steps:
 <sessions-enabled>true</sessions-enabled>
 ```
 *. Add the GAE Studio dependency
-```
+```xml
 <dependency>
     <groupId>com.arcbees.gaestudio</groupId>
-    <artifactId>gae-studio</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>gae-studio-webapp</artifactId>
+    <version>${gaestudio.version}</version>
+</dependency>
+<dependency>
+    <groupId>com.arcbees.gaestudio</groupId>
+    <artifactId>gae-studio-server</artifactId>
+    <version>${gaestudio.version}</version>
 </dependency>
 ```
-*. Install the `GaeStudioServerModule()` into the app's server module. 
+
+*. Install the `GaeStudioModule()` into the app's server module.
 ```
 import com.arcbees.gaestudio.server.guice.GaeStudioServerModule;
 
@@ -32,14 +38,14 @@ public class ServerModule extends HandlerModule {
     @Override
     protected void configureHandlers() {
         // ...
-        install(new GaeStudioServerModule());
+        install(new GaeStudioModule());
     }
 }
 ```
 
 ##Running GAE Studio
 1. Compile and run the project in which you plugged GAE Studio
-2. Header over to `{your application's domain}/gae-studio-admin`
+2. Header over to `{your application's domain}/gae-studio-admin/`
 3. Grab a beer
 
 ##Build Server
