@@ -17,31 +17,31 @@
         <outputDirectory>${webappDirectory}</outputDirectory>
     </build>
 
+    <dependencies>
+        <!-- GAE-Studio dependencies -->
+        <dependency>
+            <groupId>com.arcbees.gaestudio</groupId>
+            <artifactId>gae-studio-client</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.arcbees.gaestudio</groupId>
+            <artifactId>gae-studio-server</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+        </dependency>
+    </dependencies>
+
     <profiles>
         <!-- 1. 'mvn package' -->
         <!-- 2. 'mvn resources:copy-resources jar:jar -Pbuild-jar' -->
         <profile>
             <id>build-jar</id>
-
-            <dependencies>
-                <!-- GAE-Studio dependencies -->
-                <dependency>
-                    <groupId>com.arcbees.gaestudio</groupId>
-                    <artifactId>gae-studio-client</artifactId>
-                    <version>${project.version}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>com.arcbees.gaestudio</groupId>
-                    <artifactId>gae-studio-server</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-
-                <dependency>
-                    <groupId>com.google.inject</groupId>
-                    <artifactId>guice</artifactId>
-                </dependency>
-            </dependencies>
 
             <build>
                 <resources>
