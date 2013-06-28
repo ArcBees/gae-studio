@@ -89,6 +89,10 @@ public interface AppResources extends ClientBundle {
         String idBold();
 
         String isDisplaying();
+
+        String namespaceBold();
+
+        String namespace();
     }
 
     public interface Sprites extends CssResource {

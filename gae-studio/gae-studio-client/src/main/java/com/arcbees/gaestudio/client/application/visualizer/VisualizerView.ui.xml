@@ -21,6 +21,7 @@
                 <a class="{resources.styles.backButton}"></a>
                 <p class="{resources.styles.isDisplaying}">
                     Displaying entity <b class="{resources.styles.idBold}">ID #</b> of the kind <b class="{resources.styles.kindBold}">Kind</b>
+                    <span class="{resources.styles.namespace}">in the namespace <b class="{resources.styles.namespaceBold}">Namespace</b></span>
                 </p>
                 <g:SimplePanel ui:field="entityDetailsPanel"
                                addStyleNames="{style.entityPanel} {resources.styles.secondTable}"/>

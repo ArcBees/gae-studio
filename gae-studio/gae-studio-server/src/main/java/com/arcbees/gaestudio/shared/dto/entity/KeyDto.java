@@ -14,8 +14,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class KeyDto implements IsSerializable {
     private String kind;
     private Long id;
-    private ParentKeyDto parentKeyDTO;
-    private AppIdNamespaceDto appIdNamespaceDTO;
+    private ParentKeyDto parentKeyDto;
+    private AppIdNamespaceDto appIdNamespaceDto;
 
     @SuppressWarnings("unused")
     protected KeyDto() {
@@ -23,12 +23,12 @@ public class KeyDto implements IsSerializable {
 
     public KeyDto(String kind,
                   Long id,
-                  ParentKeyDto parentKeyDTO,
-                  AppIdNamespaceDto appIdNamespaceDTO) {
+                  ParentKeyDto parentKeyDto,
+                  AppIdNamespaceDto appIdNamespaceDto) {
         this.kind = kind;
         this.id = id;
-        this.parentKeyDTO = parentKeyDTO;
-        this.appIdNamespaceDTO = appIdNamespaceDTO;
+        this.parentKeyDto = parentKeyDto;
+        this.appIdNamespaceDto = appIdNamespaceDto;
     }
 
     public String getKind() {
@@ -40,18 +40,18 @@ public class KeyDto implements IsSerializable {
     }
 
     public ParentKeyDto getParentKey() {
-        return parentKeyDTO;
+        return parentKeyDto;
     }
 
-    public void setParentKey(ParentKeyDto parentKeyDTO) {
-        this.parentKeyDTO = parentKeyDTO;
+    public void setParentKey(ParentKeyDto parentKeyDto) {
+        this.parentKeyDto = parentKeyDto;
     }
 
-    public AppIdNamespaceDto getAppIdNamespaceDTO() {
-        return appIdNamespaceDTO;
+    public AppIdNamespaceDto getAppIdNamespaceDto() {
+        return appIdNamespaceDto;
     }
 
-    public void setAppIdNamespaceDTO(AppIdNamespaceDto appIdNamespaceDTO) {
-        this.appIdNamespaceDTO = appIdNamespaceDTO;
+    public void setAppIdNamespaceDto(AppIdNamespaceDto appIdNamespaceDto) {
+        this.appIdNamespaceDto = appIdNamespaceDto;
     }
 }

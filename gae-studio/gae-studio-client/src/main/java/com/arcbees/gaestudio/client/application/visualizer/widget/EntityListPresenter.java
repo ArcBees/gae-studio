@@ -183,8 +183,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.entity)
                 .with(KIND, keyDto.getKind())
                 .with(ID, Long.toString(keyDto.getId()))
-                .with(NAMESPACE, keyDto.getAppIdNamespaceDTO().getNamespace())
-                .with(APP_ID, keyDto.getAppIdNamespaceDTO().getAppId());
+                .with(NAMESPACE, keyDto.getAppIdNamespaceDto().getNamespace())
+                .with(APP_ID, keyDto.getAppIdNamespaceDto().getAppId());
 
         if (keyDto.getParentKey() != null) {
             builder = builder.with(PARENT_KIND, keyDto.getParentKey().getKind())
