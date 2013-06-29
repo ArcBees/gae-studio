@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.server.dispatch;
 
 import java.util.Map;
 
+import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityResult;
@@ -27,8 +28,10 @@ import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetEmptyKindEntityHandler extends
-        AbstractActionHandler<GetEmptyKindEntityAction, GetEmptyKindEntityResult> {
+public class GetEmptyKindEntityHandler
+        extends AbstractActionHandler<GetEmptyKindEntityAction, GetEmptyKindEntityResult> {
+    private static final String GET_EMPTY_KIND_ENTITY = "Get Empty Kind Entity";
+
     private final GoogleAnalytic googleAnalytic;
 
     @Inject
@@ -42,7 +45,7 @@ public class GetEmptyKindEntityHandler extends
     @Override
     public GetEmptyKindEntityResult execute(GetEmptyKindEntityAction action,
                                             ExecutionContext context) throws ActionException {
-        googleAnalytic.trackEvent("Server Call", "Get Empty Kind Entity");
+        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_EMPTY_KIND_ENTITY);
 
         DispatchHelper.disableApiHooks();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

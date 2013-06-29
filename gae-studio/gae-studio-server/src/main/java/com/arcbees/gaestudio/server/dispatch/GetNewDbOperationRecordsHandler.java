@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsResult;
@@ -26,10 +27,11 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 // TODO externalize magic strings
 // TODO add logging
-public class GetNewDbOperationRecordsHandler extends
-        AbstractActionHandler<GetNewDbOperationRecordsAction, GetNewDbOperationRecordsResult> {
-    private final Logger logger;
+public class GetNewDbOperationRecordsHandler
+        extends AbstractActionHandler<GetNewDbOperationRecordsAction, GetNewDbOperationRecordsResult> {
+    private static final String GET_NEW_DB_OPERATION_RECORD = "Get New Db Operation Record";
 
+    private final Logger logger;
     private final GoogleAnalytic googleAnalytic;
     private final MemcacheService memcacheService;
 
@@ -45,9 +47,9 @@ public class GetNewDbOperationRecordsHandler extends
     }
 
     @Override
-    public GetNewDbOperationRecordsResult execute(GetNewDbOperationRecordsAction action, ExecutionContext context)
-            throws ActionException {
-        googleAnalytic.trackEvent("Server Call", "Get New Db Operation Record");
+    public GetNewDbOperationRecordsResult execute(GetNewDbOperationRecordsAction action,
+                                                  ExecutionContext context) throws ActionException {
+        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_NEW_DB_OPERATION_RECORD);
 
         Long mostRecentId = getMostRecentId();
         if (mostRecentId == null) {
@@ -81,7 +83,8 @@ public class GetNewDbOperationRecordsHandler extends
         return new GetNewDbOperationRecordsResult(records);
     }
 
-    private List<String> getNewOperationRecordKeys(long beginId, long endId) {
+    private List<String> getNewOperationRecordKeys(long beginId,
+                                                   long endId) {
         List<String> keys = new ArrayList<String>((int) (endId - beginId + 1));
         for (long i = beginId; i <= endId; ++i) {
             keys.add(MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() + i);

@@ -30,13 +30,7 @@ public class GaParameterConstants {
 
     public static final String EVENT_ACTION = "ea";
 
-    public static final String EVENT_DEFAULT_CATEGORY = "default";
-
-    public static final String EVENT_DEFAULT_ACTION = "default";
-
     public static final String EVENT_LABEL = "el";
 
     public static final String EVENT_VALUE = "ev";
-
-    public static final String DEFAULT_APP_VERSION = "1.0.0";
 }

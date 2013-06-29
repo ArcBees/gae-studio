@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -23,6 +24,8 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 public class DeleteEntityHandler extends AbstractActionHandler<DeleteEntityAction, DeleteEntityResult> {
+    private static final String DELETE_ENTITY = "Delete Entity";
+
     private final GoogleAnalytic googleAnalytic;
 
     @Inject
@@ -35,7 +38,7 @@ public class DeleteEntityHandler extends AbstractActionHandler<DeleteEntityActio
     @Override
     public DeleteEntityResult execute(DeleteEntityAction action,
                                       ExecutionContext context) throws ActionException {
-        googleAnalytic.trackEvent("Server Call", "Delete Entity");
+        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, DELETE_ENTITY);
 
         DispatchHelper.disableApiHooks();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.recorder.HookRegistrar;
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
 import com.arcbees.gaestudio.server.recorder.authentication.Listener;
@@ -22,6 +23,8 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 public class SetRecordingHandler extends AbstractActionHandler<SetRecordingAction, SetRecordingResult> {
+    private static final String SET_RECORDING = "Set Recording";
+
     private final HookRegistrar hookRegistrar;
     private final ListenerProvider listenerProvider;
     private final GoogleAnalytic googleAnalytic;
@@ -41,8 +44,9 @@ public class SetRecordingHandler extends AbstractActionHandler<SetRecordingActio
     }
 
     @Override
-    public SetRecordingResult execute(SetRecordingAction action, ExecutionContext context) throws ActionException {
-        googleAnalytic.trackEvent("Server Call", "Set Recording");
+    public SetRecordingResult execute(SetRecordingAction action,
+                                      ExecutionContext context) throws ActionException {
+        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, SET_RECORDING);
 
         Listener listener = listenerProvider.get();
 

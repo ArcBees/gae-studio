@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.server.dispatch;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
@@ -27,6 +28,8 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 // TODO add logging
 public class GetEntitiesByKindHandler extends AbstractActionHandler<GetEntitiesByKindAction, GetEntitiesByKindResult> {
+    private static final String GET_ENTITIES_BY_KIND = "Get Entities By Kind";
+
     private final GoogleAnalytic googleAnalytic;
 
     @Inject
@@ -40,7 +43,7 @@ public class GetEntitiesByKindHandler extends AbstractActionHandler<GetEntitiesB
     @Override
     public GetEntitiesByKindResult execute(GetEntitiesByKindAction action,
                                            ExecutionContext context) throws ActionException {
-        googleAnalytic.trackEvent("Server Call", "Get Entities By Kind");
+        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_ENTITIES_BY_KIND);
 
         DispatchHelper.disableApiHooks();
 
