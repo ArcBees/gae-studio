@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.server.dispatch;
 
 import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindResult;
+import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.FetchOptions;
@@ -21,14 +22,20 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 public class GetEntityCountByKindHandler
         extends AbstractActionHandler<GetEntityCountByKindAction, GetEntityCountByKindResult> {
+    private final GoogleAnalytic googleAnalytic;
+
     @Inject
-    GetEntityCountByKindHandler() {
+    GetEntityCountByKindHandler(GoogleAnalytic googleAnalytic) {
         super(GetEntityCountByKindAction.class);
+
+        this.googleAnalytic = googleAnalytic;
     }
 
     @Override
-    public GetEntityCountByKindResult execute(GetEntityCountByKindAction action, ExecutionContext context)
-            throws ActionException {
+    public GetEntityCountByKindResult execute(GetEntityCountByKindAction action,
+                                              ExecutionContext context) throws ActionException {
+        googleAnalytic.trackEvent("Server Call", "Get Entity Count By Kind");
+
         DispatchHelper.disableApiHooks();
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

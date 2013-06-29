@@ -18,6 +18,7 @@ import com.arcbees.gaestudio.server.recorder.MemcacheKey;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsResult;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
+import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
@@ -29,20 +30,25 @@ public class GetNewDbOperationRecordsHandler extends
         AbstractActionHandler<GetNewDbOperationRecordsAction, GetNewDbOperationRecordsResult> {
     private final Logger logger;
 
+    private final GoogleAnalytic googleAnalytic;
     private final MemcacheService memcacheService;
 
     @Inject
     GetNewDbOperationRecordsHandler(Logger logger,
+                                    GoogleAnalytic googleAnalytic,
                                     MemcacheService memcacheService) {
         super(GetNewDbOperationRecordsAction.class);
 
         this.logger = logger;
+        this.googleAnalytic = googleAnalytic;
         this.memcacheService = memcacheService;
     }
 
     @Override
     public GetNewDbOperationRecordsResult execute(GetNewDbOperationRecordsAction action, ExecutionContext context)
             throws ActionException {
+        googleAnalytic.trackEvent("Server Call", "Get New Db Operation Record");
+
         Long mostRecentId = getMostRecentId();
         if (mostRecentId == null) {
             logger.info("Could not find a mostRecentId");

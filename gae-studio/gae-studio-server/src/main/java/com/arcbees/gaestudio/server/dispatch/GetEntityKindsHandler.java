@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
+import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entities;
@@ -27,14 +28,20 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 public class GetEntityKindsHandler extends AbstractActionHandler<GetEntityKindsAction, GetEntityKindsResult> {
+    private final GoogleAnalytic googleAnalytic;
+
     @Inject
-    GetEntityKindsHandler() {
+    GetEntityKindsHandler(GoogleAnalytic googleAnalytic) {
         super(GetEntityKindsAction.class);
+
+        this.googleAnalytic = googleAnalytic;
     }
 
     @Override
-    public GetEntityKindsResult execute(GetEntityKindsAction action, ExecutionContext context)
-            throws ActionException {
+    public GetEntityKindsResult execute(GetEntityKindsAction action,
+                                        ExecutionContext context) throws ActionException {
+        googleAnalytic.trackEvent("Server Call", "Get Entity Kinds");
+
         DispatchHelper.disableApiHooks();
 
         Query query = new Query(Entities.KIND_METADATA_KIND);

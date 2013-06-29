@@ -15,6 +15,7 @@ import com.arcbees.gaestudio.server.recorder.authentication.Listener;
 import com.arcbees.gaestudio.server.recorder.authentication.ListenerProvider;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingResult;
+import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
@@ -23,21 +24,26 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class SetRecordingHandler extends AbstractActionHandler<SetRecordingAction, SetRecordingResult> {
     private final HookRegistrar hookRegistrar;
     private final ListenerProvider listenerProvider;
+    private final GoogleAnalytic googleAnalytic;
     private final MemcacheService memcacheService;
 
     @Inject
     SetRecordingHandler(HookRegistrar hookRegistrar,
                         ListenerProvider listenerProvider,
+                        GoogleAnalytic googleAnalytic,
                         MemcacheService memcacheService) {
         super(SetRecordingAction.class);
 
         this.hookRegistrar = hookRegistrar;
         this.listenerProvider = listenerProvider;
+        this.googleAnalytic = googleAnalytic;
         this.memcacheService = memcacheService;
     }
 
     @Override
     public SetRecordingResult execute(SetRecordingAction action, ExecutionContext context) throws ActionException {
+        googleAnalytic.trackEvent("Server Call", "Set Recording");
+
         Listener listener = listenerProvider.get();
 
         if (action.isStarting()) {

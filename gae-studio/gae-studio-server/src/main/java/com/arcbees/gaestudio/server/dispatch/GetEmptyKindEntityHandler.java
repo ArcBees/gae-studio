@@ -15,6 +15,7 @@ import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -28,15 +29,21 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 public class GetEmptyKindEntityHandler extends
         AbstractActionHandler<GetEmptyKindEntityAction, GetEmptyKindEntityResult> {
+    private final GoogleAnalytic googleAnalytic;
+
     @Inject
-    GetEmptyKindEntityHandler() {
+    GetEmptyKindEntityHandler(GoogleAnalytic googleAnalytic) {
         super(GetEmptyKindEntityAction.class);
+
+        this.googleAnalytic = googleAnalytic;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public GetEmptyKindEntityResult execute(GetEmptyKindEntityAction action, ExecutionContext context)
-            throws ActionException {
+    public GetEmptyKindEntityResult execute(GetEmptyKindEntityAction action,
+                                            ExecutionContext context) throws ActionException {
+        googleAnalytic.trackEvent("Server Call", "Get Empty Kind Entity");
+
         DispatchHelper.disableApiHooks();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Entity emptyEntity = new Entity(action.getKind());
@@ -56,7 +63,8 @@ public class GetEmptyKindEntityHandler extends
         return new GetEmptyKindEntityResult(entityDTO);
     }
 
-    private Entity setEmptiedProperties(Entity entity, Map<String, Object> properties) {
+    private Entity setEmptiedProperties(Entity entity,
+                                        Map<String, Object> properties) {
         for (Map.Entry<String, Object> property : properties.entrySet()) {
             Object value = property.getValue();
 

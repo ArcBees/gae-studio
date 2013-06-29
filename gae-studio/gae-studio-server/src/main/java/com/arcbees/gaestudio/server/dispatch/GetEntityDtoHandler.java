@@ -17,6 +17,7 @@ import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
+import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -27,13 +28,20 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 public class GetEntityDtoHandler extends AbstractActionHandler<GetEntityDtoAction, GetEntityDtoResult> {
+    private final GoogleAnalytic googleAnalytic;
+
     @Inject
-    GetEntityDtoHandler() {
+    GetEntityDtoHandler(GoogleAnalytic googleAnalytic) {
         super(GetEntityDtoAction.class);
+
+        this.googleAnalytic = googleAnalytic;
     }
 
     @Override
-    public GetEntityDtoResult execute(GetEntityDtoAction action, ExecutionContext context) throws ActionException {
+    public GetEntityDtoResult execute(GetEntityDtoAction action,
+                                      ExecutionContext context) throws ActionException {
+        googleAnalytic.trackEvent("Server Call", "Get Entity Dto");
+
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
 
         KeyDto keyDto = action.getKeyDto();
