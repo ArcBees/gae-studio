@@ -12,7 +12,6 @@ package com.arcbees.googleanalytic;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
@@ -94,8 +93,6 @@ public class MeasureProtocolRequest {
         }
     }
 
-    private static final Logger LOGGER = Logger.getLogger(MeasureProtocolRequest.class.getName());
-
     private final List<MethodParameterTuple> methodParameterTuples;
 
     MeasureProtocolRequest(List<MethodParameterTuple> methodParameterTuples) {
@@ -111,8 +108,6 @@ public class MeasureProtocolRequest {
         for (MethodParameterTuple methodParameterTuple : methodParameterTuples) {
             genericUrl.put(methodParameterTuple.getName(), methodParameterTuple.getValue());
         }
-
-        LOGGER.info(genericUrl.toString());
 
         try {
             HttpRequest request = requestFactory.buildGetRequest(genericUrl);
