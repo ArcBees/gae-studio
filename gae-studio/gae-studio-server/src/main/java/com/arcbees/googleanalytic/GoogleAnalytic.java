@@ -32,7 +32,8 @@ public class GoogleAnalytic {
         this.trackingCode = trackingCode;
     }
 
-    public boolean sendEvent(String eventLabel) {
+    public boolean trackEvent(String eventCategory,
+                              String eventAction) {
         MeasureProtocolRequest measureProtocolRequest = new MeasureProtocolRequest.Builder()
                 .clientId(CLIENT_ID)
                 .protocolVersion(PROTOCOL_VERSION)
@@ -40,36 +41,16 @@ public class GoogleAnalytic {
                 .applicationVersion(appVersion)
                 .trackingCode(trackingCode)
                 .hitType(GaParameterConstants.EVENT_HIT_TYPE)
-                .eventCategory(GaParameterConstants.EVENT_DEFAULT_CATEGORY)
-                .eventAction(GaParameterConstants.EVENT_DEFAULT_ACTION)
-                .eventLabel(eventLabel)
+                .eventCategory(eventCategory)
+                .eventAction(eventAction)
                 .build();
 
         return measureProtocolRequest.executeRequest();
     }
 
-    public boolean sendEvent(String eventLabel,
-                             Integer eventValue) {
-        MeasureProtocolRequest measureProtocolRequest = new MeasureProtocolRequest.Builder()
-                .clientId(CLIENT_ID)
-                .protocolVersion(PROTOCOL_VERSION)
-                .applicationName(appName)
-                .applicationVersion(appVersion)
-                .trackingCode(trackingCode)
-                .hitType(GaParameterConstants.EVENT_HIT_TYPE)
-                .eventCategory(GaParameterConstants.EVENT_DEFAULT_CATEGORY)
-                .eventAction(GaParameterConstants.EVENT_DEFAULT_ACTION)
-                .eventLabel(eventLabel)
-                .eventValue(eventValue.toString())
-                .build();
-
-        return measureProtocolRequest.executeRequest();
-    }
-
-    public boolean sendEvent(String category,
-                             String action,
-                             String eventLabel,
-                             Integer eventValue) {
+    public boolean trackEvent(String category,
+                              String action,
+                              String eventLabel) {
         MeasureProtocolRequest measureProtocolRequest = new MeasureProtocolRequest.Builder()
                 .clientId(CLIENT_ID)
                 .protocolVersion(PROTOCOL_VERSION)
@@ -80,7 +61,6 @@ public class GoogleAnalytic {
                 .eventCategory(category)
                 .eventAction(action)
                 .eventLabel(eventLabel)
-                .eventValue(eventValue.toString())
                 .build();
 
         return measureProtocolRequest.executeRequest();
