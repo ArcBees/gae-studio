@@ -88,6 +88,11 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>${commons-httpclient.version}</version>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>
