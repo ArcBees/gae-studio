@@ -35,8 +35,8 @@ public class GoogleAnalytic {
     public boolean trackEvent(String eventCategory,
                               String eventAction) {
         MeasureProtocolRequest measureProtocolRequest = new MeasureProtocolRequest.Builder()
-                .clientId(CLIENT_ID)
                 .protocolVersion(PROTOCOL_VERSION)
+                .clientId(CLIENT_ID)
                 .applicationName(appName)
                 .applicationVersion(appVersion)
                 .trackingCode(trackingCode)
@@ -52,8 +52,8 @@ public class GoogleAnalytic {
                               String action,
                               String eventLabel) {
         MeasureProtocolRequest measureProtocolRequest = new MeasureProtocolRequest.Builder()
-                .clientId(CLIENT_ID)
                 .protocolVersion(PROTOCOL_VERSION)
+                .clientId(CLIENT_ID)
                 .applicationName(appName)
                 .applicationVersion(appVersion)
                 .trackingCode(trackingCode)
