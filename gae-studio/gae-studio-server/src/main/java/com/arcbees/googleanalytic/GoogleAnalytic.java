@@ -9,34 +9,29 @@
 
 package com.arcbees.googleanalytic;
 
-import java.util.UUID;
-
 public class GoogleAnalytic {
-    private static final String CLIENT_ID = UUID.randomUUID().toString();
     private static final String PROTOCOL_VERSION = "1";
 
     private final String appName;
     private final String appVersion;
     private final String trackingCode;
+    private final String clientId;
 
-    private GoogleAnalytic(String appName,
-                           String trackingCode) {
-        this(appName, GaParameterConstants.DEFAULT_APP_VERSION, trackingCode);
-    }
-
-    private GoogleAnalytic(String appName,
-                           String appVersion,
-                           String trackingCode) {
+    private GoogleAnalytic(String clientId,
+                           String trackingCode,
+                           String appName,
+                           String appVersion) {
         this.appName = appName;
         this.appVersion = appVersion;
         this.trackingCode = trackingCode;
+        this.clientId = clientId;
     }
 
     public boolean trackEvent(String eventCategory,
                               String eventAction) {
         MeasureProtocolRequest measureProtocolRequest = new MeasureProtocolRequest.Builder()
                 .protocolVersion(PROTOCOL_VERSION)
-                .clientId(CLIENT_ID)
+                .clientId(clientId)
                 .applicationName(appName)
                 .applicationVersion(appVersion)
                 .trackingCode(trackingCode)
@@ -53,7 +48,7 @@ public class GoogleAnalytic {
                               String eventLabel) {
         MeasureProtocolRequest measureProtocolRequest = new MeasureProtocolRequest.Builder()
                 .protocolVersion(PROTOCOL_VERSION)
-                .clientId(CLIENT_ID)
+                .clientId(clientId)
                 .applicationName(appName)
                 .applicationVersion(appVersion)
                 .trackingCode(trackingCode)
@@ -66,14 +61,10 @@ public class GoogleAnalytic {
         return measureProtocolRequest.executeRequest();
     }
 
-    public static GoogleAnalytic build(String appName,
-                                       String trackingCode) {
-        return new GoogleAnalytic(appName, trackingCode);
-    }
-
-    public static GoogleAnalytic build(String appName,
-                                       String appVersion,
-                                       String trackingCode) {
-        return new GoogleAnalytic(appName, appVersion, trackingCode);
+    public static GoogleAnalytic build(String clientId,
+                                       String trackingCode,
+                                       String appName,
+                                       String appVersion) {
+        return new GoogleAnalytic(clientId, trackingCode, appName, appVersion);
     }
 }
