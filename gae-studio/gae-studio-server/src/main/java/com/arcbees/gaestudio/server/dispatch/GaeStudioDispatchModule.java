@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import javax.inject.Singleton;
+
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
@@ -18,6 +20,8 @@ import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
+import com.arcbees.googleanalytic.GoogleAnalytic;
+import com.google.inject.Provides;
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
 
 public class GaeStudioDispatchModule extends HandlerModule {
@@ -32,5 +36,15 @@ public class GaeStudioDispatchModule extends HandlerModule {
         bindHandler(GetEmptyKindEntityAction.class, GetEmptyKindEntityHandler.class);
         bindHandler(DeleteEntityAction.class, DeleteEntityHandler.class);
         bindHandler(GetEntityDtoAction.class, GetEntityDtoHandler.class);
+    }
+
+    @Provides
+    @Singleton
+    GoogleAnalytic createGoogleAnalytic() {
+        GoogleAnalytic googleAnalytic = GoogleAnalytic.build("GAE-Studio", "1.0", "UA-41550930-2");
+
+        googleAnalytic.trackEvent("Initialization", "Application Loaded");
+
+        return googleAnalytic;
     }
 }
