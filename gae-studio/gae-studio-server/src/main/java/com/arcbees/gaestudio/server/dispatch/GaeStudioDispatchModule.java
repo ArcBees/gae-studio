@@ -41,7 +41,7 @@ public class GaeStudioDispatchModule extends HandlerModule {
     @Provides
     @Singleton
     GoogleAnalytic createGoogleAnalytic() {
-        GoogleAnalytic googleAnalytic = GoogleAnalytic.build("GAE-Studio", "1.0", "UA-41550930-2");
+        GoogleAnalytic googleAnalytic = GoogleAnalytic.build("GAE-Studio", "1.0", "UA-41550930-4");
 
         googleAnalytic.trackEvent("Initialization", "Application Loaded");
 
