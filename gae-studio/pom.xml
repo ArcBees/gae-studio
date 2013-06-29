@@ -32,7 +32,7 @@
         <guice.version>3.0</guice.version>
         <objectify.version>4.0rc1</objectify.version>
         <persistence-api.version>1.0.2</persistence-api.version>
-        <commons-httpclient.version>3.1</commons-httpclient.version>
+        <google-http-client-appengine.version>1.15.0-rc</google-http-client-appengine.version>
 
         <!-- test -->
         <junit.version>4.11</junit.version>

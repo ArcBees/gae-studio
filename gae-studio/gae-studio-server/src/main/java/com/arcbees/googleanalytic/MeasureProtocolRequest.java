@@ -9,14 +9,18 @@
 
 package com.arcbees.googleanalytic;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.PostMethod;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.HttpResponse;
+import com.google.api.client.http.HttpStatusCodes;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 
 public class MeasureProtocolRequest {
     public static class Builder {
@@ -90,7 +94,7 @@ public class MeasureProtocolRequest {
         }
     }
 
-    private static final Logger LOG = Logger.getLogger(MeasureProtocolRequest.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(MeasureProtocolRequest.class.getName());
 
     private final List<MethodParameterTuple> methodParameterTuples;
 
@@ -99,21 +103,26 @@ public class MeasureProtocolRequest {
     }
 
     public boolean executeRequest() {
-        HttpClient client = new HttpClient();
-        PostMethod method = new PostMethod(GaParameterConstants.POST_URL);
+        HttpTransport httpTransport = new NetHttpTransport();
+        HttpRequestFactory requestFactory = httpTransport.createRequestFactory();
+
+        GenericUrl genericUrl = new GenericUrl(GaParameterConstants.POST_URL);
 
         for (MethodParameterTuple methodParameterTuple : methodParameterTuples) {
-            method.addParameter(methodParameterTuple.getName(), methodParameterTuple.getValue());
+            genericUrl.put(methodParameterTuple.getName(), methodParameterTuple.getValue());
         }
+
+        LOGGER.info(genericUrl.toString());
 
         try {
-            int returnCode = client.executeMethod(method);
+            HttpRequest request = requestFactory.buildGetRequest(genericUrl);
+            HttpResponse response = request.execute();
 
-            return (returnCode == HttpStatus.SC_OK);
-        } catch (Exception e) {
-            LOG.log(Level.SEVERE, "ERROR: {}", e.getMessage());
-
-            return false;
+            return response.getStatusCode() == HttpStatusCodes.STATUS_CODE_OK;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        return false;
     }
 }
