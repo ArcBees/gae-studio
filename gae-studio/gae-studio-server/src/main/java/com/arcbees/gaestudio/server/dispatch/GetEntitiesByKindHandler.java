@@ -11,12 +11,13 @@ package com.arcbees.gaestudio.server.dispatch;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
+import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.FetchOptions;
@@ -27,19 +28,23 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 // TODO add logging
 public class GetEntitiesByKindHandler extends AbstractActionHandler<GetEntitiesByKindAction, GetEntitiesByKindResult> {
-    private final Logger logger;
+    private static final String GET_ENTITIES_BY_KIND = "Get Entities By Kind";
+
+    private final GoogleAnalytic googleAnalytic;
 
     @Inject
-    GetEntitiesByKindHandler(Logger logger) {
+    GetEntitiesByKindHandler(GoogleAnalytic googleAnalytic) {
         super(GetEntitiesByKindAction.class);
 
-        this.logger = logger;
+        this.googleAnalytic = googleAnalytic;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public GetEntitiesByKindResult execute(GetEntitiesByKindAction action, ExecutionContext context)
-            throws ActionException {
+    public GetEntitiesByKindResult execute(GetEntitiesByKindAction action,
+                                           ExecutionContext context) throws ActionException {
+        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_ENTITIES_BY_KIND);
+
         DispatchHelper.disableApiHooks();
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
