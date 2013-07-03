@@ -23,15 +23,17 @@
         }
 
         .menu > a {
-            display: block;
             color: white;
-            padding: 0 10px;
-            text-decoration: none;
             font-size: 18px;
+            text-decoration: none;
             cursor: pointer;
-            position: relative;
-            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+
+            padding: 0 10px;
             margin: 7px 10px;
+            display: block;
+            position: relative;
+
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
         }
 
         .logo {

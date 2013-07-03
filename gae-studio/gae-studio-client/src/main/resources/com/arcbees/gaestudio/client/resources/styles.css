@@ -46,6 +46,7 @@ body {
 
 .toolbarButton {
     cursor: pointer;
+
     padding: 0 10px 0 5px;
     margin-left: 20px;
     margin-top: 5px;
@@ -65,7 +66,7 @@ body {
 }
 
 .toolbarButton:hover {
-    background: rgba(209, 209, 209, 0.11);
+    background: rgba(220, 220, 220, 0.2);
     border: 1px solid rgba(3, 3, 3, 0.4);
 
     -webkit-box-shadow: inset 0 1px 5px -1px rgba(182, 182, 182, 0.38), 0 1px 5px 1px rgba(24, 24, 24, 0.2);
