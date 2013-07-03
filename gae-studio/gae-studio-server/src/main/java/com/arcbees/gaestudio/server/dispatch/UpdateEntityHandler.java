@@ -11,10 +11,12 @@ package com.arcbees.gaestudio.server.dispatch;
 
 import java.util.logging.Logger;
 
+import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -26,17 +28,25 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 public class UpdateEntityHandler extends AbstractActionHandler<UpdateEntityAction, UpdateEntityResult> {
+    private static final String UPDATE_ENTITY = "Update Entity";
+
     private final Logger logger;
+    private final GoogleAnalytic googleAnalytic;
 
     @Inject
-    UpdateEntityHandler(Logger logger) {
+    UpdateEntityHandler(Logger logger,
+                        GoogleAnalytic googleAnalytic) {
         super(UpdateEntityAction.class);
 
         this.logger = logger;
+        this.googleAnalytic = googleAnalytic;
     }
 
     @Override
-    public UpdateEntityResult execute(UpdateEntityAction action, ExecutionContext context) throws ActionException {
+    public UpdateEntityResult execute(UpdateEntityAction action,
+                                      ExecutionContext context) throws ActionException {
+        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, UPDATE_ENTITY);
+
         DispatchHelper.disableApiHooks();
         EntityDto entityDTO = action.getEntityDTO();
         Entity dbEntity;

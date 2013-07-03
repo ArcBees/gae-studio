@@ -11,10 +11,12 @@ package com.arcbees.gaestudio.server.dispatch;
 
 import java.util.Map;
 
+import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -26,17 +28,25 @@ import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetEmptyKindEntityHandler extends
-        AbstractActionHandler<GetEmptyKindEntityAction, GetEmptyKindEntityResult> {
+public class GetEmptyKindEntityHandler
+        extends AbstractActionHandler<GetEmptyKindEntityAction, GetEmptyKindEntityResult> {
+    private static final String GET_EMPTY_KIND_ENTITY = "Get Empty Kind Entity";
+
+    private final GoogleAnalytic googleAnalytic;
+
     @Inject
-    GetEmptyKindEntityHandler() {
+    GetEmptyKindEntityHandler(GoogleAnalytic googleAnalytic) {
         super(GetEmptyKindEntityAction.class);
+
+        this.googleAnalytic = googleAnalytic;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public GetEmptyKindEntityResult execute(GetEmptyKindEntityAction action, ExecutionContext context)
-            throws ActionException {
+    public GetEmptyKindEntityResult execute(GetEmptyKindEntityAction action,
+                                            ExecutionContext context) throws ActionException {
+        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_EMPTY_KIND_ENTITY);
+
         DispatchHelper.disableApiHooks();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Entity emptyEntity = new Entity(action.getKind());
@@ -56,7 +66,8 @@ public class GetEmptyKindEntityHandler extends
         return new GetEmptyKindEntityResult(entityDTO);
     }
 
-    private Entity setEmptiedProperties(Entity entity, Map<String, Object> properties) {
+    private Entity setEmptiedProperties(Entity entity,
+                                        Map<String, Object> properties) {
         for (Map.Entry<String, Object> property : properties.entrySet()) {
             Object value = property.getValue();
 
