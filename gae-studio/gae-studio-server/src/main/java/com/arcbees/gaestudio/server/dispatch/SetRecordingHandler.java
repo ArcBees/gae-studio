@@ -9,35 +9,45 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.recorder.HookRegistrar;
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
 import com.arcbees.gaestudio.server.recorder.authentication.Listener;
 import com.arcbees.gaestudio.server.recorder.authentication.ListenerProvider;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingResult;
+import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 public class SetRecordingHandler extends AbstractActionHandler<SetRecordingAction, SetRecordingResult> {
+    private static final String SET_RECORDING = "Set Recording";
+
     private final HookRegistrar hookRegistrar;
     private final ListenerProvider listenerProvider;
+    private final GoogleAnalytic googleAnalytic;
     private final MemcacheService memcacheService;
 
     @Inject
     SetRecordingHandler(HookRegistrar hookRegistrar,
                         ListenerProvider listenerProvider,
+                        GoogleAnalytic googleAnalytic,
                         MemcacheService memcacheService) {
         super(SetRecordingAction.class);
 
         this.hookRegistrar = hookRegistrar;
         this.listenerProvider = listenerProvider;
+        this.googleAnalytic = googleAnalytic;
         this.memcacheService = memcacheService;
     }
 
     @Override
-    public SetRecordingResult execute(SetRecordingAction action, ExecutionContext context) throws ActionException {
+    public SetRecordingResult execute(SetRecordingAction action,
+                                      ExecutionContext context) throws ActionException {
+        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, SET_RECORDING);
+
         Listener listener = listenerProvider.get();
 
         if (action.isStarting()) {

@@ -74,6 +74,11 @@
 
         <!-- Other dependencies -->
         <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client-appengine</artifactId>
+            <version>${google-http-client-appengine.version}</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>${servlet-api.version}</version>
@@ -113,6 +118,7 @@
                 <directory>src/main/java</directory>
                 <excludes>
                     <exclude>com/arcbees/gaestudio/server/**</exclude>
+                    <exclude>com/arcbees/googleanalytic/**</exclude>
                     <exclude>com/google/appengine/api/datastore/**</exclude>
                 </excludes>
             </resource>

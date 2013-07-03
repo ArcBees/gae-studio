@@ -9,12 +9,12 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
-import java.util.logging.Logger;
-
+import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Key;
@@ -24,13 +24,22 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 public class DeleteEntityHandler extends AbstractActionHandler<DeleteEntityAction, DeleteEntityResult> {
+    private static final String DELETE_ENTITY = "Delete Entity";
+
+    private final GoogleAnalytic googleAnalytic;
+
     @Inject
-    DeleteEntityHandler(Logger logger) {
+    DeleteEntityHandler(GoogleAnalytic googleAnalytic) {
         super(DeleteEntityAction.class);
+
+        this.googleAnalytic = googleAnalytic;
     }
 
     @Override
-    public DeleteEntityResult execute(DeleteEntityAction action, ExecutionContext context) throws ActionException {
+    public DeleteEntityResult execute(DeleteEntityAction action,
+                                      ExecutionContext context) throws ActionException {
+        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, DELETE_ENTITY);
+
         DispatchHelper.disableApiHooks();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
@@ -44,7 +53,9 @@ public class DeleteEntityHandler extends AbstractActionHandler<DeleteEntityActio
     }
 
     @Override
-    public void undo(DeleteEntityAction action, DeleteEntityResult result, ExecutionContext context)
+    public void undo(DeleteEntityAction action,
+                     DeleteEntityResult result,
+                     ExecutionContext context)
             throws ActionException {
         // Nothing to do here
     }
