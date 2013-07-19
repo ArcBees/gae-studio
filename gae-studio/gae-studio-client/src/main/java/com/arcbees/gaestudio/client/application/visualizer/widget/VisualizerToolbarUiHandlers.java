@@ -19,4 +19,6 @@ interface VisualizerToolbarUiHandlers extends UiHandlers {
     void delete();
 
     void edit();
+
+    void deleteByKind();
 }

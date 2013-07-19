@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntityEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
@@ -20,9 +21,11 @@ import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntities
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesType;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.google.common.base.Strings;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -49,9 +52,9 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
 
     @Inject
     VisualizerToolbarPresenter(EventBus eventBus,
-                               MyView view,
-                               DispatchAsync dispatcher,
-                               AppConstants myConstants) {
+            MyView view,
+            DispatchAsync dispatcher,
+            AppConstants myConstants) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);
@@ -96,6 +99,13 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     public void delete() {
         if (currentParsedEntity != null) {
             DeleteEntityEvent.fire(this, currentParsedEntity);
+        }
+    }
+
+    @Override
+    public void deleteByKind() {
+        if (!Strings.isNullOrEmpty(currentKind)) {
+            DeleteEntitiesEvent.fire(this, DeleteEntitiesType.KIND, currentKind);
         }
     }
 

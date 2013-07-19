@@ -39,15 +39,16 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     private final ToolbarButton create;
     private final ToolbarButton edit;
     private final ToolbarButton delete;
+    private final ToolbarButton deleteByKind;
     private final String secondTableStyleName;
     private final String secondTableHiddenStyleName;
     private final String entityListContainerSelectedStyleName;
 
     @Inject
     VisualizerToolbarView(Binder uiBinder,
-                          AppResources resources,
-                          UiFactory uiFactory,
-                          AppConstants myConstants) {
+            AppResources resources,
+            UiFactory uiFactory,
+            AppConstants myConstants) {
         this.resources = resources;
         this.uiFactory = uiFactory;
         this.myConstants = myConstants;
@@ -62,11 +63,13 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
         create = createCreateButton();
         edit = createEditButton();
         delete = createDeleteButton();
+        deleteByKind = createDeleteByKindButton();
 
         buttons.add(refresh);
         buttons.add(create);
         buttons.add(edit);
         buttons.add(delete);
+        buttons.add(deleteByKind);
 
         edit.setEnabled(false);
         delete.setEnabled(false);
@@ -123,6 +126,15 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
             @Override
             public void onClicked() {
                 getUiHandlers().delete();
+            }
+        });
+    }
+
+    private ToolbarButton createDeleteByKindButton() {
+        return uiFactory.createToolbarButton(myConstants.deleteAllOfKind(), resources.delete(), new ToolbarButtonCallback() {
+            @Override
+            public void onClicked() {
+                getUiHandlers().deleteByKind();
             }
         });
     }

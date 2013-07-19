@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntityEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
@@ -28,7 +29,8 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPresenter.MyView>
-        implements DeleteEntityEvent.DeleteEntityHandler, EntityDeletionUiHandlers {
+        implements DeleteEntityEvent.DeleteEntityHandler, EntityDeletionUiHandlers,
+        DeleteEntitiesEvent.DeleteEntitiesHandler {
     interface MyView extends View, HasUiHandlers<EntityDeletionUiHandlers> {
         void displayEntityDeletion(ParsedEntity parsedEntity);
 
@@ -41,9 +43,9 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
 
     @Inject
     EntityDeletionPresenter(EventBus eventBus,
-                            MyView view,
-                            DispatchAsync dispatcher,
-                            AppConstants myConstants) {
+            MyView view,
+            DispatchAsync dispatcher,
+            AppConstants myConstants) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);
@@ -56,6 +58,11 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
     public void onDeleteEntity(DeleteEntityEvent event) {
         currentParsedEntity = event.getParsedEntity();
         getView().displayEntityDeletion(currentParsedEntity);
+    }
+
+    @Override
+    public void onDeleteEntities(DeleteEntitiesEvent event) {
+        getView().displayEntityDeletion(null);
     }
 
     @Override
@@ -82,6 +89,7 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
         super.onBind();
 
         addRegisteredHandler(DeleteEntityEvent.getType(), this);
+        addRegisteredHandler(DeleteEntitiesEvent.getType(), this);
     }
 
     private void onEntityDeletedSuccess(EntityDto entityDTO) {
