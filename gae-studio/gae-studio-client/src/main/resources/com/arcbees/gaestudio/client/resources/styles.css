@@ -330,7 +330,7 @@ body {
     display: none;
 }
 
-.noOverflow, .entityDetailPanelVisibility {
+.noOverflow, .entityDetailPanelVisibility, .secondTableLock {
     overflow: visible;
 }
 

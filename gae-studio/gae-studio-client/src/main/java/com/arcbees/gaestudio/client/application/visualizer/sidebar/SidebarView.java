@@ -166,6 +166,6 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
             }
         };
 
-        timer.schedule(500);
+        timer.schedule(300);
     }
 }

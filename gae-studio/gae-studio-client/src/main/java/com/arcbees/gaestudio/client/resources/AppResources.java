@@ -99,6 +99,8 @@ public interface AppResources extends ClientBundle {
         String namespaceBold();
 
         String namespace();
+
+        String secondTableLock();
     }
 
     public interface Sprites extends CssResource {

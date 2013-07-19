@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.application.visualizer.ui.JsonContainer;
 import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
@@ -24,19 +23,16 @@ import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.arcbees.gquery.tooltip.client.Tooltip;
-import com.arcbees.gquery.tooltip.client.TooltipOptions;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.query.client.Function;
-import com.google.gwt.query.client.GQuery;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.Range;
@@ -62,7 +58,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     CellTable<ParsedEntity> entityTable;
 
     private final VisualizerUiFactory visualizerUiFactory;
-   // private final EntityListTooltipResources entityListTooltipResources;
+    //    private final EntityListTooltipResources entityListTooltipResources;
     private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
     private final String idStyleName;
     private final String namespaceStyleName;
@@ -90,7 +86,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                    AppResources appResources) {
         pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
         this.visualizerUiFactory = visualizerUiFactory;
-       // this.entityListTooltipResources = entityListTooltipResources;
+//        this.entityListTooltipResources = entityListTooltipResources;
 
         kindStyleName = appResources.styles().kindBold();
         idStyleName = appResources.styles().idBold();
@@ -100,7 +96,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         firstTableStyleName = appResources.styles().firstTable();
         pagerStyleName = appResources.styles().pager();
         pagerButtons = "." + pagerStyleName + " tbody tr td img";
-        firstTableRow = "." + firstTableStyleName + " tbody tr";
+        firstTableRow = "." + firstTableStyleName + " tbody";
         secondTableStyleName = appResources.styles().secondTable();
         secondTableHiddenStyleName = appResources.styles().secondTableHidden();
 
@@ -136,29 +132,35 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         panel.setVisible(true);
         $("." + kindStyleName).html(currentKind);
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
-        Window.alert("/setnewkind");
 
-        $(firstTableRow).hover(new Function() {
-                                   @Override
-                                   public void f(Element e) {
-        Window.alert("/");
-                                       $("." + secondTableHiddenStyleName).removeClass(secondTableHiddenStyleName);
-                                       $("." + idStyleName).text("ID " + $(e).children("td:first-of-type").text());
-                                       $("." + namespaceStyleName).text($(e).children("td:last-of-type").text());
+        Timer timer = new Timer() {
+            public void run() {
+                $(firstTableRow).hover(new Function() {
+                                           @Override
+                                           public void f(Element e) {
+                                               $("." + secondTableHiddenStyleName).removeClass(secondTableHiddenStyleName);
+                                               $("." + idStyleName).text("ID " + $(e).children("td:first-of-type").text());
+                                               $("." + namespaceStyleName).text($(e).children("td:last-of-type").text());
 
-                                       if ($("." + namespaceStyleName).text().equals(isUndefined)) {
-                                           $("." + namespaceSpanStyleName).hide();
-                                       } else {
-                                           $("." + namespaceSpanStyleName).show();
+                                               if ($("." + namespaceStyleName).text().equals(isUndefined)) {
+                                                   $("." + namespaceSpanStyleName).hide();
+                                               } else {
+                                                   $("." + namespaceSpanStyleName).show();
+                                               }
+                                               $("." + secondTableStyleName).removeClass(secondTableHiddenStyleName);
+                                           }
+                                       }, new Function() {
+                                           @Override
+                                           public void f() {
+                                               resetRightPanel();
+                                           }
                                        }
-                                       $("." + secondTableStyleName).removeClass(secondTableHiddenStyleName);
-                                   }
-                               }, new Function() {
-                                   @Override
-                                   public void f() {
-                                       resetRightPanel();
-                                   }
-                               });
+                );
+            }
+        };
+
+        timer.schedule(200);
+
 
         $(pagerButtons).click(new Function() {
             @Override
@@ -298,17 +300,17 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     private void resetRightPanel() {
-        $("." + namespaceStyleName).hide();
+        $("." + namespaceSpanStyleName).hide();
         $("." + entityStyleName).hide();
         $("." + idStyleName).text("no entity");
         $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
     }
 
-//    private void onEditTableAttachedOrDetached(boolean attached) {
+    //    private void onEditTableAttachedOrDetached(boolean attached) {
 //        if (attached) {
 //            initTooltip();
 //        } else {
-//            detachTooltip();
+//            detachtimer.scheduleTooltip();
 //        }
 //    }
 //
@@ -335,7 +337,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 //        tooltip = $(entityTable).as(Tooltip.Tooltip).tooltip(options);
 //    }
 //
-//    private IsWidget createEntityContent(Element element) {
+//    private createEntityContent(Element element) {
 //        int absoluteRowIndex = Integer.valueOf($(element).attr("__gwt_row"));
 //        int pageStartIndex = entityTable.getVisibleRange().getStart();
 //        int relativeIndex = absoluteRowIndex - pageStartIndex;
@@ -343,46 +345,37 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 //        ParsedEntity parsedEntity = entityTable.getVisibleItem(relativeIndex);
 //        JsonContainer container = visualizerUiFactory.createJsonContainer(parsedEntity.getJson());
 //        container.addAttachHandler(container);
-//        bindGwtQueryWidget();
-//        return container;
+////        bindGwtQueryWidget();
+////        return container;
 //    }
 //
 //    private void bindGwtQueryWidget() {
-//        Window.alert("tool;");
 //        $(firstTableRow).hover(new Function() {
-//            @Override
-//            public void f(Element e) {
-//                $("." + secondTableHiddenStyleName).removeClass(secondTableHiddenStyleName);
-//                $("." + idStyleName).text("ID " + $(e).children("td:first-of-type").text());
-//                $("." + namespaceStyleName).text($(e).children("td:last-of-type").text());
+//                                   @Override
+//                                   public void f(Element e) {
+//                                       $("." + secondTableHiddenStyleName).removeClass(secondTableHiddenStyleName);
+//                                       $("." + idStyleName).text("ID " + $(e).children("td:first-of-type").text());
+//                                       $("." + namespaceStyleName).text($(e).children("td:last-of-type").text());
 //
-//                if ($("." + namespaceStyleName).text().equals(isUndefined)) {
-//                    $("." + namespaceSpanStyleName).hide();
-//                } else {
-//                    $("." + namespaceSpanStyleName).show();
-//                }
-//                $("." + secondTableStyleName).removeClass(secondTableHiddenStyleName);
-//            }
-//        }, new Function() {
-//           @Override
-//           public void f() {
-//               resetRightPanel();
-//           }
-//        });
+//                                       if ($("." + namespaceStyleName).text().equals(isUndefined)) {
+//                                           $("." + namespaceSpanStyleName).hide();
+//                                       } else {
+//                                           $("." + namespaceSpanStyleName).show();
+//                                       }
+//                                       $("." + secondTableStyleName).removeClass(secondTableHiddenStyleName);
+//                                   }
+//                               }, new Function() {
+//                                   @Override
+//                                   public void f() {
+//                                       resetRightPanel();
+//                                   }
+//                               }
+//        );
 //
 //        $(pagerButtons).click(new Function() {
 //            @Override
 //            public void f() {
 //                resetRightPanel();
-//            }
-//        });
-//
-//        $("." + extendButtonStyleName).click(new Function() {
-//            @Override
-//            public void f(Element e) {
-//                $("." + entityContainerStyleName).addClass(entityListContainerSelectedStyleName);
-//                $("." + backButtonStyleName).show();
-//                $("." + extendButtonStyleName).hide();
 //            }
 //        });
 //    }
