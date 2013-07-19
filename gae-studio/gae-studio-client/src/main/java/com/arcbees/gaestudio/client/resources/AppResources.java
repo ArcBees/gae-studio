@@ -72,7 +72,11 @@ public interface AppResources extends ClientBundle {
 
         String entityListContainerSelected();
 
+        String entityDetailPanelVisibility();
+
         String backButton();
+
+        String fullscreenButton();
 
         String entityDetailPanel();
 
@@ -89,6 +93,8 @@ public interface AppResources extends ClientBundle {
         String idBold();
 
         String isDisplaying();
+
+        String isDisplayingEntity();
 
         String namespaceBold();
 
@@ -135,6 +141,10 @@ public interface AppResources extends ClientBundle {
     ImageResource back_rl();
 
     ImageResource back_up();
+
+    ImageResource fullscreen_rl();
+
+    ImageResource fullscreen_up();
 
     @Source("textcursor.png")
     DataResource whiteTextCursorResource();

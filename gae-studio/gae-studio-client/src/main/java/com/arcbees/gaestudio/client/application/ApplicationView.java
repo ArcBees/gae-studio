@@ -67,9 +67,9 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
     }
 
     private void bindGwtQuery() {
-        $("." + noOverflowStyleName).css("overflow", "visible");
-        $("." + noOverflowStyleName).parent("div").css("overflow", "visible");
-        $("." + noOverflowStyleName).parents("div").css("overflow", "visible");
-        $("." + noOverflowStyleName).parents("div").parents("div").css("overflow", "visible");
+//        $("." + noOverflowStyleName).css("overflow", "visible");
+//        $("." + noOverflowStyleName).parent("div").css("overflow", "visible");
+//        $("." + noOverflowStyleName).parents("div").css("overflow", "visible");
+//        $("." + noOverflowStyleName).parents("div").parents("div").css("overflow", "visible");
     }
 }

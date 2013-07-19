@@ -16,6 +16,7 @@ import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -42,6 +43,12 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     private final String secondTableStyleName;
     private final String secondTableHiddenStyleName;
     private final String entityListContainerSelectedStyleName;
+    private final String namespaceStyleName;
+    private final String idStyleName;
+    private final String entityStyleName;
+    private final String extendButtonStyleName;
+    private final String backButtonStyleName;
+
 
     @Inject
     VisualizerToolbarView(Binder uiBinder,
@@ -57,6 +64,12 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
         secondTableStyleName = resources.styles().secondTable();
         secondTableHiddenStyleName = resources.styles().secondTableHidden();
         entityListContainerSelectedStyleName = resources.styles().entityListContainerSelected();
+        namespaceStyleName = resources.styles().namespace();
+        idStyleName = resources.styles().idBold();
+        entityStyleName = resources.styles().isDisplayingEntity();
+        extendButtonStyleName = resources.styles().fullscreenButton();
+        backButtonStyleName = resources.styles().backButton();
+
 
         refresh = createRefreshButton();
         create = createCreateButton();
@@ -81,6 +94,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     public void enableContextualMenu() {
         edit.setEnabled(true);
         delete.setEnabled(true);
+        Window.alert("asdasles");
     }
 
     @Override
@@ -96,6 +110,11 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
                 getUiHandlers().refresh();
                 $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
                 $("." + entityListContainerSelectedStyleName).removeClass(entityListContainerSelectedStyleName);
+                $("." + namespaceStyleName).hide();
+                $("." + entityStyleName).hide();
+                $("." + idStyleName).text("no entity");
+                $("." + extendButtonStyleName).show();
+                $("." + backButtonStyleName).hide();
             }
         });
     }

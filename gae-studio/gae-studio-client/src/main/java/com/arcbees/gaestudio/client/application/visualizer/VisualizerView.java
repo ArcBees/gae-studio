@@ -10,10 +10,12 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -37,18 +39,22 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     @UiField
     SimplePanel entityDeletionPanel;
 
-    private final String noOverflowStyleName;
-    private final String entityListContainerSelectedStyleName;
+//    private final String noOverflowStyleName;
     private final String backButtonStyleName;
+    private final String extendButtonStyleName;
+    private final String entityContainerStyleName;
+    private final String entityListContainerSelectedStyleName;
 
     @Inject
     VisualizerView(Binder uiBinder,
                    AppResources appResources) {
         initWidget(uiBinder.createAndBindUi(this));
 
-        noOverflowStyleName = appResources.styles().noOverflow();
-        entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
         backButtonStyleName = appResources.styles().backButton();
+        extendButtonStyleName = appResources.styles().fullscreenButton();
+        entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
+        entityContainerStyleName = appResources.styles().entityContainer();
+//        noOverflowStyleName = appResources.styles().noOverflow();
 
         asWidget().addAttachHandler(this);
     }
@@ -81,13 +87,19 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
         $("." + backButtonStyleName).click(new Function() {
             @Override
             public void f() {
-                $("." + entityListContainerSelectedStyleName).removeClass(entityListContainerSelectedStyleName);
+                $("." + entityContainerStyleName).removeClass(entityListContainerSelectedStyleName);
+                $("." + extendButtonStyleName).show();
+                $("." + backButtonStyleName).hide();
             }
         });
 
-        $("." + noOverflowStyleName).css("overflow", "visible");
-        $("." + noOverflowStyleName).parent("div").css("overflow", "visible");
-        $("." + noOverflowStyleName).parents("div").css("overflow", "visible");
-        $("." + noOverflowStyleName).parents("div").parents("div").css("overflow", "visible");
+        $("." + extendButtonStyleName).click(new Function() {
+            @Override
+            public void f(Element e) {
+                $("." + entityContainerStyleName).addClass(entityListContainerSelectedStyleName);
+                $("." + extendButtonStyleName).hide();
+                $("." + backButtonStyleName).show();
+            }
+        });
     }
 }

@@ -63,6 +63,12 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private final String secondTableStyleName;
     private final String secondTableHiddenStyleName;
     private final String entityListContainerSelectedStyleName;
+    private final String entityDetailPanelVisibilityStyleName;
+    private final String namespaceStyleName;
+    private final String idStyleName;
+    private final String entityStyleName;
+    private final String extendButtonStyleName;
+    private final String backButtonStyleName;
 
     @Inject
     SidebarView(Binder binder,
@@ -86,6 +92,12 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         revealOverlayStyleName = appResources.styles().revealOverlay();
         revealUnderOverlayStyleName = appResources.styles().revealUnderOverlay();
         kindHeaderStyleName = appResources.styles().kindHeaderElement();
+        namespaceStyleName = appResources.styles().namespace();
+        idStyleName = appResources.styles().idBold();
+        entityStyleName = appResources.styles().isDisplayingEntity();
+        entityDetailPanelVisibilityStyleName = appResources.styles().entityDetailPanelVisibility();
+        extendButtonStyleName = appResources.styles().fullscreenButton();
+        backButtonStyleName = appResources.styles().backButton();
     }
 
     @Override
@@ -107,6 +119,11 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
             public boolean f(Event e) {
                 $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
                 $("." + entityListContainerSelectedStyleName).removeClass(entityListContainerSelectedStyleName);
+                $("." + namespaceStyleName).hide();
+                $("." + entityStyleName).hide();
+                $("." + idStyleName).text("no entity");
+                $("." + extendButtonStyleName).show();
+                $("." + backButtonStyleName).hide();
 
                 setActive(e);
                 Element el = (Element) e.getCurrentEventTarget().cast();
@@ -145,6 +162,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         Timer timer = new Timer() {
             public void run() {
                 $("." + hiddenOverlayStyleName).addClass(revealUnderOverlayStyleName);
+                $("." + entityDetailPanelVisibilityStyleName).show();
             }
         };
 
