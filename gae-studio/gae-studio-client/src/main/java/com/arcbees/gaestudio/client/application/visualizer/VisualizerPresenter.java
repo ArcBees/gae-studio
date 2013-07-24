@@ -29,6 +29,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler {
+
     interface MyView extends View {
     }
 
