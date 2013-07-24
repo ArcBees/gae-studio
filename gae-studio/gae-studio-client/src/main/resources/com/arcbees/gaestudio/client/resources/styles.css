@@ -218,7 +218,7 @@ body {
 }
 
 .entityListPanel {
-    width: 101%;
+    width: 51%;
     position: absolute;
     left: 0%;
     top: 0;
@@ -230,28 +230,32 @@ body {
 }
 
 .entityDetailPanel {
-    width: 100%;
+    width: 50%;
+    height: 100%;
     position: absolute;
-    left: 100%;
+    left: 50%;
     top: 0;
+    border-left: 1px solid #A2A2A2;
     background: colorLightGreyEB;
 
     transition: left .5s ease;
-    -webkit-transition: left .5s ease;
-    -moz-transition: left .5s ease;
-    -o-transition: left .5s ease;
+    -webkit-transition: left .5s ease, width .5s ease;
+    -moz-transition: left .5s ease, width .5s ease;
+    -o-transition: left .5s ease, width .5s ease;
 }
 
 .entityListContainerSelected .entityListPanel {
-    left: -101%;
+    left: -50%;
 }
 
 .entityListContainerSelected .entityDetailPanel {
     left: 0%;
+    width: 100%;
+    margin-left: -1px;
 }
 
 .entityContainer {
-    min-height: 95%;
+    min-height: 95.8%;
     width: 90%;
     float: left;
     display: block;
@@ -298,8 +302,18 @@ body {
     margin-right: 5px;
 }
 
-.firstTable, .secondTable, .pager, .secondTableHidden {
+.firstTable, .secondTable, .pager, .secondTableHidden, .unlockButton {
     overflow: visible;
+}
+
+.firstTable .lockedRow td {
+    background-color: colorBlue;
+    color: colorLightGrey;
+    text-shadow: 1px 1px 1px rgba(27, 27, 27, 0.55);
+
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-left: 0;
+    border-right: 0;
 }
 
 .firstTable, .secondTable {
@@ -325,13 +339,26 @@ body {
     display: none;
 }
 
-.noOverflow, .namespace {
+.noOverflow, .entityDetailPanelVisibility, .secondTableLock {
     overflow: visible;
+}
+
+@sprite .unlockButton {
+    gwt-image: "unlock_up";
+    display: none;
+    margin: 10px;
+    margin-right: 3.5%;
+    cursor: pointer;
+    float: right;
+}
+
+@sprite .unlockButton:hover {
+    gwt-image: "unlock_rl";
 }
 
 @sprite .backButton {
     gwt-image: "back_up";
-    display: block;
+    display: none;
     margin: 10px;
     cursor: pointer;
     float: left;
@@ -339,6 +366,18 @@ body {
 
 @sprite .backButton:hover {
     gwt-image: "back_rl";
+}
+
+@sprite .fullscreenButton {
+    gwt-image: "fullscreen_up";
+    display: none;
+    margin: 10px;
+    cursor: pointer;
+    float: left;
+}
+
+@sprite .fullscreenButton:hover {
+    gwt-image: "fullscreen_rl";
 }
 
 @url whiteTextCursor whiteTextCursorResource;
@@ -397,7 +436,7 @@ body {
     box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
 }
 
-.kindBold, .idBold , .namespaceBold {
+.kindBold, .idBold, .namespaceBold {
     font-weight: bold;
 }
 
@@ -419,4 +458,8 @@ body {
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
+}
+
+.isDisplayingEntity, .namespace {
+    display: none;
 }

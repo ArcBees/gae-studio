@@ -14,6 +14,7 @@
             <p class="{resources.styles.isDisplaying}">
                 Displaying entities of the kind <b class="{resources.styles.kindBold}">Kind</b>
             </p>
+            <a class="{resources.styles.unlockButton}" title="Deselect entity"/>
         </div>
         <cellview:CellTable ui:field="entityTable" styleName="{resources.styles.firstTable}"/>
     </g:HTMLPanel>

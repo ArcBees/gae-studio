@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -22,7 +23,7 @@ import com.gwtplatform.mvp.client.ViewImpl;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyView, AttachEvent.Handler {
+public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyView{
     interface Binder extends UiBinder<Widget, VisualizerView> {
     }
 
@@ -37,27 +38,9 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     @UiField
     SimplePanel entityDeletionPanel;
 
-    private final String noOverflowStyleName;
-    private final String entityListContainerSelectedStyleName;
-    private final String backButtonStyleName;
-
     @Inject
-    VisualizerView(Binder uiBinder,
-                   AppResources appResources) {
+    VisualizerView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
-
-        noOverflowStyleName = appResources.styles().noOverflow();
-        entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
-        backButtonStyleName = appResources.styles().backButton();
-
-        asWidget().addAttachHandler(this);
-    }
-
-    @Override
-    public void onAttachOrDetach(AttachEvent attachEvent) {
-        if (attachEvent.isAttached()) {
-            bindGwtQuery();
-        }
     }
 
     @Override
@@ -75,19 +58,5 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
                 entityDeletionPanel.setWidget(content);
             }
         }
-    }
-
-    private void bindGwtQuery() {
-        $("." + backButtonStyleName).click(new Function() {
-            @Override
-            public void f() {
-                $("." + entityListContainerSelectedStyleName).removeClass(entityListContainerSelectedStyleName);
-            }
-        });
-
-        $("." + noOverflowStyleName).css("overflow", "visible");
-        $("." + noOverflowStyleName).parent("div").css("overflow", "visible");
-        $("." + noOverflowStyleName).parents("div").css("overflow", "visible");
-        $("." + noOverflowStyleName).parents("div").parents("div").css("overflow", "visible");
     }
 }
