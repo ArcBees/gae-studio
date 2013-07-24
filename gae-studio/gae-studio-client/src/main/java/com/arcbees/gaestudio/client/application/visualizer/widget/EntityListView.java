@@ -71,6 +71,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final String entityStyleName;
     private final String secondTableStyleName;
     private final String secondTableHiddenStyleName;
+    private final String entityContainerStyleName;
+    private final String entityListContainerSelectedStyleName;
     private final String kindStyleName;
     private final String firstTableStyleName;
     private final String pagerStyleName;
@@ -104,6 +106,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         firstTableRow = "." + firstTableStyleName + " tbody";
         secondTableStyleName = appResources.styles().secondTable();
         secondTableHiddenStyleName = appResources.styles().secondTableHidden();
+        entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
+        entityContainerStyleName = appResources.styles().entityContainer();
 
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
@@ -312,6 +316,24 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 resetRightPanel();
             }
         });
+
+            $(backButton).click(new Function() {
+                @Override
+                public void f() {
+                    $("." + entityContainerStyleName).removeClass(entityListContainerSelectedStyleName);
+                    $(extendButton).show();
+                    $(backButton).hide();
+                }
+            });
+
+            $(extendButton).click(new Function() {
+                @Override
+                public void f(Element e) {
+                    $("." + entityContainerStyleName).addClass(entityListContainerSelectedStyleName);
+                    $(extendButton).hide();
+                    $(backButton).show();
+                }
+            });
     }
 
     private ParsedEntity getParsedEntityForRow(Element element) {

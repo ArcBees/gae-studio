@@ -16,7 +16,6 @@ import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListPres
 import com.arcbees.gaestudio.client.application.visualizer.widget.VisualizerToolbarPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;

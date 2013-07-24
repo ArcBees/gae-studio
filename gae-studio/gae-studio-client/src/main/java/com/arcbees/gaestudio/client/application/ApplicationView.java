@@ -23,7 +23,7 @@ import com.gwtplatform.mvp.client.ViewImpl;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class ApplicationView extends ViewImpl implements ApplicationPresenter.MyView, AttachEvent.Handler {
+public class ApplicationView extends ViewImpl implements ApplicationPresenter.MyView {
     interface Binder extends UiBinder<Widget, ApplicationView> {
     }
 
@@ -34,23 +34,10 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
     @UiField
     SimplePanel messages;
 
-    private final String noOverflowStyleName;
-
     @Inject
     ApplicationView(Binder uiBinder,
                     AppResources appResources) {
         initWidget(uiBinder.createAndBindUi(this));
-
-        noOverflowStyleName = appResources.styles().noOverflow();
-
-        asWidget().addAttachHandler(this);
-    }
-
-    @Override
-    public void onAttachOrDetach(AttachEvent attachEvent) {
-        if (attachEvent.isAttached()) {
-            bindGwtQuery();
-        }
     }
 
     @Override
@@ -64,12 +51,5 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
         } else {
             super.setInSlot(slot, content);
         }
-    }
-
-    private void bindGwtQuery() {
-//        $("." + noOverflowStyleName).css("overflow", "visible");
-//        $("." + noOverflowStyleName).parent("div").css("overflow", "visible");
-//        $("." + noOverflowStyleName).parents("div").css("overflow", "visible");
-//        $("." + noOverflowStyleName).parents("div").parents("div").css("overflow", "visible");
     }
 }

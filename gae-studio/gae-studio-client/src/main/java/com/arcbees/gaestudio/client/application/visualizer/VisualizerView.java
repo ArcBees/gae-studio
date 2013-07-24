@@ -15,7 +15,6 @@ import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -24,7 +23,7 @@ import com.gwtplatform.mvp.client.ViewImpl;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyView, AttachEvent.Handler {
+public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyView{
     interface Binder extends UiBinder<Widget, VisualizerView> {
     }
 
@@ -39,31 +38,9 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     @UiField
     SimplePanel entityDeletionPanel;
 
-//    private final String noOverflowStyleName;
-    private final String backButtonStyleName;
-    private final String extendButtonStyleName;
-    private final String entityContainerStyleName;
-    private final String entityListContainerSelectedStyleName;
-
     @Inject
-    VisualizerView(Binder uiBinder,
-                   AppResources appResources) {
+    VisualizerView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
-
-        backButtonStyleName = appResources.styles().backButton();
-        extendButtonStyleName = appResources.styles().fullscreenButton();
-        entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
-        entityContainerStyleName = appResources.styles().entityContainer();
-//        noOverflowStyleName = appResources.styles().noOverflow();
-
-        asWidget().addAttachHandler(this);
-    }
-
-    @Override
-    public void onAttachOrDetach(AttachEvent attachEvent) {
-        if (attachEvent.isAttached()) {
-            bindGwtQuery();
-        }
     }
 
     @Override
@@ -81,25 +58,5 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
                 entityDeletionPanel.setWidget(content);
             }
         }
-    }
-
-    private void bindGwtQuery() {
-        $("." + backButtonStyleName).click(new Function() {
-            @Override
-            public void f() {
-                $("." + entityContainerStyleName).removeClass(entityListContainerSelectedStyleName);
-                $("." + extendButtonStyleName).show();
-                $("." + backButtonStyleName).hide();
-            }
-        });
-
-        $("." + extendButtonStyleName).click(new Function() {
-            @Override
-            public void f(Element e) {
-                $("." + entityContainerStyleName).addClass(entityListContainerSelectedStyleName);
-                $("." + extendButtonStyleName).hide();
-                $("." + backButtonStyleName).show();
-            }
-        });
     }
 }
