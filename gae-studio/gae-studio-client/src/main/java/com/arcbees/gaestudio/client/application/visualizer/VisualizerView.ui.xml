@@ -20,7 +20,7 @@
             <div class="{resources.styles.entityDetailPanel}">
                 <g:HTMLPanel styleName="{resources.styles.entityDetailPanelVisibility}" visible="false">
                     <a class="{resources.styles.backButton}" title="Back to normal view"/>
-                    <a class="{resources.styles.fullscreenButton}" title="Display in full screen"/>
+                    <a class="{resources.styles.fullscreenButton}" title="View in full screen"/>
                     <p class="{resources.styles.isDisplaying}">
                         Displaying
                         <span class="{resources.styles.isDisplayingEntity}">entity</span>

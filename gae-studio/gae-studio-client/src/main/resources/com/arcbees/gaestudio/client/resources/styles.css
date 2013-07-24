@@ -303,8 +303,18 @@ body {
     margin-right: 5px;
 }
 
-.firstTable, .secondTable, .pager, .secondTableHidden {
+.firstTable, .secondTable, .pager, .secondTableHidden, .unlockButton {
     overflow: visible;
+}
+
+.firstTable .lockedRow td {
+    background-color: colorBlue;
+    color: colorLightGrey;
+    text-shadow: 1px 1px 1px rgba(27, 27, 27, 0.55);
+
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-left: 0;
+    border-right: 0;
 }
 
 .firstTable, .secondTable {
@@ -334,6 +344,19 @@ body {
     overflow: visible;
 }
 
+@sprite .unlockButton {
+    gwt-image: "unlock_up";
+    display: none;
+    margin: 10px;
+    margin-right: 3.5%;
+    cursor: pointer;
+    float: right;
+}
+
+@sprite .unlockButton:hover {
+    gwt-image: "unlock_rl";
+}
+
 @sprite .backButton {
     gwt-image: "back_up";
     display: none;
@@ -348,7 +371,7 @@ body {
 
 @sprite .fullscreenButton {
     gwt-image: "fullscreen_up";
-    display: block;
+    display: none;
     margin: 10px;
     cursor: pointer;
     float: left;
@@ -438,6 +461,6 @@ body {
     border-radius: 4px;
 }
 
-.isDisplayingEntity, .namespace{
+.isDisplayingEntity, .namespace {
     display: none;
 }
