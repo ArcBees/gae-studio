@@ -136,13 +136,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         panel.setVisible(true);
         $("." + kindStyleName).html(currentKind);
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
-
-        $(pagerButtons).click(new Function() {
-            @Override
-            public void f() {
-                resetRightPanel();
-            }
-        });
     }
 
     @Override
