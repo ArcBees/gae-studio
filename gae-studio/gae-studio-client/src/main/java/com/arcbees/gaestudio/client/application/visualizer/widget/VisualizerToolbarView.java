@@ -48,7 +48,6 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     private final String extendButtonStyleName;
     private final String backButtonStyleName;
 
-
     @Inject
     VisualizerToolbarView(Binder uiBinder,
                           AppResources resources,

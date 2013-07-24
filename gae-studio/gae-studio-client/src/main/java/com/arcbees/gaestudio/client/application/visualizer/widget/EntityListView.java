@@ -282,8 +282,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                     resetRightPanel();
                 }
             }
-        }
-        );
+        });
 
         $(firstTableRow).delegate("tr", BrowserEvents.CLICK, new Function() {
             @Override
@@ -296,8 +295,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                     unlockRows();
                 }
             }
-        }
-        );
+        });
 
         $(pagerButtons).click(new Function() {
             @Override
@@ -315,23 +313,23 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             }
         });
 
-            $(backButton).click(new Function() {
-                @Override
-                public void f() {
-                    $("." + entityContainerStyleName).removeClass(entityListContainerSelectedStyleName);
-                    $(extendButton).show();
-                    $(backButton).hide();
-                }
-            });
+        $(backButton).click(new Function() {
+            @Override
+            public void f() {
+                $("." + entityContainerStyleName).removeClass(entityListContainerSelectedStyleName);
+                $(extendButton).show();
+                $(backButton).hide();
+            }
+        });
 
-            $(extendButton).click(new Function() {
-                @Override
-                public void f(Element e) {
-                    $("." + entityContainerStyleName).addClass(entityListContainerSelectedStyleName);
-                    $(extendButton).hide();
-                    $(backButton).show();
-                }
-            });
+        $(extendButton).click(new Function() {
+            @Override
+            public void f(Element e) {
+                $("." + entityContainerStyleName).addClass(entityListContainerSelectedStyleName);
+                $(extendButton).hide();
+                $(backButton).show();
+            }
+        });
     }
 
     private ParsedEntity getParsedEntityForRow(Element element) {
