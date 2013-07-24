@@ -109,7 +109,6 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     public void onEntitySelected(EntitySelectedEvent event) {
         currentParsedEntity = event.getParsedEntity();
         getView().enableContextualMenu();
-
     }
 
     @Override

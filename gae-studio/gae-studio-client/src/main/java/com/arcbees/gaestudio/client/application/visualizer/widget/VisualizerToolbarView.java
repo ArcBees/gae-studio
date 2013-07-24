@@ -16,7 +16,6 @@ import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -48,7 +47,6 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     private final String entityStyleName;
     private final String extendButtonStyleName;
     private final String backButtonStyleName;
-    private final String secondTableLockStyleName;
 
 
     @Inject
@@ -70,8 +68,6 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
         entityStyleName = resources.styles().isDisplayingEntity();
         extendButtonStyleName = resources.styles().fullscreenButton();
         backButtonStyleName = resources.styles().backButton();
-        secondTableLockStyleName = resources.styles().secondTableLock();
-
 
         refresh = createRefreshButton();
         create = createCreateButton();
