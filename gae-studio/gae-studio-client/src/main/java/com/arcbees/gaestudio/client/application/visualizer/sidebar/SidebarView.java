@@ -122,7 +122,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 $("." + namespaceStyleName).hide();
                 $("." + entityStyleName).hide();
                 $("." + idStyleName).text("no entity");
-                $("." + extendButtonStyleName).show();
+                $("." + extendButtonStyleName).hide();
                 $("." + backButtonStyleName).hide();
 
                 setActive(e);
