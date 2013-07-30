@@ -4,5 +4,6 @@
     <ui:style>
     </ui:style>
     <g:HTMLPanel>
+        <g:ValueListBox ui:field="namespaces"/>
     </g:HTMLPanel>
 </ui:UiBinder>
