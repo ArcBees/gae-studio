@@ -7,12 +7,9 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.sidebar;
+package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 
 import com.gwtplatform.mvp.client.UiHandlers;
 
-interface SidebarUiHandlers extends UiHandlers {
-    void displayEntitiesOfSelectedKind(String kind);
-
-    void deleteAll();
+interface NamespacesListUiHandlers extends UiHandlers {
 }

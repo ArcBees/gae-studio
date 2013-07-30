@@ -13,8 +13,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
+import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesType;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
 import com.google.web.bindery.event.shared.EventBus;
@@ -46,6 +48,11 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     @Override
     public void displayEntitiesOfSelectedKind(String kind) {
         KindSelectedEvent.fire(this, kind);
+    }
+
+    @Override
+    public void deleteAll() {
+        DeleteEntitiesEvent.fire(this, DeleteEntitiesType.ALL);
     }
 
     @Override

@@ -13,8 +13,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -22,7 +25,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import static com.google.gwt.query.client.GQuery.$;
@@ -52,6 +57,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private final KindTemplate kindTemplate;
     private final KindHeaderTemplate kindHeaderTemplate;
     private final EmptyKindsTemplate emptyKindsTemplate;
+    private final AppConstants appConstants;
     private final AppResources appResources;
 
     private final String emptyListTypeStyleName;
@@ -75,10 +81,12 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 KindTemplate kindTemplate,
                 KindHeaderTemplate kindHeaderTemplate,
                 EmptyKindsTemplate emptyKindsTemplate,
+                AppConstants appConstants,
                 AppResources appResources) {
         this.kindTemplate = kindTemplate;
         this.kindHeaderTemplate = kindHeaderTemplate;
         this.emptyKindsTemplate = emptyKindsTemplate;
+        this.appConstants = appConstants;
         this.appResources = appResources;
 
         initWidget(binder.createAndBindUi(this));
@@ -126,7 +134,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 $("." + backButtonStyleName).hide();
 
                 setActive(e);
-                Element el = (Element) e.getCurrentEventTarget().cast();
+                Element el = e.getCurrentEventTarget().cast();
 
                 String kind = $("span", el).html();
 
@@ -134,6 +142,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 return true;
             }
         });
+
+        root.add(createDeleteAllButton());
     }
 
     public void clearKindsList() {
@@ -167,5 +177,18 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         };
 
         timer.schedule(500);
+    }
+
+    private Widget createDeleteAllButton() {
+        Button button = new Button(appConstants.deleteAll());
+
+        button.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                getUiHandlers().deleteAll();
+            }
+        });
+
+        return button;
     }
 }

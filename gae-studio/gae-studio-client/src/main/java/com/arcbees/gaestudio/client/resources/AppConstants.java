@@ -56,6 +56,8 @@ public interface AppConstants extends Constants {
 
     String deleteAllOfKind();
 
+    String deleteAll();
+
     String bytes();
 
     String kibibytesAbbreviation();
