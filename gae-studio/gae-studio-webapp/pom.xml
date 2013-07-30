@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <properties>
-        <maven-release-plugin.version>2.4.1</maven-release-plugin.version>
-    </properties>
 
     <parent>
         <artifactId>gae-studio</artifactId>
         <groupId>com.arcbees.gaestudio</groupId>
-        <version>1.0</version>
+        <version>1.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>gae-studio-webapp</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
 
     <build>
         <outputDirectory>${webappDirectory}</outputDirectory>
@@ -42,12 +39,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>${maven-release-plugin.version}</version>
-            </plugin>
         </plugins>
     </build>
 
@@ -56,13 +47,13 @@
         <dependency>
             <groupId>com.arcbees.gaestudio</groupId>
             <artifactId>gae-studio-client</artifactId>
-            <version>1.0</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.arcbees.gaestudio</groupId>
             <artifactId>gae-studio-server</artifactId>
-            <version>1.0</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
@@ -143,8 +134,4 @@
             </build>
         </profile>
     </profiles>
-
-  <scm>
-    <tag>gae-studio-webapp-1.0</tag>
-  </scm>
 </project>
