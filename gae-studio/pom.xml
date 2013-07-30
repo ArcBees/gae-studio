@@ -23,7 +23,7 @@
     <distributionManagement>
         <repository>
             <id>local-repository</id>
-            <url>file://${project.build.directory}/release</url>
+            <url>file://${basedir}/release</url>
         </repository>
     </distributionManagement>
 
