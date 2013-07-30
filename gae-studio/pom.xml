@@ -71,6 +71,15 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>${maven-release-plugin.version}</version>
             </plugin>
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${target.jdk}</source>
+                    <target>${target.jdk}</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
