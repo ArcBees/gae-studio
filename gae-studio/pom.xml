@@ -23,7 +23,7 @@
     <distributionManagement>
         <repository>
             <id>local-repository</id>
-            <url>/release/</url>
+            <url>file://${project.build.directory}/release</url>
         </repository>
     </distributionManagement>
 
