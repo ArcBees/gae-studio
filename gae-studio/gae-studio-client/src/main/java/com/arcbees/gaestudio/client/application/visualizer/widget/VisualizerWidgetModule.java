@@ -14,7 +14,7 @@ import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 public class VisualizerWidgetModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
-        bindSingletonPresenterWidget(EntityListPresenter.class, EntityListPresenter.MyView.class,
+        bindSingletonPresenterWidget(EntitiesListPresenter.class, EntitiesListPresenter.MyView.class,
                 EntityListView.class);
         bindSingletonPresenterWidget(VisualizerToolbarPresenter.class, VisualizerToolbarPresenter.MyView.class,
                 VisualizerToolbarView.class);

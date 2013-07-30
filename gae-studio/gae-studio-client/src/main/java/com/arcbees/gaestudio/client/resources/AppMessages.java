@@ -15,4 +15,12 @@ import com.google.gwt.i18n.client.Messages;
 @LocalizableResource.DefaultLocale("en")
 public interface AppMessages extends Messages {
     String requestWithHisNumber(Long number);
+
+    String deleteEntity(String kind, Long id);
+
+    String deleteEntitiesOfKind(String kind);
+
+    String deleteEntitiesOfNamespace(String namespace);
+
+    String deleteAllEntities();
 }

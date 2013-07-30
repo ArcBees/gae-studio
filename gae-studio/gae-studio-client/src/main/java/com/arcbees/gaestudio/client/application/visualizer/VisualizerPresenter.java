@@ -12,7 +12,7 @@ package com.arcbees.gaestudio.client.application.visualizer;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarPresenter;
-import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.widget.EntitiesListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.VisualizerToolbarPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.google.gwt.event.shared.GwtEvent;
@@ -50,7 +50,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_ENTITY_DELETION = new GwtEvent
             .Type<RevealContentHandler<?>>();
 
-    private final EntityListPresenter entityListPresenter;
+    private final EntitiesListPresenter entityListPresenter;
     private final VisualizerToolbarPresenter visualizerToolbarPresenter;
     private final SidebarPresenter sidebarPresenter;
 
@@ -58,7 +58,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     VisualizerPresenter(EventBus eventBus,
                         MyView view,
                         MyProxy proxy,
-                        EntityListPresenter entityListPresenter,
+                        EntitiesListPresenter entityListPresenter,
                         VisualizerToolbarPresenter visualizerToolbarPresenter,
                         SidebarPresenter sidebarPresenter) {
         super(eventBus, view, proxy);

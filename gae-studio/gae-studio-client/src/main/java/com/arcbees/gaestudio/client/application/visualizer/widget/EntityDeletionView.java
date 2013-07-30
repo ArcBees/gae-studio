@@ -10,12 +10,14 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.resources.AppMessages;
+import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesType;
+import com.google.gwt.dom.client.HeadingElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -23,6 +25,8 @@ import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
 public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUiHandlers>
         implements EntityDeletionPresenter.MyView {
+    private final AppMessages messages;
+
     interface Binder extends UiBinder<Widget, EntityDeletionView> {
     }
 
@@ -30,15 +34,43 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
     Button delete;
     @UiField
     Button cancel;
+    @UiField
+    HeadingElement message;
 
     @Inject
-    EntityDeletionView(Binder uiBinder, EventBus eventBus) {
+    EntityDeletionView(Binder uiBinder,
+                       EventBus eventBus,
+                       AppMessages messages) {
         super(eventBus);
+
+        this.messages = messages;
+
         initWidget(uiBinder.createAndBindUi(this));
     }
 
     @Override
     public void displayEntityDeletion(ParsedEntity p) {
+        message.setInnerText(messages.deleteEntity(p.getKey().getKind(), p.getKey().getId()));
+
+        asPopupPanel().center();
+    }
+
+    @Override
+    public void displayEntitiesDeletion(DeleteEntitiesType deleteType, String value) {
+        String message = "";
+        switch (deleteType) {
+            case KIND:
+                message = messages.deleteEntitiesOfKind(value);
+                break;
+            case NAMESPACE:
+                message = messages.deleteEntitiesOfNamespace(value);
+                break;
+            case ALL:
+                message = messages.deleteAllEntities();
+                break;
+        }
+
+        this.message.setInnerText(message);
         asPopupPanel().center();
     }
 
@@ -50,6 +82,7 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
 
     @UiHandler("cancel")
     void onCancelClicked(ClickEvent event) {
+        getUiHandlers().reset();
         asPopupPanel().hide();
     }
 }

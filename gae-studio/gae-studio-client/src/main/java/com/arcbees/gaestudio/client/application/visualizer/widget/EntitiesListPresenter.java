@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
@@ -38,6 +39,10 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
+import static com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent.EntitiesDeletedHandler;
+import static com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent.EntityDeletedHandler;
+import static com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent.EntitySavedHandler;
+import static com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent.RefreshEntitiesHandler;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
@@ -45,9 +50,8 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
-public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView> implements
-        EntityListUiHandlers, EntitySavedEvent.EntitySavedHandler,
-        RefreshEntitiesEvent.RefreshEntitiesHandler, EntityDeletedEvent.EntityDeletedHandler {
+public class EntitiesListPresenter extends PresenterWidget<EntitiesListPresenter.MyView> implements
+        EntityListUiHandlers, EntitySavedHandler, RefreshEntitiesHandler, EntityDeletedHandler, EntitiesDeletedHandler {
     interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
 
@@ -70,10 +74,10 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private String currentKind;
 
     @Inject
-    EntityListPresenter(EventBus eventBus,
-                        MyView view,
-                        DispatchAsync dispatcher,
-                        PlaceManager placeManager) {
+    EntitiesListPresenter(EventBus eventBus,
+                          MyView view,
+                          DispatchAsync dispatcher,
+                          PlaceManager placeManager) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
@@ -120,11 +124,17 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
+    public void onEntitiesDeleted(EntitiesDeletedEvent event) {
+        loadKind();
+    }
+
+    @Override
     protected void onBind() {
         super.onBind();
 
         addRegisteredHandler(EntitySavedEvent.getType(), this);
         addRegisteredHandler(EntityDeletedEvent.getType(), this);
+        addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
         addRegisteredHandler(RefreshEntitiesEvent.getType(), this);
     }
 

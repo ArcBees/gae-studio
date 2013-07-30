@@ -13,4 +13,6 @@ import com.gwtplatform.mvp.client.UiHandlers;
 
 interface EntityDeletionUiHandlers extends UiHandlers {
     void deleteEntity();
+
+    void reset();
 }

@@ -23,7 +23,7 @@
     <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{res.styles.glassPanel}" modal="true"
                   styleName="{res.styles.popup}" autoHideEnabled="true">
         <g:HTMLPanel>
-            <h3>Are you sure you want to delete this Entity?</h3>
+            <h3 ui:field="message"/>
             <div class="{style.buttonContainer}">
                 <g:Button ui:field="delete" styleName="{res.styles.toolbarButton}">Delete</g:Button>
                 <g:Button ui:field="cancel" styleName="{res.styles.toolbarButton}">Cancel</g:Button>

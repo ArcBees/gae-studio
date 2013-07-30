@@ -33,6 +33,14 @@ public class DeleteEntitiesEvent extends GwtEvent<DeleteEntitiesEvent.DeleteEnti
         // Possibly for serialization.
     }
 
+    public DeleteEntitiesType getDeleteType() {
+        return deleteType;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
     public DeleteEntitiesEvent(DeleteEntitiesType deleteType, String value) {
         this.deleteType = deleteType;
         this.value = value;

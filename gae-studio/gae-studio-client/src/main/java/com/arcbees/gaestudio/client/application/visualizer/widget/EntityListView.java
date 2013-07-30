@@ -41,7 +41,7 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
+public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntitiesListPresenter.MyView {
     interface Binder extends UiBinder<Widget, EntityListView> {
     }
 

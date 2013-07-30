@@ -12,6 +12,17 @@ package com.arcbees.gaestudio.shared.dispatch;
 import com.arcbees.gaestudio.shared.dispatch.util.GaeStudioActionImpl;
 
 public class DeleteEntitiesAction extends GaeStudioActionImpl<DeleteEntitiesResult> {
+    public static DeleteEntitiesAction create(DeleteEntitiesType deleteType, String deleteTypeValue) {
+        switch (deleteType) {
+            case KIND:
+                return byKind(deleteTypeValue);
+            case NAMESPACE:
+                return byNamespace(deleteTypeValue);
+            default:
+                return all();
+        }
+    }
+
     public static DeleteEntitiesAction byKind(String kind) {
         return new DeleteEntitiesAction(DeleteEntitiesType.KIND, kind);
     }
@@ -25,6 +36,7 @@ public class DeleteEntitiesAction extends GaeStudioActionImpl<DeleteEntitiesResu
     }
 
     private DeleteEntitiesType deleteEntitiesType;
+
     private String value;
 
     protected DeleteEntitiesAction() {
