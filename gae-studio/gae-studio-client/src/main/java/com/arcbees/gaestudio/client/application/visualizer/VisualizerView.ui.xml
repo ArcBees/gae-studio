@@ -16,16 +16,25 @@
         <g:SimplePanel ui:field="toolbar" addStyleNames="{resources.styles.hiddenOverlay}"/>
         <div class="{resources.styles.entityContainer}">
             <g:SimplePanel ui:field="entityListPanel"
-                           addStyleNames="{resources.styles.entityListPanel} {resources.styles.hiddenOverlay}"/>
+                           addStyleNames="{resources.styles.entityListPanel}"/>
             <div class="{resources.styles.entityDetailPanel}">
-                <a class="{resources.styles.backButton}"></a>
-                <p class="{resources.styles.isDisplaying}">
-                    Displaying entity <b class="{resources.styles.idBold}">ID #</b> of the kind <b class="{resources.styles.kindBold}">Kind</b>
-                    <span class="{resources.styles.namespace}">in the namespace <b class="{resources.styles.namespaceBold}">Namespace</b></span>
-                </p>
-                <g:SimplePanel ui:field="entityDetailsPanel"
-                               addStyleNames="{style.entityPanel} {resources.styles.secondTable}"/>
-                <g:SimplePanel ui:field="entityDeletionPanel" addStyleNames="{style.entityPanel}"/>
+                <g:HTMLPanel styleName="{resources.styles.entityDetailPanelVisibility}" visible="false">
+                    <a class="{resources.styles.backButton}" title="Back to normal view"/>
+                    <a class="{resources.styles.fullscreenButton}" title="View in full screen"/>
+                    <p class="{resources.styles.isDisplaying}">
+                        Displaying
+                        <span class="{resources.styles.isDisplayingEntity}">entity</span>
+                        <b class="{resources.styles.idBold}">no entity</b>
+                        of the kind
+                        <b class="{resources.styles.kindBold}">Kind</b>
+                        <span class="{resources.styles.namespace}">in the namespace
+                            <b class="{resources.styles.namespaceBold}">Namespace</b>
+                        </span>
+                    </p>
+                    <g:SimplePanel ui:field="entityDetailsPanel"
+                                   addStyleNames="{style.entityPanel} {resources.styles.secondTable}"/>
+                    <g:SimplePanel ui:field="entityDeletionPanel" addStyleNames="{style.entityPanel}"/>
+                </g:HTMLPanel>
             </div>
         </div>
         <div class="{resources.styles.clear}"/>

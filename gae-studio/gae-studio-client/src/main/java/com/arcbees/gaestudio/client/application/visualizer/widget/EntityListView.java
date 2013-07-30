@@ -13,33 +13,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.application.visualizer.ui.JsonContainer;
 import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
-import com.arcbees.gaestudio.client.resources.EntityListTooltipResources;
 import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.arcbees.gquery.tooltip.client.Tooltip;
-import com.arcbees.gquery.tooltip.client.TooltipOptions;
+import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.query.client.Function;
-import com.google.gwt.query.client.GQuery;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.Range;
-import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
@@ -61,22 +56,26 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     CellTable<ParsedEntity> entityTable;
 
     private final VisualizerUiFactory visualizerUiFactory;
-    private final EntityListTooltipResources entityListTooltipResources;
     private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
-    private final String entityContainerStyleName;
-    private final String entityListContainerSelectedStyleName;
-    private final String firstTableStyleName;
-    private final String secondTableStyleName;
-    private final String secondTableHiddenStyleName;
-    private final String pagerStyleName;
-    private final String kindStyleName;
     private final String idStyleName;
+    private final String lockedRowStyleName;
     private final String namespaceStyleName;
     private final String namespaceSpanStyleName;
     private final String pagerButtons;
+    private final String unlockButton;
+    private final String extendButton;
+    private final String backButton;
     private final String firstTableRow;
+    private final String entityStyleName;
+    private final String secondTableStyleName;
+    private final String secondTableHiddenStyleName;
+    private final String entityContainerStyleName;
+    private final String entityListContainerSelectedStyleName;
+    private final String kindStyleName;
+    private final String firstTableStyleName;
+    private final String pagerStyleName;
     private final String isNull = "<null>";
-    private final String isUndefined = "<undefined>";
+    private final String isUndefined = "";
 
 
     private Tooltip tooltip;
@@ -85,25 +84,28 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     EntityListView(Binder uiBinder,
                    CellTableResource cellTableResource,
                    VisualizerUiFactory visualizerUiFactory,
-                   EntityListTooltipResources entityListTooltipResources,
                    PagerResources pagerResources,
                    AppResources appResources) {
         pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
         this.visualizerUiFactory = visualizerUiFactory;
-        this.entityListTooltipResources = entityListTooltipResources;
 
-        this.entityContainerStyleName = appResources.styles().entityContainer();
-        this.entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
-        this.firstTableStyleName = appResources.styles().firstTable();
-        this.secondTableStyleName = appResources.styles().secondTable();
-        this.secondTableHiddenStyleName = appResources.styles().secondTableHidden();
-        this.pagerStyleName = appResources.styles().pager();
-        this.kindStyleName = appResources.styles().kindBold();
-        this.idStyleName = appResources.styles().idBold();
-        this.namespaceStyleName = appResources.styles().namespaceBold();
-        this.namespaceSpanStyleName = appResources.styles().namespace();
-        this.pagerButtons = "." + pagerStyleName + " tbody tr td img";
-        this.firstTableRow = "." + firstTableStyleName + " tbody tr";
+        kindStyleName = appResources.styles().kindBold();
+        idStyleName = appResources.styles().idBold();
+        namespaceStyleName = appResources.styles().namespaceBold();
+        namespaceSpanStyleName = appResources.styles().namespace();
+        entityStyleName = appResources.styles().isDisplayingEntity();
+        firstTableStyleName = appResources.styles().firstTable();
+        pagerStyleName = appResources.styles().pager();
+        lockedRowStyleName = appResources.styles().lockedRow();
+        pagerButtons = "." + pagerStyleName + " tbody tr td img";
+        unlockButton = "." + appResources.styles().unlockButton();
+        extendButton = "." + appResources.styles().fullscreenButton();
+        backButton = "." + appResources.styles().backButton();
+        firstTableRow = "." + firstTableStyleName + " tbody";
+        secondTableStyleName = appResources.styles().secondTable();
+        secondTableHiddenStyleName = appResources.styles().secondTableHidden();
+        entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
+        entityContainerStyleName = appResources.styles().entityContainer();
 
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
@@ -115,7 +117,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         initWidget(uiBinder.createAndBindUi(this));
 
-        setSelectionModel();
         pager.setDisplay(entityTable);
         pager.setPageSize(PAGE_SIZE);
 
@@ -206,16 +207,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         entityTable.setRowData(range.getStart(), newParsedEntities);
     }
 
-    private void setSelectionModel() {
-        selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-            @Override
-            public void onSelectionChange(SelectionChangeEvent event) {
-                getUiHandlers().onEntitySelected(selectionModel.getSelectedObject());
-            }
-        });
-        entityTable.setSelectionModel(selectionModel);
-    }
-
     private void setDefaultColumns() {
         TextColumn<ParsedEntity> idColumn = new TextColumn<ParsedEntity>() {
             @Override
@@ -268,60 +259,40 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     private void onEditTableAttachedOrDetached(boolean attached) {
         if (attached) {
-            initTooltip();
+            bindGwtQuery();
         } else {
-            detachTooltip();
+            $(firstTableRow).undelegate();
         }
     }
 
-    private void detachTooltip() {
-        tooltip.destroy();
-    }
-
-    private void initTooltip() {
-        TooltipOptions options = new TooltipOptions()
-                .withTrigger(TooltipOptions.TooltipTrigger.HOVER)
-                .withSelector("tbody tr")
-                .withResources(entityListTooltipResources)
-                .withContainer("element")
-                .withPlacement(TooltipOptions.TooltipPlacement.BOTTOM)
-                .withAnimation(false)
-                .withOffset(new GQuery.Offset(0, 5))
-                .withContent(new TooltipOptions.TooltipWidgetContentProvider() {
-                    @Override
-                    public IsWidget getContent(Element element) {
-                        return createEntityContent(element);
-                    }
-                });
-
-        tooltip = $(entityTable).as(Tooltip.Tooltip).tooltip(options);
-    }
-
-    private IsWidget createEntityContent(Element element) {
-        int absoluteRowIndex = Integer.valueOf($(element).attr("__gwt_row"));
-        int pageStartIndex = entityTable.getVisibleRange().getStart();
-        int relativeIndex = absoluteRowIndex - pageStartIndex;
-
-        ParsedEntity parsedEntity = entityTable.getVisibleItem(relativeIndex);
-        JsonContainer container = visualizerUiFactory.createJsonContainer(parsedEntity.getJson());
-        container.addAttachHandler(container);
-        bindGwtQueryWidget();
-        return container;
-    }
-
-    private void bindGwtQueryWidget() {
-        $(firstTableRow).click(new Function() {
+    private void bindGwtQuery() {
+        $(firstTableRow).delegate("tr", BrowserEvents.MOUSEOVER, new Function() {
             @Override
             public void f(Element e) {
-                $("." + secondTableHiddenStyleName).removeClass(secondTableHiddenStyleName);
-                $("." + entityContainerStyleName).addClass(entityListContainerSelectedStyleName);
-                $("." + idStyleName).text("ID " + $(e).children("td:first-of-type").text());
-                $("." + namespaceStyleName).text($(e).children("td:last-of-type").text());
+                if ($("." + lockedRowStyleName).isEmpty()) {
+                    initRightPanel(e);
+                }
+            }
+        });
 
-                if ($("." + namespaceStyleName).text().equals(isUndefined)) {
-                    $("." + namespaceSpanStyleName).hide();
+        $(firstTableRow).delegate("tr", BrowserEvents.MOUSEOUT, new Function() {
+            @Override
+            public void f() {
+                if ($("." + lockedRowStyleName).isEmpty()) {
+                    resetRightPanel();
+                }
+            }
+        });
+
+        $(firstTableRow).delegate("tr", BrowserEvents.CLICK, new Function() {
+            @Override
+            public void f(Element e) {
+                if (!$(e).hasClass(lockedRowStyleName)) {
+                    unlockRows();
+                    lockRow(e);
+                    initRightPanel(e);
                 } else {
-                    $("." + namespaceSpanStyleName).show();
+                    unlockRows();
                 }
             }
         });
@@ -329,8 +300,79 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         $(pagerButtons).click(new Function() {
             @Override
             public void f() {
-                $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
+                unlockRows();
+                resetRightPanel();
             }
         });
+
+        $(unlockButton).click(new Function() {
+            @Override
+            public void f() {
+                unlockRows();
+                resetRightPanel();
+            }
+        });
+
+        $(backButton).click(new Function() {
+            @Override
+            public void f() {
+                $("." + entityContainerStyleName).removeClass(entityListContainerSelectedStyleName);
+                $(extendButton).show();
+                $(backButton).hide();
+            }
+        });
+
+        $(extendButton).click(new Function() {
+            @Override
+            public void f(Element e) {
+                $("." + entityContainerStyleName).addClass(entityListContainerSelectedStyleName);
+                $(extendButton).hide();
+                $(backButton).show();
+            }
+        });
+    }
+
+    private ParsedEntity getParsedEntityForRow(Element element) {
+        int absoluteRowIndex = Integer.valueOf($(element).attr("__gwt_row"));
+        int pageStartIndex = entityTable.getVisibleRange().getStart();
+        int relativeIndex = absoluteRowIndex - pageStartIndex;
+
+        return entityTable.getVisibleItem(relativeIndex);
+    }
+
+    private void initRightPanel(Element e) {
+        $("." + secondTableHiddenStyleName).removeClass(secondTableHiddenStyleName);
+        ParsedEntity parsedEntity = getParsedEntityForRow(e);
+        getUiHandlers().onEntitySelected(parsedEntity);
+
+        KeyDto parseEntityKey = parsedEntity.getKey();
+        $("." + idStyleName).text("ID " + parseEntityKey.getId());
+        $("." + namespaceStyleName).text(parseEntityKey.getAppIdNamespaceDto().getNamespace());
+
+        if ($("." + namespaceStyleName).text().equals(isUndefined)) {
+            $("." + namespaceSpanStyleName).hide();
+        } else {
+            $("." + namespaceSpanStyleName).show();
+        }
+        $("." + secondTableStyleName).removeClass(secondTableHiddenStyleName);
+    }
+
+    private void resetRightPanel() {
+        $("." + namespaceSpanStyleName).hide();
+        $("." + entityStyleName).hide();
+        $("." + idStyleName).text("no entity");
+        $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
+    }
+
+    private void lockRow(Element e) {
+        $(e).addClass(lockedRowStyleName);
+        $(unlockButton).show();
+        $(extendButton).show();
+    }
+
+    private void unlockRows() {
+        $("." + lockedRowStyleName).removeClass(lockedRowStyleName);
+        $(unlockButton).hide();
+        $(extendButton).hide();
     }
 }

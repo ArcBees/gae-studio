@@ -72,7 +72,11 @@ public interface AppResources extends ClientBundle {
 
         String entityListContainerSelected();
 
+        String entityDetailPanelVisibility();
+
         String backButton();
+
+        String fullscreenButton();
 
         String entityDetailPanel();
 
@@ -90,9 +94,17 @@ public interface AppResources extends ClientBundle {
 
         String isDisplaying();
 
+        String isDisplayingEntity();
+
         String namespaceBold();
 
         String namespace();
+
+        String secondTableLock();
+
+        String lockedRow();
+
+        String unlockButton();
     }
 
     public interface Sprites extends CssResource {
@@ -135,6 +147,14 @@ public interface AppResources extends ClientBundle {
     ImageResource back_rl();
 
     ImageResource back_up();
+
+    ImageResource fullscreen_rl();
+
+    ImageResource fullscreen_up();
+
+    ImageResource unlock_rl();
+
+    ImageResource unlock_up();
 
     @Source("textcursor.png")
     DataResource whiteTextCursorResource();
