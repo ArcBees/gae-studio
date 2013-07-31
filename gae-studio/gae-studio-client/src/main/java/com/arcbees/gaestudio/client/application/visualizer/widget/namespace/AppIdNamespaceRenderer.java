@@ -10,8 +10,18 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.gwtplatform.mvp.client.UiHandlers;
+import com.google.common.base.Strings;
+import com.google.gwt.text.shared.AbstractRenderer;
 
-interface NamespacesListUiHandlers extends UiHandlers {
-    void deleteAllFromNamespace(AppIdNamespaceDto namespaceDto);
+public class AppIdNamespaceRenderer extends AbstractRenderer<AppIdNamespaceDto> {
+    @Override
+    public String render(AppIdNamespaceDto object) {
+        if (object == null) {
+            return "All namespaces";
+        } else if (Strings.isNullOrEmpty(object.getNamespace())) {
+            return "NS: <default>";
+        } else {
+            return "NS: " + object.getNamespace();
+        }
+    }
 }

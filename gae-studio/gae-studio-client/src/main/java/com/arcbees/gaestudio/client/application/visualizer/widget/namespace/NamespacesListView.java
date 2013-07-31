@@ -9,13 +9,14 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 
-import java.io.IOException;
+import java.util.List;
 
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.google.gwt.text.shared.AbstractRenderer;
-import com.google.gwt.text.shared.Renderer;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -29,18 +30,26 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
 
     @UiField(provided = true)
     ValueListBox<AppIdNamespaceDto> namespaces;
+    @UiField
+    Button delete;
 
     @Inject
     NamespacesListView(Binder uiBinder, EventBus eventBus) {
         super(eventBus);
 
-        this.namespaces = new ValueListBox<AppIdNamespaceDto>(new AbstractRenderer<AppIdNamespaceDto>() {
-            @Override
-            public String render(AppIdNamespaceDto object) {
-                return null;
-            }
-        });
+        this.namespaces = new ValueListBox<AppIdNamespaceDto>(new AppIdNamespaceRenderer());
 
         initWidget(uiBinder.createAndBindUi(this));
+    }
+
+    @Override
+    public void displayNamespaces(List<AppIdNamespaceDto> namespaces) {
+        this.namespaces.setAcceptableValues(namespaces);
+        this.namespaces.setValue(null);
+    }
+
+    @UiHandler("delete")
+    void onDeleted(ClickEvent event) {
+        getUiHandlers().deleteAllFromNamespace(namespaces.getValue());
     }
 }

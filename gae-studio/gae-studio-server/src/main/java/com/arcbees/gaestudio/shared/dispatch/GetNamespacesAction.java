@@ -7,11 +7,11 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
+package com.arcbees.gaestudio.shared.dispatch;
 
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.gwtplatform.mvp.client.UiHandlers;
+import com.arcbees.gaestudio.shared.dispatch.util.GaeStudioActionImpl;
 
-interface NamespacesListUiHandlers extends UiHandlers {
-    void deleteAllFromNamespace(AppIdNamespaceDto namespaceDto);
+public class GetNamespacesAction extends GaeStudioActionImpl<GetNamespacesResult> {
+    public GetNamespacesAction() {
+    }
 }

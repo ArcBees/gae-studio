@@ -9,32 +9,33 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import com.arcbees.gaestudio.server.DatastoreHelper;
 import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesAction;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesResult;
 import com.arcbees.googleanalytic.GoogleAnalytic;
+import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entities;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Query;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-import static com.google.appengine.api.datastore.Query.FilterOperator;
-import static com.google.appengine.api.datastore.Query.FilterPredicate;
-
 public class DeleteEntitiesHandler extends AbstractActionHandler<DeleteEntitiesAction, DeleteEntitiesResult> {
     private static final String DELETE_ENTITIES = "Delete Entities by ";
 
     private final GoogleAnalytic googleAnalytic;
+    private final DatastoreHelper datastoreHelper;
 
     @Inject
-    DeleteEntitiesHandler(GoogleAnalytic googleAnalytic) {
+    DeleteEntitiesHandler(GoogleAnalytic googleAnalytic,
+                          DatastoreHelper datastoreHelper) {
         super(DeleteEntitiesAction.class);
 
         this.googleAnalytic = googleAnalytic;
+        this.datastoreHelper = datastoreHelper;
     }
 
     @Override
@@ -43,51 +44,60 @@ public class DeleteEntitiesHandler extends AbstractActionHandler<DeleteEntitiesA
         googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, getEvent(action));
 
         DispatchHelper.disableApiHooks();
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-        deleteEntities(datastore, action);
+        deleteEntities(action);
 
         return new DeleteEntitiesResult();
     }
 
-    private void deleteEntities(DatastoreService datastore, DeleteEntitiesAction action) {
+    private void deleteEntities(DeleteEntitiesAction action) {
         switch (action.getDeleteEntitiesType()) {
             case KIND:
-                deleteByKind(datastore, action.getValue());
+                deleteByKind(action.getValue());
                 break;
             case NAMESPACE:
-                deleteByNamespace(datastore, action.getValue());
+                deleteByNamespace(action.getValue());
                 break;
             case ALL:
-                deleteAll(datastore);
+                deleteAll();
                 break;
         }
     }
 
-    private void deleteByNamespace(DatastoreService datastore, String value) {
-        Query.Filter filter = new FilterPredicate(Entities.NAMESPACE_METADATA_KIND, FilterOperator.EQUAL, value);
-        Query query = new Query().setFilter(filter);
+    private void deleteByNamespace(String value) {
+        String defaultNamespace = NamespaceManager.get();
+        NamespaceManager.set(value);
 
-        Iterable<Entity> entities = datastore.prepare(query).asIterable();
+        Iterable<Entity> entities = getAllEntities();
+        deleteEntities(entities);
 
-        deleteEntities(datastore, entities);
+        NamespaceManager.set(defaultNamespace);
     }
 
-    private void deleteByKind(DatastoreService datastore, String kind) {
-        Iterable<Entity> entities = datastore.prepare(new Query(kind)).asIterable();
-
-        deleteEntities(datastore, entities);
+    private void deleteByKind(String kind) {
+        Query query = new Query(kind).setKeysOnly();
+        datastoreHelper.deleteOnAllNamespaces(query);
     }
 
-    private void deleteEntities(DatastoreService datastore, Iterable<Entity> entities) {
+    private void deleteEntities(Iterable<Entity> entities) {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         for (Entity entity : entities) {
             datastore.delete(entity.getKey());
         }
     }
 
-    private void deleteAll(DatastoreService datastore) {
-        Iterable<Entity> entities = datastore.prepare(new Query()).asIterable();
-        deleteEntities(datastore, entities);
+    private void deleteAll() {
+        Iterable<Entity> entities = getAllEntitiesOfAllNamespaces();
+        deleteEntities(entities);
+    }
+
+    private Iterable<Entity> getAllEntities() {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        return datastore.prepare(new Query().setKeysOnly()).asIterable();
+    }
+
+    private Iterable<Entity> getAllEntitiesOfAllNamespaces() {
+        return datastoreHelper.queryOnAllNamespaces(new Query().setKeysOnly());
     }
 
     private String getEvent(DeleteEntitiesAction action) {

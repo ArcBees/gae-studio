@@ -11,10 +11,12 @@ package com.arcbees.gaestudio.server.dispatch;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.server.DatastoreHelper;
 import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoResult;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
@@ -29,15 +31,18 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 public class GetEntityDtoHandler extends AbstractActionHandler<GetEntityDtoAction, GetEntityDtoResult> {
-    private static final String GET_ENTITY_DTO ="Get Entity Dto";
+    private static final String GET_ENTITY_DTO = "Get Entity Dto";
 
     private final GoogleAnalytic googleAnalytic;
+    private final DatastoreHelper datastoreHelper;
 
     @Inject
-    GetEntityDtoHandler(GoogleAnalytic googleAnalytic) {
+    GetEntityDtoHandler(GoogleAnalytic googleAnalytic,
+                        DatastoreHelper datastoreHelper) {
         super(GetEntityDtoAction.class);
 
         this.googleAnalytic = googleAnalytic;
+        this.datastoreHelper = datastoreHelper;
     }
 
     @Override
@@ -45,25 +50,11 @@ public class GetEntityDtoHandler extends AbstractActionHandler<GetEntityDtoActio
                                       ExecutionContext context) throws ActionException {
         googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_ENTITY_DTO);
 
-        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-
         KeyDto keyDto = action.getKeyDto();
-        ParentKeyDto parentKeyDto = keyDto.getParentKey();
-
-        Key key;
-
-        if (parentKeyDto != null) {
-            Key parentKey = KeyFactory.createKey(parentKeyDto.getKind(), parentKeyDto.getId());
-
-            key = KeyFactory.createKey(parentKey, keyDto.getKind(), keyDto.getId());
-        } else {
-            key = KeyFactory.createKey(keyDto.getKind(), keyDto.getId());
-        }
 
         Entity entity;
-
         try {
-            entity = datastoreService.get(key);
+            entity = datastoreHelper.get(keyDto);
         } catch (EntityNotFoundException e) {
             throw new ActionException(e);
         }

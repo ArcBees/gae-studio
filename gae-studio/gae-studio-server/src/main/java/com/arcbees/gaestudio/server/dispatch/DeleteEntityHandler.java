@@ -9,9 +9,11 @@
 
 package com.arcbees.gaestudio.server.dispatch;
 
+import com.arcbees.gaestudio.server.DatastoreHelper;
 import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.googleanalytic.GoogleAnalytic;
@@ -27,12 +29,15 @@ public class DeleteEntityHandler extends AbstractActionHandler<DeleteEntityActio
     private static final String DELETE_ENTITY = "Delete Entity";
 
     private final GoogleAnalytic googleAnalytic;
+    private final DatastoreHelper datastoreHelper;
 
     @Inject
-    DeleteEntityHandler(GoogleAnalytic googleAnalytic) {
+    DeleteEntityHandler(GoogleAnalytic googleAnalytic,
+                        DatastoreHelper datastoreHelper) {
         super(DeleteEntityAction.class);
 
         this.googleAnalytic = googleAnalytic;
+        this.datastoreHelper = datastoreHelper;
     }
 
     @Override
@@ -41,13 +46,13 @@ public class DeleteEntityHandler extends AbstractActionHandler<DeleteEntityActio
         googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, DELETE_ENTITY);
 
         DispatchHelper.disableApiHooks();
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
         EntityDto entityDTO = action.getEntityDTO();
         KeyDto keyDTO = entityDTO.getKey();
+        AppIdNamespaceDto namespaceDto = keyDTO.getAppIdNamespaceDto();
         Key key = KeyFactory.createKey(keyDTO.getKind(), keyDTO.getId());
 
-        datastore.delete(key);
+        datastoreHelper.delete(key, namespaceDto.getNamespace());
 
         return new DeleteEntityResult();
     }

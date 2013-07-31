@@ -5,5 +5,6 @@
     </ui:style>
     <g:HTMLPanel>
         <g:ValueListBox ui:field="namespaces"/>
+        <g:Button ui:field="delete" text="Delete"/>
     </g:HTMLPanel>
 </ui:UiBinder>

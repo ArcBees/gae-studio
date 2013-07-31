@@ -10,20 +10,20 @@
 package com.arcbees.gaestudio.server.dispatch;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.server.DatastoreHelper;
 import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
 import com.arcbees.googleanalytic.GoogleAnalytic;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entities;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Query;
 import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.shared.ActionException;
@@ -32,12 +32,15 @@ public class GetEntityKindsHandler extends AbstractActionHandler<GetEntityKindsA
     private static final String GET_ENTITY_KINDS = "Get Entity Kinds";
 
     private final GoogleAnalytic googleAnalytic;
+    private final DatastoreHelper datastoreHelper;
 
     @Inject
-    GetEntityKindsHandler(GoogleAnalytic googleAnalytic) {
+    GetEntityKindsHandler(GoogleAnalytic googleAnalytic,
+                          DatastoreHelper datastoreHelper) {
         super(GetEntityKindsAction.class);
 
         this.googleAnalytic = googleAnalytic;
+        this.datastoreHelper = datastoreHelper;
     }
 
     @Override
@@ -48,11 +51,15 @@ public class GetEntityKindsHandler extends AbstractActionHandler<GetEntityKindsA
         DispatchHelper.disableApiHooks();
 
         Query query = new Query(Entities.KIND_METADATA_KIND);
-        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+        Iterable<Entity> entityIterable = datastoreHelper.queryOnAllNamespaces(query);
 
-        Iterable<Entity> entityIterable = datastoreService.prepare(query).asIterable();
+        ArrayList<String> kinds = getKinds(entityIterable);
 
-        Iterable<String> iterator = Iterables.transform(entityIterable, new Function<Entity, String>() {
+        return new GetEntityKindsResult(kinds);
+    }
+
+    private ArrayList<String> getKinds(Iterable<Entity> entityIterable) {
+        Set<String> kinds = FluentIterable.from(entityIterable).transform(new Function<Entity, String>() {
             @Override
             public String apply(Entity entity) {
                 String kindName;
@@ -65,10 +72,8 @@ public class GetEntityKindsHandler extends AbstractActionHandler<GetEntityKindsA
 
                 return kindName;
             }
-        });
+        }).toSet();
 
-        ArrayList<String> kinds = Lists.newArrayList(iterator);
-
-        return new GetEntityKindsResult(kinds);
+        return Lists.newArrayList(kinds);
     }
 }

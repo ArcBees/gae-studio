@@ -21,6 +21,7 @@ import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
+import com.arcbees.gaestudio.shared.dispatch.GetNamespacesAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
@@ -47,6 +48,7 @@ public class GaeStudioDispatchModule extends HandlerModule {
         bindHandler(DeleteEntityAction.class, DeleteEntityHandler.class);
         bindHandler(GetEntityDtoAction.class, GetEntityDtoHandler.class);
         bindHandler(DeleteEntitiesAction.class, DeleteEntitiesHandler.class);
+        bindHandler(GetNamespacesAction.class, GetNamespacesHandler.class);
     }
 
     @Provides

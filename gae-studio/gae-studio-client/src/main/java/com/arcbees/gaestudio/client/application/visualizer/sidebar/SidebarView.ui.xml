@@ -1,4 +1,10 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <g:HTMLPanel ui:field="root"/>
+    <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <g:HTMLPanel>
+        <span class='{res.styles.kindHeaderElement}'>Kinds</span>
+        <g:SimplePanel ui:field="namespaces"/>
+        <g:HTML ui:field="emptyKinds"/>
+        <g:HTMLPanel ui:field="kinds"/>
+    </g:HTMLPanel>
 </ui:UiBinder>

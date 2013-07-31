@@ -9,9 +9,14 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.gwtplatform.mvp.client.UiHandlers;
+import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
+import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
-interface NamespacesListUiHandlers extends UiHandlers {
-    void deleteAllFromNamespace(AppIdNamespaceDto namespaceDto);
+public class NamespaceWidgetModule extends AbstractPresenterModule {
+    @Override
+    protected void configure() {
+        install(new GinFactoryModuleBuilder().build(NamespacesListPresenterFactory.class));
+
+        bind(NamespacesListPresenter.MyView.class).to(NamespacesListView.class);
+    }
 }

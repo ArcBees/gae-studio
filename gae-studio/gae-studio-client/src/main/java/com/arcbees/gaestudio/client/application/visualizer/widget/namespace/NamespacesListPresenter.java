@@ -9,8 +9,16 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 
+import java.util.List;
+
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
+import com.arcbees.gaestudio.shared.dispatch.GetNamespacesAction;
+import com.arcbees.gaestudio.shared.dispatch.GetNamespacesResult;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -18,18 +26,39 @@ import com.gwtplatform.mvp.client.View;
 public class NamespacesListPresenter extends PresenterWidget<NamespacesListPresenter.MyView> implements
         NamespacesListUiHandlers {
     interface MyView extends View, HasUiHandlers<NamespacesListUiHandlers> {
+        void displayNamespaces(List<AppIdNamespaceDto> namespaces);
     }
+
+    private final DispatchAsync dispatcher;
+    private final DeleteFromNamespaceHandler deleteHandler;
 
     @Inject
     NamespacesListPresenter(EventBus eventBus,
-                            MyView view) {
+                            MyView view,
+                            DispatchAsync dispatcher,
+                            @Assisted DeleteFromNamespaceHandler deleteHandler) {
         super(eventBus, view);
+
+        this.dispatcher = dispatcher;
+        this.deleteHandler = deleteHandler;
 
         getView().setUiHandlers(this);
     }
 
     @Override
-    protected void onBind() {
-        super.onBind();
+    public void deleteAllFromNamespace(AppIdNamespaceDto namespaceDto) {
+        deleteHandler.onDeleteAllFromNamespace(namespaceDto);
+    }
+
+    @Override
+    protected void onReveal() {
+        super.onReveal();
+
+        dispatcher.execute(new GetNamespacesAction(), new AsyncCallbackImpl<GetNamespacesResult>() {
+            @Override
+            public void onSuccess(GetNamespacesResult result) {
+                getView().displayNamespaces(result.getNamespaces());
+            }
+        });
     }
 }
