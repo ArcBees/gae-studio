@@ -73,9 +73,9 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     @Inject
     SidebarView(Binder binder,
-            KindTemplate kindTemplate,
-            EmptyKindsTemplate emptyKindsTemplate,
-            AppResources appResources) {
+                KindTemplate kindTemplate,
+                EmptyKindsTemplate emptyKindsTemplate,
+                AppResources appResources) {
         this.kindTemplate = kindTemplate;
         this.emptyKindsTemplate = emptyKindsTemplate;
         this.appResources = appResources;

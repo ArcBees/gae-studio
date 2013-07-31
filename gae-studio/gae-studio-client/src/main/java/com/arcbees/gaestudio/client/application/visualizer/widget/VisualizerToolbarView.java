@@ -51,9 +51,9 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
     @Inject
     VisualizerToolbarView(Binder uiBinder,
-            AppResources resources,
-            UiFactory uiFactory,
-            AppConstants myConstants) {
+                          AppResources resources,
+                          UiFactory uiFactory,
+                          AppConstants myConstants) {
         this.resources = resources;
         this.uiFactory = uiFactory;
         this.myConstants = myConstants;
@@ -146,11 +146,12 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     }
 
     private ToolbarButton createDeleteByKindButton() {
-        return uiFactory.createToolbarButton(myConstants.deleteAllOfKind(), resources.delete(), new ToolbarButtonCallback() {
-            @Override
-            public void onClicked() {
-                getUiHandlers().deleteByKind();
-            }
-        });
+        return uiFactory.createToolbarButton(myConstants.deleteAllOfKind(), resources.delete(),
+                new ToolbarButtonCallback() {
+                    @Override
+                    public void onClicked() {
+                        getUiHandlers().deleteByKind();
+                    }
+                });
     }
 }

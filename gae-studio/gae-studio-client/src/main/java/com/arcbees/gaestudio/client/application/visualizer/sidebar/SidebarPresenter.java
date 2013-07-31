@@ -44,9 +44,9 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
 
     @Inject
     SidebarPresenter(EventBus eventBus,
-            MyView view,
-            DispatchAsync dispatcher,
-            NamespacesListPresenterFactory namespacesListPresenterFactory) {
+                     MyView view,
+                     DispatchAsync dispatcher,
+                     NamespacesListPresenterFactory namespacesListPresenterFactory) {
         super(eventBus, view);
 
         this.dispatcher = dispatcher;

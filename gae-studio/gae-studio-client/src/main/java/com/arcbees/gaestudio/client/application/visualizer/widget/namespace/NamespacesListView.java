@@ -34,7 +34,8 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
     Button delete;
 
     @Inject
-    NamespacesListView(Binder uiBinder, EventBus eventBus) {
+    NamespacesListView(Binder uiBinder,
+                       EventBus eventBus) {
         super(eventBus);
 
         this.namespaces = new ValueListBox<AppIdNamespaceDto>(new AppIdNamespaceRenderer());

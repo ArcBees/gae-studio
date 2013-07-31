@@ -52,9 +52,9 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
 
     @Inject
     VisualizerToolbarPresenter(EventBus eventBus,
-            MyView view,
-            DispatchAsync dispatcher,
-            AppConstants myConstants) {
+                               MyView view,
+                               DispatchAsync dispatcher,
+                               AppConstants myConstants) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);

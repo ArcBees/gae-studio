@@ -25,8 +25,6 @@ import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
 public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUiHandlers>
         implements EntityDeletionPresenter.MyView {
-    private final AppMessages messages;
-
     interface Binder extends UiBinder<Widget, EntityDeletionView> {
     }
 
@@ -36,6 +34,8 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
     Button cancel;
     @UiField
     HeadingElement message;
+
+    private final AppMessages messages;
 
     @Inject
     EntityDeletionView(Binder uiBinder,
