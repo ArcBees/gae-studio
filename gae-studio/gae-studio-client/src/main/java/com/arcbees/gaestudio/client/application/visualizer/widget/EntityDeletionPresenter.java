@@ -32,16 +32,12 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
+import static com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent.DeleteEntitiesHandler;
 import static com.arcbees.gaestudio.client.application.visualizer.widget.EntityDeletionPresenter.DeleteType.BATCH;
 import static com.arcbees.gaestudio.client.application.visualizer.widget.EntityDeletionPresenter.DeleteType.SINGLE;
 
 public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPresenter.MyView>
-        implements DeleteEntityEvent.DeleteEntityHandler, EntityDeletionUiHandlers,
-        DeleteEntitiesEvent.DeleteEntitiesHandler {
-
-    private DeleteEntitiesType deleteType;
-    private String deleteTypeValue;
-
+        implements DeleteEntityEvent.DeleteEntityHandler, EntityDeletionUiHandlers, DeleteEntitiesHandler {
     interface MyView extends View, HasUiHandlers<EntityDeletionUiHandlers> {
         void displayEntityDeletion(ParsedEntity parsedEntity);
 
@@ -60,6 +56,8 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
 
     private DeleteType lastEvent;
     private ParsedEntity currentParsedEntity;
+    private DeleteEntitiesType deleteType;
+    private String deleteTypeValue;
 
     @Inject
     EntityDeletionPresenter(EventBus eventBus,
