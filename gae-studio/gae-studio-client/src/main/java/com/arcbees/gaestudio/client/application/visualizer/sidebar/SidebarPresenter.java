@@ -58,16 +58,16 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
 
     @Override
     public void onDeleteAllFromNamespace(AppIdNamespaceDto namespaceDto) {
+        if (namespaceDto == null) {
+            DeleteEntitiesEvent.fire(this, DeleteEntitiesType.ALL);
+        } else {
+            DeleteEntitiesEvent.fire(this, DeleteEntitiesType.NAMESPACE, namespaceDto.getNamespace());
+        }
     }
 
     @Override
     public void displayEntitiesOfSelectedKind(String kind) {
         KindSelectedEvent.fire(this, kind);
-    }
-
-    @Override
-    public void deleteAll() {
-        DeleteEntitiesEvent.fire(this, DeleteEntitiesType.ALL);
     }
 
     @Override

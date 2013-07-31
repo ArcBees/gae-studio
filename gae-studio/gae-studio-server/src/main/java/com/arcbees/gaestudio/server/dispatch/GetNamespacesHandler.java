@@ -53,7 +53,8 @@ public class GetNamespacesHandler extends AbstractActionHandler<GetNamespacesAct
                 .transform(new Function<Entity, AppIdNamespaceDto>() {
                     @Override
                     public AppIdNamespaceDto apply(Entity input) {
-                        return new AppIdNamespaceDto(input.getAppId(), input.getKey().getName());
+                        return new AppIdNamespaceDto(input.getAppId(),
+                                Entities.getNamespaceFromNamespaceKey(input.getKey()));
                     }
                 });
 

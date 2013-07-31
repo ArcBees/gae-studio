@@ -13,6 +13,4 @@ import com.gwtplatform.mvp.client.UiHandlers;
 
 interface SidebarUiHandlers extends UiHandlers {
     void displayEntitiesOfSelectedKind(String kind);
-
-    void deleteAll();
 }

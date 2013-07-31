@@ -75,7 +75,7 @@ public class DatastoreHelper {
         Iterable<Entity> namespaces = getAllNamespaces();
 
         for (Entity namespace : namespaces) {
-            NamespaceManager.set(namespace.getKey().getName());
+            NamespaceManager.set(extractNamespace(namespace));
             DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
 
             datastoreService.delete(keys);
@@ -97,7 +97,7 @@ public class DatastoreHelper {
                 .transformAndConcat(new Function<Entity, Iterable<Entity>>() {
                     @Override
                     public Iterable<Entity> apply(Entity namespace) {
-                        NamespaceManager.set(namespace.getKey().getName());
+                        NamespaceManager.set(extractNamespace(namespace));
                         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
 
                         Query namespaceAwareQuery = copyQuery(query);
@@ -151,5 +151,9 @@ public class DatastoreHelper {
         }
 
         return newQuery;
+    }
+
+    private String extractNamespace(Entity namespace) {
+        return Entities.getNamespaceFromNamespaceKey(namespace.getKey());
     }
 }
