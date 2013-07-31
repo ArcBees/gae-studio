@@ -50,7 +50,7 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
-public class EntitiesListPresenter extends PresenterWidget<EntitiesListPresenter.MyView> implements
+public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView> implements
         EntityListUiHandlers, EntitySavedHandler, RefreshEntitiesHandler, EntityDeletedHandler, EntitiesDeletedHandler {
     interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
@@ -74,10 +74,10 @@ public class EntitiesListPresenter extends PresenterWidget<EntitiesListPresenter
     private String currentKind;
 
     @Inject
-    EntitiesListPresenter(EventBus eventBus,
-                          MyView view,
-                          DispatchAsync dispatcher,
-                          PlaceManager placeManager) {
+    EntityListPresenter(EventBus eventBus,
+                        MyView view,
+                        DispatchAsync dispatcher,
+                        PlaceManager placeManager) {
         super(eventBus, view);
 
         this.placeManager = placeManager;

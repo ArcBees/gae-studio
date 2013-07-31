@@ -17,7 +17,7 @@ public class VisualizerWidgetModule extends AbstractPresenterModule {
     protected void configure() {
         install(new NamespaceWidgetModule());
 
-        bindSingletonPresenterWidget(EntitiesListPresenter.class, EntitiesListPresenter.MyView.class,
+        bindSingletonPresenterWidget(EntityListPresenter.class, EntityListPresenter.MyView.class,
                 EntityListView.class);
         bindSingletonPresenterWidget(VisualizerToolbarPresenter.class, VisualizerToolbarPresenter.MyView.class,
                 VisualizerToolbarView.class);
