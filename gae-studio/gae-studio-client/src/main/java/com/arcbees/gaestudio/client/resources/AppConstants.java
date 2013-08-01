@@ -44,6 +44,8 @@ public interface AppConstants extends Constants {
 
     String successEntityDelete();
 
+    String successEntitiesDelete();
+
     String refresh();
 
     String create();
@@ -51,6 +53,10 @@ public interface AppConstants extends Constants {
     String edit();
 
     String delete();
+
+    String deleteAllOfKind();
+
+    String deleteAll();
 
     String bytes();
 

@@ -7,12 +7,13 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.arcbees.gaestudio.shared.dispatch;
 
-import com.gwtplatform.mvp.client.UiHandlers;
+import java.io.Serializable;
 
-interface EntityDeletionUiHandlers extends UiHandlers {
-    void deleteEntity();
-
-    void reset();
+public enum DeleteEntitiesType implements Serializable {
+    KIND_NAMESPACE,
+    KIND,
+    NAMESPACE,
+    ALL
 }

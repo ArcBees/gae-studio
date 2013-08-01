@@ -7,12 +7,11 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.arcbees.gaestudio.shared.dispatch;
 
-import com.gwtplatform.mvp.client.UiHandlers;
+import com.arcbees.gaestudio.shared.dispatch.util.GaeStudioActionImpl;
 
-interface EntityDeletionUiHandlers extends UiHandlers {
-    void deleteEntity();
-
-    void reset();
+public class GetNamespacesAction extends GaeStudioActionImpl<GetNamespacesResult> {
+    public GetNamespacesAction() {
+    }
 }

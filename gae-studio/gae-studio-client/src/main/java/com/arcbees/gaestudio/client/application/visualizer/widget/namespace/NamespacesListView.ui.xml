@@ -2,9 +2,7 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <g:HTMLPanel>
-        <span class='{res.styles.kindHeaderElement}'>Kinds</span>
-        <g:SimplePanel ui:field="namespaces"/>
-        <g:HTML ui:field="emptyKinds"/>
-        <g:HTMLPanel ui:field="kinds"/>
+        <g:ValueListBox ui:field="namespaces"/>
+        <g:Button ui:field="delete" text="Delete"/>
     </g:HTMLPanel>
 </ui:UiBinder>

@@ -7,12 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 
-import com.gwtplatform.mvp.client.UiHandlers;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 
-interface EntityDeletionUiHandlers extends UiHandlers {
-    void deleteEntity();
-
-    void reset();
+public interface DeleteFromNamespaceHandler {
+    void onDeleteAllFromNamespace(AppIdNamespaceDto namespaceDto);
 }

@@ -10,16 +10,15 @@
 package com.arcbees.gaestudio.server.dispatch;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import com.arcbees.gaestudio.server.DatastoreHelper;
 import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.googleanalytic.GoogleAnalytic;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 import com.google.inject.Inject;
@@ -31,12 +30,15 @@ public class GetEntitiesByKindHandler extends AbstractActionHandler<GetEntitiesB
     private static final String GET_ENTITIES_BY_KIND = "Get Entities By Kind";
 
     private final GoogleAnalytic googleAnalytic;
+    private final DatastoreHelper datastoreHelper;
 
     @Inject
-    GetEntitiesByKindHandler(GoogleAnalytic googleAnalytic) {
+    GetEntitiesByKindHandler(GoogleAnalytic googleAnalytic,
+                             DatastoreHelper datastoreHelper) {
         super(GetEntitiesByKindAction.class);
 
         this.googleAnalytic = googleAnalytic;
+        this.datastoreHelper = datastoreHelper;
     }
 
     @SuppressWarnings("unchecked")
@@ -47,8 +49,6 @@ public class GetEntitiesByKindHandler extends AbstractActionHandler<GetEntitiesB
 
         DispatchHelper.disableApiHooks();
 
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-
         FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
         if (action.getOffset() != null) {
             fetchOptions.offset(action.getOffset());
@@ -58,10 +58,10 @@ public class GetEntitiesByKindHandler extends AbstractActionHandler<GetEntitiesB
         }
 
         Query query = new Query(action.getKind());
-        List<com.google.appengine.api.datastore.Entity> results = datastore.prepare(query).asList(fetchOptions);
+        Iterable<Entity> results = datastoreHelper.queryOnAllNamespaces(query, fetchOptions);
 
-        ArrayList<EntityDto> entities = new ArrayList<EntityDto>(results.size());
-        for (com.google.appengine.api.datastore.Entity dbEntity : results) {
+        ArrayList<EntityDto> entities = new ArrayList<EntityDto>();
+        for (Entity dbEntity : results) {
             entities.add(EntityMapper.mapDTO(dbEntity));
         }
 

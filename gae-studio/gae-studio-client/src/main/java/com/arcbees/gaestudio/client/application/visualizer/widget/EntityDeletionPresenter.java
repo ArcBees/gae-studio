@@ -11,11 +11,16 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntityEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesAction;
+import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesResult;
+import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesType;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -27,17 +32,31 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
+import static com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent.DeleteEntitiesHandler;
+import static com.arcbees.gaestudio.client.application.visualizer.widget.EntityDeletionPresenter.DeleteType.BATCH;
+import static com.arcbees.gaestudio.client.application.visualizer.widget.EntityDeletionPresenter.DeleteType.SINGLE;
+
 public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPresenter.MyView>
-        implements DeleteEntityEvent.DeleteEntityHandler, EntityDeletionUiHandlers {
+        implements DeleteEntityEvent.DeleteEntityHandler, EntityDeletionUiHandlers, DeleteEntitiesHandler {
     interface MyView extends View, HasUiHandlers<EntityDeletionUiHandlers> {
         void displayEntityDeletion(ParsedEntity parsedEntity);
+
+        void displayEntitiesDeletion(DeleteEntitiesType deleteType, String kind, String namespace);
 
         void hide();
     }
 
+    enum DeleteType {
+        SINGLE,
+        BATCH
+    }
+
     private final DispatchAsync dispatcher;
     private final AppConstants myConstants;
+
+    private DeleteType lastEvent;
     private ParsedEntity currentParsedEntity;
+    private DeleteEntitiesAction deleteEntitiesAction;
 
     @Inject
     EntityDeletionPresenter(EventBus eventBus,
@@ -56,10 +75,58 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
     public void onDeleteEntity(DeleteEntityEvent event) {
         currentParsedEntity = event.getParsedEntity();
         getView().displayEntityDeletion(currentParsedEntity);
+        lastEvent = SINGLE;
+    }
+
+    @Override
+    public void onDeleteEntities(DeleteEntitiesEvent event) {
+        deleteEntitiesAction = event.getDeleteEntitiesAction();
+
+        getView().displayEntitiesDeletion(deleteEntitiesAction.getDeleteEntitiesType(),
+                deleteEntitiesAction.getKind(), deleteEntitiesAction.getNamespace());
+
+        lastEvent = BATCH;
+    }
+
+    @Override
+    public void reset() {
+        lastEvent = null;
     }
 
     @Override
     public void deleteEntity() {
+        if (SINGLE.equals(lastEvent)) {
+            deleteSingleEntity();
+        } else if (BATCH.equals(lastEvent)) {
+            deleteEntities();
+        }
+
+        reset();
+    }
+
+    @Override
+    protected void onBind() {
+        super.onBind();
+
+        addRegisteredHandler(DeleteEntityEvent.getType(), this);
+        addRegisteredHandler(DeleteEntitiesEvent.getType(), this);
+    }
+
+    private void deleteEntities() {
+        dispatcher.execute(deleteEntitiesAction, new AsyncCallback<DeleteEntitiesResult>() {
+            @Override
+            public void onSuccess(DeleteEntitiesResult result) {
+                onEntitiesDeletedSuccess();
+            }
+
+            @Override
+            public void onFailure(Throwable caught) {
+                showMessage(myConstants.errorEntityDelete(), MessageStyle.ERROR);
+            }
+        });
+    }
+
+    private void deleteSingleEntity() {
         if (currentParsedEntity != null) {
             final EntityDto entityDTO = currentParsedEntity.getEntityDTO();
             dispatcher.execute(new DeleteEntityAction(entityDTO), new AsyncCallback<DeleteEntityResult>() {
@@ -70,23 +137,24 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
 
                 @Override
                 public void onFailure(Throwable caught) {
-                    Message message = new Message(myConstants.errorEntityDelete(), MessageStyle.ERROR);
-                    DisplayMessageEvent.fire(EntityDeletionPresenter.this, message);
+                    showMessage(myConstants.errorEntityDelete(), MessageStyle.ERROR);
                 }
             });
         }
     }
 
-    @Override
-    protected void onBind() {
-        super.onBind();
-
-        addRegisteredHandler(DeleteEntityEvent.getType(), this);
+    private void onEntityDeletedSuccess(EntityDto entityDTO) {
+        showMessage(myConstants.successEntityDelete(), MessageStyle.SUCCESS);
+        EntityDeletedEvent.fire(this, entityDTO);
     }
 
-    private void onEntityDeletedSuccess(EntityDto entityDTO) {
-        Message message = new Message(myConstants.successEntityDelete(), MessageStyle.SUCCESS);
+    private void onEntitiesDeletedSuccess() {
+        showMessage(myConstants.successEntitiesDelete(), MessageStyle.SUCCESS);
+        EntitiesDeletedEvent.fire(this);
+    }
+
+    private void showMessage(String content, MessageStyle style) {
+        Message message = new Message(content, style);
         DisplayMessageEvent.fire(this, message);
-        EntityDeletedEvent.fire(this, entityDTO);
     }
 }

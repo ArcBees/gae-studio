@@ -14,12 +14,14 @@ import java.util.UUID;
 import javax.inject.Singleton;
 
 import com.arcbees.gaestudio.server.GaConstants;
+import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesAction;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
+import com.arcbees.gaestudio.shared.dispatch.GetNamespacesAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
 import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
@@ -45,6 +47,8 @@ public class GaeStudioDispatchModule extends HandlerModule {
         bindHandler(GetEmptyKindEntityAction.class, GetEmptyKindEntityHandler.class);
         bindHandler(DeleteEntityAction.class, DeleteEntityHandler.class);
         bindHandler(GetEntityDtoAction.class, GetEntityDtoHandler.class);
+        bindHandler(DeleteEntitiesAction.class, DeleteEntitiesHandler.class);
+        bindHandler(GetNamespacesAction.class, GetNamespacesHandler.class);
     }
 
     @Provides
