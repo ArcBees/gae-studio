@@ -18,12 +18,16 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoade
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
+import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.DeleteFromNamespaceHandler;
+import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesType;
+import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityResult;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.common.base.Strings;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -34,9 +38,13 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
+import static com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent.EntityPageLoadedHandler;
+import static com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent.EntitySelectedHandler;
+import static com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent.KindSelectedHandler;
+
 public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolbarPresenter.MyView> implements
-        VisualizerToolbarUiHandlers, KindSelectedEvent.KindSelectedHandler, EntitySelectedEvent.EntitySelectedHandler,
-        EntityPageLoadedEvent.EntityPageLoadedHandler {
+        VisualizerToolbarUiHandlers, KindSelectedHandler, EntitySelectedHandler, EntityPageLoadedHandler,
+        DeleteFromNamespaceHandler {
     interface MyView extends View, HasUiHandlers<VisualizerToolbarUiHandlers> {
         void setKindSelected(boolean isSelected);
 
@@ -45,14 +53,19 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
         void disableContextualMenu();
     }
 
+    public static final Object SLOT_NAMESPACES = new Object();
+
     private final DispatchAsync dispatcher;
     private final AppConstants myConstants;
+    private final NamespacesListPresenter namespacesListPresenter;
+
     private String currentKind = "";
     private ParsedEntity currentParsedEntity;
 
     @Inject
     VisualizerToolbarPresenter(EventBus eventBus,
                                MyView view,
+                               NamespacesListPresenterFactory namespacesListPresenterFactory,
                                DispatchAsync dispatcher,
                                AppConstants myConstants) {
         super(eventBus, view);
@@ -61,6 +74,19 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
 
         this.dispatcher = dispatcher;
         this.myConstants = myConstants;
+        namespacesListPresenter = namespacesListPresenterFactory.create(this);
+    }
+
+    @Override
+    public void onDeleteAllFromNamespace(AppIdNamespaceDto namespaceDto) {
+        if (!Strings.isNullOrEmpty(currentKind)) {
+            if (namespaceDto == null) {
+                DeleteEntitiesEvent.fire(this, DeleteEntitiesAction.byKind(currentKind));
+            } else {
+                DeleteEntitiesEvent.fire(this,
+                        DeleteEntitiesAction.byKindAndNamespace(currentKind, namespaceDto.getNamespace()));
+            }
+        }
     }
 
     @Override
@@ -103,13 +129,6 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     }
 
     @Override
-    public void deleteByKind() {
-        if (!Strings.isNullOrEmpty(currentKind)) {
-            DeleteEntitiesEvent.fire(this, DeleteEntitiesType.KIND, currentKind);
-        }
-    }
-
-    @Override
     public void onKindSelected(KindSelectedEvent event) {
         currentKind = event.getKind();
         getView().setKindSelected(!currentKind.isEmpty());
@@ -133,5 +152,7 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(EntitySelectedEvent.getType(), this);
         addRegisteredHandler(EntityPageLoadedEvent.getType(), this);
+
+        setInSlot(SLOT_NAMESPACES, namespacesListPresenter);
     }
 }

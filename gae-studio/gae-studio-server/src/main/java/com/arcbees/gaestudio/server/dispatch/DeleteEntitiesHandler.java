@@ -53,10 +53,13 @@ public class DeleteEntitiesHandler extends AbstractActionHandler<DeleteEntitiesA
     private void deleteEntities(DeleteEntitiesAction action) {
         switch (action.getDeleteEntitiesType()) {
             case KIND:
-                deleteByKind(action.getValue());
+                deleteByKind(action.getKind());
                 break;
             case NAMESPACE:
-                deleteByNamespace(action.getValue());
+                deleteByNamespace(action.getKind());
+                break;
+            case KIND_NAMESPACE:
+                deleteByKindAndNamespace(action.getKind(), action.getNamespace());
                 break;
             case ALL:
                 deleteAll();
@@ -64,11 +67,21 @@ public class DeleteEntitiesHandler extends AbstractActionHandler<DeleteEntitiesA
         }
     }
 
-    private void deleteByNamespace(String value) {
+    private void deleteByNamespace(String namespace) {
         String defaultNamespace = NamespaceManager.get();
-        NamespaceManager.set(value);
+        NamespaceManager.set(namespace);
 
         Iterable<Entity> entities = getAllEntities();
+        deleteEntities(entities);
+
+        NamespaceManager.set(defaultNamespace);
+    }
+
+    private void deleteByKindAndNamespace(String kind, String namespace) {
+        String defaultNamespace = NamespaceManager.get();
+        NamespaceManager.set(namespace);
+
+        Iterable<Entity> entities = getAllEntitiesOfKind(kind);
         deleteEntities(entities);
 
         NamespaceManager.set(defaultNamespace);
@@ -93,7 +106,14 @@ public class DeleteEntitiesHandler extends AbstractActionHandler<DeleteEntitiesA
 
     private Iterable<Entity> getAllEntities() {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
         return datastore.prepare(new Query().setKeysOnly()).asIterable();
+    }
+
+    private Iterable<Entity> getAllEntitiesOfKind(String kind) {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+        return datastore.prepare(new Query(kind).setKeysOnly()).asIterable();
     }
 
     private Iterable<Entity> getAllEntitiesOfAllNamespaces() {

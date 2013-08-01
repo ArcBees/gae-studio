@@ -9,7 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.event;
 
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesType;
+import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesAction;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
@@ -26,24 +26,18 @@ public class DeleteEntitiesEvent extends GwtEvent<DeleteEntitiesEvent.DeleteEnti
 
     private static final Type<DeleteEntitiesHandler> TYPE = new Type<DeleteEntitiesHandler>();
 
-    private DeleteEntitiesType deleteType;
-    private String value;
+    private DeleteEntitiesAction deleteEntitiesAction;
 
     protected DeleteEntitiesEvent() {
         // Possibly for serialization.
     }
 
-    public DeleteEntitiesType getDeleteType() {
-        return deleteType;
+    public DeleteEntitiesAction getDeleteEntitiesAction() {
+        return deleteEntitiesAction;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public DeleteEntitiesEvent(DeleteEntitiesType deleteType, String value) {
-        this.deleteType = deleteType;
-        this.value = value;
+    public DeleteEntitiesEvent(DeleteEntitiesAction deleteEntitiesAction) {
+        this.deleteEntitiesAction = deleteEntitiesAction;
     }
 
     @Override
@@ -60,12 +54,8 @@ public class DeleteEntitiesEvent extends GwtEvent<DeleteEntitiesEvent.DeleteEnti
         return TYPE;
     }
 
-    public static void fire(HasHandlers source, DeleteEntitiesType deleteType) {
-        fire(source, deleteType, "");
-    }
-
-    public static void fire(HasHandlers source, DeleteEntitiesType deleteType, String value) {
-        DeleteEntitiesEvent eventInstance = new DeleteEntitiesEvent(deleteType, value);
+    public static void fire(HasHandlers source, DeleteEntitiesAction deleteEntitiesAction) {
+        DeleteEntitiesEvent eventInstance = new DeleteEntitiesEvent(deleteEntitiesAction);
         source.fireEvent(eventInstance);
     }
 

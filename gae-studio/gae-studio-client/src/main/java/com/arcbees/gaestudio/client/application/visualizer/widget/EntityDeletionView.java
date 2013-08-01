@@ -12,8 +12,10 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesType;
+import com.google.common.base.Strings;
 import com.google.gwt.dom.client.HeadingElement;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -50,27 +52,38 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
 
     @Override
     public void displayEntityDeletion(ParsedEntity p) {
-        message.setInnerText(messages.deleteEntity(p.getKey().getKind(), p.getKey().getId()));
+        message.setInnerSafeHtml(messages.deleteEntity(p.getKey().getKind(), p.getKey().getId()));
 
         asPopupPanel().center();
     }
 
     @Override
-    public void displayEntitiesDeletion(DeleteEntitiesType deleteType, String value) {
-        String message = "";
+    public void displayEntitiesDeletion(DeleteEntitiesType deleteType, String kind, String namespace) {
+        SafeHtml message = null;
         switch (deleteType) {
             case KIND:
-                message = messages.deleteEntitiesOfKind(value);
+                message = messages.deleteEntitiesOfKind(kind);
                 break;
             case NAMESPACE:
-                message = messages.deleteEntitiesOfNamespace(value);
+                if (Strings.isNullOrEmpty(namespace)) {
+                    message = messages.deleteEntitiesOfDefaultNamespace();
+                } else {
+                    message = messages.deleteEntitiesOfNamespace(namespace);
+                }
+                break;
+            case KIND_NAMESPACE:
+                if (Strings.isNullOrEmpty(namespace)) {
+                    message = messages.deleteEntitiesOfKindOfDefaultNamespace(kind);
+                } else {
+                    message = messages.deleteEntitiesOfKindOfNamespace(kind, namespace);
+                }
                 break;
             case ALL:
                 message = messages.deleteAllEntities();
                 break;
         }
 
-        this.message.setInnerText(message);
+        this.message.setInnerSafeHtml(message);
         asPopupPanel().center();
     }
 

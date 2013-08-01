@@ -21,7 +21,6 @@ import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -51,13 +50,11 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     @UiField
     SimplePanel namespaces;
 
-
     private final KindTemplate kindTemplate;
     private final EmptyKindsTemplate emptyKindsTemplate;
     private final AppResources appResources;
 
     private final String emptyListTypeStyleName;
-    private final String rootListTypeStyleName;
     private final String hiddenOverlayStyleName;
     private final String revealOverlayStyleName;
     private final String revealUnderOverlayStyleName;
@@ -70,6 +67,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private final String entityStyleName;
     private final String extendButtonStyleName;
     private final String backButtonStyleName;
+
+    private String currentKind;
 
     @Inject
     SidebarView(Binder binder,
@@ -86,7 +85,6 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         secondTableHiddenStyleName = appResources.styles().secondTableHidden();
         entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
         emptyListTypeStyleName = appResources.styles().entityTypeSelectorEmpty();
-        rootListTypeStyleName = appResources.styles().entityTypeSelector();
         hiddenOverlayStyleName = appResources.styles().hiddenOverlay();
         revealOverlayStyleName = appResources.styles().revealOverlay();
         revealUnderOverlayStyleName = appResources.styles().revealUnderOverlay();
@@ -108,28 +106,13 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         }
 
         for (String kind : kinds) {
-            String cssClass = appResources.styles().kindListElement();
-            SafeHtml html = kindTemplate.create(kind, cssClass);
-            this.kinds.add(new HTML(html));
+            addKind(kind);
         }
 
         $("div", this.kinds).click(new Function() {
-
             @Override
             public void f(Element e) {
-                $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
-                $("." + entityListContainerSelectedStyleName).removeClass(entityListContainerSelectedStyleName);
-                $("." + namespaceStyleName).hide();
-                $("." + entityStyleName).hide();
-                $("." + idStyleName).text("no entity");
-                $("." + extendButtonStyleName).hide();
-                $("." + backButtonStyleName).hide();
-
-                setActive(e);
-
-                String kind = $("span", e).html();
-
-                getUiHandlers().displayEntitiesOfSelectedKind(kind);
+                onKindSelected(e);
             }
         });
     }
@@ -147,10 +130,44 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         }
     }
 
+    private void addKind(String kind) {
+        String cssClass = appResources.styles().kindListElement();
+        SafeHtml html = kindTemplate.create(kind, cssClass);
+
+        final HTML kindWidget = new HTML(html);
+        kinds.add(kindWidget);
+
+        if (kind.equals(currentKind)) {
+            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                @Override
+                public void execute() {
+                    onKindSelected(kindWidget.getElement().getFirstChildElement());
+                }
+            });
+        }
+    }
+
+    private void onKindSelected(Element e) {
+        $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
+        $("." + entityListContainerSelectedStyleName).removeClass(entityListContainerSelectedStyleName);
+        $("." + namespaceStyleName).hide();
+        $("." + entityStyleName).hide();
+        $("." + idStyleName).text("no entity");
+        $("." + extendButtonStyleName).hide();
+        $("." + backButtonStyleName).hide();
+
+        setActive(e);
+
+        currentKind = $("span", e).html();
+
+        getUiHandlers().displayEntitiesOfSelectedKind(currentKind);
+    }
+
     private void setActive(final Element e) {
         revealEntityDivNToolbar();
         final String activeClass = appResources.styles().kindListElementHovered();
         $(kinds).find("div").removeClass(activeClass);
+
         Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
             @Override
             public void execute() {
@@ -162,13 +179,12 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private void revealEntityDivNToolbar() {
         $("." + hiddenOverlayStyleName).addClass(revealOverlayStyleName);
 
-        Timer timer = new Timer() {
-            public void run() {
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+            @Override
+            public void execute() {
                 $("." + hiddenOverlayStyleName).addClass(revealUnderOverlayStyleName);
                 $("." + entityDetailPanelVisibilityStyleName).show();
             }
-        };
-
-        timer.schedule(500);
+        });
     }
 }

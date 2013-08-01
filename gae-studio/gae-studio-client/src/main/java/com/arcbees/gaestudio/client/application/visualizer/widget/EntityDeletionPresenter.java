@@ -41,7 +41,7 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
     interface MyView extends View, HasUiHandlers<EntityDeletionUiHandlers> {
         void displayEntityDeletion(ParsedEntity parsedEntity);
 
-        void displayEntitiesDeletion(DeleteEntitiesType deleteType, String value);
+        void displayEntitiesDeletion(DeleteEntitiesType deleteType, String kind, String namespace);
 
         void hide();
     }
@@ -56,8 +56,7 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
 
     private DeleteType lastEvent;
     private ParsedEntity currentParsedEntity;
-    private DeleteEntitiesType deleteType;
-    private String deleteTypeValue;
+    private DeleteEntitiesAction deleteEntitiesAction;
 
     @Inject
     EntityDeletionPresenter(EventBus eventBus,
@@ -81,10 +80,10 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
 
     @Override
     public void onDeleteEntities(DeleteEntitiesEvent event) {
-        deleteType = event.getDeleteType();
-        deleteTypeValue = event.getValue();
+        deleteEntitiesAction = event.getDeleteEntitiesAction();
 
-        getView().displayEntitiesDeletion(deleteType, deleteTypeValue);
+        getView().displayEntitiesDeletion(deleteEntitiesAction.getDeleteEntitiesType(),
+                deleteEntitiesAction.getKind(), deleteEntitiesAction.getNamespace());
 
         lastEvent = BATCH;
     }
@@ -114,18 +113,17 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
     }
 
     private void deleteEntities() {
-        dispatcher.execute(DeleteEntitiesAction.create(deleteType, deleteTypeValue),
-                new AsyncCallback<DeleteEntitiesResult>() {
-                    @Override
-                    public void onSuccess(DeleteEntitiesResult result) {
-                        onEntitiesDeletedSuccess();
-                    }
+        dispatcher.execute(deleteEntitiesAction, new AsyncCallback<DeleteEntitiesResult>() {
+            @Override
+            public void onSuccess(DeleteEntitiesResult result) {
+                onEntitiesDeletedSuccess();
+            }
 
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        showMessage(myConstants.errorEntityDelete(), MessageStyle.ERROR);
-                    }
-                });
+            @Override
+            public void onFailure(Throwable caught) {
+                showMessage(myConstants.errorEntityDelete(), MessageStyle.ERROR);
+            }
+        });
     }
 
     private void deleteSingleEntity() {
