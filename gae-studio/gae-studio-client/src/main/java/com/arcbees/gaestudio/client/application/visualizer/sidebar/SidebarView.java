@@ -135,7 +135,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         SafeHtml html = kindTemplate.create(kind, cssClass);
 
         final HTML kindWidget = new HTML(html);
-        this.kinds.add(kindWidget);
+        kinds.add(kindWidget);
 
         if (kind.equals(currentKind)) {
             Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
