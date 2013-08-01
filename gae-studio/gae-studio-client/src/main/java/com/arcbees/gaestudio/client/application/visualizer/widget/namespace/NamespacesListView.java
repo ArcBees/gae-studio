@@ -52,5 +52,7 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
     @UiHandler("delete")
     void onDeleted(ClickEvent event) {
         getUiHandlers().deleteAllFromNamespace(namespaces.getValue());
+
+        namespaces.setValue(null);
     }
 }

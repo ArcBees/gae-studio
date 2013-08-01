@@ -8,7 +8,7 @@
 
         .buttonContainer {
             padding-top: 5px;
-            width: 50%;
+            width: 150px;
             margin: 0 auto;
         }
 
@@ -19,10 +19,14 @@
         .buttonContainer > :first-child {
             margin-right: 6px;
         }
+
+        .container {
+            width: 100%;
+        }
     </ui:style>
     <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{res.styles.glassPanel}" modal="true"
                   styleName="{res.styles.popup}" autoHideEnabled="true">
-        <g:HTMLPanel>
+        <g:HTMLPanel styleName="{style.container}">
             <h3 ui:field="message"/>
             <div class="{style.buttonContainer}">
                 <g:Button ui:field="delete" styleName="{res.styles.toolbarButton}">Delete</g:Button>

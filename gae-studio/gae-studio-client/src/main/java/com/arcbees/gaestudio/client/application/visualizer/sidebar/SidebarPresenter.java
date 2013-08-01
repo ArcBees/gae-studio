@@ -14,12 +14,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.DeleteFromNamespaceHandler;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesType;
+import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
@@ -29,8 +30,10 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
+import static com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent.EntitiesDeletedHandler;
+
 public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> implements SidebarUiHandlers,
-        DeleteFromNamespaceHandler {
+        DeleteFromNamespaceHandler, EntitiesDeletedHandler {
     interface MyView extends View, HasUiHandlers<SidebarUiHandlers> {
         void updateKinds(List<String> kinds);
 
@@ -59,10 +62,15 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     @Override
     public void onDeleteAllFromNamespace(AppIdNamespaceDto namespaceDto) {
         if (namespaceDto == null) {
-            DeleteEntitiesEvent.fire(this, DeleteEntitiesType.ALL);
+            DeleteEntitiesEvent.fire(this, DeleteEntitiesAction.all());
         } else {
-            DeleteEntitiesEvent.fire(this, DeleteEntitiesType.NAMESPACE, namespaceDto.getNamespace());
+            DeleteEntitiesEvent.fire(this, DeleteEntitiesAction.byNamespace(namespaceDto.getNamespace()));
         }
+    }
+
+    @Override
+    public void onEntitiesDeleted(EntitiesDeletedEvent event) {
+        updateKinds();
     }
 
     @Override
@@ -74,6 +82,8 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     protected void onBind() {
         super.onBind();
 
+        addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
+
         setInSlot(SLOT_NAMESPACES, namespacesListPresenter);
     }
 
@@ -81,16 +91,20 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     protected void onReveal() {
         super.onReveal();
 
+        updateKinds();
+    }
+
+    private void updateKinds() {
         dispatcher.execute(new GetEntityKindsAction(),
                 new AsyncCallbackImpl<GetEntityKindsResult>("Failed getting Entity Kinds: ") {
                     @Override
                     public void onSuccess(GetEntityKindsResult result) {
-                        updateKinds(result);
+                        onKindsUpdated(result);
                     }
                 });
     }
 
-    private void updateKinds(GetEntityKindsResult result) {
+    private void onKindsUpdated(GetEntityKindsResult result) {
         getView().updateKinds(result.getKinds());
     }
 }

@@ -12,52 +12,57 @@ package com.arcbees.gaestudio.shared.dispatch;
 import com.arcbees.gaestudio.shared.dispatch.util.GaeStudioActionImpl;
 
 public class DeleteEntitiesAction extends GaeStudioActionImpl<DeleteEntitiesResult> {
-    public static DeleteEntitiesAction create(DeleteEntitiesType deleteType, String deleteTypeValue) {
-        switch (deleteType) {
-            case KIND:
-                return byKind(deleteTypeValue);
-            case NAMESPACE:
-                return byNamespace(deleteTypeValue);
-            default:
-                return all();
-        }
+    public static DeleteEntitiesAction byKindAndNamespace(String kind, String namespace) {
+        return new DeleteEntitiesAction(DeleteEntitiesType.KIND_NAMESPACE)
+                .setKind(kind)
+                .setNamespace(namespace);
     }
 
     public static DeleteEntitiesAction byKind(String kind) {
-        return new DeleteEntitiesAction(DeleteEntitiesType.KIND, kind);
+        return new DeleteEntitiesAction(DeleteEntitiesType.KIND)
+                .setKind(kind);
     }
 
     public static DeleteEntitiesAction byNamespace(String namespace) {
-        return new DeleteEntitiesAction(DeleteEntitiesType.NAMESPACE, namespace);
+        return new DeleteEntitiesAction(DeleteEntitiesType.NAMESPACE)
+                .setNamespace(namespace);
     }
 
     public static DeleteEntitiesAction all() {
-        return new DeleteEntitiesAction(DeleteEntitiesType.ALL, "");
+        return new DeleteEntitiesAction(DeleteEntitiesType.ALL);
     }
 
     private DeleteEntitiesType deleteEntitiesType;
-
-    private String value;
+    private String kind;
+    private String namespace;
 
     protected DeleteEntitiesAction() {
         // Possibly for serialization.
     }
 
     private DeleteEntitiesAction(DeleteEntitiesType deleteEntitiesType) {
-        this(deleteEntitiesType, null);
-    }
-
-    private DeleteEntitiesAction(DeleteEntitiesType deleteEntitiesType,
-                                 String value) {
         this.deleteEntitiesType = deleteEntitiesType;
-        this.value = value;
     }
 
     public DeleteEntitiesType getDeleteEntitiesType() {
         return deleteEntitiesType;
     }
 
-    public String getValue() {
-        return value;
+    public String getKind() {
+        return kind;
+    }
+
+    public String getNamespace() {
+        return namespace;
+    }
+
+    private DeleteEntitiesAction setKind(String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    private DeleteEntitiesAction setNamespace(String namespace) {
+        this.namespace = namespace;
+        return this;
     }
 }

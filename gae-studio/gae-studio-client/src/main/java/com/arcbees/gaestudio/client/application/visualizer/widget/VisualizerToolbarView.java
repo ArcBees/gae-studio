@@ -17,6 +17,8 @@ import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
@@ -39,7 +41,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     private final ToolbarButton create;
     private final ToolbarButton edit;
     private final ToolbarButton delete;
-    private final ToolbarButton deleteByKind;
+    private final SimplePanel deleteByKind;
     private final String secondTableStyleName;
     private final String secondTableHiddenStyleName;
     private final String entityListContainerSelectedStyleName;
@@ -73,7 +75,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
         create = createCreateButton();
         edit = createEditButton();
         delete = createDeleteButton();
-        deleteByKind = createDeleteByKindButton();
+        deleteByKind = new SimplePanel();
 
         buttons.add(refresh);
         buttons.add(create);
@@ -100,6 +102,15 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     public void disableContextualMenu() {
         edit.setEnabled(false);
         delete.setEnabled(false);
+    }
+
+    @Override
+    public void setInSlot(Object slot, IsWidget content) {
+        if (VisualizerToolbarPresenter.SLOT_NAMESPACES.equals(slot)) {
+            deleteByKind.setWidget(content);
+        } else {
+            super.setInSlot(slot, content);
+        }
     }
 
     private ToolbarButton createRefreshButton() {
@@ -143,15 +154,5 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
                 getUiHandlers().delete();
             }
         });
-    }
-
-    private ToolbarButton createDeleteByKindButton() {
-        return uiFactory.createToolbarButton(myConstants.deleteAllOfKind(), resources.delete(),
-                new ToolbarButtonCallback() {
-                    @Override
-                    public void onClicked() {
-                        getUiHandlers().deleteByKind();
-                    }
-                });
     }
 }

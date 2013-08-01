@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 
 import java.util.List;
 
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetNamespacesAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNamespacesResult;
@@ -23,8 +24,10 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
+import static com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent.EntitiesDeletedHandler;
+
 public class NamespacesListPresenter extends PresenterWidget<NamespacesListPresenter.MyView> implements
-        NamespacesListUiHandlers {
+        NamespacesListUiHandlers, EntitiesDeletedHandler {
     interface MyView extends View, HasUiHandlers<NamespacesListUiHandlers> {
         void displayNamespaces(List<AppIdNamespaceDto> namespaces);
     }
@@ -51,9 +54,25 @@ public class NamespacesListPresenter extends PresenterWidget<NamespacesListPrese
     }
 
     @Override
+    public void onEntitiesDeleted(EntitiesDeletedEvent event) {
+        updateNamespaces();
+    }
+
+    @Override
+    protected void onBind() {
+        super.onBind();
+
+        addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
+    }
+
+    @Override
     protected void onReveal() {
         super.onReveal();
 
+        updateNamespaces();
+    }
+
+    private void updateNamespaces() {
         dispatcher.execute(new GetNamespacesAction(), new AsyncCallbackImpl<GetNamespacesResult>() {
             @Override
             public void onSuccess(GetNamespacesResult result) {

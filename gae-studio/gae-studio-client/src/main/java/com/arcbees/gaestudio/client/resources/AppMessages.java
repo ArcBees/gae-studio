@@ -11,16 +11,23 @@ package com.arcbees.gaestudio.client.resources;
 
 import com.google.gwt.i18n.client.LocalizableResource;
 import com.google.gwt.i18n.client.Messages;
+import com.google.gwt.safehtml.shared.SafeHtml;
 
 @LocalizableResource.DefaultLocale("en")
 public interface AppMessages extends Messages {
     String requestWithHisNumber(Long number);
 
-    String deleteEntity(String kind, Long id);
+    SafeHtml deleteEntity(String kind, Long id);
 
-    String deleteEntitiesOfKind(String kind);
+    SafeHtml deleteEntitiesOfKind(String kind);
 
-    String deleteEntitiesOfNamespace(String namespace);
+    SafeHtml deleteEntitiesOfNamespace(String namespace);
 
-    String deleteAllEntities();
+    SafeHtml deleteEntitiesOfDefaultNamespace();
+
+    SafeHtml deleteEntitiesOfKindOfDefaultNamespace(String kind);
+
+    SafeHtml deleteEntitiesOfKindOfNamespace(String kind, String namespace);
+
+    SafeHtml deleteAllEntities();
 }
