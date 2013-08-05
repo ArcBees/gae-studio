@@ -11,7 +11,9 @@ package com.arcbees.gaestudio.shared.dispatch;
 
 import java.io.Serializable;
 
-public enum DeleteEntitiesType implements Serializable {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public enum DeleteEntitiesType implements Serializable, IsSerializable {
     KIND_NAMESPACE,
     KIND,
     NAMESPACE,
