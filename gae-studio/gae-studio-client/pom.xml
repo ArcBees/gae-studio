@@ -78,6 +78,11 @@
             <artifactId>guava-gwt</artifactId>
             <version>${guava.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.fusesource.restygwt</groupId>
+            <artifactId>restygwt</artifactId>
+            <version>${restygwt.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
