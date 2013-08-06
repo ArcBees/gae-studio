@@ -23,14 +23,13 @@ import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.Name
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
-import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityResult;
 import com.arcbees.gaestudio.client.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.client.dto.entity.EntityDto;
+import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.rest.EntitiesService;
+import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesAction;
 import com.google.common.base.Strings;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -45,6 +44,8 @@ import static com.arcbees.gaestudio.client.application.visualizer.event.KindSele
 public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolbarPresenter.MyView> implements
         VisualizerToolbarUiHandlers, KindSelectedHandler, EntitySelectedHandler, EntityPageLoadedHandler,
         DeleteFromNamespaceHandler {
+    private final EntitiesService entitiesService;
+
     interface MyView extends View, HasUiHandlers<VisualizerToolbarUiHandlers> {
         void setKindSelected(boolean isSelected);
 
@@ -67,12 +68,14 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
                                MyView view,
                                NamespacesListPresenterFactory namespacesListPresenterFactory,
                                DispatchAsync dispatcher,
+                               EntitiesService entitiesService,
                                AppConstants myConstants) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);
 
         this.dispatcher = dispatcher;
+        this.entitiesService = entitiesService;
         this.myConstants = myConstants;
         namespacesListPresenter = namespacesListPresenterFactory.create(this);
     }
@@ -97,8 +100,7 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     @Override
     public void create() {
         if (!currentKind.isEmpty()) {
-            dispatcher.execute(new GetEmptyKindEntityAction(currentKind), new AsyncCallback<GetEmptyKindEntityResult>
-                    () {
+            entitiesService.createByKind(currentKind, new MethodCallbackImpl<EntityDto>() {
                 @Override
                 public void onFailure(Throwable caught) {
                     Message message = new Message(myConstants.errorUnableToGenerateEmptyJson(), MessageStyle.ERROR);
@@ -106,8 +108,7 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
                 }
 
                 @Override
-                public void onSuccess(GetEmptyKindEntityResult result) {
-                    EntityDto emptyEntityDto = result.getEntityDTO();
+                public void onSuccess(EntityDto emptyEntityDto) {
                     EditEntityEvent.fire(VisualizerToolbarPresenter.this, new ParsedEntity(emptyEntityDto));
                 }
             });

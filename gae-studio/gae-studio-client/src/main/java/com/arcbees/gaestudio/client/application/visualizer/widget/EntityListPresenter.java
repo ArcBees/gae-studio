@@ -19,14 +19,11 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoade
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
-import com.arcbees.gaestudio.client.place.NameTokens;
-import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
-import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
-import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindResult;
 import com.arcbees.gaestudio.client.dto.entity.EntityDto;
 import com.arcbees.gaestudio.client.dto.entity.KeyDto;
+import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.client.rest.EntitiesService;
+import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -69,6 +66,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     private final DispatchAsync dispatcher;
+    private final EntitiesService entitiesService;
     private final PlaceManager placeManager;
 
     private String currentKind;
@@ -77,11 +75,13 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     EntityListPresenter(EventBus eventBus,
                         MyView view,
                         DispatchAsync dispatcher,
-                        PlaceManager placeManager) {
+                        PlaceManager placeManager,
+                        EntitiesService entitiesService) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
         this.dispatcher = dispatcher;
+        this.entitiesService = entitiesService;
 
         getView().setUiHandlers(this);
 
@@ -149,13 +149,12 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     private void setTotalCount() {
-        dispatcher.execute(new GetEntityCountByKindAction(currentKind),
-                new AsyncCallbackImpl<GetEntityCountByKindResult>() {
-                    @Override
-                    public void onSuccess(GetEntityCountByKindResult result) {
-                        getView().setRowCount(result.getCount());
-                    }
-                });
+        entitiesService.getCountByKind(currentKind, new MethodCallbackImpl<Integer>() {
+            @Override
+            public void onSuccess(Integer result) {
+                getView().setRowCount(result);
+            }
+        });
     }
 
     private void loadPage(final HasData<ParsedEntity> display) {
@@ -163,23 +162,22 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             display.setRowCount(0);
         } else {
             Range range = display.getVisibleRange();
-            dispatcher.execute(
-                    new GetEntitiesByKindAction.Builder(currentKind).offset(range.getStart()).limit(range.getLength())
-                            .build(), new AsyncCallbackImpl<GetEntitiesByKindResult>() {
-                @Override
-                public void onSuccess(GetEntitiesByKindResult result) {
-                    onLoadPageSuccess(result, display);
-                }
-            });
+            entitiesService.getByKind(currentKind, range.getStart(), range.getLength(),
+                    new MethodCallbackImpl<List<EntityDto>>() {
+                        @Override
+                        public void onSuccess(List<EntityDto> result) {
+                            onLoadPageSuccess(result, display);
+                        }
+                    });
         }
         EntityPageLoadedEvent.fire(this);
     }
 
-    private void onLoadPageSuccess(GetEntitiesByKindResult result, HasData<ParsedEntity> display) {
+    private void onLoadPageSuccess(List<EntityDto> entities, HasData<ParsedEntity> display) {
         List<ParsedEntity> parsedEntityEntities = new ArrayList<ParsedEntity>();
 
-        for (EntityDto entityDTO : result.getEntities()) {
-            ParsedEntity parsedEntity = new ParsedEntity(entityDTO);
+        for (EntityDto entityDto : entities) {
+            ParsedEntity parsedEntity = new ParsedEntity(entityDto);
             parsedEntityEntities.add(parsedEntity);
         }
 
