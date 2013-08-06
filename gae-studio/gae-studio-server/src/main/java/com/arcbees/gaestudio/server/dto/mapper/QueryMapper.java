@@ -11,11 +11,11 @@ package com.arcbees.gaestudio.server.dto.mapper;
 
 import java.util.ArrayList;
 
-import com.arcbees.gaestudio.shared.dto.query.QueryDto;
-import com.arcbees.gaestudio.shared.dto.query.QueryFilterDto;
-import com.arcbees.gaestudio.shared.dto.query.QueryFilterOperator;
-import com.arcbees.gaestudio.shared.dto.query.QueryOrderDirection;
-import com.arcbees.gaestudio.shared.dto.query.QueryOrderDto;
+import com.arcbees.gaestudio.server.dto.query.QueryDto;
+import com.arcbees.gaestudio.server.dto.query.QueryFilterDto;
+import com.arcbees.gaestudio.shared.QueryFilterOperator;
+import com.arcbees.gaestudio.shared.QueryOrderDirection;
+import com.arcbees.gaestudio.server.dto.query.QueryOrderDto;
 import com.google.apphosting.api.DatastorePb;
 import com.google.storage.onestore.v3.OnestoreEntity;
 

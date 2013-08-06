@@ -7,28 +7,35 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared.dto.query;
+package com.arcbees.gaestudio.server.dto.query;
 
+import com.arcbees.gaestudio.shared.QueryFilterOperator;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class QueryOrderDto implements IsSerializable {
-    private QueryOrderDirection direction;
+public class QueryFilterDto implements IsSerializable {
     private String property;
+    private QueryFilterOperator operator;
+    private String value;
 
     @SuppressWarnings("unused")
-    protected QueryOrderDto() {
+    protected QueryFilterDto() {
     }
 
-    public QueryOrderDto(QueryOrderDirection direction, String property) {
-        this.direction = direction;
+    public QueryFilterDto(String property, QueryFilterOperator operator, String value) {
         this.property = property;
+        this.operator = operator;
+        this.value = value;
     }
 
     public String getProperty() {
         return property;
     }
 
-    public QueryOrderDirection getDirection() {
-        return direction;
+    public QueryFilterOperator getOperator() {
+        return operator;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

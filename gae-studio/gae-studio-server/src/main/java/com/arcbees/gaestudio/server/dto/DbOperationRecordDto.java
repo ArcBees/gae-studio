@@ -7,9 +7,9 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared.dto;
+package com.arcbees.gaestudio.server.dto;
 
-import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
+import com.arcbees.gaestudio.server.dto.stacktrace.StackTraceElementDto;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public abstract class DbOperationRecordDto implements IsSerializable {

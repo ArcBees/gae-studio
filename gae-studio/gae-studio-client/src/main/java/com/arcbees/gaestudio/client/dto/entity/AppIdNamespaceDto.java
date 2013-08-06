@@ -1,8 +1,12 @@
-package com.arcbees.gaestudio.client.dto;
+package com.arcbees.gaestudio.client.dto.entity;
 
 import com.google.gwt.core.client.JavaScriptObject;
 
 public class AppIdNamespaceDto extends JavaScriptObject {
+    public static native AppIdNamespaceDto create(String appId, String namespace) /*-{
+        return {appId: appId, namespace: namespace};
+    }-*/;
+
     protected AppIdNamespaceDto() {
     }
 

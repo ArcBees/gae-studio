@@ -16,11 +16,11 @@ import java.util.TreeMap;
 
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.client.application.profiler.event.FilterValueSelectedEvent;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
-import com.arcbees.gaestudio.shared.dto.DeleteRecordDTO;
-import com.arcbees.gaestudio.shared.dto.GetRecordDto;
-import com.arcbees.gaestudio.shared.dto.PutRecordDto;
-import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
+import com.arcbees.gaestudio.client.dto.DbOperationRecordDto;
+import com.arcbees.gaestudio.client.dto.DeleteRecordDto;
+import com.arcbees.gaestudio.client.dto.GetRecordDto;
+import com.arcbees.gaestudio.client.dto.PutRecordDto;
+import com.arcbees.gaestudio.client.dto.query.QueryRecordDto;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -78,7 +78,7 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
             return OperationType.GET;
         } else if (record instanceof PutRecordDto) {
             return OperationType.PUT;
-        } else if (record instanceof DeleteRecordDTO) {
+        } else if (record instanceof DeleteRecordDto) {
             return OperationType.DELETE;
         } else if (record instanceof QueryRecordDto) {
             return OperationType.QUERY;

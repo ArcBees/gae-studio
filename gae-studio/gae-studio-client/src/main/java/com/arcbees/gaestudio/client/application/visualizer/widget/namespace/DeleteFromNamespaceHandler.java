@@ -9,7 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.client.dto.entity.AppIdNamespaceDto;
 
 public interface DeleteFromNamespaceHandler {
     void onDeleteAllFromNamespace(AppIdNamespaceDto namespaceDto);

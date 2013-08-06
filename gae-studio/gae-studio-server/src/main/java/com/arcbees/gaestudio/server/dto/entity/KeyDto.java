@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared.dto.entity;
+package com.arcbees.gaestudio.server.dto.entity;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 

@@ -9,9 +9,9 @@
 
 package com.arcbees.gaestudio.server;
 
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
+import com.arcbees.gaestudio.server.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.server.dto.entity.KeyDto;
+import com.arcbees.gaestudio.server.dto.entity.ParentKeyDto;
 import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;

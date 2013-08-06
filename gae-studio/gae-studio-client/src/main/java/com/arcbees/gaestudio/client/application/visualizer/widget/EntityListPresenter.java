@@ -25,8 +25,8 @@ import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindResult;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindResult;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.arcbees.gaestudio.client.dto.entity.EntityDto;
+import com.arcbees.gaestudio.client.dto.entity.KeyDto;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -115,7 +115,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void onEntitySaved(EntitySavedEvent event) {
-        getView().addOrReplaceEntity(event.getEntityDTO());
+        getView().addOrReplaceEntity(event.getEntityDto());
     }
 
     @Override
@@ -187,7 +187,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     private void revealEntityPlace(ParsedEntity parsedEntity) {
-        EntityDto entityDto = parsedEntity.getEntityDTO();
+        EntityDto entityDto = parsedEntity.getEntityDto();
         KeyDto keyDto = entityDto.getKey();
 
         PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.entity)

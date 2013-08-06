@@ -7,17 +7,17 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared.dto;
+package com.arcbees.gaestudio.server.dto;
 
-import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
+import com.arcbees.gaestudio.server.dto.stacktrace.StackTraceElementDto;
 
 // TODO : Complete
-public class GetRecordDto extends DbOperationRecordDto {
+public class PutRecordDto extends DbOperationRecordDto {
     @SuppressWarnings("unused")
-    protected GetRecordDto() {
+    protected PutRecordDto() {
     }
 
-    public GetRecordDto(StackTraceElementDto callerStackTraceElement,
+    public PutRecordDto(StackTraceElementDto callerStackTraceElement,
                         Long requestId,
                         Long statementId,
                         Integer executionTimeMs) {

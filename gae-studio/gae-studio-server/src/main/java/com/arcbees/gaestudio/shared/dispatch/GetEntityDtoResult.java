@@ -9,7 +9,7 @@
 
 package com.arcbees.gaestudio.shared.dispatch;
 
-import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.server.dto.entity.EntityDto;
 import com.gwtplatform.dispatch.shared.Result;
 
 public class GetEntityDtoResult implements Result {

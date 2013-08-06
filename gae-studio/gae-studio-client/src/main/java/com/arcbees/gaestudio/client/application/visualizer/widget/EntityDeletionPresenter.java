@@ -23,7 +23,7 @@ import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesResult;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesType;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.client.dto.entity.EntityDto;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -128,11 +128,11 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
 
     private void deleteSingleEntity() {
         if (currentParsedEntity != null) {
-            final EntityDto entityDTO = currentParsedEntity.getEntityDTO();
-            dispatcher.execute(new DeleteEntityAction(entityDTO), new AsyncCallback<DeleteEntityResult>() {
+            final EntityDto entityDto = currentParsedEntity.getEntityDto();
+            dispatcher.execute(new DeleteEntityAction(entityDto), new AsyncCallback<DeleteEntityResult>() {
                 @Override
                 public void onSuccess(DeleteEntityResult result) {
-                    onEntityDeletedSuccess(entityDTO);
+                    onEntityDeletedSuccess(entityDto);
                 }
 
                 @Override

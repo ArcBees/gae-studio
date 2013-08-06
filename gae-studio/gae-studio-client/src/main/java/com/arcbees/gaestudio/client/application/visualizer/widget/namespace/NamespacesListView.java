@@ -11,7 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 
 import java.util.List;
 
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.client.dto.entity.AppIdNamespaceDto;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;

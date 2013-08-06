@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared.dto.query;
+package com.arcbees.gaestudio.shared;
 
 public enum QueryFilterOperator {
     EQUAL,

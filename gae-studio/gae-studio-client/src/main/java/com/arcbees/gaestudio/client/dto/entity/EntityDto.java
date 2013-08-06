@@ -1,8 +1,12 @@
-package com.arcbees.gaestudio.client.dto;
+package com.arcbees.gaestudio.client.dto.entity;
 
 import com.google.gwt.core.client.JavaScriptObject;
 
 public class EntityDto extends JavaScriptObject {
+    public static native EntityDto create(KeyDto key, String json) /*-{
+        return {json: json, key: key};
+    }-*/;
+
     protected EntityDto() {
     }
 

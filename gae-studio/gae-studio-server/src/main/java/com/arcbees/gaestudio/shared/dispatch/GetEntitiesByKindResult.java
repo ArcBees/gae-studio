@@ -14,17 +14,17 @@ import java.util.ArrayList;
 import com.gwtplatform.dispatch.shared.Result;
 
 public class GetEntitiesByKindResult implements Result {
-    private ArrayList<com.arcbees.gaestudio.shared.dto.entity.EntityDto> entities;
+    private ArrayList<com.arcbees.gaestudio.server.dto.entity.EntityDto> entities;
 
     protected GetEntitiesByKindResult() {
         // Possibly for serialization.
     }
 
-    public GetEntitiesByKindResult(ArrayList<com.arcbees.gaestudio.shared.dto.entity.EntityDto> entities) {
+    public GetEntitiesByKindResult(ArrayList<com.arcbees.gaestudio.server.dto.entity.EntityDto> entities) {
         this.entities = entities;
     }
 
-    public ArrayList<com.arcbees.gaestudio.shared.dto.entity.EntityDto> getEntities() {
+    public ArrayList<com.arcbees.gaestudio.server.dto.entity.EntityDto> getEntities() {
         return entities;
     }
 

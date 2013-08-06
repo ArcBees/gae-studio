@@ -9,7 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.profiler;
 
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
+import com.arcbees.gaestudio.client.dto.DbOperationRecordDto;
 
 public interface DbOperationRecordProcessor {
     void processDbOperationRecord(DbOperationRecordDto record);

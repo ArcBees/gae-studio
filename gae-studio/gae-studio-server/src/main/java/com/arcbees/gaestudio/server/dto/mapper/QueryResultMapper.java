@@ -9,7 +9,7 @@
 
 package com.arcbees.gaestudio.server.dto.mapper;
 
-import com.arcbees.gaestudio.shared.dto.query.QueryResultDto;
+import com.arcbees.gaestudio.server.dto.query.QueryResultDto;
 import com.google.apphosting.api.DatastorePb;
 
 public class QueryResultMapper {

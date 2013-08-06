@@ -15,7 +15,7 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeleted
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetNamespacesAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNamespacesResult;
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.client.dto.entity.AppIdNamespaceDto;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.web.bindery.event.shared.EventBus;

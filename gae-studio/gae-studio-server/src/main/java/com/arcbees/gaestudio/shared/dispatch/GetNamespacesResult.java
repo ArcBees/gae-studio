@@ -11,7 +11,7 @@ package com.arcbees.gaestudio.shared.dispatch;
 
 import java.util.List;
 
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.server.dto.entity.AppIdNamespaceDto;
 import com.gwtplatform.dispatch.shared.Result;
 
 public class GetNamespacesResult implements Result {

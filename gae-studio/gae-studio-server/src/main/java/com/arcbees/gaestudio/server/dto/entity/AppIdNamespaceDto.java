@@ -7,28 +7,28 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared.dto.entity;
+package com.arcbees.gaestudio.server.dto.entity;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class ParentKeyDto implements IsSerializable {
-    private String kind;
-    private Long id;
+public class AppIdNamespaceDto implements IsSerializable {
+    private String appId;
+    private String namespace;
 
     @SuppressWarnings("unused")
-    protected ParentKeyDto() {
+    protected AppIdNamespaceDto() {
     }
 
-    public ParentKeyDto(String kind, Long id) {
-        this.kind = kind;
-        this.id = id;
+    public AppIdNamespaceDto(String appId, String namespace) {
+        this.appId = appId;
+        this.namespace = namespace;
     }
 
-    public String getKind() {
-        return kind;
+    public String getAppId() {
+        return appId;
     }
 
-    public Long getId() {
-        return id;
+    public String getNamespace() {
+        return namespace;
     }
 }

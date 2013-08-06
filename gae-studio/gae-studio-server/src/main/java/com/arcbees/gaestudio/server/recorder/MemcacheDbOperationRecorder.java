@@ -9,14 +9,14 @@
 
 package com.arcbees.gaestudio.server.recorder;
 
+import com.arcbees.gaestudio.server.dto.DeleteRecordDto;
 import com.arcbees.gaestudio.server.dto.mapper.QueryMapper;
 import com.arcbees.gaestudio.server.dto.mapper.QueryResultMapper;
 import com.arcbees.gaestudio.server.dto.mapper.StackTraceElementMapper;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
-import com.arcbees.gaestudio.shared.dto.DeleteRecordDTO;
-import com.arcbees.gaestudio.shared.dto.GetRecordDto;
-import com.arcbees.gaestudio.shared.dto.PutRecordDto;
-import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
+import com.arcbees.gaestudio.server.dto.DbOperationRecordDto;
+import com.arcbees.gaestudio.server.dto.GetRecordDto;
+import com.arcbees.gaestudio.server.dto.PutRecordDto;
+import com.arcbees.gaestudio.server.dto.query.QueryRecordDto;
 import com.arcbees.gaestudio.shared.util.StackInspector;
 import com.google.appengine.api.memcache.Expiration;
 import com.google.appengine.api.memcache.MemcacheService;
@@ -43,7 +43,7 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     @Override
     public void recordDbOperation(DatastorePb.DeleteRequest request, DatastorePb.DeleteResponse response,
                                   int executionTimeMs) {
-        recordOperation(new DeleteRecordDTO(
+        recordOperation(new DeleteRecordDto(
                 //request, response,
                 StackTraceElementMapper.mapDTO(stackInspector.getCaller(Thread.currentThread().getStackTrace())),
                 requestIdProvider.get(), generateId(), executionTimeMs));

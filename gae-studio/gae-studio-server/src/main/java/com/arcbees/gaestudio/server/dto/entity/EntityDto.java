@@ -7,20 +7,33 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared.dto;
+package com.arcbees.gaestudio.server.dto.entity;
 
-import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-// TODO : Complete
-public class PutRecordDto extends DbOperationRecordDto {
+public class EntityDto implements IsSerializable {
+    private KeyDto key;
+
+    private String json;
+
     @SuppressWarnings("unused")
-    protected PutRecordDto() {
+    protected EntityDto() {
     }
 
-    public PutRecordDto(StackTraceElementDto callerStackTraceElement,
-                        Long requestId,
-                        Long statementId,
-                        Integer executionTimeMs) {
-        super(callerStackTraceElement, requestId, statementId, executionTimeMs);
+    public EntityDto(KeyDto key, String json) {
+        this.key = key;
+        this.json = json;
+    }
+
+    public KeyDto getKey() {
+        return key;
+    }
+
+    public String getJson() {
+        return json;
+    }
+
+    public void setJson(String json) {
+        this.json = json;
     }
 }

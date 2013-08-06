@@ -17,10 +17,10 @@ import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactor
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.PagerResources;
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
+import com.arcbees.gaestudio.client.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.client.dto.entity.EntityDto;
+import com.arcbees.gaestudio.client.dto.entity.KeyDto;
+import com.arcbees.gaestudio.client.dto.entity.ParentKeyDto;
 import com.arcbees.gquery.tooltip.client.Tooltip;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.Element;
@@ -186,7 +186,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             if (parsedEntity.getKey().getId().equals(entityDTO.getKey().getId())) {
                 isReplace = true;
                 rowIndex = i;
-                parsedEntity.setEntityDTO(entityDTO);
+                parsedEntity.setEntityDto(entityDTO);
             }
 
             i++;

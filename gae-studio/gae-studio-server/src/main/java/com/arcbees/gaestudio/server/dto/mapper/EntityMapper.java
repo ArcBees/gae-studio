@@ -9,10 +9,10 @@
 
 package com.arcbees.gaestudio.server.dto.mapper;
 
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
+import com.arcbees.gaestudio.server.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.server.dto.entity.EntityDto;
+import com.arcbees.gaestudio.server.dto.entity.KeyDto;
+import com.arcbees.gaestudio.server.dto.entity.ParentKeyDto;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.GsonDatastoreFactory;
 import com.google.appengine.api.datastore.Key;

@@ -10,7 +10,7 @@
 package com.arcbees.gaestudio.shared.dispatch;
 
 import com.arcbees.gaestudio.shared.dispatch.util.GaeStudioActionImpl;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.arcbees.gaestudio.server.dto.entity.KeyDto;
 
 public class GetEntityDtoAction extends GaeStudioActionImpl<GetEntityDtoResult> {
     private KeyDto keyDto;

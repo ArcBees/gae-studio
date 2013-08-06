@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared.stacktrace;
+package com.arcbees.gaestudio.server.dto.stacktrace;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 

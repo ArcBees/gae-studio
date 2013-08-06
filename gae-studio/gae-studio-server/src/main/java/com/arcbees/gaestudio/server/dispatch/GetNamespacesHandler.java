@@ -12,7 +12,7 @@ package com.arcbees.gaestudio.server.dispatch;
 import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.shared.dispatch.GetNamespacesAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNamespacesResult;
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.server.dto.entity.AppIdNamespaceDto;
 import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.api.client.util.Lists;
 import com.google.appengine.api.datastore.DatastoreService;

@@ -12,15 +12,15 @@ package com.arcbees.gaestudio.client.application.entity;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
+import com.arcbees.gaestudio.client.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.client.dto.entity.EntityDto;
+import com.arcbees.gaestudio.client.dto.entity.KeyDto;
+import com.arcbees.gaestudio.client.dto.entity.ParentKeyDto;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoResult;
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
@@ -30,12 +30,12 @@ import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
+import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
 
 public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPresenter.MyProxy> {
     interface MyView extends View {
@@ -79,14 +79,14 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
 
         ParentKeyDto parentKeyDto;
         if (parentKind != null && parentId != null) {
-            parentKeyDto = new ParentKeyDto(parentKind, Long.valueOf(parentId));
+            parentKeyDto = ParentKeyDto.create(parentKind, Long.valueOf(parentId));
         } else {
             parentKeyDto = null;
         }
 
-        AppIdNamespaceDto appIdNamespaceDto = new AppIdNamespaceDto(appId, namespace);
+        AppIdNamespaceDto appIdNamespaceDto = AppIdNamespaceDto.create(appId, namespace);
 
-        KeyDto keyDto = new KeyDto(kind, Long.valueOf(id), parentKeyDto, appIdNamespaceDto);
+        KeyDto keyDto = KeyDto.create(kind, Long.valueOf(id), parentKeyDto, appIdNamespaceDto);
 
         GetEntityDtoAction getEntityDtoAction = new GetEntityDtoAction();
         getEntityDtoAction.setKeyDto(keyDto);

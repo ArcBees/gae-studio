@@ -7,9 +7,28 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared.dto.query;
+package com.arcbees.gaestudio.server.dto.entity;
 
-public enum QueryOrderDirection {
-    ASCENDING,
-    DESCENDING
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class ParentKeyDto implements IsSerializable {
+    private String kind;
+    private Long id;
+
+    @SuppressWarnings("unused")
+    protected ParentKeyDto() {
+    }
+
+    public ParentKeyDto(String kind, Long id) {
+        this.kind = kind;
+        this.id = id;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

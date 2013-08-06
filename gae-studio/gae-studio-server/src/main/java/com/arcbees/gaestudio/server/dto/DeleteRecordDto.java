@@ -7,33 +7,20 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared.dto.entity;
+package com.arcbees.gaestudio.server.dto;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+import com.arcbees.gaestudio.server.dto.stacktrace.StackTraceElementDto;
 
-public class EntityDto implements IsSerializable {
-    private KeyDto key;
-
-    private String json;
-
+// TODO : Complete
+public class DeleteRecordDto extends DbOperationRecordDto {
     @SuppressWarnings("unused")
-    protected EntityDto() {
+    protected DeleteRecordDto() {
     }
 
-    public EntityDto(KeyDto key, String json) {
-        this.key = key;
-        this.json = json;
-    }
-
-    public KeyDto getKey() {
-        return key;
-    }
-
-    public String getJson() {
-        return json;
-    }
-
-    public void setJson(String json) {
-        this.json = json;
+    public DeleteRecordDto(StackTraceElementDto callerStackTraceElement,
+                           Long requestId,
+                           Long statementId,
+                           Integer executionTimeMs) {
+        super(callerStackTraceElement, requestId, statementId, executionTimeMs);
     }
 }

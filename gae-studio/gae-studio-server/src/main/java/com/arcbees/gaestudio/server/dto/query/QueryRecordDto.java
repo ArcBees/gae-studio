@@ -7,10 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared.dto.query;
+package com.arcbees.gaestudio.server.dto.query;
 
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
-import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
+import com.arcbees.gaestudio.server.dto.DbOperationRecordDto;
+import com.arcbees.gaestudio.server.dto.stacktrace.StackTraceElementDto;
 
 public class QueryRecordDto extends DbOperationRecordDto {
     private QueryDto query;

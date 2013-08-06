@@ -14,17 +14,17 @@ import java.util.ArrayList;
 import com.gwtplatform.dispatch.shared.Result;
 
 public class GetNewDbOperationRecordsResult implements Result {
-    private ArrayList<com.arcbees.gaestudio.shared.dto.DbOperationRecordDto> records;
+    private ArrayList<com.arcbees.gaestudio.server.dto.DbOperationRecordDto> records;
 
     protected GetNewDbOperationRecordsResult() {
         // Possibly for serialization.
     }
 
-    public GetNewDbOperationRecordsResult(ArrayList<com.arcbees.gaestudio.shared.dto.DbOperationRecordDto> records) {
+    public GetNewDbOperationRecordsResult(ArrayList<com.arcbees.gaestudio.server.dto.DbOperationRecordDto> records) {
         this.records = records;
     }
 
-    public ArrayList<com.arcbees.gaestudio.shared.dto.DbOperationRecordDto> getRecords() {
+    public ArrayList<com.arcbees.gaestudio.server.dto.DbOperationRecordDto> getRecords() {
         return records;
     }
 

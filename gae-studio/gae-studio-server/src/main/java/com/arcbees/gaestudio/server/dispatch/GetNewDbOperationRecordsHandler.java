@@ -18,7 +18,7 @@ import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsResult;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
+import com.arcbees.gaestudio.server.dto.DbOperationRecordDto;
 import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.inject.Inject;
