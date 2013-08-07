@@ -25,16 +25,6 @@ import com.google.common.collect.FluentIterable;
 public class NamespacesResource extends GoogleAnalyticResource {
     private static final String GET_NAMESPACES = "Get Namespaces";
 
-    private final DatastoreHelper datastoreHelper;
-    private final Logger logger;
-
-    @Inject
-    NamespacesResource(DatastoreHelper datastoreHelper,
-                       Logger logger) {
-        this.datastoreHelper = datastoreHelper;
-        this.logger = logger;
-    }
-
     @GET
     public List<AppIdNamespaceDto> getNamespaces() {
         googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_NAMESPACES);

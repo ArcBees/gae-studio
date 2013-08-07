@@ -14,7 +14,6 @@ import java.util.UUID;
 import javax.inject.Singleton;
 
 import com.arcbees.gaestudio.server.GaConstants;
-import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
 import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.inject.Provides;
@@ -29,7 +28,6 @@ public class GaeStudioDispatchModule extends HandlerModule {
 
     @Override
     protected void configureHandlers() {
-        bindHandler(GetEntityKindsAction.class, GetEntityKindsHandler.class);
         bindHandler(SetRecordingAction.class, SetRecordingHandler.class);
     }
 

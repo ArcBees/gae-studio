@@ -19,14 +19,11 @@ import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEve
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.DeleteFromNamespaceHandler;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
-import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
+import com.arcbees.gaestudio.client.rest.KindsService;
+import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
-import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.web.bindery.event.shared.EventBus;
-import com.googlecode.objectify.cmd.DeleteType;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -43,18 +40,17 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
 
     public static final Object SLOT_NAMESPACES = new Object();
 
-    private final DispatchAsync dispatcher;
+    private final KindsService kindsService;
     private final NamespacesListPresenter namespacesListPresenter;
 
     @Inject
     SidebarPresenter(EventBus eventBus,
                      MyView view,
-                     DispatchAsync dispatcher,
+                     KindsService kindsService,
                      NamespacesListPresenterFactory namespacesListPresenterFactory) {
         super(eventBus, view);
 
-        this.dispatcher = dispatcher;
-
+        this.kindsService = kindsService;
         namespacesListPresenter = namespacesListPresenterFactory.create(this);
 
         getView().setUiHandlers(this);
@@ -96,16 +92,15 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     }
 
     private void updateKinds() {
-        dispatcher.execute(new GetEntityKindsAction(),
-                new AsyncCallbackImpl<GetEntityKindsResult>("Failed getting Entity Kinds: ") {
-                    @Override
-                    public void onSuccess(GetEntityKindsResult result) {
-                        onKindsUpdated(result);
-                    }
-                });
+        kindsService.getKinds(new MethodCallbackImpl<List<String>>("Failed getting Entity Kinds: ") {
+            @Override
+            public void onSuccess(List<String> result) {
+                onKindsUpdated(result);
+            }
+        });
     }
 
-    private void onKindsUpdated(GetEntityKindsResult result) {
-        getView().updateKinds(result.getKinds());
+    private void onKindsUpdated(List<String> kinds) {
+        getView().updateKinds(kinds);
     }
 }

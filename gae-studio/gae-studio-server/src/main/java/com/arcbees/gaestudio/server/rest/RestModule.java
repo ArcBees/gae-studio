@@ -7,5 +7,6 @@ public class RestModule extends AbstractModule {
     protected void configure() {
         bind(EntitiesResource.class);
         bind(NamespacesResource.class);
+        bind(KindsResource.class);
     }
 }

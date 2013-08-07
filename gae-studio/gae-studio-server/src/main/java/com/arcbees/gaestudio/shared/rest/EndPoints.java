@@ -8,4 +8,5 @@ public class EndPoints {
     public static final String ENTITIES = "entities/";
     public static final String NAMESPACES = "namespaces";
     public static final String COUNT = "count/";
+    public static final String KINDS = "kinds/";
 }
