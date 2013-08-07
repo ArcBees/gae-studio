@@ -15,16 +15,9 @@ import javax.inject.Singleton;
 
 import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesAction;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEmptyKindEntityAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEntitiesByKindAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEntityCountByKindAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
-import com.arcbees.gaestudio.shared.dispatch.GetNamespacesAction;
 import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
-import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
 import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.inject.Provides;
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
@@ -38,17 +31,9 @@ public class GaeStudioDispatchModule extends HandlerModule {
 
     @Override
     protected void configureHandlers() {
-        bindHandler(GetNewDbOperationRecordsAction.class, GetNewDbOperationRecordsHandler.class);
         bindHandler(GetEntityKindsAction.class, GetEntityKindsHandler.class);
-        bindHandler(GetEntitiesByKindAction.class, GetEntitiesByKindHandler.class);
-        bindHandler(GetEntityCountByKindAction.class, GetEntityCountByKindHandler.class);
         bindHandler(SetRecordingAction.class, SetRecordingHandler.class);
-        bindHandler(UpdateEntityAction.class, UpdateEntityHandler.class);
-        bindHandler(GetEmptyKindEntityAction.class, GetEmptyKindEntityHandler.class);
-        bindHandler(DeleteEntityAction.class, DeleteEntityHandler.class);
-        bindHandler(GetEntityDtoAction.class, GetEntityDtoHandler.class);
         bindHandler(DeleteEntitiesAction.class, DeleteEntitiesHandler.class);
-        bindHandler(GetNamespacesAction.class, GetNamespacesHandler.class);
     }
 
     @Provides

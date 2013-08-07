@@ -17,13 +17,14 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeleted
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
+import com.arcbees.gaestudio.client.dto.entity.EntityDto;
+import com.arcbees.gaestudio.client.dto.entity.KeyDto;
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.rest.EntitiesService;
+import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesAction;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesResult;
 import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesType;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
-import com.arcbees.gaestudio.client.dto.entity.EntityDto;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -38,6 +39,8 @@ import static com.arcbees.gaestudio.client.application.visualizer.widget.EntityD
 
 public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPresenter.MyView>
         implements DeleteEntityEvent.DeleteEntityHandler, EntityDeletionUiHandlers, DeleteEntitiesHandler {
+    private final EntitiesService entitiesService;
+
     interface MyView extends View, HasUiHandlers<EntityDeletionUiHandlers> {
         void displayEntityDeletion(ParsedEntity parsedEntity);
 
@@ -62,12 +65,14 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
     EntityDeletionPresenter(EventBus eventBus,
                             MyView view,
                             DispatchAsync dispatcher,
+                            EntitiesService entitiesService,
                             AppConstants myConstants) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);
 
         this.dispatcher = dispatcher;
+        this.entitiesService = entitiesService;
         this.myConstants = myConstants;
     }
 
@@ -129,9 +134,11 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
     private void deleteSingleEntity() {
         if (currentParsedEntity != null) {
             final EntityDto entityDto = currentParsedEntity.getEntityDto();
-            dispatcher.execute(new DeleteEntityAction(entityDto), new AsyncCallback<DeleteEntityResult>() {
+            KeyDto key = entityDto.getKey();
+
+            entitiesService.deleteEntity(key.getId(), key, new MethodCallbackImpl<Void>() {
                 @Override
-                public void onSuccess(DeleteEntityResult result) {
+                public void onSuccess(Void result) {
                     onEntityDeletedSuccess(entityDto);
                 }
 

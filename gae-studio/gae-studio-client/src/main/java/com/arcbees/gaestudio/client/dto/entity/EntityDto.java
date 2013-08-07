@@ -7,6 +7,10 @@ public class EntityDto extends JavaScriptObject {
         return {json: json, key: key};
     }-*/;
 
+    public static EntityDto updateJson(EntityDto entityDto, String json) {
+        return create(entityDto.getKey(), json);
+    }
+
     protected EntityDto() {
     }
 

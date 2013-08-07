@@ -1,19 +1,17 @@
-/**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
- */
+package com.arcbees.gaestudio.server.rest;
 
-package com.arcbees.gaestudio.server.dispatch;
+import java.util.List;
+import java.util.logging.Logger;
 
+import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+
+import com.arcbees.gaestudio.server.DatastoreHelper;
 import com.arcbees.gaestudio.server.GaConstants;
-import com.arcbees.gaestudio.shared.dispatch.GetNamespacesAction;
-import com.arcbees.gaestudio.shared.dispatch.GetNamespacesResult;
+import com.arcbees.gaestudio.server.dispatch.DispatchHelper;
 import com.arcbees.gaestudio.server.dto.entity.AppIdNamespaceDto;
-import com.arcbees.googleanalytic.GoogleAnalytic;
+import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.api.client.util.Lists;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -22,25 +20,23 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Query;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
-import com.google.inject.Inject;
-import com.gwtplatform.dispatch.server.ExecutionContext;
-import com.gwtplatform.dispatch.shared.ActionException;
 
-public class GetNamespacesHandler extends AbstractActionHandler<GetNamespacesAction, GetNamespacesResult> {
+@Path(EndPoints.NAMESPACES)
+public class NamespacesResource extends GoogleAnalyticResource {
     private static final String GET_NAMESPACES = "Get Namespaces";
 
-    private final GoogleAnalytic googleAnalytic;
+    private final DatastoreHelper datastoreHelper;
+    private final Logger logger;
 
     @Inject
-    GetNamespacesHandler(GoogleAnalytic googleAnalytic) {
-        super(GetNamespacesAction.class);
-
-        this.googleAnalytic = googleAnalytic;
+    NamespacesResource(DatastoreHelper datastoreHelper,
+                       Logger logger) {
+        this.datastoreHelper = datastoreHelper;
+        this.logger = logger;
     }
 
-    @Override
-    public GetNamespacesResult execute(GetNamespacesAction action,
-                                       ExecutionContext context) throws ActionException {
+    @GET
+    public List<AppIdNamespaceDto> getNamespaces() {
         googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_NAMESPACES);
 
         DispatchHelper.disableApiHooks();
@@ -58,6 +54,6 @@ public class GetNamespacesHandler extends AbstractActionHandler<GetNamespacesAct
                     }
                 });
 
-        return new GetNamespacesResult(Lists.newArrayList(namespaces));
+        return Lists.newArrayList(namespaces);
     }
 }

@@ -137,7 +137,8 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
 
                         @Override
                         public void onSuccess(GetNewDbOperationRecordsResult result) {
-                            processNewDbOperationRecords(result.getRecords());
+                            // TODO : Move to rest
+                            //processNewDbOperationRecords(result.getRecords());
                             isProcessing = false;
                         }
                     });

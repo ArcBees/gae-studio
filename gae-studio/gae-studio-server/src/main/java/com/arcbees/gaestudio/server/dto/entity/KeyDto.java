@@ -39,6 +39,10 @@ public class KeyDto implements IsSerializable {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public ParentKeyDto getParentKey() {
         return parentKeyDto;
     }

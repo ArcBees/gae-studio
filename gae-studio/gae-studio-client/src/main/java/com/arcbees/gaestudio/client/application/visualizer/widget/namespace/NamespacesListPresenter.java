@@ -12,14 +12,12 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 import java.util.List;
 
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
-import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
-import com.arcbees.gaestudio.shared.dispatch.GetNamespacesAction;
-import com.arcbees.gaestudio.shared.dispatch.GetNamespacesResult;
 import com.arcbees.gaestudio.client.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.client.rest.NamespacesService;
+import com.arcbees.gaestudio.client.util.JsoListMethodCallback;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -32,17 +30,17 @@ public class NamespacesListPresenter extends PresenterWidget<NamespacesListPrese
         void displayNamespaces(List<AppIdNamespaceDto> namespaces);
     }
 
-    private final DispatchAsync dispatcher;
+    private final NamespacesService namespacesService;
     private final DeleteFromNamespaceHandler deleteHandler;
 
     @Inject
     NamespacesListPresenter(EventBus eventBus,
                             MyView view,
-                            DispatchAsync dispatcher,
+                            NamespacesService namespacesService,
                             @Assisted DeleteFromNamespaceHandler deleteHandler) {
         super(eventBus, view);
 
-        this.dispatcher = dispatcher;
+        this.namespacesService = namespacesService;
         this.deleteHandler = deleteHandler;
 
         getView().setUiHandlers(this);
@@ -73,10 +71,10 @@ public class NamespacesListPresenter extends PresenterWidget<NamespacesListPrese
     }
 
     private void updateNamespaces() {
-        dispatcher.execute(new GetNamespacesAction(), new AsyncCallbackImpl<GetNamespacesResult>() {
+        namespacesService.getNamespaces(new JsoListMethodCallback<AppIdNamespaceDto>() {
             @Override
-            public void onSuccess(GetNamespacesResult result) {
-                getView().displayNamespaces(result.getNamespaces());
+            public void onSuccessReceived(List<AppIdNamespaceDto> result) {
+                getView().displayNamespaces(result);
             }
         });
     }

@@ -23,6 +23,7 @@ import com.arcbees.gaestudio.client.dto.entity.EntityDto;
 import com.arcbees.gaestudio.client.dto.entity.KeyDto;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
+import com.arcbees.gaestudio.client.util.JsoListMethodCallback;
 import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
@@ -163,9 +164,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         } else {
             Range range = display.getVisibleRange();
             entitiesService.getByKind(currentKind, range.getStart(), range.getLength(),
-                    new MethodCallbackImpl<List<EntityDto>>() {
+                    new JsoListMethodCallback<EntityDto>() {
                         @Override
-                        public void onSuccess(List<EntityDto> result) {
+                        public void onSuccessReceived(List<EntityDto> result) {
                             onLoadPageSuccess(result, display);
                         }
                     });

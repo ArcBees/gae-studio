@@ -15,10 +15,9 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
-import com.arcbees.gaestudio.shared.dispatch.UpdateEntityAction;
-import com.arcbees.gaestudio.shared.dispatch.UpdateEntityResult;
 import com.arcbees.gaestudio.client.dto.entity.EntityDto;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.arcbees.gaestudio.client.rest.EntitiesService;
+import com.arcbees.gaestudio.client.util.JsoMethodCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
@@ -37,17 +36,21 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     }
 
     private final DispatchAsync dispatcher;
+    private final EntitiesService entitiesService;
+
     private ParsedEntity currentParsedEntity;
 
     @Inject
     EntityDetailsPresenter(EventBus eventBus,
                            MyView view,
-                           DispatchAsync dispatcher) {
+                           DispatchAsync dispatcher,
+                           EntitiesService entitiesService) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);
 
         this.dispatcher = dispatcher;
+        this.entitiesService = entitiesService;
     }
 
     @Override
@@ -58,19 +61,21 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
 
     @Override
     public void saveEntity(String json) {
-        EntityDto entityDTO = currentParsedEntity.getEntityDto();
-        entityDTO.setJson(json);
-        dispatcher.execute(new UpdateEntityAction(entityDTO), new AsyncCallback<UpdateEntityResult>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                onSaveEntityFailed(caught);
-            }
+        EntityDto entityDto = currentParsedEntity.getEntityDto();
+        entityDto = EntityDto.updateJson(entityDto, json);
 
-            @Override
-            public void onSuccess(UpdateEntityResult result) {
-                onSaveEntitySucceeded(result);
-            }
-        });
+        entitiesService.updateEntity(entityDto.getKey().getId(), entityDto,
+                new JsoMethodCallback<EntityDto>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        onSaveEntityFailed(caught);
+                    }
+
+                    @Override
+                    public void onSuccessReceived(EntityDto result) {
+                        onSaveEntitySucceeded(result);
+                    }
+                });
     }
 
     @Override
@@ -88,8 +93,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
         getView().showError(message);
     }
 
-    private void onSaveEntitySucceeded(UpdateEntityResult result) {
-        EntityDto newEntityDto = result.getResult();
+    private void onSaveEntitySucceeded(EntityDto newEntityDto) {
         EntitySavedEvent.fire(this, newEntityDto);
         Message message = new Message("Entity saved.", MessageStyle.SUCCESS);
         DisplayMessageEvent.fire(this, message);

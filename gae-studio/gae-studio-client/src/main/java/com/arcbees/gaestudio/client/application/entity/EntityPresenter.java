@@ -12,15 +12,11 @@ package com.arcbees.gaestudio.client.application.entity;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
-import com.arcbees.gaestudio.client.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.client.dto.entity.EntityDto;
-import com.arcbees.gaestudio.client.dto.entity.KeyDto;
-import com.arcbees.gaestudio.client.dto.entity.ParentKeyDto;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
-import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoResult;
+import com.arcbees.gaestudio.client.rest.EntitiesService;
+import com.arcbees.gaestudio.client.util.JsoMethodCallback;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
@@ -48,6 +44,7 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     }
 
     private final DispatchAsync dispatchAsync;
+    private final EntitiesService entitiesService;
     private final AppConstants appConstants;
 
     @Inject
@@ -55,10 +52,12 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
                     MyView view,
                     MyProxy proxy,
                     DispatchAsync dispatchAsync,
+                    EntitiesService entitiesService,
                     AppConstants appConstants) {
         super(eventBus, view, proxy, VisualizerPresenter.SLOT_ENTITY_DETAILS);
 
         this.dispatchAsync = dispatchAsync;
+        this.entitiesService = entitiesService;
         this.appConstants = appConstants;
     }
 
@@ -77,28 +76,19 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
         String namespace = request.getParameter(NAMESPACE, null);
         String appId = request.getParameter(APP_ID, null);
 
-        ParentKeyDto parentKeyDto;
-        if (parentKind != null && parentId != null) {
-            parentKeyDto = ParentKeyDto.create(parentKind, Long.valueOf(parentId));
-        } else {
-            parentKeyDto = null;
-        }
-
-        AppIdNamespaceDto appIdNamespaceDto = AppIdNamespaceDto.create(appId, namespace);
-
-        KeyDto keyDto = KeyDto.create(kind, Long.valueOf(id), parentKeyDto, appIdNamespaceDto);
-
-        GetEntityDtoAction getEntityDtoAction = new GetEntityDtoAction();
-        getEntityDtoAction.setKeyDto(keyDto);
-
         String failureMessage = appConstants.failedGettingEntity();
-
-        dispatchAsync.execute(getEntityDtoAction, new AsyncCallbackImpl<GetEntityDtoResult>(failureMessage) {
+        JsoMethodCallback<EntityDto> methodCallback = new JsoMethodCallback<EntityDto>(failureMessage) {
             @Override
-            public void onSuccess(GetEntityDtoResult result) {
-                displayEntityDto(result.getEntityDto());
+            public void onSuccessReceived(EntityDto result) {
+                displayEntityDto(result);
             }
-        });
+        };
+
+        if (parentKind != null && parentId != null) {
+            entitiesService.getEntityWithParent(id, kind, appId, namespace, parentId, parentKind, methodCallback);
+        } else {
+            entitiesService.getEntity(id, kind, appId, namespace, methodCallback);
+        }
     }
 
     private void displayEntityDto(EntityDto entityDto) {

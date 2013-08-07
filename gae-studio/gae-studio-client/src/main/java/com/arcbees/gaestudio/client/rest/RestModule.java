@@ -18,4 +18,10 @@ public class RestModule extends AbstractGinModule {
     EntitiesService getEntitiesService(ResourceFactory resourceFactory) {
         return resourceFactory.setupProxy(GWT.<EntitiesService>create(EntitiesService.class), EndPoints.ENTITIES);
     }
+
+    @Provides
+    @Singleton
+    NamespacesService getNamespacesService(ResourceFactory resourceFactory) {
+        return resourceFactory.setupProxy(GWT.<NamespacesService>create(NamespacesService.class), EndPoints.NAMESPACES);
+    }
 }

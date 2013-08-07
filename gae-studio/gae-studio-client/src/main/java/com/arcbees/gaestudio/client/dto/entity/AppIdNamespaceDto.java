@@ -11,10 +11,10 @@ public class AppIdNamespaceDto extends JavaScriptObject {
     }
 
     public final native String getAppId() /*-{
-        return appId;
+        return this.appId;
     }-*/;
 
     public final native String getNamespace() /*-{
-        return namespace;
+        return this.namespace;
     }-*/;
 }
