@@ -15,12 +15,11 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
-import com.arcbees.gaestudio.client.dto.entity.EntityDto;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
-import com.arcbees.gaestudio.client.util.JsoMethodCallback;
+import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -35,7 +34,6 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
         void showError(String message);
     }
 
-    private final DispatchAsync dispatcher;
     private final EntitiesService entitiesService;
 
     private ParsedEntity currentParsedEntity;
@@ -43,13 +41,11 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     @Inject
     EntityDetailsPresenter(EventBus eventBus,
                            MyView view,
-                           DispatchAsync dispatcher,
                            EntitiesService entitiesService) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);
 
-        this.dispatcher = dispatcher;
         this.entitiesService = entitiesService;
     }
 
@@ -62,17 +58,17 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     @Override
     public void saveEntity(String json) {
         EntityDto entityDto = currentParsedEntity.getEntityDto();
-        entityDto = EntityDto.updateJson(entityDto, json);
+        entityDto.setJson(json);
 
         entitiesService.updateEntity(entityDto.getKey().getId(), entityDto,
-                new JsoMethodCallback<EntityDto>() {
+                new MethodCallbackImpl<EntityDto>() {
                     @Override
                     public void onFailure(Throwable caught) {
                         onSaveEntityFailed(caught);
                     }
 
                     @Override
-                    public void onSuccessReceived(EntityDto result) {
+                    public void onSuccess(EntityDto result) {
                         onSaveEntitySucceeded(result);
                     }
                 });

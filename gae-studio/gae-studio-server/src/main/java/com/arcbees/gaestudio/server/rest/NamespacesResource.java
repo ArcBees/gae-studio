@@ -10,7 +10,7 @@ import javax.ws.rs.Path;
 import com.arcbees.gaestudio.server.DatastoreHelper;
 import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.dispatch.DispatchHelper;
-import com.arcbees.gaestudio.server.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.api.client.util.Lists;
 import com.google.appengine.api.datastore.DatastoreService;

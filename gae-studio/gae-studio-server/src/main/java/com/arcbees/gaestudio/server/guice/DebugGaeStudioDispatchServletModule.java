@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.server.guice;
 
 import com.arcbees.gaestudio.server.dispatch.GaeStudioDispatchModule;
 import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
+import com.arcbees.gaestudio.server.rest.RestModule;
 import com.arcbees.gaestudio.shared.dispatch.util.GaeStudioActionImpl;
 import com.google.inject.servlet.ServletModule;
 import com.gwtplatform.dispatch.server.guice.DispatchServiceImpl;
@@ -24,5 +25,6 @@ public class DebugGaeStudioDispatchServletModule extends ServletModule {
 
         install(new GaeStudioRecorderModule());
         install(new GaeStudioDispatchModule());
+        install(new RestModule());
     }
 }

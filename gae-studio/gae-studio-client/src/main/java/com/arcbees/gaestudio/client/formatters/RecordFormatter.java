@@ -9,11 +9,11 @@
 
 package com.arcbees.gaestudio.client.formatters;
 
-import com.arcbees.gaestudio.client.dto.DbOperationRecordDto;
-import com.arcbees.gaestudio.client.dto.DeleteRecordDto;
-import com.arcbees.gaestudio.client.dto.GetRecordDto;
-import com.arcbees.gaestudio.client.dto.PutRecordDto;
-import com.arcbees.gaestudio.client.dto.query.QueryRecordDto;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
+import com.arcbees.gaestudio.shared.dto.DeleteRecordDto;
+import com.arcbees.gaestudio.shared.dto.GetRecordDto;
+import com.arcbees.gaestudio.shared.dto.PutRecordDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 
 public interface RecordFormatter {
     String formatRecord(DeleteRecordDto record);

@@ -12,9 +12,9 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 import java.util.List;
 
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
-import com.arcbees.gaestudio.client.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.client.rest.NamespacesService;
-import com.arcbees.gaestudio.client.util.JsoListMethodCallback;
+import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.web.bindery.event.shared.EventBus;
@@ -71,9 +71,9 @@ public class NamespacesListPresenter extends PresenterWidget<NamespacesListPrese
     }
 
     private void updateNamespaces() {
-        namespacesService.getNamespaces(new JsoListMethodCallback<AppIdNamespaceDto>() {
+        namespacesService.getNamespaces(new MethodCallbackImpl<List<AppIdNamespaceDto>>() {
             @Override
-            public void onSuccessReceived(List<AppIdNamespaceDto> result) {
+            public void onSuccess(List<AppIdNamespaceDto> result) {
                 getView().displayNamespaces(result);
             }
         });

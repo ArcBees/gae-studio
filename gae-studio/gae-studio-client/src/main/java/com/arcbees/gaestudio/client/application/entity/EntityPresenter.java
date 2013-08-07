@@ -11,14 +11,15 @@ package com.arcbees.gaestudio.client.application.entity;
 
 import javax.inject.Inject;
 
+import org.fusesource.restygwt.client.MethodCallback;
+
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
-import com.arcbees.gaestudio.client.dto.entity.EntityDto;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
-import com.arcbees.gaestudio.client.util.JsoMethodCallback;
+import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -43,7 +44,6 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     interface MyProxy extends ProxyPlace<EntityPresenter> {
     }
 
-    private final DispatchAsync dispatchAsync;
     private final EntitiesService entitiesService;
     private final AppConstants appConstants;
 
@@ -51,12 +51,10 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     EntityPresenter(EventBus eventBus,
                     MyView view,
                     MyProxy proxy,
-                    DispatchAsync dispatchAsync,
                     EntitiesService entitiesService,
                     AppConstants appConstants) {
         super(eventBus, view, proxy, VisualizerPresenter.SLOT_ENTITY_DETAILS);
 
-        this.dispatchAsync = dispatchAsync;
         this.entitiesService = entitiesService;
         this.appConstants = appConstants;
     }
@@ -77,9 +75,9 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
         String appId = request.getParameter(APP_ID, null);
 
         String failureMessage = appConstants.failedGettingEntity();
-        JsoMethodCallback<EntityDto> methodCallback = new JsoMethodCallback<EntityDto>(failureMessage) {
+        MethodCallback<EntityDto> methodCallback = new MethodCallbackImpl<EntityDto>(failureMessage) {
             @Override
-            public void onSuccessReceived(EntityDto result) {
+            public void onSuccess(EntityDto result) {
                 displayEntityDto(result);
             }
         };

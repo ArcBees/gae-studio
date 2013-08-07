@@ -17,10 +17,10 @@ import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactor
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.PagerResources;
-import com.arcbees.gaestudio.client.dto.entity.AppIdNamespaceDto;
-import com.arcbees.gaestudio.client.dto.entity.EntityDto;
-import com.arcbees.gaestudio.client.dto.entity.KeyDto;
-import com.arcbees.gaestudio.client.dto.entity.ParentKeyDto;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.arcbees.gquery.tooltip.client.Tooltip;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.Element;
@@ -244,7 +244,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             @Override
             public String getValue(ParsedEntity entityJsonParsed) {
                 KeyDto keyDto = entityJsonParsed.getKey();
-                AppIdNamespaceDto appIdNamespaceDto = keyDto.getAppIdNamespaceDto();
+                AppIdNamespaceDto appIdNamespaceDto = keyDto.getAppIdNamespace();
                 String namespace = appIdNamespaceDto.getNamespace();
                 if (namespace == null) {
                     namespace = isNull;
@@ -347,7 +347,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         KeyDto parseEntityKey = parsedEntity.getKey();
         $("." + idStyleName).text("ID " + parseEntityKey.getId());
-        $("." + namespaceStyleName).text(parseEntityKey.getAppIdNamespaceDto().getNamespace());
+        $("." + namespaceStyleName).text(parseEntityKey.getAppIdNamespace().getNamespace());
 
         if ($("." + namespaceStyleName).text().equals(isUndefined)) {
             $("." + namespaceSpanStyleName).hide();

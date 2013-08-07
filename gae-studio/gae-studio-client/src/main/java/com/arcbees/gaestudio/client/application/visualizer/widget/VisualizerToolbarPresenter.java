@@ -23,16 +23,15 @@ import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.Name
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
-import com.arcbees.gaestudio.client.dto.entity.AppIdNamespaceDto;
-import com.arcbees.gaestudio.client.dto.entity.EntityDto;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesAction;
+import com.arcbees.gaestudio.shared.DeleteEntities;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.common.base.Strings;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -56,7 +55,6 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
 
     public static final Object SLOT_NAMESPACES = new Object();
 
-    private final DispatchAsync dispatcher;
     private final AppConstants myConstants;
     private final NamespacesListPresenter namespacesListPresenter;
 
@@ -67,14 +65,12 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     VisualizerToolbarPresenter(EventBus eventBus,
                                MyView view,
                                NamespacesListPresenterFactory namespacesListPresenterFactory,
-                               DispatchAsync dispatcher,
                                EntitiesService entitiesService,
                                AppConstants myConstants) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);
 
-        this.dispatcher = dispatcher;
         this.entitiesService = entitiesService;
         this.myConstants = myConstants;
         namespacesListPresenter = namespacesListPresenterFactory.create(this);
@@ -84,10 +80,9 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     public void onDeleteAllFromNamespace(AppIdNamespaceDto namespaceDto) {
         if (!Strings.isNullOrEmpty(currentKind)) {
             if (namespaceDto == null) {
-                DeleteEntitiesEvent.fire(this, DeleteEntitiesAction.byKind(currentKind));
+                DeleteEntitiesEvent.fire(this, DeleteEntities.KIND, currentKind);
             } else {
-                DeleteEntitiesEvent.fire(this,
-                        DeleteEntitiesAction.byKindAndNamespace(currentKind, namespaceDto.getNamespace()));
+                DeleteEntitiesEvent.fire(this, DeleteEntities.KIND_NAMESPACE, currentKind, namespaceDto.getNamespace());
             }
         }
     }

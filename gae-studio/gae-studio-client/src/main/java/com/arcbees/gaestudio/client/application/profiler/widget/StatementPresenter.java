@@ -13,7 +13,7 @@ import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRec
 import com.arcbees.gaestudio.client.application.profiler.event.FilterValueSelectedEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.StatementSelectedEvent;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterValue;
-import com.arcbees.gaestudio.client.dto.DbOperationRecordDto;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;

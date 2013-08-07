@@ -7,10 +7,9 @@ import javax.ws.rs.GET;
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
 
-import com.arcbees.gaestudio.client.dto.entity.AppIdNamespaceDto;
-import com.google.gwt.core.client.JavaScriptObject;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 
 public interface NamespacesService extends RestService {
     @GET
-    void getNamespaces(MethodCallback<List<JavaScriptObject>> callback);
+    void getNamespaces(MethodCallback<List<AppIdNamespaceDto>> callback);
 }

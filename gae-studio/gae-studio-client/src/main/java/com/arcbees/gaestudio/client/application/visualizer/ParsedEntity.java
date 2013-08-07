@@ -11,8 +11,8 @@ package com.arcbees.gaestudio.client.application.visualizer;
 
 import java.util.Set;
 
-import com.arcbees.gaestudio.client.dto.entity.EntityDto;
-import com.arcbees.gaestudio.client.dto.entity.KeyDto;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
@@ -24,7 +24,7 @@ public class ParsedEntity {
     private JSONObject jsonObject;
 
     public ParsedEntity(EntityDto entityDto) {
-        this.entityDto = EntityDto.create(entityDto.getKey(), entityDto.getJson());
+        this.entityDto = new EntityDto(entityDto.getKey(), entityDto.getJson());
 
         parseJson();
     }

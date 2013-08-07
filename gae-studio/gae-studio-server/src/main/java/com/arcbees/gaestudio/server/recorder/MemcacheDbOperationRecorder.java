@@ -9,14 +9,14 @@
 
 package com.arcbees.gaestudio.server.recorder;
 
-import com.arcbees.gaestudio.server.dto.DeleteRecordDto;
-import com.arcbees.gaestudio.server.dto.mapper.QueryMapper;
-import com.arcbees.gaestudio.server.dto.mapper.QueryResultMapper;
-import com.arcbees.gaestudio.server.dto.mapper.StackTraceElementMapper;
-import com.arcbees.gaestudio.server.dto.DbOperationRecordDto;
-import com.arcbees.gaestudio.server.dto.GetRecordDto;
-import com.arcbees.gaestudio.server.dto.PutRecordDto;
-import com.arcbees.gaestudio.server.dto.query.QueryRecordDto;
+import com.arcbees.gaestudio.shared.dto.DeleteRecordDto;
+import com.arcbees.gaestudio.shared.dto.mapper.QueryMapper;
+import com.arcbees.gaestudio.shared.dto.mapper.QueryResultMapper;
+import com.arcbees.gaestudio.shared.dto.mapper.StackTraceElementMapper;
+import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
+import com.arcbees.gaestudio.shared.dto.GetRecordDto;
+import com.arcbees.gaestudio.shared.dto.PutRecordDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 import com.arcbees.gaestudio.shared.util.StackInspector;
 import com.google.appengine.api.memcache.Expiration;
 import com.google.appengine.api.memcache.MemcacheService;

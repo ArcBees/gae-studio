@@ -11,15 +11,15 @@ package com.arcbees.gaestudio.client.formatters;
 
 import java.util.HashMap;
 
-import com.arcbees.gaestudio.client.dto.DeleteRecordDto;
-import com.arcbees.gaestudio.client.dto.GetRecordDto;
-import com.arcbees.gaestudio.client.dto.PutRecordDto;
-import com.arcbees.gaestudio.client.dto.query.QueryDto;
-import com.arcbees.gaestudio.client.dto.query.QueryFilterDto;
+import com.arcbees.gaestudio.shared.dto.DeleteRecordDto;
+import com.arcbees.gaestudio.shared.dto.GetRecordDto;
+import com.arcbees.gaestudio.shared.dto.PutRecordDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryFilterDto;
 import com.arcbees.gaestudio.shared.QueryFilterOperator;
 import com.arcbees.gaestudio.shared.QueryOrderDirection;
-import com.arcbees.gaestudio.client.dto.query.QueryOrderDto;
-import com.arcbees.gaestudio.client.dto.query.QueryRecordDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryOrderDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 
 public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
     private static final HashMap<QueryFilterOperator, String> FILTER_OP_SYMBOLS =

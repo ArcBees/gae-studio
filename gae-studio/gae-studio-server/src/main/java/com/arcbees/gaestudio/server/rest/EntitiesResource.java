@@ -27,13 +27,15 @@ import javax.ws.rs.core.Response;
 import com.arcbees.gaestudio.server.DatastoreHelper;
 import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.dispatch.DispatchHelper;
-import com.arcbees.gaestudio.server.dto.entity.AppIdNamespaceDto;
-import com.arcbees.gaestudio.server.dto.entity.EntityDto;
-import com.arcbees.gaestudio.server.dto.entity.KeyDto;
-import com.arcbees.gaestudio.server.dto.entity.ParentKeyDto;
-import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
+import com.arcbees.gaestudio.shared.DeleteEntities;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
+import com.arcbees.gaestudio.shared.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
+import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -54,6 +56,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
     private static final String UPDATE_ENTITY = "Update Entity";
     private static final String DELETE_ENTITY = "Delete Entity";
     private static final String GET_ENTITY_DTO = "Get Entity Dto";
+    private static final String DELETE_ENTITIES = "Delete Entities by ";
 
     private final DatastoreHelper datastoreHelper;
     private final Logger logger;
@@ -114,6 +117,17 @@ public class EntitiesResource extends GoogleAnalyticResource {
         return EntityMapper.mapDTO(emptyEntity);
     }
 
+    @DELETE
+    public void deleteEntities(@QueryParam(UrlParameters.KIND) String kind,
+                               @QueryParam(UrlParameters.NAMESPACE) String namespace,
+                               @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType) {
+        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, getEvent(deleteType));
+
+        DispatchHelper.disableApiHooks();
+
+        deleteEntities(deleteType, kind, namespace);
+    }
+
     @GET
     @Path(EndPoints.ID)
     public EntityDto getEntity(@PathParam(UrlParameters.ID) Long id,
@@ -165,7 +179,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
 
         DispatchHelper.disableApiHooks();
 
-        AppIdNamespaceDto namespaceDto = keyDto.getAppIdNamespaceDto();
+        AppIdNamespaceDto namespaceDto = keyDto.getAppIdNamespace();
         Key key = KeyFactory.createKey(keyDto.getKind(), keyDto.getId());
 
         datastoreHelper.delete(key, namespaceDto.getNamespace());
@@ -217,5 +231,81 @@ public class EntitiesResource extends GoogleAnalyticResource {
             // Otherwise set null
             return null;
         }
+    }
+
+    private void deleteEntities(DeleteEntities deleteType,
+                                String kind,
+                                String namespace) {
+        switch (deleteType) {
+            case KIND:
+                deleteByKind(kind);
+                break;
+            case NAMESPACE:
+                deleteByNamespace(namespace);
+                break;
+            case KIND_NAMESPACE:
+                deleteByKindAndNamespace(kind, namespace);
+                break;
+            case ALL:
+                deleteAll();
+                break;
+        }
+    }
+
+    private void deleteByNamespace(String namespace) {
+        String defaultNamespace = NamespaceManager.get();
+        NamespaceManager.set(namespace);
+
+        Iterable<Entity> entities = getAllEntities();
+        deleteEntities(entities);
+
+        NamespaceManager.set(defaultNamespace);
+    }
+
+    private void deleteByKindAndNamespace(String kind, String namespace) {
+        String defaultNamespace = NamespaceManager.get();
+        NamespaceManager.set(namespace);
+
+        Iterable<Entity> entities = getAllEntitiesOfKind(kind);
+        deleteEntities(entities);
+
+        NamespaceManager.set(defaultNamespace);
+    }
+
+    private void deleteByKind(String kind) {
+        Query query = new Query(kind).setKeysOnly();
+        datastoreHelper.deleteOnAllNamespaces(query);
+    }
+
+    private void deleteEntities(Iterable<Entity> entities) {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        for (Entity entity : entities) {
+            datastore.delete(entity.getKey());
+        }
+    }
+
+    private void deleteAll() {
+        Iterable<Entity> entities = getAllEntitiesOfAllNamespaces();
+        deleteEntities(entities);
+    }
+
+    private Iterable<Entity> getAllEntities() {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+        return datastore.prepare(new Query().setKeysOnly()).asIterable();
+    }
+
+    private Iterable<Entity> getAllEntitiesOfKind(String kind) {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+        return datastore.prepare(new Query(kind).setKeysOnly()).asIterable();
+    }
+
+    private Iterable<Entity> getAllEntitiesOfAllNamespaces() {
+        return datastoreHelper.queryOnAllNamespaces(new Query().setKeysOnly());
+    }
+
+    private String getEvent(DeleteEntities deleteEntities) {
+        return DELETE_ENTITIES + deleteEntities.name();
     }
 }

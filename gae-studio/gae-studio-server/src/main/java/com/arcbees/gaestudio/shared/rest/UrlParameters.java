@@ -9,4 +9,5 @@ public class UrlParameters {
     public static final String APPID = "appid";
     public static final String PARENT_ID = "parentid";
     public static final String PARENT_KIND = "parentkind";
+    public static final String TYPE = "type";
 }

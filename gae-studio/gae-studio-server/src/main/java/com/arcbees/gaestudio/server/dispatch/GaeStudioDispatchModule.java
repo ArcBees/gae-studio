@@ -14,9 +14,7 @@ import java.util.UUID;
 import javax.inject.Singleton;
 
 import com.arcbees.gaestudio.server.GaConstants;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
-import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
 import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
 import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.inject.Provides;
@@ -33,7 +31,6 @@ public class GaeStudioDispatchModule extends HandlerModule {
     protected void configureHandlers() {
         bindHandler(GetEntityKindsAction.class, GetEntityKindsHandler.class);
         bindHandler(SetRecordingAction.class, SetRecordingHandler.class);
-        bindHandler(DeleteEntitiesAction.class, DeleteEntitiesHandler.class);
     }
 
     @Provides

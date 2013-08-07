@@ -19,18 +19,16 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoade
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
-import com.arcbees.gaestudio.client.dto.entity.EntityDto;
-import com.arcbees.gaestudio.client.dto.entity.KeyDto;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
-import com.arcbees.gaestudio.client.util.JsoListMethodCallback;
 import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -66,7 +64,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void removeEntity(EntityDto entityDTO);
     }
 
-    private final DispatchAsync dispatcher;
     private final EntitiesService entitiesService;
     private final PlaceManager placeManager;
 
@@ -75,13 +72,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Inject
     EntityListPresenter(EventBus eventBus,
                         MyView view,
-                        DispatchAsync dispatcher,
                         PlaceManager placeManager,
                         EntitiesService entitiesService) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
-        this.dispatcher = dispatcher;
         this.entitiesService = entitiesService;
 
         getView().setUiHandlers(this);
@@ -164,9 +159,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         } else {
             Range range = display.getVisibleRange();
             entitiesService.getByKind(currentKind, range.getStart(), range.getLength(),
-                    new JsoListMethodCallback<EntityDto>() {
+                    new MethodCallbackImpl<List<EntityDto>>() {
                         @Override
-                        public void onSuccessReceived(List<EntityDto> result) {
+                        public void onSuccess(List<EntityDto> result) {
                             onLoadPageSuccess(result, display);
                         }
                     });
@@ -192,8 +187,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.entity)
                 .with(KIND, keyDto.getKind())
                 .with(ID, Long.toString(keyDto.getId()))
-                .with(NAMESPACE, keyDto.getAppIdNamespaceDto().getNamespace())
-                .with(APP_ID, keyDto.getAppIdNamespaceDto().getAppId());
+                .with(NAMESPACE, keyDto.getAppIdNamespace().getNamespace())
+                .with(APP_ID, keyDto.getAppIdNamespace().getAppId());
 
         if (keyDto.getParentKey() != null) {
             builder = builder.with(PARENT_KIND, keyDto.getParentKey().getKind())

@@ -20,11 +20,12 @@ import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.Dele
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesAction;
+import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsAction;
 import com.arcbees.gaestudio.shared.dispatch.GetEntityKindsResult;
-import com.arcbees.gaestudio.client.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.web.bindery.event.shared.EventBus;
+import com.googlecode.objectify.cmd.DeleteType;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -62,9 +63,9 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     @Override
     public void onDeleteAllFromNamespace(AppIdNamespaceDto namespaceDto) {
         if (namespaceDto == null) {
-            DeleteEntitiesEvent.fire(this, DeleteEntitiesAction.all());
+            DeleteEntitiesEvent.fire(this, DeleteEntities.ALL);
         } else {
-            DeleteEntitiesEvent.fire(this, DeleteEntitiesAction.byNamespace(namespaceDto.getNamespace()));
+            DeleteEntitiesEvent.fire(this, DeleteEntities.NAMESPACE, "", namespaceDto.getNamespace());
         }
     }
 
