@@ -132,17 +132,18 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
             final EntityDto entityDto = currentParsedEntity.getEntityDto();
             KeyDto key = entityDto.getKey();
 
-            entitiesService.deleteEntity(key.getId(), key, new MethodCallbackImpl<Void>() {
-                @Override
-                public void onSuccess(Void result) {
-                    onEntityDeletedSuccess(entityDto);
-                }
+            entitiesService.entityService(key.getId())
+                    .deleteEntity(key, new MethodCallbackImpl<Void>() {
+                        @Override
+                        public void onSuccess(Void result) {
+                            onEntityDeletedSuccess(entityDto);
+                        }
 
-                @Override
-                public void onFailure(Throwable caught) {
-                    showMessage(myConstants.errorEntityDelete(), MessageStyle.ERROR);
-                }
-            });
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            showMessage(myConstants.errorEntityDelete(), MessageStyle.ERROR);
+                        }
+                    });
         }
     }
 

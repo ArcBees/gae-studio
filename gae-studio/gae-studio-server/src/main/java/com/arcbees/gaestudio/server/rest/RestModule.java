@@ -8,6 +8,7 @@ import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.assistedinject.FactoryModuleBuilder;
 
 public class RestModule extends AbstractModule {
     // TODO: Generate this only once per application through a propertie file.
@@ -18,6 +19,8 @@ public class RestModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        install(new FactoryModuleBuilder().build(SubresourceFactory.class));
+
         bind(EntitiesResource.class);
         bind(NamespacesResource.class);
         bind(KindsResource.class);

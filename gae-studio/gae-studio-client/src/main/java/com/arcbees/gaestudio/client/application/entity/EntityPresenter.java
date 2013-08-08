@@ -17,6 +17,7 @@ import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
+import com.arcbees.gaestudio.client.rest.EntityService;
 import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.web.bindery.event.shared.EventBus;
@@ -68,13 +69,14 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
 
     private void displayEntityFromPlaceRequest(PlaceRequest request) {
         String kind = request.getParameter(KIND, null);
-        String id = request.getParameter(ID, null);
+        String id = request.getParameter(ID, "-1");
         String parentKind = request.getParameter(PARENT_KIND, null);
         String parentId = request.getParameter(PARENT_ID, null);
         String namespace = request.getParameter(NAMESPACE, null);
         String appId = request.getParameter(APP_ID, null);
 
         String failureMessage = appConstants.failedGettingEntity();
+
         MethodCallback<EntityDto> methodCallback = new MethodCallbackImpl<EntityDto>(failureMessage) {
             @Override
             public void onSuccess(EntityDto result) {
@@ -82,10 +84,11 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
             }
         };
 
+        EntityService entityService = entitiesService.entityService(Long.valueOf(id));
         if (parentKind != null && parentId != null) {
-            entitiesService.getEntityWithParent(id, kind, appId, namespace, parentId, parentKind, methodCallback);
+            entityService.getEntityWithParent(kind, appId, namespace, parentId, parentKind, methodCallback);
         } else {
-            entitiesService.getEntity(id, kind, appId, namespace, methodCallback);
+            entityService.getEntity(kind, appId, namespace, methodCallback);
         }
     }
 

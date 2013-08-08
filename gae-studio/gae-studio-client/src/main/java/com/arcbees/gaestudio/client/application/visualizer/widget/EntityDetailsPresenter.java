@@ -60,7 +60,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
         EntityDto entityDto = currentParsedEntity.getEntityDto();
         entityDto.setJson(json);
 
-        entitiesService.updateEntity(entityDto.getKey().getId(), entityDto,
+        entitiesService.entityService(entityDto.getKey().getId()).updateEntity(entityDto,
                 new MethodCallbackImpl<EntityDto>() {
                     @Override
                     public void onFailure(Throwable caught) {

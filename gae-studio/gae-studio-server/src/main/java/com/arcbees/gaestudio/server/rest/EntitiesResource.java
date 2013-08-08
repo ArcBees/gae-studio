@@ -24,14 +24,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
-import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
+import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.arcbees.gaestudio.shared.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
@@ -39,13 +38,11 @@ import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.GsonDatastoreFactory;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
-import com.google.common.base.Strings;
 import com.google.gson.Gson;
 
 @Path(EndPoints.ENTITIES)
@@ -53,19 +50,19 @@ public class EntitiesResource extends GoogleAnalyticResource {
     private static final String GET_ENTITIES_BY_KIND = "Get Entities By Kind";
     private static final String GET_ENTITY_COUNT_BY_KIND = "Get Entity Count By Kind";
     private static final String GET_EMPTY_KIND_ENTITY = "Get Empty Kind Entity";
-    private static final String UPDATE_ENTITY = "Update Entity";
-    private static final String DELETE_ENTITY = "Delete Entity";
-    private static final String GET_ENTITY_DTO = "Get Entity Dto";
     private static final String DELETE_ENTITIES = "Delete Entities by ";
 
     private final DatastoreHelper datastoreHelper;
     private final Logger logger;
+    private final SubresourceFactory subresourceFactory;
 
     @Inject
     EntitiesResource(DatastoreHelper datastoreHelper,
-                     Logger logger) {
+                     Logger logger,
+                     SubresourceFactory subresourceFactory) {
         this.datastoreHelper = datastoreHelper;
         this.logger = logger;
+        this.subresourceFactory = subresourceFactory;
     }
 
     @GET
@@ -128,63 +125,9 @@ public class EntitiesResource extends GoogleAnalyticResource {
         deleteEntities(deleteType, kind, namespace);
     }
 
-    @GET
     @Path(EndPoints.ID)
-    public EntityDto getEntity(@PathParam(UrlParameters.ID) Long id,
-                               @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                               @QueryParam(UrlParameters.APPID) String appId,
-                               @QueryParam(UrlParameters.KIND) String kind,
-                               @QueryParam(UrlParameters.PARENT_ID) Long parentId,
-                               @QueryParam(UrlParameters.PARENT_KIND) String parentKind)
-            throws EntityNotFoundException {
-        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_ENTITY_DTO);
-
-        ParentKeyDto parentKeyDto = null;
-        if (parentId != null && !Strings.isNullOrEmpty(parentKind)) {
-            parentKeyDto = new ParentKeyDto(parentKind, parentId);
-        }
-
-        KeyDto keyDto = new KeyDto(kind, id, parentKeyDto, new AppIdNamespaceDto(appId, namespace));
-
-        Entity entity = datastoreHelper.get(keyDto);
-
-        return EntityMapper.mapDTO(entity);
-    }
-
-    @PUT
-    @Path(EndPoints.ID)
-    public EntityDto updateEntity(@PathParam(UrlParameters.ID) Long id,
-                                  EntityDto entityDto) {
-        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, UPDATE_ENTITY);
-
-        AppEngineHelper.disableApiHooks();
-        Entity dbEntity;
-
-        Gson gson = GsonDatastoreFactory.create();
-        dbEntity = gson.fromJson(entityDto.getJson(), Entity.class);
-        dbEntity.getKey();
-
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(dbEntity);
-        logger.info("Entity saved");
-
-        return EntityMapper.mapDTO(dbEntity);
-    }
-
-    @DELETE
-    @Path(EndPoints.ID)
-    public Response deleteEntity(@PathParam(UrlParameters.ID) Long id,
-                                 KeyDto keyDto) {
-        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, DELETE_ENTITY);
-
-        AppEngineHelper.disableApiHooks();
-
-        AppIdNamespaceDto namespaceDto = keyDto.getAppIdNamespace();
-        Key key = KeyFactory.createKey(keyDto.getKind(), keyDto.getId());
-
-        datastoreHelper.delete(key, namespaceDto.getNamespace());
-
-        return Response.ok().build();
+    public EntityResource getEntityResource(@PathParam(UrlParameters.ID) Long id) {
+        return subresourceFactory.createEntityResource(id);
     }
 
     @GET
