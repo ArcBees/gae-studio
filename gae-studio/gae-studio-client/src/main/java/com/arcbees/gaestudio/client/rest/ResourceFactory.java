@@ -7,16 +7,21 @@ import org.fusesource.restygwt.client.Resource;
 import org.fusesource.restygwt.client.RestService;
 import org.fusesource.restygwt.client.RestServiceProxy;
 
+import com.arcbees.gaestudio.shared.BaseRestPath;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 
 public class ResourceFactory {
+    private final String baseRestPath;
+
     @Inject
-    public ResourceFactory() {
+    public ResourceFactory(@BaseRestPath String baseRestPath) {
+        this.baseRestPath = baseRestPath;
+
         Defaults.setDateFormat(null);
     }
 
     public <P extends RestService> P setupProxy(P proxy, String endPoint) {
-        Resource resource = new Resource(EndPoints.REST_PATH + endPoint);
+        Resource resource = new Resource(baseRestPath + endPoint);
         ((RestServiceProxy) proxy).setResource(resource);
 
         return proxy;

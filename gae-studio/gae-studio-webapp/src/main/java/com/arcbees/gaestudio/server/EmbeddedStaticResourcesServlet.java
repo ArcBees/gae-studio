@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.arcbees.gaestudio.server.guice.BaseRestPath;
+import com.arcbees.gaestudio.shared.BaseRestPath;
 
 @Singleton
 public class EmbeddedStaticResourcesServlet extends HttpServlet {
@@ -47,7 +47,7 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
 
         String path;
         if (uri.isEmpty()) {
-            path = basePath + "gae-studio.jsp";
+            path = basePath + "com/arcbees/gaestudio/server/velocitytemplates/gae-studio.vm";
             request.setAttribute("restPath", restPath);
         } else {
             path = basePath + uri;

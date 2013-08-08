@@ -47,6 +47,7 @@
         <persistence-api.version>1.0.2</persistence-api.version>
         <google-http-client-appengine.version>1.15.0-rc</google-http-client-appengine.version>
         <resteasy.version>3.0.2.Final</resteasy.version>
+        <velocity.version>1.7</velocity.version>
 
         <!-- test -->
         <junit.version>4.11</junit.version>

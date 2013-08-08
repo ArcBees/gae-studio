@@ -9,7 +9,6 @@
 
 package com.arcbees.gaestudio.server.guice;
 
-import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.inject.servlet.ServletModule;
 
 public class DispatchServletModule extends ServletModule {
@@ -23,9 +22,9 @@ public class DispatchServletModule extends ServletModule {
 
     @Override
     public void configureServlets() {
-        String restEndPoint = EMBEDDED_PATH + "/" + EndPoints.REST_PATH;
-        String filterPath = restPath == null ? "/" + restEndPoint : "/" + restPath + restEndPoint;
+        String restEndPoint = EMBEDDED_PATH;
+        String baseRestPath = restPath == null ? "/" + restEndPoint : "/" + restPath + restEndPoint;
 
-        install(new GaeServletModule(filterPath));
+        install(new GaeServletModule(baseRestPath));
     }
 }
