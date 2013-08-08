@@ -9,20 +9,23 @@
 
 package com.arcbees.gaestudio.server.guice;
 
-import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
-import com.arcbees.gaestudio.server.rest.RestModule;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.arcbees.guicyresteasy.GuiceRestEasyFilterDispatcher;
 import com.google.inject.servlet.ServletModule;
 
 public class DispatchServletModule extends ServletModule {
     public static final String EMBEDDED_PATH = "gae-studio-admin";
 
+    private final String restPath;
+
+    public DispatchServletModule(String restPath) {
+        this.restPath = restPath;
+    }
+
     @Override
     public void configureServlets() {
-        filter("/" + EMBEDDED_PATH + "/" + EndPoints.REST_PATH + "*").through(GuiceRestEasyFilterDispatcher.class);
+        String restEndPoint = EMBEDDED_PATH + "/" + EndPoints.REST_PATH;
+        String filterPath = restPath == null ? "/" + restEndPoint : "/" + restPath + restEndPoint;
 
-        install(new GaeStudioRecorderModule());
-        install(new RestModule());
+        install(new GaeServletModule(filterPath));
     }
 }

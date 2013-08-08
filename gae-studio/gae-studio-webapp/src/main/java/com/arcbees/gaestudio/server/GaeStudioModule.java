@@ -13,10 +13,18 @@ import com.arcbees.gaestudio.server.guice.DispatchServletModule;
 import com.google.inject.servlet.ServletModule;
 
 public class GaeStudioModule extends ServletModule {
+    private final String restPath;
+
+    public GaeStudioModule() {
+        this.restPath = null;
+    }
+
+    public GaeStudioModule(String restPath) {
+        this.restPath = restPath;
+    }
+
     @Override
     protected void configureServlets() {
-        serve("/" + DispatchServletModule.EMBEDDED_PATH + "*").with(EmbeddedStaticResourcesServlet.class);
-
-        install(new DispatchServletModule());
+        install(new DispatchServletModule(restPath));
     }
 }

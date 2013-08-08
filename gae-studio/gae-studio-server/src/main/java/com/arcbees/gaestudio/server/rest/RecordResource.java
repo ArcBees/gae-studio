@@ -6,6 +6,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 import com.arcbees.gaestudio.server.GaConstants;
+import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.recorder.HookRegistrar;
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
 import com.arcbees.gaestudio.server.recorder.authentication.Listener;
@@ -14,6 +15,7 @@ import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.appengine.api.memcache.MemcacheService;
 
+@GaeStudioResource
 @Path(EndPoints.RECORD)
 public class RecordResource extends GoogleAnalyticResource {
     private static final String SET_RECORDING = "Set Recording";

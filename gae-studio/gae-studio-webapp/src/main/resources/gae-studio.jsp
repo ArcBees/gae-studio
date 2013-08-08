@@ -5,6 +5,9 @@
 
     <title>GAE Studio</title>
 
+    <script type="text/javascript" language="javascript">
+        var AppConfiguration = {restPath: ${restPath}};
+    </script>
     <script type="text/javascript" language="javascript" src="gaestudio/gaestudio.nocache.js"></script>
 </head>
 

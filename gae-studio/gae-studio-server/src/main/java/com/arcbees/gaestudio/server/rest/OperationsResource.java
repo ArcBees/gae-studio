@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 import com.arcbees.gaestudio.server.GaConstants;
+import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
@@ -18,6 +19,7 @@ import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.common.collect.Lists;
 
+@GaeStudioResource
 @Path(EndPoints.OPERATIONS)
 public class OperationsResource extends GoogleAnalyticResource {
     private static final String GET_NEW_DB_OPERATION_RECORD = "Get New Db Operation Record";

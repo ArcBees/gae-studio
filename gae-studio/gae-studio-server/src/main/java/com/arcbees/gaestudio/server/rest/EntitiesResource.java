@@ -12,25 +12,21 @@ package com.arcbees.gaestudio.server.rest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.server.GaConstants;
+import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.shared.DeleteEntities;
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
@@ -39,12 +35,11 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.GsonDatastoreFactory;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
-import com.google.gson.Gson;
 
+@GaeStudioResource
 @Path(EndPoints.ENTITIES)
 public class EntitiesResource extends GoogleAnalyticResource {
     private static final String GET_ENTITIES_BY_KIND = "Get Entities By Kind";
@@ -53,15 +48,12 @@ public class EntitiesResource extends GoogleAnalyticResource {
     private static final String DELETE_ENTITIES = "Delete Entities by ";
 
     private final DatastoreHelper datastoreHelper;
-    private final Logger logger;
     private final SubresourceFactory subresourceFactory;
 
     @Inject
     EntitiesResource(DatastoreHelper datastoreHelper,
-                     Logger logger,
                      SubresourceFactory subresourceFactory) {
         this.datastoreHelper = datastoreHelper;
-        this.logger = logger;
         this.subresourceFactory = subresourceFactory;
     }
 
@@ -125,11 +117,6 @@ public class EntitiesResource extends GoogleAnalyticResource {
         deleteEntities(deleteType, kind, namespace);
     }
 
-    @Path(EndPoints.ID)
-    public EntityResource getEntityResource(@PathParam(UrlParameters.ID) Long id) {
-        return subresourceFactory.createEntityResource(id);
-    }
-
     @GET
     @Path(EndPoints.COUNT)
     public Integer getCount(@QueryParam(UrlParameters.KIND) String kind) {
@@ -144,6 +131,11 @@ public class EntitiesResource extends GoogleAnalyticResource {
         Integer count = datastore.prepare(query).countEntities(fetchOptions);
 
         return count;
+    }
+
+    @Path(EndPoints.ID)
+    public EntityResource getEntityResource(@PathParam(UrlParameters.ID) Long id) {
+        return subresourceFactory.createEntityResource(id);
     }
 
     private Entity setEmptiedProperties(Entity entity,

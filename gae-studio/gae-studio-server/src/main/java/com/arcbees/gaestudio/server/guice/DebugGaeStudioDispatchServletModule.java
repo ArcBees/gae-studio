@@ -9,18 +9,25 @@
 
 package com.arcbees.gaestudio.server.guice;
 
-import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
-import com.arcbees.gaestudio.server.rest.RestModule;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.arcbees.guicyresteasy.GuiceRestEasyFilterDispatcher;
 import com.google.inject.servlet.ServletModule;
 
 public class DebugGaeStudioDispatchServletModule extends ServletModule {
+    private final String restPath;
+
+    public DebugGaeStudioDispatchServletModule() {
+        restPath = null;
+    }
+
+    public DebugGaeStudioDispatchServletModule(String restPath) {
+        this.restPath = restPath;
+    }
+
     @Override
     public void configureServlets() {
-        filter("/" + EndPoints.REST_PATH + "*").through(GuiceRestEasyFilterDispatcher.class);
+        String restEndPoint = EndPoints.REST_PATH;
+        String filterPath = restPath == null ? "/" + restEndPoint : "/" + restPath + restEndPoint;
 
-        install(new GaeStudioRecorderModule());
-        install(new RestModule());
+        install(new GaeServletModule(filterPath));
     }
 }

@@ -21,9 +21,11 @@ public class RestModule extends AbstractModule {
     protected void configure() {
         install(new FactoryModuleBuilder().build(SubresourceFactory.class));
 
-        bind(EntitiesResource.class);
         bind(NamespacesResource.class);
         bind(KindsResource.class);
+        bind(EntitiesResource.class);
+        bind(OperationsResource.class);
+        bind(RecordResource.class);
     }
 
     @Provides

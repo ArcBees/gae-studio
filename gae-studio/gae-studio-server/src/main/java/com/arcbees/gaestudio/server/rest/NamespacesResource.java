@@ -6,6 +6,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 import com.arcbees.gaestudio.server.GaConstants;
+import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
@@ -18,6 +19,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 
+@GaeStudioResource
 @Path(EndPoints.NAMESPACES)
 public class NamespacesResource extends GoogleAnalyticResource {
     private static final String GET_NAMESPACES = "Get Namespaces";

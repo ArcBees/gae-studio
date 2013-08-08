@@ -14,15 +14,25 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.logging.Logger;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.arcbees.gaestudio.server.guice.BaseRestPath;
+
 @Singleton
 public class EmbeddedStaticResourcesServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(EmbeddedStaticResourcesServlet.class.getSimpleName());
+
+    private final String restPath;
+
+    @Inject
+    EmbeddedStaticResourcesServlet(@BaseRestPath String restPath) {
+        this.restPath = restPath;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,7 +47,8 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
 
         String path;
         if (uri.isEmpty()) {
-            path = basePath + "gae-studio.html";
+            path = basePath + "gae-studio.jsp";
+            request.setAttribute("restPath", restPath);
         } else {
             path = basePath + uri;
         }
@@ -51,7 +62,7 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
         path = path.toLowerCase();
 
         String mimeType = "text/plain";
-        if (path.contains(".html")) {
+        if (path.contains(".jsp")) {
             mimeType = "text/html";
         } else if (path.contains(".ico")) {
             mimeType = "image/x-icon";
