@@ -1,0 +1,66 @@
+package com.arcbees.gaestudio.server.rest;
+
+import javax.inject.Inject;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+
+import com.arcbees.gaestudio.server.GaConstants;
+import com.arcbees.gaestudio.server.recorder.HookRegistrar;
+import com.arcbees.gaestudio.server.recorder.MemcacheKey;
+import com.arcbees.gaestudio.server.recorder.authentication.Listener;
+import com.arcbees.gaestudio.server.recorder.authentication.ListenerProvider;
+import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.arcbees.googleanalytic.GoogleAnalytic;
+import com.google.appengine.api.memcache.MemcacheService;
+
+@Path(EndPoints.RECORD)
+public class RecordResource extends GoogleAnalyticResource {
+    private static final String SET_RECORDING = "Set Recording";
+
+    private final HookRegistrar hookRegistrar;
+    private final ListenerProvider listenerProvider;
+    private final GoogleAnalytic googleAnalytic;
+    private final MemcacheService memcacheService;
+
+    @Inject
+    RecordResource(HookRegistrar hookRegistrar,
+                   ListenerProvider listenerProvider,
+                   GoogleAnalytic googleAnalytic,
+                   MemcacheService memcacheService) {
+        this.hookRegistrar = hookRegistrar;
+        this.listenerProvider = listenerProvider;
+        this.googleAnalytic = googleAnalytic;
+        this.memcacheService = memcacheService;
+    }
+
+    @POST
+    public Long startRecording() {
+        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, SET_RECORDING);
+
+        Listener listener = listenerProvider.get();
+
+        hookRegistrar.putListener(listener);
+
+        return getMostRecentId();
+    }
+
+    @DELETE
+    public Long stopRecording() {
+        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, SET_RECORDING);
+
+        Listener listener = listenerProvider.get();
+
+        hookRegistrar.removeListener(listener);
+
+        return getMostRecentId();
+    }
+
+    private Long getMostRecentId() {
+        Long mostRecentId = (Long) memcacheService.get(MemcacheKey.DB_OPERATION_COUNTER.getName());
+        if (mostRecentId == null) {
+            mostRecentId = 0L;
+        }
+        return mostRecentId;
+    }
+}

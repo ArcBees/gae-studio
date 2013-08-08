@@ -24,9 +24,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
-import com.arcbees.gaestudio.server.DatastoreHelper;
+import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.server.GaConstants;
-import com.arcbees.gaestudio.server.dispatch.DispatchHelper;
+import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -74,7 +74,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
                                        @QueryParam(UrlParameters.LIMIT) Integer limit) {
         googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_ENTITIES_BY_KIND);
 
-        DispatchHelper.disableApiHooks();
+        AppEngineHelper.disableApiHooks();
 
         FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
         if (offset != null) {
@@ -99,7 +99,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
     public EntityDto createEntity(String kind) {
         googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_EMPTY_KIND_ENTITY);
 
-        DispatchHelper.disableApiHooks();
+        AppEngineHelper.disableApiHooks();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Entity emptyEntity = new Entity(kind);
         try {
@@ -123,7 +123,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
                                @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType) {
         googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, getEvent(deleteType));
 
-        DispatchHelper.disableApiHooks();
+        AppEngineHelper.disableApiHooks();
 
         deleteEntities(deleteType, kind, namespace);
     }
@@ -157,7 +157,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
                                   EntityDto entityDto) {
         googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, UPDATE_ENTITY);
 
-        DispatchHelper.disableApiHooks();
+        AppEngineHelper.disableApiHooks();
         Entity dbEntity;
 
         Gson gson = GsonDatastoreFactory.create();
@@ -177,7 +177,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
                                  KeyDto keyDto) {
         googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, DELETE_ENTITY);
 
-        DispatchHelper.disableApiHooks();
+        AppEngineHelper.disableApiHooks();
 
         AppIdNamespaceDto namespaceDto = keyDto.getAppIdNamespace();
         Key key = KeyFactory.createKey(keyDto.getKind(), keyDto.getId());
@@ -192,7 +192,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
     public Integer getCount(@QueryParam(UrlParameters.KIND) String kind) {
         googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_ENTITY_COUNT_BY_KIND);
 
-        DispatchHelper.disableApiHooks();
+        AppEngineHelper.disableApiHooks();
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 

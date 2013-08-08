@@ -8,9 +8,9 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
-import com.arcbees.gaestudio.server.DatastoreHelper;
+import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.server.GaConstants;
-import com.arcbees.gaestudio.server.dispatch.DispatchHelper;
+import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.appengine.api.datastore.Entities;
 import com.google.appengine.api.datastore.Entity;
@@ -33,7 +33,7 @@ public class KindsResource extends GoogleAnalyticResource {
     public List<String> getKinds() {
         googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_ENTITY_KINDS);
 
-        DispatchHelper.disableApiHooks();
+        AppEngineHelper.disableApiHooks();
 
         Query query = new Query(Entities.KIND_METADATA_KIND);
         Iterable<Entity> entityIterable = datastoreHelper.queryOnAllNamespaces(query);

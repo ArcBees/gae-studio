@@ -9,4 +9,5 @@ public class EndPoints {
     public static final String NAMESPACES = "namespaces";
     public static final String COUNT = "count/";
     public static final String KINDS = "kinds/";
+    public static final String RECORD = "record/";
 }

@@ -7,14 +7,14 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.dispatch;
+package com.arcbees.gaestudio.server.util;
 
 import com.google.apphosting.api.ApiProxy;
 
 // TODO externalize magic strings
-public class DispatchHelper {
+public class AppEngineHelper {
     @SuppressWarnings("unused")
-    private DispatchHelper() {
+    private AppEngineHelper() {
     }
 
     /**
