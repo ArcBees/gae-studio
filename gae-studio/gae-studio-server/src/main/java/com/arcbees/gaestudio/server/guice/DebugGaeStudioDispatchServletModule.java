@@ -9,22 +9,18 @@
 
 package com.arcbees.gaestudio.server.guice;
 
-import com.arcbees.gaestudio.server.dispatch.GaeStudioDispatchModule;
 import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
 import com.arcbees.gaestudio.server.rest.RestModule;
-import com.arcbees.gaestudio.shared.dispatch.util.GaeStudioActionImpl;
+import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.arcbees.guicyresteasy.GuiceRestEasyFilterDispatcher;
 import com.google.inject.servlet.ServletModule;
-import com.gwtplatform.dispatch.server.guice.DispatchServiceImpl;
-import com.gwtplatform.dispatch.shared.ActionImpl;
 
 public class DebugGaeStudioDispatchServletModule extends ServletModule {
     @Override
     public void configureServlets() {
-        serve("/" + GaeStudioActionImpl.GAE_STUDIO + ActionImpl.DEFAULT_SERVICE_NAME + "*").with(
-                DispatchServiceImpl.class);
+        filter("/" + EndPoints.REST_PATH + "*").through(GuiceRestEasyFilterDispatcher.class);
 
         install(new GaeStudioRecorderModule());
-        install(new GaeStudioDispatchModule());
         install(new RestModule());
     }
 }

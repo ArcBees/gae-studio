@@ -10,4 +10,5 @@ public class EndPoints {
     public static final String COUNT = "count/";
     public static final String KINDS = "kinds/";
     public static final String RECORD = "record/";
+    public static final String OPERATIONS = "operations/";
 }

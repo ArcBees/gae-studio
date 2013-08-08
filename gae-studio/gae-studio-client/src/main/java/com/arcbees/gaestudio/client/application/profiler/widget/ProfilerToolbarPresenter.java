@@ -9,14 +9,14 @@
 
 package com.arcbees.gaestudio.client.application.profiler.widget;
 
+import org.fusesource.restygwt.client.MethodCallback;
+
 import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
-import com.arcbees.gaestudio.shared.dispatch.SetRecordingAction;
-import com.arcbees.gaestudio.shared.dispatch.SetRecordingResult;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.arcbees.gaestudio.client.rest.RecordService;
+import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -27,38 +27,48 @@ public class ProfilerToolbarPresenter extends PresenterWidget<ProfilerToolbarPre
         void setRecordingState(Boolean isRecording);
     }
 
-    private final DispatchAsync dispatcher;
+    private final RecordService recordService;
 
     @Inject
     ProfilerToolbarPresenter(EventBus eventBus,
                              MyView view,
-                             DispatchAsync dispatcher) {
+                             RecordService recordService) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);
 
-        this.dispatcher = dispatcher;
+        this.recordService = recordService;
     }
 
     @Override
-    public void onToggleRecording(final Boolean start) {
-        dispatcher.execute(new SetRecordingAction(start), new AsyncCallback<SetRecordingResult>() {
+    public void onToggleRecording(Boolean start) {
+        MethodCallback<Long> methodCallback = getRecordingCallback(start);
+
+        if (start) {
+            recordService.startRecording(methodCallback);
+        } else {
+            recordService.stopRecording(methodCallback);
+        }
+    }
+
+    @Override
+    public void clearOperationRecords() {
+        ClearOperationRecordsEvent.fire(this);
+    }
+
+    private MethodCallback<Long> getRecordingCallback(final boolean start) {
+        return new MethodCallbackImpl<Long>() {
             @Override
             public void onFailure(Throwable caught) {
                 getView().setRecordingState(!start);
             }
 
             @Override
-            public void onSuccess(SetRecordingResult result) {
+            public void onSuccess(Long result) {
                 getView().setRecordingState(start);
-                RecordingStateChangedEvent.fire(ProfilerToolbarPresenter.this, start, result.getCurrentRecordId());
+                RecordingStateChangedEvent.fire(ProfilerToolbarPresenter.this, start, result);
             }
-        });
-    }
-
-    @Override
-    public void clearOperationRecords() {
-        ClearOperationRecordsEvent.fire(this);
+        };
     }
 }
 

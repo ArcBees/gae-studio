@@ -9,7 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.profiler;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
@@ -24,14 +24,12 @@ import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsAction;
-import com.arcbees.gaestudio.shared.dispatch.GetNewDbOperationRecordsResult;
+import com.arcbees.gaestudio.client.rest.OperationsService;
+import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -57,7 +55,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     public static final Object TYPE_SetToolbarContent = new Object();
     private static final int TICK_DELTA_MILLISEC = 1000;
 
-    private final DispatchAsync dispatcher;
+    private final OperationsService operationsService;
     private final FiltersPresenter filterPresenter;
     private final StatisticsPresenter statisticsPresenter;
     private final AppConstants myConstants;
@@ -72,7 +70,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     ProfilerPresenter(EventBus eventBus,
                       MyView view,
                       MyProxy proxy,
-                      DispatchAsync dispatcher,
+                      OperationsService operationsService,
                       FiltersPresenter filterPresenter,
                       StatisticsPresenter statisticsPresenter,
                       AppConstants myConstants,
@@ -81,7 +79,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                       ProfilerToolbarPresenter profilerToolbarPresenter) {
         super(eventBus, view, proxy);
 
-        this.dispatcher = dispatcher;
+        this.operationsService = operationsService;
         this.filterPresenter = filterPresenter;
         this.statisticsPresenter = statisticsPresenter;
         this.myConstants = myConstants;
@@ -127,18 +125,16 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private void getNewDbOperationRecords() {
         if (!isProcessing) {
             isProcessing = true;
-            dispatcher.execute(
-                    new GetNewDbOperationRecordsAction.Builder(lastDbOperationRecordId).maxResults(100).build(),
-                    new AsyncCallback<GetNewDbOperationRecordsResult>() {
+            operationsService.getNewOperations(lastDbOperationRecordId, 100,
+                    new MethodCallbackImpl<List<DbOperationRecordDto>>() {
                         @Override
                         public void onFailure(Throwable caught) {
                             onGetNewDbOperationRecordsFailed();
                         }
 
                         @Override
-                        public void onSuccess(GetNewDbOperationRecordsResult result) {
-                            // TODO : Move to rest
-                            //processNewDbOperationRecords(result.getRecords());
+                        public void onSuccess(List<DbOperationRecordDto> results) {
+                            processNewDbOperationRecords(results);
                             isProcessing = false;
                         }
                     });
@@ -152,7 +148,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     // TODO properly handle any missing records
-    private void processNewDbOperationRecords(ArrayList<DbOperationRecordDto> records) {
+    private void processNewDbOperationRecords(List<DbOperationRecordDto> records) {
         if (!records.isEmpty()) {
             for (DbOperationRecordDto record : records) {
                 processDbOperationRecord(record);
