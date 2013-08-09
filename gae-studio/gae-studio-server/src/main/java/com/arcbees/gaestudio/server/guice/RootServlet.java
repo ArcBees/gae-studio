@@ -18,8 +18,10 @@ import com.google.inject.Singleton;
 public class RootServlet extends HttpServlet {
     private final static String templateLocation =
             "com/arcbees/gaestudio/server/velocitytemplates/gae-studio.vm";
+
+    protected final String restPath;
+
     private final VelocityWrapper velocityWrapper;
-    private final String restPath;
 
     @Inject
     public RootServlet(VelocityWrapperFactory velocityWrapperFactory,

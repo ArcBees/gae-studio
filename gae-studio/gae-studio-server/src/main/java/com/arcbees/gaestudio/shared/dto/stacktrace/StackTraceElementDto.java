@@ -9,6 +9,9 @@
 
 package com.arcbees.gaestudio.shared.dto.stacktrace;
 
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class StackTraceElementDto implements IsSerializable {
@@ -21,7 +24,11 @@ public class StackTraceElementDto implements IsSerializable {
     protected StackTraceElementDto() {
     }
 
-    public StackTraceElementDto(String className, String fileName, int lineNumber, String methodName) {
+    @JsonCreator
+    public StackTraceElementDto(@JsonProperty("className") String className,
+                                @JsonProperty("fileName") String fileName,
+                                @JsonProperty("lineNumber") int lineNumber,
+                                @JsonProperty("methodName") String methodName) {
         this.className = className;
         this.fileName = fileName;
         this.lineNumber = lineNumber;

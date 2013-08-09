@@ -47,8 +47,7 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
 
         String path;
         if (uri.isEmpty()) {
-            path = basePath + "com/arcbees/gaestudio/server/velocitytemplates/gae-studio.vm";
-            request.setAttribute("restPath", restPath);
+            path = basePath + "gae-studio.html";
         } else {
             path = basePath + uri;
         }

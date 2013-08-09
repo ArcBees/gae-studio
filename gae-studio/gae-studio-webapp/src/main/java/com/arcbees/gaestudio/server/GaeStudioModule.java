@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.server;
 
 import com.arcbees.gaestudio.server.guice.DispatchServletModule;
+import com.arcbees.gaestudio.server.guice.RootServlet;
 import com.google.inject.servlet.ServletModule;
 
 public class GaeStudioModule extends ServletModule {
@@ -25,6 +26,8 @@ public class GaeStudioModule extends ServletModule {
 
     @Override
     protected void configureServlets() {
+        serve("/" + DispatchServletModule.EMBEDDED_PATH + "/").with(RootServlet.class);
+        serve("/" + DispatchServletModule.EMBEDDED_PATH + "/gae-studio.*").with(RootServlet.class);
         serve("/" + DispatchServletModule.EMBEDDED_PATH + "*").with(EmbeddedStaticResourcesServlet.class);
 
         install(new DispatchServletModule(restPath));

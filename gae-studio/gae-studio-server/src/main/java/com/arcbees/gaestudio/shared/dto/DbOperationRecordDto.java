@@ -9,12 +9,18 @@
 
 package com.arcbees.gaestudio.shared.dto;
 
+import org.codehaus.jackson.annotate.JsonSubTypes;
+import org.codehaus.jackson.annotate.JsonTypeInfo;
+
 import com.arcbees.gaestudio.shared.dto.stacktrace.StackTraceElementDto;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
+@JsonSubTypes({@JsonSubTypes.Type(value = DeleteRecordDto.class, name = "delete"),
+        @JsonSubTypes.Type(value = GetRecordDto.class, name = "get"),
+        @JsonSubTypes.Type(value = PutRecordDto.class, name = "put")})
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public abstract class DbOperationRecordDto implements IsSerializable {
     private StackTraceElementDto callerStackTraceElement;
-
     private Long requestId;
     private Long statementId;
     private Integer executionTimeMs;
@@ -50,5 +56,21 @@ public abstract class DbOperationRecordDto implements IsSerializable {
 
     public Integer getExecutionTimeMs() {
         return executionTimeMs;
+    }
+
+    void setCallerStackTraceElement(StackTraceElementDto callerStackTraceElement) {
+        this.callerStackTraceElement = callerStackTraceElement;
+    }
+
+    void setRequestId(Long requestId) {
+        this.requestId = requestId;
+    }
+
+    void setStatementId(Long statementId) {
+        this.statementId = statementId;
+    }
+
+    void setExecutionTimeMs(Integer executionTimeMs) {
+        this.executionTimeMs = executionTimeMs;
     }
 }
