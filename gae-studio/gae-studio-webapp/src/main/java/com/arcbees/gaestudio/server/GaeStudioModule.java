@@ -28,7 +28,7 @@ public class GaeStudioModule extends ServletModule {
     protected void configureServlets() {
         serve("/" + DispatchServletModule.EMBEDDED_PATH + "/").with(RootServlet.class);
         serve("/" + DispatchServletModule.EMBEDDED_PATH + "/gae-studio.*").with(RootServlet.class);
-        serve("/" + DispatchServletModule.EMBEDDED_PATH + "*").with(EmbeddedStaticResourcesServlet.class);
+        serve("/" + DispatchServletModule.EMBEDDED_PATH + "/*").with(EmbeddedStaticResourcesServlet.class);
 
         install(new DispatchServletModule(restPath));
     }

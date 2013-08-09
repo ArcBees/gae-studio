@@ -1,9 +1,12 @@
 package com.arcbees.gaestudio.server.rest;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import com.arcbees.gaestudio.server.GaConstants;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
@@ -17,6 +20,8 @@ import com.google.appengine.api.memcache.MemcacheService;
 
 @GaeStudioResource
 @Path(EndPoints.RECORD)
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class RecordResource extends GoogleAnalyticResource {
     private static final String SET_RECORDING = "Set Recording";
 
