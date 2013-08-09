@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared.dto.mapper;
+package com.arcbees.gaestudio.server.dto.mapper;
 
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;

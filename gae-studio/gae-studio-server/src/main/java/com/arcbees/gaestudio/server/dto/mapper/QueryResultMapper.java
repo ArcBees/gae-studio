@@ -7,17 +7,20 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared.dto.mapper;
+package com.arcbees.gaestudio.server.dto.mapper;
 
-import com.arcbees.gaestudio.shared.dto.stacktrace.StackTraceElementDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryResultDto;
+import com.google.apphosting.api.DatastorePb;
 
-public class StackTraceElementMapper {
+public class QueryResultMapper {
     @SuppressWarnings("unused")
-    private StackTraceElementMapper() {
+    private QueryResultMapper() {
     }
 
-    public static StackTraceElementDto mapDTO(StackTraceElement stackTraceElement) {
-        return new StackTraceElementDto(stackTraceElement.getClassName(), stackTraceElement.getFileName(),
-                stackTraceElement.getLineNumber(), stackTraceElement.getMethodName());
+    public static QueryResultDto mapDTO(DatastorePb.QueryResult queryResult) {
+        Integer resultSize = queryResult.resultSize();
+        Integer serializedSize = queryResult.getSerializedSize();
+
+        return new QueryResultDto(resultSize, serializedSize);
     }
 }

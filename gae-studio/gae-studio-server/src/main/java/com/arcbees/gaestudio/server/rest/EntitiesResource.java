@@ -27,7 +27,7 @@ import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.shared.dto.mapper.EntityMapper;
+import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.appengine.api.NamespaceManager;

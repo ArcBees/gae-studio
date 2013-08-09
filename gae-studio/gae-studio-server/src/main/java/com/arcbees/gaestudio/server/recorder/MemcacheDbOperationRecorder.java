@@ -10,9 +10,9 @@
 package com.arcbees.gaestudio.server.recorder;
 
 import com.arcbees.gaestudio.shared.dto.DeleteRecordDto;
-import com.arcbees.gaestudio.shared.dto.mapper.QueryMapper;
-import com.arcbees.gaestudio.shared.dto.mapper.QueryResultMapper;
-import com.arcbees.gaestudio.shared.dto.mapper.StackTraceElementMapper;
+import com.arcbees.gaestudio.server.dto.mapper.QueryMapper;
+import com.arcbees.gaestudio.server.dto.mapper.QueryResultMapper;
+import com.arcbees.gaestudio.server.dto.mapper.StackTraceElementMapper;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.arcbees.gaestudio.shared.dto.GetRecordDto;
 import com.arcbees.gaestudio.shared.dto.PutRecordDto;
