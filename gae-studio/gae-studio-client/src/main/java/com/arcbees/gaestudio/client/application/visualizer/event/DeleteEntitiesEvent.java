@@ -17,19 +17,16 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class DeleteEntitiesEvent extends GwtEvent<DeleteEntitiesEvent.DeleteEntitiesHandler> {
     public interface DeleteEntitiesHandler extends EventHandler {
-
         public void onDeleteEntities(DeleteEntitiesEvent event);
     }
 
     public interface HasDeleteEntitiesHandlers extends HasHandlers {
-
         HandlerRegistration addDeleteEntitiesHandler(DeleteEntitiesHandler handler);
     }
 
     private static final Type<DeleteEntitiesHandler> TYPE = new Type<DeleteEntitiesHandler>();
 
     private DeleteEntities deleteEntities;
-
     private String kind;
     private String namespace;
 

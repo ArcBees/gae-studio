@@ -43,8 +43,6 @@ import static com.arcbees.gaestudio.client.application.visualizer.event.KindSele
 public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolbarPresenter.MyView> implements
         VisualizerToolbarUiHandlers, KindSelectedHandler, EntitySelectedHandler, EntityPageLoadedHandler,
         DeleteFromNamespaceHandler {
-    private final EntitiesService entitiesService;
-
     interface MyView extends View, HasUiHandlers<VisualizerToolbarUiHandlers> {
         void setKindSelected(boolean isSelected);
 
@@ -57,6 +55,7 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
 
     private final AppConstants myConstants;
     private final NamespacesListPresenter namespacesListPresenter;
+    private final EntitiesService entitiesService;
 
     private String currentKind = "";
     private ParsedEntity currentParsedEntity;
