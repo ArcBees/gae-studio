@@ -7,13 +7,14 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server;
+package com.arcbees.gaestudio.server.guice;
 
-import com.arcbees.gaestudio.server.guice.DispatchServletModule;
-import com.arcbees.gaestudio.server.guice.RootServlet;
+import com.arcbees.gaestudio.server.EmbeddedStaticResourcesServlet;
 import com.google.inject.servlet.ServletModule;
 
 public class GaeStudioModule extends ServletModule {
+    private static final String EMBEDDED_PATH = "gae-studio-admin";
+
     private final String restPath;
 
     public GaeStudioModule() {
@@ -26,10 +27,10 @@ public class GaeStudioModule extends ServletModule {
 
     @Override
     protected void configureServlets() {
-        serve("/" + DispatchServletModule.EMBEDDED_PATH + "/").with(RootServlet.class);
-        serve("/" + DispatchServletModule.EMBEDDED_PATH + "/gae-studio.*").with(RootServlet.class);
-        serve("/" + DispatchServletModule.EMBEDDED_PATH + "/*").with(EmbeddedStaticResourcesServlet.class);
+        serve("/" + EMBEDDED_PATH + "/").with(RootServlet.class);
+        serve("/" + EMBEDDED_PATH + "/gae-studio.*").with(RootServlet.class);
+        serve("/" + EMBEDDED_PATH + "/*").with(EmbeddedStaticResourcesServlet.class);
 
-        install(new DispatchServletModule(restPath));
+        install(new GaeServletModule(restPath));
     }
 }

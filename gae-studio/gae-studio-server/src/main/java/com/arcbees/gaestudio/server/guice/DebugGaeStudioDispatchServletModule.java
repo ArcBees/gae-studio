@@ -25,9 +25,7 @@ public class DebugGaeStudioDispatchServletModule extends ServletModule {
 
     @Override
     public void configureServlets() {
-        String baseRestPath = restPath == null ? "/" : "/" + restPath;
-
-        install(new GaeServletModule(baseRestPath));
+        install(new GaeServletModule(restPath));
 
         serve("/gae-studio.*").with(RootServlet.class);
     }

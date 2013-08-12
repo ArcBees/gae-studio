@@ -31,7 +31,8 @@ public class GaeServletModule extends ServletModule {
 
         bindConstant().annotatedWith(BaseRestPath.class).to(restPath);
 
-        String fullRestPath = (restPath + "/" + EndPoints.REST_PATH).replace("//", "/");
+        String baseRestPath = restPath == null ? "/" : "/" + restPath + "/";
+        String fullRestPath = (baseRestPath + EndPoints.REST_PATH).replace("//", "/");
 
         filter(fullRestPath + "*").through(GuiceRestEasyFilterDispatcher.class);
     }

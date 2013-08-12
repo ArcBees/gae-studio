@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.arcbees.gaestudio.server.guice.GaeStudioModule;
 import com.arcbees.gaestudio.shared.BaseRestPath;
 
 @Singleton
