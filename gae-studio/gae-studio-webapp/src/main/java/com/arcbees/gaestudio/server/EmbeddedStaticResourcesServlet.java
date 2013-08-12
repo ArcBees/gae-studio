@@ -61,7 +61,7 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
         path = path.toLowerCase();
 
         String mimeType = "text/plain";
-        if (path.contains(".jsp")) {
+        if (path.contains(".html")) {
             mimeType = "text/html";
         } else if (path.contains(".ico")) {
             mimeType = "image/x-icon";
