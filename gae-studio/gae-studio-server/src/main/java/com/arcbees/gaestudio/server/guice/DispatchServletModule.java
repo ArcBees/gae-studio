@@ -22,8 +22,7 @@ public class DispatchServletModule extends ServletModule {
 
     @Override
     public void configureServlets() {
-        String restEndPoint = EMBEDDED_PATH;
-        String baseRestPath = restPath == null ? "/" + restEndPoint : "/" + restPath + restEndPoint;
+        String baseRestPath = restPath == null ? "/" : "/" + restPath;
 
         install(new GaeServletModule(baseRestPath));
     }
