@@ -34,7 +34,7 @@ public interface EntitiesService extends RestService {
                    MethodCallback<List<EntityDto>> callback);
 
     @POST
-    void createByKind(String kind,
+    void createByKind(@QueryParam(UrlParameters.KIND) String kind,
                       MethodCallback<EntityDto> callback);
 
     @DELETE

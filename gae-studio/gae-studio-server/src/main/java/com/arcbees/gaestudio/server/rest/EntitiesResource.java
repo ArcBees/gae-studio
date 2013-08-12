@@ -25,12 +25,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.arcbees.gaestudio.server.GaConstants;
+import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.appengine.api.NamespaceManager;
@@ -90,7 +90,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
     }
 
     @POST
-    public EntityDto createEntity(String kind) {
+    public EntityDto createEntity(@QueryParam(UrlParameters.KIND) String kind) {
         googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_EMPTY_KIND_ENTITY);
 
         AppEngineHelper.disableApiHooks();
