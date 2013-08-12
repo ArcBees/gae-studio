@@ -30,6 +30,12 @@
 
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.googlecode.objectify</pattern>
+                                    <shadedPattern>${repackage}.com.googlecode.objectify</shadedPattern>
+                                </relocation>
+                            </relocations>
                             <artifactSet>
                                 <excludes>
                                     <exclude>com.google.appengine:*</exclude>
