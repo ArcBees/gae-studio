@@ -9,10 +9,10 @@
 
 package com.arcbees.gaestudio.server.guice;
 
-import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.inject.servlet.ServletModule;
 
 public class DebugGaeStudioDispatchServletModule extends ServletModule {
+    private static final String GAE_STUDIO_HTML = "/gae-studio.*";
     private final String restPath;
 
     public DebugGaeStudioDispatchServletModule() {
@@ -27,6 +27,6 @@ public class DebugGaeStudioDispatchServletModule extends ServletModule {
     public void configureServlets() {
         install(new GaeServletModule(restPath));
 
-        serve("/gae-studio.*").with(RootServlet.class);
+        serve(GAE_STUDIO_HTML).with(RootServlet.class);
     }
 }

@@ -9,7 +9,7 @@
 
 package com.arcbees.gaestudio.server;
 
-public class GaConstants {
+public class GoogleAnalyticConstants {
     public static final String CAT_INITIALIZATION = "Initialization";
 
     public static final String CAT_SERVER_CALL = "Server Call";

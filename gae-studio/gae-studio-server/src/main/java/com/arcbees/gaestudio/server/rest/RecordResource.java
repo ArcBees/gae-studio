@@ -17,7 +17,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.arcbees.gaestudio.server.GaConstants;
+import com.arcbees.gaestudio.server.GoogleAnalyticConstants;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.recorder.HookRegistrar;
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
@@ -52,7 +52,7 @@ public class RecordResource extends GoogleAnalyticResource {
 
     @POST
     public Long startRecording() {
-        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, SET_RECORDING);
+        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, SET_RECORDING);
 
         Listener listener = listenerProvider.get();
 
@@ -63,7 +63,7 @@ public class RecordResource extends GoogleAnalyticResource {
 
     @DELETE
     public Long stopRecording() {
-        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, SET_RECORDING);
+        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, SET_RECORDING);
 
         Listener listener = listenerProvider.get();
 
@@ -74,9 +74,11 @@ public class RecordResource extends GoogleAnalyticResource {
 
     private Long getMostRecentId() {
         Long mostRecentId = (Long) memcacheService.get(MemcacheKey.DB_OPERATION_COUNTER.getName());
+
         if (mostRecentId == null) {
             mostRecentId = 0L;
         }
+
         return mostRecentId;
     }
 }

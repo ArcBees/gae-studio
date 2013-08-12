@@ -14,6 +14,7 @@ import com.google.inject.servlet.ServletModule;
 
 public class GaeStudioModule extends ServletModule {
     private static final String EMBEDDED_PATH = "gae-studio-admin";
+    private static final String GAE_STUDIO_HTML = "/gae-studio.*";
 
     private final String restPath;
 
@@ -28,7 +29,7 @@ public class GaeStudioModule extends ServletModule {
     @Override
     protected void configureServlets() {
         serve("/" + EMBEDDED_PATH + "/").with(RootServlet.class);
-        serve("/" + EMBEDDED_PATH + "/gae-studio.*").with(RootServlet.class);
+        serve("/" + EMBEDDED_PATH + GAE_STUDIO_HTML).with(RootServlet.class);
         serve("/" + EMBEDDED_PATH + "/*").with(EmbeddedStaticResourcesServlet.class);
 
         install(new GaeServletModule(restPath));

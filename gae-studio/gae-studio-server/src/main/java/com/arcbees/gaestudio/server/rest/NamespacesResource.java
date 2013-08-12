@@ -17,7 +17,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.arcbees.gaestudio.server.GaConstants;
+import com.arcbees.gaestudio.server.GoogleAnalyticConstants;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
@@ -40,7 +40,7 @@ public class NamespacesResource extends GoogleAnalyticResource {
 
     @GET
     public List<AppIdNamespaceDto> getNamespaces() {
-        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_NAMESPACES);
+        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_NAMESPACES);
 
         AppEngineHelper.disableApiHooks();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

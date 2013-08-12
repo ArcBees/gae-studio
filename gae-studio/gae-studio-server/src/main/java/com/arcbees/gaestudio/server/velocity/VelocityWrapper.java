@@ -24,8 +24,8 @@ public class VelocityWrapper {
     private final VelocityContext velocityContext = new VelocityContext();
 
     @Inject
-    public VelocityWrapper(VelocityEngine velocityEngine,
-                           @Assisted String templateLocation) {
+    VelocityWrapper(VelocityEngine velocityEngine,
+                    @Assisted String templateLocation) {
         this.template = velocityEngine.getTemplate(templateLocation);
     }
 

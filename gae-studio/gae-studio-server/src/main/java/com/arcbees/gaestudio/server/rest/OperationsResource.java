@@ -22,7 +22,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import com.arcbees.gaestudio.server.GaConstants;
+import com.arcbees.gaestudio.server.GoogleAnalyticConstants;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
@@ -51,7 +51,7 @@ public class OperationsResource extends GoogleAnalyticResource {
     @GET
     public List<DbOperationRecordDto> getOperations(@QueryParam(UrlParameters.ID) Long lastId,
                                                     @QueryParam(UrlParameters.LIMIT) Integer limit) {
-        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_NEW_DB_OPERATION_RECORD);
+        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_NEW_DB_OPERATION_RECORD);
 
         Long mostRecentId = getMostRecentId();
         if (mostRecentId == null) {

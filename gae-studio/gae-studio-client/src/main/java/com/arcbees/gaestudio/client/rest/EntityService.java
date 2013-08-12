@@ -23,18 +23,12 @@ import com.arcbees.gaestudio.shared.rest.UrlParameters;
 
 public interface EntityService extends RestService {
     @GET
-    void getEntityWithParent(@QueryParam(UrlParameters.KIND) String kind,
+    void getEntity(@QueryParam(UrlParameters.KIND) String kind,
                              @QueryParam(UrlParameters.APPID) String appId,
                              @QueryParam(UrlParameters.NAMESPACE) String namespace,
                              @QueryParam(UrlParameters.PARENT_ID) String parentId,
                              @QueryParam(UrlParameters.PARENT_KIND) String parentKind,
                              MethodCallback<EntityDto> callback);
-
-    @GET
-    void getEntity(@QueryParam(UrlParameters.KIND) String kind,
-                   @QueryParam(UrlParameters.APPID) String appId,
-                   @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                   MethodCallback<EntityDto> callback);
 
     @PUT
     void updateEntity(EntityDto entityDto,

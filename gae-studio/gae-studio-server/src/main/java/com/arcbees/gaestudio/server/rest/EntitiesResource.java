@@ -24,7 +24,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import com.arcbees.gaestudio.server.GaConstants;
+import com.arcbees.gaestudio.server.GoogleAnalyticConstants;
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
@@ -66,7 +66,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
     public List<EntityDto> getEntities(@QueryParam(UrlParameters.KIND) String kind,
                                        @QueryParam(UrlParameters.OFFSET) Integer offset,
                                        @QueryParam(UrlParameters.LIMIT) Integer limit) {
-        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_ENTITIES_BY_KIND);
+        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_ENTITIES_BY_KIND);
 
         AppEngineHelper.disableApiHooks();
 
@@ -91,7 +91,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
 
     @POST
     public EntityDto createEntity(@QueryParam(UrlParameters.KIND) String kind) {
-        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_EMPTY_KIND_ENTITY);
+        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_EMPTY_KIND_ENTITY);
 
         AppEngineHelper.disableApiHooks();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -102,7 +102,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
             Entity entity = datastore.prepare(query).asList(fetchOptions).get(0);
             emptyEntity = setEmptiedProperties(emptyEntity, entity.getProperties());
         } catch (Exception e) {
-            // TODO: Be able to generate entity base schema from the pojo that haven't been save yet tot the datastore
+            // TODO: Be able to generate entity base schema from the pojo that haven't been saved yet to the datastore
             // We will need to create an implementation to support Objectify, Twig persist, etc.
             // For objectify we can use : ObjectifyService.factory().getMetadataForEntity(String kind);
             // And call method metadata.toEntity
@@ -115,7 +115,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
     public void deleteEntities(@QueryParam(UrlParameters.KIND) String kind,
                                @QueryParam(UrlParameters.NAMESPACE) String namespace,
                                @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType) {
-        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, getEvent(deleteType));
+        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, getEvent(deleteType));
 
         AppEngineHelper.disableApiHooks();
 
@@ -125,7 +125,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
     @GET
     @Path(EndPoints.COUNT)
     public Integer getCount(@QueryParam(UrlParameters.KIND) String kind) {
-        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_ENTITY_COUNT_BY_KIND);
+        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_ENTITY_COUNT_BY_KIND);
 
         AppEngineHelper.disableApiHooks();
 
@@ -165,12 +165,15 @@ public class EntitiesResource extends GoogleAnalyticResource {
 
     private Object createEmptyArbitraryObject(Map.Entry<String, Object> property) {
         try {
-            // Reset all property objects in the datastore with a no-args constructor
-            return property.getValue().getClass().newInstance();
+            return createEmptyPropertyObject(property);
         } catch (Exception e) {
-            // Otherwise set null
             return null;
         }
+    }
+
+    private Object createEmptyPropertyObject(Map.Entry<String, Object> property)
+            throws InstantiationException, IllegalAccessException {
+        return property.getValue().getClass().newInstance();
     }
 
     private void deleteEntities(DeleteEntities deleteType,
@@ -219,6 +222,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
 
     private void deleteEntities(Iterable<Entity> entities) {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
         for (Entity entity : entities) {
             datastore.delete(entity.getKey());
         }

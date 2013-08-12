@@ -85,11 +85,7 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
         };
 
         EntityService entityService = entitiesService.entityService(Long.valueOf(id));
-        if (parentKind != null && parentId != null) {
-            entityService.getEntityWithParent(kind, appId, namespace, parentId, parentKind, methodCallback);
-        } else {
-            entityService.getEntity(kind, appId, namespace, methodCallback);
-        }
+        entityService.getEntity(kind, appId, namespace, parentId, parentKind, methodCallback);
     }
 
     private void displayEntityDto(EntityDto entityDto) {

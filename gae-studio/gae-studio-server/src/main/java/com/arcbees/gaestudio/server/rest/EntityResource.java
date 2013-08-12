@@ -18,7 +18,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
-import com.arcbees.gaestudio.server.GaConstants;
+import com.arcbees.gaestudio.server.GoogleAnalyticConstants;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
@@ -63,7 +63,7 @@ public class EntityResource extends GoogleAnalyticResource {
                                @QueryParam(UrlParameters.PARENT_ID) Long parentId,
                                @QueryParam(UrlParameters.PARENT_KIND) String parentKind)
             throws EntityNotFoundException {
-        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, GET_ENTITY_DTO);
+        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_ENTITY_DTO);
 
         ParentKeyDto parentKeyDto = null;
         if (parentId != null && !Strings.isNullOrEmpty(parentKind)) {
@@ -79,7 +79,7 @@ public class EntityResource extends GoogleAnalyticResource {
 
     @PUT
     public EntityDto updateEntity(EntityDto entityDto) {
-        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, UPDATE_ENTITY);
+        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, UPDATE_ENTITY);
 
         AppEngineHelper.disableApiHooks();
         Entity dbEntity;
@@ -97,7 +97,7 @@ public class EntityResource extends GoogleAnalyticResource {
 
     @DELETE
     public Response deleteEntity(KeyDto keyDto) {
-        googleAnalytic.trackEvent(GaConstants.CAT_SERVER_CALL, DELETE_ENTITY);
+        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, DELETE_ENTITY);
 
         AppEngineHelper.disableApiHooks();
 
