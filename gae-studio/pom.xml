@@ -40,7 +40,7 @@
         <guava.version>14.0.1</guava.version>
         <gson.version>2.2.2</gson.version>
         <guice.version>3.0</guice.version>
-        <objectify.version>4.0b3</objectify.version>
+        <objectify.version>4.0rc1</objectify.version>
         <persistence-api.version>1.0.2</persistence-api.version>
         <google-http-client-appengine.version>1.15.0-rc</google-http-client-appengine.version>
 
@@ -61,6 +61,8 @@
         <gae.home>
             ${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}
         </gae.home>
+
+        <repackage>gaestudio</repackage>
     </properties>
 
     <build>
