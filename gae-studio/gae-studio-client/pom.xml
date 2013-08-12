@@ -100,17 +100,5 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
-
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>gwt-maven-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <gen>gen</gen>
-                    <module>com.arcbees.gaestudio.GaeStudio</module>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
 </project>

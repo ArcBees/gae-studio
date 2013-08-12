@@ -7,7 +7,6 @@
     <inherits name='com.google.gwt.user.theme.standard.Standard'/>
 
     <!-- Other module inherits -->
-    <inherits name='com.gwtplatform.dispatch.Dispatch'/>
     <inherits name="com.google.gwt.json.JSON"/>
     <inherits name="com.google.gwt.query.Query"/>
 
