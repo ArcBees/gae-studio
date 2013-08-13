@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.guice;
 
+import com.arcbees.gaestudio.server.analytic.AnalyticModule;
 import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
 import com.arcbees.gaestudio.server.rest.RestModule;
 import com.arcbees.gaestudio.server.velocity.VelocityModule;
@@ -28,6 +29,7 @@ public class GaeServletModule extends ServletModule {
         install(new GaeStudioRecorderModule());
         install(new VelocityModule());
         install(new RestModule());
+        install(new AnalyticModule());
 
         bindConstant().annotatedWith(BaseRestPath.class).to(restPath);
 

@@ -18,14 +18,13 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
-import com.arcbees.gaestudio.server.GoogleAnalyticConstants;
+import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
-import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -38,11 +37,7 @@ import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.inject.assistedinject.Assisted;
 
-public class EntityResource extends GoogleAnalyticResource {
-    private static final String GET_ENTITY_DTO = "Get Entity Dto";
-    private static final String UPDATE_ENTITY = "Update Entity";
-    private static final String DELETE_ENTITY = "Delete Entity";
-
+public class EntityResource {
     private final DatastoreHelper datastoreHelper;
     private final Logger logger;
     private final Long entityId;
@@ -63,9 +58,9 @@ public class EntityResource extends GoogleAnalyticResource {
                                @QueryParam(UrlParameters.PARENT_ID) String parentId,
                                @QueryParam(UrlParameters.PARENT_KIND) String parentKind)
             throws EntityNotFoundException {
-        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_ENTITY_DTO);
-
+        AppEngineHelper.disableApiHooks();
         ParentKeyDto parentKeyDto = null;
+
         if (!Strings.isNullOrEmpty(parentId) && !Strings.isNullOrEmpty(parentKind)) {
             parentKeyDto = new ParentKeyDto(parentKind, Long.valueOf(parentId));
         }
@@ -79,8 +74,6 @@ public class EntityResource extends GoogleAnalyticResource {
 
     @PUT
     public EntityDto updateEntity(EntityDto entityDto) {
-        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, UPDATE_ENTITY);
-
         AppEngineHelper.disableApiHooks();
         Entity dbEntity;
 
@@ -97,8 +90,6 @@ public class EntityResource extends GoogleAnalyticResource {
 
     @DELETE
     public Response deleteEntity(KeyDto keyDto) {
-        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, DELETE_ENTITY);
-
         AppEngineHelper.disableApiHooks();
 
         AppIdNamespaceDto namespaceDto = keyDto.getAppIdNamespace();

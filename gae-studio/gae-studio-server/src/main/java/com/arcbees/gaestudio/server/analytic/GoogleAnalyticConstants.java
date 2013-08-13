@@ -7,13 +7,12 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
+package com.arcbees.gaestudio.server.analytic;
 
-import javax.inject.Inject;
+public class GoogleAnalyticConstants {
+    public static final String CAT_INITIALIZATION = "Initialization";
 
-import com.arcbees.googleanalytic.GoogleAnalytic;
+    public static final String CAT_SERVER_CALL = "Server Call";
 
-public class GoogleAnalyticResource {
-    @Inject
-    protected GoogleAnalytic googleAnalytic;
+    public static final String APPLICATION_LOADED = "Application Loaded";
 }
