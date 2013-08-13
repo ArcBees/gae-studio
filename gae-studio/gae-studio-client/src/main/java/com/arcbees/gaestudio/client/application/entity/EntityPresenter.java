@@ -70,8 +70,8 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     private void displayEntityFromPlaceRequest(PlaceRequest request) {
         String kind = request.getParameter(KIND, null);
         String id = request.getParameter(ID, "-1");
-        String parentKind = request.getParameter(PARENT_KIND, null);
-        String parentId = request.getParameter(PARENT_ID, null);
+        String parentKind = request.getParameter(PARENT_KIND, "");
+        String parentId = request.getParameter(PARENT_ID, "");
         String namespace = request.getParameter(NAMESPACE, null);
         String appId = request.getParameter(APP_ID, null);
 

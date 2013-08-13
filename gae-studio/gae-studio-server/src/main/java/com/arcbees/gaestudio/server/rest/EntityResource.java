@@ -60,14 +60,14 @@ public class EntityResource extends GoogleAnalyticResource {
     public EntityDto getEntity(@QueryParam(UrlParameters.NAMESPACE) String namespace,
                                @QueryParam(UrlParameters.APPID) String appId,
                                @QueryParam(UrlParameters.KIND) String kind,
-                               @QueryParam(UrlParameters.PARENT_ID) Long parentId,
+                               @QueryParam(UrlParameters.PARENT_ID) String parentId,
                                @QueryParam(UrlParameters.PARENT_KIND) String parentKind)
             throws EntityNotFoundException {
         googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_ENTITY_DTO);
 
         ParentKeyDto parentKeyDto = null;
-        if (parentId != null && !Strings.isNullOrEmpty(parentKind)) {
-            parentKeyDto = new ParentKeyDto(parentKind, parentId);
+        if (!Strings.isNullOrEmpty(parentId) && !Strings.isNullOrEmpty(parentKind)) {
+            parentKeyDto = new ParentKeyDto(parentKind, Long.valueOf(parentId));
         }
 
         KeyDto keyDto = new KeyDto(kind, entityId, parentKeyDto, new AppIdNamespaceDto(appId, namespace));
