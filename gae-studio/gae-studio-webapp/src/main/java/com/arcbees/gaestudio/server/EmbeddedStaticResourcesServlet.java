@@ -14,26 +14,15 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.arcbees.gaestudio.server.guice.GaeStudioModule;
-import com.arcbees.gaestudio.shared.BaseRestPath;
-
 @Singleton
 public class EmbeddedStaticResourcesServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(EmbeddedStaticResourcesServlet.class.getSimpleName());
-
-    private final String restPath;
-
-    @Inject
-    EmbeddedStaticResourcesServlet(@BaseRestPath String restPath) {
-        this.restPath = restPath;
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -82,7 +71,7 @@ public class EmbeddedStaticResourcesServlet extends HttpServlet {
     }
 
     public String getBaseJarPath() {
-        Class<GaeStudioModule> clazz = GaeStudioModule.class;
+        Class<EmbeddedStaticResourcesServlet> clazz = EmbeddedStaticResourcesServlet.class;
         String classJarPath = clazz.getResource(clazz.getSimpleName() + ".class").toString();
 
         return classJarPath.substring(0, classJarPath.lastIndexOf("!") + 1) + "/";

@@ -15,10 +15,23 @@ import com.arcbees.gaestudio.server.rest.RestModule;
 import com.arcbees.gaestudio.server.velocity.VelocityModule;
 import com.arcbees.gaestudio.shared.BaseRestPath;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.google.common.base.Strings;
 import com.google.inject.servlet.ServletModule;
 
 public class GaeServletModule extends ServletModule {
+    private static final String RESTEASY_SERVLET_MAPPING_PREFIX = "resteasy.servlet.mapping.prefix";
+
     private final String restPath;
+
+    GaeServletModule() {
+        String restEasyPrefix = getServletContext().getInitParameter(RESTEASY_SERVLET_MAPPING_PREFIX);
+
+        if (Strings.isNullOrEmpty(restEasyPrefix) || "/*".equals(restEasyPrefix)) {
+            restPath = "";
+        } else {
+            restPath = (restEasyPrefix + "/").replace("//", "/");
+        }
+    }
 
     GaeServletModule(String restPath) {
         this.restPath = restPath.replace("//", "/");

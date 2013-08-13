@@ -12,26 +12,16 @@ package com.arcbees.gaestudio.server.guice;
 import com.arcbees.gaestudio.server.EmbeddedStaticResourcesServlet;
 import com.google.inject.servlet.ServletModule;
 
-public class GaeStudioModule extends ServletModule {
+class GaeStudioModule extends ServletModule {
     private static final String EMBEDDED_PATH = "gae-studio-admin";
     private static final String GAE_STUDIO_HTML = "/gae-studio.*";
 
-    private final String restPath;
-
-    public GaeStudioModule() {
-        this.restPath = null;
-    }
-
-    public GaeStudioModule(String restPath) {
-        this.restPath = restPath;
-    }
-
     @Override
     protected void configureServlets() {
-        serve("/" + EMBEDDED_PATH + "/").with(RootServlet.class);
-        serve("/" + EMBEDDED_PATH + GAE_STUDIO_HTML).with(RootServlet.class);
-        serve("/" + EMBEDDED_PATH + "/*").with(EmbeddedStaticResourcesServlet.class);
+        serve("/" + EMBEDDED_PATH + "/", "/" + EMBEDDED_PATH + GAE_STUDIO_HTML).with(RootServlet.class);
 
-        install(new GaeServletModule(restPath));
+        install(new GaeServletModule());
+
+        serveRegex("/" + EMBEDDED_PATH + "/.*(?!rest).*").with(EmbeddedStaticResourcesServlet.class);
     }
 }
