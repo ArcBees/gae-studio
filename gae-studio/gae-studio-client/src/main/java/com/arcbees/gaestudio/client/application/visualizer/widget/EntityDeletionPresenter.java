@@ -18,16 +18,13 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEv
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesAction;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesResult;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesType;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntityAction;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntityResult;
+import com.arcbees.gaestudio.client.rest.EntitiesService;
+import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -38,10 +35,12 @@ import static com.arcbees.gaestudio.client.application.visualizer.widget.EntityD
 
 public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPresenter.MyView>
         implements DeleteEntityEvent.DeleteEntityHandler, EntityDeletionUiHandlers, DeleteEntitiesHandler {
+    private final EntitiesService entitiesService;
+
     interface MyView extends View, HasUiHandlers<EntityDeletionUiHandlers> {
         void displayEntityDeletion(ParsedEntity parsedEntity);
 
-        void displayEntitiesDeletion(DeleteEntitiesType deleteType, String kind, String namespace);
+        void displayEntitiesDeletion(DeleteEntities deleteType, String kind, String namespace);
 
         void hide();
     }
@@ -51,23 +50,22 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
         BATCH
     }
 
-    private final DispatchAsync dispatcher;
     private final AppConstants myConstants;
 
     private DeleteType lastEvent;
     private ParsedEntity currentParsedEntity;
-    private DeleteEntitiesAction deleteEntitiesAction;
+    private DeleteEntitiesEvent deleteEntitiesEvent;
 
     @Inject
     EntityDeletionPresenter(EventBus eventBus,
                             MyView view,
-                            DispatchAsync dispatcher,
+                            EntitiesService entitiesService,
                             AppConstants myConstants) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);
 
-        this.dispatcher = dispatcher;
+        this.entitiesService = entitiesService;
         this.myConstants = myConstants;
     }
 
@@ -80,10 +78,10 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
 
     @Override
     public void onDeleteEntities(DeleteEntitiesEvent event) {
-        deleteEntitiesAction = event.getDeleteEntitiesAction();
+        deleteEntitiesEvent = event;
 
-        getView().displayEntitiesDeletion(deleteEntitiesAction.getDeleteEntitiesType(),
-                deleteEntitiesAction.getKind(), deleteEntitiesAction.getNamespace());
+        getView().displayEntitiesDeletion(deleteEntitiesEvent.getDeleteEntities(),
+                deleteEntitiesEvent.getKind(), deleteEntitiesEvent.getNamespace());
 
         lastEvent = BATCH;
     }
@@ -113,33 +111,39 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
     }
 
     private void deleteEntities() {
-        dispatcher.execute(deleteEntitiesAction, new AsyncCallback<DeleteEntitiesResult>() {
-            @Override
-            public void onSuccess(DeleteEntitiesResult result) {
-                onEntitiesDeletedSuccess();
-            }
+        entitiesService.deleteAll(deleteEntitiesEvent.getKind(),
+                deleteEntitiesEvent.getNamespace(),
+                deleteEntitiesEvent.getDeleteEntities(),
+                new MethodCallbackImpl<Void>() {
+                    @Override
+                    public void onSuccess(Void result) {
+                        onEntitiesDeletedSuccess();
+                    }
 
-            @Override
-            public void onFailure(Throwable caught) {
-                showMessage(myConstants.errorEntityDelete(), MessageStyle.ERROR);
-            }
-        });
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        showMessage(myConstants.errorEntityDelete(), MessageStyle.ERROR);
+                    }
+                });
     }
 
     private void deleteSingleEntity() {
         if (currentParsedEntity != null) {
-            final EntityDto entityDTO = currentParsedEntity.getEntityDTO();
-            dispatcher.execute(new DeleteEntityAction(entityDTO), new AsyncCallback<DeleteEntityResult>() {
-                @Override
-                public void onSuccess(DeleteEntityResult result) {
-                    onEntityDeletedSuccess(entityDTO);
-                }
+            final EntityDto entityDto = currentParsedEntity.getEntityDto();
+            KeyDto key = entityDto.getKey();
 
-                @Override
-                public void onFailure(Throwable caught) {
-                    showMessage(myConstants.errorEntityDelete(), MessageStyle.ERROR);
-                }
-            });
+            entitiesService.entityService(key.getId())
+                    .deleteEntity(key, new MethodCallbackImpl<Void>() {
+                        @Override
+                        public void onSuccess(Void result) {
+                            onEntityDeletedSuccess(entityDto);
+                        }
+
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            showMessage(myConstants.errorEntityDelete(), MessageStyle.ERROR);
+                        }
+                    });
         }
     }
 

@@ -15,7 +15,7 @@ import java.util.TreeMap;
 import com.arcbees.gaestudio.client.application.profiler.DbOperationRecordProcessor;
 import com.arcbees.gaestudio.client.application.profiler.event.FilterValueSelectedEvent;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
-import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
+import com.arcbees.gaestudio.shared.dto.stacktrace.StackTraceElementDto;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;

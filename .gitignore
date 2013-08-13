@@ -11,3 +11,4 @@ bin
 META-INF
 .checkstyle
 out
+gen

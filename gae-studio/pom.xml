@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.arcbees.gaestudio</groupId>
@@ -33,6 +34,8 @@
         <gwtquery.version>1.3.3</gwtquery.version>
         <gin.version>2.0.0</gin.version>
         <gquery-plugins.version>1.0</gquery-plugins.version>
+        <restygwt.version>1.3.1</restygwt.version>
+        <arcbees.version>1.1</arcbees.version>
 
         <!-- server -->
         <gae.version>1.8.1</gae.version>
@@ -43,6 +46,8 @@
         <objectify.version>4.0rc1</objectify.version>
         <persistence-api.version>1.0.2</persistence-api.version>
         <google-http-client-appengine.version>1.15.0-rc</google-http-client-appengine.version>
+        <resteasy.version>3.0.2.Final</resteasy.version>
+        <velocity.version>1.7</velocity.version>
 
         <!-- test -->
         <junit.version>4.11</junit.version>
@@ -78,4 +83,18 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <repositories>
+        <repository>
+            <id>fusesource-snapshots</id>
+            <name>Fusesource Snapshots</name>
+            <url>http://repo.fusesource.com/nexus/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
 </project>

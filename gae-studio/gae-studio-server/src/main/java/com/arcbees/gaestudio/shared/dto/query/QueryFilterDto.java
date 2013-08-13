@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.shared.dto.query;
 
+import com.arcbees.gaestudio.shared.QueryFilterOperator;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class QueryFilterDto implements IsSerializable {

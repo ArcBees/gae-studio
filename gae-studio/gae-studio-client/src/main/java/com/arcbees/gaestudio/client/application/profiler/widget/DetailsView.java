@@ -12,7 +12,7 @@ package com.arcbees.gaestudio.client.application.profiler.widget;
 import com.arcbees.gaestudio.client.formatters.RecordFormatter;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
-import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
+import com.arcbees.gaestudio.shared.dto.stacktrace.StackTraceElementDto;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTML;

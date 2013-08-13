@@ -9,20 +9,24 @@
 
 package com.arcbees.gaestudio.server.guice;
 
-import com.arcbees.gaestudio.server.dispatch.GaeStudioDispatchModule;
-import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
-import com.arcbees.gaestudio.shared.dispatch.util.GaeStudioActionImpl;
 import com.google.inject.servlet.ServletModule;
-import com.gwtplatform.dispatch.server.guice.DispatchServiceImpl;
-import com.gwtplatform.dispatch.shared.ActionImpl;
 
 public class DebugGaeStudioDispatchServletModule extends ServletModule {
+    private static final String GAE_STUDIO_HTML = "/gae-studio.*";
+    private final String restPath;
+
+    public DebugGaeStudioDispatchServletModule() {
+        restPath = null;
+    }
+
+    public DebugGaeStudioDispatchServletModule(String restPath) {
+        this.restPath = restPath;
+    }
+
     @Override
     public void configureServlets() {
-        serve("/" + GaeStudioActionImpl.GAE_STUDIO + ActionImpl.DEFAULT_SERVICE_NAME + "*").with(
-                DispatchServiceImpl.class);
+        install(new GaeServletModule(restPath));
 
-        install(new GaeStudioRecorderModule());
-        install(new GaeStudioDispatchModule());
+        serve(GAE_STUDIO_HTML).with(RootServlet.class);
     }
 }

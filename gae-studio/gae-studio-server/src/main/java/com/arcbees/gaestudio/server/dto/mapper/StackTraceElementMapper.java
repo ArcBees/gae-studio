@@ -9,7 +9,7 @@
 
 package com.arcbees.gaestudio.server.dto.mapper;
 
-import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
+import com.arcbees.gaestudio.shared.dto.stacktrace.StackTraceElementDto;
 
 public class StackTraceElementMapper {
     @SuppressWarnings("unused")

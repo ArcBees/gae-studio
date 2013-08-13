@@ -11,13 +11,13 @@ package com.arcbees.gaestudio.client.formatters;
 
 import java.util.HashMap;
 
-import com.arcbees.gaestudio.shared.dto.DeleteRecordDTO;
+import com.arcbees.gaestudio.shared.dto.DeleteRecordDto;
 import com.arcbees.gaestudio.shared.dto.GetRecordDto;
 import com.arcbees.gaestudio.shared.dto.PutRecordDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryFilterDto;
-import com.arcbees.gaestudio.shared.dto.query.QueryFilterOperator;
-import com.arcbees.gaestudio.shared.dto.query.QueryOrderDirection;
+import com.arcbees.gaestudio.shared.QueryFilterOperator;
+import com.arcbees.gaestudio.shared.QueryOrderDirection;
 import com.arcbees.gaestudio.shared.dto.query.QueryOrderDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 
@@ -34,7 +34,7 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
     }
 
     @Override
-    public String formatRecord(DeleteRecordDTO record) {
+    public String formatRecord(DeleteRecordDto record) {
         return "Delete record formatting not implemented yet";
     }
 

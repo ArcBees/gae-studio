@@ -9,49 +9,41 @@
 
 package com.arcbees.gaestudio.shared.dto.entity;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
 
-public class KeyDto implements IsSerializable {
-    private String kind;
-    private Long id;
-    private ParentKeyDto parentKeyDto;
-    private AppIdNamespaceDto appIdNamespaceDto;
+public class KeyDto extends ParentKeyDto {
+    private ParentKeyDto parentKey;
+    private AppIdNamespaceDto appIdNamespace;
 
     @SuppressWarnings("unused")
     protected KeyDto() {
     }
 
-    public KeyDto(String kind,
-                  Long id,
-                  ParentKeyDto parentKeyDto,
-                  AppIdNamespaceDto appIdNamespaceDto) {
-        this.kind = kind;
-        this.id = id;
-        this.parentKeyDto = parentKeyDto;
-        this.appIdNamespaceDto = appIdNamespaceDto;
-    }
+    @JsonCreator
+    public KeyDto(@JsonProperty("kind") String kind,
+                  @JsonProperty("id") Long id,
+                  @JsonProperty("parentKey") ParentKeyDto parentKey,
+                  @JsonProperty("appIdNamespace") AppIdNamespaceDto appIdNamespace) {
+        super(kind, id);
 
-    public String getKind() {
-        return kind;
-    }
-
-    public Long getId() {
-        return id;
+        this.parentKey = parentKey;
+        this.appIdNamespace = appIdNamespace;
     }
 
     public ParentKeyDto getParentKey() {
-        return parentKeyDto;
+        return parentKey;
     }
 
     public void setParentKey(ParentKeyDto parentKeyDto) {
-        this.parentKeyDto = parentKeyDto;
+        this.parentKey = parentKeyDto;
     }
 
-    public AppIdNamespaceDto getAppIdNamespaceDto() {
-        return appIdNamespaceDto;
+    public AppIdNamespaceDto getAppIdNamespace() {
+        return appIdNamespace;
     }
 
-    public void setAppIdNamespaceDto(AppIdNamespaceDto appIdNamespaceDto) {
-        this.appIdNamespaceDto = appIdNamespaceDto;
+    public void setAppIdNamespace(AppIdNamespaceDto appIdNamespace) {
+        this.appIdNamespace = appIdNamespace;
     }
 }

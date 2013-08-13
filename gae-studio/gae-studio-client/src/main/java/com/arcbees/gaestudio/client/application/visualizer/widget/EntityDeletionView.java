@@ -11,7 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppMessages;
-import com.arcbees.gaestudio.shared.dispatch.DeleteEntitiesType;
+import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.google.common.base.Strings;
 import com.google.gwt.dom.client.HeadingElement;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -58,7 +58,7 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
     }
 
     @Override
-    public void displayEntitiesDeletion(DeleteEntitiesType deleteType, String kind, String namespace) {
+    public void displayEntitiesDeletion(DeleteEntities deleteType, String kind, String namespace) {
         SafeHtml message = null;
         switch (deleteType) {
             case KIND:

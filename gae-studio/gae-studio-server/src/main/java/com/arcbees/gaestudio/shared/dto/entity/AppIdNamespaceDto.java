@@ -9,6 +9,9 @@
 
 package com.arcbees.gaestudio.shared.dto.entity;
 
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class AppIdNamespaceDto implements IsSerializable {
@@ -19,7 +22,8 @@ public class AppIdNamespaceDto implements IsSerializable {
     protected AppIdNamespaceDto() {
     }
 
-    public AppIdNamespaceDto(String appId, String namespace) {
+    @JsonCreator
+    public AppIdNamespaceDto(@JsonProperty("appId") String appId, @JsonProperty("namespace") String namespace) {
         this.appId = appId;
         this.namespace = namespace;
     }

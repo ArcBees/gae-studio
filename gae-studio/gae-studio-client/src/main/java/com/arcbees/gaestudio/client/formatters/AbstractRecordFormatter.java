@@ -10,7 +10,7 @@
 package com.arcbees.gaestudio.client.formatters;
 
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
-import com.arcbees.gaestudio.shared.dto.DeleteRecordDTO;
+import com.arcbees.gaestudio.shared.dto.DeleteRecordDto;
 import com.arcbees.gaestudio.shared.dto.GetRecordDto;
 import com.arcbees.gaestudio.shared.dto.PutRecordDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
@@ -18,8 +18,8 @@ import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 public abstract class AbstractRecordFormatter implements RecordFormatter {
     @Override
     public String formatRecord(DbOperationRecordDto record) {
-        if (record instanceof DeleteRecordDTO) {
-            return formatRecord((DeleteRecordDTO) record);
+        if (record instanceof DeleteRecordDto) {
+            return formatRecord((DeleteRecordDto) record);
         } else if (record instanceof GetRecordDto) {
             return formatRecord((GetRecordDto) record);
         } else if (record instanceof PutRecordDto) {

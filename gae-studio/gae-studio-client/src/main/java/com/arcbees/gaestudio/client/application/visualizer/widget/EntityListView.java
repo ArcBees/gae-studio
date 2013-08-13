@@ -186,7 +186,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             if (parsedEntity.getKey().getId().equals(entityDTO.getKey().getId())) {
                 isReplace = true;
                 rowIndex = i;
-                parsedEntity.setEntityDTO(entityDTO);
+                parsedEntity.setEntityDto(entityDTO);
             }
 
             i++;
@@ -244,7 +244,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             @Override
             public String getValue(ParsedEntity entityJsonParsed) {
                 KeyDto keyDto = entityJsonParsed.getKey();
-                AppIdNamespaceDto appIdNamespaceDto = keyDto.getAppIdNamespaceDto();
+                AppIdNamespaceDto appIdNamespaceDto = keyDto.getAppIdNamespace();
                 String namespace = appIdNamespaceDto.getNamespace();
                 if (namespace == null) {
                     namespace = isNull;
@@ -347,7 +347,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         KeyDto parseEntityKey = parsedEntity.getKey();
         $("." + idStyleName).text("ID " + parseEntityKey.getId());
-        $("." + namespaceStyleName).text(parseEntityKey.getAppIdNamespaceDto().getNamespace());
+        $("." + namespaceStyleName).text(parseEntityKey.getAppIdNamespace().getNamespace());
 
         if ($("." + namespaceStyleName).text().equals(isUndefined)) {
             $("." + namespaceSpanStyleName).hide();

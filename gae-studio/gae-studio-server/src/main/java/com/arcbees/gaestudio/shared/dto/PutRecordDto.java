@@ -9,7 +9,7 @@
 
 package com.arcbees.gaestudio.shared.dto;
 
-import com.arcbees.gaestudio.shared.stacktrace.StackTraceElementDto;
+import com.arcbees.gaestudio.shared.dto.stacktrace.StackTraceElementDto;
 
 // TODO : Complete
 public class PutRecordDto extends DbOperationRecordDto {

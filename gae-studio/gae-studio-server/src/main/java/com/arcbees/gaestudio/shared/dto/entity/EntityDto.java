@@ -9,18 +9,22 @@
 
 package com.arcbees.gaestudio.shared.dto.entity;
 
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class EntityDto implements IsSerializable {
     private KeyDto key;
-
     private String json;
 
     @SuppressWarnings("unused")
     protected EntityDto() {
     }
 
-    public EntityDto(KeyDto key, String json) {
+    @JsonCreator
+    public EntityDto(@JsonProperty("key") KeyDto key,
+                     @JsonProperty("json") String json) {
         this.key = key;
         this.json = json;
     }

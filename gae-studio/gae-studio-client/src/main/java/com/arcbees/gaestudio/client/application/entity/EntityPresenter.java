@@ -11,18 +11,16 @@ package com.arcbees.gaestudio.client.application.entity;
 
 import javax.inject.Inject;
 
+import org.fusesource.restygwt.client.MethodCallback;
+
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
-import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoAction;
-import com.arcbees.gaestudio.shared.dispatch.GetEntityDtoResult;
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.client.rest.EntitiesService;
+import com.arcbees.gaestudio.client.rest.EntityService;
+import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -30,12 +28,12 @@ import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
+import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
 
 public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPresenter.MyProxy> {
     interface MyView extends View {
@@ -47,18 +45,18 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     interface MyProxy extends ProxyPlace<EntityPresenter> {
     }
 
-    private final DispatchAsync dispatchAsync;
+    private final EntitiesService entitiesService;
     private final AppConstants appConstants;
 
     @Inject
     EntityPresenter(EventBus eventBus,
                     MyView view,
                     MyProxy proxy,
-                    DispatchAsync dispatchAsync,
+                    EntitiesService entitiesService,
                     AppConstants appConstants) {
         super(eventBus, view, proxy, VisualizerPresenter.SLOT_ENTITY_DETAILS);
 
-        this.dispatchAsync = dispatchAsync;
+        this.entitiesService = entitiesService;
         this.appConstants = appConstants;
     }
 
@@ -71,34 +69,23 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
 
     private void displayEntityFromPlaceRequest(PlaceRequest request) {
         String kind = request.getParameter(KIND, null);
-        String id = request.getParameter(ID, null);
+        String id = request.getParameter(ID, "-1");
         String parentKind = request.getParameter(PARENT_KIND, null);
         String parentId = request.getParameter(PARENT_ID, null);
         String namespace = request.getParameter(NAMESPACE, null);
         String appId = request.getParameter(APP_ID, null);
 
-        ParentKeyDto parentKeyDto;
-        if (parentKind != null && parentId != null) {
-            parentKeyDto = new ParentKeyDto(parentKind, Long.valueOf(parentId));
-        } else {
-            parentKeyDto = null;
-        }
-
-        AppIdNamespaceDto appIdNamespaceDto = new AppIdNamespaceDto(appId, namespace);
-
-        KeyDto keyDto = new KeyDto(kind, Long.valueOf(id), parentKeyDto, appIdNamespaceDto);
-
-        GetEntityDtoAction getEntityDtoAction = new GetEntityDtoAction();
-        getEntityDtoAction.setKeyDto(keyDto);
-
         String failureMessage = appConstants.failedGettingEntity();
 
-        dispatchAsync.execute(getEntityDtoAction, new AsyncCallbackImpl<GetEntityDtoResult>(failureMessage) {
+        MethodCallback<EntityDto> methodCallback = new MethodCallbackImpl<EntityDto>(failureMessage) {
             @Override
-            public void onSuccess(GetEntityDtoResult result) {
-                displayEntityDto(result.getEntityDto());
+            public void onSuccess(EntityDto result) {
+                displayEntityDto(result);
             }
-        });
+        };
+
+        EntityService entityService = entitiesService.entityService(Long.valueOf(id));
+        entityService.getEntity(kind, appId, namespace, parentId, parentKind, methodCallback);
     }
 
     private void displayEntityDto(EntityDto entityDto) {
