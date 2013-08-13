@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.util;
 
+import com.arcbees.gaestudio.server.GaeStudioConstants;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
@@ -111,9 +112,11 @@ public class DatastoreHelper {
         return entities;
     }
 
-    private Iterable<Entity> getAllNamespaces() {
+    public Iterable<Entity> getAllNamespaces() {
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
         Query namespacesQuery = new Query(Entities.NAMESPACE_METADATA_KIND);
+        namespacesQuery.setFilter(new Query.FilterPredicate(Entity.KEY_RESERVED_PROPERTY,
+                Query.FilterOperator.NOT_EQUAL, Entities.createNamespaceKey(GaeStudioConstants.GAE_NAMESPACE)));
 
         return datastoreService.prepare(namespacesQuery).asIterable();
     }

@@ -22,14 +22,15 @@ import javax.ws.rs.core.MediaType;
 
 import com.arcbees.gaestudio.server.GoogleAnalyticConstants;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
-import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
+import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.appengine.api.datastore.Entities;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Query;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Lists;
 
 @GaeStudioResource
 @Path(EndPoints.KINDS)
@@ -52,6 +53,7 @@ public class KindsResource extends GoogleAnalyticResource {
         AppEngineHelper.disableApiHooks();
 
         Query query = new Query(Entities.KIND_METADATA_KIND);
+
         Iterable<Entity> entityIterable = datastoreHelper.queryOnAllNamespaces(query);
 
         return getKinds(entityIterable);
@@ -73,6 +75,6 @@ public class KindsResource extends GoogleAnalyticResource {
             }
         }).toSet();
 
-        return com.google.common.collect.Lists.newArrayList(kinds);
+        return Lists.newArrayList(kinds);
     }
 }
