@@ -15,7 +15,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 
-import com.arcbees.gaestudio.server.util.GoogleAnalyticClientIdProvider;
 import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
