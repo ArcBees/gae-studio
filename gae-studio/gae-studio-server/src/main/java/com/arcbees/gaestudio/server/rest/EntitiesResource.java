@@ -82,13 +82,7 @@ public class EntitiesResource {
     }
 
     @POST
-<<<<<<< HEAD
     public EntityDto createEmptyEntity(@QueryParam(UrlParameters.KIND) String kind) {
-        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_EMPTY_KIND_ENTITY);
-
-=======
-    public EntityDto createEntity(@QueryParam(UrlParameters.KIND) String kind) {
->>>>>>> bf07437ac1f47e43a14de5ddca0252d4287f9ac0
         AppEngineHelper.disableApiHooks();
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
