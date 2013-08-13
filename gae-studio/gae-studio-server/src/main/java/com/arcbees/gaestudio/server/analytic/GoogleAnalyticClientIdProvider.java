@@ -1,4 +1,4 @@
-package com.arcbees.gaestudio.server.util;
+package com.arcbees.gaestudio.server.analytic;
 
 import java.util.UUID;
 

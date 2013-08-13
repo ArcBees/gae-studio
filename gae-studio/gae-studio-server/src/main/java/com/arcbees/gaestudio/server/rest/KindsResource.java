@@ -20,7 +20,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.arcbees.gaestudio.server.GoogleAnalyticConstants;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
@@ -36,9 +35,7 @@ import com.google.common.collect.Lists;
 @Path(EndPoints.KINDS)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class KindsResource extends GoogleAnalyticResource {
-    private static final String GET_ENTITY_KINDS = "Get Entity Kinds";
-
+public class KindsResource {
     private final DatastoreHelper datastoreHelper;
 
     @Inject
@@ -48,8 +45,6 @@ public class KindsResource extends GoogleAnalyticResource {
 
     @GET
     public List<String> getKinds() {
-        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_ENTITY_KINDS);
-
         AppEngineHelper.disableApiHooks();
 
         Query query = new Query(Entities.KIND_METADATA_KIND);

@@ -24,7 +24,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import com.arcbees.gaestudio.server.GoogleAnalyticConstants;
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
@@ -46,12 +45,7 @@ import com.google.appengine.api.datastore.Query;
 @Path(EndPoints.ENTITIES)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class EntitiesResource extends GoogleAnalyticResource {
-    private static final String GET_ENTITIES_BY_KIND = "Get Entities By Kind";
-    private static final String GET_ENTITY_COUNT_BY_KIND = "Get Entity Count By Kind";
-    private static final String GET_EMPTY_KIND_ENTITY = "Get Empty Kind Entity";
-    private static final String DELETE_ENTITIES = "Delete Entities by ";
-
+public class EntitiesResource {
     private final DatastoreHelper datastoreHelper;
     private final SubresourceFactory subresourceFactory;
 
@@ -66,8 +60,6 @@ public class EntitiesResource extends GoogleAnalyticResource {
     public List<EntityDto> getEntities(@QueryParam(UrlParameters.KIND) String kind,
                                        @QueryParam(UrlParameters.OFFSET) Integer offset,
                                        @QueryParam(UrlParameters.LIMIT) Integer limit) {
-        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_ENTITIES_BY_KIND);
-
         AppEngineHelper.disableApiHooks();
 
         FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
@@ -91,11 +83,11 @@ public class EntitiesResource extends GoogleAnalyticResource {
 
     @POST
     public EntityDto createEntity(@QueryParam(UrlParameters.KIND) String kind) {
-        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_EMPTY_KIND_ENTITY);
-
         AppEngineHelper.disableApiHooks();
+
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Entity emptyEntity = new Entity(kind);
+
         try {
             Query query = new Query(kind);
             FetchOptions fetchOptions = FetchOptions.Builder.withOffset(0).limit(1);
@@ -115,8 +107,6 @@ public class EntitiesResource extends GoogleAnalyticResource {
     public void deleteEntities(@QueryParam(UrlParameters.KIND) String kind,
                                @QueryParam(UrlParameters.NAMESPACE) String namespace,
                                @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType) {
-        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, getEvent(deleteType));
-
         AppEngineHelper.disableApiHooks();
 
         deleteEntities(deleteType, kind, namespace);
@@ -125,8 +115,6 @@ public class EntitiesResource extends GoogleAnalyticResource {
     @GET
     @Path(EndPoints.COUNT)
     public Integer getCount(@QueryParam(UrlParameters.KIND) String kind) {
-        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_ENTITY_COUNT_BY_KIND);
-
         AppEngineHelper.disableApiHooks();
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -247,9 +235,5 @@ public class EntitiesResource extends GoogleAnalyticResource {
 
     private Iterable<Entity> getAllEntitiesOfAllNamespaces() {
         return datastoreHelper.queryOnAllNamespaces(new Query().setKeysOnly());
-    }
-
-    private String getEvent(DeleteEntities deleteEntities) {
-        return DELETE_ENTITIES + deleteEntities.name();
     }
 }

@@ -17,7 +17,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.arcbees.gaestudio.server.GoogleAnalyticConstants;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.recorder.HookRegistrar;
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
@@ -31,9 +30,7 @@ import com.google.appengine.api.memcache.MemcacheService;
 @Path(EndPoints.RECORD)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class RecordResource extends GoogleAnalyticResource {
-    private static final String SET_RECORDING = "Set Recording";
-
+public class RecordResource {
     private final HookRegistrar hookRegistrar;
     private final ListenerProvider listenerProvider;
     private final GoogleAnalytic googleAnalytic;
@@ -52,8 +49,6 @@ public class RecordResource extends GoogleAnalyticResource {
 
     @POST
     public Long startRecording() {
-        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, SET_RECORDING);
-
         Listener listener = listenerProvider.get();
 
         hookRegistrar.putListener(listener);
@@ -63,8 +58,6 @@ public class RecordResource extends GoogleAnalyticResource {
 
     @DELETE
     public Long stopRecording() {
-        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, SET_RECORDING);
-
         Listener listener = listenerProvider.get();
 
         hookRegistrar.removeListener(listener);

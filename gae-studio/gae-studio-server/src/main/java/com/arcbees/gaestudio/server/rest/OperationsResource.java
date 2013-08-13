@@ -22,7 +22,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import com.arcbees.gaestudio.server.GoogleAnalyticConstants;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
@@ -35,9 +34,7 @@ import com.google.common.collect.Lists;
 @Path(EndPoints.OPERATIONS)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class OperationsResource extends GoogleAnalyticResource {
-    private static final String GET_NEW_DB_OPERATION_RECORD = "Get New Db Operation Record";
-
+public class OperationsResource {
     private final Logger logger;
     private final MemcacheService memcacheService;
 
@@ -51,8 +48,6 @@ public class OperationsResource extends GoogleAnalyticResource {
     @GET
     public List<DbOperationRecordDto> getOperations(@QueryParam(UrlParameters.ID) Long lastId,
                                                     @QueryParam(UrlParameters.LIMIT) Integer limit) {
-        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_NEW_DB_OPERATION_RECORD);
-
         Long mostRecentId = getMostRecentId();
         if (mostRecentId == null) {
             logger.info("Could not find a mostRecentId");
