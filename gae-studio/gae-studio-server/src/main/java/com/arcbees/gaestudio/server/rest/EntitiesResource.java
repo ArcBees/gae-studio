@@ -90,7 +90,7 @@ public class EntitiesResource extends GoogleAnalyticResource {
     }
 
     @POST
-    public EntityDto createEntity(@QueryParam(UrlParameters.KIND) String kind) {
+    public EntityDto createEmptyEntity(@QueryParam(UrlParameters.KIND) String kind) {
         googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, GET_EMPTY_KIND_ENTITY);
 
         AppEngineHelper.disableApiHooks();
