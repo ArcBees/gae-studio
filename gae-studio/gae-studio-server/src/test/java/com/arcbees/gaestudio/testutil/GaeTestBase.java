@@ -3,6 +3,7 @@ package com.arcbees.gaestudio.testutil;
 import org.junit.After;
 import org.junit.Before;
 
+import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -30,6 +31,20 @@ public class GaeTestBase {
 
         entity.setProperty(propertyName, name);
         datastoreService.put(entity);
+
+        return entity;
+    }
+
+    public Entity createEntityInNamespace(String namespace,
+                                          String kindName,
+                                          String propertyName,
+                                          String name) {
+        String defaultNamespace = NamespaceManager.get();
+        NamespaceManager.set(namespace);
+
+        Entity entity = createEntityInDatastore(kindName, propertyName, name);
+
+        NamespaceManager.set(defaultNamespace);
 
         return entity;
     }
