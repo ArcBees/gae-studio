@@ -25,7 +25,7 @@ public class EntityMapper {
 
     public static EntityDto mapEntityToDto(Entity dbEntity) {
         Gson gson = GsonDatastoreFactory.create();
-        return new EntityDto(mapKey(dbEntity.getKey()), gson.toJson(dbEntity));
+        return new EntityDto(mapKeyToKeyDto(dbEntity.getKey()), gson.toJson(dbEntity));
     }
 
     public static Entity mapDtoToEntity(EntityDto entityDto) {
@@ -34,7 +34,7 @@ public class EntityMapper {
         return gson.fromJson(entityDto.getJson(), Entity.class);
     }
 
-    private static KeyDto mapKey(Key dbKey) {
+    public static KeyDto mapKeyToKeyDto(Key dbKey) {
         return new KeyDto(dbKey.getKind(), dbKey.getId(), mapParentKey(dbKey.getParent()), mapNamespace(dbKey));
     }
 

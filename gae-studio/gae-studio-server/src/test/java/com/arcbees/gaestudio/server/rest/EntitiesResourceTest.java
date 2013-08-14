@@ -12,8 +12,6 @@ import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 
@@ -33,7 +31,7 @@ public class EntitiesResourceTest extends GaeTestBase {
     @Test
     public void entityStored_createEmptyEntity_shouldReturnEmptyEntity() throws EntityNotFoundException {
         //given
-        createEntityInDatastore(KIND_NAME, A_NAME);
+        createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
 
         //when
         EntityDto entityDto = entitiesResource.createEmptyEntity(KIND_NAME);
@@ -49,8 +47,8 @@ public class EntitiesResourceTest extends GaeTestBase {
     @Test
     public void twoEntitiesStored_getCount_shouldReturnTwoEntities() {
         //given
-        createEntityInDatastore(KIND_NAME, A_NAME);
-        createEntityInDatastore(KIND_NAME, ANOTHER_NAME);
+        createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
+        createEntityInDatastore(KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
         //when
         Integer entityCount = entitiesResource.getCount(KIND_NAME);
@@ -62,8 +60,8 @@ public class EntitiesResourceTest extends GaeTestBase {
     @Test
     public void twoEntitiesStored_deleteEntities_shouldHaveNoMoreEntities() {
         //given
-        createEntityInDatastore(KIND_NAME, A_NAME);
-        createEntityInDatastore(KIND_NAME, ANOTHER_NAME);
+        createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
+        createEntityInDatastore(KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
         //when
         entitiesResource.deleteEntities(KIND_NAME, null, DeleteEntities.KIND);
@@ -75,8 +73,8 @@ public class EntitiesResourceTest extends GaeTestBase {
     @Test
     public void twoEntitiesStored_getEntities_shouldReturnTwoEntities() {
         //given
-        createEntityInDatastore(KIND_NAME, A_NAME);
-        createEntityInDatastore(KIND_NAME, ANOTHER_NAME);
+        createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
+        createEntityInDatastore(KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
         //when
         List<EntityDto> entityDtos = entitiesResource.getEntities(KIND_NAME, null, null);
@@ -89,12 +87,5 @@ public class EntitiesResourceTest extends GaeTestBase {
 
         assertEquals(A_NAME, entity1.getProperty(PROPERTY_NAME));
         assertEquals(ANOTHER_NAME, entity2.getProperty(PROPERTY_NAME));
-    }
-
-    private void createEntityInDatastore(String kindName, String name) {
-        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-        Entity entity = new Entity(kindName);
-        entity.setProperty(PROPERTY_NAME, name);
-        datastoreService.put(entity);
     }
 }
