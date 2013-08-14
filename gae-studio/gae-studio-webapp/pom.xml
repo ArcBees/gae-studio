@@ -5,11 +5,11 @@
     <parent>
         <artifactId>gae-studio</artifactId>
         <groupId>com.arcbees.gaestudio</groupId>
-        <version>0.3-SNAPSHOT</version>
+        <version>0.3</version>
     </parent>
 
     <artifactId>gae-studio-webapp</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.3</version>
 
     <build>
         <outputDirectory>${webappDirectory}</outputDirectory>
