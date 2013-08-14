@@ -5,7 +5,7 @@
     <parent>
         <artifactId>gae-studio</artifactId>
         <groupId>com.arcbees.gaestudio</groupId>
-        <version>0.3</version>
+        <version>0.4-SNAPSHOT</version>
     </parent>
 
     <artifactId>gae-studio-server</artifactId>
