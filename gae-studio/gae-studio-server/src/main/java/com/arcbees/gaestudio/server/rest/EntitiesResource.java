@@ -75,14 +75,14 @@ public class EntitiesResource {
 
         List<EntityDto> entities = new ArrayList<EntityDto>();
         for (Entity dbEntity : results) {
-            entities.add(EntityMapper.mapDTO(dbEntity));
+            entities.add(EntityMapper.mapEntityToDto(dbEntity));
         }
 
         return entities;
     }
 
     @POST
-    public EntityDto createEntity(@QueryParam(UrlParameters.KIND) String kind) {
+    public EntityDto createEmptyEntity(@QueryParam(UrlParameters.KIND) String kind) {
         AppEngineHelper.disableApiHooks();
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -100,7 +100,7 @@ public class EntitiesResource {
             // And call method metadata.toEntity
         }
 
-        return EntityMapper.mapDTO(emptyEntity);
+        return EntityMapper.mapEntityToDto(emptyEntity);
     }
 
     @DELETE
@@ -121,9 +121,8 @@ public class EntitiesResource {
 
         Query query = new Query(kind);
         FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
-        Integer count = datastore.prepare(query).countEntities(fetchOptions);
 
-        return count;
+        return datastore.prepare(query).countEntities(fetchOptions);
     }
 
     @Path(EndPoints.ID)

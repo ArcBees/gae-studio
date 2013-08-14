@@ -23,9 +23,15 @@ public class EntityMapper {
     private EntityMapper() {
     }
 
-    public static EntityDto mapDTO(Entity dbEntity) {
+    public static EntityDto mapEntityToDto(Entity dbEntity) {
         Gson gson = GsonDatastoreFactory.create();
         return new EntityDto(mapKey(dbEntity.getKey()), gson.toJson(dbEntity));
+    }
+
+    public static Entity mapDtoToEntity(EntityDto entityDto) {
+        Gson gson = GsonDatastoreFactory.create();
+
+        return gson.fromJson(entityDto.getJson(), Entity.class);
     }
 
     private static KeyDto mapKey(Key dbKey) {

@@ -69,7 +69,7 @@ public class EntityResource {
 
         Entity entity = datastoreHelper.get(keyDto);
 
-        return EntityMapper.mapDTO(entity);
+        return EntityMapper.mapEntityToDto(entity);
     }
 
     @PUT
@@ -85,7 +85,7 @@ public class EntityResource {
         datastore.put(dbEntity);
         logger.info("Entity saved");
 
-        return EntityMapper.mapDTO(dbEntity);
+        return EntityMapper.mapEntityToDto(dbEntity);
     }
 
     @DELETE
