@@ -8,14 +8,14 @@ import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.testutil.FakeEntity;
-import com.arcbees.gaestudio.testutil.FakeEntityDao;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.GsonDatastoreFactory;
-import com.google.gson.Gson;
+import com.google.appengine.api.datastore.EntityNotFoundException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -23,39 +23,34 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(JukitoRunner.class)
 public class EntitiesResourceTest extends GaeTestBase {
     private static final String KIND_NAME = "FakeEntity";
+    private static final String PROPERTY_NAME = "property-name";
     private static final String A_NAME = "a-name";
-    private static final String A_NICKNAME = "a-nickname";
     private static final String ANOTHER_NAME = "another-name";
-    private static final String ANOTHER_NICKNAME = "another-nickname";
 
     @Inject
     EntitiesResource entitiesResource;
-    @Inject
-    FakeEntityDao fakeEntityDao;
-
 
     @Test
-    public void entityStored_createEmptyEntity_shouldReturnEmptyEntity() {
+    public void entityStored_createEmptyEntity_shouldReturnEmptyEntity() throws EntityNotFoundException {
         //given
-        fakeEntityDao.put(new FakeEntity(A_NAME, A_NICKNAME));
+        createEntityInDatastore(KIND_NAME, A_NAME);
 
         //when
         EntityDto entityDto = entitiesResource.createEmptyEntity(KIND_NAME);
 
         //then
-        Entity entity = convertToEntity(entityDto);
+        Entity entity = EntityMapper.mapDtoToEntity(entityDto);
 
         assertNotNull(entity);
         assertEquals(KIND_NAME, entity.getKind());
-        assertEquals("", entity.getProperty("name"));
-        assertEquals("", entity.getProperty("nickname"));
+        assertEquals("", entity.getProperty(PROPERTY_NAME));
     }
 
     @Test
     public void twoEntitiesStored_getCount_shouldReturnTwoEntities() {
         //given
-        fakeEntityDao.put(new FakeEntity(A_NAME, A_NICKNAME));
-        fakeEntityDao.put(new FakeEntity(ANOTHER_NAME, ANOTHER_NICKNAME));
+        createEntityInDatastore(KIND_NAME, A_NAME);
+        createEntityInDatastore(KIND_NAME, ANOTHER_NAME);
 
         //when
         Integer entityCount = entitiesResource.getCount(KIND_NAME);
@@ -67,8 +62,8 @@ public class EntitiesResourceTest extends GaeTestBase {
     @Test
     public void twoEntitiesStored_deleteEntities_shouldHaveNoMoreEntities() {
         //given
-        fakeEntityDao.put(new FakeEntity(A_NAME, A_NICKNAME));
-        fakeEntityDao.put(new FakeEntity(ANOTHER_NAME, ANOTHER_NICKNAME));
+        createEntityInDatastore(KIND_NAME, A_NAME);
+        createEntityInDatastore(KIND_NAME, ANOTHER_NAME);
 
         //when
         entitiesResource.deleteEntities(KIND_NAME, null, DeleteEntities.KIND);
@@ -80,8 +75,8 @@ public class EntitiesResourceTest extends GaeTestBase {
     @Test
     public void twoEntitiesStored_getEntities_shouldReturnTwoEntities() {
         //given
-        fakeEntityDao.put(new FakeEntity(A_NAME, A_NICKNAME));
-        fakeEntityDao.put(new FakeEntity(ANOTHER_NAME, ANOTHER_NICKNAME));
+        createEntityInDatastore(KIND_NAME, A_NAME);
+        createEntityInDatastore(KIND_NAME, ANOTHER_NAME);
 
         //when
         List<EntityDto> entityDtos = entitiesResource.getEntities(KIND_NAME, null, null);
@@ -89,18 +84,17 @@ public class EntitiesResourceTest extends GaeTestBase {
         //then
         assertEquals(2, entityDtos.size());
 
-        Entity entity1 = convertToEntity(entityDtos.get(0));
-        Entity entity2 = convertToEntity(entityDtos.get(1));
+        Entity entity1 = EntityMapper.mapDtoToEntity(entityDtos.get(0));
+        Entity entity2 = EntityMapper.mapDtoToEntity(entityDtos.get(1));
 
-        assertEquals(A_NAME, entity1.getProperty("name"));
-        assertEquals(A_NICKNAME, entity1.getProperty("nickname"));
-        assertEquals(ANOTHER_NAME, entity2.getProperty("name"));
-        assertEquals(ANOTHER_NICKNAME, entity2.getProperty("nickname"));
+        assertEquals(A_NAME, entity1.getProperty(PROPERTY_NAME));
+        assertEquals(ANOTHER_NAME, entity2.getProperty(PROPERTY_NAME));
     }
 
-    private Entity convertToEntity(EntityDto entityDto) {
-        Gson gson = GsonDatastoreFactory.create();
-
-        return gson.fromJson(entityDto.getJson(), Entity.class);
+    private void createEntityInDatastore(String kindName, String name) {
+        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+        Entity entity = new Entity(kindName);
+        entity.setProperty(PROPERTY_NAME, name);
+        datastoreService.put(entity);
     }
 }
