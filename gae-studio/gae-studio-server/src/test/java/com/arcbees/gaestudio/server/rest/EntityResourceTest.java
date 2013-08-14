@@ -11,8 +11,6 @@ import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
@@ -39,7 +37,7 @@ public class EntityResourceTest extends GaeTestBase {
     @Test
     public void entityStored_getEntity_shouldReturnSameEntity() throws EntityNotFoundException {
         //given
-        Entity sentEntity = createEntityInDatastore(KIND_NAME, A_NAME);
+        Entity sentEntity = createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         Long entityId = sentEntity.getKey().getId();
 
         //when
@@ -52,7 +50,7 @@ public class EntityResourceTest extends GaeTestBase {
     @Test
     public void entityStored_updateEntity_shouldUpdateEntity() throws EntityNotFoundException {
         //given
-        Entity sentEntity = createEntityInDatastore(KIND_NAME, A_NAME);
+        Entity sentEntity = createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         Long entityId = sentEntity.getKey().getId();
 
         //when
@@ -70,7 +68,7 @@ public class EntityResourceTest extends GaeTestBase {
     @Test(expected=EntityNotFoundException.class)
     public void entityStored_deleteEntity_shouldDeleteEntity() throws EntityNotFoundException {
         //given
-        Entity sentEntity = createEntityInDatastore(KIND_NAME, A_NAME);
+        Entity sentEntity = createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         Key entityKey = sentEntity.getKey();
         Long entityId = entityKey.getId();
 
@@ -80,16 +78,6 @@ public class EntityResourceTest extends GaeTestBase {
 
         //then
         getEntityFromEntityResource(entityId);
-    }
-
-    private Entity createEntityInDatastore(String kindName, String name) {
-        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-        Entity entity = new Entity(kindName);
-
-        entity.setProperty(PROPERTY_NAME, name);
-        datastoreService.put(entity);
-
-        return entity;
     }
 
     private Entity getEntityFromEntityResource(Long id) throws EntityNotFoundException {
