@@ -37,7 +37,7 @@
         <arcbees.version>1.1.1</arcbees.version>
 
         <!-- server -->
-        <gae.version>1.8.1</gae.version>
+        <gae.version>1.8.3</gae.version>
         <servlet-api.version>2.5</servlet-api.version>
         <guava.version>14.0.1</guava.version>
         <gson.version>2.2.2</gson.version>

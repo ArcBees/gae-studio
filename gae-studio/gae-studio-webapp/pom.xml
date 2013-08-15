@@ -36,32 +36,6 @@
                                     <pattern>com.googlecode.objectify</pattern>
                                     <shadedPattern>${repackage}.com.googlecode.objectify</shadedPattern>
                                 </relocation>
-                                <!--<relocation>-->
-                                    <!--<pattern>com.google.inject</pattern>-->
-                                    <!--<shadedPattern>${repackage}.com.google.inject</shadedPattern>-->
-                                <!--</relocation>-->
-                                <!--<relocation>-->
-                                    <!--<pattern>org.jboss.resteasy</pattern>-->
-                                    <!--<shadedPattern>${repackage}.org.jboss.resteasy</shadedPattern>-->
-                                <!--</relocation>-->
-                                <!--</relocations>-->
-                                <!--<relocations>-->
-                                <!--<relocation>-->
-                                <!--<pattern>com.googlecode</pattern>-->
-                                <!--<shadedPattern>${repackage}.com.googlecode</shadedPattern>-->
-                                <!--</relocation>-->
-                                <!--<relocation>-->
-                                <!--<pattern>com.gwtplatform</pattern>-->
-                                <!--<shadedPattern>${repackage}.com.gwtplatform</shadedPattern>-->
-                                <!--</relocation>-->
-                                <!--<relocation>-->
-                                <!--<pattern>org</pattern>-->
-                                <!--<shadedPattern>${repackage}.org</shadedPattern>-->
-                                <!--</relocation>-->
-                                <!--<relocation>-->
-                                <!--<pattern>net</pattern>-->
-                                <!--<shadedPattern>${repackage}.net</shadedPattern>-->
-                                <!--</relocation>-->
                             </relocations>
                             <artifactSet>
                                 <excludes>
