@@ -20,7 +20,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
@@ -31,7 +30,6 @@ import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 
-@GaeStudioResource
 @Path(EndPoints.KINDS)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
