@@ -13,10 +13,11 @@ import com.google.inject.servlet.ServletModule;
 
 public class DebugGaeStudioDispatchServletModule extends ServletModule {
     private static final String GAE_STUDIO_HTML = "/gae-studio.*";
+
     private final String restPath;
 
     public DebugGaeStudioDispatchServletModule() {
-        restPath = null;
+        restPath = "";
     }
 
     public DebugGaeStudioDispatchServletModule(String restPath) {
