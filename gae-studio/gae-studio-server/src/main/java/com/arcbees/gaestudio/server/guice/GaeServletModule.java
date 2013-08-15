@@ -9,16 +9,32 @@
 
 package com.arcbees.gaestudio.server.guice;
 
+import javax.servlet.ServletContext;
+
 import com.arcbees.gaestudio.server.analytic.AnalyticModule;
 import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
 import com.arcbees.gaestudio.server.rest.RestModule;
 import com.arcbees.gaestudio.server.velocity.VelocityModule;
 import com.arcbees.gaestudio.shared.BaseRestPath;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.arcbees.guicyresteasy.GuiceRestEasyFilterDispatcher;
+import com.google.common.base.Strings;
 import com.google.inject.servlet.ServletModule;
+
+import static org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters.RESTEASY_SERVLET_MAPPING_PREFIX;
 
 public class GaeServletModule extends ServletModule {
     private final String restPath;
+
+    GaeServletModule(ServletContext servletContext) {
+        String restEasyPrefix = servletContext.getInitParameter(RESTEASY_SERVLET_MAPPING_PREFIX);
+
+        if (Strings.isNullOrEmpty(restEasyPrefix) || "/*".equals(restEasyPrefix)) {
+            restPath = "";
+        } else {
+            restPath = (restEasyPrefix + "/").replace("//", "/");
+        }
+    }
 
     GaeServletModule(String restPath) {
         this.restPath = restPath.replace("//", "/");
