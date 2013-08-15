@@ -19,9 +19,8 @@ class GaeStudioModule extends ServletModule {
     @Override
     protected void configureServlets() {
         serve("/" + EMBEDDED_PATH + "/", "/" + EMBEDDED_PATH + GAE_STUDIO_HTML).with(RootServlet.class);
+        serve("/" + EMBEDDED_PATH + "/*").with(EmbeddedStaticResourcesServlet.class);
 
-        install(new GaeServletModule());
-
-        serveRegex("/" + EMBEDDED_PATH + "/.*(?!rest).*").with(EmbeddedStaticResourcesServlet.class);
+        install(new GaeServletModule(getServletContext()));
     }
 }
