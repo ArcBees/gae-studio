@@ -132,8 +132,10 @@ public class DatastoreHelper {
         List<Query.Filter> filters = Lists.<Query.Filter>newArrayList(filter);
         if (query.getFilter() != null) {
             filters.add(query.getFilter());
+            query.setFilter(Query.CompositeFilterOperator.and(filters));
+        } else {
+            query.setFilter(filter);
         }
-        query.setFilter(filter);
     }
 
     public Iterable<Entity> getAllNamespaces() {
