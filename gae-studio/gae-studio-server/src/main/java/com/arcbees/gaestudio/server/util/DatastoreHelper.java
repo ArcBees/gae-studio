@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.server.util;
 
+import java.util.List;
+
 import com.arcbees.gaestudio.server.GaeStudioConstants;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
@@ -27,6 +29,11 @@ import com.google.appengine.api.datastore.Query;
 import com.google.common.base.Function;
 import com.google.common.base.Strings;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Lists;
+
+import static com.google.appengine.api.datastore.Query.FilterOperator;
+import static com.google.appengine.api.datastore.Query.FilterOperator.LESS_THAN;
+import static com.google.appengine.api.datastore.Query.FilterPredicate;
 
 public class DatastoreHelper {
     public Entity get(KeyDto keyDto) throws EntityNotFoundException {
@@ -94,7 +101,7 @@ public class DatastoreHelper {
 
         Iterable<Entity> namespaces = getAllNamespaces();
 
-        FluentIterable<Entity> entities = FluentIterable.from(namespaces)
+        List<Entity> entities = FluentIterable.from(namespaces)
                 .transformAndConcat(new Function<Entity, Iterable<Entity>>() {
                     @Override
                     public Iterable<Entity> apply(Entity namespace) {
@@ -103,20 +110,37 @@ public class DatastoreHelper {
 
                         Query namespaceAwareQuery = copyQuery(query);
 
+                        filterGaeKinds(namespaceAwareQuery);
+
                         return datastoreService.prepare(namespaceAwareQuery).asIterable(fetchOptions);
                     }
-                });
+                }).toList();
 
         NamespaceManager.set(defaultNamespace);
 
         return entities;
     }
 
+    public void filterGaeKinds(Query query) {
+        FilterPredicate filter;
+        if (Entities.KIND_METADATA_KIND.equals(query.getKind())) {
+            filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, LESS_THAN, Entities.createKindKey("__"));
+        } else {
+            filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, LESS_THAN, KeyFactory.createKey("__", 1l));
+        }
+
+        List<Query.Filter> filters = Lists.<Query.Filter>newArrayList(filter);
+        if (query.getFilter() != null) {
+            filters.add(query.getFilter());
+        }
+        query.setFilter(filter);
+    }
+
     public Iterable<Entity> getAllNamespaces() {
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
         Query namespacesQuery = new Query(Entities.NAMESPACE_METADATA_KIND);
-        namespacesQuery.setFilter(new Query.FilterPredicate(Entity.KEY_RESERVED_PROPERTY,
-                Query.FilterOperator.NOT_EQUAL, Entities.createNamespaceKey(GaeStudioConstants.GAE_NAMESPACE)));
+        namespacesQuery.setFilter(new FilterPredicate(Entity.KEY_RESERVED_PROPERTY,
+                FilterOperator.NOT_EQUAL, Entities.createNamespaceKey(GaeStudioConstants.GAE_NAMESPACE)));
 
         return datastoreService.prepare(namespacesQuery).asIterable();
     }

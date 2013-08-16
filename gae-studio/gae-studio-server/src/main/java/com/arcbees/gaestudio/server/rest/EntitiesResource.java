@@ -221,7 +221,10 @@ public class EntitiesResource {
     private Iterable<Entity> getAllEntities() {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-        return datastore.prepare(new Query().setKeysOnly()).asIterable();
+        Query query = new Query().setKeysOnly();
+        datastoreHelper.filterGaeKinds(query);
+
+        return datastore.prepare(query).asIterable();
     }
 
     private Iterable<Entity> getAllEntitiesOfKind(String kind) {
@@ -231,6 +234,9 @@ public class EntitiesResource {
     }
 
     private Iterable<Entity> getAllEntitiesOfAllNamespaces() {
-        return datastoreHelper.queryOnAllNamespaces(new Query().setKeysOnly());
+        Query query = new Query().setKeysOnly();
+        datastoreHelper.filterGaeKinds(query);
+
+        return datastoreHelper.queryOnAllNamespaces(query);
     }
 }
