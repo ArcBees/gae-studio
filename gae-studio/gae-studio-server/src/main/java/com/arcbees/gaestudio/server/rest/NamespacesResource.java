@@ -17,6 +17,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
@@ -31,6 +32,7 @@ import com.google.inject.Inject;
 @Path(EndPoints.NAMESPACES)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@GaeStudioResource
 public class NamespacesResource {
     private final DatastoreHelper datastoreHelper;
 

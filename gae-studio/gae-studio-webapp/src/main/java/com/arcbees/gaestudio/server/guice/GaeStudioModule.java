@@ -12,7 +12,7 @@ package com.arcbees.gaestudio.server.guice;
 import com.arcbees.gaestudio.server.EmbeddedStaticResourcesServlet;
 import com.google.inject.servlet.ServletModule;
 
-class GaeStudioModule extends ServletModule {
+public class GaeStudioModule extends ServletModule {
     private static final String EMBEDDED_PATH = "gae-studio-admin";
     private static final String GAE_STUDIO_HTML = "/gae-studio.*";
 

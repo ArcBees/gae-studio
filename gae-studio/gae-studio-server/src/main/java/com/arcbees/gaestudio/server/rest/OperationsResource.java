@@ -22,6 +22,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
@@ -32,6 +33,7 @@ import com.google.common.collect.Lists;
 @Path(EndPoints.OPERATIONS)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@GaeStudioResource
 public class OperationsResource {
     private final Logger logger;
     private final MemcacheService memcacheService;

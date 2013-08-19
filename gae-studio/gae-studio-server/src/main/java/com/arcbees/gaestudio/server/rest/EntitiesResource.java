@@ -24,6 +24,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.server.service.EntitiesService;
+import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
@@ -33,6 +34,7 @@ import com.google.appengine.api.datastore.Entity;
 @Path(EndPoints.ENTITIES)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@GaeStudioResource
 public class EntitiesResource {
     private final SubresourceFactory subresourceFactory;
     private final EntitiesService entitiesService;
