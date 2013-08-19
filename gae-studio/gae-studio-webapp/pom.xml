@@ -36,6 +36,10 @@
                                     <pattern>com.googlecode.objectify</pattern>
                                     <shadedPattern>${repackage}.com.googlecode.objectify</shadedPattern>
                                 </relocation>
+                                <relocation>
+                                    <pattern>com.google.common</pattern>
+                                    <shadedPattern>${repackage}.com.google.common</shadedPattern>
+                                </relocation>
                             </relocations>
                             <artifactSet>
                                 <excludes>
