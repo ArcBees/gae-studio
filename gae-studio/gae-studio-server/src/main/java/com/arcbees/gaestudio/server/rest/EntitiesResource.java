@@ -25,6 +25,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
+import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.shared.DeleteEntities;
@@ -43,6 +44,7 @@ import com.google.appengine.api.datastore.Query;
 @Path(EndPoints.ENTITIES)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@GaeStudioResource
 public class EntitiesResource {
     private final DatastoreHelper datastoreHelper;
     private final SubresourceFactory subresourceFactory;

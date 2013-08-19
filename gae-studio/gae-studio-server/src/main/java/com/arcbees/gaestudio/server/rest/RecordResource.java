@@ -17,6 +17,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.recorder.HookRegistrar;
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
 import com.arcbees.gaestudio.server.recorder.authentication.Listener;
@@ -28,6 +29,7 @@ import com.google.appengine.api.memcache.MemcacheService;
 @Path(EndPoints.RECORD)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@GaeStudioResource
 public class RecordResource {
     private final HookRegistrar hookRegistrar;
     private final ListenerProvider listenerProvider;
