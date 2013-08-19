@@ -36,6 +36,11 @@ import static com.google.appengine.api.datastore.Query.FilterOperator.LESS_THAN;
 import static com.google.appengine.api.datastore.Query.FilterPredicate;
 
 public class DatastoreHelper {
+    private static final FilterPredicate GAE_KIND_KEY_PREDICATE =
+            new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, LESS_THAN, Entities.createKindKey("__"));
+    private static final FilterPredicate GAE_KIND_PREDICATE =
+            new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, LESS_THAN, KeyFactory.createKey("__", 1l));
+
     public Entity get(KeyDto keyDto) throws EntityNotFoundException {
         ParentKeyDto parentKeyDto = keyDto.getParentKey();
         AppIdNamespaceDto namespaceDto = keyDto.getAppIdNamespace();
@@ -124,9 +129,9 @@ public class DatastoreHelper {
     public void filterGaeKinds(Query query) {
         FilterPredicate filter;
         if (Entities.KIND_METADATA_KIND.equals(query.getKind())) {
-            filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, LESS_THAN, Entities.createKindKey("__"));
+            filter = GAE_KIND_KEY_PREDICATE;
         } else {
-            filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, LESS_THAN, KeyFactory.createKey("__", 1l));
+            filter = GAE_KIND_PREDICATE;
         }
 
         List<Query.Filter> filters = Lists.<Query.Filter>newArrayList(filter);

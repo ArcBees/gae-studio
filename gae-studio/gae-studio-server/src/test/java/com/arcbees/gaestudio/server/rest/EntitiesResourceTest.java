@@ -72,7 +72,7 @@ public class EntitiesResourceTest extends GaeTestBase {
     }
 
     @Test
-    public void twoEntitiesStored_deleteEntitiesByNamespace_shouldHaveNoMoreEntities() {
+    public void twoEntitiesStored_deleteEntitiesByNamespace_shouldHaveOneMoreEntities() {
         //given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInDatastore(GAE_KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);

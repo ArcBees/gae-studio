@@ -184,7 +184,7 @@ public class EntitiesResource {
         String defaultNamespace = NamespaceManager.get();
         NamespaceManager.set(namespace);
 
-        Iterable<Entity> entities = getAllEntities();
+        Iterable<Entity> entities = getAllEntitiesInCurrentNamespace();
         deleteEntities(entities);
 
         NamespaceManager.set(defaultNamespace);
@@ -218,11 +218,10 @@ public class EntitiesResource {
         deleteEntities(entities);
     }
 
-    private Iterable<Entity> getAllEntities() {
+    private Iterable<Entity> getAllEntitiesInCurrentNamespace() {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
         Query query = new Query().setKeysOnly();
-        datastoreHelper.filterGaeKinds(query);
 
         return datastore.prepare(query).asIterable();
     }
@@ -235,7 +234,6 @@ public class EntitiesResource {
 
     private Iterable<Entity> getAllEntitiesOfAllNamespaces() {
         Query query = new Query().setKeysOnly();
-        datastoreHelper.filterGaeKinds(query);
 
         return datastoreHelper.queryOnAllNamespaces(query);
     }
