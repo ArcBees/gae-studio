@@ -127,7 +127,7 @@ public class EntitiesServiceImpl implements EntitiesService {
         String defaultNamespace = NamespaceManager.get();
         NamespaceManager.set(namespace);
 
-        Iterable<Entity> entities = getAllEntities();
+        Iterable<Entity> entities = getAllEntitiesInCurrentNamespace();
         deleteEntities(entities);
 
         NamespaceManager.set(defaultNamespace);
@@ -153,10 +153,13 @@ public class EntitiesServiceImpl implements EntitiesService {
         deleteEntities(entities);
     }
 
-    private Iterable<Entity> getAllEntities() {
+    private Iterable<Entity> getAllEntitiesInCurrentNamespace() {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-        return datastore.prepare(new Query().setKeysOnly()).asIterable();
+        Query query = new Query().setKeysOnly();
+        datastoreHelper.filterGaeKinds(query);
+
+        return datastore.prepare(query).asIterable();
     }
 
     private Iterable<Entity> getAllEntitiesOfKind(String kind) {
