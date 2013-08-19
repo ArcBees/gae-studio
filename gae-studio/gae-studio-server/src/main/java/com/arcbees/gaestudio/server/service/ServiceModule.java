@@ -8,5 +8,6 @@ public class ServiceModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(EntitiesService.class).to(EntitiesServiceImpl.class).in(Singleton.class);
+        bind(EntityService.class).to(EntityServiceImpl.class).in(Singleton.class);
     }
 }

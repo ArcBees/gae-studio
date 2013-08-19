@@ -17,86 +17,80 @@ import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
+import com.arcbees.gaestudio.server.service.EntityService;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
-import com.arcbees.gaestudio.server.util.DatastoreHelper;
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
-import com.google.appengine.api.datastore.GsonDatastoreFactory;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
-import com.google.common.base.Strings;
-import com.google.gson.Gson;
 import com.google.inject.assistedinject.Assisted;
 
 public class EntityResource {
-    private final DatastoreHelper datastoreHelper;
     private final Logger logger;
     private final Long entityId;
+    private final EntityService entityService;
 
     @Inject
-    EntityResource(DatastoreHelper datastoreHelper,
-                   Logger logger,
+    EntityResource(Logger logger,
+                   EntityService entityService,
                    @Assisted Long entityId) {
-        this.datastoreHelper = datastoreHelper;
         this.logger = logger;
         this.entityId = entityId;
+        this.entityService = entityService;
     }
 
     @GET
-    public EntityDto getEntity(@QueryParam(UrlParameters.NAMESPACE) String namespace,
-                               @QueryParam(UrlParameters.APPID) String appId,
-                               @QueryParam(UrlParameters.KIND) String kind,
-                               @QueryParam(UrlParameters.PARENT_ID) String parentId,
-                               @QueryParam(UrlParameters.PARENT_KIND) String parentKind)
+    public Response getEntity(@QueryParam(UrlParameters.NAMESPACE) String namespace,
+                              @QueryParam(UrlParameters.APPID) String appId,
+                              @QueryParam(UrlParameters.KIND) String kind,
+                              @QueryParam(UrlParameters.PARENT_ID) String parentId,
+                              @QueryParam(UrlParameters.PARENT_KIND) String parentKind)
             throws EntityNotFoundException {
-        AppEngineHelper.disableApiHooks();
-        ParentKeyDto parentKeyDto = null;
+        ResponseBuilder responseBuilder;
 
-        if (!Strings.isNullOrEmpty(parentId) && !Strings.isNullOrEmpty(parentKind)) {
-            parentKeyDto = new ParentKeyDto(parentKind, Long.valueOf(parentId));
+        Entity entity = entityService.getEntity(entityId, namespace, appId, kind, parentId, parentKind);
+
+        if (entity == null) {
+            responseBuilder = Response.status(Response.Status.NOT_FOUND);
+        } else {
+            EntityDto entityDto = EntityMapper.mapEntityToDto(entity);
+
+            responseBuilder = Response.ok(entityDto);
         }
 
-        KeyDto keyDto = new KeyDto(kind, entityId, parentKeyDto, new AppIdNamespaceDto(appId, namespace));
-
-        Entity entity = datastoreHelper.get(keyDto);
-
-        return EntityMapper.mapEntityToDto(entity);
+        return responseBuilder.build();
     }
 
     @PUT
-    public EntityDto updateEntity(EntityDto entityDto) {
-        AppEngineHelper.disableApiHooks();
-        Entity dbEntity;
+    public Response updateEntity(EntityDto newEntityDto) {
+        ResponseBuilder responseBuilder;
+        Entity newEntity = EntityMapper.mapDtoToEntity(newEntityDto);
+        Entity updatedEntity = entityService.updateEntity(newEntity);
 
-        Gson gson = GsonDatastoreFactory.create();
-        dbEntity = gson.fromJson(entityDto.getJson(), Entity.class);
-        dbEntity.getKey();
+        if(updatedEntity == null) {
+            responseBuilder = Response.status(Response.Status.NOT_FOUND);
+        } else {
+            EntityDto updatedEntityDto = EntityMapper.mapEntityToDto(updatedEntity);
+            responseBuilder = Response.ok(updatedEntityDto);
+            logger.info("Entity saved");
+        }
 
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(dbEntity);
-        logger.info("Entity saved");
-
-        return EntityMapper.mapEntityToDto(dbEntity);
+        return responseBuilder.build();
     }
 
     @DELETE
     public Response deleteEntity(KeyDto keyDto) {
         AppEngineHelper.disableApiHooks();
-
-        AppIdNamespaceDto namespaceDto = keyDto.getAppIdNamespace();
         Key key = KeyFactory.createKey(keyDto.getKind(), keyDto.getId());
 
-        datastoreHelper.delete(key, namespaceDto.getNamespace());
+        entityService.deleteEntity(key);
 
-        return Response.ok().build();
+        return Response.noContent().build();
     }
 }
