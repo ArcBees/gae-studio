@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(JukitoRunner.class)
 public class KindsResourceTest extends GaeTestBase {
     private static final String KIND_NAME = "FakeEntity";
+    private static final String GAE_KIND_NAME = "__FakeEntity";
     private static final String ANOTHER_KIND = "FooEntity";
     private static final String PROPERTY_NAME = "property-name";
     private static final String A_NAME = "a-name";
@@ -29,6 +30,22 @@ public class KindsResourceTest extends GaeTestBase {
         //given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInDatastore(ANOTHER_KIND, PROPERTY_NAME, ANOTHER_NAME);
+
+        //when
+        List<String> kindsList = kindsResource.getKinds();
+
+        //then
+        assertEquals(2, kindsList.size());
+        assertTrue(kindsList.contains(KIND_NAME));
+        assertTrue(kindsList.contains(ANOTHER_KIND));
+    }
+
+    @Test
+    public void threeKindsStored_gaeKind_getKinds_shouldReturnTheTwoKinds() {
+        //given
+        createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
+        createEntityInDatastore(ANOTHER_KIND, PROPERTY_NAME, ANOTHER_NAME);
+        createEntityInDatastore(GAE_KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
         //when
         List<String> kindsList = kindsResource.getKinds();

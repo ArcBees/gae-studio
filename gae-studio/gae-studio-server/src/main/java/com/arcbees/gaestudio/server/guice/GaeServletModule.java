@@ -17,7 +17,6 @@ import com.arcbees.gaestudio.server.rest.RestModule;
 import com.arcbees.gaestudio.server.velocity.VelocityModule;
 import com.arcbees.gaestudio.shared.BaseRestPath;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.arcbees.guicyresteasy.GuiceRestEasyFilterDispatcher;
 import com.google.common.base.Strings;
 import com.google.inject.servlet.ServletModule;
 

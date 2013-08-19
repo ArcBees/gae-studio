@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(JukitoRunner.class)
 public class EntitiesResourceTest extends GaeTestBase {
     private static final String KIND_NAME = "FakeEntity";
+    private static final String GAE_KIND_NAME = "__FakeEntity";
     private static final String PROPERTY_NAME = "property-name";
     private static final String A_NAME = "a-name";
     private static final String ANOTHER_NAME = "another-name";
@@ -58,7 +59,7 @@ public class EntitiesResourceTest extends GaeTestBase {
     }
 
     @Test
-    public void twoEntitiesStored_deleteEntities_shouldHaveNoMoreEntities() {
+    public void twoEntitiesStored_deleteEntitiesByKind_shouldHaveNoMoreEntities() {
         //given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
@@ -68,6 +69,19 @@ public class EntitiesResourceTest extends GaeTestBase {
 
         //then
         assertEquals(0l, (long) entitiesResource.getCount(KIND_NAME));
+    }
+
+    @Test
+    public void twoEntitiesStored_deleteEntitiesByNamespace_shouldHaveOneMoreEntities() {
+        //given
+        createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
+        createEntityInDatastore(GAE_KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
+
+        //when
+        entitiesResource.deleteEntities(null, "", DeleteEntities.NAMESPACE);
+
+        //then
+        assertEquals(1l, (long) entitiesResource.getCount(GAE_KIND_NAME));
     }
 
     @Test
