@@ -14,6 +14,7 @@ import javax.servlet.ServletContext;
 import com.arcbees.gaestudio.server.analytic.AnalyticModule;
 import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
 import com.arcbees.gaestudio.server.rest.RestModule;
+import com.arcbees.gaestudio.server.service.ServiceModule;
 import com.arcbees.gaestudio.server.velocity.VelocityModule;
 import com.arcbees.gaestudio.shared.BaseRestPath;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
@@ -46,6 +47,7 @@ public class GaeServletModule extends ServletModule {
         install(new VelocityModule());
         install(new RestModule());
         install(new AnalyticModule());
+        install(new ServiceModule());
 
         bindConstant().annotatedWith(BaseRestPath.class).to(restPath);
 
