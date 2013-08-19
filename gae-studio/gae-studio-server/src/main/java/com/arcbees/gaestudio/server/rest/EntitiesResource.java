@@ -21,10 +21,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
-import com.arcbees.gaestudio.server.service.EntitiesService;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
+import com.arcbees.gaestudio.server.service.EntitiesService;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
@@ -47,16 +49,25 @@ public class EntitiesResource {
     }
 
     @GET
-    public List<EntityDto> getEntities(@QueryParam(UrlParameters.KIND) String kind,
-                                       @QueryParam(UrlParameters.OFFSET) Integer offset,
-                                       @QueryParam(UrlParameters.LIMIT) Integer limit) {
+    public Response getEntities(@QueryParam(UrlParameters.KIND) String kind,
+                                @QueryParam(UrlParameters.OFFSET) Integer offset,
+                                @QueryParam(UrlParameters.LIMIT) Integer limit) {
+        ResponseBuilder responseBuilder;
         Iterable<Entity> entities = entitiesService.getEntities(kind, offset, limit);
 
-        return EntityMapper.mapEntitiesToDtos(entities);
+        if (entities == null) {
+            responseBuilder = Response.status(Response.Status.NOT_FOUND);
+        } else {
+            List<EntityDto> entitiesDtos = EntityMapper.mapEntitiesToDtos(entities);
+            responseBuilder = Response.ok(entitiesDtos);
+        }
+
+        return responseBuilder.build();
     }
 
     @POST
-    public EntityDto createEmptyEntity(@QueryParam(UrlParameters.KIND) String kind) {
+    public Response createEmptyEntity(@QueryParam(UrlParameters.KIND) String kind) {
+        ResponseBuilder responseBuilder;
         Entity emptyEntity = null;
 
         try {
@@ -68,20 +79,34 @@ public class EntitiesResource {
             // And call method metadata.toEntity
         }
 
-        return EntityMapper.mapEntityToDto(emptyEntity);
+        if (emptyEntity == null) {
+            responseBuilder = Response.status(Response.Status.NOT_FOUND);
+        } else {
+            EntityDto emptyEntityDto = EntityMapper.mapEntityToDto(emptyEntity);
+            responseBuilder = Response.ok(emptyEntityDto);
+        }
+
+        return responseBuilder.build();
     }
 
     @DELETE
-    public void deleteEntities(@QueryParam(UrlParameters.KIND) String kind,
+    public Response deleteEntities(@QueryParam(UrlParameters.KIND) String kind,
                                @QueryParam(UrlParameters.NAMESPACE) String namespace,
                                @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType) {
         entitiesService.deleteEntities(kind, namespace, deleteType);
+
+        return Response.noContent().build();
     }
 
     @GET
     @Path(EndPoints.COUNT)
-    public Integer getCount(@QueryParam(UrlParameters.KIND) String kind) {
-        return entitiesService.getCount(kind);
+    public Response getCount(@QueryParam(UrlParameters.KIND) String kind) {
+        ResponseBuilder responseBuilder;
+
+        Integer count = entitiesService.getCount(kind);
+        responseBuilder = Response.ok(count);
+
+        return responseBuilder.build();
     }
 
     @Path(EndPoints.ID)
