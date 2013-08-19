@@ -224,6 +224,7 @@ public class EntitiesResource {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
         Query query = new Query().setKeysOnly();
+        datastoreHelper.filterGaeKinds(query);
 
         return datastore.prepare(query).asIterable();
     }
