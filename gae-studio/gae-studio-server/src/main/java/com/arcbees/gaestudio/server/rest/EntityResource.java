@@ -73,7 +73,7 @@ public class EntityResource {
         Entity newEntity = EntityMapper.mapDtoToEntity(newEntityDto);
         Entity updatedEntity = entityService.updateEntity(newEntity);
 
-        if(updatedEntity == null) {
+        if (updatedEntity == null) {
             responseBuilder = Response.status(Response.Status.NOT_FOUND);
         } else {
             EntityDto updatedEntityDto = EntityMapper.mapEntityToDto(updatedEntity);
