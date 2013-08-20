@@ -4,17 +4,29 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
+import org.jukito.TestSingleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.arcbees.gaestudio.server.service.KindsService;
+import com.arcbees.gaestudio.server.service.KindsServiceImpl;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(JukitoRunner.class)
-public class KindsResourceTest extends GaeTestBase {
+public class KindsServiceImplTest extends GaeTestBase {
+    @SuppressWarnings("unused")
+    public static class KindsServiceModule extends JukitoModule {
+        @Override
+        protected void configureTest() {
+            bind(KindsService.class).to(KindsServiceImpl.class).in(TestSingleton.class);
+        }
+    }
+
     private static final String KIND_NAME = "FakeEntity";
     private static final String GAE_KIND_NAME = "__FakeEntity";
     private static final String ANOTHER_KIND = "FooEntity";
@@ -23,7 +35,7 @@ public class KindsResourceTest extends GaeTestBase {
     private static final String ANOTHER_NAME = "another-name";
 
     @Inject
-    KindsResource kindsResource;
+    KindsService kindsService;
 
     @Test
     public void twoKindsStored_getKinds_shouldReturnTheTwoKinds() {
@@ -32,7 +44,7 @@ public class KindsResourceTest extends GaeTestBase {
         createEntityInDatastore(ANOTHER_KIND, PROPERTY_NAME, ANOTHER_NAME);
 
         //when
-        List<String> kindsList = kindsResource.getKinds();
+        List<String> kindsList = kindsService.getKinds();
 
         //then
         assertEquals(2, kindsList.size());
@@ -48,7 +60,7 @@ public class KindsResourceTest extends GaeTestBase {
         createEntityInDatastore(GAE_KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
         //when
-        List<String> kindsList = kindsResource.getKinds();
+        List<String> kindsList = kindsService.getKinds();
 
         //then
         assertEquals(2, kindsList.size());

@@ -9,5 +9,7 @@ public class ServiceModule extends AbstractModule {
     protected void configure() {
         bind(EntitiesService.class).to(EntitiesServiceImpl.class).in(Singleton.class);
         bind(EntityService.class).to(EntityServiceImpl.class).in(Singleton.class);
+        bind(KindsService.class).to(KindsServiceImpl.class).in(Singleton.class);
+        bind(NamespacesService.class).to(NamespacesServiceImpl.class).in(Singleton.class);
     }
 }

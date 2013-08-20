@@ -23,6 +23,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.Response.Status;
 
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
@@ -56,7 +57,7 @@ public class EntitiesResource {
         Iterable<Entity> entities = entitiesService.getEntities(kind, offset, limit);
 
         if (entities == null) {
-            responseBuilder = Response.status(Response.Status.NOT_FOUND);
+            responseBuilder = Response.status(Status.NOT_FOUND);
         } else {
             List<EntityDto> entitiesDtos = EntityMapper.mapEntitiesToDtos(entities);
             responseBuilder = Response.ok(entitiesDtos);
@@ -80,7 +81,7 @@ public class EntitiesResource {
         }
 
         if (emptyEntity == null) {
-            responseBuilder = Response.status(Response.Status.NOT_FOUND);
+            responseBuilder = Response.status(Status.NOT_FOUND);
         } else {
             EntityDto emptyEntityDto = EntityMapper.mapEntityToDto(emptyEntity);
             responseBuilder = Response.ok(emptyEntityDto);

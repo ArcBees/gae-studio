@@ -18,6 +18,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.Response.Status;
 
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.server.service.EntityService;
@@ -57,7 +58,7 @@ public class EntityResource {
         Entity entity = entityService.getEntity(entityId, namespace, appId, kind, parentId, parentKind);
 
         if (entity == null) {
-            responseBuilder = Response.status(Response.Status.NOT_FOUND);
+            responseBuilder = Response.status(Status.NOT_FOUND);
         } else {
             EntityDto entityDto = EntityMapper.mapEntityToDto(entity);
 
@@ -74,7 +75,7 @@ public class EntityResource {
         Entity updatedEntity = entityService.updateEntity(newEntity);
 
         if (updatedEntity == null) {
-            responseBuilder = Response.status(Response.Status.NOT_FOUND);
+            responseBuilder = Response.status(Status.NOT_FOUND);
         } else {
             EntityDto updatedEntityDto = EntityMapper.mapEntityToDto(updatedEntity);
             responseBuilder = Response.ok(updatedEntityDto);
