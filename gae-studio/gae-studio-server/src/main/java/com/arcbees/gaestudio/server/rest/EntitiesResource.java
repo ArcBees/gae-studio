@@ -59,13 +59,9 @@ public class EntitiesResource {
             responseBuilder = Response.status(Status.BAD_REQUEST);
         } else {
             Iterable<Entity> entities = entitiesService.getEntities(kind, offset, limit);
+            List<EntityDto> entitiesDtos = EntityMapper.mapEntitiesToDtos(entities);
 
-            if (entities == null) {
-                responseBuilder = Response.status(Status.NOT_FOUND);
-            } else {
-                List<EntityDto> entitiesDtos = EntityMapper.mapEntitiesToDtos(entities);
-                responseBuilder = Response.ok(entitiesDtos);
-            }
+            responseBuilder = Response.ok(entitiesDtos);
         }
 
         return responseBuilder.build();

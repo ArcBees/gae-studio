@@ -16,6 +16,6 @@ import javax.ws.rs.ext.ExceptionMapper;
 public class IllegalAccessExceptionMapper implements ExceptionMapper<IllegalAccessException> {
     @Override
     public Response toResponse(IllegalAccessException e) {
-        return Response.status(Status.METHOD_NOT_ALLOWED).build();
+        return Response.status(Status.INTERNAL_SERVER_ERROR).build();
     }
 }
