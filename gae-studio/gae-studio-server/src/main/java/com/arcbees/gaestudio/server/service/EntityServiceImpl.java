@@ -32,7 +32,12 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public Entity getEntity(Long entityId, String namespace, String appId, String kind, String parentId, String parentKind) {
+    public Entity getEntity(Long entityId,
+                            String namespace,
+                            String appId,
+                            String kind,
+                            String parentId,
+                            String parentKind) {
         AppEngineHelper.disableApiHooks();
 
         Entity entity;

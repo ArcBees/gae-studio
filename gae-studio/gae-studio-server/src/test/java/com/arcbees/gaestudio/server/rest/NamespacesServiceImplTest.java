@@ -28,7 +28,6 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)
 public class NamespacesServiceImplTest extends GaeTestBase {
-    @SuppressWarnings("unused")
     public static class NamespacesServiceModule extends JukitoModule {
         @Override
         protected void configureTest() {

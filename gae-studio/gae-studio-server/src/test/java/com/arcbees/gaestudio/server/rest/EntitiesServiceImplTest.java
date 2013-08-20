@@ -32,7 +32,6 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(JukitoRunner.class)
 public class EntitiesServiceImplTest extends GaeTestBase {
-    @SuppressWarnings("unused")
     public static class EntitiesServiceModule extends JukitoModule {
         @Override
         protected void configureTest() {
