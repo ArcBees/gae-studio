@@ -92,8 +92,8 @@ public class EntitiesResource {
 
     @DELETE
     public Response deleteEntities(@QueryParam(UrlParameters.KIND) String kind,
-                               @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                               @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType) {
+                                   @QueryParam(UrlParameters.NAMESPACE) String namespace,
+                                   @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType) {
         entitiesService.deleteEntities(kind, namespace, deleteType);
 
         return Response.noContent().build();

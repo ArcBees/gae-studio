@@ -43,7 +43,7 @@ public class NamespacesResource {
         ResponseBuilder responseBuilder;
         List<AppIdNamespaceDto> namespaces = namespacesService.getNamespaces();
 
-        if(namespaces.size() == 0) {
+        if (namespaces.isEmpty()) {
             responseBuilder = Response.status(Status.NOT_FOUND);
         } else {
             responseBuilder = Response.ok(namespaces);

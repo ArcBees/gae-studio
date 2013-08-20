@@ -9,8 +9,6 @@
 
 package com.arcbees.gaestudio.server.rest;
 
-import java.util.logging.Logger;
-
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -33,15 +31,12 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.inject.assistedinject.Assisted;
 
 public class EntityResource {
-    private final Logger logger;
     private final Long entityId;
     private final EntityService entityService;
 
     @Inject
-    EntityResource(Logger logger,
-                   EntityService entityService,
+    EntityResource(EntityService entityService,
                    @Assisted Long entityId) {
-        this.logger = logger;
         this.entityId = entityId;
         this.entityService = entityService;
     }
@@ -79,7 +74,6 @@ public class EntityResource {
         } else {
             EntityDto updatedEntityDto = EntityMapper.mapEntityToDto(updatedEntity);
             responseBuilder = Response.ok(updatedEntityDto);
-            logger.info("Entity saved");
         }
 
         return responseBuilder.build();

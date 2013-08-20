@@ -42,7 +42,7 @@ public class KindsResource {
         ResponseBuilder responseBuilder;
         List<String> kinds = kindsService.getKinds();
 
-        if(kinds.size() == 0) {
+        if (kinds.isEmpty()) {
             responseBuilder = Response.status(Status.NOT_FOUND);
         } else {
             responseBuilder = Response.ok(kinds);
