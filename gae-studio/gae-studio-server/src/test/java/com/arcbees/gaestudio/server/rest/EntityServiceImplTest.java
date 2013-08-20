@@ -25,7 +25,6 @@ import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 @RunWith(JukitoRunner.class)
 public class EntityServiceImplTest extends GaeTestBase {
@@ -73,7 +72,7 @@ public class EntityServiceImplTest extends GaeTestBase {
         assertEquals(ANOTHER_NAME, savedEntity.getProperty(PROPERTY_NAME));
     }
 
-    @Test
+    @Test(expected=EntityNotFoundException.class)
     public void entityStored_deleteEntity_shouldDeleteEntity() throws EntityNotFoundException {
         //given
         Entity sentEntity = createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
@@ -84,7 +83,7 @@ public class EntityServiceImplTest extends GaeTestBase {
         entityService.deleteEntity(entityKey);
 
         //then
-        assertNull(getEntityFromEntityResource(entityId));
+        getEntityFromEntityResource(entityId);
     }
 
     private Entity getEntityFromEntityResource(Long id) throws EntityNotFoundException {
