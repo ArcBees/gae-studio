@@ -54,36 +54,43 @@ public class EntitiesResource {
                                 @QueryParam(UrlParameters.OFFSET) Integer offset,
                                 @QueryParam(UrlParameters.LIMIT) Integer limit) {
         ResponseBuilder responseBuilder;
-        Iterable<Entity> entities = entitiesService.getEntities(kind, offset, limit);
 
-        if (entities == null) {
-            responseBuilder = Response.status(Status.NOT_FOUND);
+        if (kind == null) {
+            responseBuilder = Response.status(Status.BAD_REQUEST);
         } else {
-            List<EntityDto> entitiesDtos = EntityMapper.mapEntitiesToDtos(entities);
-            responseBuilder = Response.ok(entitiesDtos);
+            Iterable<Entity> entities = entitiesService.getEntities(kind, offset, limit);
+
+            if (entities == null) {
+                responseBuilder = Response.status(Status.NOT_FOUND);
+            } else {
+                List<EntityDto> entitiesDtos = EntityMapper.mapEntitiesToDtos(entities);
+                responseBuilder = Response.ok(entitiesDtos);
+            }
         }
 
         return responseBuilder.build();
     }
 
+    // TODO: Be able to generate entity base schema from the pojo that haven't been saved yet to the datastore
+    // We will need to create an implementation to support Objectify, Twig persist, etc.
+    // For objectify we can use : ObjectifyService.factory().getMetadataForEntity(String kind);
+    // And call method metadata.toEntity
+
     @POST
     public Response createEmptyEntity(@QueryParam(UrlParameters.KIND) String kind)
             throws InstantiationException, IllegalAccessException {
         ResponseBuilder responseBuilder;
-        Entity emptyEntity;
 
-        emptyEntity = entitiesService.createEmptyEntity(kind);
-
-        // TODO: Be able to generate entity base schema from the pojo that haven't been saved yet to the datastore
-        // We will need to create an implementation to support Objectify, Twig persist, etc.
-        // For objectify we can use : ObjectifyService.factory().getMetadataForEntity(String kind);
-        // And call method metadata.toEntity
-
-        if (emptyEntity == null) {
-            responseBuilder = Response.status(Status.NOT_FOUND);
+        if (kind == null) {
+            responseBuilder = Response.status(Status.BAD_REQUEST);
         } else {
-            EntityDto emptyEntityDto = EntityMapper.mapEntityToDto(emptyEntity);
-            responseBuilder = Response.ok(emptyEntityDto);
+            Entity emptyEntity = entitiesService.createEmptyEntity(kind);
+            if (emptyEntity == null) {
+                responseBuilder = Response.status(Status.NOT_FOUND);
+            } else {
+                EntityDto emptyEntityDto = EntityMapper.mapEntityToDto(emptyEntity);
+                responseBuilder = Response.ok(emptyEntityDto);
+            }
         }
 
         return responseBuilder.build();
@@ -93,9 +100,37 @@ public class EntitiesResource {
     public Response deleteEntities(@QueryParam(UrlParameters.KIND) String kind,
                                    @QueryParam(UrlParameters.NAMESPACE) String namespace,
                                    @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType) {
-        entitiesService.deleteEntities(kind, namespace, deleteType);
+        ResponseBuilder responseBuilder = validateParameters(kind, namespace, deleteType);
 
-        return Response.noContent().build();
+        if (responseBuilder.equals(Response.noContent())) {
+            entitiesService.deleteEntities(kind, namespace, deleteType);
+        }
+
+        return responseBuilder.build();
+    }
+
+    private ResponseBuilder validateParameters(String kind, String namespace, DeleteEntities deleteType) {
+        ResponseBuilder responseBuilder;
+
+        switch (deleteType) {
+            case KIND:
+                responseBuilder = kind != null ? Response.noContent() : Response.status(Status.BAD_REQUEST);
+                break;
+            case NAMESPACE:
+                responseBuilder = namespace != null ? Response.noContent() : Response.status(Status.BAD_REQUEST);
+                break;
+            case KIND_NAMESPACE:
+                responseBuilder = namespace != null && kind != null ? Response.noContent() : Response.status(Status.BAD_REQUEST);
+                break;
+            case ALL:
+                responseBuilder = Response.noContent();
+                break;
+            default:
+                responseBuilder = Response.status(Status.BAD_REQUEST);
+                break;
+        }
+
+        return responseBuilder;
     }
 
     @GET
@@ -103,8 +138,12 @@ public class EntitiesResource {
     public Response getCount(@QueryParam(UrlParameters.KIND) String kind) {
         ResponseBuilder responseBuilder;
 
-        Integer count = entitiesService.getCount(kind);
-        responseBuilder = Response.ok(count);
+        if (kind == null) {
+            responseBuilder = Response.status(Status.BAD_REQUEST);
+        } else {
+            Integer count = entitiesService.getCount(kind);
+            responseBuilder = Response.ok(count);
+        }
 
         return responseBuilder.build();
     }
