@@ -69,7 +69,8 @@ public class EntitiesServiceImplTest extends GaeTestBase {
     }
 
     @Test
-    public void entityStored_createEmptyEntity_shouldReturnEmptyEntity() throws EntityNotFoundException {
+    public void entityStored_createEmptyEntity_shouldReturnEmptyEntity()
+            throws EntityNotFoundException, InstantiationException, IllegalAccessException {
         //given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
 

@@ -37,7 +37,7 @@ public class EntityServiceImpl implements EntityService {
                             String appId,
                             String kind,
                             String parentId,
-                            String parentKind) {
+                            String parentKind) throws EntityNotFoundException {
         AppEngineHelper.disableApiHooks();
 
         Entity entity;
@@ -49,11 +49,7 @@ public class EntityServiceImpl implements EntityService {
 
         KeyDto keyDto = new KeyDto(kind, entityId, parentKeyDto, new AppIdNamespaceDto(appId, namespace));
 
-        try {
-            entity = datastoreHelper.get(keyDto);
-        } catch (EntityNotFoundException e) {
-            return null;
-        }
+        entity = datastoreHelper.get(keyDto);
 
         return entity;
     }

@@ -52,7 +52,7 @@ public class EntitiesServiceImpl implements EntitiesService {
     }
 
     @Override
-    public Entity createEmptyEntity(String kind) {
+    public Entity createEmptyEntity(String kind) throws IllegalAccessException, InstantiationException {
         AppEngineHelper.disableApiHooks();
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -100,7 +100,8 @@ public class EntitiesServiceImpl implements EntitiesService {
     }
 
     private Entity setEmptiedProperties(Entity entity,
-                                        Map<String, Object> properties) {
+                                        Map<String, Object> properties)
+            throws InstantiationException, IllegalAccessException {
         for (Map.Entry<String, Object> property : properties.entrySet()) {
             Object value = property.getValue();
 
@@ -119,12 +120,9 @@ public class EntitiesServiceImpl implements EntitiesService {
         return KeyFactory.createKey(key.getKind(), " ");
     }
 
-    private Object createEmptyArbitraryObject(Map.Entry<String, Object> property) {
-        try {
-            return createEmptyPropertyObject(property);
-        } catch (Exception e) {
-            return null;
-        }
+    private Object createEmptyArbitraryObject(Map.Entry<String, Object> property)
+            throws IllegalAccessException, InstantiationException {
+        return createEmptyPropertyObject(property);
     }
 
     private Object createEmptyPropertyObject(Map.Entry<String, Object> property)

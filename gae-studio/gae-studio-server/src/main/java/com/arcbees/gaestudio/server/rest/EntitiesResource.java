@@ -67,18 +67,17 @@ public class EntitiesResource {
     }
 
     @POST
-    public Response createEmptyEntity(@QueryParam(UrlParameters.KIND) String kind) {
+    public Response createEmptyEntity(@QueryParam(UrlParameters.KIND) String kind)
+            throws InstantiationException, IllegalAccessException {
         ResponseBuilder responseBuilder;
-        Entity emptyEntity = null;
+        Entity emptyEntity;
 
-        try {
-            emptyEntity = entitiesService.createEmptyEntity(kind);
-        } catch (Exception e) {
-            // TODO: Be able to generate entity base schema from the pojo that haven't been saved yet to the datastore
-            // We will need to create an implementation to support Objectify, Twig persist, etc.
-            // For objectify we can use : ObjectifyService.factory().getMetadataForEntity(String kind);
-            // And call method metadata.toEntity
-        }
+        emptyEntity = entitiesService.createEmptyEntity(kind);
+
+        // TODO: Be able to generate entity base schema from the pojo that haven't been saved yet to the datastore
+        // We will need to create an implementation to support Objectify, Twig persist, etc.
+        // For objectify we can use : ObjectifyService.factory().getMetadataForEntity(String kind);
+        // And call method metadata.toEntity
 
         if (emptyEntity == null) {
             responseBuilder = Response.status(Status.NOT_FOUND);

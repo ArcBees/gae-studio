@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.server.guice;
 import javax.servlet.ServletContext;
 
 import com.arcbees.gaestudio.server.analytic.AnalyticModule;
+import com.arcbees.gaestudio.server.exception.ExceptionModule;
 import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
 import com.arcbees.gaestudio.server.rest.RestModule;
 import com.arcbees.gaestudio.server.service.ServiceModule;
@@ -47,6 +48,7 @@ public class GaeServletModule extends ServletModule {
         install(new RestModule());
         install(new AnalyticModule());
         install(new ServiceModule());
+        install(new ExceptionModule());
 
         bindConstant().annotatedWith(BaseRestPath.class).to(restPath);
 

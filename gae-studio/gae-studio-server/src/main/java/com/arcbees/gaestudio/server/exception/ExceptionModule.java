@@ -7,17 +7,17 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.service;
+package com.arcbees.gaestudio.server.exception;
 
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.EntityNotFoundException;
-import com.google.appengine.api.datastore.Key;
+import javax.inject.Singleton;
 
-public interface EntityService {
-    Entity getEntity(Long entityId, String namespace, String appId, String kind, String parentId, String parentKind)
-            throws EntityNotFoundException;
+import com.google.inject.AbstractModule;
 
-    Entity updateEntity(Entity entity);
-
-    void deleteEntity(Key entityKey);
+public class ExceptionModule extends AbstractModule {
+    @Override
+    protected void configure() {
+        bind(EntityNotFoundExceptionMapper.class).in(Singleton.class);
+        bind(IllegalAccessExceptionMapper.class).in(Singleton.class);
+        bind(InstantiationExceptionMapper.class).in(Singleton.class);
+    }
 }

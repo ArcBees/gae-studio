@@ -87,7 +87,7 @@ public class EntityServiceImplTest extends GaeTestBase {
         assertNull(getEntityFromEntityResource(entityId));
     }
 
-    private Entity getEntityFromEntityResource(Long id) {
+    private Entity getEntityFromEntityResource(Long id) throws EntityNotFoundException {
         return entityService.getEntity(id, null, null, KIND_NAME, null, null);
     }
 }
