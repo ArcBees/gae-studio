@@ -96,37 +96,16 @@ public class EntitiesResource {
     public Response deleteEntities(@QueryParam(UrlParameters.KIND) String kind,
                                    @QueryParam(UrlParameters.NAMESPACE) String namespace,
                                    @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType) {
-        ResponseBuilder responseBuilder = validateParameters(kind, namespace, deleteType);
+        ResponseBuilder responseBuilder;
 
-        if (responseBuilder.equals(Response.noContent())) {
+        if (isValidDeleteRequest(kind, namespace, deleteType)) {
             entitiesService.deleteEntities(kind, namespace, deleteType);
+            responseBuilder = Response.noContent();
+        } else {
+            responseBuilder = Response.status(Status.BAD_REQUEST);
         }
 
         return responseBuilder.build();
-    }
-
-    private ResponseBuilder validateParameters(String kind, String namespace, DeleteEntities deleteType) {
-        ResponseBuilder responseBuilder;
-
-        switch (deleteType) {
-            case KIND:
-                responseBuilder = kind != null ? Response.noContent() : Response.status(Status.BAD_REQUEST);
-                break;
-            case NAMESPACE:
-                responseBuilder = namespace != null ? Response.noContent() : Response.status(Status.BAD_REQUEST);
-                break;
-            case KIND_NAMESPACE:
-                responseBuilder = namespace != null && kind != null ? Response.noContent() : Response.status(Status.BAD_REQUEST);
-                break;
-            case ALL:
-                responseBuilder = Response.noContent();
-                break;
-            default:
-                responseBuilder = Response.status(Status.BAD_REQUEST);
-                break;
-        }
-
-        return responseBuilder;
     }
 
     @GET
@@ -147,5 +126,29 @@ public class EntitiesResource {
     @Path(EndPoints.ID)
     public EntityResource getEntityResource(@PathParam(UrlParameters.ID) Long id) {
         return subresourceFactory.createEntityResource(id);
+    }
+
+    private boolean isValidDeleteRequest(String kind, String namespace, DeleteEntities deleteType) {
+        boolean isValid;
+
+        switch (deleteType) {
+            case KIND:
+                isValid = kind != null;
+                break;
+            case NAMESPACE:
+                isValid = namespace != null;
+                break;
+            case KIND_NAMESPACE:
+                isValid = namespace != null && kind != null;
+                break;
+            case ALL:
+                isValid = true;
+                break;
+            default:
+                isValid = false;
+                break;
+        }
+
+        return isValid;
     }
 }
