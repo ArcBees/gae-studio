@@ -17,6 +17,7 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
+import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.google.inject.assistedinject.Assisted;
 
 public class VelocityWrapper {
@@ -24,7 +25,7 @@ public class VelocityWrapper {
     private final VelocityContext velocityContext = new VelocityContext();
 
     @Inject
-    VelocityWrapper(VelocityEngine velocityEngine,
+    VelocityWrapper(@GaeStudioResource VelocityEngine velocityEngine,
                     @Assisted String templateLocation) {
         this.template = velocityEngine.getTemplate(templateLocation);
     }
