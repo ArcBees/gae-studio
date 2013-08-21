@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 
 import org.apache.velocity.app.VelocityEngine;
 
+import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
@@ -25,6 +26,7 @@ public class VelocityModule extends AbstractModule {
 
     @Provides
     @Singleton
+    @GaeStudioResource
     VelocityEngine buildVelocityEngine() {
         VelocityEngine velocityEngine = new VelocityEngine();
 
