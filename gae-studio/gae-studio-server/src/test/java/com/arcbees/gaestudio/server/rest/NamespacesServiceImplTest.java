@@ -1,20 +1,40 @@
+/**
+ * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * This source code, and resulting software, is the confidential and proprietary information
+ * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
+ * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
+ * shall use it only in accordance with the terms and conditions of any and all license
+ * agreements you have entered into with The Company.
+ */
+
 package com.arcbees.gaestudio.server.rest;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
+import org.jukito.TestSingleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.arcbees.gaestudio.server.service.NamespacesService;
+import com.arcbees.gaestudio.server.service.NamespacesServiceImpl;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)
-public class NamespacesResourceTest extends GaeTestBase {
+public class NamespacesServiceImplTest extends GaeTestBase {
+    public static class NamespacesServiceModule extends JukitoModule {
+        @Override
+        protected void configureTest() {
+            bind(NamespacesService.class).to(NamespacesServiceImpl.class).in(TestSingleton.class);
+        }
+    }
+
     private static final String A_NAMESPACE = "a-namespace";
     private static final String ANOTHER_NAMESPACE = "another-namespace";
     private static final String KIND_NAME = "FakeEntity";
@@ -23,7 +43,7 @@ public class NamespacesResourceTest extends GaeTestBase {
     private static final String ANOTHER_NAME = "another-name";
 
     @Inject
-    NamespacesResource namespacesResource;
+    NamespacesService namespacesService;
 
     @Test
     public void twoNamespacesStored_getNamespaces_shouldReturnTheTwoNamespaces() {
@@ -32,7 +52,7 @@ public class NamespacesResourceTest extends GaeTestBase {
         createEntityInNamespace(ANOTHER_NAMESPACE, KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
         //when
-        List<AppIdNamespaceDto> namespaceDtoList = namespacesResource.getNamespaces();
+        List<AppIdNamespaceDto> namespaceDtoList = namespacesService.getNamespaces();
 
         //then
         assertEquals(2, namespaceDtoList.size());

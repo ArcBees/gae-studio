@@ -9,6 +9,9 @@
 
 package com.arcbees.gaestudio.server.dto.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
@@ -36,6 +39,16 @@ public class EntityMapper {
 
     public static KeyDto mapKeyToKeyDto(Key dbKey) {
         return new KeyDto(dbKey.getKind(), dbKey.getId(), mapParentKey(dbKey.getParent()), mapNamespace(dbKey));
+    }
+
+    public static List<EntityDto> mapEntitiesToDtos(Iterable<Entity> entities) {
+        List<EntityDto> entitiesDtos = new ArrayList<EntityDto>();
+
+        for (Entity entity : entities) {
+            entitiesDtos.add(EntityMapper.mapEntityToDto(entity));
+        }
+
+        return entitiesDtos;
     }
 
     private static ParentKeyDto mapParentKey(Key dbParentKey) {

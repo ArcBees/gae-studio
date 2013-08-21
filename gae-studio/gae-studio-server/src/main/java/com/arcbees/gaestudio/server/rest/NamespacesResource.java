@@ -16,17 +16,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
-import com.arcbees.gaestudio.server.util.AppEngineHelper;
-import com.arcbees.gaestudio.server.util.DatastoreHelper;
+import com.arcbees.gaestudio.server.service.NamespacesService;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.google.api.client.util.Lists;
-import com.google.appengine.api.datastore.Entities;
-import com.google.appengine.api.datastore.Entity;
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
 import com.google.inject.Inject;
 
 @Path(EndPoints.NAMESPACES)
@@ -34,28 +29,17 @@ import com.google.inject.Inject;
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
 public class NamespacesResource {
-    private final DatastoreHelper datastoreHelper;
+    private final NamespacesService namespacesService;
 
     @Inject
-    NamespacesResource(DatastoreHelper datastoreHelper) {
-        this.datastoreHelper = datastoreHelper;
+    NamespacesResource(NamespacesService namespacesService) {
+        this.namespacesService = namespacesService;
     }
 
     @GET
-    public List<AppIdNamespaceDto> getNamespaces() {
-        AppEngineHelper.disableApiHooks();
+    public Response getNamespaces() {
+        List<AppIdNamespaceDto> namespaces = namespacesService.getNamespaces();
 
-        Iterable<Entity> entities = datastoreHelper.getAllNamespaces();
-
-        Iterable<AppIdNamespaceDto> namespaces = FluentIterable.from(entities)
-                .transform(new Function<Entity, AppIdNamespaceDto>() {
-                    @Override
-                    public AppIdNamespaceDto apply(Entity input) {
-                        return new AppIdNamespaceDto(input.getAppId(),
-                                Entities.getNamespaceFromNamespaceKey(input.getKey()));
-                    }
-                });
-
-        return Lists.newArrayList(namespaces);
+        return Response.ok(namespaces).build();
     }
 }

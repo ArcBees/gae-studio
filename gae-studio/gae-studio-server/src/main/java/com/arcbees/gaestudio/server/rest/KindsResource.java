@@ -9,9 +9,7 @@
 
 package com.arcbees.gaestudio.server.rest;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -19,57 +17,28 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
-import com.arcbees.gaestudio.server.util.AppEngineHelper;
-import com.arcbees.gaestudio.server.util.DatastoreHelper;
+import com.arcbees.gaestudio.server.service.KindsService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.google.appengine.api.datastore.Entities;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Query;
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.Lists;
 
 @Path(EndPoints.KINDS)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
 public class KindsResource {
-    private final DatastoreHelper datastoreHelper;
+    private final KindsService kindsService;
 
     @Inject
-    KindsResource(DatastoreHelper datastoreHelper) {
-        this.datastoreHelper = datastoreHelper;
+    KindsResource(KindsService kindsService) {
+        this.kindsService = kindsService;
     }
 
     @GET
-    public List<String> getKinds() {
-        AppEngineHelper.disableApiHooks();
+    public Response getKinds() {
+        List<String> kinds = kindsService.getKinds();
 
-        Query query = new Query(Entities.KIND_METADATA_KIND);
-
-        Iterable<Entity> entityIterable = datastoreHelper.queryOnAllNamespaces(query);
-
-        return getKinds(entityIterable);
-    }
-
-    private ArrayList<String> getKinds(Iterable<Entity> entityIterable) {
-        Set<String> kinds = FluentIterable.from(entityIterable).transform(new Function<Entity, String>() {
-            @Override
-            public String apply(Entity entity) {
-                String kindName;
-
-                if (entity != null) {
-                    kindName = entity.getKey().getName();
-                } else {
-                    kindName = "";
-                }
-
-                return kindName;
-            }
-        }).toSet();
-
-        return Lists.newArrayList(kinds);
+        return Response.ok(kinds).build();
     }
 }
