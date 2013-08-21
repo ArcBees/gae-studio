@@ -16,6 +16,6 @@ import javax.ws.rs.ext.ExceptionMapper;
 public class InstantiationExceptionMapper implements ExceptionMapper<InstantiationException> {
     @Override
     public Response toResponse(InstantiationException e) {
-        return Response.status(Status.BAD_REQUEST).build();
+        return Response.status(Status.INTERNAL_SERVER_ERROR).build();
     }
 }

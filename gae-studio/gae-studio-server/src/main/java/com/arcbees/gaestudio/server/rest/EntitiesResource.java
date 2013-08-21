@@ -54,36 +54,39 @@ public class EntitiesResource {
                                 @QueryParam(UrlParameters.OFFSET) Integer offset,
                                 @QueryParam(UrlParameters.LIMIT) Integer limit) {
         ResponseBuilder responseBuilder;
-        Iterable<Entity> entities = entitiesService.getEntities(kind, offset, limit);
 
-        if (entities == null) {
-            responseBuilder = Response.status(Status.NOT_FOUND);
+        if (kind == null) {
+            responseBuilder = Response.status(Status.BAD_REQUEST);
         } else {
+            Iterable<Entity> entities = entitiesService.getEntities(kind, offset, limit);
             List<EntityDto> entitiesDtos = EntityMapper.mapEntitiesToDtos(entities);
+
             responseBuilder = Response.ok(entitiesDtos);
         }
 
         return responseBuilder.build();
     }
 
+    // TODO: Be able to generate entity base schema from the pojo that haven't been saved yet to the datastore
+    // We will need to create an implementation to support Objectify, Twig persist, etc.
+    // For objectify we can use : ObjectifyService.factory().getMetadataForEntity(String kind);
+    // And call method metadata.toEntity
+
     @POST
     public Response createEmptyEntity(@QueryParam(UrlParameters.KIND) String kind)
             throws InstantiationException, IllegalAccessException {
         ResponseBuilder responseBuilder;
-        Entity emptyEntity;
 
-        emptyEntity = entitiesService.createEmptyEntity(kind);
-
-        // TODO: Be able to generate entity base schema from the pojo that haven't been saved yet to the datastore
-        // We will need to create an implementation to support Objectify, Twig persist, etc.
-        // For objectify we can use : ObjectifyService.factory().getMetadataForEntity(String kind);
-        // And call method metadata.toEntity
-
-        if (emptyEntity == null) {
-            responseBuilder = Response.status(Status.NOT_FOUND);
+        if (kind == null) {
+            responseBuilder = Response.status(Status.BAD_REQUEST);
         } else {
-            EntityDto emptyEntityDto = EntityMapper.mapEntityToDto(emptyEntity);
-            responseBuilder = Response.ok(emptyEntityDto);
+            Entity emptyEntity = entitiesService.createEmptyEntity(kind);
+            if (emptyEntity == null) {
+                responseBuilder = Response.status(Status.NOT_FOUND);
+            } else {
+                EntityDto emptyEntityDto = EntityMapper.mapEntityToDto(emptyEntity);
+                responseBuilder = Response.ok(emptyEntityDto);
+            }
         }
 
         return responseBuilder.build();
@@ -93,9 +96,16 @@ public class EntitiesResource {
     public Response deleteEntities(@QueryParam(UrlParameters.KIND) String kind,
                                    @QueryParam(UrlParameters.NAMESPACE) String namespace,
                                    @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType) {
-        entitiesService.deleteEntities(kind, namespace, deleteType);
+        ResponseBuilder responseBuilder;
 
-        return Response.noContent().build();
+        if (isValidDeleteRequest(kind, namespace, deleteType)) {
+            entitiesService.deleteEntities(kind, namespace, deleteType);
+            responseBuilder = Response.noContent();
+        } else {
+            responseBuilder = Response.status(Status.BAD_REQUEST);
+        }
+
+        return responseBuilder.build();
     }
 
     @GET
@@ -103,8 +113,12 @@ public class EntitiesResource {
     public Response getCount(@QueryParam(UrlParameters.KIND) String kind) {
         ResponseBuilder responseBuilder;
 
-        Integer count = entitiesService.getCount(kind);
-        responseBuilder = Response.ok(count);
+        if (kind == null) {
+            responseBuilder = Response.status(Status.BAD_REQUEST);
+        } else {
+            Integer count = entitiesService.getCount(kind);
+            responseBuilder = Response.ok(count);
+        }
 
         return responseBuilder.build();
     }
@@ -112,5 +126,29 @@ public class EntitiesResource {
     @Path(EndPoints.ID)
     public EntityResource getEntityResource(@PathParam(UrlParameters.ID) Long id) {
         return subresourceFactory.createEntityResource(id);
+    }
+
+    private boolean isValidDeleteRequest(String kind, String namespace, DeleteEntities deleteType) {
+        boolean isValid;
+
+        switch (deleteType) {
+            case KIND:
+                isValid = kind != null;
+                break;
+            case NAMESPACE:
+                isValid = namespace != null;
+                break;
+            case KIND_NAMESPACE:
+                isValid = namespace != null && kind != null;
+                break;
+            case ALL:
+                isValid = true;
+                break;
+            default:
+                isValid = false;
+                break;
+        }
+
+        return isValid;
     }
 }
