@@ -35,8 +35,8 @@ public class DefaultValueGeneratorTest {
         Object primitiveResult = defaultValueGenerator.generate(primitiveLong);
 
         //then
-        assertEquals(0, result);
-        assertEquals(0, primitiveResult);
+        assertEquals(0l, result);
+        assertEquals(0l, primitiveResult);
     }
 
     @Test
@@ -62,8 +62,8 @@ public class DefaultValueGeneratorTest {
         Object primitiveResult = defaultValueGenerator.generate(primitiveByte);
 
         //then
-        assertEquals(0, result);
-        assertEquals(0, primitiveResult);
+        assertEquals((byte) 0, result);
+        assertEquals((byte) 0, primitiveResult);
     }
 
     @Test
@@ -77,8 +77,8 @@ public class DefaultValueGeneratorTest {
         Object primitiveResult = defaultValueGenerator.generate(primitiveShort);
 
         //then
-        assertEquals(0, result);
-        assertEquals(0, primitiveResult);
+        assertEquals((short) 0, result);
+        assertEquals((short) 0, primitiveResult);
     }
 
     @Test
@@ -107,8 +107,8 @@ public class DefaultValueGeneratorTest {
         Object primitiveResult = defaultValueGenerator.generate(primitiveFloat);
 
         //then
-        assertEquals(0, result);
-        assertEquals(0, primitiveResult);
+        assertEquals(0f, result);
+        assertEquals(0f, primitiveResult);
     }
 
     @Test
@@ -122,7 +122,7 @@ public class DefaultValueGeneratorTest {
         Object primitiveResult = defaultValueGenerator.generate(primitiveDouble);
 
         //then
-        assertEquals(0, result);
-        assertEquals(0, primitiveResult);
+        assertEquals(0d, result);
+        assertEquals(0d, primitiveResult);
     }
 }

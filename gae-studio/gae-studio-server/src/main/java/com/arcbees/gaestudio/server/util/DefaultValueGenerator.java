@@ -19,7 +19,7 @@ public class DefaultValueGenerator {
             if (clazz.isPrimitive()) {
                 return Defaults.defaultValue(clazz);
             } else {
-                Object defaultValue = defaultValue(clazz.getSimpleName());
+                Object defaultValue = BoxedDefaults.defaultValue(clazz);
                 if (defaultValue == null) {
                     defaultValue = clazz.newInstance();
                 }
@@ -29,27 +29,5 @@ public class DefaultValueGenerator {
         }
 
         return null;
-    }
-
-    private Object defaultValue(String className) {
-        if (className.equals("Boolean")) {
-            return false;
-        } else if (className.equals("Long")) {
-            return 0;
-        } else if (className.equals("String")) {
-            return "";
-        } else if (className.equals("Byte")) {
-            return 0;
-        } else if (className.equals("Short")) {
-            return 0;
-        } else if (className.equals("Integer")) {
-            return 0;
-        } else if (className.equals("Float")) {
-            return 0;
-        } else if (className.equals("Double")) {
-            return 0;
-        } else {
-            return null;
-        }
     }
 }
