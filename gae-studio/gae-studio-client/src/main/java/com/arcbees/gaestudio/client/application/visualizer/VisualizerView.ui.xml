@@ -14,7 +14,7 @@
     <g:HTMLPanel addStyleNames="{style.root} {resources.styles.noOverflow}">
         <g:SimplePanel ui:field="entityTypesSidebar" addStyleNames="{resources.styles.entityTypeSelector}"/>
         <g:SimplePanel ui:field="toolbar" addStyleNames="{resources.styles.hiddenOverlay}"/>
-        <div class="{resources.styles.entityContainer}">
+        <div class="{resources.styles.entityContainer}" ui:field="entityContainer">
             <g:SimplePanel ui:field="entityListPanel"
                            addStyleNames="{resources.styles.entityListPanel}"/>
             <div class="{resources.styles.entityDetailPanel}">

@@ -189,7 +189,7 @@ body {
 
 .entityTypeSelector {
     float: left;
-    width: 10%;
+    width: 200px;
     background: #e0e0e0;
     height: 100%;
     position: relative;
@@ -260,7 +260,7 @@ body {
     float: left;
     display: block;
     position: absolute;
-    left: 10%;
+    left: 200px;
     overflow: hidden;
 }
 
@@ -279,7 +279,7 @@ body {
     z-index: 30;
     line-height: 36px;
     content: "\2190  Choose one of the entity kind to the left";
-    margin-left: 10%;
+    margin-left: 200px;
     padding-left: 8px;
     opacity: 1;
 
