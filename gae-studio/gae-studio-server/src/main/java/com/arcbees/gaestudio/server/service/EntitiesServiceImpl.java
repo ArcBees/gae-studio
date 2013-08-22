@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
+import com.arcbees.gaestudio.server.util.DefaultValueGenerator;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.DatastoreService;
@@ -27,10 +28,13 @@ import com.google.appengine.api.datastore.Query;
 
 public class EntitiesServiceImpl implements EntitiesService {
     private final DatastoreHelper datastoreHelper;
+    private final DefaultValueGenerator defaultValueGenerator;
 
     @Inject
-    public EntitiesServiceImpl(DatastoreHelper datastoreHelper) {
+    public EntitiesServiceImpl(DatastoreHelper datastoreHelper,
+                               DefaultValueGenerator defaultValueGenerator) {
         this.datastoreHelper = datastoreHelper;
+        this.defaultValueGenerator = defaultValueGenerator;
     }
 
     @Override
@@ -127,36 +131,7 @@ public class EntitiesServiceImpl implements EntitiesService {
 
     private Object createEmptyPropertyObject(Map.Entry<String, Object> property)
             throws InstantiationException, IllegalAccessException {
-        return defaultValue(property.getValue());
-    }
-
-    private Object defaultValue(Object value)
-            throws IllegalAccessException, InstantiationException {
-        if (value != null) {
-            String className = value.getClass().getSimpleName();
-
-            if (className.equals("Boolean")) {
-                return Boolean.FALSE;
-            } else if (className.equals("Long")) {
-                return 0;
-            } else if (className.equals("String")) {
-                return String.valueOf("");
-            } else if (className.equals("Byte")) {
-                return Byte.valueOf("");
-            } else if (className.equals("Short")) {
-                return Short.valueOf("");
-            } else if (className.equals("Integer")) {
-                return 0;
-            } else if (className.equals("Float")) {
-                return 0;
-            } else if (className.equals("Double")) {
-                return 0;
-            } else {
-                return value.getClass().newInstance();
-            }
-        } else {
-            return null;
-        }
+        return defaultValueGenerator.generate(property.getValue());
     }
 
     private void deleteByNamespace(String namespace) {
