@@ -9,12 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.visualizer;
 
-import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.event.logical.shared.ResizeEvent;
-import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -24,8 +20,6 @@ import com.gwtplatform.mvp.client.ViewImpl;
 public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyView{
     interface Binder extends UiBinder<Widget, VisualizerView> {
     }
-
-    private static final int LEFT_PANEL_WIDTH = 200;
 
     @UiField
     SimplePanel entityListPanel;
@@ -37,21 +31,10 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     SimplePanel entityDetailsPanel;
     @UiField
     SimplePanel entityDeletionPanel;
-    @UiField
-    DivElement entityContainer;
 
     @Inject
     VisualizerView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
-
-        Window.addResizeHandler(new ResizeHandler() {
-            @Override
-            public void onResize(ResizeEvent resizeEvent) {
-                VisualizerView.this.onResize(resizeEvent.getWidth());
-            }
-        });
-
-        onResize(Window.getClientWidth());
     }
 
     @Override
@@ -69,9 +52,5 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
                 entityDeletionPanel.setWidget(content);
             }
         }
-    }
-
-    private void onResize(int windowWidth) {
-        entityContainer.getStyle().setPropertyPx("width", Math.max(windowWidth - LEFT_PANEL_WIDTH, 0));
     }
 }

@@ -188,12 +188,7 @@ body {
 }
 
 .entityTypeSelector {
-    float: left;
-    width: 200px;
     background: #e0e0e0;
-    height: 100%;
-    position: relative;
-    z-index: 50;
     overflow-y: auto;
 
     -webkit-box-shadow: 4px 7px 10px -5px rgba(0, 0, 0, 0.7);
@@ -219,9 +214,10 @@ body {
 
 .entityListPanel {
     width: 51%;
-    position: absolute;
-    left: 0%;
-    top: 0;
+    position: relative;
+    height:100%;
+    zoom: 1;
+    overflow-y: auto;
 
     transition: left .5s ease;
     -webkit-transition: left .5s ease;
@@ -255,13 +251,7 @@ body {
 }
 
 .entityContainer {
-    min-height: 95.8%;
-    width: 90%;
-    float: left;
-    display: block;
-    position: absolute;
-    left: 200px;
-    overflow: hidden;
+    /* used as selector */
 }
 
 .hiddenOverlay {
@@ -269,17 +259,8 @@ body {
 }
 
 .hiddenOverlay > div:before {
-    height: 100%;
-    width: 88%;
-    background-color: inherit;
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 30;
     line-height: 36px;
     content: "\2190  Choose one of the entity kind to the left";
-    margin-left: 200px;
     padding-left: 8px;
     opacity: 1;
 

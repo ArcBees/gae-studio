@@ -2,41 +2,43 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:style>
-        .root {
-            overflow: visible;
-        }
-
         .entityPanel {
             width: 100%;
             clear: both;
         }
     </ui:style>
-    <g:HTMLPanel addStyleNames="{style.root} {resources.styles.noOverflow}">
-        <g:SimplePanel ui:field="entityTypesSidebar" addStyleNames="{resources.styles.entityTypeSelector}"/>
-        <g:SimplePanel ui:field="toolbar" addStyleNames="{resources.styles.hiddenOverlay}"/>
-        <div class="{resources.styles.entityContainer}" ui:field="entityContainer">
-            <g:SimplePanel ui:field="entityListPanel"
-                           addStyleNames="{resources.styles.entityListPanel}"/>
-            <div class="{resources.styles.entityDetailPanel}">
-                <g:HTMLPanel styleName="{resources.styles.entityDetailPanelVisibility}" visible="false">
-                    <a class="{resources.styles.backButton}" title="Back to normal view"/>
-                    <a class="{resources.styles.fullscreenButton}" title="View in full screen"/>
-                    <p class="{resources.styles.isDisplaying}">
-                        Displaying
-                        <span class="{resources.styles.isDisplayingEntity}">entity</span>
-                        <b class="{resources.styles.idBold}">no entity</b>
-                        of the kind
-                        <b class="{resources.styles.kindBold}">Kind</b>
-                        <span class="{resources.styles.namespace}">in the namespace
-                            <b class="{resources.styles.namespaceBold}">Namespace</b>
-                        </span>
-                    </p>
-                    <g:SimplePanel ui:field="entityDetailsPanel"
-                                   addStyleNames="{style.entityPanel} {resources.styles.secondTable}"/>
-                    <g:SimplePanel ui:field="entityDeletionPanel" addStyleNames="{style.entityPanel}"/>
-                </g:HTMLPanel>
-            </div>
-        </div>
-        <div class="{resources.styles.clear}"/>
-    </g:HTMLPanel>
+    <g:DockLayoutPanel unit="PX">
+        <g:west size="200">
+            <g:SimplePanel ui:field="entityTypesSidebar" addStyleNames="{resources.styles.entityTypeSelector}"/>
+        </g:west>
+        <g:north size="36">
+            <g:SimplePanel ui:field="toolbar" addStyleNames="{resources.styles.hiddenOverlay}"/>
+        </g:north>
+        <g:center styleName="{resources.styles.noOverflow}">
+            <g:HTMLPanel addStyleNames="{resources.styles.entityContainer}">
+                <g:SimplePanel ui:field="entityListPanel"
+                    addStyleNames="{resources.styles.entityListPanel}"/>
+
+                <div class="{resources.styles.entityDetailPanel}">
+                    <g:HTMLPanel styleName="{resources.styles.entityDetailPanelVisibility}" visible="false">
+                        <a class="{resources.styles.backButton}" title="Back to normal view"/>
+                        <a class="{resources.styles.fullscreenButton}" title="View in full screen"/>
+                        <p class="{resources.styles.isDisplaying}">
+                            Displaying
+                            <span class="{resources.styles.isDisplayingEntity}">entity</span>
+                            <b class="{resources.styles.idBold}">no entity</b>
+                            of the kind
+                            <b class="{resources.styles.kindBold}">Kind</b>
+                            <span class="{resources.styles.namespace}">in the namespace
+                                <b class="{resources.styles.namespaceBold}">Namespace</b>
+                            </span>
+                        </p>
+                        <g:SimplePanel ui:field="entityDetailsPanel"
+                                addStyleNames="{style.entityPanel} {resources.styles.secondTable}"/>
+                        <g:SimplePanel ui:field="entityDeletionPanel" addStyleNames="{style.entityPanel}"/>
+                    </g:HTMLPanel>
+                </div>
+            </g:HTMLPanel>
+        </g:center>
+    </g:DockLayoutPanel>
 </ui:UiBinder>
