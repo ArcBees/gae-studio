@@ -25,7 +25,7 @@ public class DefaultValueGeneratorTest {
     DefaultValueGenerator defaultValueGenerator;
 
     @Test
-    public void givenLongValue_generateDefault_shouldReturn0() throws InstantiationException, IllegalAccessException {
+    public void givenLongValue_generateDefault_shouldReturn0() {
         //given
         Long longValue = 3l;
         long primitiveLong = 4l;
@@ -40,7 +40,7 @@ public class DefaultValueGeneratorTest {
     }
 
     @Test
-    public void givenStringValue_generateDefault_shouldReturnEmptyString() throws InstantiationException, IllegalAccessException {
+    public void givenStringValue_generateDefault_shouldReturnEmptyString() {
         //given
         String stringValue = "hello";
 
@@ -52,7 +52,7 @@ public class DefaultValueGeneratorTest {
     }
 
     @Test
-    public void givenByteValue_generateDefault_shouldReturn0() throws InstantiationException, IllegalAccessException {
+    public void givenByteValue_generateDefault_shouldReturn0() {
         //given
         Byte byteValue = 3;
         byte primitiveByte = 4;
@@ -67,7 +67,7 @@ public class DefaultValueGeneratorTest {
     }
 
     @Test
-    public void givenShortValue_generateDefault_shouldReturn0() throws InstantiationException, IllegalAccessException {
+    public void givenShortValue_generateDefault_shouldReturn0() {
         //given
         Short shortValue = 3;
         short primitiveShort = 4;
@@ -82,7 +82,7 @@ public class DefaultValueGeneratorTest {
     }
 
     @Test
-    public void givenIntegerValue_generateDefault_shouldReturn0() throws InstantiationException, IllegalAccessException {
+    public void givenIntegerValue_generateDefault_shouldReturn0() {
         //given
         Integer integerValue = 3;
         int primitiveInteger = 4;
@@ -97,7 +97,7 @@ public class DefaultValueGeneratorTest {
     }
 
     @Test
-    public void givenFloatValue_generateDefault_shouldReturn0() throws InstantiationException, IllegalAccessException {
+    public void givenFloatValue_generateDefault_shouldReturn0() {
         //given
         Float floatValue = 3f;
         float primitiveFloat = 4;
@@ -112,7 +112,7 @@ public class DefaultValueGeneratorTest {
     }
 
     @Test
-    public void givenDoubleValue_generateDefault_shouldReturn0() throws InstantiationException, IllegalAccessException {
+    public void givenDoubleValue_generateDefault_shouldReturn0() {
         //given
         Double doubleValue = 3d;
         double primitiveDouble = 4;

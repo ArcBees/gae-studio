@@ -12,7 +12,7 @@ package com.arcbees.gaestudio.server.util;
 import com.google.common.base.Defaults;
 
 public class DefaultValueGenerator {
-    public Object generate(Object value) throws IllegalAccessException, InstantiationException {
+    public Object generate(Object value) {
         if (value != null) {
             Class<?> clazz = value.getClass();
 
@@ -21,7 +21,13 @@ public class DefaultValueGenerator {
             } else {
                 Object defaultValue = BoxedDefaults.defaultValue(clazz);
                 if (defaultValue == null) {
-                    defaultValue = clazz.newInstance();
+                    try {
+                        defaultValue = clazz.newInstance();
+                    } catch (InstantiationException e) {
+                        return null;
+                    } catch (IllegalAccessException e) {
+                        return null;
+                    }
                 }
 
                 return defaultValue;

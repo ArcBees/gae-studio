@@ -31,6 +31,7 @@ public final class BoxedDefaults {
         .put(Long.class, 0L)
         .put(Float.class, 0f)
         .put(Double.class, 0d)
+        .put(String.class, "")
         .build();
     }
 
