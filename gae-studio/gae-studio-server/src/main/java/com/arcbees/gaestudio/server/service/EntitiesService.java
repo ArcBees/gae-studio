@@ -15,7 +15,7 @@ import com.google.appengine.api.datastore.Entity;
 public interface EntitiesService {
     Iterable<Entity> getEntities(String kind, Integer offset, Integer limit);
 
-    Entity createEmptyEntity(String kind) throws IllegalAccessException, InstantiationException;
+    Entity createEmptyEntity(String kind);
 
     void deleteEntities(String kind, String namespace, DeleteEntities deleteType);
 

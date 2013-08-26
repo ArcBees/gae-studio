@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
+import com.arcbees.gaestudio.server.util.DefaultValueGenerator;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.DatastoreService;
@@ -27,10 +28,13 @@ import com.google.appengine.api.datastore.Query;
 
 public class EntitiesServiceImpl implements EntitiesService {
     private final DatastoreHelper datastoreHelper;
+    private final DefaultValueGenerator defaultValueGenerator;
 
     @Inject
-    public EntitiesServiceImpl(DatastoreHelper datastoreHelper) {
+    EntitiesServiceImpl(DatastoreHelper datastoreHelper,
+                        DefaultValueGenerator defaultValueGenerator) {
         this.datastoreHelper = datastoreHelper;
+        this.defaultValueGenerator = defaultValueGenerator;
     }
 
     @Override
@@ -52,7 +56,7 @@ public class EntitiesServiceImpl implements EntitiesService {
     }
 
     @Override
-    public Entity createEmptyEntity(String kind) throws IllegalAccessException, InstantiationException {
+    public Entity createEmptyEntity(String kind) {
         AppEngineHelper.disableApiHooks();
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -100,8 +104,7 @@ public class EntitiesServiceImpl implements EntitiesService {
     }
 
     private Entity setEmptiedProperties(Entity entity,
-                                        Map<String, Object> properties)
-            throws InstantiationException, IllegalAccessException {
+                                        Map<String, Object> properties) {
         for (Map.Entry<String, Object> property : properties.entrySet()) {
             Object value = property.getValue();
 
@@ -120,14 +123,12 @@ public class EntitiesServiceImpl implements EntitiesService {
         return KeyFactory.createKey(key.getKind(), " ");
     }
 
-    private Object createEmptyArbitraryObject(Map.Entry<String, Object> property)
-            throws IllegalAccessException, InstantiationException {
+    private Object createEmptyArbitraryObject(Map.Entry<String, Object> property) {
         return createEmptyPropertyObject(property);
     }
 
-    private Object createEmptyPropertyObject(Map.Entry<String, Object> property)
-            throws InstantiationException, IllegalAccessException {
-        return property.getValue().getClass().newInstance();
+    private Object createEmptyPropertyObject(Map.Entry<String, Object> property) {
+        return defaultValueGenerator.generate(property.getValue());
     }
 
     private void deleteByNamespace(String namespace) {

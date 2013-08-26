@@ -73,8 +73,7 @@ public class EntitiesResource {
     // And call method metadata.toEntity
 
     @POST
-    public Response createEmptyEntity(@QueryParam(UrlParameters.KIND) String kind)
-            throws InstantiationException, IllegalAccessException {
+    public Response createEmptyEntity(@QueryParam(UrlParameters.KIND) String kind) {
         ResponseBuilder responseBuilder;
 
         if (kind == null) {
