@@ -23,12 +23,15 @@ import com.arcbees.gaestudio.server.service.EntitiesService;
 import com.arcbees.gaestudio.server.service.EntitiesServiceImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(JukitoRunner.class)
 public class EntitiesServiceImplTest extends GaeTestBase {
@@ -42,6 +45,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
     private static final String KIND_NAME = "FakeEntity";
     private static final String GAE_KIND_NAME = "__FakeEntity";
     private static final String PROPERTY_NAME = "property-name";
+    private static final String UNINDEXED_PROPERTY_NAME = "unindexed-property-name";
     private static final String A_NAME = "a-name";
     private static final String ANOTHER_NAME = "another-name";
 
@@ -84,6 +88,24 @@ public class EntitiesServiceImplTest extends GaeTestBase {
     }
 
     @Test
+    public void entityStored_createEmptyEntity_shouldKeepIndexes()
+            throws EntityNotFoundException, InstantiationException, IllegalAccessException {
+        //given
+        createEntityWithMultipleProperties();
+
+        //when
+        Entity entity = entitiesService.createEmptyEntity(KIND_NAME);
+
+        //then
+        assertNotNull(entity);
+        assertEquals(KIND_NAME, entity.getKind());
+        assertEquals("", entity.getProperty(PROPERTY_NAME));
+        assertFalse(entity.isUnindexedProperty(PROPERTY_NAME));
+        assertEquals("", entity.getProperty(UNINDEXED_PROPERTY_NAME));
+        assertTrue(entity.isUnindexedProperty(UNINDEXED_PROPERTY_NAME));
+    }
+
+    @Test
     public void twoEntitiesStored_deleteEntitiesByKind_shouldHaveNoMoreEntities() {
         //given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
@@ -120,5 +142,14 @@ public class EntitiesServiceImplTest extends GaeTestBase {
 
         //then
         assertEquals(2l, (long) entityCount);
+    }
+
+    private void createEntityWithMultipleProperties() {
+        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+        Entity entity = new Entity(KIND_NAME);
+
+        entity.setProperty(PROPERTY_NAME, A_NAME);
+        entity.setUnindexedProperty(UNINDEXED_PROPERTY_NAME, A_NAME);
+        datastoreService.put(entity);
     }
 }

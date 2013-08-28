@@ -12,6 +12,7 @@ package com.google.appengine.api.datastore;
 import java.lang.reflect.Modifier;
 import java.util.Map;
 
+import com.google.appengine.api.datastore.Entity.UnindexedValue;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -41,6 +42,7 @@ public class GsonDatastoreFactory {
         gsonBuilder.registerTypeAdapter(AppIdNamespace.class, new AppIdNamespaceInstanceCreator());
         gsonBuilder.registerTypeAdapter(Key.class, new KeyInstanceCreator());
         gsonBuilder.registerTypeAdapter(Map.class, new PropertiesDeserializer());
+        gsonBuilder.registerTypeAdapter(UnindexedValue.class, new UnindexedValueAdapter());
 
         return gsonBuilder.create();
     }
