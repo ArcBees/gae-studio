@@ -66,7 +66,7 @@ public class EntitiesServiceImpl implements EntitiesService {
         Entity entity = datastore.prepare(query).asList(fetchOptions).get(0);
 
         Entity emptyEntity = new Entity(kind);
-        emptyEntity = setEmptiedProperties(emptyEntity, entity.getProperties());
+        emptyEntity = setEmptiedProperties(emptyEntity, entity);
 
         return emptyEntity;
     }
@@ -103,9 +103,11 @@ public class EntitiesServiceImpl implements EntitiesService {
         return datastore.prepare(query).countEntities(fetchOptions);
     }
 
-    private Entity setEmptiedProperties(Entity entity,
-                                        Map<String, Object> properties) {
+    private Entity setEmptiedProperties(Entity entity, Entity template) {
+        Map<String, Object> properties = template.getProperties();
+
         for (Map.Entry<String, Object> property : properties.entrySet()) {
+            String propertyKey = property.getKey();
             Object value = property.getValue();
 
             if (value instanceof Key) {
@@ -113,7 +115,12 @@ public class EntitiesServiceImpl implements EntitiesService {
             } else {
                 value = createEmptyArbitraryObject(property);
             }
-            entity.setProperty(property.getKey(), value);
+
+            if (template.isUnindexedProperty(propertyKey)) {
+                entity.setUnindexedProperty(propertyKey, value);
+            } else {
+                entity.setProperty(propertyKey, value);
+            }
         }
 
         return entity;

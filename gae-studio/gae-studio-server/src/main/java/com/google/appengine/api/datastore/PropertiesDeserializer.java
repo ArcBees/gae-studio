@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.google.appengine.api.datastore.Entity.UnindexedValue;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -34,8 +35,13 @@ public class PropertiesDeserializer implements JsonDeserializer<Map> {
 
             if (isKey(jsonValueElement)) {
                 value = context.deserialize(jsonValueElement, Key.class);
+            } else if (UnindexedValueAdapter.isUnindexedValue(jsonValueElement)) {
+                value = context.deserialize(jsonValueElement, UnindexedValue.class);
             } else {
-                value = context.deserialize(jsonValueElement, Object.class);
+                JsonElement toDeserialize = UnindexedValueAdapter.isIndexedValue(jsonValueElement) ? jsonValueElement
+                        .getAsJsonObject().get(UnindexedValueAdapter.VALUE) : jsonValueElement;
+
+                value = context.deserialize(toDeserialize, Object.class);
             }
 
             properties.put(key, value);
