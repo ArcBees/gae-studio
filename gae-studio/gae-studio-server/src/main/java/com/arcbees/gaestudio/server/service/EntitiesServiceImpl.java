@@ -112,7 +112,7 @@ public class EntitiesServiceImpl implements EntitiesService {
 
             if (value instanceof Key) {
                 value = createEmptyKey((Key) value);
-            } else{
+            } else {
                 value = createEmptyArbitraryObject(property);
             }
 
