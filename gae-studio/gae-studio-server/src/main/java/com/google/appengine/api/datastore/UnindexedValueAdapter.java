@@ -49,7 +49,7 @@ public class UnindexedValueAdapter implements JsonSerializer<UnindexedValue>, Js
             throw new IllegalArgumentException("The Json element doesn't represent an unindexed value : " + jsonElement
                     .toString());
         }
-        return new UnindexedValue(context.deserialize(jsonElement.getAsJsonObject().get(VALUE), Object.class));
 
+        return new UnindexedValue(context.deserialize(jsonElement.getAsJsonObject().get(VALUE), Object.class));
     }
 }
