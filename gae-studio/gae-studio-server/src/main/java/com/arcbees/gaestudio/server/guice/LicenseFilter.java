@@ -44,7 +44,7 @@ public class LicenseFilter implements Filter {
             chain.doFilter(request, response);
         } else {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
-            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Thanks to have used GAE Studio. Your version" +
+            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Thanks for using GAE Studio. Your version" +
                     " is now expired. Please update it via our website.");
         }
     }

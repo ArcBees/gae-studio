@@ -22,7 +22,7 @@
     <g:HTMLPanel>
         <div class="{style.alert}">
             <h4>Your version is expired.</h4>
-            <div>Thanks to have used GAE Studio. Your version is now expired. Please update it via our website.</div>
+            <div>Thanks for using GAE Studio. Your version is now expired. Please update it via our website.</div>
         </div>
     </g:HTMLPanel>
 </ui:UiBinder>

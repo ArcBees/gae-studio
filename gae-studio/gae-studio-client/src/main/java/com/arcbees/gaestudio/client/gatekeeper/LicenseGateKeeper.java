@@ -18,7 +18,7 @@ import com.gwtplatform.mvp.client.annotations.DefaultGatekeeper;
 import com.gwtplatform.mvp.client.proxy.Gatekeeper;
 
 @DefaultGatekeeper
-public class LicenseGateKeeper implements Gatekeeper{
+public class LicenseGateKeeper implements Gatekeeper {
     private final Date expirationDate;
 
     @Inject
