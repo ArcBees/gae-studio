@@ -31,8 +31,8 @@ public class RootServlet extends HttpServlet {
             "com/arcbees/gaestudio/server/velocitytemplates/gae-studio.vm";
 
     protected final String restPath;
-    private final Date expirationDate;
 
+    private final Date expirationDate;
     private final VelocityWrapper velocityWrapper;
 
     @Inject

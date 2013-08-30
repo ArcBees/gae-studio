@@ -32,8 +32,8 @@ public class LicenseExpiredPresenter extends Presenter<LicenseExpiredPresenter.M
 
     @Inject
     LicenseExpiredPresenter(EventBus eventBus,
-            MyView view,
-            MyProxy proxy) {
+                            MyView view,
+                            MyProxy proxy) {
         super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
     }
 }

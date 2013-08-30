@@ -33,8 +33,9 @@ import com.google.inject.servlet.ServletModule;
 import static org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters.RESTEASY_SERVLET_MAPPING_PREFIX;
 
 public class GaeServletModule extends ServletModule {
-    private static final long VALIDITY_PERIOD = 365 * 24 * 60 * 60 * 1000L; // one year
+    private static final long ONE_YEAR_VALIDITY_PERIOD = 365 * 24 * 60 * 60 * 1000L;
     private static final SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     private final String restPath;
 
     GaeServletModule(ServletContext servletContext) {
@@ -80,6 +81,6 @@ public class GaeServletModule extends ServletModule {
             throw new RuntimeException("The application is not correctly configured");
         }
 
-        return new Date(buildDate.getTime() + VALIDITY_PERIOD);
+        return new Date(buildDate.getTime() + ONE_YEAR_VALIDITY_PERIOD);
     }
 }
