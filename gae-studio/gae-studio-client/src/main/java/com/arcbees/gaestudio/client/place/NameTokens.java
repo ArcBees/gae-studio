@@ -13,6 +13,7 @@ public class NameTokens {
     public static final String visualizer = "visualizer";
     public static final String profiler = "profiler";
     public static final String entity = "entity";
+    public static final String licenseExpired = "licenseExpired";
 
     public static String getVisualizer() {
         return visualizer;
@@ -24,5 +25,9 @@ public class NameTokens {
 
     public static String getEntity() {
         return entity;
+    }
+
+    public static String getLicenseExpired() {
+        return licenseExpired;
     }
 }

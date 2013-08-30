@@ -7,9 +7,14 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server;
+package com.arcbees.gaestudio.client.application.error;
 
-public class GaeStudioConstants {
-    public static final String GAE_NAMESPACE = "gaestudio";
-    public static final String GA_CLIENT_KIND = "__GAClient";
+import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
+
+public class ErrorModule extends AbstractPresenterModule {
+    @Override
+    protected void configure() {
+        bindPresenter(LicenseExpiredPresenter.class, LicenseExpiredPresenter.MyView.class, LicenseExpiredView.class,
+                LicenseExpiredPresenter.MyProxy.class);
+    }
 }
