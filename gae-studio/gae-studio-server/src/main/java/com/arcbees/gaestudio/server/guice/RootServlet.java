@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.server.guice;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapper;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapperFactory;
 import com.arcbees.gaestudio.shared.BaseRestPath;
+import com.arcbees.gaestudio.shared.ExpirationDate;
 import com.google.inject.Singleton;
 
 @Singleton
@@ -29,13 +31,16 @@ public class RootServlet extends HttpServlet {
             "com/arcbees/gaestudio/server/velocitytemplates/gae-studio.vm";
 
     protected final String restPath;
+    private final Date expirationDate;
 
     private final VelocityWrapper velocityWrapper;
 
     @Inject
     RootServlet(VelocityWrapperFactory velocityWrapperFactory,
-                @BaseRestPath String restPath) {
+                @BaseRestPath String restPath,
+                @ExpirationDate Date expirationDate) {
         this.restPath = restPath;
+        this.expirationDate = expirationDate;
         this.velocityWrapper = velocityWrapperFactory.create(templateLocation);
     }
 
@@ -44,6 +49,7 @@ public class RootServlet extends HttpServlet {
         PrintWriter printWriter = resp.getWriter();
 
         velocityWrapper.put("restPath", restPath);
+        velocityWrapper.put("expirationDate", expirationDate.getTime());
         String generated = velocityWrapper.generate();
 
         printWriter.append(generated);

@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.gin;
 
+import java.util.Date;
+
 import javax.inject.Singleton;
 
 import com.arcbees.gaestudio.client.application.ApplicationModule;
@@ -19,6 +21,9 @@ import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.rest.RestModule;
+import com.arcbees.gaestudio.shared.ExpirationDate;
+import com.google.gwt.i18n.client.Dictionary;
+import com.google.inject.Provides;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.ErrorPlace;
 import com.gwtplatform.mvp.client.annotations.UnauthorizedPlace;
@@ -37,14 +42,27 @@ public class ClientModule extends AbstractPresenterModule {
 
         // TODO
         bindConstant().annotatedWith(ErrorPlace.class).to(NameTokens.visualizer);
-        bindConstant().annotatedWith(UnauthorizedPlace.class).to(NameTokens.visualizer);
+        bindConstant().annotatedWith(UnauthorizedPlace.class).to(NameTokens.licenseExpired);
 
         bind(BytesFormatter.class).in(Singleton.class);
         bind(AppResources.class).in(Singleton.class);
         bind(AppConstants.class).in(Singleton.class);
         bind(AppMessages.class).in(Singleton.class);
         bind(CellTableResource.class).in(Singleton.class);
-        
+
         bind(ResourceLoader.class).asEagerSingleton();
+    }
+
+    @Provides
+    @Singleton
+    @ExpirationDate
+    Date getExpirationDate() {
+        try {
+            Long expirationDateTimeMillis = Long.parseLong(Dictionary.getDictionary("AppConfiguration").get("ax5b7kor"));
+            return new Date(expirationDateTimeMillis);
+        } catch (NumberFormatException e) {
+            // impossible to read the expiration date... We considered the application as expired
+            return new Date();
+        }
     }
 }
