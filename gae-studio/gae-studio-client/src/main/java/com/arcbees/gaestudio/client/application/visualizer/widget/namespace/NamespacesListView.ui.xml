@@ -3,6 +3,6 @@
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <g:HTMLPanel>
         <g:ValueListBox ui:field="namespaces"/>
-        <g:Button ui:field="delete" text="Delete"/>
+        <g:Button ui:field="delete" text="Delete All"/>
     </g:HTMLPanel>
 </ui:UiBinder>

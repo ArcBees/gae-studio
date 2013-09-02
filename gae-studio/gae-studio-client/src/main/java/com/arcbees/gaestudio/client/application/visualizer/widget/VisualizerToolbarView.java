@@ -76,6 +76,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
         edit = createEditButton();
         delete = createDeleteButton();
         deleteByKind = new SimplePanel();
+        deleteByKind.setStyleName(resources.styles().toolbarButton());
 
         buttons.add(refresh);
         buttons.add(create);
@@ -106,7 +107,7 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
 
     @Override
     public void setInSlot(Object slot, IsWidget content) {
-        if (VisualizerToolbarPresenter.SLOT_NAMESPACES.equals(slot)) {
+        if (VisualizerToolbarPresenter.SLOT_NAMESPACES == slot) {
             deleteByKind.setWidget(content);
         } else {
             super.setInSlot(slot, content);
