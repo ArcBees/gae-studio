@@ -11,10 +11,9 @@ package com.arcbees.gaestudio.shared.dto;
 
 import com.arcbees.gaestudio.shared.dto.stacktrace.StackTraceElementDto;
 
-// TODO : Complete
 public class PutRecordDto extends DbOperationRecordDto {
     @SuppressWarnings("unused")
-    protected PutRecordDto() {
+    public PutRecordDto() {
     }
 
     public PutRecordDto(StackTraceElementDto callerStackTraceElement,

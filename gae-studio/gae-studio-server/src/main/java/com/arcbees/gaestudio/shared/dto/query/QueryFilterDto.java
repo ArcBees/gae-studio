@@ -9,16 +9,17 @@
 
 package com.arcbees.gaestudio.shared.dto.query;
 
-import com.arcbees.gaestudio.shared.QueryFilterOperator;
-import com.google.gwt.user.client.rpc.IsSerializable;
+import java.io.Serializable;
 
-public class QueryFilterDto implements IsSerializable {
+import com.arcbees.gaestudio.shared.QueryFilterOperator;
+
+public class QueryFilterDto implements Serializable {
     private String property;
     private QueryFilterOperator operator;
     private String value;
 
     @SuppressWarnings("unused")
-    protected QueryFilterDto() {
+    public QueryFilterDto() {
     }
 
     public QueryFilterDto(String property, QueryFilterOperator operator, String value) {
@@ -37,5 +38,17 @@ public class QueryFilterDto implements IsSerializable {
 
     public String getValue() {
         return value;
+    }
+
+    public void setProperty(String property) {
+        this.property = property;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public void setOperator(QueryFilterOperator operator) {
+        this.operator = operator;
     }
 }

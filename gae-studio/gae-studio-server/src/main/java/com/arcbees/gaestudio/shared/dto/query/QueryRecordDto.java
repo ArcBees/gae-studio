@@ -17,7 +17,7 @@ public class QueryRecordDto extends DbOperationRecordDto {
     private QueryResultDto queryResult;
 
     @SuppressWarnings("unused")
-    protected QueryRecordDto() {
+    public QueryRecordDto() {
     }
 
     public QueryRecordDto(QueryDto query, QueryResultDto queryResult,
@@ -37,5 +37,13 @@ public class QueryRecordDto extends DbOperationRecordDto {
 
     public QueryResultDto getQueryResult() {
         return queryResult;
+    }
+
+    public void setQuery(QueryDto query) {
+        this.query = query;
+    }
+
+    public void setQueryResult(QueryResultDto queryResult) {
+        this.queryResult = queryResult;
     }
 }

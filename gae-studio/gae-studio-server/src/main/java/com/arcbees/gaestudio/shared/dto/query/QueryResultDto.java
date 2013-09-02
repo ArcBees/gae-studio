@@ -9,14 +9,14 @@
 
 package com.arcbees.gaestudio.shared.dto.query;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+import java.io.Serializable;
 
-public class QueryResultDto implements IsSerializable {
+public class QueryResultDto implements Serializable {
     private Integer resultSize;
     private Integer serializedSize;
 
     @SuppressWarnings("unused")
-    protected QueryResultDto() {
+    public QueryResultDto() {
     }
 
     public QueryResultDto(Integer resultSize, Integer serializedSize) {
@@ -30,5 +30,13 @@ public class QueryResultDto implements IsSerializable {
 
     public Integer getSerializedSize() {
         return serializedSize;
+    }
+
+    public void setResultSize(Integer resultSize) {
+        this.resultSize = resultSize;
+    }
+
+    public void setSerializedSize(Integer serializedSize) {
+        this.serializedSize = serializedSize;
     }
 }

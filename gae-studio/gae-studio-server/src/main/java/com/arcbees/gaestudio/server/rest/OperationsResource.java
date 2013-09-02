@@ -20,7 +20,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
@@ -28,7 +30,6 @@ import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.appengine.api.memcache.MemcacheService;
-import com.google.common.collect.Lists;
 
 @Path(EndPoints.OPERATIONS)
 @Produces(MediaType.APPLICATION_JSON)
@@ -46,12 +47,12 @@ public class OperationsResource {
     }
 
     @GET
-    public List<DbOperationRecordDto> getOperations(@QueryParam(UrlParameters.ID) Long lastId,
+    public Response getOperations(@QueryParam(UrlParameters.ID) Long lastId,
                                                     @QueryParam(UrlParameters.LIMIT) Integer limit) {
         Long mostRecentId = getMostRecentId();
         if (mostRecentId == null) {
             logger.info("Could not find a mostRecentId");
-            return Lists.newArrayList();
+            return Response.noContent().build();
         }
 
         long beginId = lastId + 1;
@@ -60,7 +61,7 @@ public class OperationsResource {
 
         if (beginId > endId) {
             logger.info("No new records since last poll");
-            return Lists.newArrayList();
+            return Response.noContent().build();
         }
 
         logger.info("Attempting to retrieve ids " + beginId + "-" + endId);
@@ -71,12 +72,16 @@ public class OperationsResource {
         // always retrieves all missing records.
 
         // TODO optimize this
-        ArrayList<DbOperationRecordDto> records = new ArrayList<DbOperationRecordDto>(recordsByKey.size());
+        List<DbOperationRecordDto> records = new ArrayList<DbOperationRecordDto>(recordsByKey.size());
         for (Object recordObject : recordsByKey.values()) {
             records.add((DbOperationRecordDto) recordObject);
         }
 
-        return records;
+        // The erasure remove the Generic type information. At runtime, userList is simple a list of objects
+        // Using GenericEntity allows to keep the info about Generic and jackson knows it has to add the JsonTypeInfo
+        GenericEntity<List<DbOperationRecordDto>> entities = new GenericEntity<List<DbOperationRecordDto>>(records) {};
+
+        return Response.ok(entities).build();
     }
 
     private List<String> getNewOperationRecordKeys(long beginId,

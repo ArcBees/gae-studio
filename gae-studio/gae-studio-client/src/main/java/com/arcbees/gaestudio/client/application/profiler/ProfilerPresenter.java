@@ -134,7 +134,9 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
 
                         @Override
                         public void onSuccess(List<DbOperationRecordDto> results) {
-                            processNewDbOperationRecords(results);
+                            if (results != null && !results.isEmpty()) {
+                                processNewDbOperationRecords(results);
+                            }
                             isProcessing = false;
                         }
                     });
@@ -149,13 +151,11 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
 
     // TODO properly handle any missing records
     private void processNewDbOperationRecords(List<DbOperationRecordDto> records) {
-        if (!records.isEmpty()) {
-            for (DbOperationRecordDto record : records) {
-                processDbOperationRecord(record);
-                lastDbOperationRecordId = Math.max(lastDbOperationRecordId, record.getStatementId());
-            }
-            displayNewDbOperationRecords();
+        for (DbOperationRecordDto record : records) {
+            processDbOperationRecord(record);
+            lastDbOperationRecordId = Math.max(lastDbOperationRecordId, record.getStatementId());
         }
+        displayNewDbOperationRecords();
     }
 
     private void displayNewDbOperationRecords() {

@@ -9,12 +9,12 @@
 
 package com.arcbees.gaestudio.shared.dto.entity;
 
+import java.io.Serializable;
+
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-
-public class ParentKeyDto implements IsSerializable {
+public class ParentKeyDto implements Serializable {
     private String kind;
     private Long id;
 
@@ -35,5 +35,13 @@ public class ParentKeyDto implements IsSerializable {
 
     public Long getId() {
         return id;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

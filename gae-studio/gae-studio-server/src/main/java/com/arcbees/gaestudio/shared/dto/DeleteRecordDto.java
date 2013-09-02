@@ -11,10 +11,9 @@ package com.arcbees.gaestudio.shared.dto;
 
 import com.arcbees.gaestudio.shared.dto.stacktrace.StackTraceElementDto;
 
-// TODO : Complete
 public class DeleteRecordDto extends DbOperationRecordDto {
     @SuppressWarnings("unused")
-    protected DeleteRecordDto() {
+    public DeleteRecordDto() {
     }
 
     public DeleteRecordDto(StackTraceElementDto callerStackTraceElement,
