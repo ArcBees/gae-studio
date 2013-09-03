@@ -9,24 +9,27 @@
 
 package com.arcbees.gaestudio.shared.dto;
 
+import java.io.Serializable;
+
 import org.codehaus.jackson.annotate.JsonSubTypes;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 
+import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 import com.arcbees.gaestudio.shared.dto.stacktrace.StackTraceElementDto;
-import com.google.gwt.user.client.rpc.IsSerializable;
 
 @JsonSubTypes({@JsonSubTypes.Type(value = DeleteRecordDto.class, name = "delete"),
         @JsonSubTypes.Type(value = GetRecordDto.class, name = "get"),
-        @JsonSubTypes.Type(value = PutRecordDto.class, name = "put")})
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public abstract class DbOperationRecordDto implements IsSerializable {
+        @JsonSubTypes.Type(value = PutRecordDto.class, name = "put"),
+        @JsonSubTypes.Type(value = QueryRecordDto.class, name = "query")})
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
+public abstract class DbOperationRecordDto implements Serializable {
     private StackTraceElementDto callerStackTraceElement;
     private Long requestId;
     private Long statementId;
     private Integer executionTimeMs;
 
     @SuppressWarnings("unused")
-    protected DbOperationRecordDto() {
+    public DbOperationRecordDto() {
         this.requestId = -1L;
         this.statementId = -1L;
         this.executionTimeMs = -1;
@@ -58,19 +61,19 @@ public abstract class DbOperationRecordDto implements IsSerializable {
         return executionTimeMs;
     }
 
-    void setCallerStackTraceElement(StackTraceElementDto callerStackTraceElement) {
+    public void setCallerStackTraceElement(StackTraceElementDto callerStackTraceElement) {
         this.callerStackTraceElement = callerStackTraceElement;
     }
 
-    void setRequestId(Long requestId) {
+    public void setRequestId(Long requestId) {
         this.requestId = requestId;
     }
 
-    void setStatementId(Long statementId) {
+    public void setStatementId(Long statementId) {
         this.statementId = statementId;
     }
 
-    void setExecutionTimeMs(Integer executionTimeMs) {
+    public void setExecutionTimeMs(Integer executionTimeMs) {
         this.executionTimeMs = executionTimeMs;
     }
 }

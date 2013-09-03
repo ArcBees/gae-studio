@@ -9,20 +9,20 @@
 
 package com.arcbees.gaestudio.shared.dto.query;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-
-public class QueryDto implements IsSerializable {
+public class QueryDto implements Serializable {
     private String kind;
     private String ancestor;
-    private ArrayList<QueryFilterDto> filters;
-    private ArrayList<QueryOrderDto> orders;
+    private List<QueryFilterDto> filters;
+    private List<QueryOrderDto> orders;
     private Integer offset;
     private Integer limit;
 
     @SuppressWarnings("unused")
-    protected QueryDto() {
+    public QueryDto() {
     }
 
     public QueryDto(String kind, String ancestor, ArrayList<QueryFilterDto> filters, ArrayList<QueryOrderDto> orders,
@@ -43,11 +43,11 @@ public class QueryDto implements IsSerializable {
         return ancestor;
     }
 
-    public ArrayList<QueryFilterDto> getFilters() {
+    public List<QueryFilterDto> getFilters() {
         return filters;
     }
 
-    public ArrayList<QueryOrderDto> getOrders() {
+    public List<QueryOrderDto> getOrders() {
         return orders;
     }
 
@@ -57,5 +57,29 @@ public class QueryDto implements IsSerializable {
 
     public Integer getLimit() {
         return limit;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
+
+    public void setAncestor(String ancestor) {
+        this.ancestor = ancestor;
+    }
+
+    public void setFilters(List<QueryFilterDto> filters) {
+        this.filters = filters;
+    }
+
+    public void setOrders(List<QueryOrderDto> orders) {
+        this.orders = orders;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 }

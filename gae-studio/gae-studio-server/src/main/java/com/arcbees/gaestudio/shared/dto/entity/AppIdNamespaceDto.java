@@ -12,9 +12,7 @@ package com.arcbees.gaestudio.shared.dto.entity;
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-
-public class AppIdNamespaceDto implements IsSerializable {
+public class AppIdNamespaceDto {
     private String appId;
     private String namespace;
 
