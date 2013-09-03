@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
+package com.arcbees.gaestudio.server.service;
 
 import javax.inject.Inject;
 
@@ -17,8 +17,6 @@ import org.jukito.TestSingleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.arcbees.gaestudio.server.service.EntityService;
-import com.arcbees.gaestudio.server.service.EntityServiceImpl;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;

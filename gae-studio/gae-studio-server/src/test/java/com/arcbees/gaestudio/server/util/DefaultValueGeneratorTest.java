@@ -7,15 +7,13 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
+package com.arcbees.gaestudio.server.util;
 
 import javax.inject.Inject;
 
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import com.arcbees.gaestudio.server.util.DefaultValueGenerator;
 
 import static org.junit.Assert.assertEquals;
 

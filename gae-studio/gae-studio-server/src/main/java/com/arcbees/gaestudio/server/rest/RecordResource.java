@@ -18,55 +18,39 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
-import com.arcbees.gaestudio.server.recorder.HookRegistrar;
-import com.arcbees.gaestudio.server.recorder.MemcacheKey;
-import com.arcbees.gaestudio.server.recorder.authentication.Listener;
-import com.arcbees.gaestudio.server.recorder.authentication.ListenerProvider;
+import com.arcbees.gaestudio.server.service.OperationService;
+import com.arcbees.gaestudio.server.service.RecordService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.arcbees.googleanalytic.GoogleAnalytic;
-import com.google.appengine.api.memcache.MemcacheService;
 
 @Path(EndPoints.RECORD)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
 public class RecordResource {
-    private final HookRegistrar hookRegistrar;
-    private final ListenerProvider listenerProvider;
-    private final GoogleAnalytic googleAnalytic;
-    private final MemcacheService memcacheService;
+    private final RecordService recordService;
+    private final OperationService operationService;
 
     @Inject
-    RecordResource(HookRegistrar hookRegistrar,
-                   ListenerProvider listenerProvider,
-                   GoogleAnalytic googleAnalytic,
-                   MemcacheService memcacheService) {
-        this.hookRegistrar = hookRegistrar;
-        this.listenerProvider = listenerProvider;
-        this.googleAnalytic = googleAnalytic;
-        this.memcacheService = memcacheService;
+    RecordResource(RecordService recordService,
+                   OperationService operationService) {
+        this.recordService = recordService;
+        this.operationService = operationService;
     }
 
     @POST
     public Long startRecording() {
-        Listener listener = listenerProvider.get();
-
-        hookRegistrar.putListener(listener);
-
+        recordService.startRecording();
         return getMostRecentId();
     }
 
     @DELETE
     public Long stopRecording() {
-        Listener listener = listenerProvider.get();
-
-        hookRegistrar.removeListener(listener);
-
+        recordService.stopRecording();
         return getMostRecentId();
     }
 
     private Long getMostRecentId() {
-        Long mostRecentId = (Long) memcacheService.get(MemcacheKey.DB_OPERATION_COUNTER.getName());
+        Long mostRecentId = operationService.getMostRecentId();
 
         if (mostRecentId == null) {
             mostRecentId = 0L;
