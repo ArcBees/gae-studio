@@ -9,12 +9,10 @@
 
 package com.arcbees.gaestudio.shared.dto.entity;
 
-import java.io.Serializable;
-
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class AppIdNamespaceDto implements Serializable {
+public class AppIdNamespaceDto {
     private String appId;
     private String namespace;
 

@@ -9,12 +9,10 @@
 
 package com.arcbees.gaestudio.shared.dto.entity;
 
-import java.io.Serializable;
-
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class ParentKeyDto implements Serializable {
+public class ParentKeyDto {
     private String kind;
     private Long id;
 
