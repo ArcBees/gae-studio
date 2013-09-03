@@ -66,7 +66,6 @@ public class OperationServiceImpl implements OperationService {
         }
 
         return records;
-
     }
 
     private List<String> getNewOperationRecordKeys(long beginId, long endId) {

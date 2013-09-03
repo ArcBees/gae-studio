@@ -10,7 +10,6 @@
 package com.arcbees.gaestudio.server.service;
 
 public interface RecordService {
-
     void startRecording();
 
     void stopRecording();
