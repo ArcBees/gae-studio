@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
+package com.arcbees.gaestudio.server.service;
 
 import java.util.List;
 
@@ -19,8 +19,6 @@ import org.jukito.TestSingleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.arcbees.gaestudio.server.service.NamespacesService;
-import com.arcbees.gaestudio.server.service.NamespacesServiceImpl;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
 

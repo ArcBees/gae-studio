@@ -41,6 +41,4 @@ public class QueryOrderDto implements Serializable {
     public void setProperty(String property) {
         this.property = property;
     }
-
-
 }
