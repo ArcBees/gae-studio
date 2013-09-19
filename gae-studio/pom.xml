@@ -13,7 +13,7 @@
         <module>gae-studio-server</module>
         <module>gae-studio-client</module>
         <module>gae-studio-webapp</module>
-        <module>companion-project-test</module>
+        <module>gae-studio-companion</module>
     </modules>
 
     <scm>
