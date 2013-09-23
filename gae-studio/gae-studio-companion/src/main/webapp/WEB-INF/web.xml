@@ -10,16 +10,6 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Protected API</web-resource-name>
-            <url-pattern>/rest/*</url-pattern>
-        </web-resource-collection>
-        <user-data-constraint>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-
     <listener>
         <listener-class>com.arcbees.gaestudio.companion.guice.GuiceServletConfig</listener-class>
     </listener>
