@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>gae-studio</artifactId>
+        <groupId>com.arcbees.gaestudio</groupId>
+        <version>0.4-SNAPSHOT</version>
+    </parent>
+
+    <groupId>gae-studio-companion</groupId>
+    <artifactId>gae-studio-companion</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <gaestudio.version>0.4-SNAPSHOT</gaestudio.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.arcbees.gaestudio</groupId>
+            <artifactId>gae-studio-webapp</artifactId>
+            <version>${gaestudio.version}</version>
+        </dependency>
+    </dependencies>
+</project>
