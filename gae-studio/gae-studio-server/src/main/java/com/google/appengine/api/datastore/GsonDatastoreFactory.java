@@ -35,6 +35,7 @@ public class GsonDatastoreFactory {
     public static Gson create() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setPrettyPrinting();
+        gsonBuilder.setDateFormat("yyyy-MM-dd HH:mm:ss.S");
         gsonBuilder.serializeNulls();
         gsonBuilder.excludeFieldsWithModifiers(Modifier.STATIC);
         gsonBuilder.setExclusionStrategies(entityProtoExclusionStrategy);
