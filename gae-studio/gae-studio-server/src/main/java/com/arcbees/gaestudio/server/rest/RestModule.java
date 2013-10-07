@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.rest;
 
+import com.arcbees.gaestudio.server.rest.auth.AuthResource;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 
@@ -22,5 +23,7 @@ public class RestModule extends AbstractModule {
         bind(EntitiesResource.class);
         bind(OperationsResource.class);
         bind(RecordResource.class);
+
+        bind(AuthResource.class);
     }
 }
