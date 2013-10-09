@@ -10,9 +10,11 @@
 package com.arcbees.gaestudio.server.rest.auth;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.shared.rest.EndPoints;
@@ -42,10 +44,24 @@ public class AuthResource {
                              @FormParam(UrlParameters.FIRST_NAME) String firstName,
                              @FormParam(UrlParameters.LAST_NAME) String lastName) {
 
-        Token bearerToken = oAuthClient.getBearerToken(API_TOKEN);
+        Token bearerToken = getBearerToken();
 
         User user = userClient.register(bearerToken, email, password, firstName, lastName);
 
         return Response.ok(user).build();
+    }
+
+    @POST
+    @Path(EndPoints.LOGIN)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response login(@FormParam(UrlParameters.EMAIL) String email,
+                          @FormParam(UrlParameters.PASSWORD) String password) {
+        Token authToken = oAuthClient.login(email, password);
+
+        return Response.ok(authToken).build();
+    }
+
+    private Token getBearerToken() {
+        return oAuthClient.getBearerToken(API_TOKEN);
     }
 }
