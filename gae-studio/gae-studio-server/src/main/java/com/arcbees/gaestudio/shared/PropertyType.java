@@ -7,10 +7,8 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.arcbees.gaestudio.shared;
 
-import com.gwtplatform.mvp.client.UiHandlers;
-
-interface EntityDetailsUiHandlers extends UiHandlers {
-    void saveEntity();
+public enum PropertyType {
+    NUMERIC, FLOATING, STRING, BOOLEAN, DATE, ARRAY, NULL, OBJECT
 }

@@ -7,10 +7,12 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
-import com.gwtplatform.mvp.client.UiHandlers;
+import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.TakesValue;
+import com.google.gwt.user.client.ui.IsWidget;
 
-interface EntityDetailsUiHandlers extends UiHandlers {
-    void saveEntity();
+public interface PropertyEditor<T> extends TakesValue<T>, IsWidget {
+    JSONValue getJsonValue();
 }

@@ -22,12 +22,12 @@ public class EntitySelectedEvent extends GwtEvent<EntitySelectedEvent.EntitySele
         // Possibly for serialization.
     }
 
-    public EntitySelectedEvent(com.arcbees.gaestudio.client.application.visualizer.ParsedEntity parsedEntity) {
+    public EntitySelectedEvent(ParsedEntity parsedEntity) {
         this.parsedEntity = parsedEntity;
     }
 
     public static void fire(HasHandlers source,
-                            com.arcbees.gaestudio.client.application.visualizer.ParsedEntity parsedEntity) {
+                            ParsedEntity parsedEntity) {
         EntitySelectedEvent eventInstance = new EntitySelectedEvent(parsedEntity);
         source.fireEvent(eventInstance);
     }

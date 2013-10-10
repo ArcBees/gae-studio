@@ -306,6 +306,7 @@ body {
 
 .firstTable {
     margin-right: -1px;
+    clear: both;
 }
 
 .firstTable thead tr:after {

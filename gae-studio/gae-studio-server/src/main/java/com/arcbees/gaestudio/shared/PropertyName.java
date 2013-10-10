@@ -7,10 +7,14 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.arcbees.gaestudio.shared;
 
-import com.gwtplatform.mvp.client.UiHandlers;
+public class PropertyName {
+    public static final String GAE_PROPERTY_TYPE = "__gaePropertyType";
+    public static final String PROPERTY_MAP = "propertyMap";
+    public static final String INDEXED = "__indexed";
+    public static final String VALUE = "value";
 
-interface EntityDetailsUiHandlers extends UiHandlers {
-    void saveEntity();
+    private PropertyName() {
+    }
 }

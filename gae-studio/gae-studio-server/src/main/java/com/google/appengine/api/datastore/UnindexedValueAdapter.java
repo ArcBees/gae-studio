@@ -20,18 +20,18 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-public class UnindexedValueAdapter implements JsonSerializer<UnindexedValue>, JsonDeserializer<UnindexedValue> {
-    static final String INDEXED = "__indexed";
-    static final String VALUE = "value";
+import static com.arcbees.gaestudio.shared.PropertyName.INDEXED;
+import static com.arcbees.gaestudio.shared.PropertyName.VALUE;
 
+public class UnindexedValueAdapter implements JsonSerializer<UnindexedValue>, JsonDeserializer<UnindexedValue> {
     public static boolean isUnindexedValue(JsonElement element) {
-        return element.isJsonObject() && element.getAsJsonObject().has(INDEXED) && !element.getAsJsonObject()
-                .get(INDEXED).getAsBoolean();
+        return !isIndexedValue(element);
     }
 
     public static boolean isIndexedValue(JsonElement element) {
-        return element.isJsonObject() && element.getAsJsonObject().has(INDEXED) && element.getAsJsonObject()
-                .get(INDEXED).getAsBoolean();
+        return !element.isJsonObject() // Not an object, so it's not wrapped by UnindexedValue: indexed by default
+               || !element.getAsJsonObject().has(INDEXED) // No indexed property: indexed by default
+               || element.getAsJsonObject().get(INDEXED).getAsBoolean();
     }
 
     @Override
@@ -46,10 +46,12 @@ public class UnindexedValueAdapter implements JsonSerializer<UnindexedValue>, Js
     public UnindexedValue deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext context) throws
             JsonParseException {
         if (!isUnindexedValue(jsonElement)) {
-            throw new IllegalArgumentException("The Json element doesn't represent an unindexed value : " + jsonElement
-                    .toString());
+            throw new IllegalArgumentException("The Json element doesn't represent an unindexed value: " + jsonElement);
         }
 
-        return new UnindexedValue(context.deserialize(jsonElement.getAsJsonObject().get(VALUE), Object.class));
+        jsonElement.getAsJsonObject().remove(INDEXED);
+
+        PropertyValue propertyValue = context.deserialize(jsonElement, PropertyValue.class);
+        return new UnindexedValue(propertyValue.getValue());
     }
 }

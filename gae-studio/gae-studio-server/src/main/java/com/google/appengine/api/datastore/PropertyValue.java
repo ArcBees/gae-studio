@@ -7,10 +7,16 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.google.appengine.api.datastore;
 
-import com.gwtplatform.mvp.client.UiHandlers;
+public class PropertyValue {
+    private final Object value;
 
-interface EntityDetailsUiHandlers extends UiHandlers {
-    void saveEntity();
+    public PropertyValue(Object value) {
+        this.value = value;
+    }
+
+    public Object getValue() {
+        return value;
+    }
 }

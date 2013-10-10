@@ -21,6 +21,7 @@ import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityTranslator;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -61,11 +62,15 @@ public class EntitiesServiceImpl implements EntitiesService {
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
+        // TODO: Entities can have multiple model versions. We should either select the latest entity or specify an ID
+        // to fetch the template (ie. the selected entity) so we get a
         Query query = new Query(kind);
         FetchOptions fetchOptions = FetchOptions.Builder.withOffset(0).limit(1);
         Entity entity = datastore.prepare(query).asList(fetchOptions).get(0);
 
-        Entity emptyEntity = new Entity(kind);
+        // The copy allows to keep the prototype metadata.
+        Entity emptyEntity = EntityTranslator.createFromPb(EntityTranslator.convertToPb(entity));
+        // TODO: Remove key
         emptyEntity = setEmptiedProperties(emptyEntity, entity);
 
         return emptyEntity;
@@ -113,7 +118,7 @@ public class EntitiesServiceImpl implements EntitiesService {
             if (value instanceof Key) {
                 value = createEmptyKey((Key) value);
             } else {
-                value = createEmptyArbitraryObject(property);
+                value = createEmptyPropertyObject(value);
             }
 
             if (template.isUnindexedProperty(propertyKey)) {
@@ -130,12 +135,8 @@ public class EntitiesServiceImpl implements EntitiesService {
         return KeyFactory.createKey(key.getKind(), " ");
     }
 
-    private Object createEmptyArbitraryObject(Map.Entry<String, Object> property) {
-        return createEmptyPropertyObject(property);
-    }
-
-    private Object createEmptyPropertyObject(Map.Entry<String, Object> property) {
-        return defaultValueGenerator.generate(property.getValue());
+    private Object createEmptyPropertyObject(Object property) {
+        return defaultValueGenerator.generate(property);
     }
 
     private void deleteByNamespace(String namespace) {
