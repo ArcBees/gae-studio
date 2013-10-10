@@ -10,7 +10,6 @@
 package com.google.appengine.api.datastore;
 
 import java.lang.reflect.Type;
-import java.util.Date;
 
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.appengine.api.datastore.Entity.UnindexedValue;
@@ -37,40 +36,25 @@ public class PropertyValueDeserializer implements JsonDeserializer<PropertyValue
             value = context.deserialize(json, UnindexedValue.class);
         } else {
             PropertyType propertyType = extractPropertyType(json);
+            Class<?> mappedClass = getMappedClass(propertyType);
 
             if (propertyType != PropertyType.NULL) {
                 json = json.getAsJsonObject().get(VALUE);
             }
 
-            switch (propertyType) {
-                case NUMERIC:
-                    value = context.deserialize(json, Long.class);
-                    break;
-                case FLOATING:
-                    value = context.deserialize(json, Double.class);
-                    break;
-                case STRING:
-                    value = deserializeString(json, context);
-                    break;
-                case BOOLEAN:
-                    value = context.deserialize(json, Boolean.class);
-                    break;
-                case DATE:
-                    value = context.deserialize(json, Date.class);
-                    break;
-                default:
-                    value = context.deserialize(json, Object.class);
-            }
+            value = context.deserialize(json, mappedClass);
+            value = cleanupValue(value, propertyType);
         }
 
         return new PropertyValue(value);
     }
 
-    private Object deserializeString(JsonElement json, JsonDeserializationContext context) {
-        String value = context.deserialize(json, String.class);
-
-        if (value.length() > APPENGINE_STRING_MAX_LENGTH) {
-            return new Text(value);
+    private Object cleanupValue(Object value, PropertyType propertyType) {
+        if (propertyType == PropertyType.STRING && value instanceof String) {
+            String string = (String) value;
+            if (string.length() > APPENGINE_STRING_MAX_LENGTH) {
+                value = new Text(string);
+            }
         }
 
         return value;
@@ -88,6 +72,16 @@ public class PropertyValueDeserializer implements JsonDeserializer<PropertyValue
         }
 
         return propertyType;
+    }
+
+    private Class<?> getMappedClass(PropertyType propertyType) {
+        Class<?> mappedClass;
+        try {
+            mappedClass = Class.forName(propertyType.getMappedClass());
+        } catch (ClassNotFoundException e) {
+            mappedClass = Object.class;
+        }
+        return mappedClass;
     }
 
     private boolean isKey(JsonElement jsonValueElement) {

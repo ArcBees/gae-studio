@@ -38,7 +38,10 @@ public class StringPropertyEditor extends AbstractPropertyEditor<String> {
     @Override
     public JSONValue getJsonValue() {
         JSONString value = new JSONString(getValue());
-        return parseJsonValueWithMetadata(value, PropertyType.STRING, PropertyUtil.isPropertyIndexed(property));
+        Boolean isIndexed = PropertyUtil.isPropertyIndexed(property);
+        PropertyType propertyType = PropertyUtil.getPropertyType(property);
+
+        return parseJsonValueWithMetadata(value, propertyType, isIndexed);
     }
 
     @Override

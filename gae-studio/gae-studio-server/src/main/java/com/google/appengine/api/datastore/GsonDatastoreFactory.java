@@ -43,8 +43,14 @@ public class GsonDatastoreFactory {
         gsonBuilder.registerTypeAdapter(Key.class, new KeyInstanceCreator());
         gsonBuilder.registerTypeAdapter(Map.class, new PropertiesDeserializer());
         gsonBuilder.registerTypeAdapter(UnindexedValue.class, new UnindexedValueAdapter());
-        gsonBuilder.registerTypeAdapter(Text.class, new TextValueAdapter());
         gsonBuilder.registerTypeAdapter(PropertyValue.class, new PropertyValueDeserializer());
+        gsonBuilder.registerTypeAdapter(Text.class, new TextValueAdapter());
+        gsonBuilder.registerTypeAdapter(PostalAddress.class, new PostalAddressValueAdapter());
+        gsonBuilder.registerTypeAdapter(Category.class, new CategoryValueAdapter());
+        gsonBuilder.registerTypeAdapter(Link.class, new LinkValueAdapter());
+        gsonBuilder.registerTypeAdapter(Email.class, new EmailValueAdapter());
+        gsonBuilder.registerTypeAdapter(PhoneNumber.class, new PhoneNumberValueAdapter());
+        gsonBuilder.registerTypeAdapter(Rating.class, new RatingValueAdapter());
 
         return gsonBuilder.create();
     }

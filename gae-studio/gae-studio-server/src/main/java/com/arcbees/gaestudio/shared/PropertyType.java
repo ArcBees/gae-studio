@@ -10,5 +10,26 @@
 package com.arcbees.gaestudio.shared;
 
 public enum PropertyType {
-    NUMERIC, FLOATING, STRING, BOOLEAN, DATE, ARRAY, NULL, OBJECT
+    NUMERIC("java.lang.Long"),
+    FLOATING("java.lang.Double"),
+    STRING("java.lang.String"),
+    BOOLEAN("java.lang.Boolean"),
+    DATE("java.util.Date"),
+    POSTAL_ADDRESS("com.google.appengine.api.datastore.PostalAddress"),
+    CATEGORY("com.google.appengine.api.datastore.Category"),
+    LINK("com.google.appengine.api.datastore.Link"),
+    EMAIL("com.google.appengine.api.datastore.Email"),
+    PHONE_NUMBER("com.google.appengine.api.datastore.PhoneNumber"),
+    RATING("com.google.appengine.api.datastore.Rating"),
+    NULL("java.lang.Object");
+
+    private final String mappedClass;
+
+    PropertyType(String mappedClass) {
+        this.mappedClass = mappedClass;
+    }
+
+    public String getMappedClass() {
+        return mappedClass;
+    }
 }

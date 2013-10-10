@@ -104,8 +104,7 @@ public class EntityMapper {
     private static PropertyType getPropertyType(Property property) {
         PropertyType type = PropertyType.NULL;
 
-        // TODO: PostalAddress, PhoneNumber, Email, Link, Category, Rating, IMHandle, GeoPt, User, Blob,
-        // ShortBlob, BlobKey, EmbeddedEntity
+        // TODO: IMHandle, GeoPt, User, Blob, ShortBlob, BlobKey, EmbeddedEntity
 
         if (property.hasValue()) {
             PropertyValue value = property.getValue();
@@ -114,6 +113,8 @@ public class EntityMapper {
             if (value.hasInt64Value()) {
                 if (meaning == Meaning.GD_WHEN) {
                     type = PropertyType.DATE;
+                } else if (meaning == Meaning.GD_RATING) {
+                    type = PropertyType.RATING;
                 } else {
                     type = PropertyType.NUMERIC;
                 }
@@ -122,7 +123,19 @@ public class EntityMapper {
             } else if (value.hasDoubleValue()) {
                 type = PropertyType.FLOATING;
             } else if (value.hasStringValue()) {
-                type = PropertyType.STRING;
+                if (meaning == Meaning.GD_PHONENUMBER) {
+                    type = PropertyType.PHONE_NUMBER;
+                } else if (meaning == Meaning.GD_EMAIL) {
+                    type = PropertyType.EMAIL;
+                } else if (meaning == Meaning.ATOM_LINK) {
+                    type = PropertyType.LINK;
+                } else if (meaning == Meaning.ATOM_CATEGORY) {
+                    type = PropertyType.CATEGORY;
+                } else if (meaning == Meaning.GD_POSTALADDRESS) {
+                    type = PropertyType.POSTAL_ADDRESS;
+                } else {
+                    type = PropertyType.STRING;
+                }
             }
         }
 

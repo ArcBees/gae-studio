@@ -16,8 +16,8 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorPresenter.MyView;
+import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.common.collect.Maps;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
@@ -92,6 +92,24 @@ public class EntityEditorPresenter extends PresenterWidget<MyView> {
                 break;
             case BOOLEAN:
                 propertyEditor = propertyEditorFactory.createBooleanEditor(key, property);
+                break;
+            case POSTAL_ADDRESS:
+                propertyEditor = propertyEditorFactory.createPostalAddressEditor(key, property);
+                break;
+            case CATEGORY:
+                propertyEditor = propertyEditorFactory.createCategoryEditor(key, property);
+                break;
+            case LINK:
+                propertyEditor = propertyEditorFactory.createLinkEditor(key, property);
+                break;
+            case EMAIL:
+                propertyEditor = propertyEditorFactory.createEmailEditor(key, property);
+                break;
+            case PHONE_NUMBER:
+                propertyEditor = propertyEditorFactory.createPhoneNumberEditor(key, property);
+                break;
+            case RATING:
+                propertyEditor = propertyEditorFactory.createRatingEditor(key, property);
                 break;
             default:
                 propertyEditor = propertyEditorFactory.createRawEditor(key, property);

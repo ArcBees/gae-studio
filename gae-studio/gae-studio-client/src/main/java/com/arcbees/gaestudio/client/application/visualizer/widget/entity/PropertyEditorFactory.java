@@ -11,6 +11,8 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
 import java.util.Date;
 
+import javax.inject.Named;
+
 import com.google.gwt.json.client.JSONValue;
 
 public interface PropertyEditorFactory {
@@ -23,6 +25,18 @@ public interface PropertyEditorFactory {
     PropertyEditor<Double> createFloatingEditor(String key, JSONValue property);
 
     PropertyEditor<Date> createDateEditor(String key, JSONValue property);
+
+    @Named("POSTAL_ADDRESS") PropertyEditor<String> createPostalAddressEditor(String key, JSONValue property);
+
+    @Named("CATEGORY") PropertyEditor<String> createCategoryEditor(String key, JSONValue property);
+
+    @Named("LINK") PropertyEditor<String> createLinkEditor(String key, JSONValue property);
+
+    @Named("EMAIL") PropertyEditor<String> createEmailEditor(String key, JSONValue property);
+
+    @Named("PHONE_NUMBER") PropertyEditor<String> createPhoneNumberEditor(String key, JSONValue property);
+
+    @Named("RATING") PropertyEditor<Long> createRatingEditor(String key, JSONValue property);
 
     PropertyEditor<?> createRawEditor(String key, JSONValue property);
 }
