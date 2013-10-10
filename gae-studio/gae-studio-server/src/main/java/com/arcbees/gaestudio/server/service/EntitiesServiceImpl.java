@@ -115,8 +115,19 @@ public class EntitiesServiceImpl implements EntitiesService {
         return datastore.prepare(query).countEntities(fetchOptions);
     }
 
-    private Entity setEmptiedProperties(Entity entity, Entity template) {
-        Map<String, Object> properties = template.getProperties();
+    private Entity createEmptyEntityFromTemplate(Entity template) {
+        // Copy the entity from a known prototype, keeping the type metadata
+        EntityProto templateProto = EntityTranslator.convertToPb(template);
+        templateProto.getKey().getPath().getElement(0).clearId();
+
+        Entity emptyEntity = EntityTranslator.createFromPb(templateProto);
+        emptyProperties(emptyEntity);
+
+        return emptyEntity;
+    }
+
+    private void emptyProperties(Entity entity) {
+        Map<String, Object> properties = entity.getProperties();
 
         for (Map.Entry<String, Object> property : properties.entrySet()) {
             String propertyKey = property.getKey();
@@ -128,14 +139,12 @@ public class EntitiesServiceImpl implements EntitiesService {
                 value = createEmptyPropertyObject(value);
             }
 
-            if (template.isUnindexedProperty(propertyKey)) {
+            if (entity.isUnindexedProperty(propertyKey)) {
                 entity.setUnindexedProperty(propertyKey, value);
             } else {
                 entity.setProperty(propertyKey, value);
             }
         }
-
-        return entity;
     }
 
     private Object createEmptyKey(Key key) {
