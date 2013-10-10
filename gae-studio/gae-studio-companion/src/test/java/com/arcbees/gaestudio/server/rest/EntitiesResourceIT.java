@@ -14,21 +14,26 @@ import com.jayway.restassured.response.Response;
 
 import static com.jayway.restassured.RestAssured.given;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+import static javax.ws.rs.core.Response.Status.OK;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class EntitiesResourceIT extends RestIT {
     private final Gson gson = new GsonBuilder().create();
     private final TypeToken<List<Car>> type = new TypeToken<List<Car>>() {
     };
 
+    private String CAR_KIND = "Car";
+    private String UNEXISTENT_KIND = "UnexistentKind";
+
     @Test
     public void createObject_getEntities_entitiesReturned() {
         //given
-        Car car = new Car();
-        createRemoteObject(car);
+        createRemoteCar();
 
         //when
-        Response response = getRemoteEntities("Car");
+        Response response = getRemoteEntities(CAR_KIND);
 
         //then
         List<Car> entities = gson.fromJson(response.asString(), type.getType());
@@ -36,13 +41,12 @@ public class EntitiesResourceIT extends RestIT {
     }
 
     @Test
-    public void createObject_getEntitiesWithNullKind_badRequest() {
+    public void createObject_getEntitiesWithNoKind_badRequest() {
         //given
-        Car car = new Car();
-        createRemoteObject(car);
+        createRemoteCar();
 
         //when
-        Response response = getRemoteEntitiesWithNullKind();
+        Response response = getRemoteEntitiesWithNoKind();
 
         //then
         assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
@@ -51,18 +55,54 @@ public class EntitiesResourceIT extends RestIT {
     @Test
     public void createObject_createEmptyEntity_returnEmptyEntity() {
         //given
-        Car car = new Car();
-        createRemoteObject(car);
+        createRemoteCar();
 
         //when
+        Response response = createRemoteEmptyEntity(CAR_KIND);
 
+        //then
+        Car emptyCar = gson.fromJson(response.asString(), Car.class);
+        assertNotNull(emptyCar);
+        assertEquals(OK.getStatusCode(), response.getStatusCode());
+    }
+
+    @Test
+    public void createObject_postEntitiesWithNoKind_badRequest() {
+        //given
+        createRemoteCar();
+
+        //when
+        Response response = postRemoteEntitiesWithNoKind();
+
+        //then
+        assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
+    }
+
+    @Test
+    public void createObject_postEntitiesUnexistentEntity_notFound() {
+        //given
+        createRemoteCar();
+
+        //when
+        Response response = createRemoteEmptyEntity(UNEXISTENT_KIND);
+
+        //then
+        assertEquals(NOT_FOUND.getStatusCode(), response.getStatusCode());
+    }
+
+    private Response createRemoteEmptyEntity(String kind) {
+        return given().queryParam(TestEndPoints.PARAM_KIND, kind).post(getAbsoluteUri(EndPoints.ENTITIES));
     }
 
     private Response getRemoteEntities(String kind) {
         return given().queryParam(TestEndPoints.PARAM_KIND, kind).get(getAbsoluteUri(EndPoints.ENTITIES));
     }
 
-    private Response getRemoteEntitiesWithNullKind() {
+    private Response getRemoteEntitiesWithNoKind() {
         return given().get(getAbsoluteUri(EndPoints.ENTITIES));
+    }
+
+    private Response postRemoteEntitiesWithNoKind() {
+        return given().post(getAbsoluteUri(EndPoints.ENTITIES));
     }
 }

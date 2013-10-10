@@ -41,6 +41,11 @@ public abstract class RestIT {
         return HOSTNAME + TestEndPoints.ROOT + relativeLocation;
     }
 
+    protected Response createRemoteCar() {
+        Car car = new Car();
+        return createRemoteObject(car);
+    }
+
     protected Response createRemoteObject(Car car) {
         return given().body(car).post(getAbsoluteUri(TestEndPoints.PUT_OBJECT));
     }
