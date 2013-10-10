@@ -44,6 +44,7 @@ public class GsonDatastoreFactory {
         gsonBuilder.registerTypeAdapter(Map.class, new PropertiesDeserializer());
         gsonBuilder.registerTypeAdapter(UnindexedValue.class, new UnindexedValueAdapter());
         gsonBuilder.registerTypeAdapter(Text.class, new TextValueAdapter());
+        gsonBuilder.registerTypeAdapter(PropertyValue.class, new PropertyValueDeserializer());
 
         return gsonBuilder.create();
     }

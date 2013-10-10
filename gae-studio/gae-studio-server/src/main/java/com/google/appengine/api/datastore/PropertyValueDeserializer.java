@@ -29,19 +29,20 @@ import com.google.gson.JsonParseException;
 
 import static com.arcbees.gaestudio.shared.PropertyName.GAE_PROPERTY_TYPE;
 
-public class ObjectDeserializer implements JsonDeserializer<Object> {
+public class PropertyValueDeserializer implements JsonDeserializer<PropertyValue> {
     @Override
-    public Object deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public PropertyValue deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
         Object value;
         if (isKey(json)) {
+            // TODO: key should be identified by __gaePropertyType
             value = context.deserialize(json, Key.class);
         } else if (UnindexedValueAdapter.isUnindexedValue(json)) {
             value = context.deserialize(json, UnindexedValue.class);
         } else {
             PropertyType propertyType = extractPropertyType(json);
 
-            if (UnindexedValueAdapter.isUnindexedValue(json) || propertyType != PropertyType.NULL) {
+            if (propertyType != PropertyType.NULL) {
                 json = json.getAsJsonObject().get(UnindexedValueAdapter.VALUE);
             }
 
@@ -67,7 +68,7 @@ public class ObjectDeserializer implements JsonDeserializer<Object> {
             }
         }
 
-        return value;
+        return new PropertyValue(value);
     }
 
     private PropertyType extractPropertyType(JsonElement jsonElement) {
