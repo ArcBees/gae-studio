@@ -9,16 +9,19 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import javax.inject.Inject;
+
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorFactory;
+import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorPresenter;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -26,39 +29,47 @@ import com.gwtplatform.mvp.client.View;
 
 public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresenter.MyView>
         implements EditEntityEvent.EditEntityHandler, EntityDetailsUiHandlers {
+
+    private EntityEditorPresenter entityEditor;
+
     interface MyView extends View, HasUiHandlers<EntityDetailsUiHandlers> {
-        void displayEntityDetails(String json);
+        void displayEntityDetails();
 
         void hide();
 
         void showError(String message);
     }
 
-    private final EntitiesService entitiesService;
+    public static final Object EDITOR_SLOT = new Object();
 
-    private ParsedEntity currentParsedEntity;
+    private final EntitiesService entitiesService;
+    private final EntityEditorFactory entityEditorFactory;
 
     @Inject
     EntityDetailsPresenter(EventBus eventBus,
                            MyView view,
-                           EntitiesService entitiesService) {
+                           EntitiesService entitiesService,
+                           EntityEditorFactory entityEditorFactory) {
         super(eventBus, view);
 
-        getView().setUiHandlers(this);
-
         this.entitiesService = entitiesService;
+        this.entityEditorFactory = entityEditorFactory;
+
+        getView().setUiHandlers(this);
     }
 
     @Override
     public void onEditEntity(EditEntityEvent event) {
-        currentParsedEntity = event.getParsedEntity();
-        getView().displayEntityDetails(currentParsedEntity.getJson());
+        ParsedEntity parsedEntity = event.getParsedEntity();
+        entityEditor = entityEditorFactory.create(parsedEntity);
+
+        setInSlot(EDITOR_SLOT, entityEditor);
+        getView().displayEntityDetails();
     }
 
     @Override
-    public void saveEntity(String json) {
-        EntityDto entityDto = currentParsedEntity.getEntityDto();
-        entityDto.setJson(json);
+    public void saveEntity() {
+        EntityDto entityDto = entityEditor.flush().getEntityDto();
 
         entitiesService.entityService(entityDto.getKey().getId()).updateEntity(entityDto,
                 new MethodCallbackImpl<EntityDto>() {

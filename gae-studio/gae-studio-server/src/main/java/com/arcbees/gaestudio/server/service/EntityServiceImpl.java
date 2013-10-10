@@ -55,7 +55,7 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public Entity updateEntity(Entity entity) {
+    public Entity updateEntity(Entity entity) throws EntityNotFoundException {
         AppEngineHelper.disableApiHooks();
 
         entity.getKey();
@@ -63,7 +63,8 @@ public class EntityServiceImpl implements EntityService {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(entity);
 
-        return entity;
+        // This is required because put does not update the prototype in the reference
+        return datastore.get(entity.getKey());
     }
 
     @Override

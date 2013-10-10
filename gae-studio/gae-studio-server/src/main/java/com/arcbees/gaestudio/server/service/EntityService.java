@@ -17,7 +17,7 @@ public interface EntityService {
     Entity getEntity(Long entityId, String namespace, String appId, String kind, String parentId, String parentKind)
             throws EntityNotFoundException;
 
-    Entity updateEntity(Entity entity);
+    Entity updateEntity(Entity entity) throws EntityNotFoundException;
 
     void deleteEntity(Key entityKey);
 }

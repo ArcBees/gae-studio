@@ -56,7 +56,6 @@ public class EntityResource {
             responseBuilder = Response.status(Status.NOT_FOUND);
         } else {
             EntityDto entityDto = EntityMapper.mapEntityToDto(entity);
-
             responseBuilder = Response.ok(entityDto);
         }
 
@@ -64,7 +63,7 @@ public class EntityResource {
     }
 
     @PUT
-    public Response updateEntity(EntityDto newEntityDto) {
+    public Response updateEntity(EntityDto newEntityDto) throws EntityNotFoundException {
         ResponseBuilder responseBuilder;
         Entity newEntity = EntityMapper.mapDtoToEntity(newEntityDto);
         Entity updatedEntity = entityService.updateEntity(newEntity);

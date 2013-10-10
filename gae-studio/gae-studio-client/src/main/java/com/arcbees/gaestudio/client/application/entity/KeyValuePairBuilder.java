@@ -26,7 +26,7 @@ public class KeyValuePairBuilder {
         Collections.sort(propertiesList);
 
         for (String prop : propertiesList) {
-            String val = parsedEntity.getProperty(prop).toString();
+            String val = parsedEntity.getPropertyValue(prop).toString();
             val = cleanupValue(val);
 
             KeyValuePair keyValuePair = new KeyValuePair(prop, val);

@@ -25,13 +25,13 @@ public class UnindexedValueAdapter implements JsonSerializer<UnindexedValue>, Js
     static final String VALUE = "value";
 
     public static boolean isUnindexedValue(JsonElement element) {
-        return element.isJsonObject() && element.getAsJsonObject().has(INDEXED) && !element.getAsJsonObject()
-                .get(INDEXED).getAsBoolean();
+        return !isIndexedValue(element);
     }
 
     public static boolean isIndexedValue(JsonElement element) {
-        return element.isJsonObject() && element.getAsJsonObject().has(INDEXED) && element.getAsJsonObject()
-                .get(INDEXED).getAsBoolean();
+        return !element.isJsonObject() // Not an object, so it's not wrapped by UnindexedValue: indexed by default
+               || !element.getAsJsonObject().has(INDEXED) // No indexed property: indexed by default
+               || element.getAsJsonObject().get(INDEXED).getAsBoolean();
     }
 
     @Override
@@ -46,10 +46,11 @@ public class UnindexedValueAdapter implements JsonSerializer<UnindexedValue>, Js
     public UnindexedValue deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext context) throws
             JsonParseException {
         if (!isUnindexedValue(jsonElement)) {
-            throw new IllegalArgumentException("The Json element doesn't represent an unindexed value : " + jsonElement
+            throw new IllegalArgumentException("The Json element doesn't represent an unindexed value: " + jsonElement
                     .toString());
         }
 
-        return new UnindexedValue(context.deserialize(jsonElement.getAsJsonObject().get(VALUE), Object.class));
+        Object object = PropertiesDeserializer.deserializeElement(jsonElement, context);
+        return new UnindexedValue(object);
     }
 }

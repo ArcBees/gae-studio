@@ -43,6 +43,7 @@ public class GsonDatastoreFactory {
         gsonBuilder.registerTypeAdapter(Key.class, new KeyInstanceCreator());
         gsonBuilder.registerTypeAdapter(Map.class, new PropertiesDeserializer());
         gsonBuilder.registerTypeAdapter(UnindexedValue.class, new UnindexedValueAdapter());
+        gsonBuilder.registerTypeAdapter(Text.class, new TextValueAdapter());
 
         return gsonBuilder.create();
     }
