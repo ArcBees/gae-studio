@@ -28,8 +28,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import static com.arcbees.gaestudio.shared.PropertyName.GAE_PROPERTY_TYPE;
+import static com.arcbees.gaestudio.shared.PropertyName.VALUE;
 
 public class PropertyValueDeserializer implements JsonDeserializer<PropertyValue> {
+    private static final int APPENGINE_STRING_MAX_LENGTH = 500;
+
     @Override
     public PropertyValue deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
@@ -43,7 +46,7 @@ public class PropertyValueDeserializer implements JsonDeserializer<PropertyValue
             PropertyType propertyType = extractPropertyType(json);
 
             if (propertyType != PropertyType.NULL) {
-                json = json.getAsJsonObject().get(UnindexedValueAdapter.VALUE);
+                json = json.getAsJsonObject().get(VALUE);
             }
 
             switch (propertyType) {
@@ -54,8 +57,7 @@ public class PropertyValueDeserializer implements JsonDeserializer<PropertyValue
                     value = context.deserialize(json, Double.class);
                     break;
                 case STRING:
-                    value = context.deserialize(json, String.class);
-                    // TODO: if > 500 char, convert to Text
+                    value = deserializeString(json, context);
                     break;
                 case BOOLEAN:
                     value = context.deserialize(json, Boolean.class);
@@ -71,13 +73,23 @@ public class PropertyValueDeserializer implements JsonDeserializer<PropertyValue
         return new PropertyValue(value);
     }
 
+    private Object deserializeString(JsonElement json, JsonDeserializationContext context) {
+        String value = context.deserialize(json, String.class);
+
+        if (value.length() > APPENGINE_STRING_MAX_LENGTH) {
+            return new Text(value);
+        }
+
+        return value;
+    }
+
     private PropertyType extractPropertyType(JsonElement jsonElement) {
         PropertyType propertyType = PropertyType.NULL;
 
         if (jsonElement.isJsonObject()) {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
-            if (jsonObject.has(GAE_PROPERTY_TYPE.getPropertyName())) {
-                String propertyTypeName = jsonObject.get(GAE_PROPERTY_TYPE.getPropertyName()).getAsString();
+            if (jsonObject.has(GAE_PROPERTY_TYPE)) {
+                String propertyTypeName = jsonObject.get(GAE_PROPERTY_TYPE).getAsString();
                 propertyType = PropertyType.valueOf(propertyTypeName);
             }
         }

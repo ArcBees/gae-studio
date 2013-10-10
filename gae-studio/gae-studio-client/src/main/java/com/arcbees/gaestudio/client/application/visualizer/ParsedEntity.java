@@ -48,7 +48,7 @@ public class ParsedEntity {
     }
 
     public JSONObject getPropertyMap() {
-        return jsonObject.get(PROPERTY_MAP.getPropertyName()).isObject();
+        return jsonObject.get(PROPERTY_MAP).isObject();
     }
 
     public void setEntityDto(EntityDto entityDto) {

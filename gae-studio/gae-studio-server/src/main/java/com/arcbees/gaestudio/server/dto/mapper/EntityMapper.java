@@ -36,6 +36,7 @@ import com.google.storage.onestore.v3.OnestoreEntity.PropertyValue;
 
 import static com.arcbees.gaestudio.shared.PropertyName.GAE_PROPERTY_TYPE;
 import static com.arcbees.gaestudio.shared.PropertyName.PROPERTY_MAP;
+import static com.arcbees.gaestudio.shared.PropertyName.VALUE;
 
 public class EntityMapper {
     @SuppressWarnings("unused")
@@ -103,7 +104,7 @@ public class EntityMapper {
     private static PropertyType getPropertyType(Property property) {
         PropertyType type = PropertyType.NULL;
 
-        // TODO: Text?, PostalAddress, PhoneNumber, Email, Link, Category, Rating, IMHandle, GeoPt, User, Blob,
+        // TODO: PostalAddress, PhoneNumber, Email, Link, Category, Rating, IMHandle, GeoPt, User, Blob,
         // ShortBlob, BlobKey, EmbeddedEntity
 
         if (property.hasValue()) {
@@ -131,7 +132,7 @@ public class EntityMapper {
     private static String appendPropertyTypes(String json, Map<String, PropertyType> propertyTypes) {
         JsonParser jsonParser = new JsonParser();
         JsonObject entity = jsonParser.parse(json).getAsJsonObject();
-        JsonObject properties = entity.getAsJsonObject(PROPERTY_MAP.getPropertyName());
+        JsonObject properties = entity.getAsJsonObject(PROPERTY_MAP);
 
         for (Entry<String, PropertyType> entry : propertyTypes.entrySet()) {
             String propertyKey = entry.getKey();
@@ -144,10 +145,10 @@ public class EntityMapper {
                     wrapper = value.getAsJsonObject();
                 } else {
                     wrapper = new JsonObject();
-                    wrapper.add("value", value);
+                    wrapper.add(VALUE, value);
                 }
 
-                wrapper.add(GAE_PROPERTY_TYPE.getPropertyName(), new JsonPrimitive(entry.getValue().name()));
+                wrapper.add(GAE_PROPERTY_TYPE, new JsonPrimitive(entry.getValue().name()));
 
                 properties.remove(propertyKey);
                 properties.add(propertyKey, wrapper);

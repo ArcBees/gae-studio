@@ -24,13 +24,14 @@ import com.google.gwt.json.client.JSONValue;
 
 import static com.arcbees.gaestudio.shared.PropertyName.GAE_PROPERTY_TYPE;
 import static com.arcbees.gaestudio.shared.PropertyName.INDEXED;
+import static com.arcbees.gaestudio.shared.PropertyName.VALUE;
 
 public class PropertyUtil {
     public static JSONValue getPropertyValue(JSONValue property) {
         JSONObject object = property.isObject();
 
-        if (object != null && object.containsKey("value")) {
-            return object.get("value");
+        if (object != null && object.containsKey(VALUE)) {
+            return object.get(VALUE);
         }
 
         return property;
@@ -39,8 +40,8 @@ public class PropertyUtil {
     public static Boolean isPropertyIndexed(JSONValue property) {
         JSONObject embed = property.isObject();
 
-        if (embed != null && embed.containsKey(INDEXED.getPropertyName())) {
-            JSONBoolean indexed = embed.get(INDEXED.getPropertyName()).isBoolean();
+        if (embed != null && embed.containsKey(INDEXED)) {
+            JSONBoolean indexed = embed.get(INDEXED).isBoolean();
 
             return indexed == null || indexed.booleanValue();
         }
@@ -53,7 +54,7 @@ public class PropertyUtil {
 
         if (!indexed) {
             wrapper = new JSONObject();
-            wrapper.put(INDEXED.getPropertyName(), JSONBoolean.getInstance(false));
+            wrapper.put(INDEXED, JSONBoolean.getInstance(false));
         }
 
         if (type != PropertyType.NULL) {
@@ -61,11 +62,11 @@ public class PropertyUtil {
                 wrapper = new JSONObject();
             }
 
-            wrapper.put(GAE_PROPERTY_TYPE.getPropertyName(), new JSONString(type.name()));
+            wrapper.put(GAE_PROPERTY_TYPE, new JSONString(type.name()));
         }
 
         if (wrapper != null) {
-            wrapper.put("value", value);
+            wrapper.put(VALUE, value);
             return wrapper;
         }
 
@@ -74,8 +75,8 @@ public class PropertyUtil {
 
     public static JSONObject createUnindexedValue(JSONValue value) {
         JSONObject wrapper = new JSONObject();
-        wrapper.put(INDEXED.getPropertyName(), JSONBoolean.getInstance(false));
-        wrapper.put("value", value);
+        wrapper.put(INDEXED, JSONBoolean.getInstance(false));
+        wrapper.put(VALUE, value);
 
         return wrapper;
     }
@@ -85,12 +86,12 @@ public class PropertyUtil {
 
         JSONObject asObject = jsonValue.isObject();
         if (asObject != null) {
-            if (asObject.containsKey(GAE_PROPERTY_TYPE.getPropertyName())) {
-                JSONString typeName = asObject.get(GAE_PROPERTY_TYPE.getPropertyName()).isString();
+            if (asObject.containsKey(GAE_PROPERTY_TYPE)) {
+                JSONString typeName = asObject.get(GAE_PROPERTY_TYPE).isString();
                 type = PropertyType.valueOf(typeName.stringValue());
 
                 jsonValue = getPropertyValue(jsonValue);
-            } else if (asObject.containsKey(INDEXED.getPropertyName())) {
+            } else if (asObject.containsKey(INDEXED)) {
                 jsonValue = getPropertyValue(jsonValue);
             }
         }

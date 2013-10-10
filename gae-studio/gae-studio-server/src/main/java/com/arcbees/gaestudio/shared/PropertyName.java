@@ -16,16 +16,12 @@
 
 package com.arcbees.gaestudio.shared;
 
-public enum PropertyName {
-    GAE_PROPERTY_TYPE("__gaePropertyType"), PROPERTY_MAP("propertyMap"), INDEXED("__indexed");
+public class PropertyName {
+    public static final String GAE_PROPERTY_TYPE = "__gaePropertyType";
+    public static final String PROPERTY_MAP = "propertyMap";
+    public static final String INDEXED = "__indexed";
+    public static final String VALUE = "value";
 
-    private final String propertyName;
-
-    PropertyName(String propertyName) {
-        this.propertyName = propertyName;
-    }
-
-    public String getPropertyName() {
-        return propertyName;
+    private PropertyName() {
     }
 }
