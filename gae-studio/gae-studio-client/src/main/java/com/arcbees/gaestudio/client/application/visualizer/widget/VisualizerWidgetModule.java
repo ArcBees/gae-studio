@@ -9,15 +9,15 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityWidgetModule;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespaceWidgetModule;
-import com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyWidgetModule;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class VisualizerWidgetModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
         install(new NamespaceWidgetModule());
-        install(new PropertyWidgetModule());
+        install(new EntityWidgetModule());
 
         bindSingletonPresenterWidget(EntityListPresenter.class, EntityListPresenter.MyView.class,
                 EntityListView.class);

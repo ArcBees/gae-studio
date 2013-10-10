@@ -16,7 +16,7 @@ import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.TypeLiteral;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
-public class PropertyWidgetModule extends AbstractPresenterModule {
+public class EntityWidgetModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
         install(new GinFactoryModuleBuilder()
