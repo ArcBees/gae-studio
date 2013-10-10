@@ -27,6 +27,7 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
+import com.google.storage.onestore.v3.OnestoreEntity.EntityProto;
 
 public class EntitiesServiceImpl implements EntitiesService {
     private final DatastoreHelper datastoreHelper;
@@ -72,12 +73,9 @@ public class EntitiesServiceImpl implements EntitiesService {
         Entity emptyEntity = null;
 
         if (!entities.isEmpty()) {
-            Entity entity = entities.get(0);
+            Entity template = entities.get(0);
 
-            // The copy allows to keep the prototype metadata.
-            emptyEntity = EntityTranslator.createFromPb(EntityTranslator.convertToPb(entity));
-            // TODO: Remove key
-            emptyEntity = setEmptiedProperties(emptyEntity, entity);
+            emptyEntity = createEmptyEntityFromTemplate(template);
         }
 
         return emptyEntity;
