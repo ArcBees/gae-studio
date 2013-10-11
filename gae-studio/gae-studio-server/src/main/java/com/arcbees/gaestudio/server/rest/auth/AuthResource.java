@@ -27,6 +27,7 @@ import com.arcbees.oauth.client.domain.User;
 @Path(EndPoints.AUTH)
 public class AuthResource {
     public static final String API_TOKEN = "ljhs98234h24o8dsyfjehrljqh01923874j2hj";
+
     private final OAuthClient oAuthClient;
     private final UserClient userClient;
 
@@ -49,6 +50,17 @@ public class AuthResource {
         User user = userClient.register(bearerToken, email, password, firstName, lastName);
 
         return Response.ok(user).build();
+    }
+
+    @POST
+    @Path(EndPoints.RESET_PASSWORD)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response generateResetToken(@FormParam(UrlParameters.EMAIL) String email) {
+        Token bearerToken = getBearerToken();
+
+        userClient.requestResetPassword(bearerToken, email);
+
+        return Response.ok().build();
     }
 
     @POST
