@@ -38,8 +38,9 @@ public class AuthResource {
         this.userClient = userClient;
     }
 
-    @Path(EndPoints.REGISTER)
     @POST
+    @Path(EndPoints.REGISTER)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response register(@FormParam(UrlParameters.EMAIL) String email,
                              @FormParam(UrlParameters.PASSWORD) String password,
                              @FormParam(UrlParameters.FIRST_NAME) String firstName,
