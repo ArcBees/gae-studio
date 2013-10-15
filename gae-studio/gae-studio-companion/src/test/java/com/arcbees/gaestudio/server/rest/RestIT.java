@@ -1,7 +1,5 @@
 package com.arcbees.gaestudio.server.rest;
 
-import java.util.List;
-
 import org.junit.Before;
 
 import com.arcbees.gaestudio.companion.domain.Car;
@@ -10,7 +8,6 @@ import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.parsing.Parser;
@@ -23,8 +20,6 @@ public abstract class RestIT {
     public static final String HOSTNAME;
 
     protected final Gson gson = new GsonBuilder().create();
-    private final TypeToken<List<String>> type = new TypeToken<List<String>>() {
-    };
 
     static {
         RestAssured.defaultParser = Parser.JSON;
@@ -57,10 +52,12 @@ public abstract class RestIT {
         return given().body(id).delete(getAbsoluteUri(TestEndPoints.CAR));
     }
 
-    protected List<String> getRemoteKinds() {
-        Response response = given().get(getAbsoluteUri(EndPoints.KINDS));
+    protected Response getRemoteKindsResponse() {
+        return given().get(getAbsoluteUri(EndPoints.KINDS));
+    }
 
-        return gson.fromJson(response.asString(), type.getType());
+    protected Response getRemoteNamespacesResponse() {
+        return given().get(getAbsoluteUri(EndPoints.NAMESPACES));
     }
 
     protected Response deleteAllRemoteEntities() {
