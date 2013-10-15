@@ -72,4 +72,16 @@ public abstract class RestIT {
 
         return gson.fromJson(response.asString(), Car.class);
     }
+
+    protected Long stopRecording() {
+        Response response = given().delete(getAbsoluteUri(EndPoints.RECORD));
+
+        return gson.fromJson(response.asString(), Long.class);
+    }
+
+    protected Long startRecording() {
+        Response response = given().post(getAbsoluteUri(EndPoints.RECORD));
+
+        return gson.fromJson(response.asString(), Long.class);
+    }
 }

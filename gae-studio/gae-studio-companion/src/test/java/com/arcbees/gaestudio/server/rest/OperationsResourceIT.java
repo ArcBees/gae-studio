@@ -1,6 +1,5 @@
 package com.arcbees.gaestudio.server.rest;
 
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 import com.google.gson.reflect.TypeToken;
 
@@ -13,7 +12,9 @@ import com.jayway.restassured.response.Response;
 import java.util.List;
 
 import static com.jayway.restassured.RestAssured.given;
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static org.junit.Assert.assertEquals;
+import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 
 public class OperationsResourceIT extends RestIT {
     private final TypeToken<List<QueryRecordDto>> queryType = new TypeToken<List<QueryRecordDto>>() {
@@ -65,21 +66,39 @@ public class OperationsResourceIT extends RestIT {
         assertEquals(4, getOperations(lastOperationId).size());
     }
 
-    private List<DbOperationRecordDto> getOperations(Long currentOperationId) {
-        Response response = given().queryParam(TestEndPoints.PARAM_LASTID, currentOperationId).get(getAbsoluteUri(EndPoints.OPERATIONS));
+    @Test
+    public void record_noOperations_returnNoContent() {
+        //given
+        Long lastOperationId = startRecording();
+
+        //when
+        stopRecording();
+        Response response = getOperationsResponse(lastOperationId);
+
+        //then
+        assertEquals(NO_CONTENT.getStatusCode(), response.getStatusCode());
+    }
+
+    @Test
+    public void getOperations_withNoLastId_returnsBadRequest() {
+        //when
+        Response response = getOperationsWithNoLastId();
+
+        //then
+        assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
+    }
+
+    private List<QueryRecordDto> getOperations(Long currentOperationId) {
+        Response response = getOperationsResponse(currentOperationId);
 
         return gson.fromJson(response.asString(), queryType.getType());
     }
 
-    private Long stopRecording() {
-        Response response = given().delete(getAbsoluteUri(EndPoints.RECORD));
-
-        return gson.fromJson(response.asString(), Long.class);
+    private Response getOperationsResponse(Long currentOperationId) {
+        return given().queryParam(TestEndPoints.PARAM_LASTID, currentOperationId).get(getAbsoluteUri(EndPoints.OPERATIONS));
     }
 
-    private Long startRecording() {
-        Response response = given().post(getAbsoluteUri(EndPoints.RECORD));
-
-        return gson.fromJson(response.asString(), Long.class);
+    private Response getOperationsWithNoLastId() {
+        return given().get(getAbsoluteUri(EndPoints.OPERATIONS));
     }
 }
