@@ -26,8 +26,7 @@ public class EntitySelectedEvent extends GwtEvent<EntitySelectedEvent.EntitySele
         this.parsedEntity = parsedEntity;
     }
 
-    public static void fire(HasHandlers source,
-                            ParsedEntity parsedEntity) {
+    public static void fire(HasHandlers source, ParsedEntity parsedEntity) {
         EntitySelectedEvent eventInstance = new EntitySelectedEvent(parsedEntity);
         source.fireEvent(eventInstance);
     }
