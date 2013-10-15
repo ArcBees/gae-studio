@@ -6,10 +6,7 @@ import org.junit.Test;
 
 import com.arcbees.gaestudio.companion.domain.Car;
 import com.arcbees.gaestudio.companion.rest.TestEndPoints;
-import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.jayway.restassured.response.Response;
 
@@ -22,7 +19,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class EntitiesResourceIT extends RestIT {
-    private final Gson gson = new GsonBuilder().create();
     private final TypeToken<List<Car>> type = new TypeToken<List<Car>>() {
     };
 
@@ -40,6 +36,7 @@ public class EntitiesResourceIT extends RestIT {
         //then
         List<Car> entities = gson.fromJson(response.asString(), type.getType());
         assertEquals(1, entities.size());
+        assertEquals(OK.getStatusCode(), response.getStatusCode());
     }
 
     @Test
@@ -93,7 +90,7 @@ public class EntitiesResourceIT extends RestIT {
     }
 
     @Test
-    public void createObject_deleteEntities_noResponse() {
+    public void createObject_deleteEntities_noContent() {
         //given
         createRemoteCar();
 
@@ -113,7 +110,7 @@ public class EntitiesResourceIT extends RestIT {
         createRemoteCar();
 
         //when
-        Response response = deleteAllRemoteEntitiesWithNoDeleteType();
+        Response response = deleteRemoteEntitiesWithNoDeleteType();
 
         //then
         assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
@@ -162,11 +159,7 @@ public class EntitiesResourceIT extends RestIT {
         return given().post(getAbsoluteUri(EndPoints.ENTITIES));
     }
 
-    private Response deleteAllRemoteEntities() {
-        return given().queryParam(TestEndPoints.PARAM_TYPE, DeleteEntities.ALL).delete(getAbsoluteUri(EndPoints.ENTITIES));
-    }
-
-    private Response deleteAllRemoteEntitiesWithNoDeleteType() {
+    private Response deleteRemoteEntitiesWithNoDeleteType() {
         return given().delete(getAbsoluteUri(EndPoints.ENTITIES));
     }
 

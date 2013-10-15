@@ -6,6 +6,7 @@ import org.junit.Before;
 
 import com.arcbees.gaestudio.companion.domain.Car;
 import com.arcbees.gaestudio.companion.rest.TestEndPoints;
+import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,7 +22,7 @@ import static com.jayway.restassured.RestAssured.given;
 public abstract class RestIT {
     public static final String HOSTNAME;
 
-    private final Gson gson = new GsonBuilder().create();
+    protected final Gson gson = new GsonBuilder().create();
     private final TypeToken<List<String>> type = new TypeToken<List<String>>() {
     };
 
@@ -43,6 +44,7 @@ public abstract class RestIT {
 
     protected Response createRemoteCar() {
         Car car = new Car();
+
         return createRemoteObject(car);
     }
 
@@ -54,5 +56,9 @@ public abstract class RestIT {
         Response response = given().get(getAbsoluteUri(EndPoints.KINDS));
 
         return gson.fromJson(response.asString(), type.getType());
+    }
+
+    protected Response deleteAllRemoteEntities() {
+        return given().queryParam(TestEndPoints.PARAM_TYPE, DeleteEntities.ALL).delete(getAbsoluteUri(EndPoints.ENTITIES));
     }
 }

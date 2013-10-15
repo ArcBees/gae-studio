@@ -42,6 +42,10 @@ public class OperationsResource {
     @GET
     public Response getOperations(@QueryParam(UrlParameters.ID) Long lastId,
                                   @QueryParam(UrlParameters.LIMIT) Integer limit) {
+        if (lastId == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
         List<DbOperationRecordDto> records = operationService.getOperations(lastId, limit);
 
         if (records == null || records.isEmpty()) {
@@ -50,7 +54,8 @@ public class OperationsResource {
 
         // The erasure remove the Generic type information. At runtime, userList is a simple list of objects
         // Using GenericEntity allows to keep the info about Generic and jackson knows it has to add the JsonTypeInfo
-        GenericEntity<List<DbOperationRecordDto>> entities = new GenericEntity<List<DbOperationRecordDto>>(records) {};
+        GenericEntity<List<DbOperationRecordDto>> entities = new GenericEntity<List<DbOperationRecordDto>>(records) {
+        };
 
         return Response.ok(entities).build();
     }
