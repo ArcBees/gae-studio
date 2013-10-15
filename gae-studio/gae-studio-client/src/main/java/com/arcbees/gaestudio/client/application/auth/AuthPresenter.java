@@ -24,9 +24,6 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter.MyProxy> {
-    private final PlaceManager placeManager;
-    private final LicenseGateKeeper licenseGateKeeper;
-
     interface MyView extends View {
     }
 
@@ -35,6 +32,9 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
     @NoGatekeeper
     interface MyProxy extends ProxyPlace<AuthPresenter> {
     }
+
+    private final PlaceManager placeManager;
+    private final LicenseGateKeeper licenseGateKeeper;
 
     @Inject
     AuthPresenter(EventBus eventBus,
