@@ -42,14 +42,19 @@ public abstract class RestIT {
         return HOSTNAME + TestEndPoints.ROOT + relativeLocation;
     }
 
-    protected Response createRemoteCar() {
+    protected Long createRemoteCar() {
         Car car = new Car();
+        Response response = createRemoteCar(car);
 
-        return createRemoteObject(car);
+        return gson.fromJson(response.asString(), Long.class);
     }
 
-    protected Response createRemoteObject(Car car) {
-        return given().body(car).post(getAbsoluteUri(TestEndPoints.PUT_OBJECT));
+    protected Response createRemoteCar(Car car) {
+        return given().body(car).post(getAbsoluteUri(TestEndPoints.CAR));
+    }
+
+    protected Response deleteRemoteCar(Long id) {
+        return given().body(id).delete(getAbsoluteUri(TestEndPoints.CAR));
     }
 
     protected List<String> getRemoteKinds() {
@@ -60,5 +65,11 @@ public abstract class RestIT {
 
     protected Response deleteAllRemoteEntities() {
         return given().queryParam(TestEndPoints.PARAM_TYPE, DeleteEntities.ALL).delete(getAbsoluteUri(EndPoints.ENTITIES));
+    }
+
+    protected Car getRemoteCar(Long id) {
+        Response response = given().queryParam(TestEndPoints.PARAM_ID, id).get(getAbsoluteUri(TestEndPoints.CAR));
+
+        return gson.fromJson(response.asString(), Car.class);
     }
 }
