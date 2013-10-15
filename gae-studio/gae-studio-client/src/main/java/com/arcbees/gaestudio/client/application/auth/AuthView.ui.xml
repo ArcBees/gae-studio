@@ -17,13 +17,13 @@
 
         .loginBtn {
             display: block;
-            margin-top: 15px;
+            margin-top: 10px;
             margin-left: 85%;
         }
 
         .registerBtn {
             display: block;
-            margin-top: 15px;
+            margin-top: 10px;
             margin-left: 80%;
         }
 
