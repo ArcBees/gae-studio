@@ -7,25 +7,20 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.gatekeeper;
-
-import java.util.Date;
+package com.arcbees.gaestudio.client.application.auth;
 
 import javax.inject.Inject;
 
-import com.arcbees.gaestudio.shared.ExpirationDate;
-import com.gwtplatform.mvp.client.proxy.Gatekeeper;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.ViewImpl;
 
-public class LicenseGateKeeper implements Gatekeeper {
-    private final Date expirationDate;
-
-    @Inject
-    LicenseGateKeeper(@ExpirationDate Date expirationDate) {
-        this.expirationDate = expirationDate;
+public class AuthView extends ViewImpl implements AuthPresenter.MyView {
+    interface Binder extends UiBinder<Widget, AuthView> {
     }
 
-    @Override
-    public boolean canReveal() {
-        return new Date().getTime() < expirationDate.getTime();
+    @Inject
+    AuthView(Binder uiBinder) {
+        initWidget(uiBinder.createAndBindUi(this));
     }
 }
