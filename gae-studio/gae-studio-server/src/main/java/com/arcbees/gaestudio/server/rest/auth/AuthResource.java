@@ -12,30 +12,25 @@ package com.arcbees.gaestudio.server.rest.auth;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.arcbees.gaestudio.server.service.auth.AuthService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
-import com.arcbees.oauth.client.OAuthClient;
-import com.arcbees.oauth.client.UserClient;
 import com.arcbees.oauth.client.domain.Token;
 import com.arcbees.oauth.client.domain.User;
 
 @Path(EndPoints.AUTH)
 public class AuthResource {
-    public static final String API_TOKEN = "ljhs98234h24o8dsyfjehrljqh01923874j2hj";
-
-    private final OAuthClient oAuthClient;
-    private final UserClient userClient;
+    private final AuthService authService;
 
     @Inject
-    AuthResource(OAuthClient oAuthClient,
-                 UserClient userClient) {
-        this.oAuthClient = oAuthClient;
-        this.userClient = userClient;
+    AuthResource(AuthService authService) {
+        this.authService = authService;
     }
 
     @POST
@@ -46,9 +41,7 @@ public class AuthResource {
                              @FormParam(UrlParameters.FIRST_NAME) String firstName,
                              @FormParam(UrlParameters.LAST_NAME) String lastName) {
 
-        Token bearerToken = getBearerToken();
-
-        User user = userClient.register(bearerToken, email, password, firstName, lastName);
+        User user = authService.register(email, password, firstName, lastName);
 
         return Response.ok(user).build();
     }
@@ -57,11 +50,17 @@ public class AuthResource {
     @Path(EndPoints.RESET_PASSWORD)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response generateResetToken(@FormParam(UrlParameters.EMAIL) String email) {
-        Token bearerToken = getBearerToken();
-
-        userClient.requestResetPassword(bearerToken, email);
+        authService.requestResetToken(email);
 
         return Response.ok().build();
+    }
+
+    @GET
+    @Path(EndPoints.LOGIN)
+    public Response checkLogin() {
+        User user = authService.checkLogin();
+
+        return Response.ok(user).build();
     }
 
     @POST
@@ -69,12 +68,8 @@ public class AuthResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response login(@FormParam(UrlParameters.EMAIL) String email,
                           @FormParam(UrlParameters.PASSWORD) String password) {
-        Token authToken = oAuthClient.login(email, password);
+        Token authToken = authService.login(email, password);
 
         return Response.ok(authToken).build();
-    }
-
-    private Token getBearerToken() {
-        return oAuthClient.getBearerToken(API_TOKEN);
     }
 }

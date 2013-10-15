@@ -24,4 +24,7 @@
 
     <set-configuration-property name="gin.ginjector.extensions"
                                 value="com.arcbees.gaestudio.client.gin.GinjectorExtension"/>
+
+    <set-configuration-property name="gwtp.bootstrapper"
+                                value="com.arcbees.gaestudio.client.gin.BootstrapperImpl"/>
 </module>

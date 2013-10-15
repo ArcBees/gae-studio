@@ -7,10 +7,25 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server;
+package com.arcbees.gaestudio.shared.auth;
 
-public class GaeStudioConstants {
-    public static final String GAE_NAMESPACE = "gaestudio";
-    public static final String GA_CLIENT_KIND = "__GAClient";
-    public static final String GAE_USER_KIND = "__GAEUser";
+public class Profile {
+    private String firstName;
+    private String lastName;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

@@ -7,10 +7,17 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server;
+package com.arcbees.gaestudio.server.service.auth;
 
-public class GaeStudioConstants {
-    public static final String GAE_NAMESPACE = "gaestudio";
-    public static final String GA_CLIENT_KIND = "__GAClient";
-    public static final String GAE_USER_KIND = "__GAEUser";
+import com.arcbees.oauth.client.domain.Token;
+import com.arcbees.oauth.client.domain.User;
+
+public interface AuthService {
+    User register(String email, String password, String firstName, String lastName);
+
+    void requestResetToken(String email);
+
+    User checkLogin();
+
+    Token login(String email, String password);
 }

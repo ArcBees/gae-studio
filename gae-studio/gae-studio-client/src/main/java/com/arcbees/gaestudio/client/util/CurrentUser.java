@@ -9,7 +9,7 @@
 
 package com.arcbees.gaestudio.client.util;
 
-import com.arcbees.oauth.client.domain.User;
+import com.arcbees.gaestudio.shared.auth.User;
 
 public class CurrentUser {
     private User user;

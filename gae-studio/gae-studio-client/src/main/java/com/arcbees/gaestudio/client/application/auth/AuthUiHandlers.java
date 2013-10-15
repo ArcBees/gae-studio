@@ -7,10 +7,12 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server;
+package com.arcbees.gaestudio.client.application.auth;
 
-public class GaeStudioConstants {
-    public static final String GAE_NAMESPACE = "gaestudio";
-    public static final String GA_CLIENT_KIND = "__GAClient";
-    public static final String GAE_USER_KIND = "__GAEUser";
+import com.gwtplatform.mvp.client.UiHandlers;
+
+public interface AuthUiHandlers extends UiHandlers {
+    void login(String email, String password);
+
+    void register(String firstName, String lastName, String email, String password);
 }
