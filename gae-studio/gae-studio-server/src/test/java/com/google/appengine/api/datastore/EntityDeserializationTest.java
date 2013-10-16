@@ -17,7 +17,6 @@ import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.gson.Gson;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -27,7 +26,8 @@ import static org.junit.Assert.assertTrue;
  * appengine
  */
 public class EntityDeserializationTest {
-    private static final String indexedJsonEntity = "{\n" +
+    private static final String indexedJsonEntity =
+            "{\n" +
             "  \"key\": {\n" +
             "    \"parentKey\": null,\n" +
             "    \"kind\": \"TestClass\",\n" +
@@ -41,18 +41,15 @@ public class EntityDeserializationTest {
             "  },\n" +
             "  \"propertyMap\": {\n" +
             "    \"defaultIndexedProperty\": \"value1\",\n" +
-            "    \"indexedProperty\" : {\n" +
-            "        \"__indexed\": true,\n" +
-            "        \"value\":  \"value2\"\n" +
-            "    },\n" +
             "    \"unindexedProperty\" : {\n" +
             "        \"__indexed\": false,\n" +
-            "        \"value\":  \"value3\"\n" +
+            "        \"value\":  \"value2\"\n" +
             "    }   \n" +
             "  }\n" +
             "}";
 
-    private static final String jsonEntity = "{\n" +
+    private static final String jsonEntity =
+            "{\n" +
             "  \"key\": {\n" +
             "    \"parentKey\": null,\n" +
             "    \"kind\": \"Complex\",\n" +
@@ -117,10 +114,7 @@ public class EntityDeserializationTest {
         assertEquals(1, entity.getKey().getId());
         assertEquals("value1", entity.getProperty("defaultIndexedProperty"));
         assertEquals(false, entity.isUnindexedProperty("defaultIndexedProperty"));
-        assertEquals("value2", entity.getProperty("indexedProperty"));
-        assertFalse(entity.isUnindexedProperty("indexedProperty"));
-        assertEquals("value3", entity.getProperty("unindexedProperty"));
+        assertEquals("value2", entity.getProperty("unindexedProperty"));
         assertTrue(entity.isUnindexedProperty("unindexedProperty"));
-
     }
 }

@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.application.visualizer.widget.EntityDetailsPresenter.MyView;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -24,8 +25,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
 
-public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHandlers>
-        implements EntityDetailsPresenter.MyView {
+public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHandlers> implements MyView {
     interface Binder extends UiBinder<Widget, EntityDetailsView> {
     }
 
@@ -39,7 +39,8 @@ public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHa
     SimplePanel editorPanel;
 
     @Inject
-    EntityDetailsView(Binder uiBinder, EventBus eventBus) {
+    EntityDetailsView(Binder uiBinder,
+                      EventBus eventBus) {
         super(eventBus);
         initWidget(uiBinder.createAndBindUi(this));
     }
@@ -56,6 +57,15 @@ public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHa
         error.setText(message);
     }
 
+    @Override
+    public void setInSlot(Object slot, IsWidget content) {
+        super.setInSlot(slot, content);
+
+        if (slot == EntityDetailsPresenter.EDITOR_SLOT) {
+            editorPanel.setWidget(content);
+        }
+    }
+
     @UiHandler("save")
     void onEditClicked(ClickEvent event) {
         getUiHandlers().saveEntity();
@@ -64,14 +74,5 @@ public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHa
     @UiHandler("cancel")
     void onCancelClicked(ClickEvent event) {
         asPopupPanel().hide();
-    }
-
-    @Override
-    public void setInSlot(Object slot, IsWidget content) {
-        super.setInSlot(slot, content);
-
-        if (slot == EntityDetailsPresenter.EDITOR_SLOT) {
-            editorPanel.setWidget(content);
-        }
     }
 }
