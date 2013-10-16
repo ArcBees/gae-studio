@@ -47,8 +47,11 @@ public class EntityWidgetModule extends AbstractPresenterModule {
                 .implement(new TypeLiteral<PropertyEditor<Double>>() {}, DoublePropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<Boolean>>() {}, BooleanPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<Date>>() {}, DatePropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<GeoPoint>>() {}, GeoPointPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<?>>() {}, RawPropertyEditor.class)
                 .build(PropertyEditorFactory.class));
+
+        bind(GeoPointPropertyEditor.Binder.class).in(Singleton.class);
 
         install(new GinFactoryModuleBuilder().build(EntityEditorFactory.class));
 

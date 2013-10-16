@@ -77,6 +77,9 @@ public class PropertyEditorsFactoryImpl implements PropertyEditorsFactory {
             case RATING:
                 propertyEditor = propertyEditorFactory.createRatingEditor(key, property);
                 break;
+            case GEO_PT:
+                propertyEditor = propertyEditorFactory.createGeoPointEditor(key, property);
+                break;
             default:
                 propertyEditor = propertyEditorFactory.createRawEditor(key, property);
         }

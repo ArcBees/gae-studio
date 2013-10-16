@@ -104,7 +104,7 @@ public class EntityMapper {
     private static PropertyType getPropertyType(Property property) {
         PropertyType type = PropertyType.NULL;
 
-        // TODO: IMHandle, GeoPt, User, Blob, ShortBlob, BlobKey, EmbeddedEntity
+        // TODO: IMHandle, User, Blob, ShortBlob, BlobKey, EmbeddedEntity
 
         if (property.hasValue()) {
             PropertyValue value = property.getValue();
@@ -136,6 +136,8 @@ public class EntityMapper {
                 } else {
                     type = PropertyType.STRING;
                 }
+            } else if (value.hasPointValue()) {
+                type = PropertyType.GEO_PT;
             }
         }
 
@@ -154,7 +156,7 @@ public class EntityMapper {
                 JsonElement value = properties.get(propertyKey);
 
                 JsonObject wrapper;
-                if (value.isJsonObject()) {
+                if (value.isJsonObject() && value.getAsJsonObject().has(VALUE)) {
                     wrapper = value.getAsJsonObject();
                 } else {
                     wrapper = new JsonObject();

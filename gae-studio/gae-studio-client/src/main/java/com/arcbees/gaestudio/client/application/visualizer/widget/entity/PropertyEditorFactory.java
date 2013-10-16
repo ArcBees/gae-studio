@@ -26,17 +26,25 @@ public interface PropertyEditorFactory {
 
     PropertyEditor<Date> createDateEditor(String key, JSONValue property);
 
-    @Named("POSTAL_ADDRESS") PropertyEditor<String> createPostalAddressEditor(String key, JSONValue property);
+    @Named("POSTAL_ADDRESS")
+    PropertyEditor<String> createPostalAddressEditor(String key, JSONValue property);
 
-    @Named("CATEGORY") PropertyEditor<String> createCategoryEditor(String key, JSONValue property);
+    @Named("CATEGORY")
+    PropertyEditor<String> createCategoryEditor(String key, JSONValue property);
 
-    @Named("LINK") PropertyEditor<String> createLinkEditor(String key, JSONValue property);
+    @Named("LINK")
+    PropertyEditor<String> createLinkEditor(String key, JSONValue property);
 
-    @Named("EMAIL") PropertyEditor<String> createEmailEditor(String key, JSONValue property);
+    @Named("EMAIL")
+    PropertyEditor<String> createEmailEditor(String key, JSONValue property);
 
-    @Named("PHONE_NUMBER") PropertyEditor<String> createPhoneNumberEditor(String key, JSONValue property);
+    @Named("PHONE_NUMBER")
+    PropertyEditor<String> createPhoneNumberEditor(String key, JSONValue property);
 
-    @Named("RATING") PropertyEditor<Long> createRatingEditor(String key, JSONValue property);
+    @Named("RATING")
+    PropertyEditor<Long> createRatingEditor(String key, JSONValue property);
+
+    PropertyEditor<GeoPoint> createGeoPointEditor(String key, JSONValue property);
 
     PropertyEditor<?> createRawEditor(String key, JSONValue property);
 }
