@@ -38,7 +38,7 @@ public class PropertyValueDeserializer implements JsonDeserializer<PropertyValue
         } else {
             PropertyType propertyType = extractPropertyType(json);
 
-            if (propertyType != PropertyType.NULL) {
+            if (json.isJsonObject() && json.getAsJsonObject().has(VALUE)) {
                 json = json.getAsJsonObject().get(VALUE);
             }
 
