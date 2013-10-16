@@ -11,14 +11,11 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorPresenter.MyView;
-import com.google.common.collect.Maps;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -32,22 +29,21 @@ public class EntityEditorPresenter extends PresenterWidget<MyView> {
         void addPropertyEditor(IsWidget widget);
     }
 
-    private final PropertyEditorFactory propertyEditorFactory;
     private final ParsedEntity entity;
 
-    private final Map<String, PropertyEditor<?>> propertyEditors = Maps.newHashMap();
+    private final Map<String, PropertyEditor<?>> propertyEditors;
 
     @Inject
     EntityEditorPresenter(EventBus eventBus,
                           MyView view,
-                          PropertyEditorFactory propertyEditorFactory,
+                          PropertyEditorsFactory propertyEditorsFactory,
                           @Assisted ParsedEntity entity) {
         super(eventBus, view);
 
-        this.propertyEditorFactory = propertyEditorFactory;
         this.entity = entity;
+        propertyEditors = propertyEditorsFactory.create(entity);
 
-        createPropertyEditors();
+        addPropertyEditorsToView();
     }
 
     public ParsedEntity flush() {
@@ -66,39 +62,9 @@ public class EntityEditorPresenter extends PresenterWidget<MyView> {
         return entity;
     }
 
-    private void createPropertyEditors() {
-        Set<String> keys = entity.getPropertyMap().keySet();
-
-        for (String key : keys) {
-            JSONValue property = entity.getProperty(key);
-            createPropertyEditor(key, PropertyUtil.getPropertyType(property), property);
+    private void addPropertyEditorsToView() {
+        for (PropertyEditor<?> propertyEditor : propertyEditors.values()) {
+            getView().addPropertyEditor(propertyEditor);
         }
-    }
-
-    private void createPropertyEditor(String key, PropertyType propertyType, JSONValue property) {
-        PropertyEditor<?> propertyEditor;
-        switch (propertyType) {
-            case STRING:
-                propertyEditor = propertyEditorFactory.createStringEditor(key, property);
-                break;
-            case NUMERIC:
-                propertyEditor = propertyEditorFactory.createNumericEditor(key, property);
-                break;
-            case FLOATING:
-                propertyEditor = propertyEditorFactory.createFloatingEditor(key, property);
-                break;
-            case DATE:
-                propertyEditor = propertyEditorFactory.createDateEditor(key, property);
-                break;
-            case BOOLEAN:
-                propertyEditor = propertyEditorFactory.createBooleanEditor(key, property);
-                break;
-            default:
-                propertyEditor = propertyEditorFactory.createRawEditor(key, property);
-        }
-
-        propertyEditors.put(key, propertyEditor);
-
-        getView().addPropertyEditor(propertyEditor);
     }
 }
