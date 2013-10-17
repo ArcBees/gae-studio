@@ -9,15 +9,10 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorPresenter.MyView;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.inject.assistedinject.Assisted;
 import com.google.web.bindery.event.shared.EventBus;
@@ -30,41 +25,26 @@ public class EntityEditorPresenter extends PresenterWidget<MyView> {
     }
 
     private final ParsedEntity entity;
-
-    private final Map<String, PropertyEditor<?>> propertyEditors;
+    private final PropertyEditorCollectionWidget propertyEditorsWidget;
 
     @Inject
     EntityEditorPresenter(EventBus eventBus,
                           MyView view,
-                          PropertyEditorsFactory propertyEditorsFactory,
+                          PropertyEditorCollectionWidgetFactory propertyEditorCollectionWidgetFactory,
                           @Assisted ParsedEntity entity) {
         super(eventBus, view);
 
         this.entity = entity;
-        propertyEditors = propertyEditorsFactory.create(entity);
+        propertyEditorsWidget = propertyEditorCollectionWidgetFactory.create(entity.getPropertyMap());
 
-        addPropertyEditorsToView();
+        getView().addPropertyEditor(propertyEditorsWidget);
     }
 
     public ParsedEntity flush() {
-        for (Entry<String, PropertyEditor<?>> entry : propertyEditors.entrySet()) {
-            String key = entry.getKey();
-            PropertyEditor<?> propertyEditor = entry.getValue();
-
-            JSONValue newJsonValue = propertyEditor.getJsonValue();
-
-            JSONObject properties = entity.getPropertyMap();
-            properties.put(key, newJsonValue);
-        }
+        propertyEditorsWidget.flush();
 
         entity.getEntityDto().setJson(entity.getJson());
 
         return entity;
-    }
-
-    private void addPropertyEditorsToView() {
-        for (PropertyEditor<?> propertyEditor : propertyEditors.values()) {
-            getView().addPropertyEditor(propertyEditor);
-        }
     }
 }

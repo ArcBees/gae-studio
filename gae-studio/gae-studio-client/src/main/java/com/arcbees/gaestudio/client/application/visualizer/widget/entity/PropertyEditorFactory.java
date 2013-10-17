@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.inject.Named;
 
@@ -45,6 +46,8 @@ public interface PropertyEditorFactory {
     PropertyEditor<Long> createRatingEditor(String key, JSONValue property);
 
     PropertyEditor<GeoPoint> createGeoPointEditor(String key, JSONValue property);
+
+    PropertyEditor<Map<String, ?>> createEmbeddedEntityEditor(String key, JSONValue property);
 
     PropertyEditor<?> createRawEditor(String key, JSONValue property);
 }
