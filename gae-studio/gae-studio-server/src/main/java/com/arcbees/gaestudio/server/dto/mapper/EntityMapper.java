@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.dto.mapper;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -69,8 +70,10 @@ public class EntityMapper {
 
         // TODO: IMHandle, User, Blob, ShortBlob, BlobKey
 
-        if (property instanceof String || property instanceof Text) {
+        if (property instanceof String) {
             type = PropertyType.STRING;
+        } else if (property instanceof Text) {
+            type = PropertyType.TEXT;
         } else if (property instanceof Date) {
             type = PropertyType.DATE;
         } else if (property instanceof Rating) {
@@ -95,6 +98,10 @@ public class EntityMapper {
             type = PropertyType.GEO_PT;
         } else if (property instanceof EmbeddedEntity) {
             type = PropertyType.EMBEDDED;
+        } else if (property instanceof Collection) {
+            type = PropertyType.COLLECTION;
+        } else if (property instanceof Key) {
+            type = PropertyType.KEY;
         }
 
         return type;

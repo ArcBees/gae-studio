@@ -10,6 +10,7 @@
 package com.google.appengine.api.datastore;
 
 import java.lang.reflect.Modifier;
+import java.util.Collection;
 import java.util.Map;
 
 import com.google.appengine.api.datastore.Entity.UnindexedValue;
@@ -41,9 +42,10 @@ public class GsonDatastoreFactory {
         gsonBuilder.registerTypeAdapter(Entity.class, new EntityInstanceCreator());
         gsonBuilder.registerTypeAdapter(AppIdNamespace.class, new AppIdNamespaceInstanceCreator());
         gsonBuilder.registerTypeAdapter(Key.class, new KeyInstanceCreator());
-        gsonBuilder.registerTypeAdapter(Map.class, new PropertiesDeserializer());
+        gsonBuilder.registerTypeAdapter(Map.class, new PropertiesValueAdapter());
+        gsonBuilder.registerTypeAdapter(Collection.class, new CollectionValueAdapter());
         gsonBuilder.registerTypeAdapter(UnindexedValue.class, new UnindexedValueAdapter());
-        gsonBuilder.registerTypeAdapter(PropertyValue.class, new PropertyValueDeserializer());
+        gsonBuilder.registerTypeAdapter(PropertyValue.class, new PropertyValueAdapter());
         gsonBuilder.registerTypeAdapter(Text.class, new TextValueAdapter());
         gsonBuilder.registerTypeAdapter(PostalAddress.class, new PostalAddressValueAdapter());
         gsonBuilder.registerTypeAdapter(Category.class, new CategoryValueAdapter());

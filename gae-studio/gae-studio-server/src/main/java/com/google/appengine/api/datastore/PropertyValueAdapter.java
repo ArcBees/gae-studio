@@ -10,7 +10,10 @@
 package com.google.appengine.api.datastore;
 
 import java.lang.reflect.Type;
+import java.util.EnumSet;
+import java.util.Set;
 
+import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.appengine.api.datastore.Entity.UnindexedValue;
 import com.google.gson.JsonDeserializationContext;
@@ -18,19 +21,48 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 import static com.arcbees.gaestudio.shared.PropertyName.GAE_PROPERTY_TYPE;
 import static com.arcbees.gaestudio.shared.PropertyName.VALUE;
+import static com.arcbees.gaestudio.shared.PropertyType.COLLECTION;
+import static com.arcbees.gaestudio.shared.PropertyType.NULL;
 
-public class PropertyValueDeserializer implements JsonDeserializer<PropertyValue> {
+public class PropertyValueAdapter implements JsonDeserializer<PropertyValue>, JsonSerializer<PropertyValue> {
+    private static final Set<PropertyType> EXCLUDED_METADATA_PROPERTY_TYPES = EnumSet.noneOf(PropertyType.class);
+
+    static {
+        EXCLUDED_METADATA_PROPERTY_TYPES.add(NULL);
+        EXCLUDED_METADATA_PROPERTY_TYPES.add(COLLECTION);
+    }
+
+    @Override
+    public JsonElement serialize(PropertyValue src, Type typeOfSrc, JsonSerializationContext context) {
+        Object value = src.getValue();
+        JsonElement serializedValue;
+
+        if (UnindexedValueAdapter.isUnindexedValue(value)) {
+            serializedValue = context.serialize(value, UnindexedValue.class);
+        } else {
+            PropertyType propertyType = getPropertyType(value);
+            Class<?> mappedClass = getMappedClass(propertyType);
+
+            serializedValue = context.serialize(value, mappedClass);
+
+            if (!EXCLUDED_METADATA_PROPERTY_TYPES.contains(propertyType)) {
+                serializedValue = appendPropertyType(serializedValue, propertyType.getRepresentation());
+            }
+        }
+
+        return serializedValue;
+    }
+
     @Override
     public PropertyValue deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
         Object value;
-        if (isKey(json)) {
-            // TODO: key should be identified by __gaePropertyType
-            value = context.deserialize(json, Key.class);
-        } else if (UnindexedValueAdapter.isUnindexedValue(json)) {
+        if (UnindexedValueAdapter.isUnindexedValue(json)) {
             value = context.deserialize(json, UnindexedValue.class);
         } else {
             PropertyType propertyType = extractPropertyType(json);
@@ -45,6 +77,28 @@ public class PropertyValueDeserializer implements JsonDeserializer<PropertyValue
         }
 
         return new PropertyValue(value);
+    }
+
+    private PropertyType getPropertyType(Object value) {
+        if (value instanceof UnindexedValue) {
+            value = ((UnindexedValue) value).getValue();
+        }
+
+        return EntityMapper.getPropertyType(value);
+    }
+
+    private JsonElement appendPropertyType(JsonElement serializedValue, PropertyType propertyType) {
+        JsonObject wrapper;
+        if (serializedValue.isJsonObject() && serializedValue.getAsJsonObject().has(VALUE)) {
+            wrapper = serializedValue.getAsJsonObject();
+        } else {
+            wrapper = new JsonObject();
+            wrapper.add(VALUE, serializedValue);
+        }
+
+        wrapper.addProperty(GAE_PROPERTY_TYPE, propertyType.name());
+
+        return wrapper;
     }
 
     private Object cleanupValue(Object value, PropertyType propertyType) {
@@ -67,6 +121,8 @@ public class PropertyValueDeserializer implements JsonDeserializer<PropertyValue
                 String propertyTypeName = jsonObject.get(GAE_PROPERTY_TYPE).getAsString();
                 propertyType = PropertyType.valueOf(propertyTypeName);
             }
+        } else if (jsonElement.isJsonArray()) {
+            propertyType = COLLECTION;
         }
 
         return propertyType;
@@ -80,16 +136,5 @@ public class PropertyValueDeserializer implements JsonDeserializer<PropertyValue
             mappedClass = Object.class;
         }
         return mappedClass;
-    }
-
-    private boolean isKey(JsonElement jsonValueElement) {
-        if (jsonValueElement.isJsonObject()) {
-            JsonObject valueObject = jsonValueElement.getAsJsonObject();
-
-            if (valueObject.has("kind")) {
-                return true;
-            }
-        }
-        return false;
     }
 }

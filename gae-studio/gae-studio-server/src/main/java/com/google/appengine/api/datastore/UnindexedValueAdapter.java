@@ -24,6 +24,10 @@ import static com.arcbees.gaestudio.shared.PropertyName.INDEXED;
 import static com.arcbees.gaestudio.shared.PropertyName.VALUE;
 
 public class UnindexedValueAdapter implements JsonSerializer<UnindexedValue>, JsonDeserializer<UnindexedValue> {
+    public static boolean isUnindexedValue(Object value) {
+        return value instanceof UnindexedValue;
+    }
+
     public static boolean isUnindexedValue(JsonElement element) {
         return !isIndexedValue(element);
     }
@@ -36,7 +40,7 @@ public class UnindexedValueAdapter implements JsonSerializer<UnindexedValue>, Js
 
     @Override
     public JsonElement serialize(UnindexedValue unindexedValue, Type type, JsonSerializationContext context) {
-        JsonElement value = context.serialize(unindexedValue.getValue());
+        JsonElement value = context.serialize(new PropertyValue(unindexedValue.getValue()), PropertyValue.class);
 
         JsonObject object;
         if (value.isJsonObject() && value.getAsJsonObject().has(VALUE)) {
