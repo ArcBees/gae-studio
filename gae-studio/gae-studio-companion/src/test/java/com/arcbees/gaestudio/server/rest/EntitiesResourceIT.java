@@ -19,10 +19,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class EntitiesResourceIT extends RestIT {
-    private final TypeToken<List<Car>> type = new TypeToken<List<Car>>() {
+    private final TypeToken<List<Car>> carListType = new TypeToken<List<Car>>() {
     };
 
-    private String CAR_KIND = "Car";
     private String UNEXISTENT_KIND = "UnexistentKind";
 
     @Test
@@ -34,7 +33,7 @@ public class EntitiesResourceIT extends RestIT {
         Response response = getRemoteEntities(CAR_KIND);
 
         //then
-        List<Car> entities = gson.fromJson(response.asString(), type.getType());
+        List<Car> entities = gson.fromJson(response.asString(), carListType.getType());
         assertEquals(1, entities.size());
         assertEquals(OK.getStatusCode(), response.getStatusCode());
     }
@@ -99,7 +98,7 @@ public class EntitiesResourceIT extends RestIT {
 
         //then
         Response getEntitiesResponse = getRemoteEntities(CAR_KIND);
-        List<Car> entities = gson.fromJson(getEntitiesResponse.asString(), type.getType());
+        List<Car> entities = gson.fromJson(getEntitiesResponse.asString(), carListType.getType());
         assertEquals(0, entities.size());
         assertEquals(NO_CONTENT.getStatusCode(), response.getStatusCode());
     }
