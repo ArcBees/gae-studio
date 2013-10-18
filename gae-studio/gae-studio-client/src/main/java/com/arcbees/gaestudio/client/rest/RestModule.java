@@ -60,4 +60,10 @@ public class RestModule extends AbstractGinModule {
     RecordService getRecordService(ResourceFactory resourceFactory) {
         return resourceFactory.setupProxy(GWT.<RecordService>create(RecordService.class), EndPoints.RECORD);
     }
+
+    @Provides
+    @Singleton
+    AuthService getAuthService(ResourceFactory resourceFactory) {
+        return resourceFactory.setupProxy(GWT.<AuthService>create(AuthService.class), EndPoints.AUTH);
+    }
 }

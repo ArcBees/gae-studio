@@ -16,17 +16,16 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
-import com.gwtplatform.mvp.client.annotations.NoGatekeeper;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
-public class LicenseExpiredPresenter extends Presenter<LicenseExpiredPresenter.MyView, LicenseExpiredPresenter.MyProxy> {
+public class LicenseExpiredPresenter
+        extends Presenter<LicenseExpiredPresenter.MyView, LicenseExpiredPresenter.MyProxy> {
     interface MyView extends View {
     }
 
     @ProxyCodeSplit
     @NameToken(NameTokens.licenseExpired)
-    @NoGatekeeper
     interface MyProxy extends ProxyPlace<LicenseExpiredPresenter> {
     }
 

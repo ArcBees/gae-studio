@@ -19,5 +19,6 @@ public class ExceptionModule extends AbstractModule {
         bind(EntityNotFoundExceptionMapper.class).in(Singleton.class);
         bind(IllegalAccessExceptionMapper.class).in(Singleton.class);
         bind(InstantiationExceptionMapper.class).in(Singleton.class);
+        bind(ResponseExceptionMapper.class).in(Singleton.class);
     }
 }

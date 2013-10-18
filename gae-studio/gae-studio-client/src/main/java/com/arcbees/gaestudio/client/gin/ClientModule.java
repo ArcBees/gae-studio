@@ -21,6 +21,7 @@ import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.rest.RestModule;
+import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.arcbees.gaestudio.shared.ExpirationDate;
 import com.google.gwt.i18n.client.Dictionary;
 import com.google.inject.Provides;
@@ -44,7 +45,9 @@ public class ClientModule extends AbstractPresenterModule {
 
         // TODO
         bindConstant().annotatedWith(ErrorPlace.class).to(NameTokens.visualizer);
-        bindConstant().annotatedWith(UnauthorizedPlace.class).to(NameTokens.licenseExpired);
+        bindConstant().annotatedWith(UnauthorizedPlace.class).to(NameTokens.auth);
+
+        bind(CurrentUser.class).asEagerSingleton();
 
         bind(BytesFormatter.class).in(Singleton.class);
         bind(AppResources.class).in(Singleton.class);
@@ -63,7 +66,8 @@ public class ClientModule extends AbstractPresenterModule {
     @ExpirationDate
     Date getExpirationDate() {
         try {
-            Long expirationDateTimeMillis = Long.parseLong(Dictionary.getDictionary("AppConfiguration").get("ax5b7kor"));
+            String expirationDate = Dictionary.getDictionary("AppConfiguration").get("ax5b7kor");
+            Long expirationDateTimeMillis = Long.parseLong(expirationDate);
             return new Date(expirationDateTimeMillis);
         } catch (NumberFormatException e) {
             // impossible to read the expiration date... We consider the application as expired
