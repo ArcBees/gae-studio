@@ -11,6 +11,8 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
 import java.util.Date;
 
+import javax.inject.Singleton;
+
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorPresenter.MyView;
 import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.TypeLiteral;
@@ -30,6 +32,7 @@ public class EntityWidgetModule extends AbstractPresenterModule {
 
         install(new GinFactoryModuleBuilder().build(EntityEditorFactory.class));
 
+        bind(PropertyEditorsFactory.class).to(PropertyEditorsFactoryImpl.class).in(Singleton.class);
         bindSharedView(MyView.class, EntityEditorView.class);
     }
 }
