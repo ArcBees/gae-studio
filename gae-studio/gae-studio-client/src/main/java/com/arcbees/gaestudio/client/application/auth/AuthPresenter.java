@@ -16,8 +16,8 @@ import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
-import com.arcbees.gaestudio.client.gatekeeper.LicenseGateKeeper;
 import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
 import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.arcbees.gaestudio.shared.auth.Token;
@@ -44,32 +44,27 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
     interface MyProxy extends ProxyPlace<AuthPresenter> {
     }
 
+    private final AppConstants appConstants;
     private final PlaceManager placeManager;
     private final CurrentUser currentUser;
     private final AuthService authService;
-    private final LicenseGateKeeper licenseGateKeeper;
 
     @Inject
     AuthPresenter(EventBus eventBus,
                   MyView view,
                   MyProxy proxy,
+                  AppConstants appConstants,
                   PlaceManager placeManager,
                   CurrentUser currentUser,
-                  AuthService authService,
-                  LicenseGateKeeper licenseGateKeeper) {
+                  AuthService authService) {
         super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
 
+        this.appConstants = appConstants;
         this.placeManager = placeManager;
         this.currentUser = currentUser;
         this.authService = authService;
-        this.licenseGateKeeper = licenseGateKeeper;
 
         getView().setUiHandlers(this);
-    }
-
-    @Override
-    protected void onReveal() {
-        super.onReveal();
     }
 
     @Override
@@ -80,7 +75,8 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
         authService.register(email, password, firstName, lastName, new MethodCallback<User>() {
             @Override
             public void onFailure(Method method, Throwable throwable) {
-                DisplayMessageEvent.fire(AuthPresenter.this, new Message("Unable to register", MessageStyle.ERROR));
+                DisplayMessageEvent.fire(AuthPresenter.this,
+                        new Message(appConstants.unableToRegister(), MessageStyle.ERROR));
             }
 
             @Override
@@ -95,7 +91,8 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
         authService.login(email, password, new MethodCallback<Token>() {
             @Override
             public void onFailure(Method method, Throwable throwable) {
-                DisplayMessageEvent.fire(AuthPresenter.this, new Message("Unable to login", MessageStyle.ERROR));
+                DisplayMessageEvent.fire(AuthPresenter.this,
+                        new Message(appConstants.unableToLogin(), MessageStyle.ERROR));
             }
 
             @Override
@@ -106,7 +103,7 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
     }
 
     private void onLoginSuccess() {
-        DisplayMessageEvent.fire(this, new Message("Logged in successfully", MessageStyle.ERROR));
+        DisplayMessageEvent.fire(this, new Message(appConstants.loggedInSuccessfully(), MessageStyle.ERROR));
 
         currentUser.setLoggedIn(true);
 

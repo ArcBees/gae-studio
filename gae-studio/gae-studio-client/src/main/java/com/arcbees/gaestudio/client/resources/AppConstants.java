@@ -67,4 +67,10 @@ public interface AppConstants extends Constants {
     String gibibytesAbbreviation();
 
     String failedGettingEntity();
+
+    String unableToRegister();
+
+    String unableToLogin();
+
+    String loggedInSuccessfully();
 }
