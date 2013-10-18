@@ -16,7 +16,6 @@ public class User {
     private String email;
     private String password;
     private Profile profile = new Profile();
-
     private Long dateActivated;
     private Date dateCreated;
 

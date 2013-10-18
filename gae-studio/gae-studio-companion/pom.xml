@@ -19,11 +19,6 @@
     </properties>
 
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>com.arcbees.gaestudio</groupId>-->
-            <!--<artifactId>gae-studio-webapp</artifactId>-->
-            <!--<version>${gaestudio.version}</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.arcbees.gaestudio</groupId>
             <artifactId>gae-studio-server</artifactId>

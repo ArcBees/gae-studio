@@ -66,8 +66,8 @@ public class ClientModule extends AbstractPresenterModule {
     @ExpirationDate
     Date getExpirationDate() {
         try {
-            Long expirationDateTimeMillis = Long.parseLong(
-                    Dictionary.getDictionary("AppConfiguration").get("ax5b7kor"));
+            String expirationDate = Dictionary.getDictionary("AppConfiguration").get("ax5b7kor");
+            Long expirationDateTimeMillis = Long.parseLong(expirationDate);
             return new Date(expirationDateTimeMillis);
         } catch (NumberFormatException e) {
             // impossible to read the expiration date... We consider the application as expired

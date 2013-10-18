@@ -23,7 +23,6 @@ public class RestModule extends AbstractModule {
         bind(EntitiesResource.class);
         bind(OperationsResource.class);
         bind(RecordResource.class);
-
         bind(AuthResource.class);
     }
 }

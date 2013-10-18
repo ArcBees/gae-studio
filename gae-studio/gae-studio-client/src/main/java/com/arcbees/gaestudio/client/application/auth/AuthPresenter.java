@@ -70,11 +70,6 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
     @Override
     protected void onReveal() {
         super.onReveal();
-
-        if (!licenseGateKeeper.canReveal()) {
-            PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.licenseExpired).build();
-            placeManager.revealPlace(placeRequest);
-        }
     }
 
     @Override

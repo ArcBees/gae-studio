@@ -13,19 +13,26 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.shared.ExpirationDate;
 import com.gwtplatform.mvp.client.proxy.Gatekeeper;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
 public class LicenseGateKeeper implements Gatekeeper {
+    private final PlaceManager placeManager;
     private final Date expirationDate;
 
     @Inject
-    LicenseGateKeeper(@ExpirationDate Date expirationDate) {
+    LicenseGateKeeper(PlaceManager placeManager,
+                      @ExpirationDate Date expirationDate) {
+        this.placeManager = placeManager;
         this.expirationDate = expirationDate;
     }
 
     @Override
     public boolean canReveal() {
-        return new Date().getTime() < expirationDate.getTime();
+        String currentNameToken = placeManager.getCurrentPlaceRequest().getNameToken();
+
+        return NameTokens.licenseExpired.equals(currentNameToken) || new Date().getTime() < expirationDate.getTime();
     }
 }
