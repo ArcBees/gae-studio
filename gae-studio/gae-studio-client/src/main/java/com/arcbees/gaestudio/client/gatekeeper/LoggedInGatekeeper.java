@@ -19,15 +19,15 @@ import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 @DefaultGatekeeper
-public class LoggedInGatekeeper2 implements Gatekeeper {
+public class LoggedInGatekeeper implements Gatekeeper {
     private final CurrentUser currentUser;
     private final LicenseGateKeeper licenseGateKeeper;
     private final PlaceManager placeManager;
 
     @Inject
-    LoggedInGatekeeper2(CurrentUser currentUser,
-                        LicenseGateKeeper licenseGateKeeper,
-                        PlaceManager placeManager) {
+    LoggedInGatekeeper(CurrentUser currentUser,
+                       LicenseGateKeeper licenseGateKeeper,
+                       PlaceManager placeManager) {
         this.currentUser = currentUser;
         this.licenseGateKeeper = licenseGateKeeper;
         this.placeManager = placeManager;
