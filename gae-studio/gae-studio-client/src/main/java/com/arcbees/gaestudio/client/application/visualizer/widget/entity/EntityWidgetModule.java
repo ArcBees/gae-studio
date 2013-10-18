@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.inject.Singleton;
 
@@ -47,12 +48,17 @@ public class EntityWidgetModule extends AbstractPresenterModule {
                 .implement(new TypeLiteral<PropertyEditor<Double>>() {}, DoublePropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<Boolean>>() {}, BooleanPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<Date>>() {}, DatePropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<GeoPoint>>() {}, GeoPointPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Map<String, ?>>>() {}, EmbeddedEntityPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<?>>() {}, RawPropertyEditor.class)
                 .build(PropertyEditorFactory.class));
 
+        bind(GeoPointPropertyEditor.Binder.class).in(Singleton.class);
+
         install(new GinFactoryModuleBuilder().build(EntityEditorFactory.class));
 
-        bind(PropertyEditorsFactory.class).to(PropertyEditorsFactoryImpl.class).in(Singleton.class);
+        bind(PropertyEditorCollectionWidgetFactory.class).to(PropertyEditorCollectionWidgetFactoryImpl.class)
+                .in(Singleton.class);
         bindSharedView(MyView.class, EntityEditorView.class);
     }
 }

@@ -23,8 +23,6 @@ import static com.arcbees.gaestudio.shared.PropertyName.GAE_PROPERTY_TYPE;
 import static com.arcbees.gaestudio.shared.PropertyName.VALUE;
 
 public class PropertyValueDeserializer implements JsonDeserializer<PropertyValue> {
-    private static final int APPENGINE_STRING_MAX_LENGTH = 500;
-
     @Override
     public PropertyValue deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
@@ -52,7 +50,7 @@ public class PropertyValueDeserializer implements JsonDeserializer<PropertyValue
     private Object cleanupValue(Object value, PropertyType propertyType) {
         if (propertyType == PropertyType.STRING && value instanceof String) {
             String string = (String) value;
-            if (string.length() > APPENGINE_STRING_MAX_LENGTH) {
+            if (string.length() > DataTypeUtils.MAX_STRING_PROPERTY_LENGTH) {
                 value = new Text(string);
             }
         }

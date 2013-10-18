@@ -21,6 +21,8 @@ public enum PropertyType {
     EMAIL("com.google.appengine.api.datastore.Email"),
     PHONE_NUMBER("com.google.appengine.api.datastore.PhoneNumber"),
     RATING("com.google.appengine.api.datastore.Rating"),
+    GEO_PT("com.google.appengine.api.datastore.GeoPt"),
+    EMBEDDED("com.google.appengine.api.datastore.EmbeddedEntity"),
     NULL("java.lang.Object");
 
     private final String mappedClass;

@@ -9,10 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
-import java.util.Map;
+import com.google.gwt.json.client.JSONObject;
 
-import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-
-public interface PropertyEditorsFactory {
-    Map<String, PropertyEditor<?>> create(ParsedEntity entity);
+public interface PropertyEditorCollectionWidgetFactory {
+    PropertyEditorCollectionWidget create(JSONObject propertyMap);
 }

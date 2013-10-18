@@ -445,3 +445,7 @@ body {
 .isDisplayingEntity, .namespace {
     display: none;
 }
+
+.embeddedEntityProperties {
+    padding-left: 15px;
+}

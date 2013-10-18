@@ -105,6 +105,8 @@ public interface AppResources extends ClientBundle {
         String lockedRow();
 
         String unlockButton();
+
+        String embeddedEntityProperties();
     }
 
     public interface Sprites extends CssResource {
