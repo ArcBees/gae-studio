@@ -27,33 +27,11 @@ public class KeyValuePairBuilder {
 
         for (String prop : propertiesList) {
             String val = parsedEntity.getPropertyValue(prop).toString();
-            val = cleanupValue(val);
 
             KeyValuePair keyValuePair = new KeyValuePair(prop, val);
             keyValuePairs.add(keyValuePair);
         }
 
         return keyValuePairs;
-    }
-
-    private String cleanupValue(String val) {
-        val = val.replace("{\"value\":", "");
-        val = removeTrailingCurlyBracket(val);
-        return val;
-    }
-
-    private String removeTrailingCurlyBracket(String val) {
-        boolean lastCharIsCurlyBracket = val.charAt(val.length() - 1) == '}';
-
-        if (lastCharIsCurlyBracket) {
-            val = removeLastCharacter(val);
-        }
-
-        return val;
-    }
-
-    private String removeLastCharacter(String val) {
-        val = val.substring(0, val.length() - 1);
-        return val;
     }
 }

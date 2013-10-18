@@ -38,7 +38,10 @@ public class LongPropertyEditor extends AbstractPropertyEditor<Long> {
     @Override
     public JSONValue getJsonValue() {
         JSONValue value = new JSONNumber(getValue());
-        return parseJsonValueWithMetadata(value, PropertyType.NUMERIC, PropertyUtil.isPropertyIndexed(property));
+        Boolean isIndexed = PropertyUtil.isPropertyIndexed(property);
+        PropertyType propertyType = PropertyUtil.getPropertyType(property);
+
+        return parseJsonValueWithMetadata(value, propertyType, isIndexed);
     }
 
     @Override

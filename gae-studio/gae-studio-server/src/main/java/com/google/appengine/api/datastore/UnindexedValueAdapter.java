@@ -36,9 +36,18 @@ public class UnindexedValueAdapter implements JsonSerializer<UnindexedValue>, Js
 
     @Override
     public JsonElement serialize(UnindexedValue unindexedValue, Type type, JsonSerializationContext context) {
-        JsonObject object = new JsonObject();
+        JsonElement value = context.serialize(unindexedValue.getValue());
+
+        JsonObject object;
+        if (value.isJsonObject() && value.getAsJsonObject().has(VALUE)) {
+            object = value.getAsJsonObject();
+        } else {
+            object = new JsonObject();
+            object.add(VALUE, value);
+        }
+
         object.addProperty(INDEXED, false);
-        object.add(VALUE, context.serialize(unindexedValue.getValue()));
+
         return object;
     }
 
