@@ -25,4 +25,3 @@ public class BlobKeyValueAdapter implements JsonSerializer<BlobKey>, JsonDeseria
         return new JsonPrimitive(src.getKeyString());
     }
 }
-
