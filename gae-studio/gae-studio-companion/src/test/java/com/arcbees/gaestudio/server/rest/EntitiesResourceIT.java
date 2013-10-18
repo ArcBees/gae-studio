@@ -125,8 +125,8 @@ public class EntitiesResourceIT extends RestIT {
         Response response = getCount(CAR_KIND);
 
         //then
-        assertEquals(OK.getStatusCode(), response.getStatusCode());
         assertEquals(2l, (long) gson.fromJson(response.asString(), Long.class));
+        assertEquals(OK.getStatusCode(), response.getStatusCode());
     }
 
     @Test

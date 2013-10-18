@@ -95,7 +95,7 @@ public class OperationsResourceIT extends RestIT {
     }
 
     private Response getOperationsResponse(Long currentOperationId) {
-        return given().queryParam(TestEndPoints.PARAM_LASTID, currentOperationId).get(getAbsoluteUri(EndPoints.OPERATIONS));
+        return given().queryParam(TestEndPoints.PARAM_ID, currentOperationId).get(getAbsoluteUri(EndPoints.OPERATIONS));
     }
 
     private Response getOperationsWithNoLastId() {
