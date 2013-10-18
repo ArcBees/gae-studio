@@ -20,6 +20,7 @@ public abstract class RestIT {
     public static final String HOSTNAME;
 
     protected final Gson gson = new GsonBuilder().create();
+    protected String CAR_KIND = "Car";
 
     static {
         RestAssured.defaultParser = Parser.JSON;
