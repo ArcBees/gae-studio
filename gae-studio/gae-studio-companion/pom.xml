@@ -19,6 +19,7 @@
         <maven-gae-plugin.version>0.9.6</maven-gae-plugin.version>
         <maven-war-plugin.version>2.3</maven-war-plugin.version>
         <gae.version>1.8.5</gae.version>
+        <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
     </properties>
 
     <dependencies>
@@ -34,6 +35,37 @@
             <version>${gaestudio.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-1.0-sdk</artifactId>
+            <version>${gae.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.objectify</groupId>
+            <artifactId>objectify</artifactId>
+            <version>${objectify.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-servlet</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-assistedinject</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${servlet-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
@@ -44,16 +76,6 @@
             <artifactId>rest-assured</artifactId>
             <version>${rest-assured.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.objectify</groupId>
-            <artifactId>objectify</artifactId>
-            <version>${objectify.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-api-1.0-sdk</artifactId>
-            <version>${gae.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.appengine</groupId>
@@ -68,14 +90,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>google-releases</id>
-            <name>Google Releases</name>
-            <url>https://oss.sonatype.org/content/repositories/google-releases</url>
-        </repository>
-    </repositories>
 
     <build>
         <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
@@ -105,6 +119,58 @@
         </testResources>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${target.jdk}</source>
+                    <target>${target.jdk}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <!-- Disable annotation processors during normal compilation -->
+                    <proc>none</proc>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>net.kindleit</groupId>
+                <artifactId>maven-gae-plugin</artifactId>
+                <version>0.9.6</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.kindleit</groupId>
+                        <artifactId>gae-runtime</artifactId>
+                        <version>1.8.4</version>
+                        <type>pom</type>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <sdkDir>${gae.home}</sdkDir>
+                    <serverId>appengine-credentials</serverId>
+                    <splitJars>true</splitJars>
+                    <monitorKey>stop-jetty</monitorKey>
+                    <monitorPort>9966</monitorPort>
+                    <wait>false</wait>
+                    <port>8888</port>
+                    <emailAccount>maxime.meriouma@arcbees.com</emailAccount>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install-server-jar</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>deploy</id>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
@@ -145,66 +211,11 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${target.jdk}</source>
-                    <target>${target.jdk}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <!-- Disable annotation processors during normal compilation -->
-                    <proc>none</proc>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>net.kindleit</groupId>
-                <artifactId>maven-gae-plugin</artifactId>
-                <version>${maven-gae-plugin.version}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.kindleit</groupId>
-                        <artifactId>gae-runtime</artifactId>
-                        <version>1.8.4</version>
-                        <type>pom</type>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <jvmFlags>
-                        <jvmFlag>-Xmx512m</jvmFlag>
-                        <jvmFlag>-XX:MaxPermSize=256m</jvmFlag>
-                    </jvmFlags>
-                    <sdkDir>${gae.home}</sdkDir>
-                    <serverId>appengine-credentials</serverId>
-                    <splitJars>true</splitJars>
-                    <monitorKey>stop-jetty</monitorKey>
-                    <monitorPort>9966</monitorPort>
-                    <wait>false</wait>
-                    <port>8888</port>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>install-server-jar</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>deploy</id>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- Copy the war contents to target -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>${maven-war-plugin.version}</version>
+                <version>2.4</version>
                 <executions>
                     <execution>
                         <phase>compile</phase>

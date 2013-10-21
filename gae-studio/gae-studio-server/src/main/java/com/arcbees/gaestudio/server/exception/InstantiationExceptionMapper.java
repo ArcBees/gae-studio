@@ -12,7 +12,9 @@ package com.arcbees.gaestudio.server.exception;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
+@Provider
 public class InstantiationExceptionMapper implements ExceptionMapper<InstantiationException> {
     @Override
     public Response toResponse(InstantiationException e) {

@@ -7,17 +7,12 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.exception;
+package com.arcbees.gaestudio.client.application.auth;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
+import com.gwtplatform.mvp.client.UiHandlers;
 
-@Provider
-public class IllegalAccessExceptionMapper implements ExceptionMapper<IllegalAccessException> {
-    @Override
-    public Response toResponse(IllegalAccessException e) {
-        return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-    }
+public interface AuthUiHandlers extends UiHandlers {
+    void login(String email, String password);
+
+    void register(String firstName, String lastName, String email, String password);
 }
