@@ -27,7 +27,6 @@ import com.google.inject.Provides;
 import com.google.storage.onestore.v3.OnestoreEntity;
 
 public class GsonModule extends AbstractModule {
-
     @Override
     protected void configure() {
     }
