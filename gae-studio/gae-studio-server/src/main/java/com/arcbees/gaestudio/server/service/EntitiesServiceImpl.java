@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -67,9 +68,17 @@ public class EntitiesServiceImpl implements EntitiesService {
         // to fetch the template (ie. the selected entity) so we get a
         Query query = new Query(kind);
         FetchOptions fetchOptions = FetchOptions.Builder.withOffset(0).limit(1);
-        Entity template = datastore.prepare(query).asList(fetchOptions).get(0);
+        List<Entity> entities = datastore.prepare(query).asList(fetchOptions);
 
-        return createEmptyEntityFromTemplate(template);
+        Entity emptyEntity = null;
+
+        if (!entities.isEmpty()) {
+            Entity template = entities.get(0);
+
+            emptyEntity = createEmptyEntityFromTemplate(template);
+        }
+
+        return emptyEntity;
     }
 
     @Override

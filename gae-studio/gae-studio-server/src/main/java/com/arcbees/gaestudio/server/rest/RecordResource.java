@@ -40,12 +40,14 @@ public class RecordResource {
     @POST
     public Long startRecording() {
         recordService.startRecording();
+
         return getMostRecentId();
     }
 
     @DELETE
     public Long stopRecording() {
         recordService.stopRecording();
+
         return getMostRecentId();
     }
 

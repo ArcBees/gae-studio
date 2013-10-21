@@ -128,24 +128,26 @@ public class EntitiesResource {
     }
 
     private boolean isValidDeleteRequest(String kind, String namespace, DeleteEntities deleteType) {
-        boolean isValid;
+        boolean isValid = false;
 
-        switch (deleteType) {
-            case KIND:
-                isValid = kind != null;
-                break;
-            case NAMESPACE:
-                isValid = namespace != null;
-                break;
-            case KIND_NAMESPACE:
-                isValid = namespace != null && kind != null;
-                break;
-            case ALL:
-                isValid = true;
-                break;
-            default:
-                isValid = false;
-                break;
+        if (deleteType != null) {
+            switch (deleteType) {
+                case KIND:
+                    isValid = kind != null;
+                    break;
+                case NAMESPACE:
+                    isValid = namespace != null;
+                    break;
+                case KIND_NAMESPACE:
+                    isValid = namespace != null && kind != null;
+                    break;
+                case ALL:
+                    isValid = true;
+                    break;
+                default:
+                    isValid = false;
+                    break;
+            }
         }
 
         return isValid;
