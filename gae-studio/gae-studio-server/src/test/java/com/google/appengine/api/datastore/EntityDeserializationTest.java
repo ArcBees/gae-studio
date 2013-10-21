@@ -79,17 +79,17 @@ public class EntityDeserializationTest {
             "}";
 
     private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
+    private Gson gson;
 
     @Before
     public void setUp() {
         helper.setUp();
+
+        gson = new GsonModule().getGson();
     }
 
     @Test
     public void shouldBeAbleToDeserializeAComplexEntity() {
-        // Given
-        Gson gson = GsonDatastoreFactory.create();
-
         // When
         Entity entity = gson.fromJson(jsonEntity, Entity.class);
 
@@ -103,9 +103,6 @@ public class EntityDeserializationTest {
 
     @Test
     public void shouldBeAbleToDeserializeAnUnindexedValue() {
-        // Given
-        Gson gson = GsonDatastoreFactory.create();
-
         // When
         Entity entity = gson.fromJson(indexedJsonEntity, Entity.class);
 

@@ -18,6 +18,7 @@ import javax.servlet.ServletContext;
 
 import com.arcbees.gaestudio.server.BuildConstants;
 import com.arcbees.gaestudio.server.analytic.AnalyticModule;
+import com.arcbees.gaestudio.server.dto.mapper.MapperModule;
 import com.arcbees.gaestudio.server.exception.ExceptionModule;
 import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
 import com.arcbees.gaestudio.server.rest.RestModule;
@@ -26,6 +27,7 @@ import com.arcbees.gaestudio.server.velocity.VelocityModule;
 import com.arcbees.gaestudio.shared.BaseRestPath;
 import com.arcbees.gaestudio.shared.ExpirationDate;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.google.appengine.api.datastore.GsonModule;
 import com.google.common.base.Strings;
 import com.google.inject.Provides;
 import com.google.inject.servlet.ServletModule;
@@ -54,17 +56,18 @@ public class GaeServletModule extends ServletModule {
 
     @Override
     protected void configureServlets() {
-        install(new GaeStudioRecorderModule());
-        install(new VelocityModule());
-        install(new RestModule());
         install(new AnalyticModule());
-        install(new ServiceModule());
         install(new ExceptionModule());
+        install(new GaeStudioRecorderModule());
+        install(new GsonModule());
+        install(new MapperModule());
+        install(new RestModule());
+        install(new ServiceModule());
+        install(new VelocityModule());
 
         bindConstant().annotatedWith(BaseRestPath.class).to(restPath);
 
-        String baseRestPath = restPath == null ? "/" : "/" + restPath + "/";
-        String fullRestPath = (baseRestPath + EndPoints.REST_PATH).replace("//", "/");
+        String fullRestPath = parseFullRestPath();
 
         filter(fullRestPath + "*").through(LicenseFilter.class);
         filter(fullRestPath + "*").through(GuiceRestEasyFilterDispatcher.class);
@@ -82,5 +85,10 @@ public class GaeServletModule extends ServletModule {
         }
 
         return new Date(buildDate.getTime() + ONE_YEAR_VALIDITY_PERIOD);
+    }
+
+    private String parseFullRestPath() {
+        String baseRestPath = restPath == null ? "/" : "/" + restPath + "/";
+        return (baseRestPath + EndPoints.REST_PATH).replace("//", "/");
     }
 }

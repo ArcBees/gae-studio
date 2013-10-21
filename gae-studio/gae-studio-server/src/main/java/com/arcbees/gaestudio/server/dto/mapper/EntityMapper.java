@@ -13,6 +13,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -25,7 +27,6 @@ import com.google.appengine.api.datastore.Email;
 import com.google.appengine.api.datastore.EmbeddedEntity;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.GeoPt;
-import com.google.appengine.api.datastore.GsonDatastoreFactory;
 import com.google.appengine.api.datastore.IMHandle;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Link;
@@ -39,35 +40,11 @@ import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 
 public class EntityMapper {
-    @SuppressWarnings("unused")
-    private EntityMapper() {
-    }
+    private final Gson gson;
 
-    public static List<EntityDto> mapEntitiesToDtos(Iterable<Entity> entities) {
-        List<EntityDto> entitiesDtos = Lists.newArrayList();
-
-        for (Entity entity : entities) {
-            entitiesDtos.add(EntityMapper.mapEntityToDto(entity));
-        }
-
-        return entitiesDtos;
-    }
-
-    public static EntityDto mapEntityToDto(Entity dbEntity) {
-        Gson gson = GsonDatastoreFactory.create();
-        String json = gson.toJson(dbEntity);
-
-        return new EntityDto(mapKeyToKeyDto(dbEntity.getKey()), json);
-    }
-
-    public static Entity mapDtoToEntity(EntityDto entityDto) {
-        Gson gson = GsonDatastoreFactory.create();
-
-        return gson.fromJson(entityDto.getJson(), Entity.class);
-    }
-
-    public static KeyDto mapKeyToKeyDto(Key dbKey) {
-        return new KeyDto(dbKey.getKind(), dbKey.getId(), mapParentKey(dbKey.getParent()), mapNamespace(dbKey));
+    @Inject
+    EntityMapper(Gson gson) {
+        this.gson = gson;
     }
 
     public static PropertyType getPropertyType(Object property) {
@@ -120,14 +97,38 @@ public class EntityMapper {
         return type;
     }
 
-    private static ParentKeyDto mapParentKey(Key dbParentKey) {
+    public List<EntityDto> mapEntitiesToDtos(Iterable<Entity> entities) {
+        List<EntityDto> entitiesDtos = Lists.newArrayList();
+
+        for (Entity entity : entities) {
+            entitiesDtos.add(mapEntityToDto(entity));
+        }
+
+        return entitiesDtos;
+    }
+
+    public EntityDto mapEntityToDto(Entity dbEntity) {
+        String json = gson.toJson(dbEntity);
+
+        return new EntityDto(mapKeyToKeyDto(dbEntity.getKey()), json);
+    }
+
+    public Entity mapDtoToEntity(EntityDto entityDto) {
+        return gson.fromJson(entityDto.getJson(), Entity.class);
+    }
+
+    public KeyDto mapKeyToKeyDto(Key dbKey) {
+        return new KeyDto(dbKey.getKind(), dbKey.getId(), mapParentKey(dbKey.getParent()), mapNamespace(dbKey));
+    }
+
+    private ParentKeyDto mapParentKey(Key dbParentKey) {
         if (dbParentKey == null) {
             return null;
         }
         return new ParentKeyDto(dbParentKey.getKind(), dbParentKey.getId());
     }
 
-    private static AppIdNamespaceDto mapNamespace(Key dbNamespaceKey) {
+    private AppIdNamespaceDto mapNamespace(Key dbNamespaceKey) {
         if (dbNamespaceKey == null) {
             return null;
         }
