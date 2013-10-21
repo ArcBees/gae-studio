@@ -28,7 +28,7 @@ public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditor
 
     @Override
     public PropertyEditorCollectionWidget create(JSONObject propertyMap) {
-        Map<String, PropertyEditor<?>> propertyEditors = Maps.newHashMap();
+        Map<String, PropertyEditor<?>> propertyEditors = Maps.newTreeMap();
 
         for (String key : propertyMap.keySet()) {
             JSONValue property = propertyMap.get(key);

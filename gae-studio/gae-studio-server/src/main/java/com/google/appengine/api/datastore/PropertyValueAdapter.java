@@ -14,6 +14,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
+import com.arcbees.gaestudio.server.util.JsonUtil;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.appengine.api.datastore.Entity.UnindexedValue;
 import com.google.gson.JsonDeserializationContext;
@@ -62,13 +63,14 @@ public class PropertyValueAdapter implements JsonDeserializer<PropertyValue>, Js
     public PropertyValue deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
         Object value;
+
         if (UnindexedValueAdapter.isUnindexedValue(json)) {
             value = context.deserialize(json, UnindexedValue.class);
         } else {
             PropertyType propertyType = extractPropertyType(json);
             Class<?> mappedClass = getMappedClass(propertyType);
 
-            if (json.isJsonObject() && json.getAsJsonObject().has(VALUE)) {
+            if (JsonUtil.hasEmbedValue(json)) {
                 json = json.getAsJsonObject().get(VALUE);
             }
 
@@ -89,7 +91,7 @@ public class PropertyValueAdapter implements JsonDeserializer<PropertyValue>, Js
 
     private JsonElement appendPropertyType(JsonElement serializedValue, PropertyType propertyType) {
         JsonObject wrapper;
-        if (serializedValue.isJsonObject() && serializedValue.getAsJsonObject().has(VALUE)) {
+        if (JsonUtil.hasEmbedValue(serializedValue)) {
             wrapper = serializedValue.getAsJsonObject();
         } else {
             wrapper = new JsonObject();
