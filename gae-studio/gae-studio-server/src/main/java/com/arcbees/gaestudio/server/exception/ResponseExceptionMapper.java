@@ -10,14 +10,15 @@
 package com.arcbees.gaestudio.server.exception;
 
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+import com.arcbees.oauth.client.util.ResponseException;
+
 @Provider
-public class IllegalAccessExceptionMapper implements ExceptionMapper<IllegalAccessException> {
+public class ResponseExceptionMapper implements ExceptionMapper<ResponseException> {
     @Override
-    public Response toResponse(IllegalAccessException e) {
-        return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+    public Response toResponse(ResponseException e) {
+        return Response.status(e.getStatusCode()).build();
     }
 }

@@ -21,4 +21,9 @@ public class EndPoints {
     public static final String OPERATIONS = REST_PATH + "operations/";
 
     public static final String COUNT = "count/";
+
+    public static final String AUTH = "auth/";
+    public static final String REGISTER = "register/";
+    public static final String LOGIN = "login/";
+    public static final String RESET_PASSWORD = "resetpassword/";
 }

@@ -40,6 +40,7 @@ public class GsonDatastoreFactory {
         if (gson == null) {
             GsonBuilder gsonBuilder = new GsonBuilder()
                     .setPrettyPrinting()
+                    .setDateFormat("yyyy-MM-dd HH:mm:ss.S")
                     .serializeNulls()
                     .excludeFieldsWithModifiers(Modifier.STATIC)
                     .setExclusionStrategies(entityProtoExclusionStrategy);

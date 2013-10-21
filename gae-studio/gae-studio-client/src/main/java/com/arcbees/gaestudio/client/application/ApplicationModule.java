@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.client.application;
 
+import com.arcbees.gaestudio.client.application.auth.AuthModule;
 import com.arcbees.gaestudio.client.application.entity.EntityModule;
 import com.arcbees.gaestudio.client.application.error.ErrorModule;
 import com.arcbees.gaestudio.client.application.profiler.ProfilerModule;
@@ -28,6 +29,7 @@ public class ApplicationModule extends AbstractPresenterModule {
         install(new MessagesModule());
         install(new EntityModule());
         install(new ErrorModule());
+        install(new AuthModule());
         install(new GinFactoryModuleBuilder().build(UiFactory.class));
 
         bindPresenter(ApplicationPresenter.class, ApplicationPresenter.MyView.class, ApplicationView.class,
