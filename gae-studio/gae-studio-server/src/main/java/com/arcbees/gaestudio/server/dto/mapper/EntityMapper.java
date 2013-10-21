@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.dto.mapper;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -17,18 +18,23 @@ import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.datastore.Category;
 import com.google.appengine.api.datastore.Email;
 import com.google.appengine.api.datastore.EmbeddedEntity;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.api.datastore.GsonDatastoreFactory;
+import com.google.appengine.api.datastore.IMHandle;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Link;
 import com.google.appengine.api.datastore.PhoneNumber;
 import com.google.appengine.api.datastore.PostalAddress;
 import com.google.appengine.api.datastore.Rating;
+import com.google.appengine.api.datastore.ShortBlob;
 import com.google.appengine.api.datastore.Text;
+import com.google.appengine.api.users.User;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 
@@ -67,10 +73,10 @@ public class EntityMapper {
     public static PropertyType getPropertyType(Object property) {
         PropertyType type = PropertyType.NULL;
 
-        // TODO: IMHandle, User, Blob, ShortBlob, BlobKey
-
-        if (property instanceof String || property instanceof Text) {
+        if (property instanceof String) {
             type = PropertyType.STRING;
+        } else if (property instanceof Text) {
+            type = PropertyType.TEXT;
         } else if (property instanceof Date) {
             type = PropertyType.DATE;
         } else if (property instanceof Rating) {
@@ -95,6 +101,20 @@ public class EntityMapper {
             type = PropertyType.GEO_PT;
         } else if (property instanceof EmbeddedEntity) {
             type = PropertyType.EMBEDDED;
+        } else if (property instanceof Collection) {
+            type = PropertyType.COLLECTION;
+        } else if (property instanceof Key) {
+            type = PropertyType.KEY;
+        } else if (property instanceof BlobKey) {
+            type = PropertyType.BLOB_KEY;
+        } else if (property instanceof IMHandle) {
+            type = PropertyType.IM_HANDLE;
+        } else if (property instanceof User) {
+            type = PropertyType.USER;
+        } else if (property instanceof Blob) {
+            type = PropertyType.BLOB;
+        } else if (property instanceof ShortBlob) {
+            type = PropertyType.SHORT_BLOB;
         }
 
         return type;
