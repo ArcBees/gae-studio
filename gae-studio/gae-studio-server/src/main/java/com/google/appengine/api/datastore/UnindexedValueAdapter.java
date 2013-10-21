@@ -11,6 +11,7 @@ package com.google.appengine.api.datastore;
 
 import java.lang.reflect.Type;
 
+import com.arcbees.gaestudio.server.util.JsonUtil;
 import com.google.appengine.api.datastore.Entity.UnindexedValue;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -43,7 +44,7 @@ public class UnindexedValueAdapter implements JsonSerializer<UnindexedValue>, Js
         JsonElement value = context.serialize(new PropertyValue(unindexedValue.getValue()), PropertyValue.class);
 
         JsonObject object;
-        if (value.isJsonObject() && value.getAsJsonObject().has(VALUE)) {
+        if (JsonUtil.hasEmbedValue(value)) {
             object = value.getAsJsonObject();
         } else {
             object = new JsonObject();
