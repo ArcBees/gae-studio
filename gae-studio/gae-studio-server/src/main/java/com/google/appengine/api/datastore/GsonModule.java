@@ -15,6 +15,7 @@ import java.util.Map;
 
 import javax.inject.Singleton;
 
+import com.arcbees.gaestudio.shared.Constants;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Entity.UnindexedValue;
 import com.google.gson.ExclusionStrategy;
@@ -26,6 +27,7 @@ import com.google.inject.Provides;
 import com.google.storage.onestore.v3.OnestoreEntity;
 
 public class GsonModule extends AbstractModule {
+
     @Override
     protected void configure() {
     }
@@ -47,7 +49,7 @@ public class GsonModule extends AbstractModule {
 
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .setPrettyPrinting()
-                .setDateFormat("yyyy-MM-dd HH:mm:ss.S")
+                .setDateFormat(Constants.JSON_DATE_FORMAT)
                 .serializeNulls()
                 .excludeFieldsWithModifiers(Modifier.STATIC)
                 .setExclusionStrategies(entityProtoExclusionStrategy);
