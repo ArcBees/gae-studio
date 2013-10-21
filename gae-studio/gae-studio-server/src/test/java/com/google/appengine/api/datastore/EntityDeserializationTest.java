@@ -84,6 +84,7 @@ public class EntityDeserializationTest {
             "}";
 
     private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
+
     private Gson gson;
 
     @Before
