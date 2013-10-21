@@ -47,6 +47,8 @@ public interface PropertyEditorFactory {
 
     PropertyEditor<GeoPoint> createGeoPointEditor(String key, JSONValue property);
 
+    PropertyEditor<IMHandle> createIMHandleEditor(String key, JSONValue property);
+
     PropertyEditor<Map<String, ?>> createEmbeddedEntityEditor(String key, JSONValue property);
 
     PropertyEditor<?> createRawEditor(String key, JSONValue property);

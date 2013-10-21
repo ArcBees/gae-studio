@@ -12,32 +12,32 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.shared.PropertyType;
-import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.DoubleBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
 
 import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.parseJsonValueWithMetadata;
 
-public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
-    interface Binder extends UiBinder<Widget, GeoPointPropertyEditor> {}
+public class IMHandlePropertyEditor extends AbstractPropertyEditor<IMHandle> {
+    interface Binder extends UiBinder<Widget, IMHandlePropertyEditor> {}
 
-    private static final String LATITUDE = "latitude";
-    private static final String LONGITUDE = "longitude";
+    private static final String PROTOCOL = "protocol";
+    private static final String ADDRESS = "address";
 
     @UiField
-    DoubleBox latitude;
+    TextBox protocol;
     @UiField
-    DoubleBox longitude;
+    TextBox address;
 
     private final JSONValue property;
 
     @Inject
-    GeoPointPropertyEditor(Binder uiBinder,
+    IMHandlePropertyEditor(Binder uiBinder,
                            @Assisted String key,
                            @Assisted JSONValue property) {
         super(key);
@@ -45,44 +45,46 @@ public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
         this.property = property;
 
         initFormWidget(uiBinder.createAndBindUi(this));
+
+        protocol.getElement().setAttribute("placeholder", "Protocol");
+        address.getElement().setAttribute("placeholder", "Address");
+
         setInitialValue();
     }
 
     @Override
     public JSONValue getJsonValue() {
         JSONObject object = new JSONObject();
-        object.put(LATITUDE, new JSONNumber(getLatitude()));
-        object.put(LONGITUDE, new JSONNumber(getLongitude()));
+        object.put(PROTOCOL, new JSONString(getProtocol()));
+        object.put(ADDRESS, new JSONString(getAddress()));
 
-        return parseJsonValueWithMetadata(object, PropertyType.GEO_PT, PropertyUtil.isPropertyIndexed(property));
+        return parseJsonValueWithMetadata(object, PropertyType.IM_HANDLE, PropertyUtil.isPropertyIndexed(property));
     }
 
     @Override
-    public void setValue(GeoPoint geoPoint) {
-        latitude.setValue((double) geoPoint.getLatitude());
-        longitude.setValue((double) geoPoint.getLongitude());
+    public void setValue(IMHandle imHandle) {
+        protocol.setValue(imHandle.getProtocol());
+        address.setValue(imHandle.getAddress());
     }
 
     @Override
-    public GeoPoint getValue() {
-        return new GeoPoint(getLatitude(), getLongitude());
+    public IMHandle getValue() {
+        return new IMHandle(getProtocol(), getAddress());
     }
 
-    private Float getLatitude() {
-        Double value = latitude.getValue();
-        return value == null ? null : value.floatValue();
+    private String getProtocol() {
+        return protocol.getValue();
     }
 
-    private Float getLongitude() {
-        Double value = longitude.getValue();
-        return value == null ? null : value.floatValue();
+    private String getAddress() {
+        return address.getValue();
     }
 
     private void setInitialValue() {
-        JSONObject geoPtObject = PropertyUtil.getPropertyValue(property).isObject();
-        Float latitude = (float) geoPtObject.get(LATITUDE).isNumber().doubleValue();
-        Float longitude = (float) geoPtObject.get(LONGITUDE).isNumber().doubleValue();
+        JSONObject imHandleObject = PropertyUtil.getPropertyValue(property).isObject();
+        String protocol = imHandleObject.get(PROTOCOL).isString().stringValue();
+        String address = imHandleObject.get(ADDRESS).isString().stringValue();
 
-        setValue(new GeoPoint(latitude, longitude));
+        setValue(new IMHandle(protocol, address));
     }
 }
