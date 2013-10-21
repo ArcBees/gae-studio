@@ -7,12 +7,17 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
+package com.arcbees.gaestudio.server.util;
 
-import java.util.Map;
+import com.google.gson.JsonElement;
 
-import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import static com.arcbees.gaestudio.shared.PropertyName.VALUE;
 
-public interface PropertyEditorsFactory {
-    Map<String, PropertyEditor<?>> create(ParsedEntity entity);
+public final class JsonUtil {
+    private JsonUtil() {
+    }
+
+    public static boolean hasEmbedValue(JsonElement json) {
+        return json.isJsonObject() && json.getAsJsonObject().has(VALUE);
+    }
 }

@@ -10,8 +10,10 @@
 package com.google.appengine.api.datastore;
 
 import java.lang.reflect.Modifier;
+import java.util.Collection;
 import java.util.Map;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Entity.UnindexedValue;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -32,21 +34,41 @@ public class GsonDatastoreFactory {
         }
     };
 
-    public static Gson create() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.setPrettyPrinting();
-        gsonBuilder.setDateFormat("yyyy-MM-dd HH:mm:ss.S");
-        gsonBuilder.serializeNulls();
-        gsonBuilder.excludeFieldsWithModifiers(Modifier.STATIC);
-        gsonBuilder.setExclusionStrategies(entityProtoExclusionStrategy);
-        gsonBuilder.registerTypeAdapter(Entity.class, new EntityInstanceCreator());
-        gsonBuilder.registerTypeAdapter(AppIdNamespace.class, new AppIdNamespaceInstanceCreator());
-        gsonBuilder.registerTypeAdapter(Key.class, new KeyInstanceCreator());
-        gsonBuilder.registerTypeAdapter(Map.class, new PropertiesDeserializer());
-        gsonBuilder.registerTypeAdapter(UnindexedValue.class, new UnindexedValueAdapter());
-        gsonBuilder.registerTypeAdapter(Text.class, new TextValueAdapter());
-        gsonBuilder.registerTypeAdapter(PropertyValue.class, new PropertyValueDeserializer());
+    private static Gson gson;
 
-        return gsonBuilder.create();
+    public synchronized static Gson create() {
+        if (gson == null) {
+            GsonBuilder gsonBuilder = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .setDateFormat("yyyy-MM-dd HH:mm:ss.S")
+                    .serializeNulls()
+                    .excludeFieldsWithModifiers(Modifier.STATIC)
+                    .setExclusionStrategies(entityProtoExclusionStrategy);
+
+            // Instance creators
+            gsonBuilder.registerTypeAdapter(Entity.class, new EntityInstanceCreator())
+                       .registerTypeAdapter(AppIdNamespace.class, new AppIdNamespaceInstanceCreator())
+                       .registerTypeAdapter(Key.class, new KeyInstanceCreator());
+
+            // Type Adapters
+            gsonBuilder.registerTypeAdapter(BlobKey.class, new BlobKeyValueAdapter())
+                       .registerTypeAdapter(Blob.class, new BlobValueAdapter())
+                       .registerTypeAdapter(Category.class, new CategoryValueAdapter())
+                       .registerTypeAdapter(Collection.class, new CollectionValueAdapter())
+                       .registerTypeAdapter(Email.class, new EmailValueAdapter())
+                       .registerTypeAdapter(Link.class, new LinkValueAdapter())
+                       .registerTypeAdapter(Map.class, new PropertiesValueAdapter())
+                       .registerTypeAdapter(PhoneNumber.class, new PhoneNumberValueAdapter())
+                       .registerTypeAdapter(PostalAddress.class, new PostalAddressValueAdapter())
+                       .registerTypeAdapter(PropertyValue.class, new PropertyValueAdapter())
+                       .registerTypeAdapter(Rating.class, new RatingValueAdapter())
+                       .registerTypeAdapter(ShortBlob.class, new ShortBlobValueAdapter())
+                       .registerTypeAdapter(Text.class, new TextValueAdapter())
+                       .registerTypeAdapter(UnindexedValue.class, new UnindexedValueAdapter());
+
+            gson = gsonBuilder.create();
+        }
+
+        return gson;
     }
 }

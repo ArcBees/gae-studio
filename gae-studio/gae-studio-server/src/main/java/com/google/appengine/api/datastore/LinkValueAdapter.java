@@ -10,29 +10,26 @@
 package com.google.appengine.api.datastore;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
-public class PropertiesDeserializer implements JsonDeserializer<Map> {
+public class LinkValueAdapter implements JsonSerializer<Link>, JsonDeserializer<Link> {
     @Override
-    @SuppressWarnings("unchecked")
-    public Map deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public Link deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
-        Map<String, Object> properties = new HashMap<String, Object>();
+        String value = context.deserialize(json, String.class);
 
-        for (Map.Entry<String, JsonElement> jsonProperty : json.getAsJsonObject().entrySet()) {
-            String key = jsonProperty.getKey();
-            PropertyValue propertyValue = context.deserialize(jsonProperty.getValue(), PropertyValue.class);
+        return new Link(value);
+    }
 
-            properties.put(key, propertyValue.getValue());
-        }
-
-        return new LinkedHashMap(properties);
+    @Override
+    public JsonElement serialize(Link src, Type typeOfSrc, JsonSerializationContext context) {
+        return new JsonPrimitive(src.getValue());
     }
 }

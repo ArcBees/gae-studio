@@ -98,16 +98,12 @@ public class PropertyUtil {
 
     private static PropertyType guessPropertyType(JSONValue jsonValue) {
         PropertyType type;
-        if (jsonValue.isArray() != null) {
-            type = PropertyType.ARRAY;
-        } else if (jsonValue.isString() != null) {
+        if (jsonValue.isString() != null) {
             type = PropertyType.STRING;
         } else if (jsonValue.isNumber() != null) {
             type = PropertyType.NUMERIC;
         } else if (jsonValue.isBoolean() != null) {
             type = PropertyType.BOOLEAN;
-        } else if (jsonValue.isObject() != null) {
-            type = PropertyType.OBJECT;
         } else {
             type = PropertyType.NULL;
         }
