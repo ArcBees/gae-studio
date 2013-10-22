@@ -33,21 +33,7 @@
     </ui:style>
 
     <g:HTMLPanel styleName="{style.main}">
-        <g:HTMLPanel ui:field="loginForm">
-            <div>
-                <label>Email</label>
-                <g:TextBox ui:field="email"/>
-            </div>
-            <div>
-                <label>Password</label>
-                <g:PasswordTextBox ui:field="password"/>
-            </div>
-            <g:Button ui:field="login" styleName="{style.loginBtn}" text="Login"/>
-            <div>
-                Don't have an account?
-                <g:Anchor ui:field="registerLink" addStyleNames="{style.link}">Create one!</g:Anchor>
-            </div>
-        </g:HTMLPanel>
+        <g:SimplePanel ui:field="loginForm"/>
 
         <g:HTMLPanel ui:field="registerForm" visible="false">
             <div>

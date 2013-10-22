@@ -22,6 +22,7 @@ import com.arcbees.gaestudio.client.rest.AuthService;
 import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.arcbees.gaestudio.shared.auth.Token;
 import com.arcbees.gaestudio.shared.auth.User;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -36,6 +37,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter.MyProxy> implements AuthUiHandlers {
     interface MyView extends View, HasUiHandlers<AuthUiHandlers> {
+        void reload();
     }
 
     @ProxyCodeSplit
@@ -109,5 +111,7 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
 
         PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.visualizer).build();
         placeManager.revealPlace(placeRequest);
+
+        getView().reload();
     }
 }

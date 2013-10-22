@@ -15,6 +15,24 @@
 <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1'
         style="position: absolute; width: 0;height: 0; border: 0;"></iframe>
 
+<div id="loginDiv" style="display:none">
+    <form action="javascript:__gwt_login(0)" id="loginForm">
+        <div>
+            <label>Email</label>
+            <input id="loginEmail" name="u" type="text">
+        </div>
+        <div>
+            <label>Password</label>
+            <input id="loginPassword" name="pw" type="password">
+        </div>
+        <button id="loginSubmit" type="submit">Login</button>
+        <div>
+            Don't have an account?
+            <a id="registerLink">Create one!</g:Anchor>
+        </div>
+    </form>
+</div>
+
 <noscript>
     <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif;">
         Your web browser must have JavaScript enabled
