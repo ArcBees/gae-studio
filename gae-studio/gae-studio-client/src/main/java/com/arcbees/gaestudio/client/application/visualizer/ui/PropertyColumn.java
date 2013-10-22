@@ -28,7 +28,7 @@ public class PropertyColumn extends TextColumn<ParsedEntity> {
     @Override
     public String getValue(ParsedEntity parsedEntity) {
         if (parsedEntity.hasProperty(property)) {
-            JSONValue value = parsedEntity.getPropertyValue(property);
+            JSONValue value = parsedEntity.getCleanedUpProperty(property);
             if (value == null) {
                 return "<null>";
             } else if (value.isObject() != null) {
