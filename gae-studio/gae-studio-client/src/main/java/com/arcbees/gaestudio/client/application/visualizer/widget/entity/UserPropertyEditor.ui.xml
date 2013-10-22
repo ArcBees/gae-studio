@@ -1,0 +1,27 @@
+<!--~
+  ~ Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+  ~ This source code, and resulting software, is the confidential and proprietary information
+  ~ ("Proprietary Information") and is the intellectual property ("Intellectual Property")
+  ~ of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
+  ~ shall use it only in accordance with the terms and conditions of any and all license
+  ~ agreements you have entered into with The Company.
+  -->
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+        xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+
+    <g:HTMLPanel styleName="{res.styles.embeddedEntityProperties}">
+        <g:Label>Email</g:Label>
+        <g:TextBox ui:field="email"/>
+
+        <g:Label>Auth Domain</g:Label>
+        <g:TextBox ui:field="authDomain"/>
+
+        <g:Label>User ID</g:Label>
+        <g:TextBox ui:field="userId"/>
+
+        <g:Label>Federated Identity</g:Label>
+        <g:TextBox ui:field="federatedIdentity"/>
+    </g:HTMLPanel>
+</ui:UiBinder>

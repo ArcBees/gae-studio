@@ -49,6 +49,7 @@ public class EntityWidgetModule extends AbstractPresenterModule {
                 .implement(new TypeLiteral<PropertyEditor<Date>>() {}, DatePropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<GeoPoint>>() {}, GeoPointPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<IMHandle>>() {}, IMHandlePropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<User>>() {}, UserPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<Map<String, ?>>>() {}, EmbeddedEntityPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<?>>() {}, RawPropertyEditor.class)
                 .build(PropertyEditorFactory.class));

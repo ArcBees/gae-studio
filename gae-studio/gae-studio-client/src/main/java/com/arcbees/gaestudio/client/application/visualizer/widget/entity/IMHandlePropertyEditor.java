@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -25,9 +26,6 @@ import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.
 
 public class IMHandlePropertyEditor extends AbstractPropertyEditor<IMHandle> {
     interface Binder extends UiBinder<Widget, IMHandlePropertyEditor> {}
-
-    private static final String PROTOCOL = "protocol";
-    private static final String ADDRESS = "address";
 
     @UiField
     TextBox protocol;
@@ -45,18 +43,14 @@ public class IMHandlePropertyEditor extends AbstractPropertyEditor<IMHandle> {
         this.property = property;
 
         initFormWidget(uiBinder.createAndBindUi(this));
-
-        protocol.getElement().setAttribute("placeholder", "Protocol");
-        address.getElement().setAttribute("placeholder", "Address");
-
         setInitialValue();
     }
 
     @Override
     public JSONValue getJsonValue() {
         JSONObject object = new JSONObject();
-        object.put(PROTOCOL, new JSONString(getProtocol()));
-        object.put(ADDRESS, new JSONString(getAddress()));
+        object.put(PropertyName.IM_PROTOCOL, new JSONString(getProtocol()));
+        object.put(PropertyName.IM_ADDRESS, new JSONString(getAddress()));
 
         return parseJsonValueWithMetadata(object, PropertyType.IM_HANDLE, PropertyUtil.isPropertyIndexed(property));
     }
@@ -82,8 +76,8 @@ public class IMHandlePropertyEditor extends AbstractPropertyEditor<IMHandle> {
 
     private void setInitialValue() {
         JSONObject imHandleObject = PropertyUtil.getPropertyValue(property).isObject();
-        String protocol = imHandleObject.get(PROTOCOL).isString().stringValue();
-        String address = imHandleObject.get(ADDRESS).isString().stringValue();
+        String protocol = imHandleObject.get(PropertyName.IM_PROTOCOL).isString().stringValue();
+        String address = imHandleObject.get(PropertyName.IM_ADDRESS).isString().stringValue();
 
         setValue(new IMHandle(protocol, address));
     }

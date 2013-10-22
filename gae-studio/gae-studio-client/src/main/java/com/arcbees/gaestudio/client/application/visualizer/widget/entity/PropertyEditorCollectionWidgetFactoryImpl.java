@@ -70,6 +70,8 @@ public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditor
             propertyEditor = propertyEditorFactory.createGeoPointEditor(key, property);
         } else if (propertyType == PropertyType.IM_HANDLE) {
             propertyEditor = propertyEditorFactory.createIMHandleEditor(key, property);
+        } else if (propertyType == PropertyType.USER) {
+            propertyEditor = propertyEditorFactory.createUserEditor(key, property);
         } else if (propertyType == PropertyType.EMBEDDED) {
             propertyEditor = propertyEditorFactory.createEmbeddedEntityEditor(key, property);
         } else {

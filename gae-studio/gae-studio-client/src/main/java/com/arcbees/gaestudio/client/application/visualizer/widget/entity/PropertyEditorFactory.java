@@ -49,6 +49,8 @@ public interface PropertyEditorFactory {
 
     PropertyEditor<IMHandle> createIMHandleEditor(String key, JSONValue property);
 
+    PropertyEditor<User> createUserEditor(String key, JSONValue property);
+
     PropertyEditor<Map<String, ?>> createEmbeddedEntityEditor(String key, JSONValue property);
 
     PropertyEditor<?> createRawEditor(String key, JSONValue property);
