@@ -12,7 +12,6 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.shared.PropertyType;
-import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -24,10 +23,8 @@ import com.google.inject.assistedinject.Assisted;
 import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.parseJsonValueWithMetadata;
 
 public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
-    interface Binder extends UiBinder<Widget, GeoPointPropertyEditor> {}
-
-    private static final String LATITUDE = "latitude";
-    private static final String LONGITUDE = "longitude";
+    interface Binder extends UiBinder<Widget, GeoPointPropertyEditor> {
+    }
 
     @UiField
     DoubleBox latitude;
@@ -50,9 +47,7 @@ public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
 
     @Override
     public JSONValue getJsonValue() {
-        JSONObject object = new JSONObject();
-        object.put(LATITUDE, new JSONNumber(getLatitude()));
-        object.put(LONGITUDE, new JSONNumber(getLongitude()));
+        JSONObject object = getValue().asJsonObject();
 
         return parseJsonValueWithMetadata(object, PropertyType.GEO_PT, PropertyUtil.isPropertyIndexed(property));
     }
@@ -80,9 +75,7 @@ public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
 
     private void setInitialValue() {
         JSONObject geoPtObject = PropertyUtil.getPropertyValue(property).isObject();
-        Float latitude = (float) geoPtObject.get(LATITUDE).isNumber().doubleValue();
-        Float longitude = (float) geoPtObject.get(LONGITUDE).isNumber().doubleValue();
 
-        setValue(new GeoPoint(latitude, longitude));
+        setValue(GeoPoint.fromJsonObject(geoPtObject));
     }
 }

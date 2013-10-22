@@ -9,16 +9,34 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
+import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.json.client.JSONObject;
+
 public class GeoPoint {
+    private static final String LATITUDE = "latitude";
+    private static final String LONGITUDE = "longitude";
+
     private Float latitude;
     private Float longitude;
-
-    public GeoPoint() {
-    }
 
     public GeoPoint(Float latitude, Float longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public static GeoPoint fromJsonObject(JSONObject jsonObject) {
+        Float latitude = (float) jsonObject.get(LATITUDE).isNumber().doubleValue();
+        Float longitude = (float) jsonObject.get(LONGITUDE).isNumber().doubleValue();
+
+        return new GeoPoint(latitude, longitude);
+    }
+
+    public JSONObject asJsonObject() {
+        JSONObject object = new JSONObject();
+        object.put(LATITUDE, new JSONNumber(getLatitude()));
+        object.put(LONGITUDE, new JSONNumber(getLongitude()));
+
+        return object;
     }
 
     public Float getLatitude() {

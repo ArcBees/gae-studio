@@ -9,11 +9,42 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
+
+import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.getPropertyAsString;
+
 public class User {
+    private static final String EMAIL = "email";
+    private static final String AUTH_DOMAIN = "authDomain";
+    private static final String USER_ID = "userId";
+    private static final String FEDERATED_IDENTITY = "federatedIdentity";
+
     private String email;
     private String authDomain;
     private String userId;
     private String federatedIdentity;
+
+    public static User fromJsonObject(JSONObject jsonObject) {
+        User user = new User();
+
+        user.setEmail(getPropertyAsString(jsonObject, EMAIL));
+        user.setAuthDomain(getPropertyAsString(jsonObject, AUTH_DOMAIN));
+        user.setUserId(getPropertyAsString(jsonObject, USER_ID));
+        user.setFederatedIdentity(getPropertyAsString(jsonObject, FEDERATED_IDENTITY));
+
+        return user;
+    }
+
+    public JSONObject asJsonObject() {
+        JSONObject object = new JSONObject();
+        object.put(EMAIL, new JSONString(getEmail()));
+        object.put(AUTH_DOMAIN, new JSONString(getAuthDomain()));
+        object.put(USER_ID, new JSONString(getUserId()));
+        object.put(FEDERATED_IDENTITY, new JSONString(getFederatedIdentity()));
+
+        return object;
+    }
 
     public String getEmail() {
         return email;

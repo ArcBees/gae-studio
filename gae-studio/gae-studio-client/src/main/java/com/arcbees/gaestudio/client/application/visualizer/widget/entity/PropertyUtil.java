@@ -105,6 +105,15 @@ public class PropertyUtil {
         return type;
     }
 
+    public static String getPropertyAsString(JSONObject object, String propertyName) {
+        JSONValue property = object.get(propertyName);
+        if (property != null && property.isNull() == null) {
+            return property.isString().stringValue();
+        }
+
+        return "";
+    }
+
     private static PropertyType guessPropertyType(JSONValue jsonValue) {
         PropertyType type;
         if (jsonValue.isString() != null) {

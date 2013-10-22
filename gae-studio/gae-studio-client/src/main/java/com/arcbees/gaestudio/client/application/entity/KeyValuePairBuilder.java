@@ -28,8 +28,6 @@ public class KeyValuePairBuilder {
         for (String prop : propertiesList) {
             String val = parsedEntity.getCleanedUpProperty(prop).toString();
 
-
-
             KeyValuePair keyValuePair = new KeyValuePair(prop, val);
             keyValuePairs.add(keyValuePair);
         }
