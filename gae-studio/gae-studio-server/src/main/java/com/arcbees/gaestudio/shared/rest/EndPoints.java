@@ -14,6 +14,7 @@ public class EndPoints {
 
     public static final String ID = "{" + UrlParameters.ID + "}/";
 
+    public static final String BLOBS = REST_PATH + "blobs/";
     public static final String ENTITIES = REST_PATH + "entities/";
     public static final String NAMESPACES = REST_PATH + "namespaces/";
     public static final String KINDS = REST_PATH + "kinds/";

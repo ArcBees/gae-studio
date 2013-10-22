@@ -18,6 +18,7 @@ public class RestModule extends AbstractModule {
     protected void configure() {
         install(new FactoryModuleBuilder().build(SubresourceFactory.class));
 
+        bind(BlobsResource.class);
         bind(NamespacesResource.class);
         bind(KindsResource.class);
         bind(EntitiesResource.class);
