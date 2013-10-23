@@ -18,7 +18,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -48,7 +47,6 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
     HTMLPanel registerForm;
 
     private final LoginHelper loginHelper;
-    private final FormPanel form;
 
     @Inject
     AuthView(Binder uiBinder,
@@ -65,8 +63,7 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
             }
         });
 
-        form = loginHelper.getLoginFormPanel();
-        loginForm.setWidget(form);
+        loginForm.setWidget(loginHelper.getLoginFormPanel());
     }
 
     @Override

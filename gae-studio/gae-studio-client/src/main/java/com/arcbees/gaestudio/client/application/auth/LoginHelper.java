@@ -9,6 +9,9 @@
 
 package com.arcbees.gaestudio.client.application.auth;
 
+import javax.inject.Inject;
+
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.ButtonElement;
 import com.google.gwt.dom.client.Document;
@@ -24,9 +27,12 @@ public class LoginHelper {
 
     private final FormPanel form;
 
-    LoginHelper() {
+    @Inject
+    LoginHelper(AppResources appResources) {
         form = FormPanel.wrap(Document.get().getElementById(LOGINFORM_ID), false);
         form.setAction("javascript:__gwt_login(0)");
+
+        getSubmitButton().addClassName(appResources.styles().loginBtn());
     }
 
     public FormPanel getLoginFormPanel() {
@@ -43,38 +49,6 @@ public class LoginHelper {
 
     public String getUsername() {
         return getUsernameElement().getValue();
-    }
-
-    public void setUsername(String text) {
-        getUsernameElement().setValue(text);
-    }
-
-    public void setPassword(String text) {
-        getPasswordElement().setValue(text);
-    }
-
-    public void addStyleNameToRegisterLink(String style) {
-        getRegisterLinkElement().addClassName(style);
-    }
-
-    public void addStyleNameToEmail(String style) {
-        getUsernameElement().addClassName(style);
-    }
-
-    public void addStyleNameToPassword(String style) {
-        getPasswordElement().addClassName(style);
-    }
-
-    public void removeStyleNameFromEmail(String style) {
-        getUsernameElement().removeClassName(style);
-    }
-
-    public void removeStyleNameToRegisterLink(String style) {
-        getRegisterLinkElement().removeClassName(style);
-    }
-
-    public void removeStyleNameFromPassword(String style) {
-        getPasswordElement().removeClassName(style);
     }
 
     public AnchorElement getRegisterLinkElement() {

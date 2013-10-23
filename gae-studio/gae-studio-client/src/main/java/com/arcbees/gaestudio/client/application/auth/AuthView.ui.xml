@@ -15,12 +15,6 @@
             width: 200px;
         }
 
-        .loginBtn {
-            display: block;
-            margin-top: 10px;
-            margin-left: 85%;
-        }
-
         .registerBtn {
             display: block;
             margin-top: 10px;
