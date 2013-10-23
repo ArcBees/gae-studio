@@ -1,56 +1,8 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <ui:style>
-        .main {
-            width: 335px;
-            margin: 40px;
-        }
+    <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
 
-        .main label {
-            width: 120px;
-            display: inline-block;
-        }
-
-        .main input {
-            width: 200px;
-        }
-
-        .registerBtn {
-            display: block;
-            margin-top: 10px;
-            margin-left: 80%;
-        }
-
-        .link {
-            cursor: pointer;
-        }
-    </ui:style>
-
-    <g:HTMLPanel styleName="{style.main}">
+    <g:HTMLPanel styleName="{res.styles.authForm}">
         <g:SimplePanel ui:field="loginForm"/>
-
-        <g:HTMLPanel ui:field="registerForm" visible="false">
-            <div>
-                <label>First Name</label>
-                <g:TextBox ui:field="firstName"/>
-            </div>
-            <div>
-                <label>Last Name</label>
-                <g:TextBox ui:field="lastName"/>
-            </div>
-            <div>
-                <label>Email</label>
-                <g:TextBox ui:field="registerEmail"/>
-            </div>
-            <div>
-                <label>Password</label>
-                <g:PasswordTextBox ui:field="registerPassword"/>
-            </div>
-            <g:Button ui:field="register" styleName="{style.registerBtn}" text="Register"/>
-            <div>
-                Already have an account?
-                <g:Anchor ui:field="loginLink" addStyleNames="{style.link}">Login!</g:Anchor>
-            </div>
-        </g:HTMLPanel>
     </g:HTMLPanel>
 </ui:UiBinder>

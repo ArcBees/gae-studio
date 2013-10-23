@@ -11,17 +11,10 @@ package com.arcbees.gaestudio.client.application.auth;
 
 import javax.inject.Inject;
 
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
@@ -33,63 +26,44 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
 
     @UiField
     SimplePanel loginForm;
-    @UiField
-    TextBox firstName;
-    @UiField
-    TextBox lastName;
-    @UiField
-    TextBox registerEmail;
-    @UiField
-    PasswordTextBox registerPassword;
-    @UiField
-    Button register;
-    @UiField
-    HTMLPanel registerForm;
 
-    private final LoginHelper loginHelper;
+    private final LoginFormHelper loginFormHelper;
 
     @Inject
     AuthView(Binder uiBinder,
-             LoginHelper loginHelper) {
+             LoginFormHelper loginFormHelper) {
         initWidget(uiBinder.createAndBindUi(this));
 
-        this.loginHelper = loginHelper;
+        this.loginFormHelper = loginFormHelper;
         injectLoginFunction();
 
-        $(loginHelper.getRegisterLinkElement()).click(new Function() {
+        $(loginFormHelper.getRegisterLinkElement()).click(new Function() {
             @Override
             public void f() {
                 onRegisterLinkClicked();
             }
         });
 
-        loginForm.setWidget(loginHelper.getLoginFormPanel());
+        $(loginFormHelper.getForgotLinkElement()).click(new Function() {
+            @Override
+            public void f() {
+                onForgotPasswordLinkClicked();
+            }
+        });
+
+        loginForm.setWidget(loginFormHelper.getLoginFormPanel());
     }
 
-    @Override
-    public void reload() {
-        Window.Location.reload();
-    }
-
-    @UiHandler("register")
-    void onRegisterClicked(ClickEvent event) {
-        getUiHandlers().register(firstName.getText(), lastName.getText(), registerEmail.getText(),
-                registerPassword.getText());
-    }
-
-    @UiHandler("loginLink")
-    void onLoginLinkClicked(ClickEvent event) {
-        loginForm.setVisible(true);
-        registerForm.setVisible(false);
+    private void onForgotPasswordLinkClicked() {
+        getUiHandlers().redirectToForgotPassword();
     }
 
     private void onRegisterLinkClicked() {
-        loginForm.setVisible(false);
-        registerForm.setVisible(true);
+        getUiHandlers().redirectToRegister();
     }
 
     private void doLogin() {
-        getUiHandlers().login(loginHelper.getUsername(), loginHelper.getPassword());
+        getUiHandlers().login(loginFormHelper.getUsername(), loginFormHelper.getPassword());
     }
 
     private native void injectLoginFunction() /*-{

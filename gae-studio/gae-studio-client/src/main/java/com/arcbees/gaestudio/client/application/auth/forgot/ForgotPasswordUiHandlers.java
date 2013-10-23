@@ -7,14 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.auth;
+package com.arcbees.gaestudio.client.application.auth.forgot;
 
 import com.gwtplatform.mvp.client.UiHandlers;
 
-public interface AuthUiHandlers extends UiHandlers {
-    void login(String email, String password);
-
-    void redirectToForgotPassword();
-
-    void redirectToRegister();
+public interface ForgotPasswordUiHandlers extends UiHandlers {
+    void forgotPassword(String email);
 }
