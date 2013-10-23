@@ -15,6 +15,9 @@ public class PropertyName {
     public static final String INDEXED = "__indexed";
     public static final String VALUE = "value";
 
+    public static final String IM_PROTOCOL = "protocol";
+    public static final String IM_ADDRESS = "address";
+
     private PropertyName() {
     }
 }

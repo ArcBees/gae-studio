@@ -16,27 +16,31 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.DoubleBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
 
 import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.parseJsonValueWithMetadata;
 
-public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
-    interface Binder extends UiBinder<Widget, GeoPointPropertyEditor> {
+public class UserPropertyEditor extends AbstractPropertyEditor<User> {
+    interface Binder extends UiBinder<Widget, UserPropertyEditor> {
     }
 
     @UiField
-    DoubleBox latitude;
+    TextBox email;
     @UiField
-    DoubleBox longitude;
+    TextBox authDomain;
+    @UiField
+    TextBox userId;
+    @UiField
+    TextBox federatedIdentity;
 
     private final JSONValue property;
 
     @Inject
-    GeoPointPropertyEditor(Binder uiBinder,
-                           @Assisted String key,
-                           @Assisted JSONValue property) {
+    UserPropertyEditor(Binder uiBinder,
+                       @Assisted String key,
+                       @Assisted JSONValue property) {
         super(key);
 
         this.property = property;
@@ -47,35 +51,33 @@ public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
 
     @Override
     public JSONValue getJsonValue() {
-        JSONObject object = getValue().asJsonObject();
+        JSONObject user = getValue().asJsonObject();
 
-        return parseJsonValueWithMetadata(object, PropertyType.GEO_PT, PropertyUtil.isPropertyIndexed(property));
+        return parseJsonValueWithMetadata(user, PropertyType.USER, PropertyUtil.isPropertyIndexed(property));
     }
 
     @Override
-    public void setValue(GeoPoint geoPoint) {
-        latitude.setValue((double) geoPoint.getLatitude());
-        longitude.setValue((double) geoPoint.getLongitude());
+    public void setValue(User user) {
+        email.setValue(user.getEmail());
+        authDomain.setValue(user.getAuthDomain());
+        userId.setValue(user.getUserId());
+        federatedIdentity.setValue(user.getFederatedIdentity());
     }
 
     @Override
-    public GeoPoint getValue() {
-        return new GeoPoint(getLatitude(), getLongitude());
-    }
+    public User getValue() {
+        User user = new User();
+        user.setEmail(email.getValue());
+        user.setAuthDomain(authDomain.getValue());
+        user.setUserId(userId.getValue());
+        user.setFederatedIdentity(federatedIdentity.getValue());
 
-    private Float getLatitude() {
-        Double value = latitude.getValue();
-        return value == null ? null : value.floatValue();
-    }
-
-    private Float getLongitude() {
-        Double value = longitude.getValue();
-        return value == null ? null : value.floatValue();
+        return user;
     }
 
     private void setInitialValue() {
-        JSONObject geoPtObject = PropertyUtil.getPropertyValue(property).isObject();
+        JSONObject userObject = PropertyUtil.getPropertyValue(property).isObject();
 
-        setValue(GeoPoint.fromJsonObject(geoPtObject));
+        setValue(User.fromJsonObject(userObject));
     }
 }

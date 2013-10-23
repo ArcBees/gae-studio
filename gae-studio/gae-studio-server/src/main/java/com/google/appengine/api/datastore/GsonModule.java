@@ -64,6 +64,7 @@ public class GsonModule extends AbstractModule {
                    .registerTypeAdapter(Category.class, new CategoryValueAdapter())
                    .registerTypeAdapter(Collection.class, new CollectionValueAdapter())
                    .registerTypeAdapter(Email.class, new EmailValueAdapter())
+                   .registerTypeAdapter(IMHandle.class, new IMHandleDeserializer())
                    .registerTypeAdapter(Link.class, new LinkValueAdapter())
                    .registerTypeAdapter(Map.class, new PropertiesValueAdapter())
                    .registerTypeAdapter(PhoneNumber.class, new PhoneNumberValueAdapter())
