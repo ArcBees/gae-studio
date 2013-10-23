@@ -28,7 +28,7 @@
         <button id="loginSubmit" type="submit">Login</button>
         <div>
             Don't have an account?
-            <a id="registerLink" style="cursor:pointer">Create one!</g:Anchor>
+            <a id="registerLink" style="cursor:pointer">Create one!</a>
         </div>
     </form>
 </div>
