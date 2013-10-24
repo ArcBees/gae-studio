@@ -9,15 +9,6 @@
 
 package com.arcbees.gaestudio.shared;
 
-public class PropertyName {
-    public static final String GAE_PROPERTY_TYPE = "__gaePropertyType";
-    public static final String PROPERTY_MAP = "propertyMap";
-    public static final String INDEXED = "__indexed";
-    public static final String VALUE = "value";
-
-    public static final String IM_PROTOCOL = "protocol";
-    public static final String IM_ADDRESS = "address";
-
-    private PropertyName() {
-    }
+public class Constants {
+    public static final String JSON_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.S";
 }

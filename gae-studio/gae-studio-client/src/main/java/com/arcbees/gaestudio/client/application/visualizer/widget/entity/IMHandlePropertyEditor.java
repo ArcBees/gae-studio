@@ -16,25 +16,25 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.DoubleBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
 
 import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.parseJsonValueWithMetadata;
 
-public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
-    interface Binder extends UiBinder<Widget, GeoPointPropertyEditor> {
+public class IMHandlePropertyEditor extends AbstractPropertyEditor<IMHandle> {
+    interface Binder extends UiBinder<Widget, IMHandlePropertyEditor> {
     }
 
     @UiField
-    DoubleBox latitude;
+    TextBox protocol;
     @UiField
-    DoubleBox longitude;
+    TextBox address;
 
     private final JSONValue property;
 
     @Inject
-    GeoPointPropertyEditor(Binder uiBinder,
+    IMHandlePropertyEditor(Binder uiBinder,
                            @Assisted String key,
                            @Assisted JSONValue property) {
         super(key);
@@ -49,33 +49,23 @@ public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
     public JSONValue getJsonValue() {
         JSONObject object = getValue().asJsonObject();
 
-        return parseJsonValueWithMetadata(object, PropertyType.GEO_PT, PropertyUtil.isPropertyIndexed(property));
+        return parseJsonValueWithMetadata(object, PropertyType.IM_HANDLE, PropertyUtil.isPropertyIndexed(property));
     }
 
     @Override
-    public void setValue(GeoPoint geoPoint) {
-        latitude.setValue((double) geoPoint.getLatitude());
-        longitude.setValue((double) geoPoint.getLongitude());
+    public void setValue(IMHandle imHandle) {
+        protocol.setValue(imHandle.getProtocol());
+        address.setValue(imHandle.getAddress());
     }
 
     @Override
-    public GeoPoint getValue() {
-        return new GeoPoint(getLatitude(), getLongitude());
-    }
-
-    private Float getLatitude() {
-        Double value = latitude.getValue();
-        return value == null ? null : value.floatValue();
-    }
-
-    private Float getLongitude() {
-        Double value = longitude.getValue();
-        return value == null ? null : value.floatValue();
+    public IMHandle getValue() {
+        return new IMHandle(protocol.getValue(), address.getValue());
     }
 
     private void setInitialValue() {
-        JSONObject geoPtObject = PropertyUtil.getPropertyValue(property).isObject();
+        JSONObject imHandleObject = PropertyUtil.getPropertyValue(property).isObject();
 
-        setValue(GeoPoint.fromJsonObject(geoPtObject));
+        setValue(IMHandle.fromJsonObject(imHandleObject));
     }
 }

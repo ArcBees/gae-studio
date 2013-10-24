@@ -13,6 +13,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.shared.Constants;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.common.base.Strings;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -25,7 +26,7 @@ import com.google.inject.assistedinject.Assisted;
 import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.parseJsonValueWithMetadata;
 
 public class DatePropertyEditor extends AbstractPropertyEditor<Date> {
-    private static final DateTimeFormat DATE_FORMAT = DateTimeFormat.getFormat("MMM d, y h:mm:ss a");
+    private static final DateTimeFormat DATE_FORMAT = DateTimeFormat.getFormat(Constants.JSON_DATE_FORMAT);
 
     private final DateBox dateBox;
     private final JSONValue property;

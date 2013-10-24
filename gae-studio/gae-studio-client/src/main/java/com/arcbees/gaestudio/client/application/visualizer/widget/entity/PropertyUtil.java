@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
 import com.arcbees.gaestudio.shared.PropertyType;
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -42,6 +43,22 @@ public class PropertyUtil {
         return true;
     }
 
+    public static JSONValue cleanUpMetadata(JSONValue property) {
+        JSONValue result = property;
+
+        JSONObject object = property.isObject();
+        if (object != null) {
+            result = cleanUpObjectMetadata(object);
+        }
+
+        JSONArray array = property.isArray();
+        if (array != null) {
+            result = cleanUpArrayMetadata(array);
+        }
+
+        return result;
+    }
+
     public static JSONValue parseJsonValueWithMetadata(JSONValue value, PropertyType type, Boolean indexed) {
         JSONObject wrapper = null;
 
@@ -66,14 +83,6 @@ public class PropertyUtil {
         return value;
     }
 
-    public static JSONObject createUnindexedValue(JSONValue value) {
-        JSONObject wrapper = new JSONObject();
-        wrapper.put(INDEXED, JSONBoolean.getInstance(false));
-        wrapper.put(VALUE, value);
-
-        return wrapper;
-    }
-
     public static PropertyType getPropertyType(JSONValue jsonValue) {
         PropertyType type = PropertyType.NULL;
 
@@ -96,6 +105,15 @@ public class PropertyUtil {
         return type;
     }
 
+    public static String getPropertyAsString(JSONObject object, String propertyName) {
+        JSONValue property = object.get(propertyName);
+        if (property != null && property.isNull() == null) {
+            return property.isString().stringValue();
+        }
+
+        return "";
+    }
+
     private static PropertyType guessPropertyType(JSONValue jsonValue) {
         PropertyType type;
         if (jsonValue.isString() != null) {
@@ -108,5 +126,36 @@ public class PropertyUtil {
             type = PropertyType.NULL;
         }
         return type;
+    }
+
+    private static JSONValue cleanUpObjectMetadata(JSONObject object) {
+        JSONValue result;
+
+        if (object.containsKey(VALUE)) {
+            result = cleanUpMetadata(object.get(VALUE));
+        } else {
+            JSONObject cleanedUpObject = new JSONObject();
+
+            for (String key : object.keySet()) {
+                JSONValue cleanedUpElement = cleanUpMetadata(object.get(key));
+                cleanedUpObject.put(key, cleanedUpElement);
+            }
+
+            result = cleanedUpObject;
+        }
+
+        return result;
+    }
+
+    private static JSONValue cleanUpArrayMetadata(JSONArray array) {
+        JSONArray cleanedUpArray = new JSONArray();
+        int size = array.size();
+
+        for (int i = 0; i < size; ++i) {
+            JSONValue cleanedUpElement = cleanUpMetadata(array.get(i));
+            cleanedUpArray.set(i, cleanedUpElement);
+        }
+
+        return cleanedUpArray;
     }
 }

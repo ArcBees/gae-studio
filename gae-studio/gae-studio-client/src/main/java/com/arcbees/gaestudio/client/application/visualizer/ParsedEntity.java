@@ -43,8 +43,8 @@ public class ParsedEntity {
         return getPropertyMap().get(key);
     }
 
-    public JSONValue getPropertyValue(String key) {
-        return PropertyUtil.getPropertyValue(getProperty(key));
+    public JSONValue getCleanedUpProperty(String key) {
+        return PropertyUtil.cleanUpMetadata(getProperty(key));
     }
 
     public JSONObject getPropertyMap() {

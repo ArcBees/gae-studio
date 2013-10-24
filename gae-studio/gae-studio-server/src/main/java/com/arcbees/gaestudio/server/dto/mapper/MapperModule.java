@@ -7,17 +7,15 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared;
+package com.arcbees.gaestudio.server.dto.mapper;
 
-public class PropertyName {
-    public static final String GAE_PROPERTY_TYPE = "__gaePropertyType";
-    public static final String PROPERTY_MAP = "propertyMap";
-    public static final String INDEXED = "__indexed";
-    public static final String VALUE = "value";
+import javax.inject.Singleton;
 
-    public static final String IM_PROTOCOL = "protocol";
-    public static final String IM_ADDRESS = "address";
+import com.google.inject.AbstractModule;
 
-    private PropertyName() {
+public class MapperModule extends AbstractModule {
+    @Override
+    protected void configure() {
+        bind(EntityMapper.class).in(Singleton.class);
     }
 }

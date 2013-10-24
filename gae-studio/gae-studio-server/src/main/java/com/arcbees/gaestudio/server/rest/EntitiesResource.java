@@ -41,12 +41,15 @@ import com.google.appengine.api.datastore.Entity;
 public class EntitiesResource {
     private final SubresourceFactory subresourceFactory;
     private final EntitiesService entitiesService;
+    private final EntityMapper entityMapper;
 
     @Inject
     EntitiesResource(SubresourceFactory subresourceFactory,
-                     EntitiesService entitiesService) {
+                     EntitiesService entitiesService,
+                     EntityMapper entityMapper) {
         this.subresourceFactory = subresourceFactory;
         this.entitiesService = entitiesService;
+        this.entityMapper = entityMapper;
     }
 
     @GET
@@ -59,7 +62,7 @@ public class EntitiesResource {
             responseBuilder = Response.status(Status.BAD_REQUEST);
         } else {
             Iterable<Entity> entities = entitiesService.getEntities(kind, offset, limit);
-            List<EntityDto> entitiesDtos = EntityMapper.mapEntitiesToDtos(entities);
+            List<EntityDto> entitiesDtos = entityMapper.mapEntitiesToDtos(entities);
 
             responseBuilder = Response.ok(entitiesDtos);
         }
@@ -83,7 +86,7 @@ public class EntitiesResource {
             if (emptyEntity == null) {
                 responseBuilder = Response.status(Status.NOT_FOUND);
             } else {
-                EntityDto emptyEntityDto = EntityMapper.mapEntityToDto(emptyEntity);
+                EntityDto emptyEntityDto = entityMapper.mapEntityToDto(emptyEntity);
                 responseBuilder = Response.ok(emptyEntityDto);
             }
         }

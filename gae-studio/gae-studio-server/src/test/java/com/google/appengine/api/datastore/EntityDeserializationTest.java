@@ -12,6 +12,8 @@ package com.google.appengine.api.datastore;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.arcbees.gaestudio.shared.PropertyName;
+import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.gson.Gson;
@@ -65,31 +67,35 @@ public class EntityDeserializationTest {
             "    \"embeddedObject.titre\": \"Object #1\",\n" +
             "    \"date\": \"Jun 14, 2012 4:43:27 PM\",\n" +
             "    \"sprocketKey\": {\n" +
-            "      \"parentKey\": null,\n" +
-            "      \"kind\": \"Sprocket\",\n" +
-            "      \"appId\": null,\n" +
-            "      \"id\": 3,\n" +
-            "      \"name\": null,\n" +
-            "      \"appIdNamespace\": {\n" +
-            "        \"appId\": \"gae-studio\",\n" +
-            "        \"namespace\": \"\"\n" +
-            "      }\n" +
+            "      \"value\": {\n" +
+            "        \"parentKey\": null,\n" +
+            "        \"kind\": \"Sprocket\",\n" +
+            "        \"appId\": null,\n" +
+            "        \"id\": 3,\n" +
+            "        \"name\": null,\n" +
+            "        \"appIdNamespace\": {\n" +
+            "          \"appId\": \"gae-studio\",\n" +
+            "          \"namespace\": \"\"\n" +
+            "        }\n" +
+            "      },\n" +
+            "      \"" + PropertyName.GAE_PROPERTY_TYPE + "\": \"" + PropertyType.KEY.name() + "\"\n" +
             "    }\n" +
             "  }\n" +
             "}";
 
     private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
 
+    private Gson gson;
+
     @Before
     public void setUp() {
         helper.setUp();
+
+        gson = new GsonModule().getGson();
     }
 
     @Test
     public void shouldBeAbleToDeserializeAComplexEntity() {
-        // Given
-        Gson gson = GsonDatastoreFactory.create();
-
         // When
         Entity entity = gson.fromJson(jsonEntity, Entity.class);
 
@@ -103,9 +109,6 @@ public class EntityDeserializationTest {
 
     @Test
     public void shouldBeAbleToDeserializeAnUnindexedValue() {
-        // Given
-        Gson gson = GsonDatastoreFactory.create();
-
         // When
         Entity entity = gson.fromJson(indexedJsonEntity, Entity.class);
 
