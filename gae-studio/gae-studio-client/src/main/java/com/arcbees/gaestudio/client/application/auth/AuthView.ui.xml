@@ -2,7 +2,5 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
 
-    <g:HTMLPanel styleName="{res.styles.authForm}">
-        <g:SimplePanel ui:field="loginForm"/>
-    </g:HTMLPanel>
+    <g:SimplePanel ui:field="loginForm" styleName="{res.styles.authForm}"/>
 </ui:UiBinder>
