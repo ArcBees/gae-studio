@@ -107,6 +107,10 @@ public interface AppResources extends ClientBundle {
         String unlockButton();
 
         String embeddedEntityProperties();
+
+        String loginBtn();
+
+        String authForm();
     }
 
     public interface Sprites extends CssResource {

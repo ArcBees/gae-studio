@@ -9,11 +9,16 @@
 
 package com.arcbees.gaestudio.client.application.auth;
 
+import com.arcbees.gaestudio.client.application.auth.forgot.ForgotPasswordModule;
+import com.arcbees.gaestudio.client.application.auth.register.RegisterModule;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class AuthModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
+        install(new ForgotPasswordModule());
+        install(new RegisterModule());
+
         bindPresenter(AuthPresenter.class, AuthPresenter.MyView.class, AuthView.class,
                 AuthPresenter.MyProxy.class);
     }

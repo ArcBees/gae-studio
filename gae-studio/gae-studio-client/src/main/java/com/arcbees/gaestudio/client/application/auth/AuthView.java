@@ -11,67 +11,65 @@ package com.arcbees.gaestudio.client.application.auth;
 
 import javax.inject.Inject;
 
-import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+
+import static com.google.gwt.query.client.GQuery.$;
 
 public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements AuthPresenter.MyView {
     interface Binder extends UiBinder<Widget, AuthView> {
     }
 
     @UiField
-    HTMLPanel loginForm;
-    @UiField
-    TextBox email;
-    @UiField
-    PasswordTextBox password;
-    @UiField
-    TextBox firstName;
-    @UiField
-    TextBox lastName;
-    @UiField
-    TextBox registerEmail;
-    @UiField
-    PasswordTextBox registerPassword;
-    @UiField
-    Button register;
-    @UiField
-    Button login;
-    @UiField
-    HTMLPanel registerForm;
+    SimplePanel loginForm;
+
+    private final LoginFormHelper loginFormHelper;
 
     @Inject
-    AuthView(Binder uiBinder) {
+    AuthView(Binder uiBinder,
+             LoginFormHelper loginFormHelper) {
         initWidget(uiBinder.createAndBindUi(this));
+
+        this.loginFormHelper = loginFormHelper;
+        injectLoginFunction();
+
+        $(loginFormHelper.getRegisterLinkElement()).click(new Function() {
+            @Override
+            public void f() {
+                onRegisterLinkClicked();
+            }
+        });
+
+        $(loginFormHelper.getForgotLinkElement()).click(new Function() {
+            @Override
+            public void f() {
+                onForgotPasswordLinkClicked();
+            }
+        });
+
+        loginForm.setWidget(loginFormHelper.getLoginFormPanel());
     }
 
-    @UiHandler("login")
-    void onLoginClicked(ClickEvent event) {
-        getUiHandlers().login(email.getText(), password.getText());
+    private void onForgotPasswordLinkClicked() {
+        getUiHandlers().redirectToForgotPassword();
     }
 
-    @UiHandler("register")
-    void onRegisterClicked(ClickEvent event) {
-        getUiHandlers().register(firstName.getText(), lastName.getText(), registerEmail.getText(),
-                registerPassword.getText());
+    private void onRegisterLinkClicked() {
+        getUiHandlers().redirectToRegister();
     }
 
-    @UiHandler("registerLink")
-    void onRegisterLinkClicked(ClickEvent event) {
-        loginForm.setVisible(false);
-        registerForm.setVisible(true);
+    private void doLogin() {
+        getUiHandlers().login(loginFormHelper.getUsername(), loginFormHelper.getPassword());
     }
 
-    @UiHandler("loginLink")
-    void onLoginLinkClicked(ClickEvent event) {
-        loginForm.setVisible(true);
-        registerForm.setVisible(false);
-    }
+    private native void injectLoginFunction() /*-{
+        var instance = this;
+        $wnd.__gwt_login = function () {
+            instance.@com.arcbees.gaestudio.client.application.auth.AuthView::doLogin()();
+        }
+    }-*/;
 }
