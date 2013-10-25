@@ -27,6 +27,9 @@
         </div>
         <button id="loginSubmit" type="submit">Login</button>
         <div>
+            <a id="forgotLink" style="cursor:pointer">Forgot your password?</a>
+        </div>
+        <div>
             Don't have an account?
             <a id="registerLink" style="cursor:pointer">Create one!</a>
         </div>

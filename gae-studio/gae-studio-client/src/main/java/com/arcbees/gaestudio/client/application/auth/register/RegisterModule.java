@@ -7,14 +7,14 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.auth;
+package com.arcbees.gaestudio.client.application.auth.register;
 
-import com.gwtplatform.mvp.client.UiHandlers;
+import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
-public interface AuthUiHandlers extends UiHandlers {
-    void login(String email, String password);
-
-    void redirectToForgotPassword();
-
-    void redirectToRegister();
+public class RegisterModule extends AbstractPresenterModule {
+    @Override
+    protected void configure() {
+        bindPresenter(RegisterPresenter.class, RegisterPresenter.MyView.class, RegisterView.class,
+                RegisterPresenter.MyProxy.class);
+    }
 }

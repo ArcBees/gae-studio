@@ -448,5 +448,19 @@ body {
 .loginBtn {
     display: block;
     margin-top: 10px;
-    margin-left: 85%;
+    margin-left: 84%;
+}
+
+.authForm {
+    width: 335px;
+    margin: 40px;
+}
+
+.authForm label {
+    width: 120px;
+    display: inline-block;
+}
+
+.authForm input {
+    width: 200px;
 }

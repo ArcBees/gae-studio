@@ -11,55 +11,72 @@ package com.arcbees.gaestudio.client.application.auth;
 
 import javax.inject.Inject;
 
-import com.arcbees.gaestudio.client.resources.AppResources;
-import com.google.gwt.dom.client.AnchorElement;
-import com.google.gwt.dom.client.ButtonElement;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.InputElement;
-import com.google.gwt.user.client.ui.FormPanel;
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
 
-public class LoginHelper {
-    private static final String LOGINFORM_ID = "loginForm";
-    private static final String LOGINBUTTON_ID = "loginSubmit";
-    private static final String EMAIL_ID = "loginEmail";
-    private static final String PASSWORD_ID = "loginPassword";
-    private static final String REGISTER_LINK_ID = "registerLink";
+import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
+import com.arcbees.gaestudio.client.application.widget.message.Message;
+import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
+import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.rest.AuthService;
+import com.arcbees.gaestudio.client.util.CurrentUser;
+import com.arcbees.gaestudio.shared.auth.Token;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HasHandlers;
+import com.google.gwt.user.client.Window;
+import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-    private final FormPanel form;
+public class LoginHelper implements HasHandlers {
+    private final AuthService authService;
+    private final EventBus eventBus;
+    private final CurrentUser currentUser;
+    private final PlaceManager placeManager;
+    private final AppConstants appConstants;
 
     @Inject
-    LoginHelper(AppResources appResources) {
-        form = FormPanel.wrap(Document.get().getElementById(LOGINFORM_ID), false);
-        form.setAction("javascript:__gwt_login(0)");
-
-        getSubmitButton().addClassName(appResources.styles().loginBtn());
+    LoginHelper(AuthService authService,
+                EventBus eventBus,
+                CurrentUser currentUser,
+                PlaceManager placeManager,
+                AppConstants appConstants) {
+        this.authService = authService;
+        this.eventBus = eventBus;
+        this.currentUser = currentUser;
+        this.placeManager = placeManager;
+        this.appConstants = appConstants;
     }
 
-    public FormPanel getLoginFormPanel() {
-        return form;
+    @Override
+    public void fireEvent(GwtEvent<?> event) {
+        eventBus.fireEventFromSource(event, this);
     }
 
-    public ButtonElement getSubmitButton() {
-        return (ButtonElement) Document.get().getElementById(LOGINBUTTON_ID);
+    public void login(String email, String password) {
+        authService.login(email, password, new MethodCallback<Token>() {
+            @Override
+            public void onFailure(Method method, Throwable throwable) {
+                DisplayMessageEvent.fire(LoginHelper.this,
+                        new Message(appConstants.unableToLogin(), MessageStyle.ERROR));
+            }
+
+            @Override
+            public void onSuccess(Method method, Token token) {
+                onLoginSuccess();
+            }
+        });
     }
 
-    public String getPassword() {
-        return getPasswordElement().getValue();
-    }
+    private void onLoginSuccess() {
+        DisplayMessageEvent.fire(this, new Message(appConstants.loggedInSuccessfully(), MessageStyle.SUCCESS));
 
-    public String getUsername() {
-        return getUsernameElement().getValue();
-    }
+        currentUser.setLoggedIn(true);
 
-    public AnchorElement getRegisterLinkElement() {
-        return ((AnchorElement) Document.get().getElementById(REGISTER_LINK_ID));
-    }
+        PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.visualizer).build();
+        placeManager.revealPlace(placeRequest);
 
-    private InputElement getUsernameElement() {
-        return ((InputElement) Document.get().getElementById(EMAIL_ID));
-    }
-
-    private InputElement getPasswordElement() {
-        return ((InputElement) Document.get().getElementById(PASSWORD_ID));
+        Window.Location.reload();
     }
 }
