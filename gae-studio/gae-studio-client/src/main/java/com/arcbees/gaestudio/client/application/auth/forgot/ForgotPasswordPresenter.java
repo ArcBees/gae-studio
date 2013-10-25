@@ -69,7 +69,7 @@ public class ForgotPasswordPresenter extends Presenter<ForgotPasswordPresenter.M
             @Override
             public void onSuccess(Method method, Void result) {
                 DisplayMessageEvent.fire(ForgotPasswordPresenter.this,
-                        new Message(appConstants.passwordReset(), MessageStyle.ERROR));
+                        new Message(appConstants.passwordReset(), MessageStyle.SUCCESS));
             }
         });
     }

@@ -51,7 +51,7 @@ public class LoginHelper implements HasHandlers {
 
     @Override
     public void fireEvent(GwtEvent<?> event) {
-        eventBus.fireEvent(event);
+        eventBus.fireEventFromSource(event, this);
     }
 
     public void login(String email, String password) {
@@ -70,7 +70,7 @@ public class LoginHelper implements HasHandlers {
     }
 
     private void onLoginSuccess() {
-        DisplayMessageEvent.fire(this, new Message(appConstants.loggedInSuccessfully(), MessageStyle.ERROR));
+        DisplayMessageEvent.fire(this, new Message(appConstants.loggedInSuccessfully(), MessageStyle.SUCCESS));
 
         currentUser.setLoggedIn(true);
 
