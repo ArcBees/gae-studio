@@ -12,12 +12,13 @@ package com.google.appengine.api.datastore;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.arcbees.gaestudio.shared.PropertyName;
+import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.gson.Gson;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -27,7 +28,8 @@ import static org.junit.Assert.assertTrue;
  * appengine
  */
 public class EntityDeserializationTest {
-    private static final String indexedJsonEntity = "{\n" +
+    private static final String indexedJsonEntity =
+            "{\n" +
             "  \"key\": {\n" +
             "    \"parentKey\": null,\n" +
             "    \"kind\": \"TestClass\",\n" +
@@ -41,18 +43,15 @@ public class EntityDeserializationTest {
             "  },\n" +
             "  \"propertyMap\": {\n" +
             "    \"defaultIndexedProperty\": \"value1\",\n" +
-            "    \"indexedProperty\" : {\n" +
-            "        \"__indexed\": true,\n" +
-            "        \"value\":  \"value2\"\n" +
-            "    },\n" +
             "    \"unindexedProperty\" : {\n" +
             "        \"__indexed\": false,\n" +
-            "        \"value\":  \"value3\"\n" +
+            "        \"value\":  \"value2\"\n" +
             "    }   \n" +
             "  }\n" +
             "}";
 
-    private static final String jsonEntity = "{\n" +
+    private static final String jsonEntity =
+            "{\n" +
             "  \"key\": {\n" +
             "    \"parentKey\": null,\n" +
             "    \"kind\": \"Complex\",\n" +
@@ -68,31 +67,35 @@ public class EntityDeserializationTest {
             "    \"embeddedObject.titre\": \"Object #1\",\n" +
             "    \"date\": \"Jun 14, 2012 4:43:27 PM\",\n" +
             "    \"sprocketKey\": {\n" +
-            "      \"parentKey\": null,\n" +
-            "      \"kind\": \"Sprocket\",\n" +
-            "      \"appId\": null,\n" +
-            "      \"id\": 3,\n" +
-            "      \"name\": null,\n" +
-            "      \"appIdNamespace\": {\n" +
-            "        \"appId\": \"gae-studio\",\n" +
-            "        \"namespace\": \"\"\n" +
-            "      }\n" +
+            "      \"value\": {\n" +
+            "        \"parentKey\": null,\n" +
+            "        \"kind\": \"Sprocket\",\n" +
+            "        \"appId\": null,\n" +
+            "        \"id\": 3,\n" +
+            "        \"name\": null,\n" +
+            "        \"appIdNamespace\": {\n" +
+            "          \"appId\": \"gae-studio\",\n" +
+            "          \"namespace\": \"\"\n" +
+            "        }\n" +
+            "      },\n" +
+            "      \"" + PropertyName.GAE_PROPERTY_TYPE + "\": \"" + PropertyType.KEY.name() + "\"\n" +
             "    }\n" +
             "  }\n" +
             "}";
 
     private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
 
+    private Gson gson;
+
     @Before
     public void setUp() {
         helper.setUp();
+
+        gson = new GsonModule().getGson();
     }
 
     @Test
     public void shouldBeAbleToDeserializeAComplexEntity() {
-        // Given
-        Gson gson = GsonDatastoreFactory.create();
-
         // When
         Entity entity = gson.fromJson(jsonEntity, Entity.class);
 
@@ -106,9 +109,6 @@ public class EntityDeserializationTest {
 
     @Test
     public void shouldBeAbleToDeserializeAnUnindexedValue() {
-        // Given
-        Gson gson = GsonDatastoreFactory.create();
-
         // When
         Entity entity = gson.fromJson(indexedJsonEntity, Entity.class);
 
@@ -117,10 +117,7 @@ public class EntityDeserializationTest {
         assertEquals(1, entity.getKey().getId());
         assertEquals("value1", entity.getProperty("defaultIndexedProperty"));
         assertEquals(false, entity.isUnindexedProperty("defaultIndexedProperty"));
-        assertEquals("value2", entity.getProperty("indexedProperty"));
-        assertFalse(entity.isUnindexedProperty("indexedProperty"));
-        assertEquals("value3", entity.getProperty("unindexedProperty"));
+        assertEquals("value2", entity.getProperty("unindexedProperty"));
         assertTrue(entity.isUnindexedProperty("unindexedProperty"));
-
     }
 }

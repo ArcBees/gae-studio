@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -21,10 +22,12 @@ import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityTranslator;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
+import com.google.storage.onestore.v3.OnestoreEntity.EntityProto;
 
 public class EntitiesServiceImpl implements EntitiesService {
     private final DatastoreHelper datastoreHelper;
@@ -61,12 +64,19 @@ public class EntitiesServiceImpl implements EntitiesService {
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
+        // TODO: Entities can have multiple model versions. We should either select the latest entity or specify an ID
+        // to fetch the template (ie. the selected entity) so we get a
         Query query = new Query(kind);
         FetchOptions fetchOptions = FetchOptions.Builder.withOffset(0).limit(1);
-        Entity entity = datastore.prepare(query).asList(fetchOptions).get(0);
+        List<Entity> entities = datastore.prepare(query).asList(fetchOptions);
 
-        Entity emptyEntity = new Entity(kind);
-        emptyEntity = setEmptiedProperties(emptyEntity, entity);
+        Entity emptyEntity = null;
+
+        if (!entities.isEmpty()) {
+            Entity template = entities.get(0);
+
+            emptyEntity = createEmptyEntityFromTemplate(template);
+        }
 
         return emptyEntity;
     }
@@ -103,8 +113,19 @@ public class EntitiesServiceImpl implements EntitiesService {
         return datastore.prepare(query).countEntities(fetchOptions);
     }
 
-    private Entity setEmptiedProperties(Entity entity, Entity template) {
-        Map<String, Object> properties = template.getProperties();
+    private Entity createEmptyEntityFromTemplate(Entity template) {
+        // Copy the entity from a known prototype, keeping the type metadata
+        EntityProto templateProto = EntityTranslator.convertToPb(template);
+        templateProto.getKey().getPath().getElement(0).clearId();
+
+        Entity emptyEntity = EntityTranslator.createFromPb(templateProto);
+        emptyProperties(emptyEntity);
+
+        return emptyEntity;
+    }
+
+    private void emptyProperties(Entity entity) {
+        Map<String, Object> properties = entity.getProperties();
 
         for (Map.Entry<String, Object> property : properties.entrySet()) {
             String propertyKey = property.getKey();
@@ -113,29 +134,23 @@ public class EntitiesServiceImpl implements EntitiesService {
             if (value instanceof Key) {
                 value = createEmptyKey((Key) value);
             } else {
-                value = createEmptyArbitraryObject(property);
+                value = createEmptyPropertyObject(value);
             }
 
-            if (template.isUnindexedProperty(propertyKey)) {
+            if (entity.isUnindexedProperty(propertyKey)) {
                 entity.setUnindexedProperty(propertyKey, value);
             } else {
                 entity.setProperty(propertyKey, value);
             }
         }
-
-        return entity;
     }
 
     private Object createEmptyKey(Key key) {
         return KeyFactory.createKey(key.getKind(), " ");
     }
 
-    private Object createEmptyArbitraryObject(Map.Entry<String, Object> property) {
-        return createEmptyPropertyObject(property);
-    }
-
-    private Object createEmptyPropertyObject(Map.Entry<String, Object> property) {
-        return defaultValueGenerator.generate(property.getValue());
+    private Object createEmptyPropertyObject(Object property) {
+        return defaultValueGenerator.generate(property);
     }
 
     private void deleteByNamespace(String namespace) {

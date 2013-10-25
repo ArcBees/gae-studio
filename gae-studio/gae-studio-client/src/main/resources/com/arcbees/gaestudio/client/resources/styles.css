@@ -306,6 +306,7 @@ body {
 
 .firstTable {
     margin-right: -1px;
+    clear: both;
 }
 
 .firstTable thead tr:after {
@@ -463,4 +464,8 @@ body {
 
 .authForm input {
     width: 200px;
+}
+
+.embeddedEntityProperties {
+    padding-left: 15px;
 }

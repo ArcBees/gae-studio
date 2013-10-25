@@ -9,45 +9,46 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import javax.inject.Inject;
+
+import com.arcbees.gaestudio.client.application.visualizer.widget.EntityDetailsPresenter.MyView;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
 
-public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHandlers>
-        implements EntityDetailsPresenter.MyView {
+public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHandlers> implements MyView {
     interface Binder extends UiBinder<Widget, EntityDetailsView> {
     }
 
-    @UiField
-    TextArea entityDetails;
     @UiField
     Button save;
     @UiField
     Button cancel;
     @UiField
     Label error;
+    @UiField
+    SimplePanel editorPanel;
 
     @Inject
-    EntityDetailsView(Binder uiBinder, EventBus eventBus) {
+    EntityDetailsView(Binder uiBinder,
+                      EventBus eventBus) {
         super(eventBus);
         initWidget(uiBinder.createAndBindUi(this));
     }
 
     @Override
-    public void displayEntityDetails(String json) {
+    public void displayEntityDetails() {
         asPopupPanel().center();
         error.setVisible(false);
-        entityDetails.setText(json);
     }
 
     @Override
@@ -56,9 +57,18 @@ public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHa
         error.setText(message);
     }
 
+    @Override
+    public void setInSlot(Object slot, IsWidget content) {
+        super.setInSlot(slot, content);
+
+        if (slot == EntityDetailsPresenter.EDITOR_SLOT) {
+            editorPanel.setWidget(content);
+        }
+    }
+
     @UiHandler("save")
     void onEditClicked(ClickEvent event) {
-        getUiHandlers().saveEntity(entityDetails.getValue());
+        getUiHandlers().saveEntity();
     }
 
     @UiHandler("cancel")

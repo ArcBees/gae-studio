@@ -13,7 +13,9 @@ import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
@@ -30,13 +32,17 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.inject.assistedinject.Assisted;
 
+@Produces(MediaType.APPLICATION_JSON)
 public class EntityResource {
+    private final EntityMapper entityMapper;
     private final Long entityId;
     private final EntityService entityService;
 
     @Inject
     EntityResource(EntityService entityService,
+                   EntityMapper entityMapper,
                    @Assisted Long entityId) {
+        this.entityMapper = entityMapper;
         this.entityId = entityId;
         this.entityService = entityService;
     }
@@ -55,8 +61,7 @@ public class EntityResource {
         if (entity == null) {
             responseBuilder = Response.status(Status.NOT_FOUND);
         } else {
-            EntityDto entityDto = EntityMapper.mapEntityToDto(entity);
-
+            EntityDto entityDto = entityMapper.mapEntityToDto(entity);
             responseBuilder = Response.ok(entityDto);
         }
 
@@ -64,15 +69,15 @@ public class EntityResource {
     }
 
     @PUT
-    public Response updateEntity(EntityDto newEntityDto) {
+    public Response updateEntity(EntityDto newEntityDto) throws EntityNotFoundException {
         ResponseBuilder responseBuilder;
-        Entity newEntity = EntityMapper.mapDtoToEntity(newEntityDto);
+        Entity newEntity = entityMapper.mapDtoToEntity(newEntityDto);
         Entity updatedEntity = entityService.updateEntity(newEntity);
 
         if (updatedEntity == null) {
             responseBuilder = Response.status(Status.NOT_FOUND);
         } else {
-            EntityDto updatedEntityDto = EntityMapper.mapEntityToDto(updatedEntity);
+            EntityDto updatedEntityDto = entityMapper.mapEntityToDto(updatedEntity);
             responseBuilder = Response.ok(updatedEntityDto);
         }
 
