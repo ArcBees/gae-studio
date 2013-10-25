@@ -40,7 +40,7 @@ public class EntityEditorPresenter extends PresenterWidget<MyView> {
         getView().addPropertyEditor(propertyEditorsWidget);
     }
 
-    public ParsedEntity flush() {
+    public ParsedEntity flush() throws InvalidEntityFieldsException {
         propertyEditorsWidget.flush();
 
         entity.getEntityDto().setJson(entity.getJson());

@@ -17,6 +17,7 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorFactory;
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.widget.entity.InvalidEntityFieldsException;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
@@ -69,20 +70,24 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
 
     @Override
     public void saveEntity() {
-        EntityDto entityDto = entityEditor.flush().getEntityDto();
+        try {
+            EntityDto entityDto = entityEditor.flush().getEntityDto();
 
-        entitiesService.entityService(entityDto.getKey().getId()).updateEntity(entityDto,
-                new MethodCallbackImpl<EntityDto>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        onSaveEntityFailed(caught);
-                    }
+            entitiesService.entityService(entityDto.getKey().getId()).updateEntity(entityDto,
+                    new MethodCallbackImpl<EntityDto>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            onSaveEntityFailed(caught);
+                        }
 
-                    @Override
-                    public void onSuccess(EntityDto result) {
-                        onSaveEntitySucceeded(result);
-                    }
-                });
+                        @Override
+                        public void onSuccess(EntityDto result) {
+                            onSaveEntitySucceeded(result);
+                        }
+                    });
+        } catch (InvalidEntityFieldsException e) {
+            getView().showError("Invalid fields");
+        }
     }
 
     @Override

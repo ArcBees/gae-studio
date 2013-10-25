@@ -36,14 +36,23 @@ public class PropertyEditorCollectionWidget implements TakesValue<Map<String, ?>
         }
     }
 
-    public void flush() {
+    public void flush() throws InvalidEntityFieldsException {
+        boolean valid = true;
+
         for (Entry<String, PropertyEditor<?>> entry : propertyEditors.entrySet()) {
             String key = entry.getKey();
             PropertyEditor<?> propertyEditor = entry.getValue();
 
-            JSONValue newJsonValue = propertyEditor.getJsonValue();
+            valid &= propertyEditor.isValid();
 
-            propertyMap.put(key, newJsonValue);
+            if (valid) {
+                JSONValue newJsonValue = propertyEditor.getJsonValue();
+                propertyMap.put(key, newJsonValue);
+            }
+        }
+
+        if (!valid) {
+            throw new InvalidEntityFieldsException();
         }
     }
 

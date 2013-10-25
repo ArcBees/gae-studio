@@ -20,7 +20,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
     @UiTemplate("AbstractPropertyEditor.ui.xml")
-    static interface Binder extends UiBinder<Widget, PropertyEditorUiFields> {}
+    static interface Binder extends UiBinder<Widget, PropertyEditorUiFields> {
+    }
 
     /**
      * Wrapper class to make easier for subclasses to use UiBinder. Otherwise UiBinder will require subclasses'
@@ -57,5 +58,22 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
         }
 
         fields.form.setWidget(formWidget);
+    }
+
+    @Override
+    public final Boolean isValid() {
+        boolean valid = validate();
+        if (!valid) {
+            showErrors();
+        }
+
+        return valid;
+    }
+
+    protected boolean validate() {
+        return true;
+    }
+
+    protected void showErrors() {
     }
 }
