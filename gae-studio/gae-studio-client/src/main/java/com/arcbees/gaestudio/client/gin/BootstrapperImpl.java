@@ -14,24 +14,31 @@ import javax.inject.Inject;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
+import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.rest.AuthService;
 import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.arcbees.gaestudio.shared.auth.User;
+import com.google.gwt.user.client.History;
 import com.gwtplatform.mvp.client.Bootstrapper;
+import com.gwtplatform.mvp.client.annotations.UnauthorizedPlace;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class BootstrapperImpl implements Bootstrapper {
     private final CurrentUser currentUser;
     private final AuthService authService;
     private final PlaceManager placeManager;
+    private final String unauthorizedPlace;
 
     @Inject
     BootstrapperImpl(CurrentUser currentUser,
                      AuthService authService,
-                     PlaceManager placeManager) {
+                     PlaceManager placeManager,
+                     @UnauthorizedPlace String unauthorizedPlace) {
         this.currentUser = currentUser;
         this.authService = authService;
         this.placeManager = placeManager;
+        this.unauthorizedPlace = unauthorizedPlace;
     }
 
     @Override
@@ -52,6 +59,12 @@ public class BootstrapperImpl implements Bootstrapper {
     private void onLoginChecked(User user) {
         currentUser.setUser(user);
         currentUser.setLoggedIn(user != null);
-        placeManager.revealCurrentPlace();
+
+        String historyToken = History.getToken();
+        if (unauthorizedPlace.equals(historyToken)) {
+            placeManager.revealPlace(new PlaceRequest.Builder().nameToken(NameTokens.visualizer).build());
+        } else {
+            placeManager.revealCurrentPlace();
+        }
     }
 }
