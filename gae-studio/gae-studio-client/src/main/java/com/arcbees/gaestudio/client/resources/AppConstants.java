@@ -73,4 +73,6 @@ public interface AppConstants extends Constants {
     String unableToLogin();
 
     String loggedInSuccessfully();
+
+    String passwordReset();
 }
