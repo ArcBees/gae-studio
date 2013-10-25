@@ -1,0 +1,37 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:with field="nametokens" type="com.arcbees.gaestudio.client.place.NameTokens"/>
+    <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+
+    <ui:style>
+        .registerBtn {
+            display: block;
+            margin-top: 10px;
+            margin-left: 80%;
+        }
+    </ui:style>
+
+    <g:HTMLPanel styleName="{res.styles.authForm}">
+        <div>
+            <label>First Name</label>
+            <g:TextBox ui:field="firstName"/>
+        </div>
+        <div>
+            <label>Last Name</label>
+            <g:TextBox ui:field="lastName"/>
+        </div>
+        <div>
+            <label>Email</label>
+            <g:TextBox ui:field="registerEmail"/>
+        </div>
+        <div>
+            <label>Password</label>
+            <g:PasswordTextBox ui:field="registerPassword"/>
+        </div>
+        <g:Button ui:field="register" styleName="{style.registerBtn}" text="Register"/>
+        <div>
+            Already have an account?
+            <g:InlineHyperlink targetHistoryToken="{nametokens.getAuth}">Login!</g:InlineHyperlink>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>

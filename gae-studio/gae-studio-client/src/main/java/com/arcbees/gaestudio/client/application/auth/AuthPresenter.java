@@ -9,19 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.auth;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
-import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
-import com.arcbees.gaestudio.client.application.widget.message.Message;
-import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
-import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.arcbees.gaestudio.client.rest.AuthService;
-import com.arcbees.gaestudio.client.util.CurrentUser;
-import com.arcbees.gaestudio.shared.auth.Token;
-import com.arcbees.gaestudio.shared.auth.User;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -44,70 +33,37 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
     interface MyProxy extends ProxyPlace<AuthPresenter> {
     }
 
-    private final AppConstants appConstants;
     private final PlaceManager placeManager;
-    private final CurrentUser currentUser;
-    private final AuthService authService;
+    private final LoginHelper loginHelper;
 
     @Inject
     AuthPresenter(EventBus eventBus,
                   MyView view,
                   MyProxy proxy,
-                  AppConstants appConstants,
                   PlaceManager placeManager,
-                  CurrentUser currentUser,
-                  AuthService authService) {
+                  LoginHelper loginHelper) {
         super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
 
-        this.appConstants = appConstants;
         this.placeManager = placeManager;
-        this.currentUser = currentUser;
-        this.authService = authService;
+        this.loginHelper = loginHelper;
 
         getView().setUiHandlers(this);
     }
 
     @Override
-    public void register(String firstName,
-                         String lastName,
-                         final String email,
-                         final String password) {
-        authService.register(email, password, firstName, lastName, new MethodCallback<User>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-                DisplayMessageEvent.fire(AuthPresenter.this,
-                        new Message(appConstants.unableToRegister(), MessageStyle.ERROR));
-            }
+    public void redirectToRegister() {
+        PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.register).build();
+        placeManager.revealPlace(placeRequest);
+    }
 
-            @Override
-            public void onSuccess(Method method, User user) {
-                login(email, password);
-            }
-        });
+    @Override
+    public void redirectToForgotPassword() {
+        PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.forgotpass).build();
+        placeManager.revealPlace(placeRequest);
     }
 
     @Override
     public void login(String email, String password) {
-        authService.login(email, password, new MethodCallback<Token>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-                DisplayMessageEvent.fire(AuthPresenter.this,
-                        new Message(appConstants.unableToLogin(), MessageStyle.ERROR));
-            }
-
-            @Override
-            public void onSuccess(Method method, Token token) {
-                onLoginSuccess();
-            }
-        });
-    }
-
-    private void onLoginSuccess() {
-        DisplayMessageEvent.fire(this, new Message(appConstants.loggedInSuccessfully(), MessageStyle.ERROR));
-
-        currentUser.setLoggedIn(true);
-
-        PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.visualizer).build();
-        placeManager.revealPlace(placeRequest);
+        loginHelper.login(email, password);
     }
 }

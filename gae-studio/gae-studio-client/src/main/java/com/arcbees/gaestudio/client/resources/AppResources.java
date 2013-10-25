@@ -105,6 +105,10 @@ public interface AppResources extends ClientBundle {
         String lockedRow();
 
         String unlockButton();
+
+        String loginBtn();
+
+        String authForm();
     }
 
     public interface Sprites extends CssResource {
