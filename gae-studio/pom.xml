@@ -48,6 +48,7 @@
         <google-http-client-appengine.version>1.15.0-rc</google-http-client-appengine.version>
         <resteasy.version>3.0.4.Final</resteasy.version>
         <velocity.version>1.7</velocity.version>
+        <oauth-client.version>1.0-SNAPSHOT</oauth-client.version>
 
         <!-- test -->
         <junit.version>4.11</junit.version>
@@ -97,6 +98,15 @@
             <releases>
                 <enabled>false</enabled>
             </releases>
+        </repository>
+
+        <repository>
+            <id>sonatype.snapshots</id>
+            <name>Sonatype snapshot repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
 </project>
