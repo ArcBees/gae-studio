@@ -18,8 +18,10 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEven
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorFactory;
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.InvalidEntityFieldsException;
+import com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyEditorErrorEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
+import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -29,8 +31,8 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresenter.MyView>
-        implements EditEntityEvent.EditEntityHandler, EntityDetailsUiHandlers {
-
+        implements EditEntityEvent.EditEntityHandler, EntityDetailsUiHandlers,
+        PropertyEditorErrorEvent.PropertyEditorErrorHandler {
     private EntityEditorPresenter entityEditor;
 
     interface MyView extends View, HasUiHandlers<EntityDetailsUiHandlers> {
@@ -39,22 +41,29 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
         void hide();
 
         void showError(String message);
+
+        void clearErrors();
+
+        void showErrorsTitle(String title);
     }
 
     public static final Object EDITOR_SLOT = new Object();
 
     private final EntitiesService entitiesService;
     private final EntityEditorFactory entityEditorFactory;
+    private final AppConstants appConstants;
 
     @Inject
     EntityDetailsPresenter(EventBus eventBus,
                            MyView view,
                            EntitiesService entitiesService,
-                           EntityEditorFactory entityEditorFactory) {
+                           EntityEditorFactory entityEditorFactory,
+                           AppConstants appConstants) {
         super(eventBus, view);
 
         this.entitiesService = entitiesService;
         this.entityEditorFactory = entityEditorFactory;
+        this.appConstants = appConstants;
 
         getView().setUiHandlers(this);
     }
@@ -70,6 +79,8 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
 
     @Override
     public void saveEntity() {
+        getView().clearErrors();
+
         try {
             EntityDto entityDto = entityEditor.flush().getEntityDto();
 
@@ -86,8 +97,13 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
                         }
                     });
         } catch (InvalidEntityFieldsException e) {
-            getView().showError("Invalid fields");
+            getView().showErrorsTitle(appConstants.invalidFields());
         }
+    }
+
+    @Override
+    public void onPropertyEditorError(PropertyEditorErrorEvent event) {
+        getView().showError(event.getError());
     }
 
     @Override
@@ -95,6 +111,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
         super.onBind();
 
         addRegisteredHandler(EditEntityEvent.getType(), this);
+        addRegisteredHandler(PropertyEditorErrorEvent.getType(), this);
     }
 
     private void onSaveEntityFailed(Throwable caught) {

@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
 import javax.inject.Inject;
 
+import com.google.gwt.json.client.JSONException;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.TextBox;
@@ -43,5 +44,20 @@ public class RawPropertyEditor extends AbstractPropertyEditor<String> {
     @Override
     public String getValue() {
         return textBox.getValue();
+    }
+
+    @Override
+    protected boolean validate() {
+        try {
+            JSONValue jsonValue = getJsonValue();
+            return true;
+        } catch (JSONException e) {
+            return false;
+        }
+    }
+
+    @Override
+    protected void showErrors() {
+        showError(key + " (Invalid JSON)");
     }
 }

@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
+import javax.inject.Inject;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -17,6 +19,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.web.bindery.event.shared.EventBus;
 
 public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
     @UiTemplate("AbstractPropertyEditor.ui.xml")
@@ -36,10 +39,16 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
 
     private static final Binder UI_BINDER = GWT.create(Binder.class);
 
+    @Inject
+    private static EventBus eventBus;
+
+    protected final String key;
+
     private final PropertyEditorUiFields fields;
     private final Widget widget;
 
     protected AbstractPropertyEditor(String key) {
+        this.key = key;
         fields = new PropertyEditorUiFields();
 
         widget = UI_BINDER.createAndBindUi(fields);
@@ -70,10 +79,15 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
         return valid;
     }
 
+    protected final void showError(String error) {
+        eventBus.fireEventFromSource(new PropertyEditorErrorEvent(error), this);
+    }
+
     protected boolean validate() {
         return true;
     }
 
     protected void showErrors() {
+        showError(key);
     }
 }

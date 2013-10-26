@@ -61,5 +61,7 @@ public class EntityWidgetModule extends AbstractPresenterModule {
         bind(PropertyEditorCollectionWidgetFactory.class).to(PropertyEditorCollectionWidgetFactoryImpl.class)
                 .in(Singleton.class);
         bindSharedView(MyView.class, EntityEditorView.class);
+
+        requestStaticInjection(AbstractPropertyEditor.class);
     }
 }
