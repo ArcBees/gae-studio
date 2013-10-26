@@ -73,7 +73,6 @@
         <g:HTMLPanel>
             <h3>Entity Details</h3>
             <g:FlowPanel ui:field="errors" styleName="{style.error}"/>
-            <!--<g:Label ui:field="error" styleName="{style.error}"/>-->
             <g:SimplePanel ui:field="editorPanel" />
             <div class="{style.buttonContainer}">
                 <g:Button ui:field="save" styleName="{res.styles.toolbarButton}">Save</g:Button>
