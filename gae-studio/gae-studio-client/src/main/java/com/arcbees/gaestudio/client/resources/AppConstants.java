@@ -77,4 +77,8 @@ public interface AppConstants extends Constants {
     String passwordReset();
 
     String invalidFields();
+
+    String invalidProtocolOrHost();
+
+    String invalidJson();
 }

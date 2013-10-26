@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.google.gwt.json.client.JSONException;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
@@ -19,12 +20,15 @@ import com.google.inject.assistedinject.Assisted;
 
 public class RawPropertyEditor extends AbstractPropertyEditor<String> {
     private final TextBox textBox;
+    private final AppConstants appConstants;
 
     @Inject
-    RawPropertyEditor(@Assisted String key,
+    RawPropertyEditor(AppConstants appConstants,
+                      @Assisted String key,
                       @Assisted JSONValue property) {
         super(key);
 
+        this.appConstants = appConstants;
         textBox = new TextBox();
 
         initFormWidget(textBox);
@@ -58,6 +62,6 @@ public class RawPropertyEditor extends AbstractPropertyEditor<String> {
 
     @Override
     protected void showErrors() {
-        showError(key + " (Invalid JSON)");
+        showError(appConstants.invalidJson());
     }
 }

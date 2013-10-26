@@ -79,15 +79,19 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
         return valid;
     }
 
-    protected final void showError(String error) {
-        eventBus.fireEventFromSource(new PropertyEditorErrorEvent(error), this);
-    }
-
     protected boolean validate() {
         return true;
     }
 
     protected void showErrors() {
-        showError(key);
+        dispatchError(key);
+    }
+
+    protected final void showError(String error) {
+        dispatchError(key + " (" + error + ")");
+    }
+
+    private void dispatchError(String error) {
+        eventBus.fireEventFromSource(new PropertyEditorErrorEvent(error), this);
     }
 }
