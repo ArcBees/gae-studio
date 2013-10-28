@@ -12,7 +12,9 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.google.common.base.Strings;
 import com.google.gwt.json.client.JSONException;
+import com.google.gwt.json.client.JSONNull;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.TextBox;
@@ -32,12 +34,18 @@ public class RawPropertyEditor extends AbstractPropertyEditor<String> {
         textBox = new TextBox();
 
         initFormWidget(textBox);
-        setValue(property.toString());
+        setValue(property == null ? "" : property.toString());
     }
 
     @Override
     public JSONValue getJsonValue() {
-        return JSONParser.parseStrict(getValue());
+        String value = getValue();
+
+        if (Strings.isNullOrEmpty(value)) {
+            return JSONNull.getInstance();
+        } else {
+            return JSONParser.parseStrict(value);
+        }
     }
 
     @Override

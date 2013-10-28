@@ -74,6 +74,10 @@ public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditor
             propertyEditor = propertyEditorFactory.createUserEditor(key, property);
         } else if (propertyType == PropertyType.EMBEDDED) {
             propertyEditor = propertyEditorFactory.createEmbeddedEntityEditor(key, property);
+        } else if (propertyType == PropertyType.BLOB_KEY) {
+            propertyEditor = propertyEditorFactory.createBlobKeyEditor(key, property);
+        } else if (propertyType == PropertyType.KEY) {
+            propertyEditor = propertyEditorFactory.createKeyEditor(key, property);
         } else {
             propertyEditor = propertyEditorFactory.createRawEditor(key, property);
         }

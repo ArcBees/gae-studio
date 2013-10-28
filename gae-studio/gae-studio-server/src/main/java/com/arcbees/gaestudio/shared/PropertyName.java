@@ -18,6 +18,14 @@ public class PropertyName {
     public static final String IM_PROTOCOL = "protocol";
     public static final String IM_ADDRESS = "address";
 
+    public static final String PARENT_KEY = "parentKey";
+    public static final String KIND = "kind";
+    public static final String APP_ID = "appId";
+    public static final String ID = "id";
+    public static final String NAME = "name";
+    public static final String APP_ID_NAMESPACE = "appIdNamespace";
+    public static final String NAMESPACE = "namespace";
+
     private PropertyName() {
     }
 }

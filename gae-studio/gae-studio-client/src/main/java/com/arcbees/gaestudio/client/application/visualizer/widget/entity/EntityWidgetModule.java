@@ -19,6 +19,7 @@ import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.TypeLiteral;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
+import static com.arcbees.gaestudio.shared.PropertyType.BLOB_KEY;
 import static com.arcbees.gaestudio.shared.PropertyType.CATEGORY;
 import static com.arcbees.gaestudio.shared.PropertyType.EMAIL;
 import static com.arcbees.gaestudio.shared.PropertyType.LINK;
@@ -33,7 +34,8 @@ public class EntityWidgetModule extends AbstractPresenterModule {
 
         install(new GinFactoryModuleBuilder()
                 .implement(new TypeLiteral<PropertyEditor<String>>() {}, StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(POSTAL_ADDRESS.name()),
+                .implement(new TypeLiteral<PropertyEditor<String>>() {
+                }, named(POSTAL_ADDRESS.name()),
                         StringPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(CATEGORY.name()),
                         StringPropertyEditor.class)
@@ -41,7 +43,10 @@ public class EntityWidgetModule extends AbstractPresenterModule {
                         StringPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(PHONE_NUMBER.name()),
                         StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(LINK.name()), LinkPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(BLOB_KEY.name()),
+                        StringPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<String>>() {
+                }, named(LINK.name()), LinkPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<Long>>() {}, LongPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<Long>>() {}, named("RATING"), LongPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<Double>>() {}, DoublePropertyEditor.class)
@@ -52,6 +57,7 @@ public class EntityWidgetModule extends AbstractPresenterModule {
                 .implement(new TypeLiteral<PropertyEditor<User>>() {}, UserPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<Map<String, ?>>>() {}, EmbeddedEntityPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<?>>() {}, RawPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Key>>() {}, KeyPropertyEditor.class)
                 .build(PropertyEditorFactory.class));
 
         bind(GeoPointPropertyEditor.Binder.class).in(Singleton.class);
