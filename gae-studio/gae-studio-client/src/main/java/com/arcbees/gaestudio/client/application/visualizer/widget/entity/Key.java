@@ -10,9 +10,11 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.google.gwt.json.client.JSONNull;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 
 import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.getPropertyAsNumber;
 import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.getPropertyAsObject;
@@ -129,8 +131,8 @@ public class Key {
     private JSONObject createJsonKey(Key key) {
         JSONObject keyObject = new JSONObject();
         keyObject.put(KIND, new JSONString(key.kind));
-        keyObject.put(NAME, new JSONString(key.name));
-        keyObject.put(APP_ID, new JSONString(key.appId));
+        keyObject.put(NAME, nullOrString(key.name));
+        keyObject.put(APP_ID, nullOrString(key.appId));
         keyObject.put(ID, new JSONNumber(key.id));
 
         JSONObject appIdNamespaceObject = new JSONObject();
@@ -139,5 +141,9 @@ public class Key {
         keyObject.put(APP_ID_NAMESPACE, appIdNamespaceObject);
 
         return keyObject;
+    }
+
+    private JSONValue nullOrString(String value) {
+        return value == null ? JSONNull.getInstance() : new JSONString(value);
     }
 }
