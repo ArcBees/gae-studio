@@ -9,21 +9,40 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.rest.BlobsService;
+import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.arcbees.gaestudio.shared.PropertyType;
+import com.arcbees.gaestudio.shared.dto.entity.BlobInfoDto;
 import com.google.common.collect.Maps;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 
 public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditorCollectionWidgetFactory {
+    private final FetchBlobKeysRunner fetchBlobKeysRunner = new FetchBlobKeysRunner() {
+        @Override
+        public void fetch(final FetchBlobKeysCallback callback) {
+            blobsService.getAllKeys(new MethodCallbackImpl<List<BlobInfoDto>>() {
+                @Override
+                protected void onSuccess(List<BlobInfoDto> blobInfoDtos) {
+                    callback.onBlobKeysFetched(blobInfoDtos);
+                }
+            });
+        }
+    };
+
     private final PropertyEditorFactory propertyEditorFactory;
+    private final BlobsService blobsService;
 
     @Inject
-    PropertyEditorCollectionWidgetFactoryImpl(PropertyEditorFactory propertyEditorFactory) {
+    PropertyEditorCollectionWidgetFactoryImpl(PropertyEditorFactory propertyEditorFactory,
+                                              BlobsService blobsService) {
         this.propertyEditorFactory = propertyEditorFactory;
+        this.blobsService = blobsService;
     }
 
     @Override
@@ -64,6 +83,8 @@ public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditor
             propertyEditor = propertyEditorFactory.createEmailEditor(key, property);
         } else if (propertyType == PropertyType.PHONE_NUMBER) {
             propertyEditor = propertyEditorFactory.createPhoneNumberEditor(key, property);
+        } else if (propertyType == PropertyType.BLOB_KEY) {
+            return propertyEditorFactory.createBlobKeyEditor(key, property, fetchBlobKeysRunner);
         } else if (propertyType == PropertyType.RATING) {
             propertyEditor = propertyEditorFactory.createRatingEditor(key, property);
         } else if (propertyType == PropertyType.GEO_PT) {
