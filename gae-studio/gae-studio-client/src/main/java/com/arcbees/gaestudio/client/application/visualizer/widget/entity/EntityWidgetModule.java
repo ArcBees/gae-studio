@@ -44,8 +44,6 @@ public class EntityWidgetModule extends AbstractPresenterModule {
                         StringPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(BLOB_KEY.name()),
                         StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {
-                }, named(LINK.name()), LinkPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(LINK.name()), LinkPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<BlobInfoDto>>() {}, BlobKeyPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<Long>>() {}, LongPropertyEditor.class)
