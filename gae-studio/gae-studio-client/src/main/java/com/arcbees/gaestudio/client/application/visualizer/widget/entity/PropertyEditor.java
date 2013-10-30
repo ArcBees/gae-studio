@@ -16,5 +16,5 @@ import com.google.gwt.user.client.ui.IsWidget;
 public interface PropertyEditor<T> extends TakesValue<T>, IsWidget {
     JSONValue getJsonValue();
 
-    Boolean isValid();
+    boolean isValid();
 }
