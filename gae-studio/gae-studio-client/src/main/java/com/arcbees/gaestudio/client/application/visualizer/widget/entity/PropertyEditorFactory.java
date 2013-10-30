@@ -58,8 +58,5 @@ public interface PropertyEditorFactory {
 
     PropertyEditor<?> createRawEditor(String key, JSONValue property);
 
-    @Named("BLOB_KEY")
-    PropertyEditor<String> createBlobKeyEditor(String key, JSONValue property);
-
     PropertyEditor<Key> createKeyEditor(String key, JSONValue property);
 }
