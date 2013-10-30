@@ -70,7 +70,7 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
     }
 
     @Override
-    public final Boolean isValid() {
+    public final boolean isValid() {
         boolean valid = validate();
         if (!valid) {
             showErrors();

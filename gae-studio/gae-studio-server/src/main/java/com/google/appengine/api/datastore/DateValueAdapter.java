@@ -44,12 +44,7 @@ public class DateValueAdapter implements JsonSerializer<Date>, JsonDeserializer<
             throw new JsonParseException("The date should be a string value");
         }
 
-        Date date = deserializeToDate(json);
-        if (typeOfT == Date.class) {
-            return date;
-        } else {
-            throw new IllegalArgumentException(getClass() + " cannot deserialize to " + typeOfT);
-        }
+        return deserializeToDate(json);
     }
 
     private Date deserializeToDate(JsonElement json) {
