@@ -17,6 +17,7 @@ import com.arcbees.gaestudio.client.application.visualizer.widget.entity.FetchBl
 import com.arcbees.gaestudio.client.ui.BlobInfoRenderer;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.BlobInfoDto;
+import com.google.gwt.json.client.JSONNull;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.ValueListBox;
@@ -53,7 +54,8 @@ public class BlobKeyPropertyEditor extends AbstractPropertyEditor<BlobInfoDto> i
 
     @Override
     public JSONValue getJsonValue() {
-        JSONString value = new JSONString(getValue().getKey());
+        BlobInfoDto blobInfoDto = getValue();
+        JSONValue value = blobInfoDto == null ? JSONNull.getInstance() : new JSONString(getValue().getKey());
         Boolean isIndexed = PropertyUtil.isPropertyIndexed(property);
         PropertyType propertyType = PropertyUtil.getPropertyType(property);
 
