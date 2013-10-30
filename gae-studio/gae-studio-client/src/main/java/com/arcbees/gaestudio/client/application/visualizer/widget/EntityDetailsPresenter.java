@@ -82,20 +82,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
         getView().clearErrors();
 
         try {
-            EntityDto entityDto = entityEditor.flush().getEntityDto();
-
-            entitiesService.entityService(entityDto.getKey().getId()).updateEntity(entityDto,
-                    new MethodCallbackImpl<EntityDto>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            onSaveEntityFailed(caught);
-                        }
-
-                        @Override
-                        public void onSuccess(EntityDto result) {
-                            onSaveEntitySucceeded(result);
-                        }
-                    });
+            updateEntity();
         } catch (InvalidEntityFieldsException e) {
             getView().showErrorsTitle(appConstants.invalidFields());
         }
@@ -127,5 +114,22 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
         Message message = new Message("Entity saved.", MessageStyle.SUCCESS);
         DisplayMessageEvent.fire(this, message);
         getView().hide();
+    }
+
+    private void updateEntity() throws InvalidEntityFieldsException {
+        EntityDto entityDto = entityEditor.flush().getEntityDto();
+
+        entitiesService.entityService(entityDto.getKey().getId()).updateEntity(entityDto,
+                new MethodCallbackImpl<EntityDto>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        onSaveEntityFailed(caught);
+                    }
+
+                    @Override
+                    public void onSuccess(EntityDto result) {
+                        onSaveEntitySucceeded(result);
+                    }
+                });
     }
 }
