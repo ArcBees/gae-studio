@@ -9,8 +9,11 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.AppIdRenderer;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.PropertyType;
@@ -18,16 +21,33 @@ import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.common.base.Strings;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.text.shared.AbstractRenderer;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.LongBox;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
 
 import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.parseJsonValueWithMetadata;
 
-public class KeyPropertyEditor extends AbstractPropertyEditor<Key> {
+public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
+        implements FetchNamespacesRunner.FetchNamespacesCallback, FetchKindsRunner.FetchKindsCallback {
+    static class AppIdNamespaceRenderer extends AbstractRenderer<AppIdNamespaceDto> {
+        @Override
+        public String render(AppIdNamespaceDto object) {
+            if (object == null) {
+                return "<null>";
+            } else if (Strings.isNullOrEmpty(object.getNamespace())) {
+                return "<default>";
+            }
+
+            return object.getNamespace();
+        }
+    }
+
     interface Binder extends UiBinder<Widget, KeyPropertyEditor> {
     }
 
@@ -35,12 +55,12 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key> {
     LongBox id;
     @UiField
     TextBox appId;
-    @UiField
-    TextBox appIdNamespace;
-    @UiField
-    TextBox namespace;
-    @UiField
-    TextBox kind;
+    @UiField(provided = true)
+    ValueListBox<AppIdNamespaceDto> appIdNamespace;
+    @UiField(provided = true)
+    ValueListBox<AppIdNamespaceDto> namespace;
+    @UiField(provided = true)
+    ListBox kind;
     @UiField
     TextBox name;
     @UiField(provided = true)
@@ -49,12 +69,18 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key> {
     private final AppConstants appConstants;
     private final JSONValue property;
 
+    private Key key;
+
     @Inject
     KeyPropertyEditor(Binder uiBinder,
+                      AppIdNamespaceRenderer appIdNamespaceRenderer,
+                      AppIdRenderer appIdRenderer,
                       AppConstants appConstants,
                       PropertyEditorFactory propertyEditorFactory,
                       @Assisted String key,
-                      @Assisted JSONValue property) {
+                      @Assisted JSONValue property,
+                      @Assisted FetchKindsRunner fetchKindsRunner,
+                      @Assisted FetchNamespacesRunner fetchNamespacesRunner) {
         super(key);
 
         this.appConstants = appConstants;
@@ -62,8 +88,33 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key> {
         parentKey = (RawPropertyEditor) propertyEditorFactory
                 .createRawEditor(PropertyName.PARENT_KEY, property.isObject().get(PropertyName.PARENT_KEY));
 
+        appIdNamespace = new ValueListBox<AppIdNamespaceDto>(appIdRenderer);
+        namespace = new ValueListBox<AppIdNamespaceDto>(appIdNamespaceRenderer);
+        kind = new ListBox();
+
+        fetchNamespaces(fetchNamespacesRunner);
+        fetchKinds(fetchKindsRunner);
+
         initFormWidget(uiBinder.createAndBindUi(this));
         setInitialValue();
+    }
+
+    @Override
+    public void onNamespacesFetched(List<AppIdNamespaceDto> namespaces) {
+        setNamespace(namespace, namespaces);
+        setNamespace(appIdNamespace, namespaces);
+    }
+
+    @Override
+    public void onKindsFetched(List<String> kinds) {
+        kind.clear();
+        kind.addItem("<null>", (String) null);
+
+        for (String kind : kinds) {
+            this.kind.addItem(kind, kind);
+        }
+
+        setSelectedKind(key.getKind());
     }
 
     @Override
@@ -75,14 +126,11 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key> {
 
     @Override
     public void setValue(Key key) {
-        kind.setText(key.getKind());
+        this.key = key;
+
         name.setText(key.getName());
         appId.setText(key.getAppId());
         id.setValue(key.getId());
-
-        AppIdNamespaceDto appIdNamespaceDto = key.getAppIdNamespace();
-        appIdNamespace.setText(appIdNamespaceDto.getAppId());
-        namespace.setText(appIdNamespaceDto.getNamespace());
     }
 
     @Override
@@ -93,8 +141,10 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key> {
             parentKey = Key.fromJsonObject(parentKeyObject.isObject());
         }
 
-        return new Key(kind.getText(), Strings.emptyToNull(name.getText()), Strings.emptyToNull(appId.getText()),
-                id.getValue(), new AppIdNamespaceDto(appIdNamespace.getText(), namespace.getText()), parentKey);
+        return new Key(kind.getValue(kind.getSelectedIndex()), Strings.emptyToNull(name.getText()),
+                Strings.emptyToNull(appId.getText()), id.getValue(),
+                new AppIdNamespaceDto(appIdNamespace.getValue().getAppId(), namespace.getValue().getNamespace()),
+                parentKey);
     }
 
     @Override
@@ -106,5 +156,37 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key> {
         JSONObject keyObject = PropertyUtil.getPropertyValue(property).isObject();
 
         setValue(Key.fromJsonObject(keyObject));
+    }
+
+    private void fetchNamespaces(FetchNamespacesRunner fetchNamespacesRunner) {
+        AppIdNamespaceDto loading = new AppIdNamespaceDto("", "Loading namespaces...");
+        namespace.setValue(loading);
+        appIdNamespace.setValue(loading);
+
+        fetchNamespacesRunner.fetch(this);
+    }
+
+    private void fetchKinds(FetchKindsRunner fetchKindsRunner) {
+        String loading = "Loading kinds...";
+        kind.clear();
+        kind.addItem(loading);
+
+        fetchKindsRunner.fetch(this);
+    }
+
+    private void setSelectedKind(String kind) {
+        for (int i = 0; i < this.kind.getItemCount(); i++) {
+            String item = this.kind.getValue(i);
+            if (item.equals(kind)) {
+                this.kind.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
+
+    private void setNamespace(ValueListBox<AppIdNamespaceDto> listBox, List<AppIdNamespaceDto> namespaces) {
+        namespaces.add(null);
+        listBox.setValue(key.getAppIdNamespace());
+        listBox.setAcceptableValues(namespaces);
     }
 }

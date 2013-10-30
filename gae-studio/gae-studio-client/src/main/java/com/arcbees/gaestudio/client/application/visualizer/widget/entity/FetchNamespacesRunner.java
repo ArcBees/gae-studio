@@ -11,12 +11,12 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
 import java.util.List;
 
-import com.arcbees.gaestudio.shared.dto.entity.BlobInfoDto;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 
-public interface FetchBlobKeysRunner {
-    public interface FetchBlobKeysCallback {
-        void onBlobKeysFetched(List<BlobInfoDto> blobInfos);
+public interface FetchNamespacesRunner {
+    public interface FetchNamespacesCallback {
+        void onNamespacesFetched(List<AppIdNamespaceDto> namespaces);
     }
 
-    void fetch(FetchBlobKeysCallback callback);
+    void fetch(FetchNamespacesCallback callback);
 }
