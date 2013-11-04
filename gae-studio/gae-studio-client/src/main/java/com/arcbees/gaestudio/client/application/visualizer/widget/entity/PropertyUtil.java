@@ -108,7 +108,7 @@ public class PropertyUtil {
 
     public static String getPropertyAsString(JSONObject object, String propertyName) {
         JSONValue property = object.get(propertyName);
-        if (property != null && property.isNull() == null) {
+        if (propertyIsNotNull(property)) {
             return property.isString().stringValue();
         }
 
@@ -117,7 +117,7 @@ public class PropertyUtil {
 
     public static JSONNumber getPropertyAsNumber(JSONObject object, String propertyName) {
         JSONValue property = object.get(propertyName);
-        if (property != null && property.isNull() == null) {
+        if (propertyIsNotNull(property)) {
             return property.isNumber();
         }
 
@@ -126,11 +126,15 @@ public class PropertyUtil {
 
     public static JSONObject getPropertyAsObject(JSONObject object, String propertyName) {
         JSONValue property = object.get(propertyName);
-        if (property != null && property.isNull() == null) {
+        if (propertyIsNotNull(property)) {
             return property.isObject();
         }
 
         return null;
+    }
+
+    private static boolean propertyIsNotNull(JSONValue property) {
+        return property != null && property.isNull() == null;
     }
 
     private static PropertyType guessPropertyType(JSONValue jsonValue) {
