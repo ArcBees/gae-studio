@@ -9,12 +9,12 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
-import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.TakesValue;
-import com.google.gwt.user.client.ui.IsWidget;
+import java.util.List;
 
-public interface PropertyEditor<T> extends TakesValue<T>, IsWidget {
-    JSONValue getJsonValue();
+public interface FetchKindsRunner {
+    public interface FetchKindsCallback {
+        void onKindsFetched(List<String> kinds);
+    }
 
-    boolean isValid();
+    void fetch(FetchKindsCallback callback);
 }

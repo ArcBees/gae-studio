@@ -56,7 +56,7 @@ public class GaeServletModule extends ServletModule {
 
     @Override
     protected void configureServlets() {
-        //RestModule has to be before AnalyticModule
+        // RestModule needs to be loaded before AnalyticsModule, since it binds interceptors in the rest package
         install(new RestModule());
         install(new AnalyticModule());
         install(new ExceptionModule());

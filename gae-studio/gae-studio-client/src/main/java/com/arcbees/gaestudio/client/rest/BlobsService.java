@@ -7,14 +7,18 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
+package com.arcbees.gaestudio.client.rest;
 
-import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.TakesValue;
-import com.google.gwt.user.client.ui.IsWidget;
+import java.util.List;
 
-public interface PropertyEditor<T> extends TakesValue<T>, IsWidget {
-    JSONValue getJsonValue();
+import javax.ws.rs.GET;
 
-    boolean isValid();
+import org.fusesource.restygwt.client.MethodCallback;
+import org.fusesource.restygwt.client.RestService;
+
+import com.arcbees.gaestudio.shared.dto.entity.BlobInfoDto;
+
+public interface BlobsService extends RestService {
+    @GET
+    void getAllKeys(MethodCallback<List<BlobInfoDto>> callback);
 }

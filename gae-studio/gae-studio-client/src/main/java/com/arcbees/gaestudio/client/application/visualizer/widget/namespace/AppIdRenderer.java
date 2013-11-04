@@ -7,14 +7,18 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
+package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 
-import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.TakesValue;
-import com.google.gwt.user.client.ui.IsWidget;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.google.gwt.text.shared.AbstractRenderer;
 
-public interface PropertyEditor<T> extends TakesValue<T>, IsWidget {
-    JSONValue getJsonValue();
+public class AppIdRenderer extends AbstractRenderer<AppIdNamespaceDto> {
+    @Override
+    public String render(AppIdNamespaceDto object) {
+        if (object == null) {
+            return "<null>";
+        }
 
-    boolean isValid();
+        return object.getAppId();
+    }
 }

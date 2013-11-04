@@ -11,6 +11,7 @@ package com.google.appengine.api.datastore;
 
 import java.lang.reflect.Modifier;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 
 import javax.inject.Singleton;
@@ -55,25 +56,26 @@ public class GsonModule extends AbstractModule {
 
         // Instance creators
         gsonBuilder.registerTypeAdapter(Entity.class, new EntityInstanceCreator())
-                   .registerTypeAdapter(AppIdNamespace.class, new AppIdNamespaceInstanceCreator())
-                   .registerTypeAdapter(Key.class, new KeyInstanceCreator());
+                .registerTypeAdapter(AppIdNamespace.class, new AppIdNamespaceInstanceCreator())
+                .registerTypeAdapter(Key.class, new KeyInstanceCreator());
 
         // Type Adapters
         gsonBuilder.registerTypeAdapter(BlobKey.class, new BlobKeyValueAdapter())
-                   .registerTypeAdapter(Blob.class, new BlobValueAdapter())
-                   .registerTypeAdapter(Category.class, new CategoryValueAdapter())
-                   .registerTypeAdapter(Collection.class, new CollectionValueAdapter())
-                   .registerTypeAdapter(Email.class, new EmailValueAdapter())
-                   .registerTypeAdapter(IMHandle.class, new IMHandleDeserializer())
-                   .registerTypeAdapter(Link.class, new LinkValueAdapter())
-                   .registerTypeAdapter(Map.class, new PropertiesValueAdapter())
-                   .registerTypeAdapter(PhoneNumber.class, new PhoneNumberValueAdapter())
-                   .registerTypeAdapter(PostalAddress.class, new PostalAddressValueAdapter())
-                   .registerTypeAdapter(PropertyValue.class, new PropertyValueAdapter())
-                   .registerTypeAdapter(Rating.class, new RatingValueAdapter())
-                   .registerTypeAdapter(ShortBlob.class, new ShortBlobValueAdapter())
-                   .registerTypeAdapter(Text.class, new TextValueAdapter())
-                   .registerTypeAdapter(UnindexedValue.class, new UnindexedValueAdapter());
+                .registerTypeAdapter(Blob.class, new BlobValueAdapter())
+                .registerTypeAdapter(Category.class, new CategoryValueAdapter())
+                .registerTypeAdapter(Collection.class, new CollectionValueAdapter())
+                .registerTypeAdapter(Email.class, new EmailValueAdapter())
+                .registerTypeAdapter(IMHandle.class, new IMHandleDeserializer())
+                .registerTypeAdapter(Link.class, new LinkValueAdapter())
+                .registerTypeAdapter(Map.class, new PropertiesValueAdapter())
+                .registerTypeAdapter(PhoneNumber.class, new PhoneNumberValueAdapter())
+                .registerTypeAdapter(PostalAddress.class, new PostalAddressValueAdapter())
+                .registerTypeAdapter(PropertyValue.class, new PropertyValueAdapter())
+                .registerTypeAdapter(Rating.class, new RatingValueAdapter())
+                .registerTypeAdapter(ShortBlob.class, new ShortBlobValueAdapter())
+                .registerTypeAdapter(Text.class, new TextValueAdapter())
+                .registerTypeAdapter(UnindexedValue.class, new UnindexedValueAdapter())
+                .registerTypeAdapter(Date.class, new DateValueAdapter(Constants.JSON_DATE_FORMAT));
 
         return gsonBuilder.create();
     }

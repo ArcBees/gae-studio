@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
+import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
@@ -107,11 +108,33 @@ public class PropertyUtil {
 
     public static String getPropertyAsString(JSONObject object, String propertyName) {
         JSONValue property = object.get(propertyName);
-        if (property != null && property.isNull() == null) {
+        if (propertyIsNotNull(property)) {
             return property.isString().stringValue();
         }
 
         return "";
+    }
+
+    public static JSONNumber getPropertyAsNumber(JSONObject object, String propertyName) {
+        JSONValue property = object.get(propertyName);
+        if (propertyIsNotNull(property)) {
+            return property.isNumber();
+        }
+
+        return null;
+    }
+
+    public static JSONObject getPropertyAsObject(JSONObject object, String propertyName) {
+        JSONValue property = object.get(propertyName);
+        if (propertyIsNotNull(property)) {
+            return property.isObject();
+        }
+
+        return null;
+    }
+
+    private static boolean propertyIsNotNull(JSONValue property) {
+        return property != null && property.isNull() == null;
     }
 
     private static PropertyType guessPropertyType(JSONValue jsonValue) {

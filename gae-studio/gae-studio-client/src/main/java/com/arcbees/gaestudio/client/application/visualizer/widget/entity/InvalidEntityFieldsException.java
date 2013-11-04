@@ -9,12 +9,5 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
-import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.TakesValue;
-import com.google.gwt.user.client.ui.IsWidget;
-
-public interface PropertyEditor<T> extends TakesValue<T>, IsWidget {
-    JSONValue getJsonValue();
-
-    boolean isValid();
+public class InvalidEntityFieldsException extends RuntimeException {
 }

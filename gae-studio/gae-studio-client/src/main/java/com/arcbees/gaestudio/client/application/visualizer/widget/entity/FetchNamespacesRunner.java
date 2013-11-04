@@ -9,12 +9,14 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
-import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.TakesValue;
-import com.google.gwt.user.client.ui.IsWidget;
+import java.util.List;
 
-public interface PropertyEditor<T> extends TakesValue<T>, IsWidget {
-    JSONValue getJsonValue();
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 
-    boolean isValid();
+public interface FetchNamespacesRunner {
+    public interface FetchNamespacesCallback {
+        void onNamespacesFetched(List<AppIdNamespaceDto> namespaces);
+    }
+
+    void fetch(FetchNamespacesCallback callback);
 }

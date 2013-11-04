@@ -17,13 +17,13 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
-
 
 public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHandlers> implements MyView {
     interface Binder extends UiBinder<Widget, EntityDetailsView> {
@@ -34,9 +34,9 @@ public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHa
     @UiField
     Button cancel;
     @UiField
-    Label error;
-    @UiField
     SimplePanel editorPanel;
+    @UiField
+    FlowPanel errors;
 
     @Inject
     EntityDetailsView(Binder uiBinder,
@@ -48,13 +48,24 @@ public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHa
     @Override
     public void displayEntityDetails() {
         asPopupPanel().center();
-        error.setVisible(false);
+        errors.setVisible(false);
     }
 
     @Override
     public void showError(String message) {
-        error.setVisible(true);
-        error.setText(message);
+        errors.setVisible(true);
+        errors.add(new Label(message));
+    }
+
+    @Override
+    public void clearErrors() {
+        errors.setVisible(false);
+        errors.clear();
+    }
+
+    @Override
+    public void showErrorsTitle(String title) {
+        errors.insert(new Label(title), 0);
     }
 
     @Override
