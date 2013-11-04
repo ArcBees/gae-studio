@@ -9,36 +9,40 @@
 
 package com.arcbees.gaestudio.shared.dto.entity;
 
-import org.codehaus.jackson.annotate.JsonCreator;
-import org.codehaus.jackson.annotate.JsonProperty;
-
 import com.google.common.base.Objects;
 
-public class AppIdNamespaceDto {
-    private String appId;
-    private String namespace;
+public class BlobInfoDto {
+    private String key;
+    private String contentType;
+    private String name;
 
-    @SuppressWarnings("unused")
-    protected AppIdNamespaceDto() {
+    public String getKey() {
+        return key;
     }
 
-    @JsonCreator
-    public AppIdNamespaceDto(@JsonProperty("appId") String appId, @JsonProperty("namespace") String namespace) {
-        this.appId = appId;
-        this.namespace = namespace;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public String getAppId() {
-        return appId;
+    public String getContentType() {
+        return contentType;
     }
 
-    public String getNamespace() {
-        return namespace;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(appId, namespace);
+        return Objects.hashCode(key);
     }
 
     @Override
@@ -49,7 +53,8 @@ public class AppIdNamespaceDto {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        final AppIdNamespaceDto other = (AppIdNamespaceDto) obj;
-        return Objects.equal(this.appId, other.appId) && Objects.equal(this.namespace, other.namespace);
+
+        BlobInfoDto other = (BlobInfoDto) obj;
+        return Objects.equal(this.key, other.key);
     }
 }

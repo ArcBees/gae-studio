@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.inject.Named;
 
+import com.arcbees.gaestudio.shared.dto.entity.BlobInfoDto;
 import com.google.gwt.json.client.JSONValue;
 
 public interface PropertyEditorFactory {
@@ -42,6 +43,8 @@ public interface PropertyEditorFactory {
     @Named("PHONE_NUMBER")
     PropertyEditor<String> createPhoneNumberEditor(String key, JSONValue property);
 
+    PropertyEditor<BlobInfoDto> createBlobKeyEditor(String key, JSONValue property, FetchBlobKeysRunner runner);
+
     @Named("RATING")
     PropertyEditor<Long> createRatingEditor(String key, JSONValue property);
 
@@ -54,4 +57,7 @@ public interface PropertyEditorFactory {
     PropertyEditor<Map<String, ?>> createEmbeddedEntityEditor(String key, JSONValue property);
 
     PropertyEditor<?> createRawEditor(String key, JSONValue property);
+
+    PropertyEditor<Key> createKeyEditor(String key, JSONValue property, FetchKindsRunner fetchKindsRunner,
+                                        FetchNamespacesRunner fetchNamespacesRunner);
 }
