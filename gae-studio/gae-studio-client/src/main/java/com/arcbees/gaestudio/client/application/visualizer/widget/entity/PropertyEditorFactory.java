@@ -58,5 +58,6 @@ public interface PropertyEditorFactory {
 
     PropertyEditor<?> createRawEditor(String key, JSONValue property);
 
-    PropertyEditor<Key> createKeyEditor(String key, JSONValue property);
+    PropertyEditor<Key> createKeyEditor(String key, JSONValue property, FetchKindsRunner fetchKindsRunner,
+                                        FetchNamespacesRunner fetchNamespacesRunner);
 }

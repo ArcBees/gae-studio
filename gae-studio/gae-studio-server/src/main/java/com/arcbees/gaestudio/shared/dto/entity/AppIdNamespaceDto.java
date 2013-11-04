@@ -12,6 +12,8 @@ package com.arcbees.gaestudio.shared.dto.entity;
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import com.google.common.base.Objects;
+
 public class AppIdNamespaceDto {
     private String appId;
     private String namespace;
@@ -32,5 +34,22 @@ public class AppIdNamespaceDto {
 
     public String getNamespace() {
         return namespace;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(appId, namespace);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final AppIdNamespaceDto other = (AppIdNamespaceDto) obj;
+        return Objects.equal(this.appId, other.appId) && Objects.equal(this.namespace, other.namespace);
     }
 }

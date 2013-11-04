@@ -11,12 +11,10 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
 import java.util.List;
 
-import com.arcbees.gaestudio.shared.dto.entity.BlobInfoDto;
-
-public interface FetchBlobKeysRunner {
-    public interface FetchBlobKeysCallback {
-        void onBlobKeysFetched(List<BlobInfoDto> blobInfos);
+public interface FetchKindsRunner {
+    public interface FetchKindsCallback {
+        void onKindsFetched(List<String> kinds);
     }
 
-    void fetch(FetchBlobKeysCallback callback);
+    void fetch(FetchKindsCallback callback);
 }

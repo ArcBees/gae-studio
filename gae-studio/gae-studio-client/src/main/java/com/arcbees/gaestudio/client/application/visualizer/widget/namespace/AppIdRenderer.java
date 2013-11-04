@@ -7,16 +7,18 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
+package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 
-import java.util.List;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.google.gwt.text.shared.AbstractRenderer;
 
-import com.arcbees.gaestudio.shared.dto.entity.BlobInfoDto;
+public class AppIdRenderer extends AbstractRenderer<AppIdNamespaceDto> {
+    @Override
+    public String render(AppIdNamespaceDto object) {
+        if (object == null) {
+            return "<null>";
+        }
 
-public interface FetchBlobKeysRunner {
-    public interface FetchBlobKeysCallback {
-        void onBlobKeysFetched(List<BlobInfoDto> blobInfos);
+        return object.getAppId();
     }
-
-    void fetch(FetchBlobKeysCallback callback);
 }

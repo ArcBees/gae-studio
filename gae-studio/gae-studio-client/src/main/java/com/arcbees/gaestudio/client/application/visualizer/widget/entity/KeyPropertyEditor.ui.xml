@@ -5,7 +5,7 @@
 
     <g:HTMLPanel styleName="{res.styles.embeddedEntityProperties}">
         <g:Label>Kind</g:Label>
-        <g:TextBox ui:field="kind"/>
+        <g:ListBox ui:field="kind"/>
 
         <g:Label>Id</g:Label>
         <g:LongBox ui:field="id"/>
@@ -17,10 +17,10 @@
         <g:TextBox ui:field="name"/>
 
         <g:Label>Namespace</g:Label>
-        <g:TextBox ui:field="namespace"/>
+        <g:ValueListBox ui:field="namespace"/>
 
         <g:Label>Namespace's App Id</g:Label>
-        <g:TextBox ui:field="appIdNamespace"/>
+        <g:ValueListBox ui:field="appIdNamespace"/>
 
         <prop:RawPropertyEditor ui:field="parentKey"/>
     </g:HTMLPanel>
