@@ -56,12 +56,13 @@ public class GaeServletModule extends ServletModule {
 
     @Override
     protected void configureServlets() {
+        //RestModule has to be before AnalyticModule
+        install(new RestModule());
         install(new AnalyticModule());
         install(new ExceptionModule());
         install(new GaeStudioRecorderModule());
         install(new GsonModule());
         install(new MapperModule());
-        install(new RestModule());
         install(new ServiceModule());
         install(new VelocityModule());
 
