@@ -56,6 +56,7 @@ public class GaeServletModule extends ServletModule {
 
     @Override
     protected void configureServlets() {
+        //RestModule has to be before AnalyticModule
         install(new RestModule());
         install(new AnalyticModule());
         install(new ExceptionModule());
