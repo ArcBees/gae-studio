@@ -13,7 +13,7 @@ public class NameTokens {
     public static final String visualizer = "visualizer";
     public static final String profiler = "profiler";
     public static final String entity = "entity";
-    public static final String licenseExpired = "licenseExpired";
+    public static final String license = "license";
     public static final String auth = "auth";
     public static final String forgotpass = "forgotpass";
     public static final String register = "register";
@@ -38,8 +38,8 @@ public class NameTokens {
         return entity;
     }
 
-    public static String getLicenseExpired() {
-        return licenseExpired;
+    public static String getLicense() {
+        return license;
     }
 
     public static String getAuth() {

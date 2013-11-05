@@ -9,30 +9,28 @@
 
 package com.arcbees.gaestudio.client.gatekeeper;
 
-import java.util.Date;
-
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.place.NameTokens;
-import com.arcbees.gaestudio.shared.ExpirationDate;
+import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.gwtplatform.mvp.client.proxy.Gatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
 public class LicenseGateKeeper implements Gatekeeper {
     private final PlaceManager placeManager;
-    private final Date expirationDate;
+    private final CurrentUser currentUser;
 
     @Inject
     LicenseGateKeeper(PlaceManager placeManager,
-                      @ExpirationDate Date expirationDate) {
+                      CurrentUser currentUser) {
         this.placeManager = placeManager;
-        this.expirationDate = expirationDate;
+        this.currentUser = currentUser;
     }
 
     @Override
     public boolean canReveal() {
         String currentNameToken = placeManager.getCurrentPlaceRequest().getNameToken();
 
-        return NameTokens.licenseExpired.equals(currentNameToken) || new Date().getTime() < expirationDate.getTime();
+        return NameTokens.license.equals(currentNameToken) || currentUser.isLicenseValid();
     }
 }

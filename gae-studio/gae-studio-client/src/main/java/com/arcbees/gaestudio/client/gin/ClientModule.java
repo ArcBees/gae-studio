@@ -9,8 +9,6 @@
 
 package com.arcbees.gaestudio.client.gin;
 
-import java.util.Date;
-
 import javax.inject.Singleton;
 
 import com.arcbees.gaestudio.client.application.ApplicationModule;
@@ -22,9 +20,6 @@ import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.rest.RestModule;
 import com.arcbees.gaestudio.client.util.CurrentUser;
-import com.arcbees.gaestudio.shared.ExpirationDate;
-import com.google.gwt.i18n.client.Dictionary;
-import com.google.inject.Provides;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.ErrorPlace;
 import com.gwtplatform.mvp.client.annotations.GaAccount;
@@ -59,19 +54,5 @@ public class ClientModule extends AbstractPresenterModule {
 
         bindConstant().annotatedWith(GaAccount.class).to("UA-41550930-4");
         bind(GoogleAnalyticsNavigationTracker.class).asEagerSingleton();
-    }
-
-    @Provides
-    @Singleton
-    @ExpirationDate
-    Date getExpirationDate() {
-        try {
-            String expirationDate = Dictionary.getDictionary("AppConfiguration").get("ax5b7kor");
-            Long expirationDateTimeMillis = Long.parseLong(expirationDate);
-            return new Date(expirationDateTimeMillis);
-        } catch (NumberFormatException e) {
-            // impossible to read the expiration date... We consider the application as expired
-            return new Date();
-        }
     }
 }

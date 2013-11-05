@@ -16,6 +16,7 @@ import org.fusesource.restygwt.client.MethodCallback;
 
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.rest.AuthService;
+import com.arcbees.gaestudio.client.rest.LicenseService;
 import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.arcbees.gaestudio.shared.auth.User;
 import com.google.gwt.user.client.History;
@@ -29,16 +30,19 @@ public class BootstrapperImpl implements Bootstrapper {
     private final AuthService authService;
     private final PlaceManager placeManager;
     private final String unauthorizedPlace;
+    private final LicenseService licenseService;
 
     @Inject
     BootstrapperImpl(CurrentUser currentUser,
                      AuthService authService,
                      PlaceManager placeManager,
+                     LicenseService licenseService,
                      @UnauthorizedPlace String unauthorizedPlace) {
         this.currentUser = currentUser;
         this.authService = authService;
         this.placeManager = placeManager;
         this.unauthorizedPlace = unauthorizedPlace;
+        this.licenseService = licenseService;
     }
 
     @Override
@@ -60,6 +64,27 @@ public class BootstrapperImpl implements Bootstrapper {
         currentUser.setUser(user);
         currentUser.setLoggedIn(user != null);
 
+        if (user != null) {
+            licenseService.checkLicense(user.getId(), new MethodCallback<Void>() {
+                @Override
+                public void onFailure(Method method, Throwable throwable) {
+                    currentUser.setLicenseValid(false);
+                    navigate();
+                }
+
+                @Override
+                public void onSuccess(Method method, Void aVoid) {
+                    currentUser.setLicenseValid(true);
+                    navigate();
+                }
+            });
+        } else {
+            currentUser.setLicenseValid(false);
+            navigate();
+        }
+    }
+
+    private void navigate() {
         String historyToken = History.getToken();
         if (unauthorizedPlace.equals(historyToken)) {
             placeManager.revealPlace(new PlaceRequest.Builder().nameToken(NameTokens.visualizer).build());
