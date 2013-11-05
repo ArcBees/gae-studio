@@ -9,12 +9,14 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
-import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.TakesValue;
-import com.google.gwt.user.client.ui.IsWidget;
+import java.util.List;
 
-public interface PropertyEditor<T> extends TakesValue<T>, IsWidget {
-    JSONValue getJsonValue();
+import com.arcbees.gaestudio.shared.dto.entity.BlobInfoDto;
 
-    boolean isValid();
+public interface FetchBlobKeysRunner {
+    public interface FetchBlobKeysCallback {
+        void onBlobKeysFetched(List<BlobInfoDto> blobInfos);
+    }
+
+    void fetch(FetchBlobKeysCallback callback);
 }

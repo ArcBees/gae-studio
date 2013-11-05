@@ -72,6 +72,12 @@ public class RestModule extends AbstractGinModule {
 
     @Provides
     @Singleton
+    BlobsService getBlobsService(ResourceFactory resourceFactory) {
+        return resourceFactory.setupProxy(GWT.<BlobsService>create(BlobsService.class), EndPoints.BLOBS);
+    }
+
+    @Provides
+    @Singleton
     LicenseService getLicenseService() {
         Resource resource = new Resource(EndPoints.ARCBEES_LICENSE_SERVICE);
         LicenseService proxy = GWT.create(LicenseService.class);

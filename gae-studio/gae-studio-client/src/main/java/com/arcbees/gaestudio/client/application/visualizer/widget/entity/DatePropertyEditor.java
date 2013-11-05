@@ -24,6 +24,7 @@ import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
 import com.google.inject.assistedinject.Assisted;
 
 import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.parseJsonValueWithMetadata;
+import static com.google.gwt.query.client.GQuery.$;
 
 public class DatePropertyEditor extends AbstractPropertyEditor<Date> {
     private static final DateTimeFormat DATE_FORMAT = DateTimeFormat.getFormat(Constants.JSON_DATE_FORMAT);
@@ -63,8 +64,18 @@ public class DatePropertyEditor extends AbstractPropertyEditor<Date> {
         return dateBox.getValue();
     }
 
+    @Override
+    protected boolean validate() {
+        return !$(dateBox).hasClass("dateBoxFormatError");
+    }
+
     private String getFormattedDate() {
-        return DATE_FORMAT.format(getValue());
+        String formattedDate = "";
+        if (getValue() != null) {
+            formattedDate = DATE_FORMAT.format(getValue());
+        }
+
+        return formattedDate;
     }
 
     private Date parseDate(String parsedDate) {

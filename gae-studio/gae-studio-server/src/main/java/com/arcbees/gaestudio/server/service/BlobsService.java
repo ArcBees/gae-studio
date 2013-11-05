@@ -7,14 +7,12 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
+package com.arcbees.gaestudio.server.service;
 
-import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.TakesValue;
-import com.google.gwt.user.client.ui.IsWidget;
+import java.util.Iterator;
 
-public interface PropertyEditor<T> extends TakesValue<T>, IsWidget {
-    JSONValue getJsonValue();
+import com.google.appengine.api.blobstore.BlobInfo;
 
-    boolean isValid();
+public interface BlobsService {
+    Iterator<BlobInfo> getAllBlobInfos();
 }

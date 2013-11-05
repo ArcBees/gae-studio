@@ -32,7 +32,7 @@ public class PropertiesValueAdapter implements JsonDeserializer<Map<?, ?>>, Json
             String key = jsonProperty.getKey();
             PropertyValue propertyValue = context.deserialize(jsonProperty.getValue(), PropertyValue.class);
 
-            properties.put(key, propertyValue.getValue());
+            properties.put(key, propertyValue == null ? null : propertyValue.getValue());
         }
 
         return properties;

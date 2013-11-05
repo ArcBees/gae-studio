@@ -140,7 +140,7 @@
                     <dependency>
                         <groupId>net.kindleit</groupId>
                         <artifactId>gae-runtime</artifactId>
-                        <version>1.8.4</version>
+                        <version>1.8.6</version>
                         <type>pom</type>
                     </dependency>
                 </dependencies>
@@ -152,7 +152,6 @@
                     <monitorPort>9966</monitorPort>
                     <wait>false</wait>
                     <port>8888</port>
-                    <emailAccount>maxime.meriouma@arcbees.com</emailAccount>
                 </configuration>
                 <executions>
                     <execution>

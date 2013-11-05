@@ -18,6 +18,7 @@ import com.google.inject.AbstractModule;
 public class ServiceModule extends AbstractModule {
     @Override
     protected void configure() {
+        bind(BlobsService.class).to(BlobsServiceImpl.class).in(Singleton.class);
         bind(EntitiesService.class).to(EntitiesServiceImpl.class).in(Singleton.class);
         bind(EntityService.class).to(EntityServiceImpl.class).in(Singleton.class);
         bind(KindsService.class).to(KindsServiceImpl.class).in(Singleton.class);
