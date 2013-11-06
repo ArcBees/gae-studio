@@ -1,20 +1,28 @@
+/**
+ * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * This source code, and resulting software, is the confidential and proprietary information
+ * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
+ * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
+ * shall use it only in accordance with the terms and conditions of any and all license
+ * agreements you have entered into with The Company.
+ */
+
 package com.arcbees.gaestudio.server.rest;
 
-import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
-import com.google.gson.reflect.TypeToken;
+import java.util.List;
 
 import org.junit.Test;
 
 import com.arcbees.gaestudio.companion.rest.TestEndPoints;
+import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.google.gson.reflect.TypeToken;
 import com.jayway.restassured.response.Response;
-
-import java.util.List;
 
 import static com.jayway.restassured.RestAssured.given;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
-import static org.junit.Assert.assertEquals;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
+import static org.junit.Assert.assertEquals;
 
 public class OperationsResourceIT extends RestIT {
     private final TypeToken<List<QueryRecordDto>> queryType = new TypeToken<List<QueryRecordDto>>() {
