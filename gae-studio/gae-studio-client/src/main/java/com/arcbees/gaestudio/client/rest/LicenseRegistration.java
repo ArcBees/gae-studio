@@ -7,20 +7,25 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.error;
+package com.arcbees.gaestudio.client.rest;
 
-import javax.inject.Inject;
+public class LicenseRegistration {
+    private Long userId;
+    private String key;
 
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.ViewImpl;
-
-public class LicenseExpiredView extends ViewImpl implements LicenseExpiredPresenter.MyView {
-    interface Binder extends UiBinder<Widget, LicenseExpiredView> {
+    public String getKey() {
+        return key;
     }
 
-    @Inject
-    LicenseExpiredView(Binder uiBinder) {
-        initWidget(uiBinder.createAndBindUi(this));
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

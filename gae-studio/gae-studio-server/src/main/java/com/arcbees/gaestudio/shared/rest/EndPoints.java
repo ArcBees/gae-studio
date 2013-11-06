@@ -27,4 +27,6 @@ public class EndPoints {
     public static final String REGISTER = "register/";
     public static final String LOGIN = "login/";
     public static final String RESET_PASSWORD = "resetpassword/";
+    public static final String CHECK = "check/";
+    public static final String ARCBEES_LICENSE_SERVICE = "https://arcbees-license-service.appspot.com/key/";
 }

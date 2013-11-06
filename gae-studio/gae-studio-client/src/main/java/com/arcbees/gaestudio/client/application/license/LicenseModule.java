@@ -7,14 +7,14 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.error;
+package com.arcbees.gaestudio.client.application.license;
 
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
-public class ErrorModule extends AbstractPresenterModule {
+public class LicenseModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
-        bindPresenter(LicenseExpiredPresenter.class, LicenseExpiredPresenter.MyView.class, LicenseExpiredView.class,
-                LicenseExpiredPresenter.MyProxy.class);
+        bindPresenter(LicensePresenter.class, LicensePresenter.MyView.class, LicenseView.class,
+                LicensePresenter.MyProxy.class);
     }
 }

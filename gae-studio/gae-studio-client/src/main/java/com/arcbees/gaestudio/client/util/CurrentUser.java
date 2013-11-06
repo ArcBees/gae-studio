@@ -14,6 +14,7 @@ import com.arcbees.gaestudio.shared.auth.User;
 public class CurrentUser {
     private User user;
     private boolean isLoggedIn;
+    private boolean licenseValid;
 
     public CurrentUser() {
     }
@@ -37,5 +38,13 @@ public class CurrentUser {
     public void logout() {
         user = null;
         isLoggedIn = false;
+    }
+
+    public boolean isLicenseValid() {
+        return licenseValid;
+    }
+
+    public void setLicenseValid(boolean licenseValid) {
+        this.licenseValid = licenseValid;
     }
 }

@@ -11,6 +11,9 @@ package com.arcbees.gaestudio.client.rest;
 
 import javax.inject.Singleton;
 
+import org.fusesource.restygwt.client.Resource;
+import org.fusesource.restygwt.client.RestServiceProxy;
+
 import com.arcbees.gaestudio.shared.BaseRestPath;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.gwt.core.shared.GWT;
@@ -71,5 +74,15 @@ public class RestModule extends AbstractGinModule {
     @Singleton
     BlobsService getBlobsService(ResourceFactory resourceFactory) {
         return resourceFactory.setupProxy(GWT.<BlobsService>create(BlobsService.class), EndPoints.BLOBS);
+    }
+
+    @Provides
+    @Singleton
+    LicenseService getLicenseService() {
+        Resource resource = new Resource(EndPoints.ARCBEES_LICENSE_SERVICE);
+        LicenseService proxy = GWT.create(LicenseService.class);
+        ((RestServiceProxy) proxy).setResource(resource);
+
+        return proxy;
     }
 }

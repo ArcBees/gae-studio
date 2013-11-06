@@ -38,7 +38,7 @@ public class LoggedInGatekeeper implements Gatekeeper {
         boolean loggedIn = currentUser.isLoggedIn();
 
         if (loggedIn && !licenseGateKeeper.canReveal()) {
-            PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.licenseExpired).build();
+            PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.license).build();
             placeManager.revealPlace(placeRequest);
         }
 
