@@ -81,4 +81,10 @@ public interface AppConstants extends Constants {
     String invalidProtocolOrHost();
 
     String invalidJson();
+
+    String failedRegistration();
+
+    String successfulRegistration();
+
+    String validLicense();
 }

@@ -30,4 +30,6 @@ public interface AppMessages extends Messages {
     SafeHtml deleteEntitiesOfKindOfNamespace(String kind, String namespace);
 
     SafeHtml deleteAllEntities();
+
+    String invalidKey(String error);
 }

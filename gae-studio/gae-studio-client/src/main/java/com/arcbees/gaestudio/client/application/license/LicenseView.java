@@ -17,7 +17,6 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -33,8 +32,6 @@ public class LicenseView extends ViewWithUiHandlers<LicenseUiHandlers> implement
     HTMLPanel keyEntrySection;
     @UiField
     TextBox key;
-    @UiField
-    Button register;
 
     @Inject
     LicenseView(Binder uiBinder) {

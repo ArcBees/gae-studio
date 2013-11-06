@@ -29,7 +29,14 @@ public class LicenseCheckerImpl implements LicenseChecker {
     public Boolean isLicenseValid() {
         initializeSession();
 
-        return session().getLicenseValid() ? true : checkLicenseAgainstServer();
+        if (session().getLicenseValid()) {
+            return true;
+        } else {
+            Boolean isLicenseValid = checkLicenseAgainstServer();
+            session().setLicenseValid(isLicenseValid);
+
+            return isLicenseValid;
+        }
     }
 
     private Boolean checkLicenseAgainstServer() {
@@ -37,41 +44,30 @@ public class LicenseCheckerImpl implements LicenseChecker {
 
         HTTPResponse response = getHttpResponse(url);
 
-        if (response != null) {
-            int responseCode = response.getResponseCode();
+        int responseCode = response.getResponseCode();
 
-            session().setLicenseValid(responseCode == 200);
-        } else {
-            session().setLicenseValid(false);
-        }
-
-        return session().getLicenseValid();
+        return responseCode == 200;
     }
 
-    private HTTPResponse getHttpResponse(URL url) {
+    private HTTPResponse getHttpResponse(URL url)  {
         URLFetchService service = URLFetchServiceFactory.getURLFetchService();
-        HTTPResponse response = null;
-        try {
-            response = service.fetch(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        return response;
+        try {
+            return service.fetch(url);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private URL getUrl() {
         User user = authService.checkLogin();
         Long userId = user.getId();
 
-        URL url = null;
         try {
-            url = new URL(EndPoints.ARCBEES_LICENSE_SERVICE + "check?id=" + userId);
+            return new URL(EndPoints.ARCBEES_LICENSE_SERVICE + "check?id=" + userId);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-
-        return url;
     }
 
     private void initializeSession() {

@@ -13,14 +13,18 @@ import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
+import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
+import com.arcbees.gaestudio.client.application.widget.message.Message;
+import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.rest.LicenseRegistration;
 import com.arcbees.gaestudio.client.rest.LicenseService;
 import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.arcbees.gaestudio.shared.auth.User;
 import com.google.api.client.http.HttpStatusCodes;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -36,7 +40,7 @@ public class LicensePresenter
     interface MyView extends View, HasUiHandlers<LicenseUiHandlers> {
         void showMessage(String message);
 
-        void setKeyEntrySectionVisible(boolean b);
+        void setKeyEntrySectionVisible(boolean visible);
 
         String getKey();
     }
@@ -49,6 +53,8 @@ public class LicensePresenter
     private final LicenseService licenseService;
     private final CurrentUser currentUser;
     private final PlaceManager placeManager;
+    private final AppConstants appConstants;
+    private final AppMessages appMessages;
 
     @Inject
     LicensePresenter(EventBus eventBus,
@@ -56,34 +62,36 @@ public class LicensePresenter
                      MyProxy proxy,
                      LicenseService licenseService,
                      CurrentUser currentUser,
-                     PlaceManager placeManager) {
+                     PlaceManager placeManager,
+                     AppConstants appConstants,
+                     AppMessages appMessages) {
         super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
 
         this.licenseService = licenseService;
         this.currentUser = currentUser;
         this.placeManager = placeManager;
+        this.appConstants = appConstants;
+        this.appMessages = appMessages;
 
         getView().setUiHandlers(this);
     }
 
     @Override
     public void onRegister() {
-        String key = getView().getKey();
-
-        LicenseRegistration licenseRegistration = new LicenseRegistration();
-        licenseRegistration.setUserId(currentUser.getUser().getId());
-        licenseRegistration.setKey(key);
+        LicenseRegistration licenseRegistration = getLicenseRegistration();
 
         licenseService.register(licenseRegistration, new MethodCallback<Void>() {
             @Override
             public void onFailure(Method method, Throwable throwable) {
-                Window.alert("Failed registration");
+                DisplayMessageEvent.fire(LicensePresenter.this,
+                        new Message(appConstants.failedRegistration(), MessageStyle.ERROR));
                 currentUser.setLicenseValid(false);
             }
 
             @Override
             public void onSuccess(Method method, Void aVoid) {
-                Window.alert("Successfully registered. Thank you!");
+                DisplayMessageEvent.fire(LicensePresenter.this,
+                        new Message(appConstants.successfulRegistration(), MessageStyle.SUCCESS));
                 currentUser.setLicenseValid(true);
                 placeManager.revealDefaultPlace();
             }
@@ -111,6 +119,17 @@ public class LicensePresenter
         }
     }
 
+    private LicenseRegistration getLicenseRegistration() {
+        String key = getView().getKey();
+
+        LicenseRegistration licenseRegistration = new LicenseRegistration();
+
+        licenseRegistration.setUserId(currentUser.getUser().getId());
+        licenseRegistration.setKey(key);
+
+        return licenseRegistration;
+    }
+
     private void handleLicenseCheck(Method method) {
         Response response = method.getResponse();
         int statusCode = response.getStatusCode();
@@ -123,12 +142,12 @@ public class LicensePresenter
     }
 
     private void displayInvalidLicenseMessage(String error) {
-        getView().showMessage("Invalid key: " + error);
+        getView().showMessage(appMessages.invalidKey(error));
         getView().setKeyEntrySectionVisible(true);
     }
 
     private void displayValidLicenseMessage() {
-        getView().showMessage("Your license is valid.");
+        getView().showMessage(appConstants.validLicense());
         getView().setKeyEntrySectionVisible(false);
     }
 }
