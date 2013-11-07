@@ -17,14 +17,15 @@
     cursor: pointer;
 }
 
-.success {
-    color: #293a25;
-    background-color: #cee4c8;
+.success, .error {
+    color: #F6F3F3;
     border-color: #a2b89e;
 }
 
+.success {
+    background-color: #20BE02;
+}
+
 .error {
-    color: #3a2a25;
-    background-color: #e4cfc8;
-    border-color: #b8a6a3;
+    background-color: #DD501F;
 }
