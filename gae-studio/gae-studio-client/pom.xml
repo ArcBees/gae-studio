@@ -83,6 +83,12 @@
             <artifactId>restygwt</artifactId>
             <version>${restygwt.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jukito</groupId>
+            <artifactId>jukito</artifactId>
+            <version>${jukito.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
