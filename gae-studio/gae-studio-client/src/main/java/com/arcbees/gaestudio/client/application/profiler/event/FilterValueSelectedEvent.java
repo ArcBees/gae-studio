@@ -31,10 +31,6 @@ public class FilterValueSelectedEvent extends GwtEvent<FilterValueSelectedEvent.
         source.fireEvent(eventInstance);
     }
 
-    public static void fire(HasHandlers source, FilterValueSelectedEvent eventInstance) {
-        source.fireEvent(eventInstance);
-    }
-
     public interface HasFilterValueSelectedHandlers extends HasHandlers {
         HandlerRegistration addFilterValueSelectedHandler(FilterValueSelectedHandler handler);
     }
