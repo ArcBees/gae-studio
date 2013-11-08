@@ -11,13 +11,13 @@ package com.arcbees.gaestudio.client.formatters;
 
 import java.util.HashMap;
 
+import com.arcbees.gaestudio.shared.QueryFilterOperator;
+import com.arcbees.gaestudio.shared.QueryOrderDirection;
 import com.arcbees.gaestudio.shared.dto.DeleteRecordDto;
 import com.arcbees.gaestudio.shared.dto.GetRecordDto;
 import com.arcbees.gaestudio.shared.dto.PutRecordDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryFilterDto;
-import com.arcbees.gaestudio.shared.QueryFilterOperator;
-import com.arcbees.gaestudio.shared.QueryOrderDirection;
 import com.arcbees.gaestudio.shared.dto.query.QueryOrderDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 
@@ -72,7 +72,8 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
             builder.append(" ");
             builder.append(operatorToString(filter.getOperator()));
             builder.append("\", ");
-            builder.append(filter.getValue());
+            String value = filter.getValue();
+            builder.append(value.replace('\ufffd' + "", "\\ufffd"));
             builder.append(")");
         }
 
