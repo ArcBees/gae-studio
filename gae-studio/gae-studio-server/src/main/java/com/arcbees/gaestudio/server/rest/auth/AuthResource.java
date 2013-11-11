@@ -18,6 +18,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.service.auth.AuthService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
@@ -25,6 +26,7 @@ import com.arcbees.oauth.client.domain.Token;
 import com.arcbees.oauth.client.domain.User;
 
 @Path(EndPoints.AUTH)
+@GaeStudioResource
 public class AuthResource {
     private final AuthService authService;
 
