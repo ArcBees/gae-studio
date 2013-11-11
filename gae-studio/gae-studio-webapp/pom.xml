@@ -100,7 +100,6 @@
                         <configuration>
                             <strict>true</strict>
 
-                            <extraJvmArgs>-Xmx1024m -XX:MaxPermSize=512m</extraJvmArgs>
                             <logLevel>INFO</logLevel>
 
                             <copyWebapp>true</copyWebapp>
