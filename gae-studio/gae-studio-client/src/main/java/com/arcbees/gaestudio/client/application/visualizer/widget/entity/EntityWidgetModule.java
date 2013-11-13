@@ -31,59 +31,40 @@ import static com.google.inject.name.Names.named;
 public class EntityWidgetModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
-        install(new GinFactoryModuleBuilder()
-                .implement(new TypeLiteral<PropertyEditor<String>>() {
-                }, StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {
-                }, named(POSTAL_ADDRESS.name()),
+        install(new GinFactoryModuleBuilder().implement(new TypeLiteral<PropertyEditor<String>>() {},
+                StringPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(POSTAL_ADDRESS.name()),
                         StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {
-                }, named(CATEGORY.name()),
+                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(CATEGORY.name()),
                         StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {
-                }, named(EMAIL.name()),
+                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(EMAIL.name()),
                         StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {
-                }, named(PHONE_NUMBER.name()),
+                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(PHONE_NUMBER.name()),
                         StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {
-                }, named(BLOB_KEY.name()),
+                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(BLOB_KEY.name()),
                         StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {
-                }, named("BYTES"), BytesPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {
-                }, named(LINK.name()), LinkPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<BlobInfoDto>>() {
-                }, BlobKeyPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Long>>() {
-                }, LongPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Long>>() {
-                }, named("RATING"), LongPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Double>>() {
-                }, DoublePropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Boolean>>() {
-                }, BooleanPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Date>>() {
-                }, DatePropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<GeoPoint>>() {
-                }, GeoPointPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<IMHandle>>() {
-                }, IMHandlePropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<User>>() {
-                }, UserPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Map<String, ?>>>() {
-                }, EmbeddedEntityPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<?>>() {
-                }, RawPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Key>>() {
-                }, KeyPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named("BYTES"), BytesPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(LINK.name()), LinkPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<BlobInfoDto>>() {}, BlobKeyPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Long>>() {}, LongPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Long>>() {}, named("RATING"), LongPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Double>>() {}, DoublePropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Boolean>>() {}, BooleanPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Date>>() {}, DatePropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<GeoPoint>>() {}, GeoPointPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<IMHandle>>() {}, IMHandlePropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<User>>() {}, UserPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Map<String, ?>>>() {}, EmbeddedEntityPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<?>>() {}, RawPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Key>>() {}, KeyPropertyEditor.class)
                 .build(PropertyEditorFactory.class));
 
         bind(GeoPointPropertyEditor.Binder.class).in(Singleton.class);
 
         install(new GinFactoryModuleBuilder().build(EntityEditorFactory.class));
 
-        bind(PropertyEditorCollectionWidgetFactory.class).to(PropertyEditorCollectionWidgetFactoryImpl.class)
+        bind(PropertyEditorCollectionWidgetFactory.class)
+                .to(PropertyEditorCollectionWidgetFactoryImpl.class)
                 .in(Singleton.class);
         bindSharedView(MyView.class, EntityEditorView.class);
 
