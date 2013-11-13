@@ -31,10 +31,9 @@ import static com.google.inject.name.Names.named;
 public class EntityWidgetModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
-        install(new GinFactoryModuleBuilder()
-                .implement(new TypeLiteral<PropertyEditor<String>>() {}, StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {
-                }, named(POSTAL_ADDRESS.name()),
+        install(new GinFactoryModuleBuilder().implement(new TypeLiteral<PropertyEditor<String>>() {},
+                StringPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(POSTAL_ADDRESS.name()),
                         StringPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(CATEGORY.name()),
                         StringPropertyEditor.class)
@@ -44,6 +43,7 @@ public class EntityWidgetModule extends AbstractPresenterModule {
                         StringPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(BLOB_KEY.name()),
                         StringPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named("BYTES"), BytesPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(LINK.name()), LinkPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<BlobInfoDto>>() {}, BlobKeyPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<Long>>() {}, LongPropertyEditor.class)
@@ -63,7 +63,8 @@ public class EntityWidgetModule extends AbstractPresenterModule {
 
         install(new GinFactoryModuleBuilder().build(EntityEditorFactory.class));
 
-        bind(PropertyEditorCollectionWidgetFactory.class).to(PropertyEditorCollectionWidgetFactoryImpl.class)
+        bind(PropertyEditorCollectionWidgetFactory.class)
+                .to(PropertyEditorCollectionWidgetFactoryImpl.class)
                 .in(Singleton.class);
         bindSharedView(MyView.class, EntityEditorView.class);
 
