@@ -60,4 +60,7 @@ public interface PropertyEditorFactory {
 
     PropertyEditor<Key> createKeyEditor(String key, JSONValue property, FetchKindsRunner fetchKindsRunner,
                                         FetchNamespacesRunner fetchNamespacesRunner);
+
+    @Named("BYTES")
+    PropertyEditor<String> createBytesEditor(String key, JSONValue property);
 }
