@@ -60,6 +60,10 @@ public class RawPropertyEditor extends AbstractPropertyEditor<String> {
 
     @Override
     protected boolean validate() {
+        return jsonParsingDoesNotThrow();
+    }
+
+    private boolean jsonParsingDoesNotThrow() {
         try {
             getJsonValue();
             return true;
