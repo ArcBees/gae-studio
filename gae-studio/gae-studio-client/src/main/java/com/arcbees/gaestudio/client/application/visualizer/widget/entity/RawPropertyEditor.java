@@ -63,6 +63,11 @@ public class RawPropertyEditor extends AbstractPropertyEditor<String> {
         return jsonParsingDoesNotThrow();
     }
 
+    @Override
+    protected void showErrors() {
+        showError(appConstants.invalidJson());
+    }
+
     private boolean jsonParsingDoesNotThrow() {
         try {
             getJsonValue();
@@ -70,10 +75,5 @@ public class RawPropertyEditor extends AbstractPropertyEditor<String> {
         } catch (JSONException e) {
             return false;
         }
-    }
-
-    @Override
-    protected void showErrors() {
-        showError(appConstants.invalidJson());
     }
 }
