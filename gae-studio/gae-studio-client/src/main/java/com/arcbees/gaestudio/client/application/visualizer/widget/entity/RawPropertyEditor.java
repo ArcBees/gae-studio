@@ -61,7 +61,7 @@ public class RawPropertyEditor extends AbstractPropertyEditor<String> {
     @Override
     protected boolean validate() {
         try {
-            JSONValue jsonValue = getJsonValue();
+            getJsonValue();
             return true;
         } catch (JSONException e) {
             return false;

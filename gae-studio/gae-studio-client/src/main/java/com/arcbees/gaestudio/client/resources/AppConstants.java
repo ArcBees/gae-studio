@@ -87,4 +87,8 @@ public interface AppConstants extends Constants {
     String successfulRegistration();
 
     String validLicense();
+
+    String invalidLatitude();
+
+    String invalidLongitude();
 }
