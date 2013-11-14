@@ -91,4 +91,6 @@ public interface AppConstants extends Constants {
     String invalidLatitude();
 
     String invalidLongitude();
+
+    String invalidRating();
 }
