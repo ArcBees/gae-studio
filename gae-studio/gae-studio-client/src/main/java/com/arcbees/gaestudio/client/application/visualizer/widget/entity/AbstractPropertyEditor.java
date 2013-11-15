@@ -87,6 +87,12 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
         dispatchError(key);
     }
 
+    protected final void showErrors(Iterable<String> errors) {
+        for(String error : errors) {
+            showError(error);
+        }
+    }
+
     protected final void showError(String error) {
         dispatchError(key + " (" + error + ")");
     }
