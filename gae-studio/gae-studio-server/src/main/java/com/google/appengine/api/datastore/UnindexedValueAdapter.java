@@ -12,6 +12,7 @@ package com.google.appengine.api.datastore;
 import java.lang.reflect.Type;
 
 import com.arcbees.gaestudio.server.util.JsonUtil;
+import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.appengine.api.datastore.Entity.UnindexedValue;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -21,6 +22,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+import static com.arcbees.gaestudio.shared.PropertyName.GAE_PROPERTY_TYPE;
 import static com.arcbees.gaestudio.shared.PropertyName.INDEXED;
 import static com.arcbees.gaestudio.shared.PropertyName.VALUE;
 
@@ -53,7 +55,15 @@ public class UnindexedValueAdapter implements JsonSerializer<UnindexedValue>, Js
 
         object.addProperty(INDEXED, false);
 
+        if(hasCollectionValue(object)) {
+            object.addProperty(GAE_PROPERTY_TYPE, PropertyType.COLLECTION.name());
+        }
+
         return object;
+    }
+
+    private boolean hasCollectionValue(JsonObject object) {
+        return object.has(VALUE) && object.get(VALUE).isJsonArray();
     }
 
     @Override

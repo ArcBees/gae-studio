@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
@@ -57,6 +58,7 @@ public class EntityWidgetModule extends AbstractPresenterModule {
                 .implement(new TypeLiteral<PropertyEditor<Map<String, ?>>>() {}, EmbeddedEntityPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<?>>() {}, RawPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<Key>>() {}, KeyPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Collection<?>>>() {}, CollectionPropertyEditor.class)
                 .build(PropertyEditorFactory.class));
 
         bind(GeoPointPropertyEditor.Binder.class).in(Singleton.class);
