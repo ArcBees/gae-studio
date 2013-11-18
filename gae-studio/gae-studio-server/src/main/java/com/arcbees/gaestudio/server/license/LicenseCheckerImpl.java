@@ -19,11 +19,15 @@ import javax.inject.Provider;
 import com.arcbees.gaestudio.server.service.auth.AuthService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.oauth.client.domain.User;
+import com.google.appengine.api.urlfetch.HTTPMethod;
+import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchService;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 
 public class LicenseCheckerImpl implements LicenseChecker {
+    private static final double GAE_MAXIMUM_HTTP_REQUEST_DEADLINE = 60d;
+
     private final AuthService authService;
     private final Provider<LicenseSession> licenseSessionProvider;
 
@@ -61,8 +65,11 @@ public class LicenseCheckerImpl implements LicenseChecker {
     private HTTPResponse getHttpResponse(URL url)  {
         URLFetchService service = URLFetchServiceFactory.getURLFetchService();
 
+        HTTPRequest httpRequest = new HTTPRequest(url, HTTPMethod.GET);
+        httpRequest.getFetchOptions().setDeadline(GAE_MAXIMUM_HTTP_REQUEST_DEADLINE);
+
         try {
-            return service.fetch(url);
+            return service.fetch(httpRequest);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
