@@ -16,7 +16,6 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.shared.PropertyType;
-import com.google.common.base.Joiner;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -89,7 +88,7 @@ public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
             errorTokens.add(appConstants.invalidLongitude());
         }
 
-        showError(Joiner.on("; ").join(errorTokens));
+        showErrors(errorTokens);
     }
 
     @Override
