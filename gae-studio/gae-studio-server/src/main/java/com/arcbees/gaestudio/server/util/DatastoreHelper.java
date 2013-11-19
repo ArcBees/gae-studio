@@ -45,7 +45,7 @@ public class DatastoreHelper {
 
         Key key;
 
-        if(idIsNotAString(keyDto)) {
+        if (idIsNotAString(keyDto)) {
             if (parentKeyDto != null) {
                 Key parentKey = KeyFactory.createKey(parentKeyDto.getKind(), parentKeyDto.getId());
 
