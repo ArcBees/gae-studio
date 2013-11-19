@@ -45,7 +45,7 @@ public class DatastoreHelper {
 
         Key key;
 
-        if (idIsNotAString(keyDto)) {
+        if (idIsNumeric(keyDto)) {
             if (parentKeyDto != null) {
                 Key parentKey = KeyFactory.createKey(parentKeyDto.getKind(), parentKeyDto.getId());
 
@@ -202,7 +202,7 @@ public class DatastoreHelper {
         return Entities.getNamespaceFromNamespaceKey(namespace.getKey());
     }
 
-    private boolean idIsNotAString(KeyDto keyDto) {
+    private boolean idIsNumeric(KeyDto keyDto) {
         return keyDto.getId() != 0;
     }
 }
