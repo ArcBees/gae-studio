@@ -41,13 +41,11 @@ public class DoublePropertyEditor extends AbstractPropertyEditor<Double> {
         return parseJsonValueWithMetadata(value, PropertyType.FLOATING, PropertyUtil.isPropertyIndexed(property));
     }
 
-    @Override
-    public void setValue(Double value) {
+    private void setValue(Double value) {
         doubleBox.setValue(value);
     }
 
-    @Override
-    public Double getValue() {
+    private Double getValue() {
         return doubleBox.getValue();
     }
 }

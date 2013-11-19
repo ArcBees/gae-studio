@@ -80,16 +80,6 @@ public class CollectionPropertyEditor extends AbstractPropertyEditor<Collection<
         return property;
     }
 
-    @Override
-    public Collection<?> getValue() {
-        return null; //these method never seem to be invoked
-    }
-
-    @Override
-    public void setValue(Collection<?> value) {
-        //these method never seem to be invoked
-    }
-
     private JSONArray extractArray(JSONValue property) {
         JSONObject jsonObject = property.isObject();
         JSONValue arrayValue = jsonObject.get(VALUE);

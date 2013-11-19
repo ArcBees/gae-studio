@@ -47,14 +47,4 @@ public class EmbeddedEntityPropertyEditor extends AbstractPropertyEditor<Map<Str
 
         return property;
     }
-
-    @Override
-    public void setValue(Map<String, ?> value) {
-        propertyEditorsWidget.setValue(value);
-    }
-
-    @Override
-    public Map<String, ?> getValue() {
-        return propertyEditorsWidget.getValue();
-    }
 }

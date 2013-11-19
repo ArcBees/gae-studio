@@ -63,17 +63,6 @@ public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
     }
 
     @Override
-    public GeoPoint getValue() {
-        return new GeoPoint(getLatitude(), getLongitude());
-    }
-
-    @Override
-    public void setValue(GeoPoint geoPoint) {
-        latitude.setValue((double) geoPoint.getLatitude());
-        longitude.setValue((double) geoPoint.getLongitude());
-    }
-
-    @Override
     protected void showErrors() {
         Boolean isLatitudeValid = isLatitudeValid();
         Boolean isLongitudeValid = isLongitudeValid();
@@ -94,6 +83,15 @@ public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
     @Override
     protected boolean validate() {
         return isLatitudeValid() && isLongitudeValid();
+    }
+
+    private GeoPoint getValue() {
+        return new GeoPoint(getLatitude(), getLongitude());
+    }
+
+    private void setValue(GeoPoint geoPoint) {
+        latitude.setValue((double) geoPoint.getLatitude());
+        longitude.setValue((double) geoPoint.getLongitude());
     }
 
     private boolean isLongitudeValid() {

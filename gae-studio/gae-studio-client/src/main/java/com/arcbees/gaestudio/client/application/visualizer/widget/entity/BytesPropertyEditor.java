@@ -46,13 +46,11 @@ public class BytesPropertyEditor extends AbstractPropertyEditor<String> {
         return parseJsonValueWithMetadata(value, propertyType, isIndexed);
     }
 
-    @Override
-    public void setValue(String value) {
+    private void setValue(String value) {
         textBox.setValue(value);
     }
 
-    @Override
-    public String getValue() {
+    private String getValue() {
         return textBox.getValue();
     }
 }
