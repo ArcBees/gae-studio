@@ -125,16 +125,11 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     }
 
     @Override
-    public void setValue(Key key) {
-        this.key = key;
-
-        name.setText(key.getName());
-        appId.setText(key.getAppId());
-        id.setValue(key.getId());
+    protected void showErrors() {
+        showError(appConstants.invalidProtocolOrHost());
     }
 
-    @Override
-    public Key getValue() {
+    private Key getValue() {
         Key parentKey = null;
         JSONValue parentKeyObject = this.parentKey.getJsonValue();
         if (parentKeyObject != null && parentKeyObject.isObject() != null) {
@@ -147,9 +142,12 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
                 parentKey);
     }
 
-    @Override
-    protected void showErrors() {
-        showError(appConstants.invalidProtocolOrHost());
+    private void setValue(Key key) {
+        this.key = key;
+
+        name.setText(key.getName());
+        appId.setText(key.getAppId());
+        id.setValue(key.getId());
     }
 
     private void setInitialValue() {

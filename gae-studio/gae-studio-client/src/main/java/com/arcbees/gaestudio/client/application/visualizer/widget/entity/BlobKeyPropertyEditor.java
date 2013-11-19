@@ -62,13 +62,11 @@ public class BlobKeyPropertyEditor extends AbstractPropertyEditor<BlobInfoDto> i
         return parseJsonValueWithMetadata(value, propertyType, isIndexed);
     }
 
-    @Override
-    public void setValue(BlobInfoDto value) {
+    private void setValue(BlobInfoDto value) {
         listBox.setValue(value);
     }
 
-    @Override
-    public BlobInfoDto getValue() {
+    private BlobInfoDto getValue() {
         return listBox.getValue();
     }
 

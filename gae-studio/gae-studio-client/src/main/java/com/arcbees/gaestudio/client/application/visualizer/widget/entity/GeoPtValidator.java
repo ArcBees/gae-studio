@@ -9,11 +9,12 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
-import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.ui.IsWidget;
+public class GeoPtValidator {
+    public boolean isLatitudeValid(Double latitude) {
+        return -90d <= latitude && latitude <= 90d;
+    }
 
-public interface PropertyEditor<T> extends IsWidget {
-    JSONValue getJsonValue();
-
-    boolean isValid();
+    public boolean isLongitudeValid(Double longitude) {
+        return -180d <= longitude && longitude <= 180d;
+    }
 }

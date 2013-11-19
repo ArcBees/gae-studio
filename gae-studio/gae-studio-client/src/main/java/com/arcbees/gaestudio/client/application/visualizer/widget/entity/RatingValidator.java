@@ -9,11 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
-import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.ui.IsWidget;
-
-public interface PropertyEditor<T> extends IsWidget {
-    JSONValue getJsonValue();
-
-    boolean isValid();
+public class RatingValidator {
+    public boolean isRatingValid(Long value) {
+        return 0 <= value && value <= 100;
+    }
 }

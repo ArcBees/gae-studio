@@ -9,8 +9,12 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
@@ -32,14 +36,20 @@ public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
     DoubleBox longitude;
 
     private final JSONValue property;
+    private final GeoPtValidator geoPtValidator;
+    private final AppConstants appConstants;
 
     @Inject
     GeoPointPropertyEditor(Binder uiBinder,
+                           GeoPtValidator geoPtValidator,
+                           AppConstants appConstants,
                            @Assisted String key,
                            @Assisted JSONValue property) {
         super(key);
 
         this.property = property;
+        this.geoPtValidator = geoPtValidator;
+        this.appConstants = appConstants;
 
         initFormWidget(uiBinder.createAndBindUi(this));
         setInitialValue();
@@ -53,14 +63,43 @@ public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
     }
 
     @Override
-    public void setValue(GeoPoint geoPoint) {
+    protected void showErrors() {
+        Boolean isLatitudeValid = isLatitudeValid();
+        Boolean isLongitudeValid = isLongitudeValid();
+
+        Collection<String> errorTokens = new ArrayList<String>();
+
+        if (!isLatitudeValid) {
+            errorTokens.add(appConstants.invalidLatitude());
+        }
+
+        if (!isLongitudeValid) {
+            errorTokens.add(appConstants.invalidLongitude());
+        }
+
+        showErrors(errorTokens);
+    }
+
+    @Override
+    protected boolean validate() {
+        return isLatitudeValid() && isLongitudeValid();
+    }
+
+    private GeoPoint getValue() {
+        return new GeoPoint(getLatitude(), getLongitude());
+    }
+
+    private void setValue(GeoPoint geoPoint) {
         latitude.setValue((double) geoPoint.getLatitude());
         longitude.setValue((double) geoPoint.getLongitude());
     }
 
-    @Override
-    public GeoPoint getValue() {
-        return new GeoPoint(getLatitude(), getLongitude());
+    private boolean isLongitudeValid() {
+        return geoPtValidator.isLongitudeValid(longitude.getValue());
+    }
+
+    private boolean isLatitudeValid() {
+        return geoPtValidator.isLatitudeValid(latitude.getValue());
     }
 
     private Float getLatitude() {

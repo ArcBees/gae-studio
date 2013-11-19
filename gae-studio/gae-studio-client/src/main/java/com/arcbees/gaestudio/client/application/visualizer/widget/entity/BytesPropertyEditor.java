@@ -12,40 +12,45 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.shared.PropertyType;
-import com.google.gwt.json.client.JSONBoolean;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.inject.assistedinject.Assisted;
 
 import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.parseJsonValueWithMetadata;
 
-public class BooleanPropertyEditor extends AbstractPropertyEditor<Boolean> {
-    private final CheckBox checkBox;
+public class BytesPropertyEditor extends AbstractPropertyEditor<String> {
+    private final TextBox textBox;
     private final JSONValue property;
 
     @Inject
-    BooleanPropertyEditor(@Assisted String key,
-                          @Assisted JSONValue property) {
+    BytesPropertyEditor(@Assisted String key,
+                        @Assisted JSONValue property) {
         super(key);
 
         this.property = property;
-        checkBox = new CheckBox();
+        textBox = new TextBox();
+        textBox.setEnabled(false);
 
-        initFormWidget(checkBox);
-        setValue(PropertyUtil.getPropertyValue(property).isBoolean().booleanValue());
+        initFormWidget(textBox);
+        setValue(PropertyUtil.getPropertyValue(property).isArray().toString());
     }
 
     @Override
     public JSONValue getJsonValue() {
-        JSONValue value = JSONBoolean.getInstance(getValue());
-        return parseJsonValueWithMetadata(value, PropertyType.BOOLEAN, PropertyUtil.isPropertyIndexed(property));
+        JSONArray value = JSONParser.parseStrict(getValue()).isArray();
+        Boolean isIndexed = PropertyUtil.isPropertyIndexed(property);
+        PropertyType propertyType = PropertyUtil.getPropertyType(property);
+
+        return parseJsonValueWithMetadata(value, propertyType, isIndexed);
     }
 
-    private void setValue(Boolean value) {
-        checkBox.setValue(value);
+    private void setValue(String value) {
+        textBox.setValue(value);
     }
 
-    private Boolean getValue() {
-        return checkBox.getValue();
+    private String getValue() {
+        return textBox.getValue();
     }
 }

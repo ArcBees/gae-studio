@@ -56,16 +56,14 @@ public class UserPropertyEditor extends AbstractPropertyEditor<User> {
         return parseJsonValueWithMetadata(user, PropertyType.USER, PropertyUtil.isPropertyIndexed(property));
     }
 
-    @Override
-    public void setValue(User user) {
+    private void setValue(User user) {
         email.setValue(user.getEmail());
         authDomain.setValue(user.getAuthDomain());
         userId.setValue(user.getUserId());
         federatedIdentity.setValue(user.getFederatedIdentity());
     }
 
-    @Override
-    public User getValue() {
+    private User getValue() {
         User user = new User();
         user.setEmail(email.getValue());
         user.setAuthDomain(authDomain.getValue());
