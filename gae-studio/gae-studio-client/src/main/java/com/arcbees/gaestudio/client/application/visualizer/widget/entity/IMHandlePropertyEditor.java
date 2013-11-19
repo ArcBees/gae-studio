@@ -64,17 +64,6 @@ public class IMHandlePropertyEditor extends AbstractPropertyEditor<IMHandle> {
     }
 
     @Override
-    public void setValue(IMHandle imHandle) {
-        protocol.setValue(imHandle.getProtocol());
-        address.setValue(imHandle.getAddress());
-    }
-
-    @Override
-    public IMHandle getValue() {
-        return new IMHandle(protocol.getValue(), address.getValue());
-    }
-
-    @Override
     public boolean validate() {
         boolean valid;
 
@@ -90,6 +79,15 @@ public class IMHandlePropertyEditor extends AbstractPropertyEditor<IMHandle> {
     @Override
     protected void showErrors() {
         showError(appConstants.invalidProtocolOrHost());
+    }
+
+    private IMHandle getValue() {
+        return new IMHandle(protocol.getValue(), address.getValue());
+    }
+
+    private void setValue(IMHandle imHandle) {
+        protocol.setValue(imHandle.getProtocol());
+        address.setValue(imHandle.getAddress());
     }
 
     private boolean isValidUrl() {

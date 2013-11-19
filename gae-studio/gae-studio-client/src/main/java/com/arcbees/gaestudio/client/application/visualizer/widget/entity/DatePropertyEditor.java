@@ -55,18 +55,16 @@ public class DatePropertyEditor extends AbstractPropertyEditor<Date> {
     }
 
     @Override
-    public void setValue(Date value) {
-        dateBox.setValue(value);
+    protected boolean validate() {
+        return !$(dateBox).hasClass("dateBoxFormatError");
     }
 
-    @Override
-    public Date getValue() {
+    private Date getValue() {
         return dateBox.getValue();
     }
 
-    @Override
-    protected boolean validate() {
-        return !$(dateBox).hasClass("dateBoxFormatError");
+    private void setValue(Date value) {
+        dateBox.setValue(value);
     }
 
     private String getFormattedDate() {

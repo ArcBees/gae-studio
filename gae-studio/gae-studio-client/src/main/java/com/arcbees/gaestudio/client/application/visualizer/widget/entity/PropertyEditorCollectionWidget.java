@@ -15,12 +15,11 @@ import java.util.Map.Entry;
 import com.google.common.collect.Maps;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.TakesValue;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PropertyEditorCollectionWidget implements TakesValue<Map<String, ?>>, IsWidget {
+public class PropertyEditorCollectionWidget implements IsWidget {
     private final Map<String, PropertyEditor<?>> propertyEditors;
     private final JSONObject propertyMap;
     private final FlowPanel panel;
@@ -46,19 +45,6 @@ public class PropertyEditorCollectionWidget implements TakesValue<Map<String, ?>
         return panel;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public void setValue(Map<String, ?> value) {
-        for (Entry<String, ?> entry : value.entrySet()) {
-            String key = entry.getKey();
-            if (propertyEditors.containsKey(key)) {
-                PropertyEditor<Object> propertyEditor = (PropertyEditor<Object>) propertyEditors.get(key);
-                propertyEditor.setValue(entry.getValue());
-            }
-        }
-    }
-
-    @Override
     public Map<String, ?> getValue() {
         Map<String, Object> values = Maps.newHashMap();
 

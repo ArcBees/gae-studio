@@ -41,13 +41,11 @@ public class BooleanPropertyEditor extends AbstractPropertyEditor<Boolean> {
         return parseJsonValueWithMetadata(value, PropertyType.BOOLEAN, PropertyUtil.isPropertyIndexed(property));
     }
 
-    @Override
-    public void setValue(Boolean value) {
+    private void setValue(Boolean value) {
         checkBox.setValue(value);
     }
 
-    @Override
-    public Boolean getValue() {
+    private Boolean getValue() {
         return checkBox.getValue();
     }
 }

@@ -44,13 +44,11 @@ public class LongPropertyEditor extends AbstractPropertyEditor<Long> {
         return parseJsonValueWithMetadata(value, propertyType, isIndexed);
     }
 
-    @Override
-    public void setValue(Long value) {
+    private void setValue(Long value) {
         longBox.setValue(value);
     }
 
-    @Override
-    public Long getValue() {
+    protected Long getValue() {
         return longBox.getValue();
     }
 }

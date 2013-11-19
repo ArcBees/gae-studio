@@ -49,16 +49,6 @@ public class RawPropertyEditor extends AbstractPropertyEditor<String> {
     }
 
     @Override
-    public void setValue(String value) {
-        textBox.setValue(value);
-    }
-
-    @Override
-    public String getValue() {
-        return textBox.getValue();
-    }
-
-    @Override
     protected boolean validate() {
         return jsonParsingDoesNotThrow();
     }
@@ -66,6 +56,14 @@ public class RawPropertyEditor extends AbstractPropertyEditor<String> {
     @Override
     protected void showErrors() {
         showError(appConstants.invalidJson());
+    }
+
+    private String getValue() {
+        return textBox.getValue();
+    }
+
+    private void setValue(String value) {
+        textBox.setValue(value);
     }
 
     private boolean jsonParsingDoesNotThrow() {
