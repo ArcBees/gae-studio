@@ -9,14 +9,8 @@
 
 package com.arcbees.gaestudio.companion.dao;
 
-import javax.inject.Singleton;
+public interface HasStringId {
+    String getId();
 
-import com.google.inject.AbstractModule;
-
-public class DaoModule extends AbstractModule {
-    @Override
-    protected void configure() {
-        bind(CarDao.class).in(Singleton.class);
-        bind(StringIdEntityDao.class).in(Singleton.class);
-    }
+    void setId(String id);
 }
