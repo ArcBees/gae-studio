@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
@@ -63,4 +64,6 @@ public interface PropertyEditorFactory {
 
     @Named("BYTES")
     PropertyEditor<String> createBytesEditor(String key, JSONValue property);
+
+    PropertyEditor<Collection<?>> createCollectionEditor(String key, JSONValue property);
 }

@@ -131,6 +131,8 @@ public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditor
                     propertyEditorFactory.createKeyEditor(key, property, fetchKindsRunner, fetchNamespacesRunner);
         } else if (propertyType == PropertyType.BLOB || propertyType == PropertyType.SHORT_BLOB) {
             propertyEditor = propertyEditorFactory.createBytesEditor(key, property);
+        } else if (propertyType == PropertyType.COLLECTION) {
+            propertyEditor = propertyEditorFactory.createCollectionEditor(key, property);
         } else {
             propertyEditor = propertyEditorFactory.createRawEditor(key, property);
         }
