@@ -44,7 +44,8 @@ public class DatastoreHelper {
         NamespaceManager.set(namespaceDto.getNamespace());
 
         Key key;
-        if(keyDto.getId() != 0) {
+
+        if(idIsNotAString(keyDto)) {
             if (parentKeyDto != null) {
                 Key parentKey = KeyFactory.createKey(parentKeyDto.getKind(), parentKeyDto.getId());
 
@@ -61,7 +62,6 @@ public class DatastoreHelper {
                 key = KeyFactory.createKey(keyDto.getKind(), keyDto.getName());
             }
         }
-
 
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
         Entity entity = datastoreService.get(key);
@@ -200,5 +200,9 @@ public class DatastoreHelper {
 
     private String extractNamespace(Entity namespace) {
         return Entities.getNamespaceFromNamespaceKey(namespace.getKey());
+    }
+
+    private boolean idIsNotAString(KeyDto keyDto) {
+        return keyDto.getId() != 0;
     }
 }

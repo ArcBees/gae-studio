@@ -143,13 +143,13 @@ public class EntitiesResource {
         if (deleteType != null) {
             switch (deleteType) {
                 case KIND:
-                    isValid = !Strings.isNullOrEmpty(kind);
+                    isValid = kind != null;
                     break;
                 case NAMESPACE:
-                    isValid = !Strings.isNullOrEmpty(namespace);
+                    isValid = namespace != null;
                     break;
                 case KIND_NAMESPACE:
-                    isValid = !Strings.isNullOrEmpty(namespace) && !Strings.isNullOrEmpty(kind);
+                    isValid = namespace != null && kind != null;
                     break;
                 case ALL:
                     isValid = true;
