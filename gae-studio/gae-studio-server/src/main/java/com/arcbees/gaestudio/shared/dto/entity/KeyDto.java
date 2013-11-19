@@ -23,9 +23,10 @@ public class KeyDto extends ParentKeyDto {
     @JsonCreator
     public KeyDto(@JsonProperty("kind") String kind,
                   @JsonProperty("id") Long id,
+                  @JsonProperty("name") String name,
                   @JsonProperty("parentKey") ParentKeyDto parentKey,
                   @JsonProperty("appIdNamespace") AppIdNamespaceDto appIdNamespace) {
-        super(kind, id);
+        super(kind, id, name);
 
         this.parentKey = parentKey;
         this.appIdNamespace = appIdNamespace;

@@ -211,10 +211,18 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         TextColumn<ParsedEntity> idColumn = new TextColumn<ParsedEntity>() {
             @Override
             public String getValue(ParsedEntity entityJsonParsed) {
-                return entityJsonParsed.getKey().getId().toString();
+                String idName;
+
+                if(entityJsonParsed.getKey().getId() != 0) {
+                    idName = entityJsonParsed.getKey().getId().toString();
+                } else {
+                    idName = entityJsonParsed.getKey().getName();
+                }
+
+                return idName;
             }
         };
-        entityTable.addColumn(idColumn, "ID");
+        entityTable.addColumn(idColumn, "ID/Name");
 
         TextColumn<ParsedEntity> parentKindColumn = new TextColumn<ParsedEntity>() {
             @Override

@@ -13,6 +13,7 @@ public class EndPoints {
     public static final String REST_PATH = "gae-studio/";
 
     public static final String ID = "{" + UrlParameters.ID + "}/";
+    public static final String NAME = "{" + UrlParameters.NAME + "}/";
 
     public static final String BLOBS = REST_PATH + "blobs/";
     public static final String ENTITIES = REST_PATH + "entities/";

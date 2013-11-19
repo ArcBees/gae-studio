@@ -33,6 +33,7 @@ public class EntityServiceImpl implements EntityService {
 
     @Override
     public Entity getEntity(Long entityId,
+                            String entityName,
                             String namespace,
                             String appId,
                             String kind,
@@ -44,10 +45,10 @@ public class EntityServiceImpl implements EntityService {
         ParentKeyDto parentKeyDto = null;
 
         if (!Strings.isNullOrEmpty(parentId) && !Strings.isNullOrEmpty(parentKind)) {
-            parentKeyDto = new ParentKeyDto(parentKind, Long.valueOf(parentId));
+            parentKeyDto = new ParentKeyDto(parentKind, Long.valueOf(parentId), null);
         }
 
-        KeyDto keyDto = new KeyDto(kind, entityId, parentKeyDto, new AppIdNamespaceDto(appId, namespace));
+        KeyDto keyDto = new KeyDto(kind, entityId, entityName, parentKeyDto, new AppIdNamespaceDto(appId, namespace));
 
         entity = datastoreHelper.get(keyDto);
 
