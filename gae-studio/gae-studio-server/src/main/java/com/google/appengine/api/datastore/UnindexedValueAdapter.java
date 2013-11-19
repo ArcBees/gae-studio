@@ -55,15 +55,11 @@ public class UnindexedValueAdapter implements JsonSerializer<UnindexedValue>, Js
 
         object.addProperty(INDEXED, false);
 
-        if(hasCollectionValue(object)) {
+        if (hasCollectionValue(object)) {
             object.addProperty(GAE_PROPERTY_TYPE, PropertyType.COLLECTION.name());
         }
 
         return object;
-    }
-
-    private boolean hasCollectionValue(JsonObject object) {
-        return object.has(VALUE) && object.get(VALUE).isJsonArray();
     }
 
     @Override
@@ -77,5 +73,9 @@ public class UnindexedValueAdapter implements JsonSerializer<UnindexedValue>, Js
 
         PropertyValue propertyValue = context.deserialize(jsonElement, PropertyValue.class);
         return new UnindexedValue(propertyValue.getValue());
+    }
+
+    private boolean hasCollectionValue(JsonObject object) {
+        return object.has(VALUE) && object.get(VALUE).isJsonArray();
     }
 }
