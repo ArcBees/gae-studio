@@ -36,8 +36,6 @@ public class StringIdEntityResource {
 
     @POST
     public Response createEntity(StringIdEntity stringIdEntity) {
-        stringIdEntity.setId(null);
-
         stringIdEntityDao.put(stringIdEntity);
 
         return Response.ok(stringIdEntity.getId()).build();
