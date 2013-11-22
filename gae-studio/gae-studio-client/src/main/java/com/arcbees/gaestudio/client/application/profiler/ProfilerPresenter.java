@@ -15,10 +15,6 @@ import org.fusesource.restygwt.client.MethodCallback;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
-import com.arcbees.gaestudio.client.application.profiler.jsonmappers.DeleteOperationMapper;
-import com.arcbees.gaestudio.client.application.profiler.jsonmappers.GetOperationMapper;
-import com.arcbees.gaestudio.client.application.profiler.jsonmappers.PutOperationMapper;
-import com.arcbees.gaestudio.client.application.profiler.jsonmappers.QueryOperationMapper;
 import com.arcbees.gaestudio.client.application.profiler.widget.DetailsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerToolbarPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatementPresenter;
@@ -30,15 +26,11 @@ import com.arcbees.gaestudio.client.rest.ClientId;
 import com.arcbees.gaestudio.client.rest.OperationsService;
 import com.arcbees.gaestudio.shared.channel.Token;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
-import com.arcbees.gaestudio.shared.dto.OperationKind;
 import com.google.gwt.appengine.channel.client.Channel;
 import com.google.gwt.appengine.channel.client.ChannelError;
 import com.google.gwt.appengine.channel.client.ChannelFactory;
 import com.google.gwt.appengine.channel.client.Socket;
 import com.google.gwt.appengine.channel.client.SocketListener;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONValue;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
@@ -74,10 +66,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private final ProfilerToolbarPresenter profilerToolbarPresenter;
     private final ChannelFactory channelFactory;
     private final String clientId;
-    private final GetOperationMapper getOperationMapper;
-    private final PutOperationMapper putOperationMapper;
-    private final DeleteOperationMapper deleteOperationMapper;
-    private final QueryOperationMapper queryOperationMapper;
+    private final DbOperationDeserializer dbOperationDeserializer;
 
     private Socket socket;
 
@@ -93,10 +82,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                       DetailsPresenter detailsPresenter,
                       ProfilerToolbarPresenter profilerToolbarPresenter,
                       ChannelFactory channelFactory,
-                      GetOperationMapper getOperationMapper,
-                      PutOperationMapper putOperationMapper,
-                      DeleteOperationMapper deleteOperationMapper,
-                      QueryOperationMapper queryOperationMapper,
+                      DbOperationDeserializer dbOperationDeserializer,
                       @ClientId String clientId) {
         super(eventBus, view, proxy);
 
@@ -109,10 +95,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         this.profilerToolbarPresenter = profilerToolbarPresenter;
         this.channelFactory = channelFactory;
         this.clientId = clientId;
-        this.getOperationMapper = getOperationMapper;
-        this.putOperationMapper = putOperationMapper;
-        this.deleteOperationMapper = deleteOperationMapper;
-        this.queryOperationMapper = queryOperationMapper;
+        this.dbOperationDeserializer = dbOperationDeserializer;
     }
 
     @Override
@@ -135,12 +118,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
 
     @Override
     public void onMessage(String dbOperation) {
-        JSONValue jsonValue = JSONParser.parseStrict(dbOperation);
-        JSONObject jsonObject = jsonValue.isObject();
-        String kind = jsonObject.get("type").isString().stringValue();
-        OperationKind operationKind = OperationKind.valueOf(kind);
-
-        DbOperationRecordDto recordDto = deserialize(dbOperation, operationKind);
+        DbOperationRecordDto recordDto = dbOperationDeserializer.deserialize(dbOperation);
 
         processDbOperationRecord(recordDto);
         displayNewDbOperationRecords();
@@ -190,22 +168,6 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                 openChannel(token);
             }
         });
-    }
-
-    private DbOperationRecordDto deserialize(String serializedOperation, OperationKind operationKind) {
-        DbOperationRecordDto recordDto;
-
-        if (operationKind.equals(OperationKind.DELETE)) {
-            recordDto = deleteOperationMapper.read(serializedOperation);
-        } else if (operationKind.equals(OperationKind.PUT)) {
-            recordDto = putOperationMapper.read(serializedOperation);
-        } else if (operationKind.equals(OperationKind.GET)) {
-            recordDto = getOperationMapper.read(serializedOperation);
-        } else {
-            recordDto = queryOperationMapper.read(serializedOperation);
-        }
-
-        return recordDto;
     }
 
     private void openChannel(Token token) {
