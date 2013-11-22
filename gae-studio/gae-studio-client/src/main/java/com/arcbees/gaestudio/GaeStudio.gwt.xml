@@ -14,6 +14,7 @@
     <inherits name='com.gwtplatform.mvp.MvpWithEntryPoint'/>
     <inherits name="com.google.common.collect.Collect"/>
     <inherits name="com.arcbees.gquery.tooltip.Tooltip"/>
+    <inherits name="com.google.gwt.appengine.channel.Channel"/>
 
     <!-- Specify the paths for translatable code -->
     <source path='client'/>
