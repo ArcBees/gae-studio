@@ -35,8 +35,7 @@ public class OperationsResource {
         ChannelService channelService = ChannelServiceFactory.getChannelService();
         String tokenValue = channelService.createChannel(cliendId);
 
-        Token token = new Token();
-        token.setValue(tokenValue);
+        Token token = new Token(tokenValue);
 
         return Response.ok(token).build();
     }
