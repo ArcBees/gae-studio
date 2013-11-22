@@ -20,10 +20,9 @@ import com.google.inject.Provider;
 
 import static com.arcbees.gaestudio.server.GaeStudioConstants.GAE_NAMESPACE;
 import static com.arcbees.gaestudio.server.GaeStudioConstants.GA_CLIENT_KIND;
+import static com.arcbees.gaestudio.shared.Constants.CLIENT_ID;
 
 public class GoogleAnalyticClientIdProvider implements Provider<String> {
-    private static final String CLIENT_ID = "clientId";
-
     @Override
     public String get() {
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();

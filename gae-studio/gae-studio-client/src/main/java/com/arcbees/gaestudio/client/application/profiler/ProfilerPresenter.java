@@ -9,25 +9,36 @@
 
 package com.arcbees.gaestudio.client.application.profiler;
 
-import java.util.List;
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
-import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
+import com.arcbees.gaestudio.client.application.profiler.jsonmappers.DeleteOperationMapper;
+import com.arcbees.gaestudio.client.application.profiler.jsonmappers.GetOperationMapper;
+import com.arcbees.gaestudio.client.application.profiler.jsonmappers.PutOperationMapper;
+import com.arcbees.gaestudio.client.application.profiler.jsonmappers.QueryOperationMapper;
 import com.arcbees.gaestudio.client.application.profiler.widget.DetailsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerToolbarPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatementPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FiltersPresenter;
-import com.arcbees.gaestudio.client.application.widget.message.Message;
-import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.rest.ClientId;
 import com.arcbees.gaestudio.client.rest.OperationsService;
-import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.shared.channel.Token;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
-import com.google.gwt.user.client.Timer;
+import com.arcbees.gaestudio.shared.dto.OperationKind;
+import com.google.gwt.appengine.channel.client.Channel;
+import com.google.gwt.appengine.channel.client.ChannelError;
+import com.google.gwt.appengine.channel.client.ChannelFactory;
+import com.google.gwt.appengine.channel.client.Socket;
+import com.google.gwt.appengine.channel.client.SocketListener;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
@@ -39,7 +50,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, ProfilerPresenter.MyProxy> implements
         RecordingStateChangedEvent.RecordingStateChangedHandler,
-        ClearOperationRecordsEvent.ClearOperationRecordsHandler {
+        ClearOperationRecordsEvent.ClearOperationRecordsHandler, SocketListener {
     interface MyView extends View {
     }
 
@@ -53,7 +64,6 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     public static final Object TYPE_SetStatementPanelContent = new Object();
     public static final Object TYPE_SetDetailsPanelContent = new Object();
     public static final Object TYPE_SetToolbarContent = new Object();
-    private static final int TICK_DELTA_MILLISEC = 1000;
 
     private final OperationsService operationsService;
     private final FiltersPresenter filterPresenter;
@@ -62,9 +72,14 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private final StatementPresenter statementPresenter;
     private final DetailsPresenter detailsPresenter;
     private final ProfilerToolbarPresenter profilerToolbarPresenter;
+    private final ChannelFactory channelFactory;
+    private final String clientId;
+    private final GetOperationMapper getOperationMapper;
+    private final PutOperationMapper putOperationMapper;
+    private final DeleteOperationMapper deleteOperationMapper;
+    private final QueryOperationMapper queryOperationMapper;
 
-    private long lastDbOperationRecordId = 0L;
-    private boolean isProcessing = false;
+    private Socket socket;
 
     @Inject
     ProfilerPresenter(EventBus eventBus,
@@ -76,7 +91,13 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                       AppConstants myConstants,
                       StatementPresenter statementPresenter,
                       DetailsPresenter detailsPresenter,
-                      ProfilerToolbarPresenter profilerToolbarPresenter) {
+                      ProfilerToolbarPresenter profilerToolbarPresenter,
+                      ChannelFactory channelFactory,
+                      GetOperationMapper getOperationMapper,
+                      PutOperationMapper putOperationMapper,
+                      DeleteOperationMapper deleteOperationMapper,
+                      QueryOperationMapper queryOperationMapper,
+                      @ClientId String clientId) {
         super(eventBus, view, proxy);
 
         this.operationsService = operationsService;
@@ -86,21 +107,51 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         this.statementPresenter = statementPresenter;
         this.detailsPresenter = detailsPresenter;
         this.profilerToolbarPresenter = profilerToolbarPresenter;
+        this.channelFactory = channelFactory;
+        this.clientId = clientId;
+        this.getOperationMapper = getOperationMapper;
+        this.putOperationMapper = putOperationMapper;
+        this.deleteOperationMapper = deleteOperationMapper;
+        this.queryOperationMapper = queryOperationMapper;
     }
 
     @Override
     public void onRecordingStateChanged(RecordingStateChangedEvent event) {
         if (event.isStarting()) {
-            lastDbOperationRecordId = event.getCurrentRecordId();
-            tick.scheduleRepeating(TICK_DELTA_MILLISEC);
+            openChannel();
         } else {
-            tick.cancel();
+            closeChannel();
         }
     }
 
     @Override
     public void onClearOperationRecords(ClearOperationRecordsEvent event) {
         clearOperationRecords();
+    }
+
+    @Override
+    public void onOpen() {
+    }
+
+    @Override
+    public void onMessage(String dbOperation) {
+        JSONValue jsonValue = JSONParser.parseStrict(dbOperation);
+        JSONObject jsonObject = jsonValue.isObject();
+        String kind = jsonObject.get("type").isString().stringValue();
+        OperationKind operationKind = OperationKind.valueOf(kind);
+
+        DbOperationRecordDto recordDto = deserialize(dbOperation, operationKind);
+
+        processDbOperationRecord(recordDto);
+        displayNewDbOperationRecords();
+    }
+
+    @Override
+    public void onError(ChannelError channelError) {
+    }
+
+    @Override
+    public void onClose() {
     }
 
     @Override
@@ -122,40 +173,45 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         addRegisteredHandler(ClearOperationRecordsEvent.getType(), this);
     }
 
-    private void getNewDbOperationRecords() {
-        if (!isProcessing) {
-            isProcessing = true;
-            operationsService.getNewOperations(lastDbOperationRecordId, 100,
-                    new MethodCallbackImpl<List<DbOperationRecordDto>>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            onGetNewDbOperationRecordsFailed();
-                        }
-
-                        @Override
-                        public void onSuccess(List<DbOperationRecordDto> results) {
-                            if (results != null && !results.isEmpty()) {
-                                processNewDbOperationRecords(results);
-                            }
-                            isProcessing = false;
-                        }
-                    });
+    private void closeChannel() {
+        if (socket != null) {
+            socket.close();
         }
     }
 
-    private void onGetNewDbOperationRecordsFailed() {
-        Message message = new Message(myConstants.errorWhileGettingNewDbOperationRecords(), MessageStyle.ERROR);
-        DisplayMessageEvent.fire(this, message);
-        isProcessing = false;
+    private void openChannel() {
+        operationsService.getToken(clientId, new MethodCallback<Token>() {
+            @Override
+            public void onFailure(Method method, Throwable throwable) {
+            }
+
+            @Override
+            public void onSuccess(Method method, Token token) {
+                openChannel(token);
+            }
+        });
     }
 
-    // TODO properly handle any missing records
-    private void processNewDbOperationRecords(List<DbOperationRecordDto> records) {
-        for (DbOperationRecordDto record : records) {
-            processDbOperationRecord(record);
-            lastDbOperationRecordId = Math.max(lastDbOperationRecordId, record.getStatementId());
+    private DbOperationRecordDto deserialize(String serializedOperation, OperationKind operationKind) {
+        DbOperationRecordDto recordDto;
+
+        if (operationKind.equals(OperationKind.DELETE)) {
+            recordDto = deleteOperationMapper.read(serializedOperation);
+        } else if (operationKind.equals(OperationKind.PUT)) {
+            recordDto = putOperationMapper.read(serializedOperation);
+        } else if (operationKind.equals(OperationKind.GET)) {
+            recordDto = getOperationMapper.read(serializedOperation);
+        } else {
+            recordDto = queryOperationMapper.read(serializedOperation);
         }
-        displayNewDbOperationRecords();
+
+        return recordDto;
+    }
+
+    private void openChannel(Token token) {
+        Channel channel = channelFactory.createChannel(token.getValue());
+
+        socket = channel.open(this);
     }
 
     private void displayNewDbOperationRecords() {
@@ -173,11 +229,4 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         statisticsPresenter.clearOperationRecords();
         displayNewDbOperationRecords();
     }
-
-    private Timer tick = new Timer() {
-        @Override
-        public void run() {
-            getNewDbOperationRecords();
-        }
-    };
 }

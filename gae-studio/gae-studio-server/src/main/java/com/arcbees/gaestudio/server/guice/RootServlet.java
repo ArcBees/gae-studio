@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.server.guice;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapper;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapperFactory;
 import com.arcbees.gaestudio.shared.BaseRestPath;
+import com.arcbees.gaestudio.shared.Constants;
 import com.google.inject.Singleton;
 
 @Singleton
@@ -42,9 +44,17 @@ public class RootServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter printWriter = resp.getWriter();
 
-        velocityWrapper.put("restPath", restPath);
+        setParameters();
+
         String generated = velocityWrapper.generate();
 
         printWriter.append(generated);
+    }
+
+    private void setParameters() {
+        velocityWrapper.put("restPathKey", Constants.REST_PATH);
+        velocityWrapper.put("restPathValue", restPath);
+        velocityWrapper.put("clientIdKey", Constants.CLIENT_ID);
+        velocityWrapper.put("clientIdValue", UUID.randomUUID().toString());
     }
 }
