@@ -12,6 +12,9 @@ package com.arcbees.gaestudio.shared.channel;
 public class Token {
     private String value;
 
+    Token() {
+    }
+
     public Token(String value) {
         this.value = value;
     }

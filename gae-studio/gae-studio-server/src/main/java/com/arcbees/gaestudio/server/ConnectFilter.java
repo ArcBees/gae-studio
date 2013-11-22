@@ -10,9 +10,8 @@
 package com.arcbees.gaestudio.server;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -21,13 +20,19 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import com.arcbees.gaestudio.server.channel.ClientService;
 import com.google.appengine.api.channel.ChannelPresence;
 import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;
-import com.google.appengine.api.memcache.MemcacheService;
-import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 public class ConnectFilter implements Filter {
+    private final ClientService clientService;
+
+    @Inject
+    ConnectFilter(ClientService clientService) {
+        this.clientService = clientService;
+    }
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -52,9 +57,9 @@ public class ConnectFilter implements Filter {
         String clientId = presence.clientId();
 
         if (presence.isConnected()) {
-            storeClientId(clientId);
+            clientService.storeClient(clientId);
         } else {
-            removeClientId(clientId);
+            clientService.removeClient(clientId);
         }
     }
 
@@ -62,36 +67,5 @@ public class ConnectFilter implements Filter {
         ChannelService channelService = ChannelServiceFactory.getChannelService();
 
         return channelService.parsePresence(multiReadRequest);
-    }
-
-    private void removeClientId(String clientId) {
-        MemcacheService memcacheService = getMemcacheService();
-        List<String> clientIds = getClientIds(memcacheService);
-
-        if (clientIds != null) {
-            clientIds.remove(clientId);
-            memcacheService.put(GaeStudioConstants.GAESTUDIO_OPERATIONS_CLIENT_IDS, clientIds);
-        }
-    }
-
-    private MemcacheService getMemcacheService() {
-        return MemcacheServiceFactory.getMemcacheService();
-    }
-
-    private void storeClientId(String clientId) {
-        MemcacheService memcacheService = getMemcacheService();
-        List<String> clientIds = getClientIds(memcacheService);
-
-        if (clientIds == null) {
-            clientIds = new ArrayList<String>();
-        }
-
-        clientIds.add(clientId);
-
-        memcacheService.put(GaeStudioConstants.GAESTUDIO_OPERATIONS_CLIENT_IDS, clientIds);
-    }
-
-    private List<String> getClientIds(MemcacheService memcacheService) {
-        return (List<String>) memcacheService.get(GaeStudioConstants.GAESTUDIO_OPERATIONS_CLIENT_IDS);
     }
 }
