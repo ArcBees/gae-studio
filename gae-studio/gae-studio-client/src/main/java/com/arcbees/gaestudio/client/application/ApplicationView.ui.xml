@@ -1,7 +1,8 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
-    <g:DockLayoutPanel unit="PX">
+    <ui:with field="debugIds" type="com.arcbees.gaestudio.client.util.DebugIds"/>
+    <g:DockLayoutPanel unit="PX" debugId="{debugIds.getApplicationRoot}">
         <g:north size="51">
             <g:HTMLPanel>
                 <g:SimplePanel ui:field="messages"/>

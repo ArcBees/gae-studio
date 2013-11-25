@@ -11,6 +11,10 @@
 
     <artifactId>gae-studio-webapp</artifactId>
 
+    <properties>
+        <client.module>com.arcbees.gaestudio.GaeStudio</client.module>
+    </properties>
+
     <build>
         <outputDirectory>${webappDirectory}</outputDirectory>
 
@@ -104,7 +108,7 @@
 
                             <copyWebapp>true</copyWebapp>
 
-                            <module>com.arcbees.gaestudio.GaeStudio</module>
+                            <module>${client.module}</module>
 
                             <compileReport>true</compileReport>
                         </configuration>
@@ -141,6 +145,12 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>integration-test</id>
+            <properties>
+                <client.module>com.arcbees.gaestudio.GaeStudioDebug</client.module>
+            </properties>
         </profile>
     </profiles>
 </project>

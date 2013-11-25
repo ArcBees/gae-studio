@@ -7,18 +7,12 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.license;
+package com.arcbees.gaestudio.client.util;
 
-import com.arcbees.gaestudio.server.BuildConstants;
-import com.google.inject.AbstractModule;
-
-public class LicenseModule extends AbstractModule {
-    @Override
-    protected void configure() {
-        if (BuildConstants.CHECK_LICENSE) {
-            bind(LicenseFilter.class);
-        }
-
-        bind(LicenseChecker.class).to(LicenseCheckerImpl.class);
+public class DebugIds {
+    public static String getApplicationRoot() {
+        return APPLICATION_ROOT;
     }
+
+    public static final String APPLICATION_ROOT = "application-root";
 }

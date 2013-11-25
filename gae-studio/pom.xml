@@ -53,11 +53,13 @@
         <!-- test -->
         <junit.version>4.11</junit.version>
         <jukito.version>1.2</jukito.version>
+        <selenium-java.version>2.33.0</selenium-java.version>
 
         <!-- maven -->
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <maven-shade-plugin.version>2.1</maven-shade-plugin.version>
         <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
+        <maven-failsafe-plugin.version>2.15</maven-failsafe-plugin.version>
 
         <target.jdk>1.6</target.jdk>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -71,6 +73,7 @@
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <gaes.buildtime>${maven.build.timestamp}</gaes.buildtime>
         <repackage>com.arcbees.gaestudio.repackaged</repackage>
+        <test.checklicense>true</test.checklicense>
     </properties>
 
     <build>

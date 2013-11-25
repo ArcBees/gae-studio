@@ -7,18 +7,16 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.license;
+package com.arcbees.gaestudio.companion.guice;
 
-import com.arcbees.gaestudio.server.BuildConstants;
-import com.google.inject.AbstractModule;
+import com.arcbees.gaestudio.server.guice.GaeStudioModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.servlet.GuiceServletContextListener;
 
-public class LicenseModule extends AbstractModule {
+public class SeleniumListener extends GuiceServletContextListener {
     @Override
-    protected void configure() {
-        if (BuildConstants.CHECK_LICENSE) {
-            bind(LicenseFilter.class);
-        }
-
-        bind(LicenseChecker.class).to(LicenseCheckerImpl.class);
+    protected Injector getInjector() {
+        return Guice.createInjector(new ServerModule(), new DispatchServletModule(), new GaeStudioModule());
     }
 }
