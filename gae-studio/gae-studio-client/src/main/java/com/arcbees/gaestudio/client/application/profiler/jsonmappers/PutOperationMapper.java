@@ -7,10 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared;
+package com.arcbees.gaestudio.client.application.profiler.jsonmappers;
 
-public class Constants {
-    public static final String JSON_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.S";
-    public static final String CLIENT_ID = "clientId";
-    public static final String REST_PATH = "restPath";
+import com.arcbees.gaestudio.shared.dto.PutRecordDto;
+import com.github.nmorel.gwtjackson.client.ObjectMapper;
+
+public interface PutOperationMapper extends ObjectMapper<PutRecordDto> {
 }

@@ -20,6 +20,6 @@ public class GetRecordDto extends DbOperationRecordDto {
                         Long requestId,
                         Long statementId,
                         Integer executionTimeMs) {
-        super(callerStackTraceElement, requestId, statementId, executionTimeMs);
+        super(callerStackTraceElement, requestId, statementId, executionTimeMs, OperationKind.GET);
     }
 }

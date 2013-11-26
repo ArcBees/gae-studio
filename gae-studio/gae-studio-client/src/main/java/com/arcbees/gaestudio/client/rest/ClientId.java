@@ -7,10 +7,17 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared;
+package com.arcbees.gaestudio.client.rest;
 
-public class Constants {
-    public static final String JSON_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.S";
-    public static final String CLIENT_ID = "clientId";
-    public static final String REST_PATH = "restPath";
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import com.google.inject.BindingAnnotation;
+
+@Target({ElementType.PARAMETER, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@BindingAnnotation
+public @interface ClientId {
 }

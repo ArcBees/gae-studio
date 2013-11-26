@@ -9,54 +9,34 @@
 
 package com.arcbees.gaestudio.server.rest;
 
-import java.util.List;
-
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
-import com.arcbees.gaestudio.server.service.OperationService;
-import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
+import com.arcbees.gaestudio.shared.Constants;
+import com.arcbees.gaestudio.shared.channel.Token;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.arcbees.gaestudio.shared.rest.UrlParameters;
+import com.google.appengine.api.channel.ChannelService;
+import com.google.appengine.api.channel.ChannelServiceFactory;
 
 @Path(EndPoints.OPERATIONS)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
 public class OperationsResource {
-    private final OperationService operationService;
-
-    @Inject
-    OperationsResource(OperationService operationService) {
-        this.operationService = operationService;
-    }
-
+    @Path(EndPoints.TOKEN)
     @GET
-    public Response getOperations(@QueryParam(UrlParameters.ID) Long lastId,
-                                  @QueryParam(UrlParameters.LIMIT) Integer limit) {
-        if (lastId == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
+    public Response createToken(@QueryParam(Constants.CLIENT_ID) String cliendId) {
+        ChannelService channelService = ChannelServiceFactory.getChannelService();
+        String tokenValue = channelService.createChannel(cliendId);
 
-        List<DbOperationRecordDto> records = operationService.getOperations(lastId, limit);
+        Token token = new Token(tokenValue);
 
-        if (records == null || records.isEmpty()) {
-            return Response.noContent().build();
-        }
-
-        // The erasure remove the Generic type information. At runtime, userList is a simple list of objects
-        // Using GenericEntity allows to keep the info about Generic and jackson knows it has to add the JsonTypeInfo
-        GenericEntity<List<DbOperationRecordDto>> entities = new GenericEntity<List<DbOperationRecordDto>>(records) {
-        };
-
-        return Response.ok(entities).build();
+        return Response.ok(token).build();
     }
 }
