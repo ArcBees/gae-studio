@@ -9,12 +9,12 @@
 
 package com.arcbees.gaestudio.client.gatekeeper;
 
-import com.google.gwt.inject.client.AbstractGinModule;
-import com.gwtplatform.mvp.client.proxy.Gatekeeper;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-public class SecureGatekeeperModule extends AbstractGinModule {
-    @Override
-    protected void configure() {
-        bind(Gatekeeper.class).annotatedWith(LicenseGatekeeper2.class).to(SecureLicenseGateKeeper.class);
-    }
+import com.google.inject.BindingAnnotation;
+
+@BindingAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+public @interface LicenseGatekeeper2 {
 }

@@ -26,7 +26,7 @@ public class LoggedInGatekeeper implements Gatekeeper {
 
     @Inject
     LoggedInGatekeeper(CurrentUser currentUser,
-                       @LicenseGatekeeper Gatekeeper licenseGateKeeper,
+                       @LicenseGatekeeper2 Gatekeeper licenseGateKeeper,
                        PlaceManager placeManager) {
         this.currentUser = currentUser;
         this.licenseGateKeeper = licenseGateKeeper;
