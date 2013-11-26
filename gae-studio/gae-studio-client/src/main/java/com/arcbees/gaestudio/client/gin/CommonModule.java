@@ -29,7 +29,7 @@ import com.gwtplatform.mvp.client.gin.DefaultModule;
 import com.gwtplatform.mvp.client.googleanalytics.GoogleAnalyticsNavigationTracker;
 import com.gwtplatform.mvp.client.proxy.DefaultPlaceManager;
 
-public class ClientModule extends AbstractPresenterModule {
+public class CommonModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
         install(new DefaultModule(DefaultPlaceManager.class));

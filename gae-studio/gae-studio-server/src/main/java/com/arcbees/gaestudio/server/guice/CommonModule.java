@@ -14,7 +14,6 @@ import javax.servlet.ServletContext;
 import com.arcbees.gaestudio.server.analytic.AnalyticModule;
 import com.arcbees.gaestudio.server.dto.mapper.MapperModule;
 import com.arcbees.gaestudio.server.exception.ExceptionModule;
-import com.arcbees.gaestudio.server.license.LicenseModule;
 import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
 import com.arcbees.gaestudio.server.rest.RestModule;
 import com.arcbees.gaestudio.server.service.ServiceModule;
@@ -28,10 +27,10 @@ import com.google.inject.servlet.ServletModule;
 
 import static org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters.RESTEASY_SERVLET_MAPPING_PREFIX;
 
-public class GaeServletModule extends ServletModule {
+public class CommonModule extends ServletModule {
     private final String restPath;
 
-    GaeServletModule(ServletContext servletContext) {
+    public CommonModule(ServletContext servletContext) {
         String restEasyPrefix = servletContext.getInitParameter(RESTEASY_SERVLET_MAPPING_PREFIX);
 
         if (Strings.isNullOrEmpty(restEasyPrefix) || "/*".equals(restEasyPrefix)) {
@@ -41,7 +40,7 @@ public class GaeServletModule extends ServletModule {
         }
     }
 
-    GaeServletModule(String restPath) {
+    CommonModule(String restPath) {
         this.restPath = restPath.replace("//", "/");
     }
 
@@ -56,7 +55,6 @@ public class GaeServletModule extends ServletModule {
         install(new MapperModule());
         install(new ServiceModule());
         install(new VelocityModule());
-        install(new LicenseModule());
 
         bindConstant().annotatedWith(BaseRestPath.class).to(restPath);
 
@@ -66,7 +64,6 @@ public class GaeServletModule extends ServletModule {
     }
 
     @Provides
-
     private String parseFullRestPath() {
         String baseRestPath = restPath == null ? "/" : "/" + restPath + "/";
         return (baseRestPath + EndPoints.REST_PATH).replace("//", "/");

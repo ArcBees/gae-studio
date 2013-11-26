@@ -7,11 +7,18 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server;
+package com.arcbees.gaestudio.selenium;
 
-import java.lang.Boolean;
+import org.junit.Test;
 
-public class BuildConstants {
-    // will be replaced by maven
-    public static final String BUILD_TIME_DATE  = "${gaes.buildtime}";
+import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.client.util.DebugIds;
+
+public class VisualizerIT extends SeleniumTestBase {
+    @Test
+    public void testNavigateToVisualizer() {
+        navigate(NameTokens.visualizer);
+
+        assertContainsElementWithDebugId(DebugIds.VISUALIZER);
+    }
 }

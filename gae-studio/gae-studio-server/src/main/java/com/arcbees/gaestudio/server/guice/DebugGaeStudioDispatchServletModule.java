@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.guice;
 
+import com.arcbees.gaestudio.server.service.auth.SecureAuthModule;
 import com.google.inject.servlet.ServletModule;
 
 public class DebugGaeStudioDispatchServletModule extends ServletModule {
@@ -26,7 +27,9 @@ public class DebugGaeStudioDispatchServletModule extends ServletModule {
 
     @Override
     public void configureServlets() {
-        install(new GaeServletModule(restPath));
+        install(new CommonModule(restPath));
+        install(new SecureLicenseModule());
+        install(new SecureAuthModule());
 
         serve(GAE_STUDIO_HTML).with(RootServlet.class);
     }

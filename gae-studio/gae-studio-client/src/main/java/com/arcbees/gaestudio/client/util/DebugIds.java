@@ -14,5 +14,10 @@ public class DebugIds {
         return APPLICATION_ROOT;
     }
 
+    public static String getVisualizer() {
+        return VISUALIZER;
+    }
+
     public static final String APPLICATION_ROOT = "application-root";
+    public static final String VISUALIZER = "visualizer";
 }

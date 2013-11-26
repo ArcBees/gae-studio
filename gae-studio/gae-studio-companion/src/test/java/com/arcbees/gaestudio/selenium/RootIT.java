@@ -9,41 +9,15 @@
 
 package com.arcbees.gaestudio.selenium;
 
-import org.junit.After;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.arcbees.gaestudio.client.util.DebugIds;
-import com.google.gwt.user.client.ui.UIObject;
 
-public class RootIT {
-    private static final String ROOT = "http://localhost:8888/gae-studio-admin/";
-
-    private final WebDriver webDriver = new ChromeDriver();
-
+public class RootIT extends SeleniumTestBase {
     @Test
     public void simpleTest() {
-        webDriver.get(ROOT);
+        webdriver().get(getRoot());
 
-        assertContainsElementWithId(DebugIds.APPLICATION_ROOT);
-    }
-
-    @After
-    public void after() {
-        webDriver.quit();
-    }
-
-    private WebElement assertContainsElementWithId(String id) {
-        return webDriverWait().until(ExpectedConditions.presenceOfElementLocated(By.id(UIObject.DEBUG_ID_PREFIX + id)
-        ));
-    }
-
-    private WebDriverWait webDriverWait() {
-        return new WebDriverWait(webDriver, 20);
+        assertContainsElementWithDebugId(DebugIds.APPLICATION_ROOT);
     }
 }

@@ -7,11 +7,14 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server;
+package com.arcbees.gaestudio.client.gatekeeper;
 
-import java.lang.Boolean;
+import com.google.gwt.inject.client.AbstractGinModule;
+import com.gwtplatform.mvp.client.proxy.Gatekeeper;
 
-public class BuildConstants {
-    // will be replaced by maven
-    public static final String BUILD_TIME_DATE  = "${gaes.buildtime}";
+public class UnsecureGatekeeperModule extends AbstractGinModule {
+    @Override
+    protected void configure() {
+        bind(Gatekeeper.class).annotatedWith(LicenseGatekeeper.class).to(UnsecureLicenseGatekeeper.class);
+    }
 }

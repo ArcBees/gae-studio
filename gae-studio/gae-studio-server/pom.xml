@@ -218,13 +218,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>integration-test</id>
-            <properties>
-                <test.checklicense>false</test.checklicense>
-            </properties>
-        </profile>
-    </profiles>
 </project>

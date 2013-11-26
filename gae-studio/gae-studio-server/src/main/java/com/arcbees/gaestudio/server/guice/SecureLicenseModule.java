@@ -7,11 +7,16 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server;
+package com.arcbees.gaestudio.server.guice;
 
-import java.lang.Boolean;
+import com.arcbees.gaestudio.server.license.LicenseFilter;
+import com.arcbees.gaestudio.server.license.LicenseModule;
+import com.google.inject.AbstractModule;
 
-public class BuildConstants {
-    // will be replaced by maven
-    public static final String BUILD_TIME_DATE  = "${gaes.buildtime}";
+public class SecureLicenseModule extends AbstractModule {
+    @Override
+    protected void configure() {
+        install(new LicenseModule());
+        bind(LicenseFilter.class);
+    }
 }

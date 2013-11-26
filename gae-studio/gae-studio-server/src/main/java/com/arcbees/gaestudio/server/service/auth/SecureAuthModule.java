@@ -7,11 +7,15 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server;
+package com.arcbees.gaestudio.server.service.auth;
 
-import java.lang.Boolean;
+import javax.inject.Singleton;
 
-public class BuildConstants {
-    // will be replaced by maven
-    public static final String BUILD_TIME_DATE  = "${gaes.buildtime}";
+import com.google.inject.AbstractModule;
+
+public class SecureAuthModule extends AbstractModule {
+    @Override
+    protected void configure() {
+        bind(AuthService.class).to(SecureAuthService.class).in(Singleton.class);
+    }
 }

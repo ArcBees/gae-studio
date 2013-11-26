@@ -9,16 +9,11 @@
 
 package com.arcbees.gaestudio.server.license;
 
-import com.arcbees.gaestudio.server.BuildConstants;
 import com.google.inject.AbstractModule;
 
 public class LicenseModule extends AbstractModule {
     @Override
     protected void configure() {
-        if (BuildConstants.CHECK_LICENSE) {
-            bind(LicenseFilter.class);
-        }
-
         bind(LicenseChecker.class).to(LicenseCheckerImpl.class);
     }
 }
