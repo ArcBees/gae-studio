@@ -7,10 +7,8 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared;
+package com.arcbees.gaestudio.shared.dto;
 
-public class Constants {
-    public static final String JSON_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.S";
-    public static final String CLIENT_ID = "clientId";
-    public static final String REST_PATH = "restPath";
+public enum OperationKind {
+    PUT, DELETE, QUERY, GET
 }

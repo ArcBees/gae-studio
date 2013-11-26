@@ -15,6 +15,7 @@ import org.fusesource.restygwt.client.Resource;
 import org.fusesource.restygwt.client.RestServiceProxy;
 
 import com.arcbees.gaestudio.shared.BaseRestPath;
+import com.arcbees.gaestudio.shared.Constants;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.i18n.client.Dictionary;
@@ -31,7 +32,14 @@ public class RestModule extends AbstractGinModule {
     @Singleton
     @BaseRestPath
     String getBaseRestPath() {
-        return Dictionary.getDictionary("AppConfiguration").get("restPath");
+        return Dictionary.getDictionary("AppConfiguration").get(Constants.REST_PATH);
+    }
+
+    @Provides
+    @Singleton
+    @ClientId
+    String getClientId() {
+        return Dictionary.getDictionary("AppConfiguration").get(Constants.CLIENT_ID);
     }
 
     @Provides
