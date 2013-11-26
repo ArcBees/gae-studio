@@ -15,6 +15,6 @@ import com.gwtplatform.mvp.client.proxy.Gatekeeper;
 public class SecureGatekeeperModule extends AbstractGinModule {
     @Override
     protected void configure() {
-        bind(Gatekeeper.class).annotatedWith(LicenseGatekeeper.class).to(SecureLicenseGateKeeper.class);
+        bind(Gatekeeper.class).annotatedWith(LicenseGateKeeper.class).to(SecureLicenseGateKeeper.class);
     }
 }

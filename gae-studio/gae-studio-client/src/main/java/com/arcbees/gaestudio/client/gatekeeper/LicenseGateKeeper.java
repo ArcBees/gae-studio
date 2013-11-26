@@ -16,5 +16,5 @@ import com.google.inject.BindingAnnotation;
 
 @BindingAnnotation
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LicenseGatekeeper {
+public @interface LicenseGateKeeper {
 }
