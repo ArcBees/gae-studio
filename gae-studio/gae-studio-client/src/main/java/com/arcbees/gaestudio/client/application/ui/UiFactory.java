@@ -10,7 +10,12 @@
 package com.arcbees.gaestudio.client.application.ui;
 
 import com.google.gwt.resources.client.ImageResource;
+import com.google.inject.assistedinject.Assisted;
 
 public interface UiFactory {
-    ToolbarButton createToolbarButton(String text, ImageResource imageResource, final ToolbarButtonCallback callback);
+    ToolbarButton createToolbarButton(@Assisted("text") String text, ImageResource imageResource,
+                                      final ToolbarButtonCallback callback);
+
+    ToolbarButton createToolbarButton(@Assisted("text") String text, ImageResource imageResource,
+                                      final ToolbarButtonCallback callback, @Assisted("debugId") String debugId);
 }

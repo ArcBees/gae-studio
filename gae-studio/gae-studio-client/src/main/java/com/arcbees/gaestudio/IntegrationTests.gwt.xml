@@ -5,7 +5,5 @@
     <extend-configuration-property name="gin.ginjector.modules"
                                    value="com.arcbees.gaestudio.client.gin.TestModule"/>
 
-    <set-property name="user.agent" value="safari"/>
-
-    <inherits name="com.google.gwt.user.Debug"/>
+    <inherits name="com.arcbees.gaestudio.Debug"/>
 </module>

@@ -17,6 +17,15 @@ import com.googlecode.objectify.annotation.Id;
 public class Car implements HasId {
     @Id
     private Long id;
+    private String make;
+
+    public String getMake() {
+        return make;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
 
     @Override
     public Long getId() {

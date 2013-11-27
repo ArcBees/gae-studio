@@ -9,12 +9,15 @@
 
 package com.arcbees.gaestudio.server.rest;
 
+import java.util.Set;
+
 import org.junit.Before;
 
 import com.arcbees.gaestudio.companion.domain.Car;
 import com.arcbees.gaestudio.companion.rest.TestEndPoints;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jayway.restassured.RestAssured;
@@ -48,22 +51,22 @@ public abstract class RestIT {
     }
 
     protected Long createRemoteCar() {
-        Car car = new Car();
-        Response response = createRemoteCar(car);
-
-        return gson.fromJson(response.asString(), Long.class);
+        return createRemoteCar(new Car());
     }
 
-    protected Response createRemoteCar(Car car) {
-        return given().body(car).post(getAbsoluteUri(TestEndPoints.CAR));
+    protected Long createRemoteCar(Car car) {
+        return given().body(car).post(getAbsoluteUri(TestEndPoints.CAR)).as(Long.class);
     }
 
     protected Response deleteRemoteCar(Long id) {
         return given().body(id).delete(getAbsoluteUri(TestEndPoints.CAR));
     }
 
-    protected Response getRemoteKindsResponse() {
-        return given().get(getAbsoluteUri(EndPoints.KINDS));
+    protected Set<String> getRemoteKindsResponse() {
+        Response response = given().get(getAbsoluteUri(EndPoints.KINDS));
+        String[] kinds = response.as(String[].class);
+
+        return Sets.newHashSet(kinds);
     }
 
     protected Response getRemoteNamespacesResponse() {
