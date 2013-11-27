@@ -12,7 +12,6 @@ package com.arcbees.gaestudio.server;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.logging.Logger;
 
 import javax.inject.Singleton;
 import javax.servlet.ServletException;
@@ -22,18 +21,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @Singleton
 public class EmbeddedStaticResourcesServlet extends HttpServlet {
-    private static final Logger logger = Logger.getLogger(EmbeddedStaticResourcesServlet.class.getSimpleName());
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String uri = request.getRequestURI();
-        logger.info("request.getRequestURI: " + uri);
         uri = uri.replace("/gae-studio-admin/", "");
 
         String basePath = getBaseJarPath();
-        logger.info("getBaseJarPath(); " + basePath);
 
         String path;
         if (uri.isEmpty()) {
