@@ -6,4 +6,6 @@
                                    value="com.arcbees.gaestudio.client.gin.TestModule"/>
 
     <inherits name="com.arcbees.gaestudio.Debug"/>
+
+    <set-property name="user.agent" value="safari" />
 </module>
