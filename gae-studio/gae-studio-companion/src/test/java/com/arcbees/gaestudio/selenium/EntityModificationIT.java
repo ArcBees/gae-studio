@@ -10,7 +10,6 @@
 package com.arcbees.gaestudio.selenium;
 
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -20,15 +19,18 @@ import org.openqa.selenium.WebElement;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.util.DebugIds;
 import com.arcbees.gaestudio.companion.domain.Car;
+import com.arcbees.gaestudio.companion.domain.Wheel;
+import com.google.appengine.api.datastore.GeoPt;
 import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 
-import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 public class EntityModificationIT extends SeleniumTestBase {
     private final String make = "Ford";
     private final String newMake = "Mercedes";
+    private final String aNewString = "a new string";
+    private final float delta = 0.0001f;
 
     @Test
     public void modifyCarTest() {
@@ -39,10 +41,24 @@ public class EntityModificationIT extends SeleniumTestBase {
         assertCarIsModified(carId);
     }
 
-    private void assertCarIsModified(long carId) {
-        Car saved = getRemoteCar(carId);
+    private long createCar() {
+        Car car = buildCar();
 
-        assertEquals("Car make is not saved", newMake, saved.getMake());
+        return createRemoteCar(car);
+    }
+
+    private Car buildCar() {
+        Car car = new Car();
+        car.setMake(make);
+        car.setBooleans(Lists.newArrayList(true, true, true));
+        car.setGeoPts(Lists.newArrayList(new GeoPt(10.5f, 10.5f), new GeoPt(0.0f, 0.0f),
+                new GeoPt(-10.12345f, -10.12345f)));
+        car.setWheels(Lists.newArrayList(new Wheel(5.25), new Wheel(10.0), new Wheel(20.75)));
+
+        List<Object> mixedProperties = Lists.<Object>newArrayList(1, "some string", new GeoPt(10.0f, 10.0f));
+        car.setMixedProperties(mixedProperties);
+
+        return car;
     }
 
     private void editCar() {
@@ -69,6 +85,50 @@ public class EntityModificationIT extends SeleniumTestBase {
     private void changeCarData() {
         WebElement editor = waitUntilPresenceOfElementLocated(ByDebugId.id(DebugIds.ENTITY_EDITOR));
 
+        changeCarString(editor);
+        changeCarBooleans();
+        changeCarGeoPts();
+        changeCarWheels();
+        changeCarMixedProperties();
+    }
+
+    private void changeCarMixedProperties() {
+        WebElement mixedPropertiesContainer = waitUntilPresenceOfElementLocated(ByDebugId.id("mixedProperties"));
+        WebElement targetproperty = findChild(mixedPropertiesContainer, ByDebugId.id("1"));
+        WebElement textbox = targetproperty.findElement(By.tagName("input"));
+
+        typeInTextBox(textbox, aNewString);
+    }
+
+    private void changeCarWheels() {
+        WebElement wheelsContainer = waitUntilPresenceOfElementLocated(ByDebugId.id("wheels.size"));
+        WebElement targetWheel = findChild(wheelsContainer, ByDebugId.id("0"));
+        WebElement textbox = targetWheel.findElement(By.tagName("input"));
+
+        typeInTextBox(textbox, "2.0");
+    }
+
+    private void changeCarGeoPts() {
+        WebElement geoPtsContainer = waitUntilPresenceOfElementLocated(ByDebugId.id("geoPts"));
+        WebElement targetGeoPt = findChild(geoPtsContainer, ByDebugId.id("2"));
+
+        List<WebElement> textboxes = targetGeoPt.findElements(By.tagName("input"));
+
+        typeInTextBox(textboxes.get(0), "25.0");
+        typeInTextBox(textboxes.get(1), "50.0");
+    }
+
+    private void changeCarBooleans() {
+        WebElement booleansContainer = waitUntilPresenceOfElementLocated(ByDebugId.id("booleans"));
+        List<WebElement> checkboxes = booleansContainer.findElements(By.tagName("input"));
+
+        WebElement middleCheckbox = checkboxes.get(1);
+        waitUntilElementIsClickable(middleCheckbox);
+
+        middleCheckbox.click();
+    }
+
+    private void changeCarString(WebElement editor) {
         WebElement makeTextBox = findChild(editor, By.xpath(".//input[@value='" + make + "']"));
         typeInTextBox(makeTextBox, newMake);
     }
@@ -99,23 +159,39 @@ public class EntityModificationIT extends SeleniumTestBase {
     }
 
     private List<WebElement> getCarKindCandidates(WebElement kinds) {
-        return kinds.findElements(By.xpath("//span[text()='Car']"));
+        return kinds.findElements(By.xpath("//span[text()='" + Car.class.getSimpleName() + "']"));
     }
 
-    private long createCar() {
-        Car car = new Car();
-        car.setMake(make);
+    private void assertCarIsModified(long carId) {
+        Car saved = getRemoteCar(carId);
 
-        Long carId = createRemoteCar(car);
-
-        makeSureCarKindExists();
-
-        return carId;
+        checkMake(saved);
+        checkBooleans(saved);
+        checkGeoPts(saved);
+        checkWheels(saved);
+        checkMixedProperties(saved);
     }
 
-    private void makeSureCarKindExists() {
-        Set<String> kinds = getRemoteKindsResponse();
+    private void checkMixedProperties(Car saved) {
+        assertEquals(aNewString, saved.getMixedProperties().get(1));
+    }
 
-        assertThat("Car kind not found", kinds, hasItem("Car"));
+    private void checkWheels(Car saved) {
+        assertEquals(2.0f, saved.getWheels().get(0).getSize(), delta);
+    }
+
+    private void checkGeoPts(Car saved) {
+        assertEquals(25.0f, saved.getGeoPts().get(2).getLatitude(), delta);
+        assertEquals(50.0f, saved.getGeoPts().get(2).getLongitude(), delta);
+    }
+
+    private void checkBooleans(Car saved) {
+        assertEquals(true, saved.getBooleans().get(0));
+        assertEquals(false, saved.getBooleans().get(1));
+        assertEquals(true, saved.getBooleans().get(2));
+    }
+
+    private void checkMake(Car saved) {
+        assertEquals("Car make is not saved", newMake, saved.getMake());
     }
 }
