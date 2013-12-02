@@ -13,35 +13,24 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.util.CurrentUser;
-import com.gwtplatform.mvp.client.annotations.DefaultGatekeeper;
 import com.gwtplatform.mvp.client.proxy.Gatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-@DefaultGatekeeper
-public class LoggedInGatekeeper implements Gatekeeper {
-    private final CurrentUser currentUser;
-    private final Gatekeeper licenseGateKeeper;
+public class SecureLicenseGateKeeper implements Gatekeeper {
     private final PlaceManager placeManager;
+    private final CurrentUser currentUser;
 
     @Inject
-    LoggedInGatekeeper(CurrentUser currentUser,
-                       @LicenseGateKeeper Gatekeeper licenseGateKeeper,
-                       PlaceManager placeManager) {
-        this.currentUser = currentUser;
-        this.licenseGateKeeper = licenseGateKeeper;
+    SecureLicenseGateKeeper(PlaceManager placeManager,
+                            CurrentUser currentUser) {
         this.placeManager = placeManager;
+        this.currentUser = currentUser;
     }
 
     @Override
     public boolean canReveal() {
-        boolean loggedIn = currentUser.isLoggedIn();
+        String currentNameToken = placeManager.getCurrentPlaceRequest().getNameToken();
 
-        if (loggedIn && !licenseGateKeeper.canReveal()) {
-            PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.license).build();
-            placeManager.revealPlace(placeRequest);
-        }
-
-        return loggedIn;
+        return NameTokens.license.equals(currentNameToken) || currentUser.isLicenseValid();
     }
 }

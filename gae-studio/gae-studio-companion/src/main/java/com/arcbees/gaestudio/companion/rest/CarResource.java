@@ -9,6 +9,10 @@
 
 package com.arcbees.gaestudio.companion.rest;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Set;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -22,6 +26,7 @@ import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.companion.dao.CarDao;
 import com.arcbees.gaestudio.companion.domain.Car;
+import com.google.appengine.api.datastore.GeoPt;
 
 @Path(TestEndPoints.CAR)
 @Produces(MediaType.APPLICATION_JSON)
@@ -37,6 +42,10 @@ public class CarResource {
     @POST
     public Response createCar(Car car) {
         car.setId(null);
+
+        if (car.getMixedProperties() != null) {
+            convertGeoPts(car);
+        }
 
         carDao.put(car);
 
@@ -55,5 +64,36 @@ public class CarResource {
         carDao.delete(id);
 
         return Response.noContent().build();
+    }
+
+    private void convertGeoPts(Car car) {
+        List<Object> mixedProperties = car.getMixedProperties();
+        for (int i = 0; i < mixedProperties.size(); i++) {
+            Object obj = mixedProperties.get(i);
+            if (isGeoPt(obj)) {
+                LinkedHashMap<String, Double> map = (LinkedHashMap<String, Double>) obj;
+
+                double latitutde = map.get("latitude");
+                double longitude = map.get("longitude");
+
+                mixedProperties.set(i, new GeoPt(new Float(latitutde), new Float(longitude)));
+            }
+        }
+    }
+
+    private boolean isGeoPt(Object obj) throws ClassCastException {
+        boolean isGeoPt = false;
+
+        try {
+            LinkedHashMap<String, Double> map = (LinkedHashMap<String, Double>) obj;
+            Set<String> keys = map.keySet();
+            if (keys.contains("latitude") && keys.contains("longitude")) {
+                isGeoPt = true;
+            }
+        } catch (ClassCastException e) {
+            isGeoPt = false;
+        }
+
+        return isGeoPt;
     }
 }

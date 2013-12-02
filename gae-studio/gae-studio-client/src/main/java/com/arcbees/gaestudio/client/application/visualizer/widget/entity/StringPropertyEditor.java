@@ -45,7 +45,7 @@ public class StringPropertyEditor extends AbstractPropertyEditor<String> {
     }
 
     private void setValue(String value) {
-        textBox.setValue(value);
+        textBox.getElement().setAttribute("value", value);
     }
 
     private String getValue() {

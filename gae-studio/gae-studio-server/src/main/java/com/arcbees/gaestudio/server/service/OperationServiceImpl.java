@@ -12,7 +12,6 @@ package com.arcbees.gaestudio.server.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
@@ -21,13 +20,10 @@ import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.appengine.api.memcache.MemcacheService;
 
 public class OperationServiceImpl implements OperationService {
-    private final Logger logger;
     private final MemcacheService memcacheService;
 
     @Inject
-    OperationServiceImpl(Logger logger,
-                         MemcacheService memcacheService) {
-        this.logger = logger;
+    OperationServiceImpl(MemcacheService memcacheService) {
         this.memcacheService = memcacheService;
     }
 
@@ -40,7 +36,6 @@ public class OperationServiceImpl implements OperationService {
         Long mostRecentId = getMostRecentId();
 
         if (mostRecentId == null) {
-            logger.info("Could not find a mostRecentId");
             return null;
         }
 
@@ -49,11 +44,8 @@ public class OperationServiceImpl implements OperationService {
         long endId = limit != null ? Math.min(lastId + limit, mostRecentId) : mostRecentId;
 
         if (beginId > endId) {
-            logger.info("No new records since last poll");
             return null;
         }
-
-        logger.info("Attempting to retrieve ids " + beginId + "-" + endId);
 
         Map<String, Object> recordsByKey = memcacheService.getAll(getNewOperationRecordKeys(beginId, endId));
         // TODO trimming missing results only from the end of the range is incorrect, as there are scenarios

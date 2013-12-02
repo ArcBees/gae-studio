@@ -7,25 +7,15 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
+package com.arcbees.gaestudio.server.service.auth;
 
-import java.util.Set;
+import javax.inject.Singleton;
 
-import org.junit.Test;
+import com.google.inject.AbstractModule;
 
-import static org.hamcrest.Matchers.hasItem;
-import static org.junit.Assert.assertThat;
-
-public class KindsResourceIT extends RestIT {
-    @Test
-    public void createObject_getKinds_KindIsReturned() {
-        //given
-        createRemoteCar();
-
-        //when
-        Set<String> response = getRemoteKindsResponse();
-
-        //then
-        assertThat(response, hasItem("Car"));
+public class SecureAuthModule extends AbstractModule {
+    @Override
+    protected void configure() {
+        bind(AuthService.class).to(SecureAuthService.class).in(Singleton.class);
     }
 }

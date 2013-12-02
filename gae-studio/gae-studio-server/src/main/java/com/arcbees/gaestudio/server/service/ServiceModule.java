@@ -11,8 +11,6 @@ package com.arcbees.gaestudio.server.service;
 
 import javax.inject.Singleton;
 
-import com.arcbees.gaestudio.server.service.auth.AuthService;
-import com.arcbees.gaestudio.server.service.auth.AuthServiceImpl;
 import com.google.inject.AbstractModule;
 
 public class ServiceModule extends AbstractModule {
@@ -25,6 +23,5 @@ public class ServiceModule extends AbstractModule {
         bind(NamespacesService.class).to(NamespacesServiceImpl.class).in(Singleton.class);
         bind(OperationService.class).to(OperationServiceImpl.class).in(Singleton.class);
         bind(RecordService.class).to(RecordServiceImpl.class).in(Singleton.class);
-        bind(AuthService.class).to(AuthServiceImpl.class).in(Singleton.class);
     }
 }

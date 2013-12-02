@@ -25,7 +25,7 @@ import com.google.common.base.Strings;
 import static com.arcbees.gaestudio.server.GaeStudioConstants.GAE_NAMESPACE;
 import static com.arcbees.gaestudio.server.GaeStudioConstants.GAE_USER_KIND;
 
-public class AuthServiceImpl implements AuthService {
+public class SecureAuthService implements AuthService {
     public static final String API_TOKEN = "ljhs98234h24o8dsyfjehrljqh01923874j2hj";
 
     private static final String TOKEN = "token";
@@ -34,8 +34,8 @@ public class AuthServiceImpl implements AuthService {
     private final UserClient userClient;
 
     @Inject
-    AuthServiceImpl(OAuthClient oAuthClient,
-                    UserClient userClient) {
+    SecureAuthService(OAuthClient oAuthClient,
+                      UserClient userClient) {
         this.oAuthClient = oAuthClient;
         this.userClient = userClient;
     }

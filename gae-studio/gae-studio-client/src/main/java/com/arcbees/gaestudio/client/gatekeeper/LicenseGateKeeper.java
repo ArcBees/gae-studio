@@ -9,28 +9,12 @@
 
 package com.arcbees.gaestudio.client.gatekeeper;
 
-import javax.inject.Inject;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-import com.arcbees.gaestudio.client.place.NameTokens;
-import com.arcbees.gaestudio.client.util.CurrentUser;
-import com.gwtplatform.mvp.client.proxy.Gatekeeper;
-import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.google.inject.BindingAnnotation;
 
-public class LicenseGateKeeper implements Gatekeeper {
-    private final PlaceManager placeManager;
-    private final CurrentUser currentUser;
-
-    @Inject
-    LicenseGateKeeper(PlaceManager placeManager,
-                      CurrentUser currentUser) {
-        this.placeManager = placeManager;
-        this.currentUser = currentUser;
-    }
-
-    @Override
-    public boolean canReveal() {
-        String currentNameToken = placeManager.getCurrentPlaceRequest().getNameToken();
-
-        return NameTokens.license.equals(currentNameToken) || currentUser.isLicenseValid();
-    }
+@BindingAnnotation
+@Retention(RetentionPolicy.RUNTIME)
+public @interface LicenseGateKeeper {
 }

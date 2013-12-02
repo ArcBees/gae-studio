@@ -7,25 +7,26 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
+package com.arcbees.gaestudio.companion.domain;
 
-import java.util.Set;
+import com.googlecode.objectify.annotation.Embed;
 
-import org.junit.Test;
+@Embed
+public class Wheel {
+    private double size;
 
-import static org.hamcrest.Matchers.hasItem;
-import static org.junit.Assert.assertThat;
+    private Wheel() {
+    }
 
-public class KindsResourceIT extends RestIT {
-    @Test
-    public void createObject_getKinds_KindIsReturned() {
-        //given
-        createRemoteCar();
+    public Wheel(double size) {
+        this.size = size;
+    }
 
-        //when
-        Set<String> response = getRemoteKindsResponse();
+    public double getSize() {
+        return size;
+    }
 
-        //then
-        assertThat(response, hasItem("Car"));
+    public void setSize(double size) {
+        this.size = size;
     }
 }

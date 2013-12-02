@@ -7,25 +7,14 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
+package com.arcbees.gaestudio.companion.guice;
 
-import java.util.Set;
+import com.arcbees.gaestudio.server.license.LicenseModule;
+import com.google.inject.AbstractModule;
 
-import org.junit.Test;
-
-import static org.hamcrest.Matchers.hasItem;
-import static org.junit.Assert.assertThat;
-
-public class KindsResourceIT extends RestIT {
-    @Test
-    public void createObject_getKinds_KindIsReturned() {
-        //given
-        createRemoteCar();
-
-        //when
-        Set<String> response = getRemoteKindsResponse();
-
-        //then
-        assertThat(response, hasItem("Car"));
+public class UnsecureLicenseModule extends AbstractModule {
+    @Override
+    protected void configure() {
+        install(new LicenseModule());
     }
 }
