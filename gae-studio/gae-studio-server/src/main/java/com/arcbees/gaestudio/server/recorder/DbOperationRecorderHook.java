@@ -9,8 +9,6 @@
 
 package com.arcbees.gaestudio.server.recorder;
 
-import java.util.logging.Logger;
-
 import com.google.apphosting.api.ApiProxy.ApiProxyException;
 import com.google.apphosting.api.ApiProxy.Delegate;
 import com.google.apphosting.api.ApiProxy.Environment;
@@ -26,24 +24,19 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 public class DbOperationRecorderHook extends BaseHook {
-    private final Logger logger;
     private final DbOperationRecorder dbOperationRecorder;
 
     @Inject
-    DbOperationRecorderHook(Logger logger,
-                            DbOperationRecorder dbOperationRecorder,
+    DbOperationRecorderHook(DbOperationRecorder dbOperationRecorder,
                             @Assisted Delegate<Environment> baseDelegate) {
         super(baseDelegate);
 
-        this.logger = logger;
         this.dbOperationRecorder = dbOperationRecorder;
     }
 
     @Override
     public byte[] makeSyncCall(Environment environment, String packageName, String methodName, byte[] request)
             throws ApiProxyException {
-        logger.info("Processing makeSyncCall for " + packageName + "." + methodName);
-
         if ("Delete".equals(methodName)) {
             return this.handleDelete(environment, request);
         } else if ("Get".equals(methodName)) {
@@ -66,8 +59,6 @@ public class DbOperationRecorderHook extends BaseHook {
         byte[] result = d.makeSyncCall(environment, "datastore_v3", "Delete", requestData);
         long end = System.currentTimeMillis();
 
-        logger.info("Executed Get in " + (end - start) + "ms");
-
         DeleteResponse response = new DeleteResponse();
         response.mergeFrom(result);
 
@@ -84,8 +75,6 @@ public class DbOperationRecorderHook extends BaseHook {
         long start = System.currentTimeMillis();
         byte[] result = d.makeSyncCall(environment, "datastore_v3", "RunQuery", request);
         long end = System.currentTimeMillis();
-
-        logger.info("Executed RunQuery in " + (end - start) + "ms");
 
         QueryResult queryResult = new QueryResult();
         queryResult.mergeFrom(result);
@@ -104,8 +93,6 @@ public class DbOperationRecorderHook extends BaseHook {
         byte[] result = d.makeSyncCall(environment, "datastore_v3", "Get", request);
         long end = System.currentTimeMillis();
 
-        logger.info("Executed Get in " + (end - start) + "ms");
-
         GetResponse getResponse = new GetResponse();
         getResponse.mergeFrom(result);
 
@@ -122,8 +109,6 @@ public class DbOperationRecorderHook extends BaseHook {
         long start = System.currentTimeMillis();
         byte[] result = d.makeSyncCall(environment, "datastore_v3", "Put", request);
         long end = System.currentTimeMillis();
-
-        logger.info("Executed Put in " + (end - start) + "ms");
 
         PutResponse putResponse = new PutResponse();
         putResponse.mergeFrom(result);

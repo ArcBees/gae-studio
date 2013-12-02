@@ -96,7 +96,7 @@ public class SeleniumTestBase extends RestIT {
         return webDriverWait().until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
-    private void waitUntilElementIsClickable(final WebElement element) {
+    public void waitUntilElementIsClickable(final WebElement element) {
         webDriverWait().until(new Predicate<WebDriver>() {
             @Override
             public boolean apply(WebDriver input) {

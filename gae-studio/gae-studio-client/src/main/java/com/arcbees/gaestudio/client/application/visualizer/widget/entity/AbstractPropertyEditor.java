@@ -54,6 +54,7 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
         widget = UI_BINDER.createAndBindUi(fields);
 
         fields.key.setText(key);
+        fields.form.ensureDebugId(key);
     }
 
     @Override
