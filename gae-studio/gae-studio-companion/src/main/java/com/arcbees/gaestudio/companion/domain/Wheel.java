@@ -7,17 +7,26 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.selenium;
+package com.arcbees.gaestudio.companion.domain;
 
-import org.junit.Test;
+import com.googlecode.objectify.annotation.Embed;
 
-import com.arcbees.gaestudio.client.util.DebugIds;
+@Embed
+public class Wheel {
+    private double size;
 
-public class RootIT extends SeleniumTestBase {
-    @Test
-    public void simpleTest() {
-        webdriver().get(getRoot());
+    private Wheel() {
+    }
 
-        assertContainsElementWithDebugId(DebugIds.APPLICATION_ROOT);
+    public Wheel(double size) {
+        this.size = size;
+    }
+
+    public double getSize() {
+        return size;
+    }
+
+    public void setSize(double size) {
+        this.size = size;
     }
 }

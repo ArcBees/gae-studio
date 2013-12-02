@@ -11,7 +11,6 @@ package com.arcbees.gaestudio.server.recorder;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
@@ -19,15 +18,12 @@ import com.arcbees.gaestudio.server.recorder.authentication.Listener;
 import com.google.apphosting.api.ApiProxy;
 
 public class HookRegistrar {
-    private final Logger logger;
     private final ApiProxyHook hook;
     private final Set<Listener> listeners = new HashSet<Listener>();
 
     @Inject
     @SuppressWarnings("unchecked")
-    HookRegistrar(DbOperationRecorderHookFactory dbOperationRecorderHookFactory,
-                  Logger logger) {
-        this.logger = logger;
+    HookRegistrar(DbOperationRecorderHookFactory dbOperationRecorderHookFactory) {
         hook = new ApiProxyHook(ApiProxy.getDelegate());
         hook.getHooks().put("datastore_v3", dbOperationRecorderHookFactory.create(hook.getBaseDelegate()));
         ApiProxy.setDelegate(hook);
@@ -46,10 +42,8 @@ public class HookRegistrar {
     private void setRecording() {
         if (listeners.isEmpty()) {
             hook.setRecording(false);
-            logger.info("Stop recording");
         } else {
             hook.setRecording(true);
-            logger.info("Recording, " + listeners.size() + " listeners left");
         }
     }
 }

@@ -12,7 +12,7 @@
     <artifactId>gae-studio-webapp</artifactId>
 
     <properties>
-        <client.module>com.arcbees.gaestudio.GaeStudio</client.module>
+        <client.module>com.arcbees.gaestudio.Production</client.module>
     </properties>
 
     <build>
@@ -149,7 +149,7 @@
         <profile>
             <id>integration-test</id>
             <properties>
-                <client.module>com.arcbees.gaestudio.GaeStudioDebug</client.module>
+                <client.module>com.arcbees.gaestudio.IntegrationTests</client.module>
             </properties>
         </profile>
     </profiles>

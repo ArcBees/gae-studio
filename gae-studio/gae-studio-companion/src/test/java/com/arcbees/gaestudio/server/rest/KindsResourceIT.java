@@ -9,12 +9,12 @@
 
 package com.arcbees.gaestudio.server.rest;
 
+import java.util.Set;
+
 import org.junit.Test;
 
-import com.jayway.restassured.response.Response;
-
-import static javax.ws.rs.core.Response.Status.OK;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.hasItem;
+import static org.junit.Assert.assertThat;
 
 public class KindsResourceIT extends RestIT {
     @Test
@@ -23,9 +23,9 @@ public class KindsResourceIT extends RestIT {
         createRemoteCar();
 
         //when
-        Response response = getRemoteKindsResponse();
+        Set<String> response = getRemoteKindsResponse();
 
         //then
-        assertEquals(OK.getStatusCode(), response.getStatusCode());
+        assertThat(response, hasItem("Car"));
     }
 }
