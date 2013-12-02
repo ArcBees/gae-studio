@@ -13,4 +13,5 @@ public class GaeStudioConstants {
     public static final String GAE_NAMESPACE = "gaestudio";
     public static final String GA_CLIENT_KIND = "__GAClient";
     public static final String GAE_USER_KIND = "__GAEUser";
+    public static final String GAESTUDIO_OPERATIONS_CLIENT_IDS = "gaestudio-operations-client-ids";
 }

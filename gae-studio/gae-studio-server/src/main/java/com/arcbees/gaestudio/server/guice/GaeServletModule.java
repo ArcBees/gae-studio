@@ -9,8 +9,10 @@
 
 package com.arcbees.gaestudio.server.guice;
 
+import javax.inject.Singleton;
 import javax.servlet.ServletContext;
 
+import com.arcbees.gaestudio.server.ConnectFilter;
 import com.arcbees.gaestudio.server.analytic.AnalyticModule;
 import com.arcbees.gaestudio.server.dto.mapper.MapperModule;
 import com.arcbees.gaestudio.server.exception.ExceptionModule;
@@ -63,6 +65,9 @@ public class GaeServletModule extends ServletModule {
         String fullRestPath = parseFullRestPath();
 
         filter(fullRestPath + "*").through(GuiceRestEasyFilterDispatcher.class);
+
+        bind(ConnectFilter.class).in(Singleton.class);
+        filter("/_ah/channel/connected/", "/_ah/channel/disconnected/").through(ConnectFilter.class);
     }
 
     @Provides

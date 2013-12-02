@@ -6,9 +6,10 @@
     <title>GAE Studio</title>
 
     <script type="text/javascript" language="javascript">
-        var AppConfiguration = {"restPath": "${restPath}","ax5b7kor": "${expirationDate}"};
+        var AppConfiguration = {"${restPathKey}": "${restPathValue}","${clientIdKey}": "${clientIdValue}"};
     </script>
     <script type="text/javascript" language="javascript" src="gaestudio/gaestudio.nocache.js"></script>
+    <script type="text/javascript" src="/_ah/channel/jsapi"></script>
 </head>
 
 <body>

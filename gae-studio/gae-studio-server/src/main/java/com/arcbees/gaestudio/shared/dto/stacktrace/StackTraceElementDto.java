@@ -11,8 +11,8 @@ package com.arcbees.gaestudio.shared.dto.stacktrace;
 
 import java.io.Serializable;
 
-import org.codehaus.jackson.annotate.JsonCreator;
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class StackTraceElementDto implements Serializable {
     private String className;

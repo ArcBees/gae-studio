@@ -89,6 +89,18 @@
             <version>${jukito.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.google.gwt.appengine</groupId>
+            <artifactId>channel</artifactId>
+            <version>2.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/gwt-gae-channel-2.0.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.github.nmorel.gwtjackson</groupId>
+            <artifactId>gwt-jackson</artifactId>
+            <version>${gwt-jackson.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
