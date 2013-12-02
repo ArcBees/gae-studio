@@ -15,6 +15,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class ParentKeyDto {
     private String kind;
     private Long id;
+    private String name;
 
     @SuppressWarnings("unused")
     protected ParentKeyDto() {
@@ -22,9 +23,11 @@ public class ParentKeyDto {
 
     @JsonCreator
     public ParentKeyDto(@JsonProperty("kind") String kind,
-                        @JsonProperty("id") Long id) {
+                        @JsonProperty("id") Long id,
+                        @JsonProperty("name") String name) {
         this.kind = kind;
         this.id = id;
+        this.name = name;
     }
 
     public String getKind() {
@@ -41,5 +44,13 @@ public class ParentKeyDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

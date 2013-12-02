@@ -39,7 +39,6 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     private final UiFactory uiFactory;
     private final AppConstants myConstants;
     private final ToolbarButton refresh;
-    private final ToolbarButton create;
     private final ToolbarButton edit;
     private final ToolbarButton delete;
     private final SimplePanel deleteByKind;
@@ -73,14 +72,12 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
         backButtonStyleName = resources.styles().backButton();
 
         refresh = createRefreshButton();
-        create = createCreateButton();
         edit = createEditButton();
         delete = createDeleteButton();
         deleteByKind = new SimplePanel();
         deleteByKind.setStyleName(resources.styles().toolbarButton());
 
         buttons.add(refresh);
-        buttons.add(create);
         buttons.add(edit);
         buttons.add(delete);
         buttons.add(deleteByKind);
@@ -127,15 +124,6 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
                 $("." + idStyleName).text("no entity");
                 $("." + extendButtonStyleName).show();
                 $("." + backButtonStyleName).hide();
-            }
-        });
-    }
-
-    private ToolbarButton createCreateButton() {
-        return uiFactory.createToolbarButton(myConstants.create(), resources.create(), new ToolbarButtonCallback() {
-            @Override
-            public void onClicked() {
-                getUiHandlers().create();
             }
         });
     }

@@ -44,12 +44,23 @@ public class DatastoreHelper {
         NamespaceManager.set(namespaceDto.getNamespace());
 
         Key key;
-        if (parentKeyDto != null) {
-            Key parentKey = KeyFactory.createKey(parentKeyDto.getKind(), parentKeyDto.getId());
 
-            key = KeyFactory.createKey(parentKey, keyDto.getKind(), keyDto.getId());
+        if (idIsNumeric(keyDto)) {
+            if (parentKeyDto != null) {
+                Key parentKey = KeyFactory.createKey(parentKeyDto.getKind(), parentKeyDto.getId());
+
+                key = KeyFactory.createKey(parentKey, keyDto.getKind(), keyDto.getId());
+            } else {
+                key = KeyFactory.createKey(keyDto.getKind(), keyDto.getId());
+            }
         } else {
-            key = KeyFactory.createKey(keyDto.getKind(), keyDto.getId());
+            if (parentKeyDto != null) {
+                Key parentKey = KeyFactory.createKey(parentKeyDto.getKind(), parentKeyDto.getName());
+
+                key = KeyFactory.createKey(parentKey, keyDto.getKind(), keyDto.getName());
+            } else {
+                key = KeyFactory.createKey(keyDto.getKind(), keyDto.getName());
+            }
         }
 
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
@@ -189,5 +200,9 @@ public class DatastoreHelper {
 
     private String extractNamespace(Entity namespace) {
         return Entities.getNamespaceFromNamespaceKey(namespace.getKey());
+    }
+
+    private boolean idIsNumeric(KeyDto keyDto) {
+        return keyDto.getId() != 0;
     }
 }

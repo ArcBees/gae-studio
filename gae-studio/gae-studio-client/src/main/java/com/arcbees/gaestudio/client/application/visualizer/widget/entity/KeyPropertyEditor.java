@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,6 +25,7 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.text.shared.AbstractRenderer;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.HasConstrainedValue;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.LongBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -68,6 +70,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
 
     private final AppConstants appConstants;
     private final JSONValue property;
+    private final NameSpaceValueSetter nameSpaceValueSetter;
 
     private Key key;
 
@@ -77,6 +80,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
                       AppIdRenderer appIdRenderer,
                       AppConstants appConstants,
                       PropertyEditorFactory propertyEditorFactory,
+                      NameSpaceValueSetter nameSpaceValueSetter,
                       @Assisted String key,
                       @Assisted JSONValue property,
                       @Assisted FetchKindsRunner fetchKindsRunner,
@@ -85,6 +89,8 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
 
         this.appConstants = appConstants;
         this.property = property;
+        this.nameSpaceValueSetter = nameSpaceValueSetter;
+
         parentKey = (RawPropertyEditor) propertyEditorFactory
                 .createRawEditor(PropertyName.PARENT_KEY, property.isObject().get(PropertyName.PARENT_KEY));
 
@@ -101,8 +107,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
 
     @Override
     public void onNamespacesFetched(List<AppIdNamespaceDto> namespaces) {
-        setNamespace(namespace, namespaces);
-        setNamespace(appIdNamespace, namespaces);
+        setNamespaces(namespaces);
     }
 
     @Override
@@ -127,6 +132,15 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     @Override
     protected void showErrors() {
         showError(appConstants.invalidProtocolOrHost());
+    }
+
+    private void setNamespaces(List<AppIdNamespaceDto> namespaces) {
+        List<HasConstrainedValue<AppIdNamespaceDto>> listboxes =
+                new ArrayList<HasConstrainedValue<AppIdNamespaceDto>>();
+        listboxes.add(namespace);
+        listboxes.add(appIdNamespace);
+
+        nameSpaceValueSetter.setNamespace(namespaces, key.getAppIdNamespace(), listboxes);
     }
 
     private Key getValue() {
@@ -180,11 +194,5 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
                 break;
             }
         }
-    }
-
-    private void setNamespace(ValueListBox<AppIdNamespaceDto> listBox, List<AppIdNamespaceDto> namespaces) {
-        namespaces.add(null);
-        listBox.setValue(key.getAppIdNamespace());
-        listBox.setAcceptableValues(namespaces);
     }
 }

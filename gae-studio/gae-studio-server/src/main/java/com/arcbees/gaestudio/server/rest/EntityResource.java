@@ -37,14 +37,17 @@ public class EntityResource {
     private final EntityMapper entityMapper;
     private final Long entityId;
     private final EntityService entityService;
+    private final String entityName;
 
     @Inject
     EntityResource(EntityService entityService,
                    EntityMapper entityMapper,
-                   @Assisted Long entityId) {
+                   @Assisted Long entityId,
+                   @Assisted String entityName) {
         this.entityMapper = entityMapper;
         this.entityId = entityId;
         this.entityService = entityService;
+        this.entityName = entityName;
     }
 
     @GET
@@ -56,7 +59,7 @@ public class EntityResource {
             throws EntityNotFoundException {
         ResponseBuilder responseBuilder;
 
-        Entity entity = entityService.getEntity(entityId, namespace, appId, kind, parentId, parentKind);
+        Entity entity = entityService.getEntity(entityId, entityName, namespace, appId, kind, parentId, parentKind);
 
         if (entity == null) {
             responseBuilder = Response.status(Status.NOT_FOUND);

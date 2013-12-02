@@ -17,5 +17,6 @@ public class DaoModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(CarDao.class).in(Singleton.class);
+        bind(StringIdEntityDao.class).in(Singleton.class);
     }
 }

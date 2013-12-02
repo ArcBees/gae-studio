@@ -119,7 +119,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     private void updateEntity() throws InvalidEntityFieldsException {
         EntityDto entityDto = entityEditor.flush().getEntityDto();
 
-        entitiesService.entityService(entityDto.getKey().getId()).updateEntity(entityDto,
+        entitiesService.entityService(entityDto.getKey().getId(), entityDto.getKey().getName()).updateEntity(entityDto,
                 new MethodCallbackImpl<EntityDto>() {
                     @Override
                     public void onFailure(Throwable caught) {

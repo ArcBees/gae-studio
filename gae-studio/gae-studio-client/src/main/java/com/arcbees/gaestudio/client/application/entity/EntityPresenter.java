@@ -30,6 +30,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.NAME;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
@@ -70,6 +71,7 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     private void displayEntityFromPlaceRequest(PlaceRequest request) {
         String kind = request.getParameter(KIND, null);
         String id = request.getParameter(ID, "-1");
+        String name = request.getParameter(NAME, null);
         String parentKind = request.getParameter(PARENT_KIND, "");
         String parentId = request.getParameter(PARENT_ID, "");
         String namespace = request.getParameter(NAMESPACE, null);
@@ -84,8 +86,8 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
             }
         };
 
-        EntityService entityService = entitiesService.entityService(Long.valueOf(id));
-        entityService.getEntity(kind, appId, namespace, parentId, parentKind, methodCallback);
+        EntityService entityService = entitiesService.entityService(Long.valueOf(id), name);
+        entityService.getEntity(kind, appId, name, namespace, parentId, parentKind, methodCallback);
     }
 
     private void displayEntityDto(EntityDto entityDto) {

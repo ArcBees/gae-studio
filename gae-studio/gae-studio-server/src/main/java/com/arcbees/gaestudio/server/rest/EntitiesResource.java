@@ -32,6 +32,7 @@ import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
+import com.google.api.client.repackaged.com.google.common.base.Strings;
 import com.google.appengine.api.datastore.Entity;
 
 @Path(EndPoints.ENTITIES)
@@ -79,7 +80,7 @@ public class EntitiesResource {
     public Response createEmptyEntity(@QueryParam(UrlParameters.KIND) String kind) {
         ResponseBuilder responseBuilder;
 
-        if (kind == null) {
+        if (Strings.isNullOrEmpty(kind)) {
             responseBuilder = Response.status(Status.BAD_REQUEST);
         } else {
             Entity emptyEntity = entitiesService.createEmptyEntity(kind);
@@ -115,7 +116,7 @@ public class EntitiesResource {
     public Response getCount(@QueryParam(UrlParameters.KIND) String kind) {
         ResponseBuilder responseBuilder;
 
-        if (kind == null) {
+        if (Strings.isNullOrEmpty(kind)) {
             responseBuilder = Response.status(Status.BAD_REQUEST);
         } else {
             Integer count = entitiesService.getCount(kind);
@@ -127,7 +128,13 @@ public class EntitiesResource {
 
     @Path(EndPoints.ID)
     public EntityResource getEntityResource(@PathParam(UrlParameters.ID) Long id) {
-        return subresourceFactory.createEntityResource(id);
+        return subresourceFactory.createEntityResource(id, "");
+    }
+
+    @Path(EndPoints.ID + EndPoints.NAME)
+    public EntityResource getEntityResource(@PathParam(UrlParameters.ID) Long id,
+                                            @PathParam(UrlParameters.NAME) String name) {
+        return subresourceFactory.createEntityResource(id, name);
     }
 
     private boolean isValidDeleteRequest(String kind, String namespace, DeleteEntities deleteType) {

@@ -63,7 +63,7 @@ public class EntityResourceIT extends RestIT {
     }
 
     private Response deleteEntityResponse(Long carId) {
-        KeyDto keyDto = new KeyDto(CAR_KIND, carId, null, null);
+        KeyDto keyDto = new KeyDto(CAR_KIND, carId, null, null, null);
 
         return given().body(keyDto).delete(getAbsoluteUri(EndPoints.ENTITIES + carId));
     }

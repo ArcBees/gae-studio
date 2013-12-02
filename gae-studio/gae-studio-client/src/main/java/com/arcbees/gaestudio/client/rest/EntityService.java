@@ -25,6 +25,7 @@ public interface EntityService extends RestService {
     @GET
     void getEntity(@QueryParam(UrlParameters.KIND) String kind,
                    @QueryParam(UrlParameters.APPID) String appId,
+                   @QueryParam(UrlParameters.NAME) String name,
                    @QueryParam(UrlParameters.NAMESPACE) String namespace,
                    @QueryParam(UrlParameters.PARENT_ID) String parentId,
                    @QueryParam(UrlParameters.PARENT_KIND) String parentKind,
