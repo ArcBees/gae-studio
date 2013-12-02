@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module rename-to='gaestudio'>
+    <inherits name='com.arcbees.gaestudio.Common'/>
+
+    <extend-configuration-property name="gin.ginjector.modules"
+                                   value="com.arcbees.gaestudio.client.gin.TestModule"/>
+
+    <inherits name="com.arcbees.gaestudio.Debug"/>
+
+    <set-property name="user.agent" value="safari" />
+</module>

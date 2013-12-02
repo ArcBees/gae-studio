@@ -7,25 +7,13 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
+package com.arcbees.gaestudio.client.gatekeeper;
 
-import java.util.Set;
+import com.gwtplatform.mvp.client.proxy.Gatekeeper;
 
-import org.junit.Test;
-
-import static org.hamcrest.Matchers.hasItem;
-import static org.junit.Assert.assertThat;
-
-public class KindsResourceIT extends RestIT {
-    @Test
-    public void createObject_getKinds_KindIsReturned() {
-        //given
-        createRemoteCar();
-
-        //when
-        Set<String> response = getRemoteKindsResponse();
-
-        //then
-        assertThat(response, hasItem("Car"));
+public class UnsecureLicenseGatekeeper implements Gatekeeper {
+    @Override
+    public boolean canReveal() {
+        return true;
     }
 }

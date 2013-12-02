@@ -33,8 +33,6 @@ import com.gwtplatform.mvp.client.View;
 public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresenter.MyView>
         implements EditEntityEvent.EditEntityHandler, EntityDetailsUiHandlers,
         PropertyEditorErrorEvent.PropertyEditorErrorHandler {
-    private EntityEditorPresenter entityEditor;
-
     interface MyView extends View, HasUiHandlers<EntityDetailsUiHandlers> {
         void displayEntityDetails();
 
@@ -52,6 +50,8 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     private final EntitiesService entitiesService;
     private final EntityEditorFactory entityEditorFactory;
     private final AppConstants appConstants;
+
+    private EntityEditorPresenter entityEditor;
 
     @Inject
     EntityDetailsPresenter(EventBus eventBus,

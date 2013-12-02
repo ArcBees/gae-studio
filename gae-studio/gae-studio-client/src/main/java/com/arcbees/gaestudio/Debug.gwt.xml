@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module rename-to='gaestudio'>
+    <inherits name="com.google.gwt.user.Debug"/>
+
+    <set-configuration-property name="CssResource.style" value="pretty"/>
+</module>

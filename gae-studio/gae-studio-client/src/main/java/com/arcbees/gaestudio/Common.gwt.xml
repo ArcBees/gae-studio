@@ -21,8 +21,8 @@
     <source path='client'/>
     <source path='shared'/>
 
-    <set-configuration-property name="gin.ginjector.modules"
-                                value="com.arcbees.gaestudio.client.gin.ClientModule"/>
+    <extend-configuration-property name="gin.ginjector.modules"
+                                   value="com.arcbees.gaestudio.client.gin.CommonModule"/>
 
     <set-configuration-property name="gin.ginjector.extensions"
                                 value="com.arcbees.gaestudio.client.gin.GinjectorExtension"/>

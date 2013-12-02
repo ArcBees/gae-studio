@@ -9,8 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.ui;
 
-import javax.inject.Inject;
-
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -23,6 +21,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
+import com.google.inject.assistedinject.AssistedInject;
 
 public class ToolbarButton extends Composite {
     interface Binder extends UiBinder<Widget, ToolbarButton> {
@@ -37,12 +36,23 @@ public class ToolbarButton extends Composite {
     @UiField
     InlineLabel text;
 
-    @Inject
+    @AssistedInject
     ToolbarButton(Binder binder,
                   AppResources resources,
-                  @Assisted String text,
+                  @Assisted("text") String text,
                   @Assisted ImageResource imageResource,
                   @Assisted final ToolbarButtonCallback callback) {
+        this(binder, resources, text, imageResource, callback, "");
+    }
+
+
+    @AssistedInject
+    ToolbarButton(Binder binder,
+                  AppResources resources,
+                  @Assisted("text") String text,
+                  @Assisted ImageResource imageResource,
+                  @Assisted final ToolbarButtonCallback callback,
+                  @Assisted("debugId") String debugId) {
         this.resources = resources;
 
         initWidget(binder.createAndBindUi(this));
@@ -56,6 +66,8 @@ public class ToolbarButton extends Composite {
                 callback.onClicked();
             }
         }, ClickEvent.getType());
+
+        ensureDebugId(debugId);
     }
 
     public void setEnabled(Boolean enabled) {

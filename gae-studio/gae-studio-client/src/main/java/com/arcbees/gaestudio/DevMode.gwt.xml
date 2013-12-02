@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module rename-to='gaestudio'>
+    <inherits name='com.arcbees.gaestudio.Production'/>
+
+    <inherits name="com.arcbees.gaestudio.Debug"/>
+</module>

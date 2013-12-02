@@ -9,15 +9,16 @@
 
 package com.arcbees.gaestudio.server.guice;
 
-import com.arcbees.gaestudio.server.service.auth.SecureAuthModule;
+import com.arcbees.gaestudio.server.EmbeddedStaticResourcesServlet;
 import com.google.inject.servlet.ServletModule;
 
-public class GaeStudioModule extends ServletModule {
+public class EmbeddedPathModule extends ServletModule {
+    private static final String EMBEDDED_PATH = "gae-studio-admin";
+    private static final String GAE_STUDIO_HTML = "/gae-studio.*";
+
     @Override
     protected void configureServlets() {
-        install(new EmbeddedPathModule());
-        install(new CommonModule(getServletContext()));
-        install(new SecureLicenseModule());
-        install(new SecureAuthModule());
+        serve("/" + EMBEDDED_PATH + "/", "/" + EMBEDDED_PATH + GAE_STUDIO_HTML).with(RootServlet.class);
+        serve("/" + EMBEDDED_PATH + "/*").with(EmbeddedStaticResourcesServlet.class);
     }
 }

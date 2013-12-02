@@ -2,6 +2,7 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:cellview="urn:import:com.google.gwt.user.cellview.client">
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <ui:with field="debugIds" type="com.arcbees.gaestudio.client.util.DebugIds"/>
     <ui:style>
         .heading {
             padding-left: 5px;
@@ -16,6 +17,7 @@
             </p>
             <a class="{resources.styles.unlockButton}" title="Deselect entity"/>
         </div>
-        <cellview:CellTable ui:field="entityTable" styleName="{resources.styles.firstTable}"/>
+        <cellview:CellTable ui:field="entityTable" styleName="{resources.styles.firstTable}"
+                            debugId="{debugIds.getEntitiesTables}"/>
     </g:HTMLPanel>
 </ui:UiBinder>
