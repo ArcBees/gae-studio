@@ -7,16 +7,24 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.companion.dao;
+package com.arcbees.gaestudio.companion.domain;
 
-import javax.inject.Singleton;
+import com.arcbees.gaestudio.companion.dao.HasStringId;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
-import com.google.inject.AbstractModule;
+@Entity
+public class StringIdEntity implements HasStringId {
+    @Id
+    private String id;
 
-public class DaoModule extends AbstractModule {
     @Override
-    protected void configure() {
-        bind(CarDao.class).in(Singleton.class);
-        bind(StringIdEntityDao.class).in(Singleton.class);
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 }
