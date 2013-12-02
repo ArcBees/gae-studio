@@ -9,23 +9,17 @@
 
 package com.arcbees.gaestudio.companion.dao;
 
-import com.arcbees.gaestudio.companion.domain.Car;
 import com.arcbees.gaestudio.companion.domain.StringIdEntity;
-import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.ObjectifyFactory;
-import com.googlecode.objectify.ObjectifyService;
 
-public class OfyService {
-    static {
-        factory().register(Car.class);
-        factory().register(StringIdEntity.class);
+import static com.arcbees.gaestudio.companion.dao.OfyService.ofy;
+
+public class StringIdEntityDao extends BaseStringDao<StringIdEntity> {
+    StringIdEntityDao() {
+        super(StringIdEntity.class);
     }
 
-    public static Objectify ofy() {
-        return ObjectifyService.ofy();
-    }
-
-    public static ObjectifyFactory factory() {
-        return ObjectifyService.factory();
+    @Override
+    public StringIdEntity get(String id) {
+        return ofy().load().type(clazz).id(id).now();
     }
 }

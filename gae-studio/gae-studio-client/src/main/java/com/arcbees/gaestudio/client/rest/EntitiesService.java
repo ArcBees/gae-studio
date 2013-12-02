@@ -43,8 +43,9 @@ public interface EntitiesService extends RestService {
                    @QueryParam(UrlParameters.TYPE) DeleteEntities deleteEntities,
                    MethodCallback<Void> callback);
 
-    @Path(EndPoints.ID)
-    EntityService entityService(@PathParam(UrlParameters.ID) Long id);
+    @Path(EndPoints.ID + EndPoints.NAME)
+    EntityService entityService(@PathParam(UrlParameters.ID) Long id,
+                                @PathParam(UrlParameters.NAME) String name);
 
     @GET
     @Path(EndPoints.COUNT)

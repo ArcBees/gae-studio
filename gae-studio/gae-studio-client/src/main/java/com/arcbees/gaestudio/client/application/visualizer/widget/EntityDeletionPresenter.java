@@ -132,7 +132,7 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
             final EntityDto entityDto = currentParsedEntity.getEntityDto();
             KeyDto key = entityDto.getKey();
 
-            entitiesService.entityService(key.getId())
+            entitiesService.entityService(key.getId(), key.getName())
                     .deleteEntity(key, new MethodCallbackImpl<Void>() {
                         @Override
                         public void onSuccess(Void result) {

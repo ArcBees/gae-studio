@@ -41,6 +41,7 @@ import static com.arcbees.gaestudio.client.application.visualizer.event.EntitySa
 import static com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent.RefreshEntitiesHandler;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.NAME;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
@@ -187,6 +188,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.entity)
                 .with(KIND, keyDto.getKind())
                 .with(ID, Long.toString(keyDto.getId()))
+                .with(NAME, keyDto.getName())
                 .with(NAMESPACE, keyDto.getAppIdNamespace().getNamespace())
                 .with(APP_ID, keyDto.getAppIdNamespace().getAppId());
 

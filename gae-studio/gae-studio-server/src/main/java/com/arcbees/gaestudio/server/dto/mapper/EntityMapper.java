@@ -118,14 +118,14 @@ public class EntityMapper {
     }
 
     public KeyDto mapKeyToKeyDto(Key dbKey) {
-        return new KeyDto(dbKey.getKind(), dbKey.getId(), mapParentKey(dbKey.getParent()), mapNamespace(dbKey));
+        return new KeyDto(dbKey.getKind(), dbKey.getId(), dbKey.getName(), mapParentKey(dbKey.getParent()), mapNamespace(dbKey));
     }
 
     private ParentKeyDto mapParentKey(Key dbParentKey) {
         if (dbParentKey == null) {
             return null;
         }
-        return new ParentKeyDto(dbParentKey.getKind(), dbParentKey.getId());
+        return new ParentKeyDto(dbParentKey.getKind(), dbParentKey.getId(), null);
     }
 
     private AppIdNamespaceDto mapNamespace(Key dbNamespaceKey) {
