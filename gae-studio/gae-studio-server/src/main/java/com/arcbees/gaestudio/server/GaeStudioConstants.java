@@ -14,4 +14,8 @@ public class GaeStudioConstants {
     public static final String GA_CLIENT_KIND = "__GAClient";
     public static final String GAE_USER_KIND = "__GAEUser";
     public static final String GAESTUDIO_OPERATIONS_CLIENT_IDS = "gaestudio-operations-client-ids";
+    public static final String DISABLE_API_HOOKS = "GaeStudio.disableApiHooks";
+    public static final String REQUEST_ID = "requestId";
+    public static final String VISUALIZER_NAMESPACE = "gae.visualizer";
+    public static final String REQUEST_COUNTER = "request.counter";
 }

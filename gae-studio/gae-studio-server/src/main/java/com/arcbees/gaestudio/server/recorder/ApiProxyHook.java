@@ -16,13 +16,12 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import com.arcbees.gaestudio.server.GaeStudioConstants;
 import com.google.apphosting.api.ApiProxy.ApiConfig;
 import com.google.apphosting.api.ApiProxy.ApiProxyException;
 import com.google.apphosting.api.ApiProxy.Delegate;
 import com.google.apphosting.api.ApiProxy.Environment;
 
-// TODO externalize magic strings
-// TODO cleanup
 public class ApiProxyHook extends BaseHook {
     private Map<String, Delegate<Environment>> hooks;
     boolean isRecording = false;
@@ -53,8 +52,6 @@ public class ApiProxyHook extends BaseHook {
         if (areApiHooksDisabled(environment)) {
             return getBaseDelegate().makeAsyncCall(environment, packageName, methodName, request, apiConfig);
         }
-
-        // TODO flesh this out and make sure it works in all scenarios
 
         return new Future<byte[]>() {
             @Override
@@ -98,7 +95,7 @@ public class ApiProxyHook extends BaseHook {
     }
 
     private Boolean isDisabledForRequest(Environment environment) {
-        Boolean setting = (Boolean) environment.getAttributes().get("GaeStudio.disableApiHooks");
+        Boolean setting = (Boolean) environment.getAttributes().get(GaeStudioConstants.DISABLE_API_HOOKS);
         if (setting != null && setting) {
             return true;
         }

@@ -58,7 +58,6 @@ public class DetailsView extends ViewImpl implements DetailsPresenter.MyView {
         callLocation.setHTML("");
     }
 
-    // TODO this is just a quick hack
     private String tempFormatCaller(StackTraceElementDto caller) {
         StringBuilder builder = new StringBuilder();
 

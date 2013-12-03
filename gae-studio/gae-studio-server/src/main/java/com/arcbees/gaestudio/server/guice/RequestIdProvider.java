@@ -9,11 +9,11 @@
 
 package com.arcbees.gaestudio.server.guice;
 
+import com.arcbees.gaestudio.server.GaeStudioConstants;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-// TODO externalize magic strings
 public class RequestIdProvider implements Provider<Long> {
     private final MemcacheService memcacheService;
 
@@ -24,6 +24,6 @@ public class RequestIdProvider implements Provider<Long> {
 
     @Override
     public Long get() {
-        return memcacheService.increment("request.counter", 1L, 0L);
+        return memcacheService.increment(GaeStudioConstants.REQUEST_COUNTER, 1L, 0L);
     }
 }
