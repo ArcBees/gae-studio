@@ -1,5 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:style>
         .root {
             overflow-x: auto;
@@ -10,5 +11,21 @@
         }
     </ui:style>
 
-    <g:SimplePanel ui:field="root" addStyleNames="{style.root}"/>
+    <g:HTMLPanel styleName="{res.styles.entityDetailPanel}" ui:field="panelRoot">
+        <g:HTMLPanel styleName="{res.styles.entityDetailPanelVisibility}">
+            <a class="{res.styles.backButton}" title="Back to normal view" ui:field="back"/>
+            <a class="{res.styles.fullscreenButton}" title="View in full screen" ui:field="fullscreen"/>
+            <p class="{res.styles.isDisplaying}">
+                Displaying
+                <span class="{res.styles.isDisplayingEntity}">entity</span>
+                <b class="{res.styles.idBold}">no entity</b>
+                of the kind
+                <b class="{res.styles.kindBold}">Kind</b>
+                <span class="{res.styles.namespace}">in the namespace
+                    <b class="{res.styles.namespaceBold}">Namespace</b>
+                </span>
+            </p>
+            <g:SimplePanel ui:field="root" addStyleNames="{style.root} {res.styles.secondTable}"/>
+        </g:HTMLPanel>
+    </g:HTMLPanel>
 </ui:UiBinder>

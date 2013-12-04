@@ -11,7 +11,10 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
+import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
@@ -24,6 +27,9 @@ import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -41,8 +47,8 @@ import static com.arcbees.gaestudio.client.application.visualizer.event.EntitySa
 import static com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent.RefreshEntitiesHandler;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.NAME;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.NAME;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
@@ -63,10 +69,15 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void hideList();
 
         void removeEntity(EntityDto entityDTO);
+
+        CellTable<ParsedEntity> getEntityTable();
     }
+
+    private static final int DEFAULT_COLUMNS_COUNT = 3;
 
     private final EntitiesService entitiesService;
     private final PlaceManager placeManager;
+    private final PropertyNamesAggregator propertyNamesAggregator;
 
     private String currentKind;
 
@@ -74,11 +85,13 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     EntityListPresenter(EventBus eventBus,
                         MyView view,
                         PlaceManager placeManager,
-                        EntitiesService entitiesService) {
+                        EntitiesService entitiesService,
+                        PropertyNamesAggregator propertyNamesAggregator) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
         this.entitiesService = entitiesService;
+        this.propertyNamesAggregator = propertyNamesAggregator;
 
         getView().setUiHandlers(this);
 
@@ -93,15 +106,23 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
+    public void onRowLock() {
+        getEventBus().fireEvent(new RowLockedEvent());
+    }
+
+    @Override
+    public void onRowUnlock() {
+        getEventBus().fireEvent(new RowUnlockedEvent());
+    }
+
+    @Override
     public void onRefreshEntities(RefreshEntitiesEvent event) {
         loadKind();
     }
 
-    public void setCurrentKind(String currentKind) {
-        this.currentKind = currentKind;
-    }
+    public void loadKind(String kind) {
+        this.currentKind = kind;
 
-    public void loadKind() {
         setTotalCount();
         getView().setNewKind(currentKind);
     }
@@ -133,6 +154,10 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         addRegisteredHandler(EntityDeletedEvent.getType(), this);
         addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
         addRegisteredHandler(RefreshEntitiesEvent.getType(), this);
+    }
+
+    private void loadKind() {
+        loadKind(this.currentKind);
     }
 
     private void setTableDataProvider() {
@@ -171,14 +196,49 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     private void onLoadPageSuccess(List<EntityDto> entities, HasData<ParsedEntity> display) {
-        List<ParsedEntity> parsedEntityEntities = new ArrayList<ParsedEntity>();
+        List<ParsedEntity> parsedEntities = new ArrayList<ParsedEntity>();
 
         for (EntityDto entityDto : entities) {
             ParsedEntity parsedEntity = new ParsedEntity(entityDto);
-            parsedEntityEntities.add(parsedEntity);
+            parsedEntities.add(parsedEntity);
         }
 
-        getView().setData(display.getVisibleRange(), parsedEntityEntities);
+        adjustColumns(parsedEntities);
+        getView().setData(display.getVisibleRange(), parsedEntities);
+    }
+
+    private void adjustColumns(List<ParsedEntity> entities) {
+        removeKindSpecificColumns();
+
+        Set<String> propertyNames = propertyNamesAggregator.aggregatePropertyNames(entities);
+
+        for (String propertyName : propertyNames) {
+            TextColumn<ParsedEntity> column = buildColumn(propertyName);
+
+            addColumn(column, propertyName);
+        }
+    }
+
+    private TextColumn<ParsedEntity> buildColumn(final String propertyName) {
+        return new TextColumn<ParsedEntity>() {
+            @Override
+            public String getValue(ParsedEntity parsedEntity) {
+                JSONValue value = parsedEntity.getProperty(propertyName);
+
+                String stringValue = "";
+                if (value != null) {
+                    stringValue = parsedEntity.getCleanedUpProperty(propertyName).toString();
+                }
+
+                return stringValue;
+            }
+        };
+    }
+
+    private void addColumn(TextColumn<ParsedEntity> column, String header) {
+        CellTable<ParsedEntity> entityTable = getView().getEntityTable();
+        entityTable.addColumn(column, header);
+        entityTable.redraw();
     }
 
     private void revealEntityPlace(ParsedEntity parsedEntity) {
@@ -198,5 +258,19 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         }
 
         placeManager.revealPlace(builder.build());
+    }
+
+    private void removeKindSpecificColumns() {
+        CellTable<ParsedEntity> entityTable = getView().getEntityTable();
+
+        while(entityTable.getColumnCount() > DEFAULT_COLUMNS_COUNT) {
+            removeLastColumn(entityTable);
+        }
+    }
+
+    private void removeLastColumn(CellTable<ParsedEntity> entityTable) {
+        int lastColumnIndex = entityTable.getColumnCount() - 1;
+
+        entityTable.removeColumn(lastColumnIndex);
     }
 }

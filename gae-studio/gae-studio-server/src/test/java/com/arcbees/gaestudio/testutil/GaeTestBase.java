@@ -34,11 +34,11 @@ public class GaeTestBase {
         helper.tearDown();
     }
 
-    public Entity createEntityInDatastore(String kindName, String propertyName, String name) {
+    public Entity createEntityInDatastore(String kindName, String propertyName, Object value) {
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
         Entity entity = new Entity(kindName);
 
-        entity.setProperty(propertyName, name);
+        entity.setProperty(propertyName, value);
         datastoreService.put(entity);
 
         return entity;
@@ -47,11 +47,11 @@ public class GaeTestBase {
     public Entity createEntityInNamespace(String namespace,
                                           String kindName,
                                           String propertyName,
-                                          String name) {
+                                          Object value) {
         String defaultNamespace = NamespaceManager.get();
         NamespaceManager.set(namespace);
 
-        Entity entity = createEntityInDatastore(kindName, propertyName, name);
+        Entity entity = createEntityInDatastore(kindName, propertyName, value);
 
         NamespaceManager.set(defaultNamespace);
 

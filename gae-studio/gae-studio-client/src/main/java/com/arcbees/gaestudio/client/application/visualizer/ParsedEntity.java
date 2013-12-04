@@ -21,7 +21,6 @@ import com.google.gwt.json.client.JSONValue;
 import static com.arcbees.gaestudio.shared.PropertyName.PROPERTY_MAP;
 
 public class ParsedEntity {
-
     private EntityDto entityDto;
     private JSONObject jsonObject;
 
@@ -44,7 +43,8 @@ public class ParsedEntity {
     }
 
     public JSONValue getCleanedUpProperty(String key) {
-        return PropertyUtil.cleanUpMetadata(getProperty(key));
+        JSONValue property = getProperty(key);
+        return PropertyUtil.cleanUpMetadata(property);
     }
 
     public JSONObject getPropertyMap() {

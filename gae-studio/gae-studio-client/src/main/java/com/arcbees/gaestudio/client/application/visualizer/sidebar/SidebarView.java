@@ -65,7 +65,6 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private final String namespaceStyleName;
     private final String idStyleName;
     private final String entityStyleName;
-    private final String extendButtonStyleName;
     private final String backButtonStyleName;
 
     private String currentKind;
@@ -92,7 +91,6 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         idStyleName = appResources.styles().idBold();
         entityStyleName = appResources.styles().isDisplayingEntity();
         entityDetailPanelVisibilityStyleName = appResources.styles().entityDetailPanelVisibility();
-        extendButtonStyleName = appResources.styles().fullscreenButton();
         backButtonStyleName = appResources.styles().backButton();
     }
 
@@ -108,13 +106,6 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         for (String kind : kinds) {
             addKind(kind);
         }
-
-        $("div", this.kinds).click(new Function() {
-            @Override
-            public void f(Element e) {
-                onKindSelected(e);
-            }
-        });
     }
 
     @Override
@@ -137,6 +128,13 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         final HTML kindWidget = new HTML(html);
         kinds.add(kindWidget);
 
+        $(kindWidget).click(new Function() {
+            @Override
+            public void f(Element e) {
+                onKindSelected(e);
+            }
+        });
+
         if (kind.equals(currentKind)) {
             Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
                 @Override
@@ -153,7 +151,6 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         $("." + namespaceStyleName).hide();
         $("." + entityStyleName).hide();
         $("." + idStyleName).text("no entity");
-        $("." + extendButtonStyleName).hide();
         $("." + backButtonStyleName).hide();
 
         setActive(e);

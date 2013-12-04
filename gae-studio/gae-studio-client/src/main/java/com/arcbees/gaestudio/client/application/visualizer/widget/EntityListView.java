@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.PagerResources;
@@ -21,7 +20,7 @@ import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
-import com.arcbees.gquery.tooltip.client.Tooltip;
+import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent;
@@ -35,7 +34,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.Range;
-import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
@@ -47,47 +45,36 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     private static final int PAGE_SIZE = 25;
     private static final Range DEFAULT_RANGE = new Range(0, PAGE_SIZE);
-
     @UiField
     HTMLPanel panel;
     @UiField(provided = true)
     SimplePager pager;
     @UiField(provided = true)
     CellTable<ParsedEntity> entityTable;
+    @UiField
+    AnchorElement deselectEntity;
 
-    private final VisualizerUiFactory visualizerUiFactory;
-    private final SingleSelectionModel<ParsedEntity> selectionModel = new SingleSelectionModel<ParsedEntity>();
     private final String idStyleName;
     private final String lockedRowStyleName;
     private final String namespaceStyleName;
     private final String namespaceSpanStyleName;
     private final String pagerButtons;
-    private final String unlockButton;
-    private final String extendButton;
-    private final String backButton;
     private final String firstTableRow;
     private final String entityStyleName;
     private final String secondTableStyleName;
     private final String secondTableHiddenStyleName;
-    private final String entityContainerStyleName;
-    private final String entityListContainerSelectedStyleName;
     private final String kindStyleName;
     private final String firstTableStyleName;
     private final String pagerStyleName;
     private final String isNull = "<null>";
     private final String isUndefined = "";
 
-
-    private Tooltip tooltip;
-
     @Inject
     EntityListView(Binder uiBinder,
                    CellTableResource cellTableResource,
-                   VisualizerUiFactory visualizerUiFactory,
                    PagerResources pagerResources,
                    AppResources appResources) {
         pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
-        this.visualizerUiFactory = visualizerUiFactory;
 
         kindStyleName = appResources.styles().kindBold();
         idStyleName = appResources.styles().idBold();
@@ -98,14 +85,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         pagerStyleName = appResources.styles().pager();
         lockedRowStyleName = appResources.styles().lockedRow();
         pagerButtons = "." + pagerStyleName + " tbody tr td img";
-        unlockButton = "." + appResources.styles().unlockButton();
-        extendButton = "." + appResources.styles().fullscreenButton();
-        backButton = "." + appResources.styles().backButton();
         firstTableRow = "." + firstTableStyleName + " tbody";
         secondTableStyleName = appResources.styles().secondTable();
         secondTableHiddenStyleName = appResources.styles().secondTableHidden();
-        entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
-        entityContainerStyleName = appResources.styles().entityContainer();
 
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
@@ -150,10 +132,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         entityTable.setRowData(range.getStart(), parsedEntities);
     }
 
-    public void redrawTable() {
-        entityTable.redraw();
-    }
-
     @Override
     public void addOrReplaceEntity(EntityDto entityDTO) {
         int rowIndex = getRowIndex(entityDTO);
@@ -173,6 +151,15 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             Range range = entityTable.getVisibleRange();
             entityTable.setVisibleRangeAndClearData(range, true);
         }
+    }
+
+    @Override
+    public CellTable<ParsedEntity> getEntityTable() {
+        return entityTable;
+    }
+
+    private void redrawTable() {
+        entityTable.redraw();
     }
 
     private int getRowIndex(EntityDto entityDTO) {
@@ -208,12 +195,26 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     private void setDefaultColumns() {
-        TextColumn<ParsedEntity> idColumn = new TextColumn<ParsedEntity>() {
+        TextColumn<ParsedEntity> idColumn = buildIdColumn();
+        entityTable.addColumn(idColumn, "ID");
+
+        TextColumn<ParsedEntity> parentKindColumn = buildParentKindColumn();
+        entityTable.addColumn(parentKindColumn, "Parent Kind");
+
+        TextColumn<ParsedEntity> parentIdColumn = buildParentIdColumn();
+        entityTable.addColumn(parentIdColumn, "Parent ID");
+
+        TextColumn<ParsedEntity> namespaceColumn = buildNameSpaceColumn();
+        entityTable.addColumn(namespaceColumn, "Namespace");
+    }
+
+    private TextColumn<ParsedEntity> buildIdColumn() {
+        return new TextColumn<ParsedEntity>() {
             @Override
             public String getValue(ParsedEntity entityJsonParsed) {
                 String idName;
 
-                if(entityJsonParsed.getKey().getId() != 0) {
+                if (entityJsonParsed.getKey().getId() != 0) {
                     idName = entityJsonParsed.getKey().getId().toString();
                 } else {
                     idName = entityJsonParsed.getKey().getName();
@@ -222,9 +223,10 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 return idName;
             }
         };
-        entityTable.addColumn(idColumn, "ID/Name");
+    }
 
-        TextColumn<ParsedEntity> parentKindColumn = new TextColumn<ParsedEntity>() {
+    private TextColumn<ParsedEntity> buildParentKindColumn() {
+        return new TextColumn<ParsedEntity>() {
             @Override
             public String getValue(ParsedEntity entityJsonParsed) {
                 ParentKeyDto parentKeyDTO = entityJsonParsed.getKey().getParentKey();
@@ -234,9 +236,10 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 return parentKeyDTO.getKind();
             }
         };
-        entityTable.addColumn(parentKindColumn, "Parent Kind");
+    }
 
-        TextColumn<ParsedEntity> parentIdColumn = new TextColumn<ParsedEntity>() {
+    private TextColumn<ParsedEntity> buildParentIdColumn() {
+        return new TextColumn<ParsedEntity>() {
             @Override
             public String getValue(ParsedEntity entityJsonParsed) {
                 ParentKeyDto parentKeyDTO = entityJsonParsed.getKey().getParentKey();
@@ -246,9 +249,10 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 return parentKeyDTO.getId().toString();
             }
         };
-        entityTable.addColumn(parentIdColumn, "Parent ID");
+    }
 
-        TextColumn<ParsedEntity> namespaceColumn = new TextColumn<ParsedEntity>() {
+    private TextColumn<ParsedEntity> buildNameSpaceColumn() {
+        return new TextColumn<ParsedEntity>() {
             @Override
             public String getValue(ParsedEntity entityJsonParsed) {
                 KeyDto keyDto = entityJsonParsed.getKey();
@@ -262,7 +266,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 return namespace;
             }
         };
-        entityTable.addColumn(namespaceColumn, "Namespace");
     }
 
     private void onEditTableAttachedOrDetached(boolean attached) {
@@ -274,24 +277,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     private void bindGwtQuery() {
-        $(firstTableRow).delegate("tr", BrowserEvents.MOUSEOVER, new Function() {
-            @Override
-            public void f(Element e) {
-                if ($("." + lockedRowStyleName).isEmpty()) {
-                    initRightPanel(e);
-                }
-            }
-        });
-
-        $(firstTableRow).delegate("tr", BrowserEvents.MOUSEOUT, new Function() {
-            @Override
-            public void f() {
-                if ($("." + lockedRowStyleName).isEmpty()) {
-                    resetRightPanel();
-                }
-            }
-        });
-
         $(firstTableRow).delegate("tr", BrowserEvents.CLICK, new Function() {
             @Override
             public void f(Element e) {
@@ -313,29 +298,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             }
         });
 
-        $(unlockButton).click(new Function() {
+        $(deselectEntity).click(new Function() {
             @Override
             public void f() {
                 unlockRows();
                 resetRightPanel();
-            }
-        });
-
-        $(backButton).click(new Function() {
-            @Override
-            public void f() {
-                $("." + entityContainerStyleName).removeClass(entityListContainerSelectedStyleName);
-                $(extendButton).show();
-                $(backButton).hide();
-            }
-        });
-
-        $(extendButton).click(new Function() {
-            @Override
-            public void f(Element e) {
-                $("." + entityContainerStyleName).addClass(entityListContainerSelectedStyleName);
-                $(extendButton).hide();
-                $(backButton).show();
             }
         });
     }
@@ -374,13 +341,13 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     private void lockRow(Element e) {
         $(e).addClass(lockedRowStyleName);
-        $(unlockButton).show();
-        $(extendButton).show();
+        $(deselectEntity).show();
+        getUiHandlers().onRowLock();
     }
 
     private void unlockRows() {
         $("." + lockedRowStyleName).removeClass(lockedRowStyleName);
-        $(unlockButton).hide();
-        $(extendButton).hide();
+        $(deselectEntity).hide();
+        getUiHandlers().onRowUnlock();
     }
 }
