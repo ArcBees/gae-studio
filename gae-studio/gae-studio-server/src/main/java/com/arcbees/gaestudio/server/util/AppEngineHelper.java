@@ -9,9 +9,9 @@
 
 package com.arcbees.gaestudio.server.util;
 
+import com.arcbees.gaestudio.server.GaeStudioConstants;
 import com.google.apphosting.api.ApiProxy;
 
-// TODO externalize magic strings
 public class AppEngineHelper {
     @SuppressWarnings("unused")
     private AppEngineHelper() {
@@ -22,6 +22,6 @@ public class AppEngineHelper {
      * by GAE Studio itself from showing in the profiler.
      */
     public static void disableApiHooks() {
-        ApiProxy.getCurrentEnvironment().getAttributes().put("GaeStudio.disableApiHooks", true);
+        ApiProxy.getCurrentEnvironment().getAttributes().put(GaeStudioConstants.DISABLE_API_HOOKS, true);
     }
 }

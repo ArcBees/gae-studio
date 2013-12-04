@@ -11,10 +11,10 @@ package com.arcbees.gaestudio.server.dto.mapper;
 
 import java.util.ArrayList;
 
-import com.arcbees.gaestudio.shared.dto.query.QueryDto;
-import com.arcbees.gaestudio.shared.dto.query.QueryFilterDto;
 import com.arcbees.gaestudio.shared.QueryFilterOperator;
 import com.arcbees.gaestudio.shared.QueryOrderDirection;
+import com.arcbees.gaestudio.shared.dto.query.QueryDto;
+import com.arcbees.gaestudio.shared.dto.query.QueryFilterDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryOrderDto;
 import com.google.apphosting.api.DatastorePb;
 import com.google.storage.onestore.v3.OnestoreEntity;
@@ -30,7 +30,6 @@ public class QueryMapper {
 
         final ArrayList<QueryFilterDto> filterList = new ArrayList<QueryFilterDto>();
         for (DatastorePb.Query.Filter filter : query.filters()) {
-            // TODO find out why this is an array
             OnestoreEntity.Property property = filter.getProperty(0);
             String propertyName = property.getName();
             QueryFilterOperator operator = convertFilterOperator(filter.getOpEnum());

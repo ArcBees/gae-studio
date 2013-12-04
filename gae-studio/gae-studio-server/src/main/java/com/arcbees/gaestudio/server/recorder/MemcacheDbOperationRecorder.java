@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.server.recorder;
 
 import java.util.Set;
 
+import com.arcbees.gaestudio.server.GaeStudioConstants;
 import com.arcbees.gaestudio.server.channel.ClientService;
 import com.arcbees.gaestudio.server.dto.mapper.QueryMapper;
 import com.arcbees.gaestudio.server.dto.mapper.QueryResultMapper;
@@ -31,7 +32,6 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
-// TODO externalize magic literals
 public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     private final Provider<MemcacheService> memcacheServiceProvider;
     private final Provider<Long> requestIdProvider;
@@ -43,7 +43,7 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     @Inject
     MemcacheDbOperationRecorder(Provider<MemcacheService> memcacheServiceProvider,
                                 ClientService clientService,
-                                @Named("requestId") Provider<Long> requestIdProvider,
+                                @Named(GaeStudioConstants.REQUEST_ID) Provider<Long> requestIdProvider,
                                 StackInspector stackInspector) {
         this.memcacheServiceProvider = memcacheServiceProvider;
         this.requestIdProvider = requestIdProvider;

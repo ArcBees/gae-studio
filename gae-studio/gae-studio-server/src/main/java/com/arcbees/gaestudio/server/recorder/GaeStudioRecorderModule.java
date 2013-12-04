@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.server.recorder;
 
 import javax.inject.Singleton;
 
+import com.arcbees.gaestudio.server.GaeStudioConstants;
 import com.arcbees.gaestudio.server.guice.RequestIdProvider;
 import com.arcbees.gaestudio.server.recorder.authentication.Listener;
 import com.arcbees.gaestudio.server.recorder.authentication.ListenerProvider;
@@ -24,11 +25,10 @@ import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.RequestScoped;
 
-// TODO externalize magic strings
 public class GaeStudioRecorderModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(Long.class).annotatedWith(Names.named("requestId")).toProvider(RequestIdProvider.class)
+        bind(Long.class).annotatedWith(Names.named(GaeStudioConstants.REQUEST_ID)).toProvider(RequestIdProvider.class)
                 .in(RequestScoped.class);
 
         bind(StackInspector.class).to(SimpleStackInspector.class);
@@ -46,6 +46,6 @@ public class GaeStudioRecorderModule extends AbstractModule {
     @Provides
     @Singleton
     private MemcacheService memcacheServiceProvider() {
-        return MemcacheServiceFactory.getMemcacheService("gae.visualizer");
+        return MemcacheServiceFactory.getMemcacheService(GaeStudioConstants.VISUALIZER_NAMESPACE);
     }
 }
