@@ -73,8 +73,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         CellTable<ParsedEntity> getEntityTable();
     }
 
-    private static final int DEFAULT_COLUMNS_COUNT = 3;
-
     private final EntitiesService entitiesService;
     private final PlaceManager placeManager;
     private final PropertyNamesAggregator propertyNamesAggregator;
@@ -263,7 +261,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private void removeKindSpecificColumns() {
         CellTable<ParsedEntity> entityTable = getView().getEntityTable();
 
-        while(entityTable.getColumnCount() > DEFAULT_COLUMNS_COUNT) {
+        while(entityTable.getColumnCount() > EntityListView.getDefaultColumnCount()) {
             removeLastColumn(entityTable);
         }
     }

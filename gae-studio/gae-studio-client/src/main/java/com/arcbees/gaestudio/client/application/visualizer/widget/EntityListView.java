@@ -45,6 +45,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     private static final int PAGE_SIZE = 25;
     private static final Range DEFAULT_RANGE = new Range(0, PAGE_SIZE);
+    private static int DEFAULT_COLUMN_COUNT;
+
     @UiField
     HTMLPanel panel;
     @UiField(provided = true)
@@ -105,6 +107,10 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         setDefaultColumns();
     }
 
+    public static int getDefaultColumnCount() {
+        return DEFAULT_COLUMN_COUNT;
+    }
+
     @Override
     public void setTableDataProvider(AsyncDataProvider<ParsedEntity> dataProvider) {
         dataProvider.addDataDisplay(entityTable);
@@ -158,6 +164,10 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         return entityTable;
     }
 
+    private void setDefaultColumnCount(int defaultColumnCount) {
+        DEFAULT_COLUMN_COUNT = defaultColumnCount;
+    }
+
     private void redrawTable() {
         entityTable.redraw();
     }
@@ -206,6 +216,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         TextColumn<ParsedEntity> namespaceColumn = buildNameSpaceColumn();
         entityTable.addColumn(namespaceColumn, "Namespace");
+
+        setDefaultColumnCount(entityTable.getColumnCount());
     }
 
     private TextColumn<ParsedEntity> buildIdColumn() {
