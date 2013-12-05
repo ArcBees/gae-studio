@@ -28,7 +28,7 @@ import com.jayway.restassured.response.Response;
 import static com.jayway.restassured.RestAssured.get;
 import static com.jayway.restassured.RestAssured.given;
 
-public abstract class RestIT {
+public class RestIT {
     public static final String HOSTNAME;
 
     protected final Gson gson = new GsonBuilder().create();
@@ -43,7 +43,21 @@ public abstract class RestIT {
 
     @Before
     public void setUp() {
+        clearDatabase();
+    }
+
+    public void clearDatabase() {
         get(getAbsoluteUri(TestEndPoints.CLEAR));
+    }
+
+    public Long createRemoteCar(Car car) {
+        return given().body(car).post(getAbsoluteUri(TestEndPoints.CAR)).as(Long.class);
+    }
+
+    public Car getRemoteCar(Long id) {
+        Response response = given().queryParam(TestEndPoints.PARAM_ID, id).get(getAbsoluteUri(TestEndPoints.CAR));
+
+        return gson.fromJson(response.asString(), Car.class);
     }
 
     protected String getAbsoluteUri(String relativeLocation) {
@@ -52,14 +66,6 @@ public abstract class RestIT {
 
     protected Long createRemoteCar() {
         return createRemoteCar(new Car());
-    }
-
-    protected Long createRemoteCar(Car car) {
-        return given().body(car).post(getAbsoluteUri(TestEndPoints.CAR)).as(Long.class);
-    }
-
-    protected Response deleteRemoteCar(Long id) {
-        return given().body(id).delete(getAbsoluteUri(TestEndPoints.CAR));
     }
 
     protected Set<String> getRemoteKindsResponse() {
@@ -74,13 +80,8 @@ public abstract class RestIT {
     }
 
     protected Response deleteAllRemoteEntities() {
-        return given().queryParam(TestEndPoints.PARAM_TYPE, DeleteEntities.ALL).delete(getAbsoluteUri(EndPoints.ENTITIES));
-    }
-
-    protected Car getRemoteCar(Long id) {
-        Response response = given().queryParam(TestEndPoints.PARAM_ID, id).get(getAbsoluteUri(TestEndPoints.CAR));
-
-        return gson.fromJson(response.asString(), Car.class);
+        return given().queryParam(TestEndPoints.PARAM_TYPE, DeleteEntities.ALL).delete(getAbsoluteUri(EndPoints
+                .ENTITIES));
     }
 
     protected Long stopRecording() {
