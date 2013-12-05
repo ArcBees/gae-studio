@@ -12,9 +12,13 @@ The project in which you want to plug GAE Studio must repect the following condi
 ##Plugging GAE Studio in your project
 To plug GAE Studio into your project, follow these steps:
 
-*. Modify the appengine-web.xml file and turn on sessions.
+*. Modify the appengine-web.xml file and turn on sessions and channel presence.
 ```
 <sessions-enabled>true</sessions-enabled>
+
+<inbound-services>
+    <service>channel_presence</service>
+</inbound-services>
 ```
 *. Add the GAE Studio dependency
 ```xml
