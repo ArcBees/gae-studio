@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -21,33 +22,30 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
 import com.arcbees.gaestudio.server.dto.mapper.EntityMapper;
+import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.service.EntityService;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
+import com.google.api.client.repackaged.com.google.common.base.Strings;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
-import com.google.inject.assistedinject.Assisted;
 
+@Path(EndPoints.ENTITY)
 @Produces(MediaType.APPLICATION_JSON)
+@GaeStudioResource
 public class EntityResource {
     private final EntityMapper entityMapper;
-    private final Long entityId;
     private final EntityService entityService;
-    private final String entityName;
 
     @Inject
     EntityResource(EntityService entityService,
-                   EntityMapper entityMapper,
-                   @Assisted Long entityId,
-                   @Assisted String entityName) {
+                   EntityMapper entityMapper) {
         this.entityMapper = entityMapper;
-        this.entityId = entityId;
         this.entityService = entityService;
-        this.entityName = entityName;
     }
 
     @GET
@@ -55,17 +53,24 @@ public class EntityResource {
                               @QueryParam(UrlParameters.APPID) String appId,
                               @QueryParam(UrlParameters.KIND) String kind,
                               @QueryParam(UrlParameters.PARENT_ID) String parentId,
-                              @QueryParam(UrlParameters.PARENT_KIND) String parentKind)
+                              @QueryParam(UrlParameters.PARENT_KIND) String parentKind,
+                              @QueryParam(UrlParameters.NAME) String entityName,
+                              @QueryParam(UrlParameters.ID) Long entityId)
             throws EntityNotFoundException {
         ResponseBuilder responseBuilder;
 
-        Entity entity = entityService.getEntity(entityId, entityName, namespace, appId, kind, parentId, parentKind);
-
-        if (entity == null) {
-            responseBuilder = Response.status(Status.NOT_FOUND);
+        if (isBadRequest(kind, entityName, entityId)) {
+            responseBuilder = Response.status(Status.BAD_REQUEST);
         } else {
-            EntityDto entityDto = entityMapper.mapEntityToDto(entity);
-            responseBuilder = Response.ok(entityDto);
+            Entity entity;
+
+            if (entityId != null) {
+                entity = entityService.getEntity(entityId, namespace, appId, kind, parentId, parentKind);
+            } else {
+                entity = entityService.getEntity(entityName, namespace, appId, kind, parentId, parentKind);
+            }
+
+            responseBuilder = buildResponseFromEntity(entity);
         }
 
         return responseBuilder.build();
@@ -88,12 +93,50 @@ public class EntityResource {
     }
 
     @DELETE
-    public Response deleteEntity(KeyDto keyDto) {
+    public Response deleteEntity(@QueryParam(UrlParameters.KIND) String kind,
+                                 @QueryParam(UrlParameters.NAME) String entityName,
+                                 @QueryParam(UrlParameters.ID) Long entityId) {
         AppEngineHelper.disableApiHooks();
-        Key key = KeyFactory.createKey(keyDto.getKind(), keyDto.getId());
+        ResponseBuilder responseBuilder = Response.noContent();
+        Key key;
 
-        entityService.deleteEntity(key);
+        if (isBadRequest(kind, entityName, entityId)) {
+            responseBuilder = Response.status(Status.BAD_REQUEST);
+        } else {
+            if (entityId != null) {
+                key = KeyFactory.createKey(kind, entityId);
+            } else {
+                key = KeyFactory.createKey(kind, entityName);
+            }
 
-        return Response.noContent().build();
+            entityService.deleteEntity(key);
+        }
+
+        return responseBuilder.build();
+    }
+
+    private ResponseBuilder buildResponseFromEntity(Entity entity) {
+        ResponseBuilder responseBuilder;
+
+        if (entity == null) {
+            responseBuilder = Response.status(Status.NOT_FOUND);
+        } else {
+            EntityDto entityDto = entityMapper.mapEntityToDto(entity);
+            responseBuilder = Response.ok(entityDto);
+        }
+
+        return responseBuilder;
+    }
+
+    private boolean isBadRequest(String kind, String entityName, Long entityId) {
+        return kind == null || nameParameterIsPresent(entityName) && idParameterIsPresent(entityId);
+    }
+
+    private boolean nameParameterIsPresent(String entityName) {
+        return !Strings.isNullOrEmpty(entityName);
+    }
+
+    private boolean idParameterIsPresent(Long entityId) {
+        return entityId != null;
     }
 }

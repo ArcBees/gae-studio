@@ -16,7 +16,6 @@ import org.fusesource.restygwt.client.MethodCallback;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.rest.EntityService;
 import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -30,8 +29,8 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.NAME;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.NAME;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
@@ -46,18 +45,18 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     interface MyProxy extends ProxyPlace<EntityPresenter> {
     }
 
-    private final EntitiesService entitiesService;
+    private final EntityService entityService;
     private final AppConstants appConstants;
 
     @Inject
     EntityPresenter(EventBus eventBus,
                     MyView view,
                     MyProxy proxy,
-                    EntitiesService entitiesService,
+                    EntityService entityService,
                     AppConstants appConstants) {
         super(eventBus, view, proxy, VisualizerPresenter.SLOT_ENTITY_DETAILS);
 
-        this.entitiesService = entitiesService;
+        this.entityService = entityService;
         this.appConstants = appConstants;
     }
 
@@ -86,8 +85,12 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
             }
         };
 
-        EntityService entityService = entitiesService.entityService(Long.valueOf(id), name);
-        entityService.getEntity(kind, appId, name, namespace, parentId, parentKind, methodCallback);
+        Long longId = null;
+
+        if (Long.valueOf(id) != 0) {
+            longId = Long.valueOf(id);
+        }
+        entityService.getEntity(kind, appId, namespace, parentId, parentKind, name, longId, methodCallback);
     }
 
     private void displayEntityDto(EntityDto entityDto) {

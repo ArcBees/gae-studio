@@ -70,7 +70,7 @@ public class EntityServiceImplTest extends GaeTestBase {
         assertEquals(ANOTHER_NAME, savedEntity.getProperty(PROPERTY_NAME));
     }
 
-    @Test(expected=EntityNotFoundException.class)
+    @Test(expected = EntityNotFoundException.class)
     public void entityStored_deleteEntity_shouldDeleteEntity() throws EntityNotFoundException {
         //given
         Entity sentEntity = createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
@@ -85,6 +85,6 @@ public class EntityServiceImplTest extends GaeTestBase {
     }
 
     private Entity getEntityFromEntityResource(Long id) throws EntityNotFoundException {
-        return entityService.getEntity(id, null, null, null, KIND_NAME, null, null);
+        return entityService.getEntity(id, null, null, KIND_NAME, null, null);
     }
 }

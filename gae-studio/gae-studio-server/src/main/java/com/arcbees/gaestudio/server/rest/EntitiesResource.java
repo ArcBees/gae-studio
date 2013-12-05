@@ -17,7 +17,6 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -40,15 +39,12 @@ import com.google.appengine.api.datastore.Entity;
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
 public class EntitiesResource {
-    private final SubresourceFactory subresourceFactory;
     private final EntitiesService entitiesService;
     private final EntityMapper entityMapper;
 
     @Inject
-    EntitiesResource(SubresourceFactory subresourceFactory,
-                     EntitiesService entitiesService,
+    EntitiesResource(EntitiesService entitiesService,
                      EntityMapper entityMapper) {
-        this.subresourceFactory = subresourceFactory;
         this.entitiesService = entitiesService;
         this.entityMapper = entityMapper;
     }
@@ -124,17 +120,6 @@ public class EntitiesResource {
         }
 
         return responseBuilder.build();
-    }
-
-    @Path(EndPoints.ID)
-    public EntityResource getEntityResource(@PathParam(UrlParameters.ID) Long id) {
-        return subresourceFactory.createEntityResource(id, "");
-    }
-
-    @Path(EndPoints.ID + EndPoints.NAME)
-    public EntityResource getEntityResource(@PathParam(UrlParameters.ID) Long id,
-                                            @PathParam(UrlParameters.NAME) String name) {
-        return subresourceFactory.createEntityResource(id, name);
     }
 
     private boolean isValidDeleteRequest(String kind, String namespace, DeleteEntities deleteType) {

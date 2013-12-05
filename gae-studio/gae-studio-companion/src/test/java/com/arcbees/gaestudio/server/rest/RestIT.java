@@ -58,10 +58,6 @@ public abstract class RestIT {
         return given().body(car).post(getAbsoluteUri(TestEndPoints.CAR)).as(Long.class);
     }
 
-    protected Response deleteRemoteCar(Long id) {
-        return given().body(id).delete(getAbsoluteUri(TestEndPoints.CAR));
-    }
-
     protected Set<String> getRemoteKindsResponse() {
         Response response = given().get(getAbsoluteUri(EndPoints.KINDS));
         String[] kinds = response.as(String[].class);

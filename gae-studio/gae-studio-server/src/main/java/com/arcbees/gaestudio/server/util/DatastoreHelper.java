@@ -203,6 +203,6 @@ public class DatastoreHelper {
     }
 
     private boolean idIsNumeric(KeyDto keyDto) {
-        return keyDto.getId() != 0;
+        return Strings.isNullOrEmpty(keyDto.getName());
     }
 }
