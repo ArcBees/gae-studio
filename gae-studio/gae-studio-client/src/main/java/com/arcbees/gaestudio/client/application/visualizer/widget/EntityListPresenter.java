@@ -69,12 +69,13 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void removeEntity(EntityDto entityDTO);
 
         CellTable<ParsedEntity> getEntityTable();
+
+        void addProperty(String propertyName);
     }
 
     private final EntitiesService entitiesService;
     private final PlaceManager placeManager;
     private final PropertyNamesAggregator propertyNamesAggregator;
-    private final ParsedEntityColumnCreator columnCreator;
 
     private String currentKind;
 
@@ -83,14 +84,12 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         MyView view,
                         PlaceManager placeManager,
                         EntitiesService entitiesService,
-                        PropertyNamesAggregator propertyNamesAggregator,
-                        ParsedEntityColumnCreator columnCreator) {
+                        PropertyNamesAggregator propertyNamesAggregator) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
         this.entitiesService = entitiesService;
         this.propertyNamesAggregator = propertyNamesAggregator;
-        this.columnCreator = columnCreator;
 
         getView().setUiHandlers(this);
 
@@ -153,9 +152,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         addRegisteredHandler(EntityDeletedEvent.getType(), this);
         addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
         addRegisteredHandler(RefreshEntitiesEvent.getType(), this);
-
-        CellTable<ParsedEntity> entityTable = getView().getEntityTable();
-        columnCreator.initializeTable(entityTable);
     }
 
     private void loadKind() {
@@ -216,7 +212,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         CellTable<ParsedEntity> entityTable = getView().getEntityTable();
 
         for (String propertyName : propertyNames) {
-            columnCreator.addPropertyColumn(entityTable, propertyName);
+            getView().addProperty(propertyName);
         }
 
         entityTable.redraw();

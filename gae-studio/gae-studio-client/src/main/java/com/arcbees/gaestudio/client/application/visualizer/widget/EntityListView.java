@@ -64,12 +64,15 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final String kindStyleName;
     private final String firstTableStyleName;
     private final String pagerStyleName;
+    private final ParsedEntityColumnCreator columnCreator;
 
     @Inject
     EntityListView(Binder uiBinder,
                    CellTableResource cellTableResource,
                    PagerResources pagerResources,
-                   AppResources appResources) {
+                   AppResources appResources,
+                   ParsedEntityColumnCreator columnCreator) {
+        this.columnCreator = columnCreator;
         pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
 
         kindStyleName = appResources.styles().kindBold();
@@ -97,6 +100,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         pager.setDisplay(entityTable);
         pager.setPageSize(PAGE_SIZE);
+
+        columnCreator.initializeTable(entityTable);
     }
 
     @Override
@@ -150,6 +155,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @Override
     public CellTable<ParsedEntity> getEntityTable() {
         return entityTable;
+    }
+
+    @Override
+    public void addProperty(String propertyName) {
+        columnCreator.addPropertyColumn(entityTable, propertyName);
     }
 
     private void redrawTable() {
