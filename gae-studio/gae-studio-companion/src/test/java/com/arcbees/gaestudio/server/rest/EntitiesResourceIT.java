@@ -36,9 +36,7 @@ public class EntitiesResourceIT extends RestIT {
     @Test
     public void createObject_getEntities_entitiesReturned() {
         //given
-        Car car = new Car();
-        car.setMake("hello");
-        createRemoteCar(car);
+        createRemoteCar();
 
         //when
         Response response = getRemoteEntities(CAR_KIND);
