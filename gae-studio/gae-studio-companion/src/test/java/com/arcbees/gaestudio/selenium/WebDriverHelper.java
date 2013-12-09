@@ -11,28 +11,24 @@ package com.arcbees.gaestudio.selenium;
 
 import java.util.List;
 
-import org.junit.After;
+import javax.inject.Inject;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.arcbees.gaestudio.server.rest.RestIT;
 import com.google.common.base.Predicate;
-import com.google.gwt.user.client.ui.UIObject;
 
-public class SeleniumTestBase extends RestIT {
+public class WebDriverHelper {
     private final WebDriver webDriver;
 
-    SeleniumTestBase() {
-        webDriver = new ChromeDriver();
-    }
-
-    public String getRoot() {
-        return HOSTNAME + "gae-studio-admin/";
+    @Inject
+    WebDriverHelper(WebDriver webDriver) {
+        this.webDriver = webDriver;
     }
 
     public WebDriver webdriver() {
@@ -41,17 +37,6 @@ public class SeleniumTestBase extends RestIT {
 
     public WebDriverWait webDriverWait() {
         return new WebDriverWait(webDriver, 20);
-    }
-
-    @After
-    public void after() {
-        webdriver().quit();
-    }
-
-    public WebElement assertContainsElementWithDebugId(String debugId) {
-        return webDriverWait().until(ExpectedConditions.presenceOfElementLocated(By.id(UIObject
-                .DEBUG_ID_PREFIX + debugId)
-        ));
     }
 
     public void navigate(String nametoken) {
@@ -103,6 +88,10 @@ public class SeleniumTestBase extends RestIT {
                 return element.isDisplayed() && element.isEnabled();
             }
         });
+    }
+
+    public String getRoot() {
+        return RestIT.HOSTNAME + "gae-studio-admin/";
     }
 
     private String place(String nametoken) {

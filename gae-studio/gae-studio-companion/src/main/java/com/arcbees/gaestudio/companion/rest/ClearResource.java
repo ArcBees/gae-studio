@@ -10,7 +10,9 @@
 package com.arcbees.gaestudio.companion.rest;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
@@ -24,6 +26,13 @@ import static com.arcbees.gaestudio.companion.dao.OfyService.ofy;
 
 @Path(TestEndPoints.CLEAR)
 public class ClearResource {
+    private final Logger logger;
+
+    @Inject
+    ClearResource(Logger logger) {
+        this.logger = logger;
+    }
+
     @GET
     public Response get() {
         ResponseBuilder responseBuilder;
@@ -35,6 +44,8 @@ public class ClearResource {
 
             ofy().delete().entities(keys).now();
             ofy().clear();
+
+            logger.info("Database Cleared");
 
             responseBuilder = Response.ok();
         }
