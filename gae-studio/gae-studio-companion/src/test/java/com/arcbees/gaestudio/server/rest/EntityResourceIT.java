@@ -72,10 +72,8 @@ public class EntityResourceIT extends RestIT {
         //when
         Response response = getEntityResponse(carId);
         EntityDto entityDto = responseToEntityDto(response);
-        System.out.println(entityDto.getJson());
         String newJson = entityDto.getJson().replaceFirst("OldMake", "NewMake");
         entityDto.setJson(newJson);
-        System.out.println(newJson);
 
         Response updateResponse = updateEntityResponse(entityDto);
 
