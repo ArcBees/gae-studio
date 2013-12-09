@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.server.rest;
 
 import org.junit.Test;
 
+import com.arcbees.gaestudio.companion.domain.Car;
 import com.arcbees.gaestudio.companion.rest.TestEndPoints;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
@@ -59,6 +60,33 @@ public class EntityResourceIT extends RestIT {
 
         //then
         assertEquals(NO_CONTENT.getStatusCode(), response.getStatusCode());
+    }
+
+    @Test
+    public void createCar_updateCar_shouldReturnOK() {
+        //given
+        Car car = new Car();
+        car.setMake("OldMake");
+        Long carId = createRemoteCar(car);
+
+        //when
+        Response response = getEntityResponse(carId);
+        EntityDto entityDto = responseToEntityDto(response);
+        System.out.println(entityDto.getJson());
+        String newJson = entityDto.getJson().replaceFirst("OldMake", "NewMake");
+        entityDto.setJson(newJson);
+        System.out.println(newJson);
+
+        Response updateResponse = updateEntityResponse(entityDto);
+
+        //then
+        assertEquals(OK.getStatusCode(), updateResponse.getStatusCode());
+    }
+
+    private Response updateEntityResponse(EntityDto newEntityDto) {
+        return given()
+                .body(newEntityDto)
+                .put(getAbsoluteUri(EndPoints.ENTITY));
     }
 
     private Response deleteEntityResponse(Long carId) {

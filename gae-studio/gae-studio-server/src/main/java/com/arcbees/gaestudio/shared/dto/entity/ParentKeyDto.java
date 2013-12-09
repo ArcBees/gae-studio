@@ -30,17 +30,15 @@ public class ParentKeyDto {
         this.name = name;
     }
 
-    @JsonCreator
-    public ParentKeyDto(@JsonProperty("kind") String kind,
-                        @JsonProperty("id") Long id) {
+    public ParentKeyDto(String kind,
+                        Long id) {
         this.kind = kind;
         this.id = id;
         this.name = "";
     }
 
-    @JsonCreator
-    public ParentKeyDto(@JsonProperty("kind") String kind,
-                        @JsonProperty("name") String name) {
+    public ParentKeyDto(String kind,
+                        String name) {
         this.kind = kind;
         this.id = 0l;
         this.name = name;
