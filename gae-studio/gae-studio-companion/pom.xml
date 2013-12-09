@@ -18,6 +18,7 @@
         <rest-assured.version>1.8.1</rest-assured.version>
         <maven-gae-plugin.version>0.9.6</maven-gae-plugin.version>
         <maven-war-plugin.version>2.3</maven-war-plugin.version>
+        <cucumber.version>1.1.5</cucumber.version>
         <gae.version>1.8.5</gae.version>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
     </properties>
@@ -98,6 +99,18 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium-java.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-guice</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
