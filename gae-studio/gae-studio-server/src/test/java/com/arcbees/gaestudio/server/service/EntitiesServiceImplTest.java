@@ -51,7 +51,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
     EntitiesService entitiesService;
 
     @Test
-    public void twoEntitiesStored_getEntities_shouldReturnTwoEntities() {
+    public void getEntities_twoEntitiesStored_shouldReturnTwoEntities() {
         //given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
@@ -71,7 +71,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
     }
 
     @Test
-    public void entityStored_createEmptyEntity_shouldReturnEmptyEntity()
+    public void createEmptyEntity_entityStored_shouldReturnEmptyEntity()
             throws EntityNotFoundException, InstantiationException, IllegalAccessException {
         //given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
@@ -86,7 +86,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
     }
 
     @Test
-    public void entityStored_createEmptyEntity_shouldKeepIndexes()
+    public void createEmptyEntity_entityStored_shouldKeepIndexes()
             throws EntityNotFoundException, InstantiationException, IllegalAccessException {
         //given
         createEntityWithMultipleProperties();
@@ -104,7 +104,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
     }
 
     @Test
-    public void twoEntitiesStored_deleteEntitiesByKind_shouldHaveNoMoreEntities() {
+    public void deleteEntitiesByKind_twoEntitiesStored_shouldHaveNoMoreEntities() {
         //given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
@@ -117,7 +117,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
     }
 
     @Test
-    public void twoEntitiesStored_deleteEntitiesByNamespace_shouldHaveOneMoreEntities() {
+    public void deleteEntitiesByNamespace_twoEntitiesStored_shouldHaveOneMoreEntities() {
         //given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInDatastore(GAE_KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
@@ -130,7 +130,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
     }
 
     @Test
-    public void twoEntitiesStored_getCount_shouldReturnTwoEntities() {
+    public void getCount_twoEntitiesStored_shouldReturnTwoEntities() {
         //given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);

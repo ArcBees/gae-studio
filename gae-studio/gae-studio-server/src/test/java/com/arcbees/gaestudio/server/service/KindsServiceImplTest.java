@@ -44,7 +44,7 @@ public class KindsServiceImplTest extends GaeTestBase {
     KindsService kindsService;
 
     @Test
-    public void twoKindsStored_getKinds_shouldReturnTheTwoKinds() {
+    public void getKinds_twoKindsStored_shouldReturnTheTwoKinds() {
         //given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInDatastore(ANOTHER_KIND, PROPERTY_NAME, ANOTHER_NAME);
@@ -59,7 +59,7 @@ public class KindsServiceImplTest extends GaeTestBase {
     }
 
     @Test
-    public void threeKindsStored_gaeKind_getKinds_shouldReturnTheTwoKinds() {
+    public void getKinds_threeKindsStored_gaeKind_shouldReturnTheTwoKinds() {
         //given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInDatastore(ANOTHER_KIND, PROPERTY_NAME, ANOTHER_NAME);
