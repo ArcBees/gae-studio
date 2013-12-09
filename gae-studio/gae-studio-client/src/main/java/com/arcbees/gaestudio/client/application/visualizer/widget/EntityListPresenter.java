@@ -27,9 +27,7 @@ import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.cellview.client.CellTable;
-import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -76,6 +74,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private final EntitiesService entitiesService;
     private final PlaceManager placeManager;
     private final PropertyNamesAggregator propertyNamesAggregator;
+    private final ParsedEntityColumnCreator columnCreator;
 
     private String currentKind;
 
@@ -84,12 +83,14 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         MyView view,
                         PlaceManager placeManager,
                         EntitiesService entitiesService,
-                        PropertyNamesAggregator propertyNamesAggregator) {
+                        PropertyNamesAggregator propertyNamesAggregator,
+                        ParsedEntityColumnCreator columnCreator) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
         this.entitiesService = entitiesService;
         this.propertyNamesAggregator = propertyNamesAggregator;
+        this.columnCreator = columnCreator;
 
         getView().setUiHandlers(this);
 
@@ -209,33 +210,12 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         removeKindSpecificColumns();
 
         Set<String> propertyNames = propertyNamesAggregator.aggregatePropertyNames(entities);
+        CellTable<ParsedEntity> entityTable = getView().getEntityTable();
 
         for (String propertyName : propertyNames) {
-            TextColumn<ParsedEntity> column = buildColumn(propertyName);
-
-            addColumn(column, propertyName);
+            columnCreator.addColumn(entityTable, propertyName);
         }
-    }
 
-    private TextColumn<ParsedEntity> buildColumn(final String propertyName) {
-        return new TextColumn<ParsedEntity>() {
-            @Override
-            public String getValue(ParsedEntity parsedEntity) {
-                JSONValue value = parsedEntity.getProperty(propertyName);
-
-                String stringValue = "";
-                if (value != null) {
-                    stringValue = parsedEntity.getCleanedUpProperty(propertyName).toString();
-                }
-
-                return stringValue;
-            }
-        };
-    }
-
-    private void addColumn(TextColumn<ParsedEntity> column, String header) {
-        CellTable<ParsedEntity> entityTable = getView().getEntityTable();
-        entityTable.addColumn(column, header);
         entityTable.redraw();
     }
 
