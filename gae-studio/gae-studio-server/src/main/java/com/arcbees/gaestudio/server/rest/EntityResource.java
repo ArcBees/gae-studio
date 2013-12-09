@@ -137,6 +137,6 @@ public class EntityResource {
     }
 
     private boolean idParameterIsPresent(Long entityId) {
-        return entityId != null;
+        return entityId != null && entityId != 0;
     }
 }

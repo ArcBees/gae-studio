@@ -85,12 +85,7 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
             }
         };
 
-        Long longId = null;
-
-        if (Long.valueOf(id) != 0) {
-            longId = Long.valueOf(id);
-        }
-        entityService.getEntity(kind, appId, namespace, parentId, parentKind, name, longId, methodCallback);
+        entityService.getEntity(kind, appId, namespace, parentId, parentKind, name, Long.valueOf(id), methodCallback);
     }
 
     private void displayEntityDto(EntityDto entityDto) {
