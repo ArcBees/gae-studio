@@ -12,7 +12,7 @@
     </ui:style>
 
     <g:HTMLPanel styleName="{res.styles.entityDetailPanel}" ui:field="panelRoot">
-        <g:HTMLPanel styleName="{res.styles.entityDetailPanelVisibility}">
+        <div styleName="{res.styles.entityDetailPanelVisibility}">
             <a class="{res.styles.backButton}" title="Back to normal view" ui:field="back"/>
             <a class="{res.styles.fullscreenButton}" title="View in full screen" ui:field="fullscreen"/>
             <p class="{res.styles.isDisplaying}">
@@ -26,6 +26,6 @@
                 </span>
             </p>
             <g:SimplePanel ui:field="root" addStyleNames="{style.root} {res.styles.secondTable}"/>
-        </g:HTMLPanel>
+        </div>
     </g:HTMLPanel>
 </ui:UiBinder>
