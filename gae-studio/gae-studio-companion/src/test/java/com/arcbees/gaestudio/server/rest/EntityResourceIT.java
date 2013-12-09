@@ -11,9 +11,9 @@ package com.arcbees.gaestudio.server.rest;
 
 import org.junit.Test;
 
+import com.arcbees.gaestudio.companion.domain.Car;
 import com.arcbees.gaestudio.companion.rest.TestEndPoints;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.jayway.restassured.response.Response;
 
@@ -62,10 +62,36 @@ public class EntityResourceIT extends RestIT {
         assertEquals(NO_CONTENT.getStatusCode(), response.getStatusCode());
     }
 
-    private Response deleteEntityResponse(Long carId) {
-        KeyDto keyDto = new KeyDto(CAR_KIND, carId, null, null, null);
+    @Test
+    public void createCar_updateCar_shouldReturnOK() {
+        //given
+        Car car = new Car();
+        car.setMake("OldMake");
+        Long carId = createRemoteCar(car);
 
-        return given().body(keyDto).delete(getAbsoluteUri(EndPoints.ENTITIES + carId));
+        //when
+        Response response = getEntityResponse(carId);
+        EntityDto entityDto = responseToEntityDto(response);
+        String newJson = entityDto.getJson().replaceFirst("OldMake", "NewMake");
+        entityDto.setJson(newJson);
+
+        Response updateResponse = updateEntityResponse(entityDto);
+
+        //then
+        assertEquals(OK.getStatusCode(), updateResponse.getStatusCode());
+    }
+
+    private Response updateEntityResponse(EntityDto newEntityDto) {
+        return given()
+                .body(newEntityDto)
+                .put(getAbsoluteUri(EndPoints.ENTITY));
+    }
+
+    private Response deleteEntityResponse(Long carId) {
+        return given()
+                .queryParam(TestEndPoints.PARAM_KIND, CAR_KIND)
+                .queryParam(TestEndPoints.PARAM_ID, carId)
+                .delete(getAbsoluteUri(EndPoints.ENTITY));
     }
 
     private EntityDto responseToEntityDto(Response response) {
@@ -73,6 +99,9 @@ public class EntityResourceIT extends RestIT {
     }
 
     private Response getEntityResponse(Long carId) {
-        return given().queryParam(TestEndPoints.PARAM_KIND, CAR_KIND).get(getAbsoluteUri(EndPoints.ENTITIES + carId));
+        return given()
+                .queryParam(TestEndPoints.PARAM_KIND, CAR_KIND)
+                .queryParam(TestEndPoints.PARAM_ID, carId)
+                .get(getAbsoluteUri(EndPoints.ENTITY));
     }
 }

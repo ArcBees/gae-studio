@@ -18,17 +18,17 @@ import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
 
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 
 public interface EntityService extends RestService {
     @GET
     void getEntity(@QueryParam(UrlParameters.KIND) String kind,
                    @QueryParam(UrlParameters.APPID) String appId,
-                   @QueryParam(UrlParameters.NAME) String name,
                    @QueryParam(UrlParameters.NAMESPACE) String namespace,
                    @QueryParam(UrlParameters.PARENT_ID) String parentId,
                    @QueryParam(UrlParameters.PARENT_KIND) String parentKind,
+                   @QueryParam(UrlParameters.NAME) String entityName,
+                   @QueryParam(UrlParameters.ID) Long entityId,
                    MethodCallback<EntityDto> callback);
 
     @PUT
@@ -36,6 +36,8 @@ public interface EntityService extends RestService {
                       MethodCallback<EntityDto> callback);
 
     @DELETE
-    void deleteEntity(KeyDto key,
+    void deleteEntity(@QueryParam(UrlParameters.KIND) String kind,
+                      @QueryParam(UrlParameters.NAME) String entityName,
+                      @QueryParam(UrlParameters.ID) Long entityId,
                       MethodCallback<Void> callback);
 }

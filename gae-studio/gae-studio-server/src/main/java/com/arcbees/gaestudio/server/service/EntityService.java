@@ -14,7 +14,10 @@ import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 
 public interface EntityService {
-    Entity getEntity(Long entityId, String entityName, String namespace, String appId, String kind, String parentId, String parentKind)
+    Entity getEntity(String entityName, String namespace, String appId, String kind, String parentId, String parentKind)
+            throws EntityNotFoundException;
+
+    Entity getEntity(Long entityId, String namespace, String appId, String kind, String parentId, String parentKind)
             throws EntityNotFoundException;
 
     Entity updateEntity(Entity entity) throws EntityNotFoundException;

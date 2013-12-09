@@ -32,6 +32,26 @@ public class KeyDto extends ParentKeyDto {
         this.appIdNamespace = appIdNamespace;
     }
 
+    public KeyDto(String kind,
+                  Long id,
+                  ParentKeyDto parentKey,
+                  AppIdNamespaceDto appIdNamespace) {
+        super(kind, id);
+
+        this.parentKey = parentKey;
+        this.appIdNamespace = appIdNamespace;
+    }
+
+    public KeyDto(String kind,
+                  String name,
+                  ParentKeyDto parentKey,
+                  AppIdNamespaceDto appIdNamespace) {
+        super(kind, name);
+
+        this.parentKey = parentKey;
+        this.appIdNamespace = appIdNamespace;
+    }
+
     public ParentKeyDto getParentKey() {
         return parentKey;
     }

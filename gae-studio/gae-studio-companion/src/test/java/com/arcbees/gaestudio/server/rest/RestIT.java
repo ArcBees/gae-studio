@@ -66,8 +66,8 @@ public class RestIT {
 
     protected Long createRemoteCar() {
         return createRemoteCar(new Car());
-    }
-
+    }    
+    
     protected Set<String> getRemoteKindsResponse() {
         Response response = given().get(getAbsoluteUri(EndPoints.KINDS));
         String[] kinds = response.as(String[].class);
