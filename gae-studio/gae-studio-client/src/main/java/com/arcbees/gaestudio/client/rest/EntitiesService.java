@@ -15,7 +15,6 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 
 import org.fusesource.restygwt.client.MethodCallback;
@@ -42,10 +41,6 @@ public interface EntitiesService extends RestService {
                    @QueryParam(UrlParameters.NAMESPACE) String namespace,
                    @QueryParam(UrlParameters.TYPE) DeleteEntities deleteEntities,
                    MethodCallback<Void> callback);
-
-    @Path(EndPoints.ID + EndPoints.NAME)
-    EntityService entityService(@PathParam(UrlParameters.ID) Long id,
-                                @PathParam(UrlParameters.NAME) String name);
 
     @GET
     @Path(EndPoints.COUNT)

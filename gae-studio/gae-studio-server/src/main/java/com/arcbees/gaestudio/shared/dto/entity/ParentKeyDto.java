@@ -30,6 +30,20 @@ public class ParentKeyDto {
         this.name = name;
     }
 
+    public ParentKeyDto(String kind,
+                        Long id) {
+        this.kind = kind;
+        this.id = id;
+        this.name = "";
+    }
+
+    public ParentKeyDto(String kind,
+                        String name) {
+        this.kind = kind;
+        this.id = 0l;
+        this.name = name;
+    }
+
     public String getKind() {
         return kind;
     }

@@ -44,7 +44,7 @@ public class NamespacesServiceImplTest extends GaeTestBase {
     NamespacesService namespacesService;
 
     @Test
-    public void twoNamespacesStored_getNamespaces_shouldReturnTheTwoNamespaces() {
+    public void getNamespaces_twoNamespacesStored_shouldReturnTheTwoNamespaces() {
         //given
         createEntityInNamespace(A_NAMESPACE, KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInNamespace(ANOTHER_NAMESPACE, KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);

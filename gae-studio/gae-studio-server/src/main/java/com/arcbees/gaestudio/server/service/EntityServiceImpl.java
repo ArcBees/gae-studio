@@ -33,7 +33,6 @@ public class EntityServiceImpl implements EntityService {
 
     @Override
     public Entity getEntity(Long entityId,
-                            String entityName,
                             String namespace,
                             String appId,
                             String kind,
@@ -45,10 +44,33 @@ public class EntityServiceImpl implements EntityService {
         ParentKeyDto parentKeyDto = null;
 
         if (!Strings.isNullOrEmpty(parentId) && !Strings.isNullOrEmpty(parentKind)) {
-            parentKeyDto = new ParentKeyDto(parentKind, Long.valueOf(parentId), null);
+            parentKeyDto = new ParentKeyDto(parentKind, Long.valueOf(parentId));
         }
 
-        KeyDto keyDto = new KeyDto(kind, entityId, entityName, parentKeyDto, new AppIdNamespaceDto(appId, namespace));
+        KeyDto keyDto = new KeyDto(kind, entityId, parentKeyDto, new AppIdNamespaceDto(appId, namespace));
+
+        entity = datastoreHelper.get(keyDto);
+
+        return entity;
+    }
+
+    @Override
+    public Entity getEntity(String entityName,
+                            String namespace,
+                            String appId,
+                            String kind,
+                            String parentId,
+                            String parentKind) throws EntityNotFoundException {
+        AppEngineHelper.disableApiHooks();
+
+        Entity entity;
+        ParentKeyDto parentKeyDto = null;
+
+        if (!Strings.isNullOrEmpty(parentId) && !Strings.isNullOrEmpty(parentKind)) {
+            parentKeyDto = new ParentKeyDto(parentKind, parentId);
+        }
+
+        KeyDto keyDto = new KeyDto(kind, entityName, parentKeyDto, new AppIdNamespaceDto(appId, namespace));
 
         entity = datastoreHelper.get(keyDto);
 

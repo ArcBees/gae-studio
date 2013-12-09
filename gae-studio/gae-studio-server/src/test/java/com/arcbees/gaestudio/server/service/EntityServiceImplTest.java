@@ -42,7 +42,7 @@ public class EntityServiceImplTest extends GaeTestBase {
     EntityService entityService;
 
     @Test
-    public void entityStored_getEntity_shouldReturnSameEntity() throws EntityNotFoundException {
+    public void getEntity_entityStored_shouldReturnSameEntity() throws EntityNotFoundException {
         //given
         Entity sentEntity = createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         Long entityId = sentEntity.getKey().getId();
@@ -55,7 +55,7 @@ public class EntityServiceImplTest extends GaeTestBase {
     }
 
     @Test
-    public void entityStored_updateEntity_shouldUpdateEntity() throws EntityNotFoundException {
+    public void updateEntity_entityStored_shouldUpdateEntity() throws EntityNotFoundException {
         //given
         Entity sentEntity = createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         Long entityId = sentEntity.getKey().getId();
@@ -70,8 +70,8 @@ public class EntityServiceImplTest extends GaeTestBase {
         assertEquals(ANOTHER_NAME, savedEntity.getProperty(PROPERTY_NAME));
     }
 
-    @Test(expected=EntityNotFoundException.class)
-    public void entityStored_deleteEntity_shouldDeleteEntity() throws EntityNotFoundException {
+    @Test(expected = EntityNotFoundException.class)
+    public void deleteEntity_entityStored_shouldDeleteEntity() throws EntityNotFoundException {
         //given
         Entity sentEntity = createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         Key entityKey = sentEntity.getKey();
@@ -85,6 +85,6 @@ public class EntityServiceImplTest extends GaeTestBase {
     }
 
     private Entity getEntityFromEntityResource(Long id) throws EntityNotFoundException {
-        return entityService.getEntity(id, null, null, null, KIND_NAME, null, null);
+        return entityService.getEntity(id, null, null, KIND_NAME, null, null);
     }
 }

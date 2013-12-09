@@ -22,7 +22,7 @@ import com.arcbees.gaestudio.client.application.visualizer.widget.entity.Propert
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.arcbees.gaestudio.client.rest.EntitiesService;
+import com.arcbees.gaestudio.client.rest.EntityService;
 import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.web.bindery.event.shared.EventBus;
@@ -47,7 +47,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
 
     public static final Object EDITOR_SLOT = new Object();
 
-    private final EntitiesService entitiesService;
+    private final EntityService entityService;
     private final EntityEditorFactory entityEditorFactory;
     private final AppConstants appConstants;
 
@@ -56,12 +56,12 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     @Inject
     EntityDetailsPresenter(EventBus eventBus,
                            MyView view,
-                           EntitiesService entitiesService,
+                           EntityService entityService,
                            EntityEditorFactory entityEditorFactory,
                            AppConstants appConstants) {
         super(eventBus, view);
 
-        this.entitiesService = entitiesService;
+        this.entityService = entityService;
         this.entityEditorFactory = entityEditorFactory;
         this.appConstants = appConstants;
 
@@ -119,7 +119,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     private void updateEntity() throws InvalidEntityFieldsException {
         EntityDto entityDto = entityEditor.flush().getEntityDto();
 
-        entitiesService.entityService(entityDto.getKey().getId(), entityDto.getKey().getName()).updateEntity(entityDto,
+        entityService.updateEntity(entityDto,
                 new MethodCallbackImpl<EntityDto>() {
                     @Override
                     public void onFailure(Throwable caught) {

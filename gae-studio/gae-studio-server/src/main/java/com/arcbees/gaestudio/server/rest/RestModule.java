@@ -22,8 +22,8 @@ public class RestModule extends AbstractModule {
         bind(NamespacesResource.class);
         bind(KindsResource.class);
         bind(EntitiesResource.class);
-        bind(OperationsResource.class);
         bind(RecordResource.class);
         bind(AuthResource.class);
+        bind(EntityResource.class);
     }
 }
