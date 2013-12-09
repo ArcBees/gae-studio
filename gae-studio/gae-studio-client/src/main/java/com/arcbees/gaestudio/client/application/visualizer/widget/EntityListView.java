@@ -16,10 +16,8 @@ import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.PagerResources;
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.Element;
@@ -29,7 +27,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
-import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
@@ -45,7 +42,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     private static final int PAGE_SIZE = 25;
     private static final Range DEFAULT_RANGE = new Range(0, PAGE_SIZE);
-    private static int DEFAULT_COLUMN_COUNT;
 
     @UiField
     HTMLPanel panel;
@@ -68,8 +64,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final String kindStyleName;
     private final String firstTableStyleName;
     private final String pagerStyleName;
-    private final String isNull = "<null>";
-    private final String isUndefined = "";
 
     @Inject
     EntityListView(Binder uiBinder,
@@ -103,12 +97,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         pager.setDisplay(entityTable);
         pager.setPageSize(PAGE_SIZE);
-
-        setDefaultColumns();
-    }
-
-    public static int getDefaultColumnCount() {
-        return DEFAULT_COLUMN_COUNT;
     }
 
     @Override
@@ -164,10 +152,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         return entityTable;
     }
 
-    private void setDefaultColumnCount(int defaultColumnCount) {
-        DEFAULT_COLUMN_COUNT = defaultColumnCount;
-    }
-
     private void redrawTable() {
         entityTable.redraw();
     }
@@ -202,82 +186,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         Range range = entityTable.getVisibleRange();
 
         entityTable.setRowData(range.getStart(), newParsedEntities);
-    }
-
-    private void setDefaultColumns() {
-        TextColumn<ParsedEntity> idColumn = buildIdColumn();
-        entityTable.addColumn(idColumn, "ID");
-
-        TextColumn<ParsedEntity> parentKindColumn = buildParentKindColumn();
-        entityTable.addColumn(parentKindColumn, "Parent Kind");
-
-        TextColumn<ParsedEntity> parentIdColumn = buildParentIdColumn();
-        entityTable.addColumn(parentIdColumn, "Parent ID");
-
-        TextColumn<ParsedEntity> namespaceColumn = buildNameSpaceColumn();
-        entityTable.addColumn(namespaceColumn, "Namespace");
-
-        setDefaultColumnCount(entityTable.getColumnCount());
-    }
-
-    private TextColumn<ParsedEntity> buildIdColumn() {
-        return new TextColumn<ParsedEntity>() {
-            @Override
-            public String getValue(ParsedEntity entityJsonParsed) {
-                String idName;
-
-                if (entityJsonParsed.getKey().getId() != 0) {
-                    idName = entityJsonParsed.getKey().getId().toString();
-                } else {
-                    idName = entityJsonParsed.getKey().getName();
-                }
-
-                return idName;
-            }
-        };
-    }
-
-    private TextColumn<ParsedEntity> buildParentKindColumn() {
-        return new TextColumn<ParsedEntity>() {
-            @Override
-            public String getValue(ParsedEntity entityJsonParsed) {
-                ParentKeyDto parentKeyDTO = entityJsonParsed.getKey().getParentKey();
-                if (parentKeyDTO == null) {
-                    return isNull;
-                }
-                return parentKeyDTO.getKind();
-            }
-        };
-    }
-
-    private TextColumn<ParsedEntity> buildParentIdColumn() {
-        return new TextColumn<ParsedEntity>() {
-            @Override
-            public String getValue(ParsedEntity entityJsonParsed) {
-                ParentKeyDto parentKeyDTO = entityJsonParsed.getKey().getParentKey();
-                if (parentKeyDTO == null) {
-                    return isNull;
-                }
-                return parentKeyDTO.getId().toString();
-            }
-        };
-    }
-
-    private TextColumn<ParsedEntity> buildNameSpaceColumn() {
-        return new TextColumn<ParsedEntity>() {
-            @Override
-            public String getValue(ParsedEntity entityJsonParsed) {
-                KeyDto keyDto = entityJsonParsed.getKey();
-                AppIdNamespaceDto appIdNamespaceDto = keyDto.getAppIdNamespace();
-                String namespace = appIdNamespaceDto.getNamespace();
-                if (namespace == null) {
-                    namespace = isNull;
-                } else if (namespace.isEmpty()) {
-                    namespace = isUndefined;
-                }
-                return namespace;
-            }
-        };
     }
 
     private void onEditTableAttachedOrDetached(boolean attached) {
@@ -336,7 +244,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         $("." + idStyleName).text("ID " + parseEntityKey.getId());
         $("." + namespaceStyleName).text(parseEntityKey.getAppIdNamespace().getNamespace());
 
-        if ($("." + namespaceStyleName).text().equals(isUndefined)) {
+        if ($("." + namespaceStyleName).text().equals(ParsedEntityColumnCreator.IS_UNDEFINED)) {
             $("." + namespaceSpanStyleName).hide();
         } else {
             $("." + namespaceSpanStyleName).show();

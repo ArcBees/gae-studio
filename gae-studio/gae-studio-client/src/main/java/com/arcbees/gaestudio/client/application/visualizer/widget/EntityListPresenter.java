@@ -153,6 +153,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         addRegisteredHandler(EntityDeletedEvent.getType(), this);
         addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
         addRegisteredHandler(RefreshEntitiesEvent.getType(), this);
+
+        CellTable<ParsedEntity> entityTable = getView().getEntityTable();
+        columnCreator.initializeTable(entityTable);
     }
 
     private void loadKind() {
@@ -213,7 +216,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         CellTable<ParsedEntity> entityTable = getView().getEntityTable();
 
         for (String propertyName : propertyNames) {
-            columnCreator.addColumn(entityTable, propertyName);
+            columnCreator.addPropertyColumn(entityTable, propertyName);
         }
 
         entityTable.redraw();
@@ -241,7 +244,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private void removeKindSpecificColumns() {
         CellTable<ParsedEntity> entityTable = getView().getEntityTable();
 
-        while(entityTable.getColumnCount() > EntityListView.getDefaultColumnCount()) {
+        while(entityTable.getColumnCount() > ParsedEntityColumnCreator.getDefaultColumnCount()) {
             removeLastColumn(entityTable);
         }
     }
