@@ -60,12 +60,12 @@ public class RestIT {
         return gson.fromJson(response.asString(), Car.class);
     }
 
-    protected String getAbsoluteUri(String relativeLocation) {
-        return HOSTNAME + TestEndPoints.ROOT + relativeLocation;
+    public Long createRemoteCar() {
+        return createRemoteCar(new Car());
     }
 
-    protected Long createRemoteCar() {
-        return createRemoteCar(new Car());
+    protected String getAbsoluteUri(String relativeLocation) {
+        return HOSTNAME + TestEndPoints.ROOT + relativeLocation;
     }
 
     protected Set<String> getRemoteKindsResponse() {

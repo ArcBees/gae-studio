@@ -10,11 +10,13 @@
 package com.arcbees.gaestudio.client.gin;
 
 import com.arcbees.gaestudio.client.gatekeeper.SecureGatekeeperModule;
+import com.arcbees.gaestudio.client.log.DoNothingLogModule;
 import com.google.gwt.inject.client.AbstractGinModule;
 
 public class ProductionModule extends AbstractGinModule {
     @Override
     protected void configure() {
         install(new SecureGatekeeperModule());
+        install(new DoNothingLogModule());
     }
 }

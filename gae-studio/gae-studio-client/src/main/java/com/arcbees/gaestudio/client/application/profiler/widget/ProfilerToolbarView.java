@@ -14,6 +14,7 @@ import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.client.util.DebugIds;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -91,7 +92,7 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
                 isRecording = true;
                 getUiHandlers().onToggleRecording(true);
             }
-        });
+        }, DebugIds.RECORD);
     }
 
     private ToolbarButton createStopButton() {
