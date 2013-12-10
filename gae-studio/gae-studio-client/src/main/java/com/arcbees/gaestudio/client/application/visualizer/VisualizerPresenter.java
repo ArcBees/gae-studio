@@ -33,7 +33,9 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler,
         RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler {
     interface MyView extends View {
-        void setPanelsWidthPercentages(int leftPercentage, int rightPercentage);
+        void showEntityDetails();
+
+        void collapseEntityDetails();
     }
 
     @ProxyCodeSplit
@@ -70,12 +72,12 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
     @Override
     public void onRowLocked(RowLockedEvent rowLockedEvent) {
-        showEntityDetails();
+        getView().showEntityDetails();
     }
 
     @Override
     public void onRowUnlocked(RowUnlockedEvent rowLockedEvent) {
-        collapseEntityDetails();
+        getView().collapseEntityDetails();
     }
 
     @Override
@@ -107,13 +109,5 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(RowLockedEvent.getType(), this);
         addRegisteredHandler(RowUnlockedEvent.getType(), this);
-    }
-
-    private void showEntityDetails() {
-        getView().setPanelsWidthPercentages(50, 50);
-    }
-
-    private void collapseEntityDetails() {
-        getView().setPanelsWidthPercentages(100, 0);
     }
 }

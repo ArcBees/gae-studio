@@ -153,13 +153,26 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public CellTable<ParsedEntity> getEntityTable() {
-        return entityTable;
+    public void addProperty(String propertyName) {
+        columnCreator.addPropertyColumn(entityTable, propertyName);
     }
 
     @Override
-    public void addProperty(String propertyName) {
-        columnCreator.addPropertyColumn(entityTable, propertyName);
+    public void redraw() {
+        entityTable.redraw();
+    }
+
+    @Override
+    public void removeKindSpecificColumns() {
+        while(entityTable.getColumnCount() > ParsedEntityColumnCreator.getDefaultColumnCount()) {
+            removeLastColumn(entityTable);
+        }
+    }
+
+    private void removeLastColumn(CellTable<ParsedEntity> entityTable) {
+        int lastColumnIndex = entityTable.getColumnCount() - 1;
+
+        entityTable.removeColumn(lastColumnIndex);
     }
 
     private void redrawTable() {

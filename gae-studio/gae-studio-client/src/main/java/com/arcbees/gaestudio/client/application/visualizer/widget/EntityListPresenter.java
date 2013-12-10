@@ -27,7 +27,6 @@ import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -68,9 +67,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         void removeEntity(EntityDto entityDTO);
 
-        CellTable<ParsedEntity> getEntityTable();
-
         void addProperty(String propertyName);
+
+        void redraw();
+
+        void removeKindSpecificColumns();
     }
 
     private final EntitiesService entitiesService;
@@ -206,16 +207,15 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     private void adjustColumns(List<ParsedEntity> entities) {
-        removeKindSpecificColumns();
+        getView().removeKindSpecificColumns();
 
         Set<String> propertyNames = propertyNamesAggregator.aggregatePropertyNames(entities);
-        CellTable<ParsedEntity> entityTable = getView().getEntityTable();
 
         for (String propertyName : propertyNames) {
             getView().addProperty(propertyName);
         }
 
-        entityTable.redraw();
+        getView().redraw();
     }
 
     private void revealEntityPlace(ParsedEntity parsedEntity) {
@@ -235,19 +235,5 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         }
 
         placeManager.revealPlace(builder.build());
-    }
-
-    private void removeKindSpecificColumns() {
-        CellTable<ParsedEntity> entityTable = getView().getEntityTable();
-
-        while(entityTable.getColumnCount() > ParsedEntityColumnCreator.getDefaultColumnCount()) {
-            removeLastColumn(entityTable);
-        }
-    }
-
-    private void removeLastColumn(CellTable<ParsedEntity> entityTable) {
-        int lastColumnIndex = entityTable.getColumnCount() - 1;
-
-        entityTable.removeColumn(lastColumnIndex);
     }
 }

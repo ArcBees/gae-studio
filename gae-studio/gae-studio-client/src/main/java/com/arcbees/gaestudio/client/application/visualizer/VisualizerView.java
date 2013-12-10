@@ -53,7 +53,16 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     }
 
     @Override
-    public void setPanelsWidthPercentages(int leftPercentage, int rightPercentage) {
+    public void showEntityDetails() {
+        setPanelsWidthPercentages(50, 50);
+    }
+
+    @Override
+    public void collapseEntityDetails() {
+        setPanelsWidthPercentages(100, 0);
+    }
+
+    private void setPanelsWidthPercentages(int leftPercentage, int rightPercentage) {
         setWidthPercentage(leftPercentage, entityListPanel);
         setWidthPercentage(rightPercentage, entityDetailsPanel);
     }
