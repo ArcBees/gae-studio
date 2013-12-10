@@ -13,7 +13,10 @@ import javax.inject.Inject;
 
 import org.fusesource.restygwt.client.MethodCallback;
 
+import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
+import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.EntityService;
@@ -35,9 +38,20 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
-public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPresenter.MyProxy> {
+public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPresenter.MyProxy> implements
+        KindSelectedEvent.KindSelectedHandler, RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler {
     interface MyView extends View {
         void showEntity(EntityDto entityDto);
+
+        void hideFullscreenButton();
+
+        void bind();
+
+        void showFullscreenButton();
+
+        void hideEntityDetails();
+
+        void showEntityDetails();
     }
 
     @ProxyStandard
@@ -61,10 +75,38 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     }
 
     @Override
+    public void onKindSelected(KindSelectedEvent event) {
+        getView().hideFullscreenButton();
+    }
+
+    @Override
     public void prepareFromRequest(PlaceRequest request) {
         super.prepareFromRequest(request);
 
         displayEntityFromPlaceRequest(request);
+    }
+
+    @Override
+    public void onRowLocked(RowLockedEvent rowLockedEvent) {
+        getView().showFullscreenButton();
+        getView().showEntityDetails();
+    }
+
+    @Override
+    public void onRowUnlocked(RowUnlockedEvent rowLockedEvent) {
+        getView().hideFullscreenButton();
+        getView().hideEntityDetails();
+    }
+
+    @Override
+    protected void onBind() {
+        super.onBind();
+
+        getView().bind();
+
+        addRegisteredHandler(KindSelectedEvent.getType(), this);
+        addRegisteredHandler(RowLockedEvent.getType(), this);
+        addRegisteredHandler(RowUnlockedEvent.getType(), this);
     }
 
     private void displayEntityFromPlaceRequest(PlaceRequest request) {

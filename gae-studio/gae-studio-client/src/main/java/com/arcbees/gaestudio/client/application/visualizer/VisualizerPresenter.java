@@ -10,6 +10,8 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
+import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
+import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListPresenter;
@@ -28,9 +30,12 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
-        VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler {
-
+        VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler,
+        RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler {
     interface MyView extends View {
+        void showEntityDetails();
+
+        void collapseEntityDetails();
     }
 
     @ProxyCodeSplit
@@ -45,9 +50,6 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     public static final Object SLOT_KINDS = new Object();
     @ContentSlot
     public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_ENTITY_DETAILS = new GwtEvent
-            .Type<RevealContentHandler<?>>();
-    @ContentSlot
-    public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_ENTITY_DELETION = new GwtEvent
             .Type<RevealContentHandler<?>>();
 
     private final EntityListPresenter entityListPresenter;
@@ -69,6 +71,29 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     }
 
     @Override
+    public void onRowLocked(RowLockedEvent rowLockedEvent) {
+        getView().showEntityDetails();
+    }
+
+    @Override
+    public void onRowUnlocked(RowUnlockedEvent rowLockedEvent) {
+        getView().collapseEntityDetails();
+    }
+
+    @Override
+    public void onKindSelected(KindSelectedEvent event) {
+        setInSlot(SLOT_ENTITIES, entityListPresenter);
+
+        String kind = event.getKind();
+
+        if (kind.isEmpty()) {
+            entityListPresenter.hideList();
+        } else {
+            entityListPresenter.loadKind(kind);
+        }
+    }
+
+    @Override
     protected void revealInParent() {
         RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
     }
@@ -82,17 +107,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         setInSlot(SLOT_KINDS, sidebarPresenter);
 
         addRegisteredHandler(KindSelectedEvent.getType(), this);
-    }
-
-    @Override
-    public void onKindSelected(KindSelectedEvent event) {
-        setInSlot(SLOT_ENTITIES, entityListPresenter);
-
-        entityListPresenter.setCurrentKind(event.getKind());
-        if (event.getKind().isEmpty()) {
-            entityListPresenter.hideList();
-        } else {
-            entityListPresenter.loadKind();
-        }
+        addRegisteredHandler(RowLockedEvent.getType(), this);
+        addRegisteredHandler(RowUnlockedEvent.getType(), this);
     }
 }

@@ -14,4 +14,8 @@ import com.gwtplatform.mvp.client.UiHandlers;
 
 interface EntityListUiHandlers extends UiHandlers {
     void onEntitySelected(ParsedEntity parsedEntity);
+
+    void onRowLock();
+
+    void onRowUnlock();
 }

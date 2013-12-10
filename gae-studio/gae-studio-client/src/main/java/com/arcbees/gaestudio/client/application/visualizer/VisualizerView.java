@@ -17,7 +17,9 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyView{
+import static com.google.gwt.query.client.GQuery.$;
+
+public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyView {
     interface Binder extends UiBinder<Widget, VisualizerView> {
     }
 
@@ -29,8 +31,6 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     SimplePanel entityTypesSidebar;
     @UiField
     SimplePanel entityDetailsPanel;
-    @UiField
-    SimplePanel entityDeletionPanel;
 
     @Inject
     VisualizerView(Binder uiBinder) {
@@ -48,9 +48,26 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
                 entityTypesSidebar.setWidget(content);
             } else if (slot == VisualizerPresenter.SLOT_ENTITY_DETAILS) {
                 entityDetailsPanel.setWidget(content);
-            } else if (slot == VisualizerPresenter.SLOT_ENTITY_DELETION) {
-                entityDeletionPanel.setWidget(content);
             }
         }
+    }
+
+    @Override
+    public void showEntityDetails() {
+        setPanelsWidthPercentages(50, 50);
+    }
+
+    @Override
+    public void collapseEntityDetails() {
+        setPanelsWidthPercentages(100, 0);
+    }
+
+    private void setPanelsWidthPercentages(int leftPercentage, int rightPercentage) {
+        setWidthPercentage(leftPercentage, entityListPanel);
+        setWidthPercentage(rightPercentage, entityDetailsPanel);
+    }
+
+    private void setWidthPercentage(int percentage, IsWidget widget) {
+        $(widget).css("width", percentage + "%");
     }
 }

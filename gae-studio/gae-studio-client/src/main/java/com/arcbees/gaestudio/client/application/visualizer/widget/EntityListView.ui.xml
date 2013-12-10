@@ -6,7 +6,6 @@
     <ui:style>
         .heading {
             padding-left: 5px;
-            background: rgb(241, 241, 241);
         }
     </ui:style>
     <g:HTMLPanel ui:field="panel" visible="false">
@@ -15,7 +14,7 @@
             <p class="{resources.styles.isDisplaying}">
                 Displaying entities of the kind <b class="{resources.styles.kindBold}">Kind</b>
             </p>
-            <a class="{resources.styles.unlockButton}" title="Deselect entity"/>
+            <a class="{resources.styles.unlockButton}" title="Deselect entity" ui:field="deselectEntity"/>
         </div>
         <cellview:CellTable ui:field="entityTable" styleName="{resources.styles.firstTable}"
                             debugId="{debugIds.getEntitiesTables}"/>

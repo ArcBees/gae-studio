@@ -48,7 +48,6 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
     private final String namespaceStyleName;
     private final String idStyleName;
     private final String entityStyleName;
-    private final String extendButtonStyleName;
     private final String backButtonStyleName;
 
     @Inject
@@ -68,7 +67,6 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
         namespaceStyleName = resources.styles().namespace();
         idStyleName = resources.styles().idBold();
         entityStyleName = resources.styles().isDisplayingEntity();
-        extendButtonStyleName = resources.styles().fullscreenButton();
         backButtonStyleName = resources.styles().backButton();
 
         refresh = createRefreshButton();
@@ -122,7 +120,6 @@ public class VisualizerToolbarView extends ViewWithUiHandlers<VisualizerToolbarU
                 $("." + namespaceStyleName).hide();
                 $("." + entityStyleName).hide();
                 $("." + idStyleName).text("no entity");
-                $("." + extendButtonStyleName).show();
                 $("." + backButtonStyleName).hide();
             }
         });
