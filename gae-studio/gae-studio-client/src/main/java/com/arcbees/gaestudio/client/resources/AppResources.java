@@ -121,6 +121,7 @@ public interface AppResources extends ClientBundle {
         String topmenuBgActive();
     }
 
+    @CssResource.NotStrict
     public Styles styles();
 
     public Sprites sprites();
