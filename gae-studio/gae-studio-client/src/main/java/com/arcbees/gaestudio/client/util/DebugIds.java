@@ -50,4 +50,5 @@ public class DebugIds {
     public static final String SAVE = "save";
     public static final String ENTITY_EDITOR = "entity-editor";
     public static final String MESSAGE = "message";
+    public static final String RECORD = "record";
 }

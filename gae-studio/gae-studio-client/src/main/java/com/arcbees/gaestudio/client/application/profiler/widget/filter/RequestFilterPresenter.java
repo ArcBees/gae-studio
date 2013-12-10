@@ -53,7 +53,6 @@ public class RequestFilterPresenter extends PresenterWidget<RequestFilterPresent
         filterValue.addRecord(record);
     }
 
-
     @Override
     public void displayNewDbOperationRecords() {
         getView().display(new ArrayList<FilterValue<Long>>(statementsByRequest.values()));

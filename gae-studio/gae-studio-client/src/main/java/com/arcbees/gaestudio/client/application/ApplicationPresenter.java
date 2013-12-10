@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application;
 
 import com.arcbees.gaestudio.client.application.widget.HeaderPresenter;
 import com.arcbees.gaestudio.client.application.widget.message.MessagesPresenter;
+import com.arcbees.gaestudio.client.log.LoggerRestorer;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -26,34 +27,43 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     interface MyView extends View {
     }
 
-    @ContentSlot
-    public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
-
-    public static final Object TYPE_SetHeaderContent = new Object();
-    public static final Object TYPE_SetMessagesContent = new Object();
-
     @ProxyStandard
     interface MyProxy extends Proxy<ApplicationPresenter> {
     }
 
+    @ContentSlot
+    public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
+    public static final Object TYPE_SetHeaderContent = new Object();
+    public static final Object TYPE_SetMessagesContent = new Object();
+
     private final HeaderPresenter headerPresenter;
     private final MessagesPresenter messagesPresenter;
+    private final LoggerRestorer loggerRestorer;
 
     @Inject
     ApplicationPresenter(EventBus eventBus,
                          MyView view,
                          MyProxy proxy,
                          HeaderPresenter headerPresenter,
-                         MessagesPresenter messagesPresenter) {
+                         MessagesPresenter messagesPresenter,
+                         LoggerRestorer loggerRestorer) {
         super(eventBus, view, proxy);
 
         this.headerPresenter = headerPresenter;
         this.messagesPresenter = messagesPresenter;
+        this.loggerRestorer = loggerRestorer;
     }
 
     @Override
     protected void revealInParent() {
         RevealRootLayoutContentEvent.fire(this, this);
+    }
+
+    @Override
+    protected void onReveal() {
+        super.onReveal();
+
+        loggerRestorer.restorePopupLogger();
     }
 
     @Override

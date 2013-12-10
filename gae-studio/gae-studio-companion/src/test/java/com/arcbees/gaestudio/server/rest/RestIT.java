@@ -60,14 +60,14 @@ public class RestIT {
         return gson.fromJson(response.asString(), Car.class);
     }
 
+    public Long createRemoteCar() {
+        return createRemoteCar(new Car());
+    }
+
     protected String getAbsoluteUri(String relativeLocation) {
         return HOSTNAME + TestEndPoints.ROOT + relativeLocation;
     }
 
-    protected Long createRemoteCar() {
-        return createRemoteCar(new Car());
-    }    
-    
     protected Set<String> getRemoteKindsResponse() {
         Response response = given().get(getAbsoluteUri(EndPoints.KINDS));
         String[] kinds = response.as(String[].class);

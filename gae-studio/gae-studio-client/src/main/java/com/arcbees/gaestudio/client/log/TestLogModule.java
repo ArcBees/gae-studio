@@ -7,16 +7,13 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.gin;
+package com.arcbees.gaestudio.client.log;
 
-import com.arcbees.gaestudio.client.gatekeeper.UnsecureGatekeeperModule;
-import com.arcbees.gaestudio.client.log.TestLogModule;
 import com.google.gwt.inject.client.AbstractGinModule;
 
-public class TestModule extends AbstractGinModule {
+public class TestLogModule extends AbstractGinModule {
     @Override
     protected void configure() {
-        install(new UnsecureGatekeeperModule());
-        install(new TestLogModule());
+        bind(LoggerRestorer.class).to(TestLoggerRestorer.class);
     }
 }

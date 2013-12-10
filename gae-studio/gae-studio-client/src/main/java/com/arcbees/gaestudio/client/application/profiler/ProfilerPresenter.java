@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.profiler;
 
+import java.util.logging.Logger;
+
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
@@ -21,9 +23,9 @@ import com.arcbees.gaestudio.client.application.profiler.widget.StatementPresent
 import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FiltersPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
-import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.ClientId;
 import com.arcbees.gaestudio.client.rest.OperationsService;
+import com.arcbees.gaestudio.client.util.DebugLogMessages;
 import com.arcbees.gaestudio.shared.channel.Token;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.gwt.appengine.channel.client.Channel;
@@ -60,13 +62,13 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private final OperationsService operationsService;
     private final FiltersPresenter filterPresenter;
     private final StatisticsPresenter statisticsPresenter;
-    private final AppConstants myConstants;
     private final StatementPresenter statementPresenter;
     private final DetailsPresenter detailsPresenter;
     private final ProfilerToolbarPresenter profilerToolbarPresenter;
     private final ChannelFactory channelFactory;
     private final String clientId;
     private final DbOperationDeserializer dbOperationDeserializer;
+    private final Logger logger;
 
     private Socket socket;
 
@@ -77,25 +79,25 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                       OperationsService operationsService,
                       FiltersPresenter filterPresenter,
                       StatisticsPresenter statisticsPresenter,
-                      AppConstants myConstants,
                       StatementPresenter statementPresenter,
                       DetailsPresenter detailsPresenter,
                       ProfilerToolbarPresenter profilerToolbarPresenter,
                       ChannelFactory channelFactory,
                       DbOperationDeserializer dbOperationDeserializer,
+                      Logger logger,
                       @ClientId String clientId) {
         super(eventBus, view, proxy);
 
         this.operationsService = operationsService;
         this.filterPresenter = filterPresenter;
         this.statisticsPresenter = statisticsPresenter;
-        this.myConstants = myConstants;
         this.statementPresenter = statementPresenter;
         this.detailsPresenter = detailsPresenter;
         this.profilerToolbarPresenter = profilerToolbarPresenter;
         this.channelFactory = channelFactory;
         this.clientId = clientId;
         this.dbOperationDeserializer = dbOperationDeserializer;
+        this.logger = logger;
     }
 
     @Override
@@ -114,6 +116,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
 
     @Override
     public void onOpen() {
+        logger.info(DebugLogMessages.CHANNEL_OPENED);
     }
 
     @Override
