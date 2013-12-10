@@ -1,7 +1,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
         xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
-    <ui:with field="debugIds" type="com.arcbees.gaestudio.client.util.DebugIds"/>
+    <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
     <ui:style>
         .json {
             font-family: "Consolas", "Menlo", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
