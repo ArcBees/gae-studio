@@ -46,7 +46,6 @@
         }
     </ui:style>
     <g:HTMLPanel styleName="{style.header} {resources.sprites.topmenuBg}">
-        <div>HELLO</div>
         <a href="" class="{style.logo}">
             <g:Image resource="{resources.logo}"/>
         </a>

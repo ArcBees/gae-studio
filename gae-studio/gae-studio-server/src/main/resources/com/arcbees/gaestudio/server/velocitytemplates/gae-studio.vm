@@ -25,7 +25,7 @@
         <div>
             <input id="loginPassword" name="pw" type="password" placeholder="Password">
         </div>
-        <button id="loginSubmit" type="submit">Login me in Scotty!</button>
+        <button id="loginSubmit" type="submit">Log me in Scotty!</button>
         <div>
             <a id="forgotLink">Forgot your password?</a>
         </div>
