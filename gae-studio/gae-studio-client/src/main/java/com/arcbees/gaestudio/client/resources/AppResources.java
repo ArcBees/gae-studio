@@ -162,6 +162,8 @@ public interface AppResources extends ClientBundle {
 
     ImageResource unlock_up();
 
+    ImageResource splashLogo();
+
     @Source("textcursor.png")
     DataResource whiteTextCursorResource();
 }

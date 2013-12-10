@@ -12,6 +12,10 @@ body {
     background: colorLightGreyEB;
 }
 
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
 .fleft {
     float: left;
 }
@@ -453,8 +457,9 @@ body {
 }
 
 .authForm {
-    width: 335px;
-    margin: 40px;
+    width: 345px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .authForm label {
@@ -463,7 +468,12 @@ body {
 }
 
 .authForm input {
-    width: 200px;
+    width: 96%;
+    padding: 0 0 0 4%;
+    border: none;
+    height: 37px;
+    margin-bottom: 11px;
+    font-size: 1.5em;
 }
 
 .embeddedEntityProperties {

@@ -19,11 +19,9 @@
 <div id="loginDiv" style="display:none">
     <form action="javascript:__gwt_login(0)" id="loginForm">
         <div>
-            <label>Email</label>
             <input id="loginEmail" name="u" type="text">
         </div>
         <div>
-            <label>Password</label>
             <input id="loginPassword" name="pw" type="password">
         </div>
         <button id="loginSubmit" type="submit">Login</button>
