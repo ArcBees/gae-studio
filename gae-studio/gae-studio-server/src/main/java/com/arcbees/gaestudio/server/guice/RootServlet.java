@@ -19,10 +19,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.arcbees.gaestudio.server.BuildConstants;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapper;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapperFactory;
 import com.arcbees.gaestudio.shared.BaseRestPath;
-import com.arcbees.gaestudio.shared.Constants;
+import com.arcbees.gaestudio.shared.config.AppConfig;
+import com.google.gson.Gson;
 import com.google.inject.Singleton;
 
 @Singleton
@@ -52,9 +54,16 @@ public class RootServlet extends HttpServlet {
     }
 
     private void setParameters() {
-        velocityWrapper.put("restPathKey", Constants.REST_PATH);
-        velocityWrapper.put("restPathValue", restPath);
-        velocityWrapper.put("clientIdKey", Constants.CLIENT_ID);
-        velocityWrapper.put("clientIdValue", UUID.randomUUID().toString());
+        AppConfig config = buildAppConfig();
+        String json = new Gson().toJson(config);
+        velocityWrapper.put(AppConfig.OBJECT_KEY, "var " + AppConfig.OBJECT_KEY + " = " + json + ";");
+    }
+
+    private AppConfig buildAppConfig() {
+        return AppConfig.with()
+                    .restPath(restPath)
+                    .clientId(UUID.randomUUID().toString())
+                    .version("Version: " + BuildConstants.VERSION)
+                    .build();
     }
 }

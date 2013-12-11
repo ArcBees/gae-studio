@@ -7,9 +7,13 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.shared;
+package com.arcbees.gaestudio.client.application.version;
 
-public class Constants {
-    public static final String JSON_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.S";
-    public static final String CLIENT_ID = "clientId";
+import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
+
+public class VersionModule extends AbstractPresenterModule {
+    @Override
+    protected void configure() {
+        bindPresenterWidget(VersionPresenter.class, VersionPresenter.MyView.class, VersionView.class);
+    }
 }

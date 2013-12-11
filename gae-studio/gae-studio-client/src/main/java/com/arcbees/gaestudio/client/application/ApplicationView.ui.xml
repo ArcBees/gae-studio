@@ -5,6 +5,7 @@
     <g:DockLayoutPanel unit="PX" debugId="{debugIds.getApplicationRoot}">
         <g:north size="51">
             <g:HTMLPanel>
+                <g:SimplePanel ui:field="version"/>
                 <g:SimplePanel ui:field="messages"/>
                 <g:SimplePanel ui:field="header"/>
             </g:HTMLPanel>

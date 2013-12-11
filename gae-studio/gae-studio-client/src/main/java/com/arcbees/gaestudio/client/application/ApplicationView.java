@@ -29,6 +29,8 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
     SimpleLayoutPanel main;
     @UiField
     SimplePanel messages;
+    @UiField
+    SimplePanel version;
 
     @Inject
     ApplicationView(Binder uiBinder) {
@@ -43,6 +45,8 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
             header.setWidget(content);
         } else if (slot == ApplicationPresenter.TYPE_SetMessagesContent) {
             messages.setWidget(content);
+        } else if (slot == ApplicationPresenter.SLOT_VERSION) {
+            version.setWidget(content);
         } else {
             super.setInSlot(slot, content);
         }

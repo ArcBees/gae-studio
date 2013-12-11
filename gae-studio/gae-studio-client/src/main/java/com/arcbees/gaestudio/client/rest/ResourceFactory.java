@@ -16,14 +16,14 @@ import org.fusesource.restygwt.client.Resource;
 import org.fusesource.restygwt.client.RestService;
 import org.fusesource.restygwt.client.RestServiceProxy;
 
-import com.arcbees.gaestudio.shared.BaseRestPath;
+import com.arcbees.gaestudio.shared.config.AppConfig;
 
 public class ResourceFactory {
     private final String baseRestPath;
 
     @Inject
-    ResourceFactory(@BaseRestPath String baseRestPath) {
-        this.baseRestPath = baseRestPath;
+    ResourceFactory(AppConfig appConfig) {
+        this.baseRestPath = appConfig.getRestPath();
 
         Defaults.setDateFormat(null);
     }

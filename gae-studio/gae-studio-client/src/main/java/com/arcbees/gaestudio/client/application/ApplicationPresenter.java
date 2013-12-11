@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.client.application;
 
+import com.arcbees.gaestudio.client.application.version.VersionPresenter;
 import com.arcbees.gaestudio.client.application.widget.HeaderPresenter;
 import com.arcbees.gaestudio.client.application.widget.message.MessagesPresenter;
 import com.arcbees.gaestudio.client.log.LoggerRestorer;
@@ -35,10 +36,12 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
     public static final Object TYPE_SetHeaderContent = new Object();
     public static final Object TYPE_SetMessagesContent = new Object();
+    public static final Object SLOT_VERSION = new Object();
 
     private final HeaderPresenter headerPresenter;
     private final MessagesPresenter messagesPresenter;
     private final LoggerRestorer loggerRestorer;
+    private final VersionPresenter versionPresenter;
 
     @Inject
     ApplicationPresenter(EventBus eventBus,
@@ -46,12 +49,14 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
                          MyProxy proxy,
                          HeaderPresenter headerPresenter,
                          MessagesPresenter messagesPresenter,
-                         LoggerRestorer loggerRestorer) {
+                         LoggerRestorer loggerRestorer,
+                         VersionPresenter versionPresenter) {
         super(eventBus, view, proxy);
 
         this.headerPresenter = headerPresenter;
         this.messagesPresenter = messagesPresenter;
         this.loggerRestorer = loggerRestorer;
+        this.versionPresenter = versionPresenter;
     }
 
     @Override
@@ -72,5 +77,6 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 
         setInSlot(TYPE_SetHeaderContent, headerPresenter);
         setInSlot(TYPE_SetMessagesContent, messagesPresenter);
+        setInSlot(SLOT_VERSION, versionPresenter);
     }
 }

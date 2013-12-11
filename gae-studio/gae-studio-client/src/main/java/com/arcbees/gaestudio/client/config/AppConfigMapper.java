@@ -7,17 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.rest;
+package com.arcbees.gaestudio.client.config;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.arcbees.gaestudio.shared.config.AppConfig;
+import com.github.nmorel.gwtjackson.client.ObjectMapper;
 
-import com.google.inject.BindingAnnotation;
-
-@Target({ElementType.PARAMETER, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@BindingAnnotation
-public @interface ClientId {
+public interface AppConfigMapper extends ObjectMapper<AppConfig> {
 }

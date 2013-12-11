@@ -14,11 +14,8 @@ import javax.inject.Singleton;
 import org.fusesource.restygwt.client.Resource;
 import org.fusesource.restygwt.client.RestServiceProxy;
 
-import com.arcbees.gaestudio.shared.BaseRestPath;
-import com.arcbees.gaestudio.shared.Constants;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.i18n.client.Dictionary;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Provides;
 
@@ -26,20 +23,6 @@ public class RestModule extends AbstractGinModule {
     @Override
     protected void configure() {
         bind(ResourceFactory.class).in(Singleton.class);
-    }
-
-    @Provides
-    @Singleton
-    @BaseRestPath
-    String getBaseRestPath() {
-        return Dictionary.getDictionary("AppConfiguration").get(Constants.REST_PATH);
-    }
-
-    @Provides
-    @Singleton
-    @ClientId
-    String getClientId() {
-        return Dictionary.getDictionary("AppConfiguration").get(Constants.CLIENT_ID);
     }
 
     @Provides
