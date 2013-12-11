@@ -2,5 +2,63 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
 
-    <g:SimplePanel ui:field="loginForm" styleName="{res.styles.authForm}"/>
+    <ui:style>
+        body, html, .root {
+            height: 100%;
+        }
+
+        .topBlueBar {
+            height: 4px;
+        }
+
+        .middleBlueBar {
+            height: 75px;
+            margin-top: 195px;
+        }
+
+        .topBlueBar, .middleBlueBar, .footer {
+            background-color: #25aae1;
+        }
+
+        .root {
+            background-color: #e6e6e6;
+        }
+
+        .wrap {
+            min-height: 100%;
+        }
+
+        .footer {
+            position: relative;
+            margin-top: -14px;
+            height: 14px;
+            clear: both;
+        }
+
+        .main {
+            overflow: auto;
+            padding-bottom: 14px;
+        }
+
+        .logo {
+            margin-top: -168px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            margin-bottom: 50px;
+        }
+    </ui:style>
+    <g:HTMLPanel styleName="{style.root}">
+        <div class="{style.wrap}">
+            <div class="{style.main}">
+                <div class="{style.topBlueBar}"/>
+                <div class="{style.middleBlueBar}"/>
+                <div class="{res.styles.authForm}">
+                    <g:Image resource="{res.splashLogo}" addStyleNames="{style.logo}"/>
+                    <g:SimplePanel ui:field="loginForm"/>
+                </div>
+            </div>
+        </div>
+        <div class="{style.footer}"/>
+    </g:HTMLPanel>
 </ui:UiBinder>

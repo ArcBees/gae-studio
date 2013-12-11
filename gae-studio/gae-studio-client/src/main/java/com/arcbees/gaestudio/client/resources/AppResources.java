@@ -121,6 +121,7 @@ public interface AppResources extends ClientBundle {
         String topmenuBgActive();
     }
 
+    @CssResource.NotStrict
     public Styles styles();
 
     public Sprites sprites();
@@ -161,6 +162,8 @@ public interface AppResources extends ClientBundle {
     ImageResource unlock_rl();
 
     ImageResource unlock_up();
+
+    ImageResource splashLogo();
 
     @Source("textcursor.png")
     DataResource whiteTextCursorResource();

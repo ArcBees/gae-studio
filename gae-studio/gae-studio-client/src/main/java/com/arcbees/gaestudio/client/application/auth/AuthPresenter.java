@@ -9,7 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.auth;
 
-import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -42,7 +41,7 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
                   MyProxy proxy,
                   PlaceManager placeManager,
                   LoginHelper loginHelper) {
-        super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
+        super(eventBus, view, proxy, RevealType.Root);
 
         this.placeManager = placeManager;
         this.loginHelper = loginHelper;
