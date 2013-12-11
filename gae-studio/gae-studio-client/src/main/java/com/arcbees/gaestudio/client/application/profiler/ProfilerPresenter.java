@@ -22,10 +22,10 @@ import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerToolbarP
 import com.arcbees.gaestudio.client.application.profiler.widget.StatementPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FiltersPresenter;
+import com.arcbees.gaestudio.client.debug.DebugLogMessages;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.rest.ClientId;
 import com.arcbees.gaestudio.client.rest.OperationsService;
-import com.arcbees.gaestudio.client.util.DebugLogMessages;
 import com.arcbees.gaestudio.shared.channel.Token;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.gwt.appengine.channel.client.Channel;
