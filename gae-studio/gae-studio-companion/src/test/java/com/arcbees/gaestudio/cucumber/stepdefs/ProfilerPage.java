@@ -14,8 +14,8 @@ import javax.inject.Inject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import com.arcbees.gaestudio.client.util.DebugIds;
-import com.arcbees.gaestudio.client.util.DebugLogMessages;
+import com.arcbees.gaestudio.client.debug.DebugIds;
+import com.arcbees.gaestudio.client.debug.DebugLogMessages;
 import com.arcbees.gaestudio.selenium.WebDriverHelper;
 import com.arcbees.test.ByDebugId;
 

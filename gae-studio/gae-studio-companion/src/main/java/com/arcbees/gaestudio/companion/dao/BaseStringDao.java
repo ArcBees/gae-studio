@@ -31,7 +31,7 @@ public abstract class BaseStringDao<T extends HasStringId> {
     public boolean update(String id,
                           T entity) {
         if (exists(id)) {
-            entity.setId(id);
+            entity.setName(id);
             put(entity);
             return true;
         }

@@ -8,6 +8,7 @@
     <script type="text/javascript" language="javascript">
         ${AppConfiguration}
     </script>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
     <script type="text/javascript" language="javascript" src="gaestudio/gaestudio.nocache.js"></script>
     <script type="text/javascript" src="/_ah/channel/jsapi"></script>
 </head>
@@ -19,20 +20,17 @@
 <div id="loginDiv" style="display:none">
     <form action="javascript:__gwt_login(0)" id="loginForm">
         <div>
-            <label>Email</label>
-            <input id="loginEmail" name="u" type="text">
+            <input id="loginEmail" name="u" type="text" placeholder="Email">
         </div>
         <div>
-            <label>Password</label>
-            <input id="loginPassword" name="pw" type="password">
+            <input id="loginPassword" name="pw" type="password" placeholder="Password">
         </div>
-        <button id="loginSubmit" type="submit">Login</button>
+        <button id="loginSubmit" type="submit">Log me in Scotty!</button>
         <div>
-            <a id="forgotLink" style="cursor:pointer">Forgot your password?</a>
+            <a id="forgotLink">Forgot your password?</a>
         </div>
         <div>
-            Don't have an account?
-            <a id="registerLink" style="cursor:pointer">Create one!</a>
+            <a id="registerLink">Don't have an account?</a>
         </div>
     </form>
 </div>

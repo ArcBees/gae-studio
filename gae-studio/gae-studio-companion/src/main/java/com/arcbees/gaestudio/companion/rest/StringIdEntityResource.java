@@ -38,7 +38,7 @@ public class StringIdEntityResource {
     public Response createEntity(StringIdEntity stringIdEntity) {
         stringIdEntityDao.put(stringIdEntity);
 
-        return Response.ok(stringIdEntity.getId()).build();
+        return Response.ok(stringIdEntity.getName()).build();
     }
 
     @GET

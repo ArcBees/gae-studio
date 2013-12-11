@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.util;
+package com.arcbees.gaestudio.client.debug;
 
 public class DebugLogMessages {
     public static final String CHANNEL_OPENED = "channel opened";

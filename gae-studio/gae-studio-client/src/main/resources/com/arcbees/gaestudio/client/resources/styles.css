@@ -5,11 +5,15 @@
 @eval colorLightGreyEB com.arcbees.gaestudio.client.resources.Colors.colorLightGreyEB;
 
 body, * {
-    font-family: Arial, Abel, Verdana, sans-serif;
+    font-family: Source Sans Pro, Verdana, sans-serif;
 }
 
 body {
     background: colorLightGreyEB;
+}
+
+input:focus, textarea:focus, button:focus {
+    outline: none;
 }
 
 .fleft {
@@ -443,15 +447,10 @@ body {
     display: none;
 }
 
-.loginBtn {
-    display: block;
-    margin-top: 10px;
-    margin-left: 84%;
-}
-
 .authForm {
-    width: 335px;
-    margin: 40px;
+    width: 345px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .authForm label {
@@ -460,7 +459,78 @@ body {
 }
 
 .authForm input {
-    width: 200px;
+    width: 96%;
+    padding: 0 0 0 4%;
+    margin-bottom: 11px;
+
+    box-shadow: inset 2px 2px 6px 1px rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+.authForm input:hover, .authForm input:focus {
+    outline: 2px solid #25aae1;
+    outline-offset: -2px;
+}
+
+.loginBtn:hover, .loginBtn:active {
+    box-shadow: inset 2px 2px 6px 1px rgba(0, 0, 0, 0.4);
+}
+
+.loginBtn {
+    width: 100%;
+    margin-bottom: 20px;
+
+    border: none;
+    background-color: #25aae1;
+    color: white;
+}
+
+.loginBtn:hover {
+    cursor: pointer;
+}
+
+.loginBtn:active {
+    background-color: #0e76bc;
+}
+
+.authForm input, .loginBtn {
+    height: 37px;
+}
+
+.authForm input, .loginBtn, #loginForm #registerLink {
+    font-size: 1.5em;
+}
+
+#loginForm {
+    text-align: center;
+}
+
+#loginForm #forgotLink {
+    color: #25aae1;
+    font-size: 1.2em;
+}
+
+#loginForm #registerLink {
+    margin-top: 60px;
+    display: block;
+
+    color: #353535;
+}
+
+#loginForm a {
+    cursor:pointer;
+}
+
+#loginForm a:active {
+    text-decoration: underline;
+}
+
+#loginForm #registerLink:hover, #loginForm #forgotLink:hover {
+    color: #0e76bc;
+}
+
+#loginForm #registerLink:active, #loginForm #forgotLink:active {
+    text-decoration: underline;
 }
 
 .embeddedEntityProperties {

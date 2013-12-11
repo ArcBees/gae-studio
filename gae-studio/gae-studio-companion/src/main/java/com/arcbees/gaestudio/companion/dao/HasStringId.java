@@ -10,7 +10,7 @@
 package com.arcbees.gaestudio.companion.dao;
 
 public interface HasStringId {
-    String getId();
+    String getName();
 
-    void setId(String id);
+    void setName(String name);
 }
