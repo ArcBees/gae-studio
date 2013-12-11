@@ -16,8 +16,8 @@ import org.openqa.selenium.WebElement;
 
 import com.arcbees.gaestudio.client.util.DebugIds;
 import com.arcbees.gaestudio.client.util.DebugLogMessages;
-import com.arcbees.gaestudio.selenium.ByDebugId;
 import com.arcbees.gaestudio.selenium.WebDriverHelper;
+import com.arcbees.test.ByDebugId;
 
 public class ProfilerPage {
     private final WebDriverHelper webDriverHelper;
