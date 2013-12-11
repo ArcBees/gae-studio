@@ -71,10 +71,10 @@ public class RestIT {
         return given().body(stringIdEntity).post(getAbsoluteUri(TestEndPoints.STRING_ID_ENTITY));
     }
 
-    public Response createStringIdEntity(String id) {
+    public Response createStringIdEntity(String name) {
         StringIdEntity stringIdEntity = new StringIdEntity();
 
-        stringIdEntity.setName(id);
+        stringIdEntity.setName(name);
 
         return createStringIdEntity(stringIdEntity);
     }

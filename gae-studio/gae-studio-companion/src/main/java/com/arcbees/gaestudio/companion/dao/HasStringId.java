@@ -12,5 +12,5 @@ package com.arcbees.gaestudio.companion.dao;
 public interface HasStringId {
     String getName();
 
-    void setName(String id);
+    void setName(String name);
 }

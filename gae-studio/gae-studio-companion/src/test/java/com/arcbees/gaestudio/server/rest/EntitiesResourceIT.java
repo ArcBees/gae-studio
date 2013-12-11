@@ -65,7 +65,7 @@ public class EntitiesResourceIT extends RestIT {
     }
 
     @Test
-    public void createObject_getEntitiesWithNoKind_badRequest() {
+    public void getEntitiesWithNoKind_createObject_badRequest() {
         //given
         createRemoteCar();
 
@@ -77,7 +77,7 @@ public class EntitiesResourceIT extends RestIT {
     }
 
     @Test
-    public void createObject_createEmptyEntity_returnEmptyEntity() {
+    public void createEmptyEntity_createObject_returnEmptyEntity() {
         //given
         createRemoteCar();
 
@@ -91,7 +91,7 @@ public class EntitiesResourceIT extends RestIT {
     }
 
     @Test
-    public void createObject_postEntitiesWithNoKind_badRequest() {
+    public void postEntitiesWithNoKind_createObject_badRequest() {
         //given
         createRemoteCar();
 
@@ -103,7 +103,7 @@ public class EntitiesResourceIT extends RestIT {
     }
 
     @Test
-    public void createObject_postEntitiesUnexistentEntity_notFound() {
+    public void postEntitiesUnexistentEntity_createObject_notFound() {
         //given
         createRemoteCar();
 
@@ -115,7 +115,7 @@ public class EntitiesResourceIT extends RestIT {
     }
 
     @Test
-    public void createObject_deleteEntities_noContent() {
+    public void deleteEntities_createObject_noContent() {
         //given
         createRemoteCar();
 
@@ -130,7 +130,7 @@ public class EntitiesResourceIT extends RestIT {
     }
 
     @Test
-    public void createObject_deleteEntitiesNoDeleteType_badRequest() {
+    public void deleteEntitiesNoDeleteType_createObject_badRequest() {
         //given
         createRemoteCar();
 
@@ -142,7 +142,7 @@ public class EntitiesResourceIT extends RestIT {
     }
 
     @Test
-    public void createTwoObjects_getCount_OkWithTwo() {
+    public void getCount_createTwoObjects_OkWithTwo() {
         //given
         createRemoteCar();
         createRemoteCar();
@@ -156,7 +156,7 @@ public class EntitiesResourceIT extends RestIT {
     }
 
     @Test
-    public void createTwoObjects_getCountWithNoKind_badRequest() {
+    public void getCountWithNoKind_createTwoObjects_badRequest() {
         //given
         createRemoteCar();
         createRemoteCar();

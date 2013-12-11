@@ -28,7 +28,7 @@ public class EntityResourceIT extends RestIT {
     private Long UNEXISTENT_ID = 99999999l;
 
     @Test
-    public void createCar_getEntity_shouldReturnEntity() {
+    public void getEntity_createCar_shouldReturnEntity() {
         //given
         Long carId = createRemoteCar();
 
@@ -43,7 +43,7 @@ public class EntityResourceIT extends RestIT {
     }
 
     @Test
-    public void createStringIdEntity_getEntity_shouldReturnEntity() {
+    public void getEntity_createStringIdEntity_shouldReturnEntity() {
         //given
         createStringIdEntity(AN_ENTITY_NAME);
 
@@ -58,7 +58,7 @@ public class EntityResourceIT extends RestIT {
     }
 
     @Test
-    public void createStringIdEntity_getEntityWithIdAndName_shouldReturnBadRequest() {
+    public void getEntityWithIdAndName_createStringIdEntity_shouldReturnBadRequest() {
         //given
         Long carId = createRemoteCar();
 
@@ -79,7 +79,7 @@ public class EntityResourceIT extends RestIT {
     }
 
     @Test
-    public void createCar_deleteCar_shouldReturnNoContent() {
+    public void deleteCar_createCar_shouldReturnNoContent() {
         //given
         Long carId = createRemoteCar();
 
@@ -91,7 +91,7 @@ public class EntityResourceIT extends RestIT {
     }
 
     @Test
-    public void createCar_updateCar_shouldReturnOK() {
+    public void updateCar_createCar_shouldReturnOK() {
         //given
         Car car = new Car();
         car.setMake("OldMake");
