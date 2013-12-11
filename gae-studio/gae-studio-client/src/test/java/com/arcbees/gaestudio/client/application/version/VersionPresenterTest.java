@@ -21,7 +21,6 @@ import com.arcbees.gaestudio.shared.config.AppConfig;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
-
 @RunWith(JukitoRunner.class)
 public class VersionPresenterTest {
     private static final String SOME_VERSION = "some version";

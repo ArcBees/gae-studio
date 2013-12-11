@@ -28,6 +28,7 @@ public class VersionPresenter extends PresenterWidget<VersionPresenter.MyView> {
                      MyView view,
                      AppConfig appConfig) {
         super(eventBus, view);
+
         this.appConfig = appConfig;
     }
 
