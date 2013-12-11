@@ -23,10 +23,10 @@ import com.arcbees.gaestudio.client.application.profiler.widget.StatementPresent
 import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FiltersPresenter;
 import com.arcbees.gaestudio.client.place.NameTokens;
-import com.arcbees.gaestudio.client.rest.ClientId;
 import com.arcbees.gaestudio.client.rest.OperationsService;
 import com.arcbees.gaestudio.client.util.DebugLogMessages;
 import com.arcbees.gaestudio.shared.channel.Token;
+import com.arcbees.gaestudio.shared.config.AppConfig;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.gwt.appengine.channel.client.Channel;
 import com.google.gwt.appengine.channel.client.ChannelError;
@@ -85,7 +85,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                       ChannelFactory channelFactory,
                       DbOperationDeserializer dbOperationDeserializer,
                       Logger logger,
-                      @ClientId String clientId) {
+                      AppConfig appConfig) {
         super(eventBus, view, proxy);
 
         this.operationsService = operationsService;
@@ -95,7 +95,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         this.detailsPresenter = detailsPresenter;
         this.profilerToolbarPresenter = profilerToolbarPresenter;
         this.channelFactory = channelFactory;
-        this.clientId = clientId;
+        this.clientId = appConfig.getClientId();
         this.dbOperationDeserializer = dbOperationDeserializer;
         this.logger = logger;
     }
