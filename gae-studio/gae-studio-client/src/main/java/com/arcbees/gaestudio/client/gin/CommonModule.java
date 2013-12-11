@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.client.gin;
 import javax.inject.Singleton;
 
 import com.arcbees.gaestudio.client.application.ApplicationModule;
+import com.arcbees.gaestudio.client.application.version.VersionModule;
 import com.arcbees.gaestudio.client.config.ConfigModule;
 import com.arcbees.gaestudio.client.formatters.BytesFormatter;
 import com.arcbees.gaestudio.client.place.NameTokens;
@@ -37,6 +38,7 @@ public class CommonModule extends AbstractPresenterModule {
         install(new ApplicationModule());
         install(new RestModule());
         install(new ConfigModule());
+        install(new VersionModule());
 
         bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.visualizer);
 

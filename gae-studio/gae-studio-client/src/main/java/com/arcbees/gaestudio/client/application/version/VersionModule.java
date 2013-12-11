@@ -7,12 +7,13 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server;
+package com.arcbees.gaestudio.client.application.version;
 
-import java.lang.Boolean;
+import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
-public class BuildConstants {
-    // will be replaced by maven
-    public static final String BUILD_TIME_DATE  = "${gaes.buildtime}";
-    public static final String VERSION  = "${project.version}";
+public class VersionModule extends AbstractPresenterModule {
+    @Override
+    protected void configure() {
+        bindPresenterWidget(VersionPresenter.class, VersionPresenter.MyView.class, VersionView.class);
+    }
 }

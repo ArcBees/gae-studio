@@ -1,0 +1,11 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:style>
+        .version {
+            position: fixed;
+            right: 5px;
+            bottom: 5px;
+        }
+    </ui:style>
+    <g:Label ui:field="label" addStyleNames="{style.version}"/>
+</ui:UiBinder>

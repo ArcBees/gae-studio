@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.arcbees.gaestudio.server.BuildConstants;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapper;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapperFactory;
 import com.arcbees.gaestudio.shared.BaseRestPath;
@@ -53,8 +54,16 @@ public class RootServlet extends HttpServlet {
     }
 
     private void setParameters() {
-        AppConfig config = AppConfig.with().restPath(restPath).clientId(UUID.randomUUID().toString()).build();
+        AppConfig config = buildAppConfig();
         String json = new Gson().toJson(config);
         velocityWrapper.put(AppConfig.OBJECT_KEY, "var " + AppConfig.OBJECT_KEY + " = " + json + ";");
+    }
+
+    private AppConfig buildAppConfig() {
+        return AppConfig.with()
+                    .restPath(restPath)
+                    .clientId(UUID.randomUUID().toString())
+                    .version("Version: " + BuildConstants.VERSION)
+                    .build();
     }
 }
