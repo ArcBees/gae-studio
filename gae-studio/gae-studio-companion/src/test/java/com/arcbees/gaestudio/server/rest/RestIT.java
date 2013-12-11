@@ -14,6 +14,7 @@ import java.util.Set;
 import org.junit.Before;
 
 import com.arcbees.gaestudio.companion.domain.Car;
+import com.arcbees.gaestudio.companion.domain.StringIdEntity;
 import com.arcbees.gaestudio.companion.rest.TestEndPoints;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
@@ -33,6 +34,8 @@ public class RestIT {
 
     protected final Gson gson = new GsonBuilder().create();
     protected String CAR_KIND = "Car";
+    protected String STRING_ENTITY_KIND = "StringIdEntity";
+    protected String AN_ENTITY_NAME = "An entity name";
 
     static {
         RestAssured.defaultParser = Parser.JSON;
@@ -62,6 +65,18 @@ public class RestIT {
 
     public Long createRemoteCar() {
         return createRemoteCar(new Car());
+    }
+
+    public Response createStringIdEntity(StringIdEntity stringIdEntity) {
+        return given().body(stringIdEntity).post(getAbsoluteUri(TestEndPoints.STRING_ID_ENTITY));
+    }
+
+    public Response createStringIdEntity(String id) {
+        StringIdEntity stringIdEntity = new StringIdEntity();
+
+        stringIdEntity.setName(id);
+
+        return createStringIdEntity(stringIdEntity);
     }
 
     protected String getAbsoluteUri(String relativeLocation) {

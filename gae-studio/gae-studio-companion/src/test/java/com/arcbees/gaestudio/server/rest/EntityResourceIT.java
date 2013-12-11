@@ -18,6 +18,7 @@ import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.jayway.restassured.response.Response;
 
 import static com.jayway.restassured.RestAssured.given;
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 import static javax.ws.rs.core.Response.Status.OK;
@@ -32,7 +33,7 @@ public class EntityResourceIT extends RestIT {
         Long carId = createRemoteCar();
 
         //when
-        Response response = getEntityResponse(carId);
+        Response response = getCarEntityResponse(carId);
         EntityDto entityDto = responseToEntityDto(response);
 
         //then
@@ -42,9 +43,36 @@ public class EntityResourceIT extends RestIT {
     }
 
     @Test
+    public void createStringIdEntity_getEntity_shouldReturnEntity() {
+        //given
+        createStringIdEntity(AN_ENTITY_NAME);
+
+        //when
+        Response response = getStringIdEntityResponse(AN_ENTITY_NAME);
+        EntityDto entityDto = responseToEntityDto(response);
+
+        //then
+        assertEquals(OK.getStatusCode(), response.getStatusCode());
+        assertEquals(STRING_ENTITY_KIND, entityDto.getKey().getKind());
+        assertEquals(AN_ENTITY_NAME, entityDto.getKey().getName());
+    }
+
+    @Test
+    public void createStringIdEntity_getEntityWithIdAndName_shouldReturnBadRequest() {
+        //given
+        Long carId = createRemoteCar();
+
+        //when
+        Response response = getEntityWithIdAndNameResponse(AN_ENTITY_NAME, carId);
+
+        //then
+        assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
+    }
+
+    @Test
     public void getUnexistentEntity_shouldReturnNotFound() {
         //when
-        Response response = getEntityResponse(UNEXISTENT_ID);
+        Response response = getCarEntityResponse(UNEXISTENT_ID);
 
         //then
         assertEquals(NOT_FOUND.getStatusCode(), response.getStatusCode());
@@ -70,7 +98,7 @@ public class EntityResourceIT extends RestIT {
         Long carId = createRemoteCar(car);
 
         //when
-        Response response = getEntityResponse(carId);
+        Response response = getCarEntityResponse(carId);
         EntityDto entityDto = responseToEntityDto(response);
         String newJson = entityDto.getJson().replaceFirst("OldMake", "NewMake");
         entityDto.setJson(newJson);
@@ -98,10 +126,25 @@ public class EntityResourceIT extends RestIT {
         return gson.fromJson(response.asString(), EntityDto.class);
     }
 
-    private Response getEntityResponse(Long carId) {
+    private Response getCarEntityResponse(Long carId) {
         return given()
                 .queryParam(TestEndPoints.PARAM_KIND, CAR_KIND)
                 .queryParam(TestEndPoints.PARAM_ID, carId)
+                .get(getAbsoluteUri(EndPoints.ENTITY));
+    }
+
+    private Response getStringIdEntityResponse(String name) {
+        return given()
+                .queryParam(TestEndPoints.PARAM_KIND, STRING_ENTITY_KIND)
+                .queryParam(TestEndPoints.PARAM_NAME, name)
+                .get(getAbsoluteUri(EndPoints.ENTITY));
+    }
+
+    private Response getEntityWithIdAndNameResponse(String name, Long id) {
+        return given()
+                .queryParam(TestEndPoints.PARAM_KIND, CAR_KIND)
+                .queryParam(TestEndPoints.PARAM_ID, id)
+                .queryParam(TestEndPoints.PARAM_NAME, name)
                 .get(getAbsoluteUri(EndPoints.ENTITY));
     }
 }

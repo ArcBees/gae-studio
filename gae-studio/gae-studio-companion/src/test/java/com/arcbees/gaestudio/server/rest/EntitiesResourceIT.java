@@ -14,6 +14,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.arcbees.gaestudio.companion.domain.Car;
+import com.arcbees.gaestudio.companion.domain.StringIdEntity;
 import com.arcbees.gaestudio.companion.rest.TestEndPoints;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.gson.reflect.TypeToken;
@@ -30,11 +31,13 @@ import static org.junit.Assert.assertNotNull;
 public class EntitiesResourceIT extends RestIT {
     private final TypeToken<List<Car>> carListType = new TypeToken<List<Car>>() {
     };
+    private final TypeToken<List<StringIdEntity>> stringIdEntityListType = new TypeToken<List<StringIdEntity>>() {
+    };
 
     private String UNEXISTENT_KIND = "UnexistentKind";
 
     @Test
-    public void createObject_getEntities_entitiesReturned() {
+    public void getEntities_createObject_entityReturned() {
         //given
         createRemoteCar();
 
@@ -43,6 +46,20 @@ public class EntitiesResourceIT extends RestIT {
 
         //then
         List<Car> entities = gson.fromJson(response.asString(), carListType.getType());
+        assertEquals(1, entities.size());
+        assertEquals(OK.getStatusCode(), response.getStatusCode());
+    }
+
+    @Test
+    public void getEntities_createStringIdObject_entityReturned() {
+        //given
+        createStringIdEntity(AN_ENTITY_NAME);
+
+        //when
+        Response response = getRemoteEntities(STRING_ENTITY_KIND);
+
+        //then
+        List<StringIdEntity> entities = gson.fromJson(response.asString(), stringIdEntityListType.getType());
         assertEquals(1, entities.size());
         assertEquals(OK.getStatusCode(), response.getStatusCode());
     }
