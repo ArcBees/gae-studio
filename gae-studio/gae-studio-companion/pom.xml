@@ -116,7 +116,7 @@
         <dependency>
             <groupId>com.arcbees</groupId>
             <artifactId>testutils</artifactId>
-            <version>1.2-SNAPSHOT</version>
+            <version>${testutils.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
