@@ -56,6 +56,7 @@
         <junit.version>4.11</junit.version>
         <jukito.version>1.3</jukito.version>
         <selenium-java.version>2.37.1</selenium-java.version>
+        <testutils.version>1.2-SNAPSHOT</testutils.version>
 
         <!-- maven -->
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
