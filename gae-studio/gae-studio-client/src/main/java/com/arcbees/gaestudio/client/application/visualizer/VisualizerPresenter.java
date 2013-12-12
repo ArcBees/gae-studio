@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.client.application.visualizer;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListPresenter;
@@ -31,11 +32,16 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler,
-        RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler {
+        RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler,
+        KindPanelToggleEvent.KindPanelToggleHandler {
     interface MyView extends View {
         void showEntityDetails();
 
         void collapseEntityDetails();
+
+        void closeKindPanel();
+
+        void openKindPanel();
     }
 
     @ProxyCodeSplit
@@ -94,6 +100,15 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     }
 
     @Override
+    public void onKindPanelToggle(KindPanelToggleEvent event) {
+        if (event.getAction().equals(KindPanelToggleEvent.Action.CLOSE)) {
+            getView().closeKindPanel();
+        } else {
+            getView().openKindPanel();
+        }
+    }
+
+    @Override
     protected void revealInParent() {
         RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
     }
@@ -109,5 +124,6 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(RowLockedEvent.getType(), this);
         addRegisteredHandler(RowUnlockedEvent.getType(), this);
+        addRegisteredHandler(KindPanelToggleEvent.getType(), this);
     }
 }

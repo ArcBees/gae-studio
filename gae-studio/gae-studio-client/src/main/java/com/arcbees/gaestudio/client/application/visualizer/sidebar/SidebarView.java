@@ -16,13 +16,17 @@ import javax.inject.Inject;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
@@ -49,6 +53,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     HTML emptyKinds;
     @UiField
     SimplePanel namespaces;
+    @UiField
+    Image closeToggle;
 
     private final KindTemplate kindTemplate;
     private final EmptyKindsTemplate emptyKindsTemplate;
@@ -115,10 +121,44 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     }
 
     @Override
+    public void showCloseHandle() {
+        this.closeToggle.setVisible(true);
+    }
+
+    @Override
     public void setInSlot(Object slot, IsWidget content) {
         if (SidebarPresenter.SLOT_NAMESPACES.equals(slot)) {
             namespaces.setWidget(content);
         }
+    }
+
+    @UiHandler("closeToggle")
+    void handleClick(ClickEvent event) {
+        getUiHandlers().onCloseHandleActivated();
+
+        rotateToggle();
+    }
+
+    private void rotateToggle() {
+        if (isFlipped()) {
+            setRotation(0);
+        } else {
+            setRotation(180);
+        }
+    }
+
+    private void setRotation(int rotationInDegrees) {
+        Style style = closeToggle.getElement().getStyle();
+        style.setProperty("webkitTransform", "rotateY(" + rotationInDegrees + "deg)");
+    }
+
+    private boolean isFlipped() {
+        return getToggleTransform().equals("rotateY(180deg)");
+    }
+
+    private String getToggleTransform() {
+        Style style = closeToggle.getElement().getStyle();
+        return style.getProperty("webkitTransform");
     }
 
     private void addKind(String kind) {

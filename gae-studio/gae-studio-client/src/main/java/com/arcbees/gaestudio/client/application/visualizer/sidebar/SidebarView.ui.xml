@@ -2,8 +2,22 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
+    <ui:style>
+        .close {
+            position: absolute;
+            right: 5px;
+            top: 13px;
+            transition: all 0.5s;
+        }
+
+        .close:hover {
+            cursor: pointer;
+        }
+    </ui:style>
     <g:HTMLPanel>
-        <span class='{res.styles.kindHeaderElement}'>Kinds</span>
+        <span class='{res.styles.kindHeaderElement}'>Kinds
+            <g:Image ui:field="closeToggle" resource="{res.closeToggle}" addStyleNames="{style.close}"/>
+        </span>
         <g:SimplePanel ui:field="namespaces"/>
         <g:HTML ui:field="emptyKinds"/>
         <g:HTMLPanel ui:field="kinds" debugId="{debugIds.getKinds}"/>
