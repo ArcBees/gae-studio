@@ -133,14 +133,14 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     }
 
     @UiHandler("closeToggle")
-    public void handleClick(ClickEvent event) {
+    void handleClick(ClickEvent event) {
         getUiHandlers().onCloseHandleActivated();
 
         rotateToggle();
     }
 
     private void rotateToggle() {
-        if(isFlipped()) {
+        if (isFlipped()) {
             setRotation(0);
         } else {
             setRotation(180);
@@ -149,7 +149,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     private void setRotation(int rotationInDegrees) {
         Style style = closeToggle.getElement().getStyle();
-        style.setProperty("webkitTransform", "rotateY("+rotationInDegrees+"deg)");
+        style.setProperty("webkitTransform", "rotateY(" + rotationInDegrees + "deg)");
     }
 
     private boolean isFlipped() {

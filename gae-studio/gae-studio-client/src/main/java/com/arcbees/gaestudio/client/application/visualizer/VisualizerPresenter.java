@@ -32,7 +32,8 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler,
-        RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler, KindPanelToggleEvent.KindPanelToggleHandler {
+        RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler,
+        KindPanelToggleEvent.KindPanelToggleHandler {
     interface MyView extends View {
         void showEntityDetails();
 
@@ -100,7 +101,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
     @Override
     public void onKindPanelToggle(KindPanelToggleEvent event) {
-        if(event.getAction().equals(KindPanelToggleEvent.Action.CLOSE)) {
+        if (event.getAction().equals(KindPanelToggleEvent.Action.CLOSE)) {
             getView().closeKindPanel();
         } else {
             getView().openKindPanel();

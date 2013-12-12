@@ -87,7 +87,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     public void onCloseHandleActivated() {
         getEventBus().fireEvent(new KindPanelToggleEvent(action));
 
-        if(action.equals(CLOSE)) {
+        if (action.equals(CLOSE)) {
             action = OPEN;
         } else {
             action = CLOSE;
