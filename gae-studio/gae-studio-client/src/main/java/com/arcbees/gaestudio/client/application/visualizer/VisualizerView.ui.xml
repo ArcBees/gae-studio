@@ -13,15 +13,15 @@
             -o-transition: width .5s ease;
         }
     </ui:style>
-    <g:DockLayoutPanel unit="PX" debugId="{debugIds.getVisualizer}">
-        <g:west size="200">
+    <g:DockLayoutPanel unit="PX" debugId="{debugIds.getVisualizer}" ui:field="dock">
+        <g:west size="240">
             <g:SimplePanel ui:field="entityTypesSidebar" addStyleNames="{resources.styles.entityTypeSelector}"/>
         </g:west>
         <g:north size="36">
             <g:SimplePanel ui:field="toolbar" addStyleNames="{resources.styles.hiddenOverlay}"/>
         </g:north>
         <g:center styleName="{resources.styles.noOverflow}">
-            <g:HTMLPanel addStyleNames="{resources.styles.entityContainer}">
+            <g:HTMLPanel addStyleNames="{resources.styles.entityContainer}" ui:field="centerContainer">
                 <g:SimplePanel ui:field="entityListPanel"
                                addStyleNames="{resources.styles.entityListPanel}"/>
 

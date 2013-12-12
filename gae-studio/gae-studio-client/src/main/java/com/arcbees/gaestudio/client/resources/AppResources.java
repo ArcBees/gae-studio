@@ -155,6 +155,8 @@ public interface AppResources extends ClientBundle {
 
     ImageResource back_up();
 
+    ImageResource closeToggle();
+
     ImageResource fullscreen_rl();
 
     ImageResource fullscreen_up();

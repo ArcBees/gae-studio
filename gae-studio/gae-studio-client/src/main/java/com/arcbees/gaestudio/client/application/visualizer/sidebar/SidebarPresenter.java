@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.DeleteFromNamespaceHandler;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
@@ -29,6 +30,8 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent.EntitiesDeletedHandler;
+import static com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent.Action.CLOSE;
+import static com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent.Action.OPEN;
 
 public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> implements SidebarUiHandlers,
         DeleteFromNamespaceHandler, EntitiesDeletedHandler {
@@ -36,12 +39,15 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         void updateKinds(List<String> kinds);
 
         void addEmptyEntityListStyle();
+
+        void showCloseHandle();
     }
 
     public static final Object SLOT_NAMESPACES = new Object();
 
     private final KindsService kindsService;
     private final NamespacesListPresenter namespacesListPresenter;
+    private KindPanelToggleEvent.Action action = CLOSE;
 
     @Inject
     SidebarPresenter(EventBus eventBus,
@@ -73,6 +79,19 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     @Override
     public void displayEntitiesOfSelectedKind(String kind) {
         KindSelectedEvent.fire(this, kind);
+
+        allowClosingSidebar();
+    }
+
+    @Override
+    public void onCloseHandleActivated() {
+        getEventBus().fireEvent(new KindPanelToggleEvent(action));
+
+        if(action.equals(CLOSE)) {
+            action = OPEN;
+        } else {
+            action = CLOSE;
+        }
     }
 
     @Override
@@ -89,6 +108,10 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         super.onReveal();
 
         updateKinds();
+    }
+
+    private void allowClosingSidebar() {
+        getView().showCloseHandle();
     }
 
     private void updateKinds() {
