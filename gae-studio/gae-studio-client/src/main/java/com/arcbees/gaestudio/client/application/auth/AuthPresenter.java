@@ -9,7 +9,14 @@
 
 package com.arcbees.gaestudio.client.application.auth;
 
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
+
 import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.rest.AuthService;
+import com.arcbees.gaestudio.shared.auth.Token;
+import com.google.gwt.http.client.Response;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -24,6 +31,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter.MyProxy> implements AuthUiHandlers {
     interface MyView extends View, HasUiHandlers<AuthUiHandlers> {
+        void showErrorMessage(String errorMessage);
     }
 
     @ProxyCodeSplit
@@ -34,17 +42,23 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
 
     private final PlaceManager placeManager;
     private final LoginHelper loginHelper;
+    private final AuthService authService;
+    private final AppConstants appConstants;
 
     @Inject
     AuthPresenter(EventBus eventBus,
                   MyView view,
                   MyProxy proxy,
                   PlaceManager placeManager,
-                  LoginHelper loginHelper) {
+                  LoginHelper loginHelper,
+                  AuthService authService,
+                  AppConstants appConstants) {
         super(eventBus, view, proxy, RevealType.Root);
 
         this.placeManager = placeManager;
         this.loginHelper = loginHelper;
+        this.authService = authService;
+        this.appConstants = appConstants;
 
         getView().setUiHandlers(this);
     }
@@ -63,6 +77,27 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
 
     @Override
     public void login(String email, String password) {
-        loginHelper.login(email, password);
+        authService.login(email, password, new MethodCallback<Token>() {
+            @Override
+            public void onFailure(Method method, Throwable throwable) {
+                displayError(method);
+            }
+
+            @Override
+            public void onSuccess(Method method, Token token) {
+                loginHelper.reloadApp();
+            }
+        });
+    }
+
+    private void displayError(Method method) {
+        Response response = method.getResponse();
+        int statusCode = response.getStatusCode();
+
+        if (statusCode == Response.SC_UNAUTHORIZED) {
+            getView().showErrorMessage(appConstants.wrongPwdOrEmail());
+        } else {
+            getView().showErrorMessage(appConstants.oops());
+        }
     }
 }

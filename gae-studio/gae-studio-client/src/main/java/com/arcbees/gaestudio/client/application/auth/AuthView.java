@@ -12,7 +12,9 @@ package com.arcbees.gaestudio.client.application.auth;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.query.client.Function;
+import com.google.gwt.query.client.GQuery;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Image;
@@ -28,6 +30,8 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
 
     @UiField
     SimplePanel loginForm;
+    @UiField
+    DivElement errorMessage;
 
     private final LoginFormHelper loginFormHelper;
     private final AppResources appResources;
@@ -45,37 +49,68 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
         $(loginFormHelper.getRegisterLinkElement()).click(new Function() {
             @Override
             public void f() {
-                onRegisterLinkClicked();
+                getUiHandlers().redirectToRegister();
             }
         });
 
         $(loginFormHelper.getForgotLinkElement()).click(new Function() {
             @Override
             public void f() {
-                onForgotPasswordLinkClicked();
+                getUiHandlers().redirectToForgotPassword();
             }
         });
 
         loginForm.setWidget(loginFormHelper.getLoginFormPanel());
     }
 
-    private void onForgotPasswordLinkClicked() {
-        getUiHandlers().redirectToForgotPassword();
+    @Override
+    public void showErrorMessage(String message) {
+        this.errorMessage.setInnerText(message);
+
+        setErrorMessageOpacity(1.0f);
+        hideAjaxLoader();
+        setLoginButtonEnabled(true);
+        showRedBoxes();
     }
 
-    private void onRegisterLinkClicked() {
-        getUiHandlers().redirectToRegister();
+    private void setLoginButtonEnabled(boolean enabled) {
+        loginFormHelper.getSubmitButton().setDisabled(!enabled);
     }
 
     private void doLogin() {
+        setErrorMessageOpacity(0.0f);
         showAjaxLoader();
+        setLoginButtonEnabled(false);
+        hideRedBoxes();
+
         getUiHandlers().login(loginFormHelper.getUsername(), loginFormHelper.getPassword());
+    }
+
+    private void hideRedBoxes() {
+        formFields().css("outline", "none");
+    }
+
+    private void showRedBoxes() {
+        formFields().css("outline", "#ff5400 solid 2px");
+        formFields().css("outline-offset", "-2px");
+    }
+
+    private GQuery formFields() {
+        return $("input", loginForm);
+    }
+
+    private void setErrorMessageOpacity(float opacity) {
+        $(errorMessage).css("opacity", Float.toString(opacity));
     }
 
     private void showAjaxLoader() {
         Image ajaxLoader = buildAjaxLoader();
-        loginFormHelper.getSubmitButton().setDisabled(true);
+
         $(loginFormHelper.getSubmitButton()).before(ajaxLoader.asWidget().getElement());
+    }
+
+    private void hideAjaxLoader() {
+        $(loginFormHelper.getSubmitButton()).prev().remove();
     }
 
     private Image buildAjaxLoader() {

@@ -20,6 +20,7 @@ import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
+import com.arcbees.gaestudio.shared.auth.Token;
 import com.arcbees.gaestudio.shared.auth.User;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -76,7 +77,22 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
 
             @Override
             public void onSuccess(Method method, User user) {
-                loginHelper.login(email, password);
+                login(email, password);
+            }
+        });
+    }
+
+    private void login(String email, String password) {
+        authService.login(email, password, new MethodCallback<Token>() {
+            @Override
+            public void onFailure(Method method, Throwable throwable) {
+                DisplayMessageEvent.fire(RegisterPresenter.this,
+                        new Message(appConstants.unableToLogin(), MessageStyle.ERROR));
+            }
+
+            @Override
+            public void onSuccess(Method method, Token token) {
+                loginHelper.reloadApp();
             }
         });
     }
