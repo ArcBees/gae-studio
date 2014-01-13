@@ -111,6 +111,8 @@ public interface AppResources extends ClientBundle {
         String loginBtn();
 
         String authForm();
+
+        String loginAjaxLoader();
     }
 
     public interface Sprites extends CssResource {
@@ -166,6 +168,8 @@ public interface AppResources extends ClientBundle {
     ImageResource unlock_up();
 
     ImageResource splashLogo();
+
+    ImageResource ajaxLoader30px();
 
     @Source("textcursor.png")
     DataResource whiteTextCursorResource();

@@ -11,9 +11,11 @@ package com.arcbees.gaestudio.client.application.auth;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
@@ -28,13 +30,16 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
     SimplePanel loginForm;
 
     private final LoginFormHelper loginFormHelper;
+    private final AppResources appResources;
 
     @Inject
     AuthView(Binder uiBinder,
-             LoginFormHelper loginFormHelper) {
-        initWidget(uiBinder.createAndBindUi(this));
-
+             LoginFormHelper loginFormHelper,
+             AppResources appResources) {
+        this.appResources = appResources;
         this.loginFormHelper = loginFormHelper;
+
+        initWidget(uiBinder.createAndBindUi(this));
         injectLoginFunction();
 
         $(loginFormHelper.getRegisterLinkElement()).click(new Function() {
@@ -63,7 +68,22 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
     }
 
     private void doLogin() {
+        showAjaxLoader();
         getUiHandlers().login(loginFormHelper.getUsername(), loginFormHelper.getPassword());
+    }
+
+    private void showAjaxLoader() {
+        Image ajaxLoader = buildAjaxLoader();
+        loginFormHelper.getSubmitButton().setDisabled(true);
+        $(loginFormHelper.getSubmitButton()).before(ajaxLoader.asWidget().getElement());
+    }
+
+    private Image buildAjaxLoader() {
+        Image ajaxLoader = new Image();
+        ajaxLoader.setResource(appResources.ajaxLoader30px());
+        ajaxLoader.addStyleName(appResources.styles().loginAjaxLoader());
+
+        return ajaxLoader;
     }
 
     private native void injectLoginFunction() /*-{
