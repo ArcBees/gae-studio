@@ -93,4 +93,8 @@ public interface AppConstants extends Constants {
     String invalidLongitude();
 
     String invalidRating();
+
+    String wrongPwdOrEmail();
+
+    String oops();
 }

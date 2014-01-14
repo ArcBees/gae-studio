@@ -45,7 +45,21 @@
             margin-left: auto;
             margin-right: auto;
             display: block;
-            margin-bottom: 50px;
+            margin-bottom: 10px;
+        }
+
+        .errorMessage {
+            height: 34px;
+            margin-bottom: 14px;
+
+            text-align: center;
+            font-size: 1.2em;
+            line-height: 34px;
+
+            opacity: 0.0;
+
+            color: white;
+            background-color: #ff5400;
         }
     </ui:style>
     <g:HTMLPanel styleName="{style.root}">
@@ -55,6 +69,7 @@
                 <div class="{style.middleBlueBar}"/>
                 <div class="{res.styles.authForm}">
                     <g:Image resource="{res.splashLogo}" addStyleNames="{style.logo}"/>
+                    <div ui:field="errorMessage" class="{style.errorMessage}"/>
                     <g:SimplePanel ui:field="loginForm"/>
                 </div>
             </div>

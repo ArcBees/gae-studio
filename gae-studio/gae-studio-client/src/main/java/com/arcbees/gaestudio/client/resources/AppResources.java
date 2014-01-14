@@ -112,6 +112,8 @@ public interface AppResources extends ClientBundle {
 
         String authForm();
 
+        String loginAjaxLoader();
+
         String northSection();
     }
 
@@ -162,6 +164,8 @@ public interface AppResources extends ClientBundle {
     ImageResource unlock_up();
 
     ImageResource splashLogo();
+
+    ImageResource ajaxLoader30px();
 
     ImageResource cogplay();
 

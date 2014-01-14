@@ -494,6 +494,7 @@ input:focus, textarea:focus, button:focus {
 
 #loginForm {
     text-align: center;
+    position: relative;
 }
 
 #loginForm #forgotLink {
@@ -526,6 +527,12 @@ input:focus, textarea:focus, button:focus {
 
 .embeddedEntityProperties {
     padding-left: 15px;
+}
+
+.loginAjaxLoader {
+    position: absolute;
+    right: -36px;
+    top: 99px;
 }
 
 .northSection {
