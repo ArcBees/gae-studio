@@ -14,18 +14,18 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
-import org.fusesource.restygwt.client.MethodCallback;
-import org.fusesource.restygwt.client.RestService;
-
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
+import com.gwtplatform.dispatch.rest.shared.RestAction;
+import com.gwtplatform.dispatch.rest.shared.RestService;
 
+@Path(EndPoints.ARCBEES_LICENSE_SERVICE)
 public interface LicenseService extends RestService {
     @GET
     @Path(EndPoints.CHECK)
-    void checkLicense(@QueryParam(UrlParameters.ID) Long userId, MethodCallback<Void> callback);
+    RestAction<Void> checkLicense(@QueryParam(UrlParameters.ID) Long userId);
 
     @POST
     @Path(EndPoints.REGISTER)
-    void register(LicenseRegistration licenseRegistration, MethodCallback<Void> callback);
+    RestAction<Void> register(LicenseRegistration licenseRegistration);
 }

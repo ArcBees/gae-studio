@@ -11,25 +11,25 @@ package com.arcbees.gaestudio.client.application.auth;
 
 import javax.inject.Inject;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.arcbees.gaestudio.shared.auth.Token;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class LoginHelper implements HasHandlers {
+    private final RestDispatch restDispatch;
     private final AuthService authService;
     private final EventBus eventBus;
     private final CurrentUser currentUser;
@@ -37,11 +37,13 @@ public class LoginHelper implements HasHandlers {
     private final AppConstants appConstants;
 
     @Inject
-    LoginHelper(AuthService authService,
+    LoginHelper(RestDispatch restDispatch,
+                AuthService authService,
                 EventBus eventBus,
                 CurrentUser currentUser,
                 PlaceManager placeManager,
                 AppConstants appConstants) {
+        this.restDispatch = restDispatch;
         this.authService = authService;
         this.eventBus = eventBus;
         this.currentUser = currentUser;
@@ -55,15 +57,15 @@ public class LoginHelper implements HasHandlers {
     }
 
     public void login(String email, String password) {
-        authService.login(email, password, new MethodCallback<Token>() {
+        restDispatch.execute(authService.login(email, password), new AsyncCallbackImpl<Token>() {
             @Override
-            public void onFailure(Method method, Throwable throwable) {
+            public void onFailure(Throwable throwable) {
                 DisplayMessageEvent.fire(LoginHelper.this,
                         new Message(appConstants.unableToLogin(), MessageStyle.ERROR));
             }
 
             @Override
-            public void onSuccess(Method method, Token token) {
+            public void onSuccess(Token token) {
                 onLoginSuccess();
             }
         });

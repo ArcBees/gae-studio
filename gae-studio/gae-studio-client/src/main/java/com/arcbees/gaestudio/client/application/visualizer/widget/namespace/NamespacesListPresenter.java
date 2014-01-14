@@ -13,11 +13,12 @@ import java.util.List;
 
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.rest.NamespacesService;
-import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -30,16 +31,19 @@ public class NamespacesListPresenter extends PresenterWidget<NamespacesListPrese
         void displayNamespaces(List<AppIdNamespaceDto> namespaces);
     }
 
+    private final RestDispatch restDispatch;
     private final NamespacesService namespacesService;
     private final DeleteFromNamespaceHandler deleteHandler;
 
     @Inject
     NamespacesListPresenter(EventBus eventBus,
                             MyView view,
+                            RestDispatch restDispatch,
                             NamespacesService namespacesService,
                             @Assisted DeleteFromNamespaceHandler deleteHandler) {
         super(eventBus, view);
 
+        this.restDispatch = restDispatch;
         this.namespacesService = namespacesService;
         this.deleteHandler = deleteHandler;
 
@@ -71,7 +75,7 @@ public class NamespacesListPresenter extends PresenterWidget<NamespacesListPrese
     }
 
     private void updateNamespaces() {
-        namespacesService.getNamespaces(new MethodCallbackImpl<List<AppIdNamespaceDto>>() {
+        restDispatch.execute(namespacesService.getNamespaces(), new AsyncCallbackImpl<List<AppIdNamespaceDto>>() {
             @Override
             public void onSuccess(List<AppIdNamespaceDto> result) {
                 getView().displayNamespaces(result);

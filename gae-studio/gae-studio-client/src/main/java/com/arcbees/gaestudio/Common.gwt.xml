@@ -10,7 +10,7 @@
     <inherits name="com.google.gwt.json.JSON"/>
     <inherits name="com.google.gwt.query.Query"/>
 
-    <inherits name="org.fusesource.restygwt.RestyGWT"/>
+    <inherits name="com.gwtplatform.dispatch.rest.DispatchRest"/>
     <inherits name='com.gwtplatform.mvp.MvpWithEntryPoint'/>
     <inherits name="com.google.common.collect.Collect"/>
     <inherits name="com.arcbees.gquery.tooltip.Tooltip"/>
@@ -23,6 +23,9 @@
 
     <extend-configuration-property name="gin.ginjector.modules"
                                    value="com.arcbees.gaestudio.client.gin.CommonModule"/>
+
+    <extend-configuration-property name="gwtjackson.configuration.extension"
+                                   value="com.arcbees.gaestudio.client.util.GwtJacksonExtension" />
 
     <set-configuration-property name="gin.ginjector.extensions"
                                 value="com.arcbees.gaestudio.client.gin.GinjectorExtension"/>

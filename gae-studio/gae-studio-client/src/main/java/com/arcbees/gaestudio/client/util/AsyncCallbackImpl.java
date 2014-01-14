@@ -9,38 +9,25 @@
 
 package com.arcbees.gaestudio.client.util;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public abstract class MethodCallbackImpl<T> implements MethodCallback<T> {
+public abstract class AsyncCallbackImpl<T> implements AsyncCallback<T> {
     private final String failureMessage;
 
-    public MethodCallbackImpl() {
+    public AsyncCallbackImpl() {
         failureMessage = null;
     }
 
-    public MethodCallbackImpl(String failureMessage) {
+    public AsyncCallbackImpl(String failureMessage) {
         this.failureMessage = failureMessage;
     }
 
-    @Override
-    public void onSuccess(Method method, T result) {
-        onSuccess(result);
-    }
 
     @Override
-    public void onFailure(Method method, Throwable caught) {
-        onFailure(caught);
-
+    public void onFailure(Throwable caught) {
         if (failureMessage != null) {
             Window.alert(failureMessage + ", exception: " + caught.getMessage());
         }
     }
-
-    protected void onFailure(Throwable caught) {
-    }
-
-    protected abstract void onSuccess(T result);
 }

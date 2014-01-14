@@ -115,6 +115,7 @@
                             <module>${client.module}</module>
 
                             <compileReport>true</compileReport>
+                            <style>DETAILED</style>
                         </configuration>
                         <executions>
                             <execution>

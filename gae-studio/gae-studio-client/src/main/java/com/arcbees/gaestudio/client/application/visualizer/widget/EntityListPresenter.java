@@ -24,7 +24,7 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedE
 import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
-import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.view.client.AsyncDataProvider;
@@ -32,6 +32,7 @@ import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -74,6 +75,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void removeKindSpecificColumns();
     }
 
+    private final RestDispatch restDispatch;
     private final EntitiesService entitiesService;
     private final PlaceManager placeManager;
     private final PropertyNamesAggregator propertyNamesAggregator;
@@ -84,11 +86,13 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     EntityListPresenter(EventBus eventBus,
                         MyView view,
                         PlaceManager placeManager,
+                        RestDispatch restDispatch,
                         EntitiesService entitiesService,
                         PropertyNamesAggregator propertyNamesAggregator) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
+        this.restDispatch = restDispatch;
         this.entitiesService = entitiesService;
         this.propertyNamesAggregator = propertyNamesAggregator;
 
@@ -170,7 +174,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     private void setTotalCount() {
-        entitiesService.getCountByKind(currentKind, new MethodCallbackImpl<Integer>() {
+        restDispatch.execute(entitiesService.getCountByKind(currentKind), new AsyncCallbackImpl<Integer>() {
             @Override
             public void onSuccess(Integer result) {
                 getView().setRowCount(result);
@@ -183,8 +187,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             display.setRowCount(0);
         } else {
             Range range = display.getVisibleRange();
-            entitiesService.getByKind(currentKind, range.getStart(), range.getLength(),
-                    new MethodCallbackImpl<List<EntityDto>>() {
+            restDispatch.execute(entitiesService.getByKind(currentKind, range.getStart(), range.getLength()),
+                    new AsyncCallbackImpl<List<EntityDto>>() {
                         @Override
                         public void onSuccess(List<EntityDto> result) {
                             onLoadPageSuccess(result, display);
