@@ -11,12 +11,14 @@ package com.arcbees.gaestudio.client.application.auth;
 
 import javax.inject.Inject;
 
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.query.client.GQuery;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -35,6 +37,16 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
 
     private final LoginFormHelper loginFormHelper;
     private final AppResources appResources;
+    private final Function loginOnEnter = new Function() {
+        @Override
+        public boolean f(Event event) {
+            if (event.getKeyCode() == KeyCodes.KEY_ENTER) {
+                doLogin();
+            }
+
+            return true;
+        }
+    };
 
     @Inject
     AuthView(Binder uiBinder,
@@ -59,6 +71,10 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
                 getUiHandlers().redirectToForgotPassword();
             }
         });
+
+        $(loginFormHelper.getUsernameElement()).keydown(loginOnEnter);
+
+        $(loginFormHelper.getPasswordElement()).keydown(loginOnEnter);
 
         loginForm.setWidget(loginFormHelper.getLoginFormPanel());
     }
