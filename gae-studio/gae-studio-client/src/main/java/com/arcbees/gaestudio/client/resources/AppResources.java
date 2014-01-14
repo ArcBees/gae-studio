@@ -113,13 +113,11 @@ public interface AppResources extends ClientBundle {
         String authForm();
 
         String loginAjaxLoader();
+
+        String northSection();
     }
 
     public interface Sprites extends CssResource {
-        String topmenuBg();
-
-        String topmenuBgHover();
-
         String topmenuBgActive();
     }
 
@@ -138,8 +136,6 @@ public interface AppResources extends ClientBundle {
     ImageResource topmenuBgActive();
 
     ImageResource logo();
-
-    ImageResource topmenuSeparator();
 
     ImageResource record();
 
@@ -170,6 +166,8 @@ public interface AppResources extends ClientBundle {
     ImageResource splashLogo();
 
     ImageResource ajaxLoader30px();
+
+    ImageResource cogplay();
 
     @Source("textcursor.png")
     DataResource whiteTextCursorResource();
