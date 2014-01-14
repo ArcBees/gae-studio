@@ -59,10 +59,6 @@ input:focus, textarea:focus, button:focus {
     background: transparent;
     border: 1px solid transparent;
 
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-
     transition: all .25s ease;
     -webkit-transition: all .25s ease;
     -moz-transition: all .25s ease;
@@ -70,12 +66,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .toolbarButton:hover {
-    background: rgba(220, 220, 220, 0.2);
-    border: 1px solid rgba(3, 3, 3, 0.4);
-
-    -webkit-box-shadow: inset 0 1px 5px -1px rgba(182, 182, 182, 0.38), 0 1px 5px 1px rgba(24, 24, 24, 0.2);
-    -moz-box-shadow: inset 0 1px 5px -1px rgba(182, 182, 182, 0.38), 0 1px 5px 1px rgba(24, 24, 24, 0.2);
-    box-shadow: inset 0 1px 5px -1px rgba(182, 182, 182, 0.38), 0 1px 5px 1px rgba(24, 24, 24, 0.2);
+    background: #25aae1;
 }
 
 .toolbarButton:active {
@@ -535,4 +526,8 @@ input:focus, textarea:focus, button:focus {
 
 .embeddedEntityProperties {
     padding-left: 15px;
+}
+
+.northSection {
+    background-color: #2d2d2d;
 }

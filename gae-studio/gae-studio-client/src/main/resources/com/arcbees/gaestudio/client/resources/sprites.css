@@ -1,11 +1,3 @@
-@sprite .topmenuBg, .topmenuBgHover:before {
-    gwt-image: "topmenuBg";
-}
-
-@sprite .topmenuBgHover:hover, .topmenuBgHover:after {
-    gwt-image: "topmenuBgHover";
-}
-
-@sprite .topmenuBgHover.topmenuBgActive:before {
+@sprite .topmenuBgActive:before {
     gwt-image: "topmenuBgActive";
 }

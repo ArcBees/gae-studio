@@ -10,6 +10,10 @@
 package com.arcbees.gaestudio.client.application.widget;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.UListElement;
+import com.google.gwt.event.logical.shared.AttachEvent;
+import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
@@ -18,14 +22,31 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements HeaderPresenter.MyView {
+public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements HeaderPresenter.MyView,
+        AttachEvent.Handler {
     interface Binder extends UiBinder<Widget, HeaderView> {
     }
 
     @UiField(provided = true)
     AppResources resources;
+    @UiField
+    DivElement cog;
+    @UiField
+    UListElement themes;
 
     private final String activeStyleName;
+    private final Function showThemes = new Function() {
+        @Override
+        public void f() {
+            $(themes).show();
+        }
+    };
+    private final Function hideThemes = new Function() {
+        @Override
+        public void f() {
+            $(themes).hide();
+        }
+    };
 
     @Inject
     HeaderView(Binder uiBinder,
@@ -35,11 +56,20 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
         initWidget(uiBinder.createAndBindUi(this));
 
         activeStyleName = resources.sprites().topmenuBgActive();
+
+        asWidget().addAttachHandler(this);
     }
 
     @Override
     public void activateCurrentLink(String nameTokens) {
         $("." + activeStyleName).removeClass(activeStyleName);
         $("." + nameTokens).addClass(activeStyleName);
+    }
+
+    @Override
+    public void onAttachOrDetach(AttachEvent event) {
+        if (event.isAttached()) {
+            $(cog).hover(showThemes, hideThemes);
+        }
     }
 }
