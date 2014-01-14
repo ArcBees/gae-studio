@@ -11,9 +11,11 @@ package com.arcbees.gaestudio.client.application.auth;
 
 import javax.inject.Inject;
 
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
@@ -48,6 +50,28 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
             @Override
             public void f() {
                 onForgotPasswordLinkClicked();
+            }
+        });
+
+        $(loginFormHelper.getUsernameElement()).keydown(new Function() {
+            @Override
+            public boolean f(Event event) {
+                if (event.getKeyCode() == KeyCodes.KEY_ENTER) {
+                    doLogin();
+                }
+
+                return true;
+            }
+        });
+
+        $(loginFormHelper.getPasswordElement()).keydown(new Function() {
+            @Override
+            public boolean f(Event event) {
+                if (event.getKeyCode() == KeyCodes.KEY_ENTER) {
+                    doLogin();
+                }
+
+                return true;
             }
         });
 
