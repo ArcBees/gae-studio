@@ -32,6 +32,8 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter.MyProxy> implements AuthUiHandlers {
     interface MyView extends View, HasUiHandlers<AuthUiHandlers> {
         void showErrorMessage(String errorMessage);
+
+        void resetLoginForm();
     }
 
     @ProxyCodeSplit
@@ -88,6 +90,13 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
                 loginHelper.reloadApp();
             }
         });
+    }
+
+    @Override
+    protected void onHide() {
+        super.onHide();
+
+        getView().resetLoginForm();
     }
 
     private void displayError(Method method) {

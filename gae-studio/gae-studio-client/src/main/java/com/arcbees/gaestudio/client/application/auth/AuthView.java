@@ -68,9 +68,15 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
         this.errorMessage.setInnerText(message);
 
         setErrorMessageOpacity(1.0f);
+        showRedBoxes();
+
+        resetLoginForm();
+    }
+
+    @Override
+    public void resetLoginForm() {
         hideAjaxLoader();
         setLoginButtonEnabled(true);
-        showRedBoxes();
     }
 
     private void setLoginButtonEnabled(boolean enabled) {
