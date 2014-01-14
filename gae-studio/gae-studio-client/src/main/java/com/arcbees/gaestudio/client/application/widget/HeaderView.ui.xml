@@ -4,59 +4,121 @@
     <ui:with type="com.arcbees.gaestudio.client.place.NameTokens" field="nameTokens"/>
     <ui:style>
         .header {
-            border-bottom: 1px solid #2d9af5;
             position: relative;
-            line-height: 36px;
         }
 
         .menu {
             float: right;
-            margin-right: 10px;
+
+            height: 100%;
         }
 
         .menu img, .menu a {
             float: left;
         }
 
-        .menu > a:last-of-type {
-            margin-right: 1px;
-        }
-
         .menu > a {
             color: white;
             font-size: 18px;
+            text-transform: uppercase;
             text-decoration: none;
             cursor: pointer;
 
-            padding: 0 10px;
-            margin: 7px 10px;
+            padding: 0 15px;
             display: block;
             position: relative;
 
+            line-height: 30px;
+
             text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+        }
+
+        .menu a:hover {
+            background: #25aae1;
         }
 
         .logo {
             cursor: pointer;
         }
 
-        .logo:active {
+        .logo img {
+            margin-left: 6px;
+            margin-top: 9px;
+        }
+
+        .cogplay {
+            float: right;
             position: relative;
-            top: 1px;
+
+            padding: 4px;
+            margin: 0;
+            height: 22px;
+        }
+
+        .cogplay:hover {
+            cursor: pointer;
+
+            background: white;
+        }
+
+        .rightContainer {
+            display: inline-block;
+            position: absolute;
+            top: 36%;
+            right: 20px;
+            height: 30px;
+        }
+
+        .rightContainer ul {
+            position: absolute;
+            right: 0;
+
+            width: 250%;
+            margin: 0;
+            padding: 0;
+
+            list-style-type: none;
+
+            background: white;
+
+            font-size: 1.2em;
+
+            display: none;
+        }
+
+        .rightContainer ul li {
+            padding: 4px 0 4px 9px;
+        }
+
+        .rightContainer ul li:hover {
+            background: #dfdfdf;
+            cursor: pointer;
         }
     </ui:style>
-    <g:HTMLPanel styleName="{style.header} {resources.sprites.topmenuBg}">
+    <g:HTMLPanel styleName="{style.header}">
         <a href="" class="{style.logo}">
             <g:Image resource="{resources.logo}"/>
         </a>
-        <div class="{style.menu}">
-            <a href="#{nameTokens.getVisualizer}" class="{resources.styles.toolbarButton}">
-                Visualizer
-            </a>
-            <img src="{resources.topmenuSeparator.getSafeUri}"/>
-            <a href="#{nameTokens.getProfiler}" class="{resources.styles.toolbarButton}">
-                Profiler
-            </a>
+        <div class="{style.rightContainer}">
+            <div class="{style.cogplay}" ui:field="cog">
+                <g:Image resource="{resources.cogplay}"/>
+                <ul ui:field="themes">
+                    <li>
+                        Clear Theme
+                    </li>
+                    <li>
+                        Dark Theme
+                    </li>
+                </ul>
+            </div>
+            <div class="{style.menu}">
+                <a href="#{nameTokens.getVisualizer}">
+                    Visualizer
+                </a>
+                <a href="#{nameTokens.getProfiler}">
+                    Profiler
+                </a>
+            </div>
         </div>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
