@@ -26,7 +26,6 @@ import com.gwtplatform.mvp.client.proxy.RevealRootLayoutContentEvent;
 
 public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy> {
     interface MyView extends View {
-        void overrideOverflow();
     }
 
     @ProxyStandard
@@ -68,8 +67,6 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     @Override
     protected void onReveal() {
         super.onReveal();
-
-        getView().overrideOverflow();
 
         loggerRestorer.restorePopupLogger();
     }

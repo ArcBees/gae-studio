@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.client.application.widget;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.UListElement;
+import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -21,7 +22,8 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements HeaderPresenter.MyView {
+public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements HeaderPresenter.MyView,
+        AttachEvent.Handler {
     interface Binder extends UiBinder<Widget, HeaderView> {
     }
 
@@ -54,6 +56,8 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
         initWidget(uiBinder.createAndBindUi(this));
 
         activeStyleName = resources.sprites().topmenuBgActive();
+
+        asWidget().addAttachHandler(this);
     }
 
     @Override
@@ -63,7 +67,9 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     }
 
     @Override
-    public void bind() {
-        $(cog).hover(showThemes, hideThemes);
+    public void onAttachOrDetach(AttachEvent event) {
+        if (event.isAttached()) {
+            $(cog).hover(showThemes, hideThemes);
+        }
     }
 }

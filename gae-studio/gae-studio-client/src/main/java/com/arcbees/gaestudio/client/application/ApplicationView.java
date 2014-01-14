@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application;
 
 import javax.inject.Inject;
 
+import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -22,7 +23,7 @@ import com.gwtplatform.mvp.client.ViewImpl;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class ApplicationView extends ViewImpl implements ApplicationPresenter.MyView {
+public class ApplicationView extends ViewImpl implements ApplicationPresenter.MyView, AttachEvent.Handler {
     interface Binder extends UiBinder<Widget, ApplicationView> {
     }
 
@@ -40,6 +41,8 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
     @Inject
     ApplicationView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
+
+        asWidget().addAttachHandler(this);
     }
 
     @Override
@@ -66,8 +69,10 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
      * over the main section
      */
     @Override
-    public void overrideOverflow() {
-        $(northSection).parent().css("overflow", "visible");
-        $(northSection).parent().css("z-index", "1");
+    public void onAttachOrDetach(AttachEvent event) {
+        if (event.isAttached()) {
+            $(northSection).parent().css("overflow", "visible");
+            $(northSection).parent().css("z-index", "1");
+        }
     }
 }
