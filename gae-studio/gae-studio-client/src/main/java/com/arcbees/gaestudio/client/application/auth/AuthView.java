@@ -30,6 +30,16 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
     SimplePanel loginForm;
 
     private final LoginFormHelper loginFormHelper;
+    private final Function loginOnEnter = new Function() {
+        @Override
+        public boolean f(Event event) {
+            if (event.getKeyCode() == KeyCodes.KEY_ENTER) {
+                doLogin();
+            }
+
+            return true;
+        }
+    };
 
     @Inject
     AuthView(Binder uiBinder,
@@ -53,27 +63,9 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
             }
         });
 
-        $(loginFormHelper.getUsernameElement()).keydown(new Function() {
-            @Override
-            public boolean f(Event event) {
-                if (event.getKeyCode() == KeyCodes.KEY_ENTER) {
-                    doLogin();
-                }
+        $(loginFormHelper.getUsernameElement()).keydown(loginOnEnter);
 
-                return true;
-            }
-        });
-
-        $(loginFormHelper.getPasswordElement()).keydown(new Function() {
-            @Override
-            public boolean f(Event event) {
-                if (event.getKeyCode() == KeyCodes.KEY_ENTER) {
-                    doLogin();
-                }
-
-                return true;
-            }
-        });
+        $(loginFormHelper.getPasswordElement()).keydown(loginOnEnter);
 
         loginForm.setWidget(loginFormHelper.getLoginFormPanel());
     }
