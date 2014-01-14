@@ -10,6 +10,9 @@
 package com.arcbees.gaestudio.client.application.widget;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.UListElement;
+import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
@@ -24,8 +27,24 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
 
     @UiField(provided = true)
     AppResources resources;
+    @UiField
+    DivElement cog;
+    @UiField
+    UListElement themes;
 
     private final String activeStyleName;
+    private final Function showThemes = new Function() {
+        @Override
+        public void f() {
+            $(themes).show();
+        }
+    };
+    private final Function hideThemes = new Function() {
+        @Override
+        public void f() {
+            $(themes).hide();
+        }
+    };
 
     @Inject
     HeaderView(Binder uiBinder,
@@ -41,5 +60,10 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     public void activateCurrentLink(String nameTokens) {
         $("." + activeStyleName).removeClass(activeStyleName);
         $("." + nameTokens).addClass(activeStyleName);
+    }
+
+    @Override
+    public void bind() {
+        $(cog).hover(showThemes, hideThemes);
     }
 }
