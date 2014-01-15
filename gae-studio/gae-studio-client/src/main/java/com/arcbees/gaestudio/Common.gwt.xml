@@ -24,9 +24,6 @@
     <extend-configuration-property name="gin.ginjector.modules"
                                    value="com.arcbees.gaestudio.client.gin.CommonModule"/>
 
-    <extend-configuration-property name="gwtjackson.configuration.extension"
-                                   value="com.arcbees.gaestudio.client.util.GwtJacksonExtension" />
-
     <set-configuration-property name="gin.ginjector.extensions"
                                 value="com.arcbees.gaestudio.client.gin.GinjectorExtension"/>
 
