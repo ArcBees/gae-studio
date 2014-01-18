@@ -60,11 +60,11 @@ public class LoginFormHelper {
         return ((AnchorElement) Document.get().getElementById(FORGOT_LINK_ID));
     }
 
-    private InputElement getUsernameElement() {
+    public InputElement getUsernameElement() {
         return ((InputElement) Document.get().getElementById(EMAIL_ID));
     }
 
-    private InputElement getPasswordElement() {
+    public InputElement getPasswordElement() {
         return ((InputElement) Document.get().getElementById(PASSWORD_ID));
     }
 }

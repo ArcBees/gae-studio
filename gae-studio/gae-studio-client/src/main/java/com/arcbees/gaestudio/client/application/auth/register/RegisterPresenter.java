@@ -18,6 +18,7 @@ import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
+import com.arcbees.gaestudio.shared.auth.Token;
 import com.arcbees.gaestudio.shared.auth.User;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -77,10 +78,25 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
                                 new Message(appConstants.unableToRegister(), MessageStyle.ERROR));
                     }
 
-                    @Override
-                    public void onSuccess(User user) {
-                        loginHelper.login(email, password);
-                    }
-                });
+            @Override
+            public void onSuccess(User user) {
+                login(email, password);
+            }
+        });
+    }
+
+    private void login(String email, String password) {
+        authService.login(email, password, new MethodCallback<Token>() {
+            @Override
+            public void onFailure(Method method, Throwable throwable) {
+                DisplayMessageEvent.fire(RegisterPresenter.this,
+                        new Message(appConstants.unableToLogin(), MessageStyle.ERROR));
+            }
+
+            @Override
+            public void onSuccess(Method method, Token token) {
+                loginHelper.reloadApp();
+            }
+        });
     }
 }

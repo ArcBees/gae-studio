@@ -16,35 +16,25 @@ import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.arcbees.gaestudio.client.rest.AuthService;
-import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.CurrentUser;
-import com.arcbees.gaestudio.shared.auth.Token;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class LoginHelper implements HasHandlers {
-    private final RestDispatch restDispatch;
-    private final AuthService authService;
     private final EventBus eventBus;
     private final CurrentUser currentUser;
     private final PlaceManager placeManager;
     private final AppConstants appConstants;
 
     @Inject
-    LoginHelper(RestDispatch restDispatch,
-                AuthService authService,
-                EventBus eventBus,
+    LoginHelper(EventBus eventBus,
                 CurrentUser currentUser,
                 PlaceManager placeManager,
                 AppConstants appConstants) {
-        this.restDispatch = restDispatch;
-        this.authService = authService;
         this.eventBus = eventBus;
         this.currentUser = currentUser;
         this.placeManager = placeManager;
@@ -56,22 +46,7 @@ public class LoginHelper implements HasHandlers {
         eventBus.fireEventFromSource(event, this);
     }
 
-    public void login(String email, String password) {
-        restDispatch.execute(authService.login(email, password), new AsyncCallbackImpl<Token>() {
-            @Override
-            public void onFailure(Throwable throwable) {
-                DisplayMessageEvent.fire(LoginHelper.this,
-                        new Message(appConstants.unableToLogin(), MessageStyle.ERROR));
-            }
-
-            @Override
-            public void onSuccess(Token token) {
-                onLoginSuccess();
-            }
-        });
-    }
-
-    private void onLoginSuccess() {
+    public void reloadApp() {
         DisplayMessageEvent.fire(this, new Message(appConstants.loggedInSuccessfully(), MessageStyle.SUCCESS));
 
         currentUser.setLoggedIn(true);
