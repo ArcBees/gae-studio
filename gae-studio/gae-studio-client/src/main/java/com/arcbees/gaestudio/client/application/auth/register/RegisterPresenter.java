@@ -11,9 +11,6 @@ package com.arcbees.gaestudio.client.application.auth.register;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.auth.LoginHelper;
-import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
-import com.arcbees.gaestudio.client.application.widget.message.Message;
-import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
@@ -71,32 +68,21 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
                          final String email,
                          final String password) {
         restDispatch.execute(authService.register(email, password, firstName, lastName),
-                new AsyncCallbackImpl<User>() {
+                new AsyncCallbackImpl<User>(appConstants.unableToRegister()) {
                     @Override
-                    public void onFailure(Throwable throwable) {
-                        DisplayMessageEvent.fire(RegisterPresenter.this,
-                                new Message(appConstants.unableToRegister(), MessageStyle.ERROR));
+                    public void onSuccess(User user) {
+                        login(email, password);
                     }
-
-            @Override
-            public void onSuccess(User user) {
-                login(email, password);
-            }
-        });
+                });
     }
 
     private void login(String email, String password) {
-        authService.login(email, password, new MethodCallback<Token>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-                DisplayMessageEvent.fire(RegisterPresenter.this,
-                        new Message(appConstants.unableToLogin(), MessageStyle.ERROR));
-            }
-
-            @Override
-            public void onSuccess(Method method, Token token) {
-                loginHelper.reloadApp();
-            }
-        });
+        restDispatch.execute(authService.login(email, password),
+                new AsyncCallbackImpl<Token>(appConstants.unableToLogin()) {
+                    @Override
+                    public void onSuccess(Token token) {
+                        loginHelper.reloadApp();
+                    }
+                });
     }
 }
