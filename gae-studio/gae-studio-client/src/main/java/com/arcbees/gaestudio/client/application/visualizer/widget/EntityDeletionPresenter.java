@@ -37,8 +37,6 @@ import static com.arcbees.gaestudio.client.application.visualizer.widget.EntityD
 
 public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPresenter.MyView>
         implements DeleteEntityEvent.DeleteEntityHandler, EntityDeletionUiHandlers, DeleteEntitiesHandler {
-    private final RestDispatch restDispatch;
-
     interface MyView extends View, HasUiHandlers<EntityDeletionUiHandlers> {
         void displayEntityDeletion(ParsedEntity parsedEntity);
 
@@ -55,6 +53,7 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
     private final AppConstants myConstants;
     private final EntitiesService entitiesService;
     private final EntityService entityService;
+    private final RestDispatch restDispatch;
 
     private DeleteType lastEvent;
     private ParsedEntity currentParsedEntity;

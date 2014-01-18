@@ -24,13 +24,12 @@ import com.gwtplatform.mvp.client.View;
 
 public class ProfilerToolbarPresenter extends PresenterWidget<ProfilerToolbarPresenter.MyView> implements
         ProfilerToolbarUiHandlers {
-    private final RestDispatch restDispatch;
-
     interface MyView extends View, HasUiHandlers<ProfilerToolbarUiHandlers> {
         void setRecordingState(Boolean isRecording);
     }
 
     private final RecordService recordService;
+    private final RestDispatch restDispatch;
 
     @Inject
     ProfilerToolbarPresenter(EventBus eventBus,

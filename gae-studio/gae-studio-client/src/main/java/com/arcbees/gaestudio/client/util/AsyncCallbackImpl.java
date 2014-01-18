@@ -9,10 +9,21 @@
 
 package com.arcbees.gaestudio.client.util;
 
+import javax.inject.Inject;
+
+import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
+import com.arcbees.gaestudio.client.application.widget.message.Message;
+import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.web.bindery.event.shared.EventBus;
 
-public abstract class AsyncCallbackImpl<T> implements AsyncCallback<T> {
+public abstract class AsyncCallbackImpl<T> implements AsyncCallback<T>, HasHandlers {
+    @Inject
+    private static EventBus eventBus;
+
     private final String failureMessage;
 
     public AsyncCallbackImpl() {
@@ -23,11 +34,15 @@ public abstract class AsyncCallbackImpl<T> implements AsyncCallback<T> {
         this.failureMessage = failureMessage;
     }
 
+    @Override
+    public void fireEvent(GwtEvent<?> event) {
+
+    }
 
     @Override
     public void onFailure(Throwable caught) {
         if (failureMessage != null) {
-            Window.alert(failureMessage + ", exception: " + caught.getMessage());
+            DisplayMessageEvent.fire(this, new Message(failureMessage, MessageStyle.ERROR));
         }
     }
 }
