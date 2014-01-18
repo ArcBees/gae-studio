@@ -97,8 +97,10 @@ public class QueryMapper {
             return Long.toString(value.getInt64Value());
         } else if (value.hasStringValue()) {
             return "\"" + value.getStringValue() + "\"";
+        } else if (value.hasReferenceValue()) {
+            return value.getReferenceValue().toString();
         } else {
-            throw new IllegalArgumentException("Unknown property value type: " + value.toString());
+            return value.toString();
         }
     }
 }

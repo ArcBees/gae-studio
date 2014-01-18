@@ -32,7 +32,7 @@ public class GaeStudioRecorderModule extends AbstractModule {
                 .in(RequestScoped.class);
 
         bind(StackInspector.class).to(SimpleStackInspector.class);
-        bind(DbOperationRecorder.class).to(MemcacheDbOperationRecorder.class);
+        bind(DbOperationRecorder.class).to(MemcacheDbOperationRecorder.class).in(RequestScoped.class);
 
         install(new FactoryModuleBuilder()
                 .implement(DbOperationRecorderHook.class, DbOperationRecorderHook.class)
