@@ -9,16 +9,15 @@
 
 package com.arcbees.gaestudio.client.application.auth;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
+import com.arcbees.gaestudio.client.util.RestCallbackImpl;
 import com.arcbees.gaestudio.shared.auth.Token;
 import com.google.gwt.http.client.Response;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -44,6 +43,7 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
 
     private final PlaceManager placeManager;
     private final LoginHelper loginHelper;
+    private final RestDispatch restDispatch;
     private final AuthService authService;
     private final AppConstants appConstants;
 
@@ -53,12 +53,14 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
                   MyProxy proxy,
                   PlaceManager placeManager,
                   LoginHelper loginHelper,
+                  RestDispatch restDispatch,
                   AuthService authService,
                   AppConstants appConstants) {
         super(eventBus, view, proxy, RevealType.Root);
 
         this.placeManager = placeManager;
         this.loginHelper = loginHelper;
+        this.restDispatch = restDispatch;
         this.authService = authService;
         this.appConstants = appConstants;
 
@@ -79,17 +81,18 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
 
     @Override
     public void login(String email, String password) {
-        authService.login(email, password, new MethodCallback<Token>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-                displayError(method);
-            }
+        restDispatch.execute(authService.login(email, password),
+                new RestCallbackImpl<Token>() {
+                    @Override
+                    public void onSuccess(Token result) {
+                        loginHelper.reloadApp();
+                    }
 
-            @Override
-            public void onSuccess(Method method, Token token) {
-                loginHelper.reloadApp();
-            }
-        });
+                    @Override
+                    public void setResponse(Response response) {
+                        displayError(response);
+                    }
+                });
     }
 
     @Override
@@ -99,8 +102,7 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
         getView().resetLoginForm();
     }
 
-    private void displayError(Method method) {
-        Response response = method.getResponse();
+    private void displayError(Response response) {
         int statusCode = response.getStatusCode();
 
         if (statusCode == Response.SC_UNAUTHORIZED) {
