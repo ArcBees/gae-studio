@@ -1,11 +1,22 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <ui:style>
+        .toolbar {
+            height: 100%;
+            float: left;
+            overflow: hidden;
+
+            background: #232323;
+        }
+
+        .right {
+            overflow: hidden;
+        }
+    </ui:style>
     <g:HTMLPanel>
-       <g:DockLayoutPanel addStyleNames="{resources.styles.profilerDockTemporary}">
-            <g:north size="30">
-                <g:SimplePanel ui:field="toolbarPanel"/>
-            </g:north>
+        <g:SimplePanel ui:field="toolbarPanel" addStyleNames="{style.toolbar}"/>
+        <g:DockLayoutPanel addStyleNames="{resources.styles.profilerDockTemporary} {style.right}">
             <g:center>
                 <g:SplitLayoutPanel>
                     <g:west size="300">

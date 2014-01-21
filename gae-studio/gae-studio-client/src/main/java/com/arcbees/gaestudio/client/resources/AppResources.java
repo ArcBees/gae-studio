@@ -115,6 +115,20 @@ public interface AppResources extends ClientBundle {
         String loginAjaxLoader();
 
         String northSection();
+
+        String panelToggle();
+
+        String profilerToggle();
+
+        String delete();
+
+        String record();
+
+        String stop();
+
+        String refresh();
+
+        String edit();
     }
 
     public interface Sprites extends CssResource {
@@ -168,6 +182,10 @@ public interface AppResources extends ClientBundle {
     ImageResource ajaxLoader30px();
 
     ImageResource cogplay();
+
+    ImageResource deleteRl();
+
+    ImageResource stopRl();
 
     @Source("textcursor.png")
     DataResource whiteTextCursorResource();
