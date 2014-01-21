@@ -42,9 +42,7 @@
                         </g:SplitLayoutPanel>
                     </g:west>
                     <g:center>
-                        <g:HTMLPanel>
-                            <g:SimplePanel ui:field="statementPanel" addStyleNames="{style.whitePanel}"/>
-                        </g:HTMLPanel>
+                        <g:SimplePanel ui:field="statementPanel" addStyleNames="{style.whitePanel}"/>
                     </g:center>
                 </g:SplitLayoutPanel>
             </g:center>

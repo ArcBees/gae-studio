@@ -77,7 +77,7 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
                 appResources.styles().statementImage());
     }
 
-    @UiHandler({"imgContainer"})
+    @UiHandler("imgContainer")
     void onRemoveImgContainerClicked(ClickEvent event, Element parent, DbOperationRecordDto value) {
         DivElement details = renderer.getDetails(parent);
         toggleDetails(details);
@@ -86,13 +86,13 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
         toggleIconState(imgContainer);
     }
 
-    @UiHandler({"imgContainer"})
+    @UiHandler("imgContainer")
     void onRemoveImgContainerMouseOver(MouseOverEvent event, Element parent, DbOperationRecordDto value) {
         SpanElement imgContainer = getIcon(parent);
         imgContainer.addClassName(appResources.styles().statementImageRl());
     }
 
-    @UiHandler({"imgContainer"})
+    @UiHandler("imgContainer")
     void onRemoveImgContainerMouseOut(MouseOutEvent event, Element parent, DbOperationRecordDto value) {
         SpanElement imgContainer = getIcon(parent);
         imgContainer.removeClassName(appResources.styles().statementImageRl());
@@ -105,7 +105,7 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
     private void toggleIconState(SpanElement imgContainer) {
         AppResources.Styles styles = appResources.styles();
 
-        if($(imgContainer).hasClass(styles.statementImageDn())) {
+        if ($(imgContainer).hasClass(styles.statementImageDn())) {
             imgContainer.removeClassName(styles.statementImageDn());
         } else {
             imgContainer.addClassName(styles.statementImageDn());
@@ -116,7 +116,7 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
         Style style = details.getStyle();
         String display = style.getDisplay();
 
-        if(display.isEmpty()) {
+        if (display.isEmpty()) {
             display = NONE.getCssName();
         }
 
