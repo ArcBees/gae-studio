@@ -4,12 +4,11 @@
 @eval colorLightGray com.arcbees.gaestudio.client.resources.Colors.colorLightGray;
 @eval colorLightGreyEB com.arcbees.gaestudio.client.resources.Colors.colorLightGreyEB;
 
+@external .gwt-SplitLayoutPanel-HDragger;
+@external .gwt-SplitLayoutPanel-VDragger;
+
 body, * {
     font-family: Source Sans Pro, Verdana, sans-serif;
-}
-
-body {
-    background: colorLightGreyEB;
 }
 
 input:focus, textarea:focus, button:focus {
@@ -92,10 +91,11 @@ input:focus, textarea:focus, button:focus {
 }
 
 .tabs {
-    background-color: #8f8f8f;
     font-size: 1.2em;
     line-height: 28px;
-    margin-bottom: 5px;
+    padding-top: 5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
 }
 
 .tabs > span {
@@ -509,7 +509,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 #loginForm a {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 #loginForm a:active {
@@ -594,3 +594,43 @@ input:focus, textarea:focus, button:focus {
     margin-top: 6px;
 }
 
+@sprite .gwt-SplitLayoutPanel-HDragger, .gwt-SplitLayoutPanel-VDragger {
+    gwt-image: "resize";
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-position-x: 50%;
+    background-position-y: 50%;
+}
+
+.statementDetails {
+    background-color: #ececec;
+    overflow: hidden;
+    padding: 15px;
+    margin-left: 12px;
+    margin-top: 6px;
+
+    display: none;
+
+    transition: height .5s ease;
+    -webkit-transition: height .5s ease;
+    -moz-transition: height .5s ease;
+    -o-transition: height .5s ease;
+}
+
+.statementDetails p {
+    color: #7a7a7a;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+@sprite .statementImage {
+    gwt-image: "listDot";
+    margin-right: 5px;
+    display: inline-block;
+}
+
+@sprite .statementImageRl, .statementImageDn {
+    gwt-image: "listDotRl";
+    cursor: pointer;
+}

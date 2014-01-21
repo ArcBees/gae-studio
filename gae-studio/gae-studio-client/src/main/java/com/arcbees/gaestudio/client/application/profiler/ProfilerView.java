@@ -28,8 +28,6 @@ public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
     @UiField
     SimplePanel statementPanel;
     @UiField
-    SimplePanel detailsPanel;
-    @UiField
     SimplePanel toolbarPanel;
 
     @Inject
@@ -46,8 +44,6 @@ public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
                 statisticsPanel.setWidget(content);
             } else if (slot == ProfilerPresenter.TYPE_SetStatementPanelContent) {
                 statementPanel.setWidget(content);
-            } else if (slot == ProfilerPresenter.TYPE_SetDetailsPanelContent) {
-                detailsPanel.setWidget(content);
             } else if (slot == ProfilerPresenter.TYPE_SetToolbarContent) {
                 toolbarPanel.setWidget(content);
             }

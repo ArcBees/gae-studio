@@ -13,6 +13,18 @@
         .right {
             overflow: hidden;
         }
+
+        .whitePanel {
+            background-color: white;
+        }
+
+        .lightGrey {
+            background-color: #ececec;
+        }
+
+        .mediumGrey {
+            background-color: #e0e0e0;
+        }
     </ui:style>
     <g:HTMLPanel>
         <g:SimplePanel ui:field="toolbarPanel" addStyleNames="{style.toolbar}"/>
@@ -22,22 +34,17 @@
                     <g:west size="300">
                         <g:SplitLayoutPanel>
                             <g:center>
-                                <g:SimplePanel ui:field="requestPanel"/>
+                                <g:SimplePanel ui:field="requestPanel" addStyleNames="{style.lightGrey}"/>
                             </g:center>
                             <g:south size="350">
-                                <g:SimplePanel ui:field="statisticsPanel"/>
+                                <g:SimplePanel ui:field="statisticsPanel" addStyleNames="{style.mediumGrey}"/>
                             </g:south>
                         </g:SplitLayoutPanel>
                     </g:west>
                     <g:center>
-                        <g:SplitLayoutPanel>
-                            <g:center>
-                                <g:SimplePanel ui:field="statementPanel"/>
-                            </g:center>
-                            <g:south size="400">
-                                <g:SimplePanel ui:field="detailsPanel"/>
-                            </g:south>
-                        </g:SplitLayoutPanel>
+                        <g:HTMLPanel>
+                            <g:SimplePanel ui:field="statementPanel" addStyleNames="{style.whitePanel}"/>
+                        </g:HTMLPanel>
                     </g:center>
                 </g:SplitLayoutPanel>
             </g:center>

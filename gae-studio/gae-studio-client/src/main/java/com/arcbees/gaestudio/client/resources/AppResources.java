@@ -129,6 +129,14 @@ public interface AppResources extends ClientBundle {
         String refresh();
 
         String edit();
+
+        String statementDetails();
+
+        String statementImage();
+
+        String statementImageRl();
+
+        String statementImageDn();
     }
 
     public interface Sprites extends CssResource {
@@ -186,6 +194,12 @@ public interface AppResources extends ClientBundle {
     ImageResource deleteRl();
 
     ImageResource stopRl();
+
+    ImageResource resize();
+
+    ImageResource listDot();
+
+    ImageResource listDotRl();
 
     @Source("textcursor.png")
     DataResource whiteTextCursorResource();
