@@ -90,7 +90,7 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
 
     @Override
     public void onToggle() {
-        if(toggle.getDirection().equals(PanelToggle.Direction.LEFT)) {
+        if (toggle.getDirection().equals(PanelToggle.Direction.LEFT)) {
             $(buttons).width(PANEL_WIDTH_CLOSED);
         } else {
             $(buttons).width(PANEL_WIDTH_OPENED);
@@ -111,31 +111,32 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
     private ToolbarButton createRecordButton() {
         return uiFactory.createToolbarButton(myConstants.record(), resources.styles().record(),
                 new ToolbarButtonCallback() {
-            @Override
-            public void onClicked() {
-                isRecording = true;
-                getUiHandlers().onToggleRecording(true);
-            }
-        }, DebugIds.RECORD);
+                    @Override
+                    public void onClicked() {
+                        isRecording = true;
+                        getUiHandlers().onToggleRecording(true);
+                    }
+                }, DebugIds.RECORD);
     }
 
     private ToolbarButton createStopButton() {
-        return uiFactory.createToolbarButton(myConstants.stop(), resources.styles().stop(), new ToolbarButtonCallback() {
-            @Override
-            public void onClicked() {
-                isRecording = false;
-                getUiHandlers().onToggleRecording(false);
-            }
-        });
+        return uiFactory.createToolbarButton(myConstants.stop(), resources.styles().stop(),
+                new ToolbarButtonCallback() {
+                    @Override
+                    public void onClicked() {
+                        isRecording = false;
+                        getUiHandlers().onToggleRecording(false);
+                    }
+                });
     }
 
     private ToolbarButton createClearButton() {
         return uiFactory.createToolbarButton(myConstants.clear(), resources.styles().delete(),
                 new ToolbarButtonCallback() {
-            @Override
-            public void onClicked() {
-                getUiHandlers().clearOperationRecords();
-            }
-        });
+                    @Override
+                    public void onClicked() {
+                        getUiHandlers().clearOperationRecords();
+                    }
+                });
     }
 }

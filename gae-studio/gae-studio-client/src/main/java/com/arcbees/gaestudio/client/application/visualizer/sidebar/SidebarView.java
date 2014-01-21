@@ -31,7 +31,8 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implements SidebarPresenter.MyView, PanelToggle.ToggleHandler {
+public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implements SidebarPresenter.MyView,
+        PanelToggle.ToggleHandler {
     interface KindTemplate extends SafeHtmlTemplates {
         @SafeHtmlTemplates.Template("<div class=\"{1}\"><span>{0}</span></div>")
         SafeHtml create(String kindName, String cssClass);

@@ -18,15 +18,15 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class ToolbarButton extends Composite implements AttachEvent.Handler {
+public class ToolbarButton implements AttachEvent.Handler, IsWidget {
     interface Binder extends UiBinder<Widget, ToolbarButton> {
     }
 
@@ -40,13 +40,14 @@ public class ToolbarButton extends Composite implements AttachEvent.Handler {
     DivElement icon;
 
     private final ToolbarButtonCallback callback;
+    private final Widget widget;
 
     @AssistedInject
     ToolbarButton(Binder binder,
                   AppResources resources,
                   @Assisted("text") String text,
                   @Assisted("iconClass") String iconClass,
-                  @Assisted final ToolbarButtonCallback callback) {
+                  @Assisted ToolbarButtonCallback callback) {
         this(binder, resources, text, iconClass, callback, "");
     }
 
@@ -55,11 +56,11 @@ public class ToolbarButton extends Composite implements AttachEvent.Handler {
                   AppResources resources,
                   @Assisted("text") String text,
                   @Assisted("iconClass") String iconClass,
-                  @Assisted final ToolbarButtonCallback callback,
+                  @Assisted ToolbarButtonCallback callback,
                   @Assisted("debugId") String debugId) {
         this.resources = resources;
 
-        initWidget(binder.createAndBindUi(this));
+        widget = binder.createAndBindUi(this);
 
         this.text.setInnerSafeHtml(SafeHtmlUtils.fromString(text));
 
@@ -67,14 +68,18 @@ public class ToolbarButton extends Composite implements AttachEvent.Handler {
 
         this.callback = callback;
 
-        ensureDebugId(debugId);
+        widget.ensureDebugId(debugId);
 
-        addAttachHandler(this);
+        widget.addAttachHandler(this);
+    }
+
+    @Override
+    public Widget asWidget() {
+        return widget;
     }
 
     @Override
     public void onAttachOrDetach(AttachEvent event) {
-
         if (event.isAttached()) {
             register(callback);
         }
