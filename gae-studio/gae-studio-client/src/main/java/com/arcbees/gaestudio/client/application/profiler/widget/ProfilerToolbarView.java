@@ -70,7 +70,7 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
         clear = createClearButton();
 
         toggle = panelToggleFactory.create(this);
-        toggle.addStyleName(resources.styles().profilerToggle());
+        toggle.asWidget().addStyleName(resources.styles().profilerToggle());
 
         buttons.add(record);
         buttons.add(stop);

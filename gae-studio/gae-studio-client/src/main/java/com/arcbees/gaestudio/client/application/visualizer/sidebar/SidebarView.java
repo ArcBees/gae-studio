@@ -58,7 +58,6 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private final KindTemplate kindTemplate;
     private final EmptyKindsTemplate emptyKindsTemplate;
     private final AppResources appResources;
-
     private final String emptyListTypeStyleName;
     private final String hiddenOverlayStyleName;
     private final String revealOverlayStyleName;
@@ -123,7 +122,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     @Override
     public void showCloseHandle() {
-        this.closeToggle.setVisible(true);
+        this.closeToggle.asWidget().setVisible(true);
     }
 
     @Override

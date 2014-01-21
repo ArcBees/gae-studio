@@ -16,11 +16,13 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
 
-public class PanelToggle extends Image implements ClickHandler {
+public class PanelToggle implements ClickHandler, IsWidget {
     public enum Direction {
-        LEFT, RIGHT;
+        LEFT, RIGHT
     }
 
     public interface ToggleHandler {
@@ -30,6 +32,7 @@ public class PanelToggle extends Image implements ClickHandler {
     private static final String TRANSFORM = "webkitTransform";
 
     private final ToggleHandler toggleHandler;
+    private final Image widget;
 
     private Direction direction = Direction.LEFT;
 
@@ -38,10 +41,20 @@ public class PanelToggle extends Image implements ClickHandler {
                 @Assisted ToggleHandler toggleHandler) {
         this.toggleHandler = toggleHandler;
 
-        setResource(appResources.closeToggle());
-        addStyleName(appResources.styles().panelToggle());
+        widget = new Image();
 
-        addClickHandler(this);
+        widget.setResource(appResources.closeToggle());
+        widget.addStyleName(appResources.styles().panelToggle());
+        widget.addClickHandler(this);
+    }
+
+    public void setAddStyleNames(String stylename) {
+        widget.addStyleName(stylename);
+    }
+
+    @Override
+    public Widget asWidget() {
+        return widget;
     }
 
     @Override
@@ -69,12 +82,12 @@ public class PanelToggle extends Image implements ClickHandler {
     }
 
     private String getToggleTransform() {
-        Style style = getElement().getStyle();
+        Style style = widget.getElement().getStyle();
         return style.getProperty(TRANSFORM);
     }
 
     private void setRotation(int rotationInDegrees) {
-        Style style = getElement().getStyle();
+        Style style = widget.getElement().getStyle();
         style.setProperty(TRANSFORM, buildRotateString(rotationInDegrees));
     }
 
