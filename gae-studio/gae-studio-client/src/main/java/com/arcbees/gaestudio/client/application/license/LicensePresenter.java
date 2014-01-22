@@ -9,9 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.license;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
@@ -21,12 +18,15 @@ import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.rest.LicenseRegistration;
 import com.arcbees.gaestudio.client.rest.LicenseService;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.CurrentUser;
+import com.arcbees.gaestudio.client.util.RestCallbackImpl;
 import com.arcbees.gaestudio.shared.auth.User;
 import com.google.api.client.http.HttpStatusCodes;
 import com.google.gwt.http.client.Response;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -50,6 +50,7 @@ public class LicensePresenter
     interface MyProxy extends ProxyPlace<LicensePresenter> {
     }
 
+    private final RestDispatch restDispatch;
     private final LicenseService licenseService;
     private final CurrentUser currentUser;
     private final PlaceManager placeManager;
@@ -60,6 +61,7 @@ public class LicensePresenter
     LicensePresenter(EventBus eventBus,
                      MyView view,
                      MyProxy proxy,
+                     RestDispatch restDispatch,
                      LicenseService licenseService,
                      CurrentUser currentUser,
                      PlaceManager placeManager,
@@ -67,6 +69,7 @@ public class LicensePresenter
                      AppMessages appMessages) {
         super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
+        this.restDispatch = restDispatch;
         this.licenseService = licenseService;
         this.currentUser = currentUser;
         this.placeManager = placeManager;
@@ -80,16 +83,16 @@ public class LicensePresenter
     public void onRegister() {
         LicenseRegistration licenseRegistration = getLicenseRegistration();
 
-        licenseService.register(licenseRegistration, new MethodCallback<Void>() {
+        restDispatch.execute(licenseService.register(licenseRegistration), new AsyncCallbackImpl<Void>() {
             @Override
-            public void onFailure(Method method, Throwable throwable) {
+            public void onFailure(Throwable throwable) {
                 DisplayMessageEvent.fire(LicensePresenter.this,
                         new Message(appConstants.failedRegistration(), MessageStyle.ERROR));
                 currentUser.setLicenseValid(false);
             }
 
             @Override
-            public void onSuccess(Method method, Void aVoid) {
+            public void onSuccess(Void aVoid) {
                 DisplayMessageEvent.fire(LicensePresenter.this,
                         new Message(appConstants.successfulRegistration(), MessageStyle.SUCCESS));
                 currentUser.setLicenseValid(true);
@@ -105,15 +108,15 @@ public class LicensePresenter
         User user = currentUser.getUser();
 
         if (user != null) {
-            licenseService.checkLicense(user.getId(), new MethodCallback<Void>() {
+            restDispatch.execute(licenseService.checkLicense(user.getId()), new RestCallbackImpl<Void>() {
                 @Override
-                public void onFailure(Method method, Throwable throwable) {
-                    handleLicenseCheck(method);
+                public void setResponse(Response response) {
+                    handleLicenseCheck(response);
                 }
 
                 @Override
-                public void onSuccess(Method method, Void aVoid) {
-                    handleLicenseCheck(method);
+                public void onSuccess(Void aVoid) {
+                    // Response is handled in setResponse
                 }
             });
         }
@@ -130,8 +133,7 @@ public class LicensePresenter
         return licenseRegistration;
     }
 
-    private void handleLicenseCheck(Method method) {
-        Response response = method.getResponse();
+    private void handleLicenseCheck(Response response) {
         int statusCode = response.getStatusCode();
 
         if (statusCode == HttpStatusCodes.STATUS_CODE_OK) {

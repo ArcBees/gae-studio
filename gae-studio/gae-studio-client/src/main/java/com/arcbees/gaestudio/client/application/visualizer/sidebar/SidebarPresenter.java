@@ -21,10 +21,11 @@ import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.Dele
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
 import com.arcbees.gaestudio.client.rest.KindsService;
-import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -45,6 +46,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
 
     public static final Object SLOT_NAMESPACES = new Object();
 
+    private final RestDispatch restDispatch;
     private final KindsService kindsService;
     private final NamespacesListPresenter namespacesListPresenter;
     private KindPanelToggleEvent.Action action = CLOSE;
@@ -52,10 +54,12 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     @Inject
     SidebarPresenter(EventBus eventBus,
                      MyView view,
+                     RestDispatch restDispatch,
                      KindsService kindsService,
                      NamespacesListPresenterFactory namespacesListPresenterFactory) {
         super(eventBus, view);
 
+        this.restDispatch = restDispatch;
         this.kindsService = kindsService;
         namespacesListPresenter = namespacesListPresenterFactory.create(this);
 
@@ -115,12 +119,13 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     }
 
     private void updateKinds() {
-        kindsService.getKinds(new MethodCallbackImpl<List<String>>("Failed getting Entity Kinds: ") {
-            @Override
-            public void onSuccess(List<String> result) {
-                onKindsUpdated(result);
-            }
-        });
+        restDispatch.execute(kindsService.getKinds(),
+                new AsyncCallbackImpl<List<String>>("Failed getting Entity Kinds: ") {
+                    @Override
+                    public void onSuccess(List<String> result) {
+                        onKindsUpdated(result);
+                    }
+                });
     }
 
     private void onKindsUpdated(List<String> kinds) {

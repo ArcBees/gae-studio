@@ -11,9 +11,6 @@ package com.arcbees.gaestudio.client.application.profiler;
 
 import java.util.logging.Logger;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
@@ -24,6 +21,7 @@ import com.arcbees.gaestudio.client.application.profiler.widget.filter.FiltersPr
 import com.arcbees.gaestudio.client.debug.DebugLogMessages;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.rest.OperationsService;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.channel.Token;
 import com.arcbees.gaestudio.shared.config.AppConfig;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
@@ -34,6 +32,7 @@ import com.google.gwt.appengine.channel.client.Socket;
 import com.google.gwt.appengine.channel.client.SocketListener;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -57,6 +56,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     public static final Object SLOT_STATETEMENTS = new Object();
     public static final Object SLOT_TOOLBAR = new Object();
 
+    private final RestDispatch restDispatch;
     private final OperationsService operationsService;
     private final FiltersPresenter filterPresenter;
     private final StatisticsPresenter statisticsPresenter;
@@ -73,6 +73,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     ProfilerPresenter(EventBus eventBus,
                       MyView view,
                       MyProxy proxy,
+                      RestDispatch restDispatch,
                       OperationsService operationsService,
                       FiltersPresenter filterPresenter,
                       StatisticsPresenter statisticsPresenter,
@@ -84,6 +85,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                       AppConfig appConfig) {
         super(eventBus, view, proxy);
 
+        this.restDispatch = restDispatch;
         this.operationsService = operationsService;
         this.filterPresenter = filterPresenter;
         this.statisticsPresenter = statisticsPresenter;
@@ -155,13 +157,9 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     private void openChannel() {
-        operationsService.getToken(clientId, new MethodCallback<Token>() {
+        restDispatch.execute(operationsService.getToken(clientId), new AsyncCallbackImpl<Token>() {
             @Override
-            public void onFailure(Method method, Throwable throwable) {
-            }
-
-            @Override
-            public void onSuccess(Method method, Token token) {
+            public void onSuccess(Token token) {
                 openChannel(token);
             }
         });

@@ -9,21 +9,17 @@
 
 package com.arcbees.gaestudio.client.application.auth.register;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.auth.LoginHelper;
-import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
-import com.arcbees.gaestudio.client.application.widget.message.Message;
-import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.auth.Token;
 import com.arcbees.gaestudio.shared.auth.User;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -44,6 +40,7 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
     }
 
     private final AppConstants appConstants;
+    private final RestDispatch restDispatch;
     private final LoginHelper loginHelper;
     private final AuthService authService;
 
@@ -52,11 +49,13 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
                       MyView view,
                       MyProxy proxy,
                       AppConstants appConstants,
+                      RestDispatch restDispatch,
                       AuthService authService,
                       LoginHelper loginHelper) {
         super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
         this.appConstants = appConstants;
+        this.restDispatch = restDispatch;
         this.loginHelper = loginHelper;
         this.authService = authService;
 
@@ -68,32 +67,22 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
                          String lastName,
                          final String email,
                          final String password) {
-        authService.register(email, password, firstName, lastName, new MethodCallback<User>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-                DisplayMessageEvent.fire(RegisterPresenter.this,
-                        new Message(appConstants.unableToRegister(), MessageStyle.ERROR));
-            }
-
-            @Override
-            public void onSuccess(Method method, User user) {
-                login(email, password);
-            }
-        });
+        restDispatch.execute(authService.register(email, password, firstName, lastName),
+                new AsyncCallbackImpl<User>(appConstants.unableToRegister()) {
+                    @Override
+                    public void onSuccess(User user) {
+                        login(email, password);
+                    }
+                });
     }
 
     private void login(String email, String password) {
-        authService.login(email, password, new MethodCallback<Token>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-                DisplayMessageEvent.fire(RegisterPresenter.this,
-                        new Message(appConstants.unableToLogin(), MessageStyle.ERROR));
-            }
-
-            @Override
-            public void onSuccess(Method method, Token token) {
-                loginHelper.reloadApp();
-            }
-        });
+        restDispatch.execute(authService.login(email, password),
+                new AsyncCallbackImpl<Token>(appConstants.unableToLogin()) {
+                    @Override
+                    public void onSuccess(Token token) {
+                        loginHelper.reloadApp();
+                    }
+                });
     }
 }

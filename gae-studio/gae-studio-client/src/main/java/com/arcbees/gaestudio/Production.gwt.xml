@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module rename-to='gaestudio'>
     <inherits name='com.arcbees.gaestudio.Common'/>
+    <inherits name='com.google.gwt.logging.LoggingDisabled'/>
 
     <extend-configuration-property name="gin.ginjector.modules"
                                    value="com.arcbees.gaestudio.client.gin.ProductionModule"/>

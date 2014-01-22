@@ -20,12 +20,13 @@ import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.rest.EntityService;
-import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -52,6 +53,7 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
     private final AppConstants myConstants;
     private final EntitiesService entitiesService;
     private final EntityService entityService;
+    private final RestDispatch restDispatch;
 
     private DeleteType lastEvent;
     private ParsedEntity currentParsedEntity;
@@ -60,13 +62,15 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
     @Inject
     EntityDeletionPresenter(EventBus eventBus,
                             MyView view,
-                            EntitiesService entitiesService,
                             AppConstants myConstants,
+                            RestDispatch restDispatch,
+                            EntitiesService entitiesService,
                             EntityService entityService) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);
 
+        this.restDispatch = restDispatch;
         this.entitiesService = entitiesService;
         this.myConstants = myConstants;
         this.entityService = entityService;
@@ -114,10 +118,10 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
     }
 
     private void deleteEntities() {
-        entitiesService.deleteAll(deleteEntitiesEvent.getKind(),
+        restDispatch.execute(entitiesService.deleteAll(deleteEntitiesEvent.getKind(),
                 deleteEntitiesEvent.getNamespace(),
-                deleteEntitiesEvent.getDeleteEntities(),
-                new MethodCallbackImpl<Void>() {
+                deleteEntitiesEvent.getDeleteEntities()),
+                new AsyncCallbackImpl<Void>() {
                     @Override
                     public void onSuccess(Void result) {
                         onEntitiesDeletedSuccess();
@@ -135,17 +139,18 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
             final EntityDto entityDto = currentParsedEntity.getEntityDto();
             KeyDto key = entityDto.getKey();
 
-            entityService.deleteEntity(key.getKind(), key.getName(), key.getId(), new MethodCallbackImpl<Void>() {
-                @Override
-                public void onSuccess(Void result) {
-                    onEntityDeletedSuccess(entityDto);
-                }
+            restDispatch.execute(entityService.deleteEntity(key.getKind(), key.getName(), key.getId()),
+                    new AsyncCallbackImpl<Void>() {
+                        @Override
+                        public void onSuccess(Void result) {
+                            onEntityDeletedSuccess(entityDto);
+                        }
 
-                @Override
-                public void onFailure(Throwable caught) {
-                    showMessage(myConstants.errorEntityDelete(), MessageStyle.ERROR);
-                }
-            });
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            showMessage(myConstants.errorEntityDelete(), MessageStyle.ERROR);
+                        }
+                    });
         }
     }
 
