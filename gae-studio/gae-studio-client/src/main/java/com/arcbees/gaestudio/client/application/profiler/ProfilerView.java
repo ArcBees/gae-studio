@@ -38,13 +38,13 @@ public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
     @Override
     public void setInSlot(Object slot, IsWidget content) {
         if (content != null) {
-            if (slot == ProfilerPresenter.TYPE_SetRequestPanelContent) {
+            if (slot == ProfilerPresenter.SLOT_REQUESTS) {
                 requestPanel.setWidget(content);
-            } else if (slot == ProfilerPresenter.TYPE_SetStatisticsPanelContent) {
+            } else if (slot == ProfilerPresenter.SLOT_STATISTICS) {
                 statisticsPanel.setWidget(content);
-            } else if (slot == ProfilerPresenter.TYPE_SetStatementPanelContent) {
+            } else if (slot == ProfilerPresenter.SLOT_STATETEMENTS) {
                 statementPanel.setWidget(content);
-            } else if (slot == ProfilerPresenter.TYPE_SetToolbarContent) {
+            } else if (slot == ProfilerPresenter.SLOT_TOOLBAR) {
                 toolbarPanel.setWidget(content);
             }
         }

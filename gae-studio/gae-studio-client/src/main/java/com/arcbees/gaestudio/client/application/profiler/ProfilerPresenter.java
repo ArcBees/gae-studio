@@ -52,10 +52,10 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     interface MyProxy extends ProxyPlace<ProfilerPresenter> {
     }
 
-    public static final Object TYPE_SetRequestPanelContent = new Object();
-    public static final Object TYPE_SetStatisticsPanelContent = new Object();
-    public static final Object TYPE_SetStatementPanelContent = new Object();
-    public static final Object TYPE_SetToolbarContent = new Object();
+    public static final Object SLOT_REQUESTS = new Object();
+    public static final Object SLOT_STATISTICS = new Object();
+    public static final Object SLOT_STATETEMENTS = new Object();
+    public static final Object SLOT_TOOLBAR = new Object();
 
     private final OperationsService operationsService;
     private final FiltersPresenter filterPresenter;
@@ -132,17 +132,17 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
 
     @Override
     protected void revealInParent() {
-        RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
+        RevealContentEvent.fire(this, ApplicationPresenter.SLOT_MAIN, this);
     }
 
     @Override
     protected void onBind() {
         super.onBind();
 
-        setInSlot(TYPE_SetRequestPanelContent, filterPresenter);
-        setInSlot(TYPE_SetStatisticsPanelContent, statisticsPresenter);
-        setInSlot(TYPE_SetStatementPanelContent, statementPresenter);
-        setInSlot(TYPE_SetToolbarContent, profilerToolbarPresenter);
+        setInSlot(SLOT_REQUESTS, filterPresenter);
+        setInSlot(SLOT_STATISTICS, statisticsPresenter);
+        setInSlot(SLOT_STATETEMENTS, statementPresenter);
+        setInSlot(SLOT_TOOLBAR, profilerToolbarPresenter);
 
         addRegisteredHandler(RecordingStateChangedEvent.getType(), this);
         addRegisteredHandler(ClearOperationRecordsEvent.getType(), this);

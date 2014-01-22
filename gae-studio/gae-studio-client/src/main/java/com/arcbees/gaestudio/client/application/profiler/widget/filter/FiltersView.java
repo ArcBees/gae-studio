@@ -67,11 +67,11 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
 
     @Override
     public void setInSlot(Object slot, IsWidget content) {
-        if (slot == FiltersPresenter.TYPE_SetRequestFilter) {
+        if (slot == FiltersPresenter.SLOT_REQUEST_FILTER) {
             request.setWidget(content);
-        } else if (slot == FiltersPresenter.TYPE_MethodFilter) {
+        } else if (slot == FiltersPresenter.SLOT_METHOD_FILTER) {
             method.setWidget(content);
-        } else if (slot == FiltersPresenter.TYPE_TypeFilter) {
+        } else if (slot == FiltersPresenter.SLOT_TYPE_FILTER) {
             type.setWidget(content);
         }
     }

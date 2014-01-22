@@ -65,7 +65,7 @@ public class LicensePresenter
                      PlaceManager placeManager,
                      AppConstants appConstants,
                      AppMessages appMessages) {
-        super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
+        super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
         this.licenseService = licenseService;
         this.currentUser = currentUser;
