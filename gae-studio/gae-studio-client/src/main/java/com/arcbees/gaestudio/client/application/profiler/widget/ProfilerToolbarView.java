@@ -113,7 +113,6 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
                 new ToolbarButtonCallback() {
                     @Override
                     public void onClicked() {
-                        isRecording = true;
                         getUiHandlers().onToggleRecording(true);
                     }
                 }, DebugIds.RECORD);
@@ -124,7 +123,6 @@ public class ProfilerToolbarView extends ViewWithUiHandlers<ProfilerToolbarUiHan
                 new ToolbarButtonCallback() {
                     @Override
                     public void onClicked() {
-                        isRecording = false;
                         getUiHandlers().onToggleRecording(false);
                     }
                 });
