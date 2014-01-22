@@ -54,7 +54,7 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
                       AppConstants appConstants,
                       AuthService authService,
                       LoginHelper loginHelper) {
-        super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
+        super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
         this.appConstants = appConstants;
         this.loginHelper = loginHelper;

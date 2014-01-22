@@ -49,7 +49,7 @@ public class ForgotPasswordPresenter extends Presenter<ForgotPasswordPresenter.M
                             MyProxy proxy,
                             AppConstants appConstants,
                             AuthService authService) {
-        super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
+        super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
         this.appConstants = appConstants;
         this.authService = authService;
