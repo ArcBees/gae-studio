@@ -1,5 +1,15 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
-    <g:HTMLPanel ui:field="buttons" styleName="{resources.styles.toolbar}"/>
+    <ui:style>
+        .buttons {
+            width: 130px;
+
+            transition: width .25s ease;
+            -webkit-transition: width .25s ease;
+            -moz-transition: width .25s ease;
+            -o-transition: width .25s ease;
+        }
+    </ui:style>
+    <g:HTMLPanel ui:field="buttons" styleName="{resources.styles.toolbar} {style.buttons}"/>
 </ui:UiBinder>

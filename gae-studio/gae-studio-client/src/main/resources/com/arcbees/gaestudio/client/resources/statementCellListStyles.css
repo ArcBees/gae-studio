@@ -1,0 +1,11 @@
+.cellListEvenItem {
+    cursor: default;
+}
+
+.cellListOddItem {
+    cursor: default;
+}
+
+.cellListKeyboardSelectedItem {
+    background: none;
+}
