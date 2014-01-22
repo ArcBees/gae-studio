@@ -14,8 +14,6 @@ import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 public class ProfilerWidgetModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
-        bindSingletonPresenterWidget(DetailsPresenter.class, DetailsPresenter.MyView.class,
-                DetailsView.class);
         bindSingletonPresenterWidget(StatementPresenter.class, StatementPresenter.MyView.class,
                 StatementView.class);
         bindSingletonPresenterWidget(StatisticsPresenter.class, StatisticsPresenter.MyView.class,

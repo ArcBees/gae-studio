@@ -32,4 +32,6 @@ public interface AppMessages extends Messages {
     SafeHtml deleteAllEntities();
 
     String invalidKey(String error);
+
+    String callLocationDetails(String className, String methodNam, String fileName, String lineNumber);
 }

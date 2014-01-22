@@ -17,7 +17,6 @@ import org.fusesource.restygwt.client.MethodCallback;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
-import com.arcbees.gaestudio.client.application.profiler.widget.DetailsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerToolbarPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatementPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsPresenter;
@@ -56,14 +55,12 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     public static final Object TYPE_SetRequestPanelContent = new Object();
     public static final Object TYPE_SetStatisticsPanelContent = new Object();
     public static final Object TYPE_SetStatementPanelContent = new Object();
-    public static final Object TYPE_SetDetailsPanelContent = new Object();
     public static final Object TYPE_SetToolbarContent = new Object();
 
     private final OperationsService operationsService;
     private final FiltersPresenter filterPresenter;
     private final StatisticsPresenter statisticsPresenter;
     private final StatementPresenter statementPresenter;
-    private final DetailsPresenter detailsPresenter;
     private final ProfilerToolbarPresenter profilerToolbarPresenter;
     private final ChannelFactory channelFactory;
     private final String clientId;
@@ -80,7 +77,6 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                       FiltersPresenter filterPresenter,
                       StatisticsPresenter statisticsPresenter,
                       StatementPresenter statementPresenter,
-                      DetailsPresenter detailsPresenter,
                       ProfilerToolbarPresenter profilerToolbarPresenter,
                       ChannelFactory channelFactory,
                       DbOperationDeserializer dbOperationDeserializer,
@@ -92,7 +88,6 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         this.filterPresenter = filterPresenter;
         this.statisticsPresenter = statisticsPresenter;
         this.statementPresenter = statementPresenter;
-        this.detailsPresenter = detailsPresenter;
         this.profilerToolbarPresenter = profilerToolbarPresenter;
         this.channelFactory = channelFactory;
         this.clientId = appConfig.getClientId();
@@ -147,7 +142,6 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         setInSlot(TYPE_SetRequestPanelContent, filterPresenter);
         setInSlot(TYPE_SetStatisticsPanelContent, statisticsPresenter);
         setInSlot(TYPE_SetStatementPanelContent, statementPresenter);
-        setInSlot(TYPE_SetDetailsPanelContent, detailsPresenter);
         setInSlot(TYPE_SetToolbarContent, profilerToolbarPresenter);
 
         addRegisteredHandler(RecordingStateChangedEvent.getType(), this);
