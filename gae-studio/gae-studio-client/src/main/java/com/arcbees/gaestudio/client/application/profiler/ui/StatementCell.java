@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.client.application.profiler.ui;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.formatters.RecordFormatter;
+import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.arcbees.gaestudio.shared.dto.stacktrace.StackTraceElementDto;
@@ -35,8 +36,6 @@ import static com.google.gwt.dom.client.Style.Display.NONE;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class StatementCell extends AbstractCell<DbOperationRecordDto> {
-    private RecordFormatter recordFormatter;
-
     public interface Renderer extends UiRenderer {
         void render(SafeHtmlBuilder safeHtmlBuilder, String formatted, String callLocation,
                     String statementDetailsClass, String imageClass);
@@ -50,16 +49,21 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
 
     private final Renderer renderer;
     private final AppResources appResources;
+    private final AppMessages appMessages;
+
+    private RecordFormatter recordFormatter;
 
     @Inject
     StatementCell(RecordFormatter recordFormatter,
                   Renderer renderer,
-                  AppResources appResources) {
+                  AppResources appResources,
+                  AppMessages appMessages) {
         super(BrowserEvents.CLICK, BrowserEvents.MOUSEOVER, BrowserEvents.MOUSEOUT);
 
         this.recordFormatter = recordFormatter;
         this.renderer = renderer;
         this.appResources = appResources;
+        this.appMessages = appMessages;
     }
 
     @Override
@@ -105,11 +109,7 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
     private void toggleIconState(SpanElement imgContainer) {
         AppResources.Styles styles = appResources.styles();
 
-        if ($(imgContainer).hasClass(styles.statementImageDn())) {
-            imgContainer.removeClassName(styles.statementImageDn());
-        } else {
-            imgContainer.addClassName(styles.statementImageDn());
-        }
+        $(imgContainer).toggleClass(styles.statementImageDn());
     }
 
     private void toggleDetails(DivElement details) {
@@ -128,17 +128,7 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
     }
 
     private String tempFormatCaller(StackTraceElementDto caller) {
-        StringBuilder builder = new StringBuilder();
-
-        builder.append("Class:");
-        builder.append(caller.getClassName());
-        builder.append(" Method:");
-        builder.append(caller.getMethodName());
-        builder.append(" Filename:");
-        builder.append(caller.getFileName());
-        builder.append(" Line#:");
-        builder.append(caller.getLineNumber());
-
-        return builder.toString();
+        return appMessages.callLocationDetails(caller.getClassName(), caller.getMethodName(),
+                caller.getFileName(), String.valueOf(caller.getLineNumber()));
     }
 }
