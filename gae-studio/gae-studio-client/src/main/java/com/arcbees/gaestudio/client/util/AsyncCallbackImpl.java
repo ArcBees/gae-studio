@@ -36,7 +36,7 @@ public abstract class AsyncCallbackImpl<T> implements AsyncCallback<T>, HasHandl
 
     @Override
     public void fireEvent(GwtEvent<?> event) {
-
+        eventBus.fireEvent(event);
     }
 
     @Override
