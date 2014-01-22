@@ -9,8 +9,6 @@
 
 package com.arcbees.gaestudio.server.recorder;
 
-import javax.inject.Provider;
-
 import com.google.apphosting.api.ApiProxy.ApiProxyException;
 import com.google.apphosting.api.ApiProxy.Delegate;
 import com.google.apphosting.api.ApiProxy.Environment;
@@ -26,14 +24,14 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 public class DbOperationRecorderHook extends BaseHook {
-    private final Provider<DbOperationRecorder> dbOperationRecorderProvider;
+    private final DbOperationRecorder dbOperationRecorder;
 
     @Inject
-    DbOperationRecorderHook(Provider<DbOperationRecorder> dbOperationRecorderProvider,
+    DbOperationRecorderHook(DbOperationRecorder dbOperationRecorder,
                             @Assisted Delegate<Environment> baseDelegate) {
         super(baseDelegate);
 
-        this.dbOperationRecorderProvider = dbOperationRecorderProvider;
+        this.dbOperationRecorder = dbOperationRecorder;
     }
 
     @Override
@@ -64,7 +62,7 @@ public class DbOperationRecorderHook extends BaseHook {
         DeleteResponse response = new DeleteResponse();
         response.mergeFrom(result);
 
-        getDbOperationRecorder().recordDbOperation(request, response, (int) (end - start));
+        dbOperationRecorder.recordDbOperation(request, response, (int) (end - start));
 
         return result;
     }
@@ -81,7 +79,7 @@ public class DbOperationRecorderHook extends BaseHook {
         QueryResult queryResult = new QueryResult();
         queryResult.mergeFrom(result);
 
-        getDbOperationRecorder().recordDbOperation(query, queryResult, (int) (end - start));
+        dbOperationRecorder.recordDbOperation(query, queryResult, (int) (end - start));
 
         return result;
     }
@@ -98,7 +96,7 @@ public class DbOperationRecorderHook extends BaseHook {
         GetResponse getResponse = new GetResponse();
         getResponse.mergeFrom(result);
 
-        getDbOperationRecorder().recordDbOperation(getRequest, getResponse, (int) (end - start));
+        dbOperationRecorder.recordDbOperation(getRequest, getResponse, (int) (end - start));
 
         return result;
     }
@@ -115,12 +113,8 @@ public class DbOperationRecorderHook extends BaseHook {
         PutResponse putResponse = new PutResponse();
         putResponse.mergeFrom(result);
 
-        getDbOperationRecorder().recordDbOperation(putRequest, putResponse, (int) (end - start));
+        dbOperationRecorder.recordDbOperation(putRequest, putResponse, (int) (end - start));
 
         return result;
-    }
-
-    private DbOperationRecorder getDbOperationRecorder() {
-        return dbOperationRecorderProvider.get();
     }
 }
