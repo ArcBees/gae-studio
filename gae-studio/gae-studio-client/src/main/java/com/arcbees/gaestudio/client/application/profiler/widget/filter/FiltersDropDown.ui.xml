@@ -1,0 +1,18 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <g:HTMLPanel tag="ul" addStyleNames="{res.styles.ul}">
+        <li class="{res.styles.selectedLi} {res.styles.dropDownArrow}">
+            <span>View By</span>
+            Request
+        </li>
+        <li class="{res.styles.hiddenLi} ">
+            <span>View By</span>
+            Type
+        </li>
+        <li class="{res.styles.hiddenLi}">
+            <span>View By</span>
+            Method
+        </li>
+    </g:HTMLPanel>
+</ui:UiBinder>

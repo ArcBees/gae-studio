@@ -10,10 +10,6 @@
             background: #232323;
         }
 
-        .right {
-            overflow: hidden;
-        }
-
         .whitePanel {
             background-color: white;
         }
@@ -25,27 +21,28 @@
         .mediumGrey {
             background-color: #e0e0e0;
         }
+
+        .splitLayoutPanel {
+            height: 100%;
+            left: 130px;
+        }
     </ui:style>
     <g:HTMLPanel>
         <g:SimplePanel ui:field="toolbarPanel" addStyleNames="{style.toolbar}"/>
-        <g:DockLayoutPanel addStyleNames="{resources.styles.profilerDockTemporary} {style.right}">
-            <g:center>
+        <g:SplitLayoutPanel addStyleNames="{style.splitLayoutPanel}">
+            <g:west size="300">
                 <g:SplitLayoutPanel>
-                    <g:west size="300">
-                        <g:SplitLayoutPanel>
-                            <g:center>
-                                <g:SimplePanel ui:field="requestPanel" addStyleNames="{style.lightGrey}"/>
-                            </g:center>
-                            <g:south size="350">
-                                <g:SimplePanel ui:field="statisticsPanel" addStyleNames="{style.mediumGrey}"/>
-                            </g:south>
-                        </g:SplitLayoutPanel>
-                    </g:west>
                     <g:center>
-                        <g:SimplePanel ui:field="statementPanel" addStyleNames="{style.whitePanel}"/>
+                        <g:SimplePanel ui:field="requestPanel" addStyleNames="{style.lightGrey}"/>
                     </g:center>
+                    <g:south size="350">
+                        <g:SimplePanel ui:field="statisticsPanel" addStyleNames="{style.mediumGrey}"/>
+                    </g:south>
                 </g:SplitLayoutPanel>
+            </g:west>
+            <g:center>
+                <g:SimplePanel ui:field="statementPanel" addStyleNames="{style.whitePanel}"/>
             </g:center>
-        </g:DockLayoutPanel>
+        </g:SplitLayoutPanel>
     </g:HTMLPanel>
 </ui:UiBinder>
