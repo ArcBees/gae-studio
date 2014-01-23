@@ -11,13 +11,9 @@ package com.arcbees.gaestudio.client.application.profiler;
 
 import java.util.logging.Logger;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
-import com.arcbees.gaestudio.client.application.profiler.widget.DetailsPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.ProfilerToolbarPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatementPresenter;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatisticsPresenter;
@@ -25,6 +21,7 @@ import com.arcbees.gaestudio.client.application.profiler.widget.filter.FiltersPr
 import com.arcbees.gaestudio.client.debug.DebugLogMessages;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.rest.OperationsService;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.channel.Token;
 import com.arcbees.gaestudio.shared.config.AppConfig;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
@@ -35,6 +32,7 @@ import com.google.gwt.appengine.channel.client.Socket;
 import com.google.gwt.appengine.channel.client.SocketListener;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -53,17 +51,16 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     interface MyProxy extends ProxyPlace<ProfilerPresenter> {
     }
 
-    public static final Object TYPE_SetRequestPanelContent = new Object();
-    public static final Object TYPE_SetStatisticsPanelContent = new Object();
-    public static final Object TYPE_SetStatementPanelContent = new Object();
-    public static final Object TYPE_SetDetailsPanelContent = new Object();
-    public static final Object TYPE_SetToolbarContent = new Object();
+    public static final Object SLOT_REQUESTS = new Object();
+    public static final Object SLOT_STATISTICS = new Object();
+    public static final Object SLOT_STATETEMENTS = new Object();
+    public static final Object SLOT_TOOLBAR = new Object();
 
+    private final RestDispatch restDispatch;
     private final OperationsService operationsService;
     private final FiltersPresenter filterPresenter;
     private final StatisticsPresenter statisticsPresenter;
     private final StatementPresenter statementPresenter;
-    private final DetailsPresenter detailsPresenter;
     private final ProfilerToolbarPresenter profilerToolbarPresenter;
     private final ChannelFactory channelFactory;
     private final String clientId;
@@ -76,11 +73,11 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     ProfilerPresenter(EventBus eventBus,
                       MyView view,
                       MyProxy proxy,
+                      RestDispatch restDispatch,
                       OperationsService operationsService,
                       FiltersPresenter filterPresenter,
                       StatisticsPresenter statisticsPresenter,
                       StatementPresenter statementPresenter,
-                      DetailsPresenter detailsPresenter,
                       ProfilerToolbarPresenter profilerToolbarPresenter,
                       ChannelFactory channelFactory,
                       DbOperationDeserializer dbOperationDeserializer,
@@ -88,11 +85,11 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                       AppConfig appConfig) {
         super(eventBus, view, proxy);
 
+        this.restDispatch = restDispatch;
         this.operationsService = operationsService;
         this.filterPresenter = filterPresenter;
         this.statisticsPresenter = statisticsPresenter;
         this.statementPresenter = statementPresenter;
-        this.detailsPresenter = detailsPresenter;
         this.profilerToolbarPresenter = profilerToolbarPresenter;
         this.channelFactory = channelFactory;
         this.clientId = appConfig.getClientId();
@@ -137,18 +134,17 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
 
     @Override
     protected void revealInParent() {
-        RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
+        RevealContentEvent.fire(this, ApplicationPresenter.SLOT_MAIN, this);
     }
 
     @Override
     protected void onBind() {
         super.onBind();
 
-        setInSlot(TYPE_SetRequestPanelContent, filterPresenter);
-        setInSlot(TYPE_SetStatisticsPanelContent, statisticsPresenter);
-        setInSlot(TYPE_SetStatementPanelContent, statementPresenter);
-        setInSlot(TYPE_SetDetailsPanelContent, detailsPresenter);
-        setInSlot(TYPE_SetToolbarContent, profilerToolbarPresenter);
+        setInSlot(SLOT_REQUESTS, filterPresenter);
+        setInSlot(SLOT_STATISTICS, statisticsPresenter);
+        setInSlot(SLOT_STATETEMENTS, statementPresenter);
+        setInSlot(SLOT_TOOLBAR, profilerToolbarPresenter);
 
         addRegisteredHandler(RecordingStateChangedEvent.getType(), this);
         addRegisteredHandler(ClearOperationRecordsEvent.getType(), this);
@@ -161,13 +157,9 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     private void openChannel() {
-        operationsService.getToken(clientId, new MethodCallback<Token>() {
+        restDispatch.execute(operationsService.getToken(clientId), new AsyncCallbackImpl<Token>() {
             @Override
-            public void onFailure(Method method, Throwable throwable) {
-            }
-
-            @Override
-            public void onSuccess(Method method, Token token) {
+            public void onSuccess(Token token) {
                 openChannel(token);
             }
         });

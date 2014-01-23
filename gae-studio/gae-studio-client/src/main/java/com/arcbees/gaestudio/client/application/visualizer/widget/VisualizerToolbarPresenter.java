@@ -25,13 +25,14 @@ import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
-import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.common.base.Strings;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -56,6 +57,7 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     private final AppConstants myConstants;
     private final NamespacesListPresenter namespacesListPresenter;
     private final EntitiesService entitiesService;
+    private final RestDispatch restDispatch;
 
     private String currentKind = "";
     private ParsedEntity currentParsedEntity;
@@ -64,12 +66,14 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     VisualizerToolbarPresenter(EventBus eventBus,
                                MyView view,
                                NamespacesListPresenterFactory namespacesListPresenterFactory,
+                               RestDispatch restDispatch,
                                EntitiesService entitiesService,
                                AppConstants myConstants) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);
 
+        this.restDispatch = restDispatch;
         this.entitiesService = entitiesService;
         this.myConstants = myConstants;
         namespacesListPresenter = namespacesListPresenterFactory.create(this);
@@ -94,7 +98,7 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     @Override
     public void create() {
         if (!currentKind.isEmpty()) {
-            entitiesService.createByKind(currentKind, new MethodCallbackImpl<EntityDto>() {
+            restDispatch.execute(entitiesService.createByKind(currentKind), new AsyncCallbackImpl<EntityDto>() {
                 @Override
                 public void onFailure(Throwable caught) {
                     Message message = new Message(myConstants.errorUnableToGenerateEmptyJson(), MessageStyle.ERROR);

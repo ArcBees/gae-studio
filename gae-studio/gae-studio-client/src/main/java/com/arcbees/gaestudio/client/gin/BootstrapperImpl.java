@@ -11,15 +11,14 @@ package com.arcbees.gaestudio.client.gin;
 
 import javax.inject.Inject;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.rest.AuthService;
 import com.arcbees.gaestudio.client.rest.LicenseService;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.arcbees.gaestudio.shared.auth.User;
 import com.google.gwt.user.client.History;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.Bootstrapper;
 import com.gwtplatform.mvp.client.annotations.UnauthorizedPlace;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
@@ -29,6 +28,7 @@ public class BootstrapperImpl implements Bootstrapper {
     private final CurrentUser currentUser;
     private final AuthService authService;
     private final PlaceManager placeManager;
+    private final RestDispatch restDispatch;
     private final String unauthorizedPlace;
     private final LicenseService licenseService;
 
@@ -36,25 +36,27 @@ public class BootstrapperImpl implements Bootstrapper {
     BootstrapperImpl(CurrentUser currentUser,
                      AuthService authService,
                      PlaceManager placeManager,
+                     RestDispatch restDispatch,
                      LicenseService licenseService,
                      @UnauthorizedPlace String unauthorizedPlace) {
         this.currentUser = currentUser;
         this.authService = authService;
         this.placeManager = placeManager;
+        this.restDispatch = restDispatch;
         this.unauthorizedPlace = unauthorizedPlace;
         this.licenseService = licenseService;
     }
 
     @Override
     public void onBootstrap() {
-        authService.checkLogin(new MethodCallback<User>() {
+        restDispatch.execute(authService.checkLogin(), new AsyncCallbackImpl<User>() {
             @Override
-            public void onFailure(Method method, Throwable exception) {
+            public void onFailure(Throwable exception) {
                 onLoginChecked(null);
             }
 
             @Override
-            public void onSuccess(Method method, User user) {
+            public void onSuccess(User user) {
                 onLoginChecked(user);
             }
         });
@@ -65,15 +67,15 @@ public class BootstrapperImpl implements Bootstrapper {
         currentUser.setLoggedIn(user != null);
 
         if (user != null) {
-            licenseService.checkLicense(user.getId(), new MethodCallback<Void>() {
+            restDispatch.execute(licenseService.checkLicense(user.getId()), new AsyncCallbackImpl<Void>() {
                 @Override
-                public void onFailure(Method method, Throwable throwable) {
+                public void onFailure(Throwable throwable) {
                     currentUser.setLicenseValid(false);
                     navigate();
                 }
 
                 @Override
-                public void onSuccess(Method method, Void aVoid) {
+                public void onSuccess(Void aVoid) {
                     currentUser.setLicenseValid(true);
                     navigate();
                 }

@@ -11,14 +11,17 @@ package com.arcbees.gaestudio.client.rest;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 
-import org.fusesource.restygwt.client.MethodCallback;
-import org.fusesource.restygwt.client.RestService;
+import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.gwtplatform.dispatch.rest.shared.RestAction;
+import com.gwtplatform.dispatch.rest.shared.RestService;
 
+@Path(EndPoints.RECORD)
 public interface RecordService extends RestService {
     @POST
-    void startRecording(MethodCallback<Long> callback);
+    RestAction<Long> startRecording();
 
     @DELETE
-    void stopRecording(MethodCallback<Long> callback);
+    RestAction<Long> stopRecording();
 }

@@ -28,8 +28,7 @@ import com.google.inject.servlet.RequestScoped;
 public class GaeStudioRecorderModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(Long.class).annotatedWith(Names.named(GaeStudioConstants.REQUEST_ID)).toProvider(RequestIdProvider.class)
-                .in(RequestScoped.class);
+        bind(Long.class).annotatedWith(Names.named(GaeStudioConstants.REQUEST_ID)).toProvider(RequestIdProvider.class);
 
         bind(StackInspector.class).to(SimpleStackInspector.class);
         bind(DbOperationRecorder.class).to(MemcacheDbOperationRecorder.class);

@@ -17,13 +17,12 @@ import java.util.List;
 import com.arcbees.gaestudio.client.application.profiler.ui.StatementCell;
 import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterValue;
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.client.resources.StatementCellListResource;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
@@ -33,30 +32,18 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
 
     @UiField(provided = true)
     AppResources resources;
-
     @UiField(provided = true)
     CellList<DbOperationRecordDto> statements;
-
-    private final SingleSelectionModel<DbOperationRecordDto> selectionModel =
-            new SingleSelectionModel<DbOperationRecordDto>();
 
     @Inject
     StatementView(Binder uiBinder,
                   AppResources resources,
-                  StatementCell statementCell) {
+                  StatementCell statementCell,
+                  StatementCellListResource statementCellListResource) {
         this.resources = resources;
-        statements = new CellList<DbOperationRecordDto>(statementCell);
+        statements = new CellList<DbOperationRecordDto>(statementCell, statementCellListResource);
 
         initWidget(uiBinder.createAndBindUi(this));
-
-        selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-            @Override
-            public void onSelectionChange(SelectionChangeEvent event) {
-                DbOperationRecordDto dbOperationRecordDTO = selectionModel.getSelectedObject();
-                getUiHandlers().onStatementClicked(dbOperationRecordDTO);
-            }
-        });
-        statements.setSelectionModel(selectionModel);
     }
 
     @SuppressWarnings("unchecked")

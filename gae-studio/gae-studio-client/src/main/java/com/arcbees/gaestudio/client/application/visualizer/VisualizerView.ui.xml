@@ -15,11 +15,11 @@
     </ui:style>
     <g:DockLayoutPanel unit="PX" debugId="{debugIds.getVisualizer}" ui:field="dock">
         <g:west size="240">
-            <g:SimplePanel ui:field="entityTypesSidebar" addStyleNames="{resources.styles.entityTypeSelector}"/>
+            <g:HTMLPanel>
+                <g:SimplePanel ui:field="entityTypesSidebar" addStyleNames="{resources.styles.entityTypeSelector}"/>
+                <g:SimplePanel ui:field="toolbar" addStyleNames="{resources.styles.hiddenOverlay}"/>
+            </g:HTMLPanel>
         </g:west>
-        <g:north size="36">
-            <g:SimplePanel ui:field="toolbar" addStyleNames="{resources.styles.hiddenOverlay}"/>
-        </g:north>
         <g:center styleName="{resources.styles.noOverflow}">
             <g:HTMLPanel addStyleNames="{resources.styles.entityContainer}" ui:field="centerContainer">
                 <g:SimplePanel ui:field="entityListPanel"

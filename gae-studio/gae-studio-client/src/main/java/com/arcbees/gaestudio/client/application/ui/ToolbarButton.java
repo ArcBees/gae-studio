@@ -10,20 +10,23 @@
 package com.arcbees.gaestudio.client.application.ui;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.ParagraphElement;
+import com.google.gwt.event.logical.shared.AttachEvent;
+import com.google.gwt.query.client.Function;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
 
-public class ToolbarButton extends Composite {
+import static com.google.gwt.query.client.GQuery.$;
+
+public class ToolbarButton implements AttachEvent.Handler, IsWidget {
     interface Binder extends UiBinder<Widget, ToolbarButton> {
     }
 
@@ -32,42 +35,64 @@ public class ToolbarButton extends Composite {
     @UiField
     HTMLPanel button;
     @UiField
-    Image image;
+    ParagraphElement text;
     @UiField
-    InlineLabel text;
+    DivElement icon;
+
+    private final ToolbarButtonCallback callback;
+    private final Widget widget;
 
     @AssistedInject
     ToolbarButton(Binder binder,
                   AppResources resources,
                   @Assisted("text") String text,
-                  @Assisted ImageResource imageResource,
-                  @Assisted final ToolbarButtonCallback callback) {
-        this(binder, resources, text, imageResource, callback, "");
+                  @Assisted("iconClass") String iconClass,
+                  @Assisted ToolbarButtonCallback callback) {
+        this(binder, resources, text, iconClass, callback, "");
     }
 
-
     @AssistedInject
     ToolbarButton(Binder binder,
                   AppResources resources,
                   @Assisted("text") String text,
-                  @Assisted ImageResource imageResource,
-                  @Assisted final ToolbarButtonCallback callback,
+                  @Assisted("iconClass") String iconClass,
+                  @Assisted ToolbarButtonCallback callback,
                   @Assisted("debugId") String debugId) {
         this.resources = resources;
 
-        initWidget(binder.createAndBindUi(this));
+        widget = binder.createAndBindUi(this);
 
-        this.text.setText(text);
-        this.image.setResource(imageResource);
+        this.text.setInnerSafeHtml(SafeHtmlUtils.fromString(text));
 
-        button.addDomHandler(new ClickHandler() {
+        icon.addClassName(iconClass);
+
+        this.callback = callback;
+
+        widget.ensureDebugId(debugId);
+
+        widget.addAttachHandler(this);
+    }
+
+    @Override
+    public Widget asWidget() {
+        return widget;
+    }
+
+    @Override
+    public void onAttachOrDetach(AttachEvent event) {
+        if (event.isAttached()) {
+            register(callback);
+        }
+    }
+
+    private void register(final ToolbarButtonCallback callback) {
+        $(button).click(new Function() {
             @Override
-            public void onClick(ClickEvent event) {
+            public boolean f(Event e) {
                 callback.onClicked();
+                return true;
             }
-        }, ClickEvent.getType());
-
-        ensureDebugId(debugId);
+        });
     }
 
     public void setEnabled(Boolean enabled) {

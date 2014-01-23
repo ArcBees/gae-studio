@@ -110,7 +110,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
     @Override
     protected void revealInParent() {
-        RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
+        RevealContentEvent.fire(this, ApplicationPresenter.SLOT_MAIN, this);
     }
 
     @Override

@@ -1,0 +1,23 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'>
+    <ui:with field='formatted' type='java.lang.String'/>
+    <ui:with field='callLocation' type='java.lang.String'/>
+    <ui:with field='statementDetailsClass' type='java.lang.String'/>
+    <ui:with field='imageClass' type='java.lang.String'/>
+
+    <ui:style>
+        .root {
+            margin-bottom: 10px;
+        }
+    </ui:style>
+
+    <div class="{style.root}">
+        <div>
+            <span ui:field="imgContainer" class="{imageClass}"/>
+            <ui:text from="{formatted}"/>
+        </div>
+        <div ui:field="details" class="{statementDetailsClass}">
+            <p>Call Location</p>
+            <ui:text from="{callLocation}"/>
+        </div>
+    </div>
+</ui:UiBinder>

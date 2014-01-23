@@ -9,9 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.auth.forgot;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
@@ -19,8 +16,10 @@ import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -41,6 +40,7 @@ public class ForgotPasswordPresenter extends Presenter<ForgotPasswordPresenter.M
     }
 
     private final AppConstants appConstants;
+    private final RestDispatch restDispatch;
     private final AuthService authService;
 
     @Inject
@@ -48,10 +48,12 @@ public class ForgotPasswordPresenter extends Presenter<ForgotPasswordPresenter.M
                             MyView view,
                             MyProxy proxy,
                             AppConstants appConstants,
+                            RestDispatch restDispatch,
                             AuthService authService) {
-        super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
+        super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
         this.appConstants = appConstants;
+        this.restDispatch = restDispatch;
         this.authService = authService;
 
         getView().setUiHandlers(this);
@@ -59,15 +61,15 @@ public class ForgotPasswordPresenter extends Presenter<ForgotPasswordPresenter.M
 
     @Override
     public void forgotPassword(String email) {
-        authService.generateResetToken(email, new MethodCallback<Void>() {
+        restDispatch.execute(authService.generateResetToken(email), new AsyncCallbackImpl<Void>() {
             @Override
-            public void onFailure(Method method, Throwable throwable) {
+            public void onFailure(Throwable throwable) {
                 DisplayMessageEvent.fire(ForgotPasswordPresenter.this,
                         new Message(appConstants.unableToRegister(), MessageStyle.ERROR));
             }
 
             @Override
-            public void onSuccess(Method method, Void result) {
+            public void onSuccess(Void result) {
                 DisplayMessageEvent.fire(ForgotPasswordPresenter.this,
                         new Message(appConstants.passwordReset(), MessageStyle.SUCCESS));
             }

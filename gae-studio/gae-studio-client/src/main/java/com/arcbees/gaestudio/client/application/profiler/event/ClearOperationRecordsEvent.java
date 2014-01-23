@@ -12,7 +12,6 @@ package com.arcbees.gaestudio.client.application.profiler.event;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class ClearOperationRecordsEvent extends GwtEvent<ClearOperationRecordsEvent.ClearOperationRecordsHandler> {
     public ClearOperationRecordsEvent() {
@@ -26,10 +25,6 @@ public class ClearOperationRecordsEvent extends GwtEvent<ClearOperationRecordsEv
 
     public static void fire(HasHandlers source, ClearOperationRecordsEvent eventInstance) {
         source.fireEvent(eventInstance);
-    }
-
-    public interface HasClearOperationRecordsHandlers extends HasHandlers {
-        HandlerRegistration addClearOperationRecordsHandler(ClearOperationRecordsHandler handler);
     }
 
     public interface ClearOperationRecordsHandler extends EventHandler {

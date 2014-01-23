@@ -11,75 +11,28 @@ package com.arcbees.gaestudio.client.rest;
 
 import javax.inject.Singleton;
 
-import org.fusesource.restygwt.client.Resource;
-import org.fusesource.restygwt.client.RestServiceProxy;
-
-import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.google.gwt.core.shared.GWT;
+import com.arcbees.gaestudio.shared.config.AppConfig;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Provides;
+import com.gwtplatform.dispatch.rest.client.RestApplicationPath;
+import com.gwtplatform.dispatch.rest.client.gin.RestDispatchAsyncModule;
 
 public class RestModule extends AbstractGinModule {
     @Override
     protected void configure() {
-        bind(ResourceFactory.class).in(Singleton.class);
+        install(new RestDispatchAsyncModule());
     }
 
     @Provides
+    @RestApplicationPath
     @Singleton
-    EntitiesService getEntitiesService(ResourceFactory resourceFactory) {
-        return resourceFactory.setupProxy(GWT.<EntitiesService>create(EntitiesService.class), EndPoints.ENTITIES);
-    }
+    private String getRestApplicationPath(AppConfig appConfig) {
+        String restPath = appConfig.getRestPath();
 
-    @Provides
-    @Singleton
-    EntityService getEntityService(ResourceFactory resourceFactory) {
-        return resourceFactory.setupProxy(GWT.<EntityService>create(EntityService.class), EndPoints.ENTITY);
-    }
+        if (restPath.endsWith("/")) {
+            restPath = restPath.substring(0, restPath.length() - 1);
+        }
 
-    @Provides
-    @Singleton
-    NamespacesService getNamespacesService(ResourceFactory resourceFactory) {
-        return resourceFactory.setupProxy(GWT.<NamespacesService>create(NamespacesService.class), EndPoints.NAMESPACES);
-    }
-
-    @Provides
-    @Singleton
-    KindsService getKindsService(ResourceFactory resourceFactory) {
-        return resourceFactory.setupProxy(GWT.<KindsService>create(KindsService.class), EndPoints.KINDS);
-    }
-
-    @Provides
-    @Singleton
-    OperationsService getOperationsService(ResourceFactory resourceFactory) {
-        return resourceFactory.setupProxy(GWT.<OperationsService>create(OperationsService.class), EndPoints.OPERATIONS);
-    }
-
-    @Provides
-    @Singleton
-    RecordService getRecordService(ResourceFactory resourceFactory) {
-        return resourceFactory.setupProxy(GWT.<RecordService>create(RecordService.class), EndPoints.RECORD);
-    }
-
-    @Provides
-    @Singleton
-    AuthService getAuthService(ResourceFactory resourceFactory) {
-        return resourceFactory.setupProxy(GWT.<AuthService>create(AuthService.class), EndPoints.AUTH);
-    }
-
-    @Provides
-    @Singleton
-    BlobsService getBlobsService(ResourceFactory resourceFactory) {
-        return resourceFactory.setupProxy(GWT.<BlobsService>create(BlobsService.class), EndPoints.BLOBS);
-    }
-
-    @Provides
-    @Singleton
-    LicenseService getLicenseService() {
-        Resource resource = new Resource(EndPoints.ARCBEES_LICENSE_SERVICE);
-        LicenseService proxy = GWT.create(LicenseService.class);
-        ((RestServiceProxy) proxy).setResource(resource);
-
-        return proxy;
+        return restPath;
     }
 }

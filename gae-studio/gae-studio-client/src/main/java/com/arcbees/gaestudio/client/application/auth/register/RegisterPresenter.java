@@ -9,27 +9,23 @@
 
 package com.arcbees.gaestudio.client.application.auth.register;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
-import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
-import com.arcbees.gaestudio.client.application.widget.message.Message;
-import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
+import com.arcbees.gaestudio.client.application.auth.LoginHelper;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
+import com.arcbees.gaestudio.shared.auth.Token;
 import com.arcbees.gaestudio.shared.auth.User;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.NoGatekeeper;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
-import com.gwtplatform.mvp.client.proxy.PlaceManager;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, RegisterPresenter.MyProxy> implements
@@ -44,21 +40,24 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
     }
 
     private final AppConstants appConstants;
+    private final RestDispatch restDispatch;
+    private final LoginHelper loginHelper;
     private final AuthService authService;
-    private final PlaceManager placeManager;
 
     @Inject
     RegisterPresenter(EventBus eventBus,
                       MyView view,
                       MyProxy proxy,
                       AppConstants appConstants,
+                      RestDispatch restDispatch,
                       AuthService authService,
-                      PlaceManager placeManager) {
-        super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
+                      LoginHelper loginHelper) {
+        super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
         this.appConstants = appConstants;
+        this.restDispatch = restDispatch;
+        this.loginHelper = loginHelper;
         this.authService = authService;
-        this.placeManager = placeManager;
 
         getView().setUiHandlers(this);
     }
@@ -68,20 +67,15 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
                          String lastName,
                          final String email,
                          final String password) {
-        authService.register(email, password, firstName, lastName, new MethodCallback<User>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-                DisplayMessageEvent.fire(RegisterPresenter.this,
-                        new Message(appConstants.unableToRegister(), MessageStyle.ERROR));
-            }
-
-            @Override
-            public void onSuccess(Method method, User user) {
-                DisplayMessageEvent.fire(RegisterPresenter.this,
-                        new Message(appConstants.registerSuccessfull(), MessageStyle.SUCCESS));
-                redirectToAuth();
-            }
-        });
+        restDispatch.execute(authService.register(email, password, firstName, lastName),
+                new AsyncCallbackImpl<User>(appConstants.unableToRegister()) {
+                    @Override
+                    public void onSuccess(User user) {
+                        DisplayMessageEvent.fire(RegisterPresenter.this,
+                                new Message(appConstants.registerSuccessfull(), MessageStyle.SUCCESS));
+                        redirectToAuth();
+                    }
+                });
     }
 
     private void redirectToAuth() {

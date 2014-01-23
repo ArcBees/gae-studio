@@ -12,32 +12,31 @@ package com.arcbees.gaestudio.client.rest;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
-import org.fusesource.restygwt.client.MethodCallback;
-import org.fusesource.restygwt.client.RestService;
-
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
+import com.gwtplatform.dispatch.rest.shared.RestAction;
+import com.gwtplatform.dispatch.rest.shared.RestService;
 
+@Path(EndPoints.ENTITY)
 public interface EntityService extends RestService {
     @GET
-    void getEntity(@QueryParam(UrlParameters.KIND) String kind,
-                   @QueryParam(UrlParameters.APPID) String appId,
-                   @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                   @QueryParam(UrlParameters.PARENT_ID) String parentId,
-                   @QueryParam(UrlParameters.PARENT_KIND) String parentKind,
-                   @QueryParam(UrlParameters.NAME) String entityName,
-                   @QueryParam(UrlParameters.ID) Long entityId,
-                   MethodCallback<EntityDto> callback);
+    RestAction<EntityDto> getEntity(@QueryParam(UrlParameters.KIND) String kind,
+                                    @QueryParam(UrlParameters.APPID) String appId,
+                                    @QueryParam(UrlParameters.NAMESPACE) String namespace,
+                                    @QueryParam(UrlParameters.PARENT_ID) String parentId,
+                                    @QueryParam(UrlParameters.PARENT_KIND) String parentKind,
+                                    @QueryParam(UrlParameters.NAME) String entityName,
+                                    @QueryParam(UrlParameters.ID) Long entityId);
 
     @PUT
-    void updateEntity(EntityDto entityDto,
-                      MethodCallback<EntityDto> callback);
+    RestAction<EntityDto> updateEntity(EntityDto entityDto);
 
     @DELETE
-    void deleteEntity(@QueryParam(UrlParameters.KIND) String kind,
-                      @QueryParam(UrlParameters.NAME) String entityName,
-                      @QueryParam(UrlParameters.ID) Long entityId,
-                      MethodCallback<Void> callback);
+    RestAction<Void> deleteEntity(@QueryParam(UrlParameters.KIND) String kind,
+                                  @QueryParam(UrlParameters.NAME) String entityName,
+                                  @QueryParam(UrlParameters.ID) Long entityId);
 }

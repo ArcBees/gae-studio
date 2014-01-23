@@ -16,12 +16,7 @@
         <!-- GWTP dependencies -->
         <dependency>
             <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-shared</artifactId>
-            <version>${gwtp.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-server-guice</artifactId>
+            <artifactId>gwtp-dispatch-common-shared</artifactId>
             <version>${gwtp.version}</version>
         </dependency>
 

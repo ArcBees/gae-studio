@@ -14,26 +14,25 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.client.ui.PanelToggle;
+import com.arcbees.gaestudio.client.ui.PanelToggleFactory;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implements SidebarPresenter.MyView {
+public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implements SidebarPresenter.MyView,
+        PanelToggle.ToggleHandler {
     interface KindTemplate extends SafeHtmlTemplates {
         @SafeHtmlTemplates.Template("<div class=\"{1}\"><span>{0}</span></div>")
         SafeHtml create(String kindName, String cssClass);
@@ -53,13 +52,12 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     HTML emptyKinds;
     @UiField
     SimplePanel namespaces;
-    @UiField
-    Image closeToggle;
+    @UiField(provided = true)
+    PanelToggle closeToggle;
 
     private final KindTemplate kindTemplate;
     private final EmptyKindsTemplate emptyKindsTemplate;
     private final AppResources appResources;
-
     private final String emptyListTypeStyleName;
     private final String hiddenOverlayStyleName;
     private final String revealOverlayStyleName;
@@ -79,10 +77,12 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     SidebarView(Binder binder,
                 KindTemplate kindTemplate,
                 EmptyKindsTemplate emptyKindsTemplate,
-                AppResources appResources) {
+                AppResources appResources,
+                PanelToggleFactory panelToggleFactory) {
         this.kindTemplate = kindTemplate;
         this.emptyKindsTemplate = emptyKindsTemplate;
         this.appResources = appResources;
+        this.closeToggle = panelToggleFactory.create(this);
 
         initWidget(binder.createAndBindUi(this));
 
@@ -122,7 +122,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     @Override
     public void showCloseHandle() {
-        this.closeToggle.setVisible(true);
+        this.closeToggle.asWidget().setVisible(true);
     }
 
     @Override
@@ -132,33 +132,9 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         }
     }
 
-    @UiHandler("closeToggle")
-    void handleClick(ClickEvent event) {
+    @Override
+    public void onToggle() {
         getUiHandlers().onCloseHandleActivated();
-
-        rotateToggle();
-    }
-
-    private void rotateToggle() {
-        if (isFlipped()) {
-            setRotation(0);
-        } else {
-            setRotation(180);
-        }
-    }
-
-    private void setRotation(int rotationInDegrees) {
-        Style style = closeToggle.getElement().getStyle();
-        style.setProperty("webkitTransform", "rotateY(" + rotationInDegrees + "deg)");
-    }
-
-    private boolean isFlipped() {
-        return getToggleTransform().equals("rotateY(180deg)");
-    }
-
-    private String getToggleTransform() {
-        Style style = closeToggle.getElement().getStyle();
-        return style.getProperty("webkitTransform");
     }
 
     private void addKind(String kind) {

@@ -16,38 +16,35 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
-import org.fusesource.restygwt.client.MethodCallback;
-import org.fusesource.restygwt.client.RestService;
-
 import com.arcbees.gaestudio.shared.auth.Token;
 import com.arcbees.gaestudio.shared.auth.User;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
+import com.gwtplatform.dispatch.rest.shared.RestAction;
+import com.gwtplatform.dispatch.rest.shared.RestService;
 
+@Path(EndPoints.AUTH)
 public interface AuthService extends RestService {
     @POST
     @Path(EndPoints.REGISTER)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    void register(@FormParam(UrlParameters.EMAIL) String email,
-                  @FormParam(UrlParameters.PASSWORD) String password,
-                  @FormParam(UrlParameters.FIRST_NAME) String firstName,
-                  @FormParam(UrlParameters.LAST_NAME) String lastName,
-                  MethodCallback<User> callback);
+    RestAction<User> register(@FormParam(UrlParameters.EMAIL) String email,
+                              @FormParam(UrlParameters.PASSWORD) String password,
+                              @FormParam(UrlParameters.FIRST_NAME) String firstName,
+                              @FormParam(UrlParameters.LAST_NAME) String lastName);
 
     @POST
     @Path(EndPoints.RESET_PASSWORD)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    void generateResetToken(@FormParam(UrlParameters.EMAIL) String email,
-                            MethodCallback<Void> callback);
+    RestAction<Void> generateResetToken(@FormParam(UrlParameters.EMAIL) String email);
 
     @POST
     @Path(EndPoints.LOGIN)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    void login(@FormParam(UrlParameters.EMAIL) String email,
-               @FormParam(UrlParameters.PASSWORD) String password,
-               MethodCallback<Token> callback);
+    RestAction<Token> login(@FormParam(UrlParameters.EMAIL) String email,
+                            @FormParam(UrlParameters.PASSWORD) String password);
 
     @GET
     @Path(EndPoints.LOGIN)
-    void checkLogin(MethodCallback<User> callback);
+    RestAction<User> checkLogin();
 }

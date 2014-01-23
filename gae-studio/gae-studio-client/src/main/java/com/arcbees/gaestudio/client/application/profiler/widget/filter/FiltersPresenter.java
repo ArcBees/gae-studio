@@ -23,9 +23,9 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
         Filter getCurrentlyDisplayedFilter();
     }
 
-    public static final Object TYPE_SetRequestFilter = new Object();
-    public static final Object TYPE_MethodFilter = new Object();
-    public static final Object TYPE_TypeFilter = new Object();
+    public static final Object SLOT_REQUEST_FILTER = new Object();
+    public static final Object SLOT_METHOD_FILTER = new Object();
+    public static final Object SLOT_TYPE_FILTER = new Object();
 
     private final RequestFilterPresenter requestFilterPresenter;
     private final MethodFilterPresenter methodFilterPresenter;
@@ -86,8 +86,8 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
     protected void onBind() {
         super.onBind();
 
-        setInSlot(TYPE_SetRequestFilter, requestFilterPresenter);
-        setInSlot(TYPE_MethodFilter, methodFilterPresenter);
-        setInSlot(TYPE_TypeFilter, typeFilterPresenter);
+        setInSlot(SLOT_REQUEST_FILTER, requestFilterPresenter);
+        setInSlot(SLOT_METHOD_FILTER, methodFilterPresenter);
+        setInSlot(SLOT_TYPE_FILTER, typeFilterPresenter);
     }
 }

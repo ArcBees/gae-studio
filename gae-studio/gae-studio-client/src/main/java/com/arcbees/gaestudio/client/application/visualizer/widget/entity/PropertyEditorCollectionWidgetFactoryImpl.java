@@ -17,21 +17,22 @@ import javax.inject.Inject;
 import com.arcbees.gaestudio.client.rest.BlobsService;
 import com.arcbees.gaestudio.client.rest.KindsService;
 import com.arcbees.gaestudio.client.rest.NamespacesService;
-import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.BlobInfoDto;
 import com.google.common.collect.Maps;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 
 public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditorCollectionWidgetFactory {
     private final FetchBlobKeysRunner fetchBlobKeysRunner = new FetchBlobKeysRunner() {
         @Override
         public void fetch(final FetchBlobKeysCallback callback) {
-            blobsService.getAllKeys(new MethodCallbackImpl<List<BlobInfoDto>>() {
+            getRestDispatch().execute(blobsService.getAllKeys(), new AsyncCallbackImpl<List<BlobInfoDto>>() {
                 @Override
-                protected void onSuccess(List<BlobInfoDto> blobInfoDtos) {
+                public void onSuccess(List<BlobInfoDto> blobInfoDtos) {
                     callback.onBlobKeysFetched(blobInfoDtos);
                 }
             });
@@ -40,9 +41,9 @@ public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditor
     private final FetchKindsRunner fetchKindsRunner = new FetchKindsRunner() {
         @Override
         public void fetch(final FetchKindsCallback callback) {
-            kindsService.getKinds(new MethodCallbackImpl<List<String>>() {
+            getRestDispatch().execute(kindsService.getKinds(), new AsyncCallbackImpl<List<String>>() {
                 @Override
-                protected void onSuccess(List<String> kinds) {
+                public void onSuccess(List<String> kinds) {
                     callback.onKindsFetched(kinds);
                 }
             });
@@ -51,26 +52,30 @@ public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditor
     private final FetchNamespacesRunner fetchNamespacesRunner = new FetchNamespacesRunner() {
         @Override
         public void fetch(final FetchNamespacesCallback callback) {
-            namespacesService.getNamespaces(new MethodCallbackImpl<List<AppIdNamespaceDto>>() {
-                @Override
-                protected void onSuccess(List<AppIdNamespaceDto> namespaces) {
-                    callback.onNamespacesFetched(namespaces);
-                }
-            });
+            getRestDispatch().execute(namespacesService.getNamespaces(),
+                    new AsyncCallbackImpl<List<AppIdNamespaceDto>>() {
+                        @Override
+                        public void onSuccess(List<AppIdNamespaceDto> namespaces) {
+                            callback.onNamespacesFetched(namespaces);
+                        }
+                    });
         }
     };
 
     private final PropertyEditorFactory propertyEditorFactory;
+    private final RestDispatch restDispatch;
     private final BlobsService blobsService;
     private final KindsService kindsService;
     private final NamespacesService namespacesService;
 
     @Inject
     PropertyEditorCollectionWidgetFactoryImpl(PropertyEditorFactory propertyEditorFactory,
+                                              RestDispatch restDispatch,
                                               BlobsService blobsService,
                                               KindsService kindsService,
                                               NamespacesService namespacesService) {
         this.propertyEditorFactory = propertyEditorFactory;
+        this.restDispatch = restDispatch;
         this.blobsService = blobsService;
         this.kindsService = kindsService;
         this.namespacesService = namespacesService;
@@ -138,5 +143,9 @@ public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditor
         }
 
         return propertyEditor;
+    }
+
+    private RestDispatch getRestDispatch() {
+        return restDispatch;
     }
 }

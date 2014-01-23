@@ -47,11 +47,11 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 
     @Override
     public void setInSlot(Object slot, IsWidget content) {
-        if (slot == ApplicationPresenter.TYPE_SetMainContent) {
+        if (slot == ApplicationPresenter.SLOT_MAIN) {
             main.setWidget(content);
-        } else if (slot == ApplicationPresenter.TYPE_SetHeaderContent) {
+        } else if (slot == ApplicationPresenter.SLOT_HEADER) {
             header.setWidget(content);
-        } else if (slot == ApplicationPresenter.TYPE_SetMessagesContent) {
+        } else if (slot == ApplicationPresenter.SLOT_MESSAGES) {
             messages.setWidget(content);
         } else if (slot == ApplicationPresenter.SLOT_VERSION) {
             version.setWidget(content);
