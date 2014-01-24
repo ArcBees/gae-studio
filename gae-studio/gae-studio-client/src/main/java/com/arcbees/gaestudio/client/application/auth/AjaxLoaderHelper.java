@@ -32,7 +32,7 @@ public class AjaxLoaderHelper {
     }
 
     public void hideAjaxLoader(Element sibbling) {
-        $(sibbling).prev().remove();
+        $(sibbling).prev("img").remove();
     }
 
     private Image buildAjaxLoader() {
