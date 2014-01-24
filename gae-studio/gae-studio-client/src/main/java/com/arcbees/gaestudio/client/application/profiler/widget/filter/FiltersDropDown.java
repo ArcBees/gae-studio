@@ -63,7 +63,7 @@ public class FiltersDropDown implements IsWidget, AttachEvent.Handler {
 
     @Override
     public void onAttachOrDetach(AttachEvent event) {
-        if(event.isAttached()) {
+        if (event.isAttached()) {
             init();
         }
     }
