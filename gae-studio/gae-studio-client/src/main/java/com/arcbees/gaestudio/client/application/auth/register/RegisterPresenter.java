@@ -18,6 +18,7 @@ import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.auth.User;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
@@ -34,6 +35,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, RegisterPresenter.MyProxy> implements
         RegisterUiHandlers {
     interface MyView extends View, HasUiHandlers<RegisterUiHandlers> {
+        void resetForm();
     }
 
     @ProxyCodeSplit
@@ -77,6 +79,11 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
                         DisplayMessageEvent.fire(RegisterPresenter.this,
                                 new Message(appConstants.registerSuccessfull(), MessageStyle.SUCCESS));
                         redirectToAuth();
+                    }
+
+                    @Override
+                    public void handleFailure(Throwable caught) {
+                        getView().resetForm();
                     }
                 });
     }

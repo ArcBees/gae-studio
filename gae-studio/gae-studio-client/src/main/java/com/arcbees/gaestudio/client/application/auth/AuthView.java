@@ -11,15 +11,13 @@ package com.arcbees.gaestudio.client.application.auth;
 
 import javax.inject.Inject;
 
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.query.client.GQuery;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
@@ -36,7 +34,7 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
     DivElement errorMessage;
 
     private final LoginFormHelper loginFormHelper;
-    private final AppResources appResources;
+    private final AjaxLoaderHelper ajaxLoaderHelper;
     private final Function loginOnEnter = new Function() {
         @Override
         public boolean f(Event event) {
@@ -51,8 +49,8 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
     @Inject
     AuthView(Binder uiBinder,
              LoginFormHelper loginFormHelper,
-             AppResources appResources) {
-        this.appResources = appResources;
+             AjaxLoaderHelper ajaxLoaderHelper) {
+        this.ajaxLoaderHelper = ajaxLoaderHelper;
         this.loginFormHelper = loginFormHelper;
 
         initWidget(uiBinder.createAndBindUi(this));
@@ -91,7 +89,7 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
 
     @Override
     public void resetLoginForm() {
-        hideAjaxLoader();
+        ajaxLoaderHelper.hideAjaxLoader(loginFormHelper.getSubmitButton());
         setLoginButtonEnabled(true);
     }
 
@@ -101,7 +99,7 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
 
     private void doLogin() {
         setErrorMessageOpacity(0.0f);
-        showAjaxLoader();
+        ajaxLoaderHelper.showAjaxLoader(loginFormHelper.getSubmitButton());
         setLoginButtonEnabled(false);
         hideRedBoxes();
 
@@ -123,24 +121,6 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
 
     private void setErrorMessageOpacity(float opacity) {
         $(errorMessage).css("opacity", Float.toString(opacity));
-    }
-
-    private void showAjaxLoader() {
-        Image ajaxLoader = buildAjaxLoader();
-
-        $(loginFormHelper.getSubmitButton()).before(ajaxLoader.asWidget().getElement());
-    }
-
-    private void hideAjaxLoader() {
-        $(loginFormHelper.getSubmitButton()).prev().remove();
-    }
-
-    private Image buildAjaxLoader() {
-        Image ajaxLoader = new Image();
-        ajaxLoader.setResource(appResources.ajaxLoader30px());
-        ajaxLoader.addStyleName(appResources.styles().loginAjaxLoader());
-
-        return ajaxLoader;
     }
 
     private native void injectLoginFunction() /*-{

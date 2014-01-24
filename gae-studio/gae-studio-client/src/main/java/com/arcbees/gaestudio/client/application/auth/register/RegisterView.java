@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.auth.register;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.application.auth.AjaxLoaderHelper;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -22,6 +23,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> implements RegisterPresenter.MyView {
+    private final AjaxLoaderHelper ajaxLoaderHelper;
+
     interface Binder extends UiBinder<Widget, RegisterView> {
     }
 
@@ -37,12 +40,24 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
     Button register;
 
     @Inject
-    RegisterView(Binder uiBinder) {
+    RegisterView(Binder uiBinder,
+                 AjaxLoaderHelper ajaxLoaderHelper) {
+        this.ajaxLoaderHelper = ajaxLoaderHelper;
+
         initWidget(uiBinder.createAndBindUi(this));
+    }
+
+    @Override
+    public void resetForm() {
+        ajaxLoaderHelper.hideAjaxLoader(register.getElement());
+        register.setEnabled(true);
     }
 
     @UiHandler("register")
     void onRegisterClicked(ClickEvent event) {
+        ajaxLoaderHelper.showAjaxLoader(register.getElement());
+        register.setEnabled(false);
+
         getUiHandlers().register(firstName.getText(), lastName.getText(), registerEmail.getText(),
                 registerPassword.getText());
     }
