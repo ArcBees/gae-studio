@@ -41,7 +41,6 @@ public abstract class AsyncCallbackImpl<T> implements AsyncCallback<T>, HasHandl
     public void handleFailure(Throwable caught) {
     }
 
-
     @Override
     public final void onFailure(Throwable caught) {
         if (failureMessage != null) {
