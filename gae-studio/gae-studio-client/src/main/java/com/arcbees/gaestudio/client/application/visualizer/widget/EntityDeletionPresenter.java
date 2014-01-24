@@ -121,15 +121,10 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
         restDispatch.execute(entitiesService.deleteAll(deleteEntitiesEvent.getKind(),
                 deleteEntitiesEvent.getNamespace(),
                 deleteEntitiesEvent.getDeleteEntities()),
-                new AsyncCallbackImpl<Void>() {
+                new AsyncCallbackImpl<Void>(myConstants.errorEntityDelete()) {
                     @Override
                     public void onSuccess(Void result) {
                         onEntitiesDeletedSuccess();
-                    }
-
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        showMessage(myConstants.errorEntityDelete(), MessageStyle.ERROR);
                     }
                 });
     }
@@ -140,15 +135,10 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
             KeyDto key = entityDto.getKey();
 
             restDispatch.execute(entityService.deleteEntity(key.getKind(), key.getName(), key.getId()),
-                    new AsyncCallbackImpl<Void>() {
+                    new AsyncCallbackImpl<Void>(myConstants.errorEntityDelete()) {
                         @Override
                         public void onSuccess(Void result) {
                             onEntityDeletedSuccess(entityDto);
-                        }
-
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            showMessage(myConstants.errorEntityDelete(), MessageStyle.ERROR);
                         }
                     });
         }

@@ -61,18 +61,13 @@ public class ForgotPasswordPresenter extends Presenter<ForgotPasswordPresenter.M
 
     @Override
     public void forgotPassword(String email) {
-        restDispatch.execute(authService.generateResetToken(email), new AsyncCallbackImpl<Void>() {
-            @Override
-            public void onFailure(Throwable throwable) {
-                DisplayMessageEvent.fire(ForgotPasswordPresenter.this,
-                        new Message(appConstants.unableToRegister(), MessageStyle.ERROR));
-            }
-
-            @Override
-            public void onSuccess(Void result) {
-                DisplayMessageEvent.fire(ForgotPasswordPresenter.this,
-                        new Message(appConstants.passwordReset(), MessageStyle.SUCCESS));
-            }
-        });
+        restDispatch.execute(authService.generateResetToken(email),
+                new AsyncCallbackImpl<Void>(appConstants.unableToRegister()) {
+                    @Override
+                    public void onSuccess(Void result) {
+                        DisplayMessageEvent.fire(ForgotPasswordPresenter.this,
+                                new Message(appConstants.passwordReset(), MessageStyle.SUCCESS));
+                    }
+                });
     }
 }

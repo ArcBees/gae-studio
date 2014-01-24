@@ -51,7 +51,7 @@ public class BootstrapperImpl implements Bootstrapper {
     public void onBootstrap() {
         restDispatch.execute(authService.checkLogin(), new AsyncCallbackImpl<User>() {
             @Override
-            public void onFailure(Throwable exception) {
+            public void handleFailure(Throwable exception) {
                 onLoginChecked(null);
             }
 
@@ -69,7 +69,7 @@ public class BootstrapperImpl implements Bootstrapper {
         if (user != null) {
             restDispatch.execute(licenseService.checkLicense(user.getId()), new AsyncCallbackImpl<Void>() {
                 @Override
-                public void onFailure(Throwable throwable) {
+                public void handleFailure(Throwable throwable) {
                     currentUser.setLicenseValid(false);
                     navigate();
                 }

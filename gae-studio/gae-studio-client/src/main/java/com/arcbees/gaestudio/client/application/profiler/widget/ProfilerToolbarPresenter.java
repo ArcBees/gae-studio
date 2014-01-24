@@ -66,7 +66,7 @@ public class ProfilerToolbarPresenter extends PresenterWidget<ProfilerToolbarPre
     private AsyncCallback<Long> getRecordingCallback(final boolean start) {
         return new AsyncCallbackImpl<Long>() {
             @Override
-            public void onFailure(Throwable caught) {
+            public void handleFailure(Throwable caught) {
                 getView().setRecordingState(!start);
             }
 

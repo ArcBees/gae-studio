@@ -107,7 +107,7 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
 
         if (statusCode == Response.SC_UNAUTHORIZED) {
             getView().showErrorMessage(appConstants.wrongPwdOrEmail());
-        } else {
+        } else if (statusCode != Response.SC_OK) {
             getView().showErrorMessage(appConstants.oops());
         }
     }
