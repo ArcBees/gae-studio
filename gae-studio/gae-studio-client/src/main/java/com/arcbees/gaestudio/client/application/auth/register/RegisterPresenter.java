@@ -18,7 +18,6 @@ import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.auth.User;
-import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
@@ -35,6 +34,8 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, RegisterPresenter.MyProxy> implements
         RegisterUiHandlers {
     interface MyView extends View, HasUiHandlers<RegisterUiHandlers> {
+        void resetSubmit();
+
         void resetForm();
     }
 
@@ -83,9 +84,16 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
 
                     @Override
                     public void handleFailure(Throwable caught) {
-                        getView().resetForm();
+                        getView().resetSubmit();
                     }
                 });
+    }
+
+    @Override
+    protected void onReveal() {
+        super.onReveal();
+
+        getView().resetForm();
     }
 
     private void redirectToAuth() {
