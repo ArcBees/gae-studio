@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.auth;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.application.ui.AjaxLoader;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.query.client.Function;
@@ -34,7 +35,7 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
     DivElement errorMessage;
 
     private final LoginFormHelper loginFormHelper;
-    private final AjaxLoaderHelper ajaxLoaderHelper;
+    private final AjaxLoader ajaxLoader;
     private final Function loginOnEnter = new Function() {
         @Override
         public boolean f(Event event) {
@@ -49,8 +50,8 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
     @Inject
     AuthView(Binder uiBinder,
              LoginFormHelper loginFormHelper,
-             AjaxLoaderHelper ajaxLoaderHelper) {
-        this.ajaxLoaderHelper = ajaxLoaderHelper;
+             AjaxLoader ajaxLoader) {
+        this.ajaxLoader = ajaxLoader;
         this.loginFormHelper = loginFormHelper;
 
         initWidget(uiBinder.createAndBindUi(this));
@@ -75,6 +76,8 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
         $(loginFormHelper.getPasswordElement()).keydown(loginOnEnter);
 
         loginForm.setWidget(loginFormHelper.getLoginFormPanel());
+
+        loginFormHelper.getLoginFormPanel().add(ajaxLoader);
     }
 
     @Override
@@ -89,7 +92,7 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
 
     @Override
     public void resetLoginForm() {
-        ajaxLoaderHelper.hideAjaxLoader(loginFormHelper.getSubmitButton());
+        ajaxLoader.hide();
         setLoginButtonEnabled(true);
     }
 
@@ -99,7 +102,7 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
 
     private void doLogin() {
         setErrorMessageOpacity(0.0f);
-        ajaxLoaderHelper.showAjaxLoader(loginFormHelper.getSubmitButton());
+        ajaxLoader.show();
         setLoginButtonEnabled(false);
         hideRedBoxes();
 
