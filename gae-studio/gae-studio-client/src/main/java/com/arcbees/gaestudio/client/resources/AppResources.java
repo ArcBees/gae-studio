@@ -219,6 +219,8 @@ public interface AppResources extends ClientBundle {
 
     ImageResource dropDownArrowRl();
 
+    ImageResource listGraph();
+
     @Source("textcursor.png")
     DataResource whiteTextCursorResource();
 }
