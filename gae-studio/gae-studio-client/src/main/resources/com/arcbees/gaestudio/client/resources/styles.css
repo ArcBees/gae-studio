@@ -706,3 +706,19 @@ input:focus, textarea:focus, button:focus {
 .selectedLi {
     /* used as a selector */
 }
+
+.className {
+    font-size: 1.3em;
+}
+
+.methodName {
+    font-size: 1.1em;
+    line-height: 1.5em;
+    padding-left: 5px;
+}
+
+.methodName:hover {
+    cursor: pointer;
+    background-color: #25aae1;
+    color: white;
+}

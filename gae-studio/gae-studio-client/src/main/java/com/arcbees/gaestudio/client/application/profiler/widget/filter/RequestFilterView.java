@@ -13,6 +13,7 @@ import java.util.List;
 
 import com.arcbees.gaestudio.client.application.profiler.ui.RequestFilterCell;
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.client.resources.RequestFilterCellListResources;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellList;
@@ -39,9 +40,10 @@ public class RequestFilterView extends ViewWithUiHandlers<RequestFilterUiHandler
     @Inject
     RequestFilterView(Binder uiBinder,
                       AppResources resources,
-                      RequestFilterCell requestFilterCell) {
+                      RequestFilterCell requestFilterCell,
+                      RequestFilterCellListResources cellListResources) {
         this.resources = resources;
-        requests = new CellList<FilterValue<Long>>(requestFilterCell);
+        requests = new CellList<FilterValue<Long>>(requestFilterCell, cellListResources);
 
         initWidget(uiBinder.createAndBindUi(this));
 

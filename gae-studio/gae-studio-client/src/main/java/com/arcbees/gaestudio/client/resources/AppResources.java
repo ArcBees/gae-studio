@@ -147,6 +147,10 @@ public interface AppResources extends ClientBundle {
         String selectedLi();
 
         String dropDownArrow();
+
+        String className();
+
+        String methodName();
     }
 
     public interface Sprites extends CssResource {

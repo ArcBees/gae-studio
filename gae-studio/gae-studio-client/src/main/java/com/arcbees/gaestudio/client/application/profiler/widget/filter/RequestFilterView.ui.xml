@@ -3,6 +3,6 @@
              xmlns:cellview="urn:import:com.google.gwt.user.cellview.client">
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <g:HTMLPanel>
-        <cellview:CellList ui:field="requests" styleName="{resources.styles.list}"/>
+        <cellview:CellList ui:field="requests"/>
     </g:HTMLPanel>
 </ui:UiBinder>

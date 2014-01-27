@@ -14,6 +14,8 @@ import java.util.Map;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Tree;
@@ -27,16 +29,24 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
     interface Binder extends UiBinder<Widget, MethodFilterView> {
     }
 
+    interface TreeItemTemplate extends SafeHtmlTemplates {
+        @SafeHtmlTemplates.Template("<div class=\"{1}\">{0}</div>")
+        SafeHtml methodOrClass(String className, String style);
+    }
+
     @UiField
     Tree methods;
-
     @UiField(provided = true)
     AppResources resources;
 
+    private final TreeItemTemplate template;
+
     @Inject
     MethodFilterView(Binder uiBinder,
-                     AppResources resources) {
+                     AppResources resources,
+                     TreeItemTemplate template) {
         this.resources = resources;
+        this.template = template;
 
         initWidget(uiBinder.createAndBindUi(this));
 
@@ -60,11 +70,12 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
         methods.clear();
 
         for (Map.Entry<String, Map<String, FilterValue<String>>> classFilter : statementsByMethodAndClass.entrySet()) {
-            // TODO TreeItem deprecated
-            TreeItem classTreeItem = new TreeItem(classFilter.getKey());
+            SafeHtml html = template.methodOrClass(classFilter.getKey(), resources.styles().className());
+            TreeItem classTreeItem = new TreeItem(html);
 
             for (String methodName : classFilter.getValue().keySet()) {
-                TreeItem methodTreeItem = new TreeItem(methodName);
+                html = template.methodOrClass(methodName, resources.styles().methodName());
+                TreeItem methodTreeItem = new TreeItem(html);
                 classTreeItem.addItem(methodTreeItem);
             }
 
