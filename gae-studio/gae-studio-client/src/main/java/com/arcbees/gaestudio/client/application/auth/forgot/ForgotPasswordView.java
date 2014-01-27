@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.auth.forgot;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.application.ui.AjaxLoader;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -29,14 +30,34 @@ public class ForgotPasswordView extends ViewWithUiHandlers<ForgotPasswordUiHandl
     TextBox email;
     @UiField
     Button submit;
+    @UiField(provided = true)
+    AjaxLoader ajaxLoader;
 
     @Inject
-    ForgotPasswordView(Binder uiBinder) {
+    ForgotPasswordView(Binder uiBinder,
+                       AjaxLoader ajaxLoader) {
+        this.ajaxLoader = ajaxLoader;
+
         initWidget(uiBinder.createAndBindUi(this));
+    }
+
+    @Override
+    public void resetForm() {
+        resetSubmit();
+        email.setText("");
+    }
+
+    @Override
+    public void resetSubmit() {
+        ajaxLoader.hide();
+        submit.setEnabled(true);
     }
 
     @UiHandler("submit")
     void onRegisterClicked(ClickEvent event) {
+        ajaxLoader.show();
+        submit.setEnabled(false);
+
         getUiHandlers().forgotPassword(email.getText());
     }
 }
