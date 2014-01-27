@@ -79,6 +79,7 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
                     public void onSuccess(User user) {
                         DisplayMessageEvent.fire(RegisterPresenter.this,
                                 new Message(appConstants.registerSuccessfull(), MessageStyle.SUCCESS));
+                        getView().resetSubmit();
                         redirectToAuth();
                     }
 
