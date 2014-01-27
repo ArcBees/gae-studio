@@ -48,7 +48,7 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
     }
 
     @Override
-    public void resetForm() {
+    public void resetSubmit() {
         ajaxLoader.hide();
         register.setEnabled(true);
     }
