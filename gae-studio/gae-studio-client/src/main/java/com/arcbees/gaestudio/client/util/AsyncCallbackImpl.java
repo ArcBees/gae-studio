@@ -16,7 +16,6 @@ import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.web.bindery.event.shared.EventBus;
 
@@ -39,10 +38,15 @@ public abstract class AsyncCallbackImpl<T> implements AsyncCallback<T>, HasHandl
         eventBus.fireEvent(event);
     }
 
+    public void handleFailure(Throwable caught) {
+    }
+
     @Override
-    public void onFailure(Throwable caught) {
+    public final void onFailure(Throwable caught) {
         if (failureMessage != null) {
             DisplayMessageEvent.fire(this, new Message(failureMessage, MessageStyle.ERROR));
         }
+
+        handleFailure(caught);
     }
 }

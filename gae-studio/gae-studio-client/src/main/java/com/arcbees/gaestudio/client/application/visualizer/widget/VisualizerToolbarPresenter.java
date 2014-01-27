@@ -98,18 +98,13 @@ public class VisualizerToolbarPresenter extends PresenterWidget<VisualizerToolba
     @Override
     public void create() {
         if (!currentKind.isEmpty()) {
-            restDispatch.execute(entitiesService.createByKind(currentKind), new AsyncCallbackImpl<EntityDto>() {
-                @Override
-                public void onFailure(Throwable caught) {
-                    Message message = new Message(myConstants.errorUnableToGenerateEmptyJson(), MessageStyle.ERROR);
-                    DisplayMessageEvent.fire(VisualizerToolbarPresenter.this, message);
-                }
-
-                @Override
-                public void onSuccess(EntityDto emptyEntityDto) {
-                    EditEntityEvent.fire(VisualizerToolbarPresenter.this, new ParsedEntity(emptyEntityDto));
-                }
-            });
+            restDispatch.execute(entitiesService.createByKind(currentKind),
+                    new AsyncCallbackImpl<EntityDto>(myConstants.errorUnableToGenerateEmptyJson()) {
+                        @Override
+                        public void onSuccess(EntityDto emptyEntityDto) {
+                            EditEntityEvent.fire(VisualizerToolbarPresenter.this, new ParsedEntity(emptyEntityDto));
+                        }
+                    });
         }
     }
 

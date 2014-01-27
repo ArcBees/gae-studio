@@ -126,7 +126,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
         restDispatch.execute(entityService.updateEntity(entityDto),
                 new AsyncCallbackImpl<EntityDto>() {
                     @Override
-                    public void onFailure(Throwable caught) {
+                    public void handleFailure(Throwable caught) {
                         onSaveEntityFailed(caught);
                     }
 

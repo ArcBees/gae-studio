@@ -83,11 +83,10 @@ public class LicensePresenter
     public void onRegister() {
         LicenseRegistration licenseRegistration = getLicenseRegistration();
 
-        restDispatch.execute(licenseService.register(licenseRegistration), new AsyncCallbackImpl<Void>() {
+        restDispatch.execute(licenseService.register(licenseRegistration),
+                new AsyncCallbackImpl<Void>(appConstants.failedRegistration()) {
             @Override
-            public void onFailure(Throwable throwable) {
-                DisplayMessageEvent.fire(LicensePresenter.this,
-                        new Message(appConstants.failedRegistration(), MessageStyle.ERROR));
+            public void handleFailure(Throwable throwable) {
                 currentUser.setLicenseValid(false);
             }
 

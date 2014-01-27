@@ -34,6 +34,9 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, RegisterPresenter.MyProxy> implements
         RegisterUiHandlers {
     interface MyView extends View, HasUiHandlers<RegisterUiHandlers> {
+        void resetSubmit();
+
+        void resetForm();
     }
 
     @ProxyCodeSplit
@@ -76,9 +79,22 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
                     public void onSuccess(User user) {
                         DisplayMessageEvent.fire(RegisterPresenter.this,
                                 new Message(appConstants.registerSuccessfull(), MessageStyle.SUCCESS));
+                        getView().resetSubmit();
                         redirectToAuth();
                     }
+
+                    @Override
+                    public void handleFailure(Throwable caught) {
+                        getView().resetSubmit();
+                    }
                 });
+    }
+
+    @Override
+    protected void onReveal() {
+        super.onReveal();
+
+        getView().resetForm();
     }
 
     private void redirectToAuth() {
