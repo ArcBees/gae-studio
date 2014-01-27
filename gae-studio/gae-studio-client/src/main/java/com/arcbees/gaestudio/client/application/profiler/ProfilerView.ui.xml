@@ -24,10 +24,14 @@
 
         .splitLayoutPanel {
             height: 100%;
-            left: 130px;
+            overflow: hidden;
+        }
+
+        .root {
+            overflow: hidden;
         }
     </ui:style>
-    <g:HTMLPanel>
+    <g:HTMLPanel addStyleNames="{style.root}">
         <g:SimplePanel ui:field="toolbarPanel" addStyleNames="{style.toolbar}"/>
         <g:SplitLayoutPanel addStyleNames="{style.splitLayoutPanel}">
             <g:west size="300">
