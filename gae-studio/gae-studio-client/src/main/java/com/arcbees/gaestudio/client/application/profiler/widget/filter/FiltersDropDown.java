@@ -65,11 +65,18 @@ public class FiltersDropDown implements IsWidget, AttachEvent.Handler {
     public void onAttachOrDetach(AttachEvent event) {
         if (event.isAttached()) {
             init();
+        } else {
+            clear();
         }
     }
 
+    private void clear() {
+        list().unbind(Event.ONBLUR);
+        everyLi().unbind(Event.ONCLICK);
+    }
+
     private void init() {
-        $(list).blur(new Function() {
+        list().blur(new Function() {
             @Override
             public boolean f(Event e) {
                 GQuery element = $("li." + resources.styles().selectedLi());
@@ -79,7 +86,7 @@ public class FiltersDropDown implements IsWidget, AttachEvent.Handler {
             }
         });
 
-        $("li", list).click(new Function() {
+        everyLi().click(new Function() {
             @Override
             public boolean f(Event e) {
                 GQuery li = $(getElement());
@@ -100,18 +107,18 @@ public class FiltersDropDown implements IsWidget, AttachEvent.Handler {
     }
 
     private void open() {
-        $(list).addClass(resources.styles().openedList());
-        $("li", list).removeClass(resources.styles().hiddenLi(), resources.styles().dropDownArrow());
+        list().addClass(resources.styles().openedList());
+        everyLi().removeClass(resources.styles().hiddenLi(), resources.styles().dropDownArrow());
         $("li:first-child", list).addClass(resources.styles().dropDownArrow());
 
         opened = true;
     }
 
     private void close(GQuery li) {
-        $(list).removeClass(resources.styles().openedList());
+        list().removeClass(resources.styles().openedList());
 
-        $("li", list).addClass(resources.styles().hiddenLi());
-        $("li", list).removeClass(resources.styles().selectedLi(), resources.styles().dropDownArrow());
+        everyLi().addClass(resources.styles().hiddenLi());
+        everyLi().removeClass(resources.styles().selectedLi(), resources.styles().dropDownArrow());
 
         $(li).removeClass(resources.styles().hiddenLi());
         $(li).addClass(resources.styles().selectedLi(), resources.styles().dropDownArrow());
@@ -120,6 +127,14 @@ public class FiltersDropDown implements IsWidget, AttachEvent.Handler {
         handler.onFilterSelected(filter);
 
         opened = false;
+    }
+
+    private GQuery list() {
+        return $(list);
+    }
+
+    private GQuery everyLi() {
+        return $("li", list);
     }
 
     private Filter parseFilter(GQuery li) {
