@@ -12,13 +12,15 @@ package com.arcbees.gaestudio.client.rest;
 import java.util.List;
 
 import javax.ws.rs.GET;
-
-import org.fusesource.restygwt.client.MethodCallback;
-import org.fusesource.restygwt.client.RestService;
+import javax.ws.rs.Path;
 
 import com.arcbees.gaestudio.shared.dto.entity.BlobInfoDto;
+import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.gwtplatform.dispatch.rest.shared.RestAction;
+import com.gwtplatform.dispatch.rest.shared.RestService;
 
+@Path(EndPoints.BLOBS)
 public interface BlobsService extends RestService {
     @GET
-    void getAllKeys(MethodCallback<List<BlobInfoDto>> callback);
+    RestAction<List<BlobInfoDto>> getAllKeys();
 }

@@ -11,9 +11,19 @@ package com.arcbees.gaestudio.shared.auth;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Token {
     private String token;
     private Date expire;
+
+    @JsonCreator
+    public Token(@JsonProperty("token") String token,
+                 @JsonProperty("expire") Date expire) {
+        this.token = token;
+        this.expire = expire;
+    }
 
     public String getToken() {
         return token;

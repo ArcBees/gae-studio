@@ -1,5 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:cui="urn:import:com.arcbees.gaestudio.client.application.ui">
     <ui:with field="nametokens" type="com.arcbees.gaestudio.client.place.NameTokens"/>
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
 
@@ -29,6 +30,7 @@
             <g:PasswordTextBox ui:field="registerPassword"/>
         </div>
         <g:Button ui:field="register" styleName="{style.registerBtn}" text="Register"/>
+        <cui:AjaxLoader ui:field="ajaxLoader"/>
         <div>
             Already have an account?
             <g:InlineHyperlink targetHistoryToken="{nametokens.getAuth}">Login!</g:InlineHyperlink>

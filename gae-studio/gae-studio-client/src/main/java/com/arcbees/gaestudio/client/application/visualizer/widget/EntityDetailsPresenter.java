@@ -23,9 +23,10 @@ import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.EntityService;
-import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -47,6 +48,7 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
 
     public static final Object EDITOR_SLOT = new Object();
 
+    private final RestDispatch restDispatch;
     private final EntityService entityService;
     private final EntityEditorFactory entityEditorFactory;
     private final AppConstants appConstants;
@@ -56,11 +58,13 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     @Inject
     EntityDetailsPresenter(EventBus eventBus,
                            MyView view,
+                           RestDispatch restDispatch,
                            EntityService entityService,
                            EntityEditorFactory entityEditorFactory,
                            AppConstants appConstants) {
         super(eventBus, view);
 
+        this.restDispatch = restDispatch;
         this.entityService = entityService;
         this.entityEditorFactory = entityEditorFactory;
         this.appConstants = appConstants;
@@ -119,10 +123,10 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     private void updateEntity() throws InvalidEntityFieldsException {
         EntityDto entityDto = entityEditor.flush().getEntityDto();
 
-        entityService.updateEntity(entityDto,
-                new MethodCallbackImpl<EntityDto>() {
+        restDispatch.execute(entityService.updateEntity(entityDto),
+                new AsyncCallbackImpl<EntityDto>() {
                     @Override
-                    public void onFailure(Throwable caught) {
+                    public void handleFailure(Throwable caught) {
                         onSaveEntityFailed(caught);
                     }
 

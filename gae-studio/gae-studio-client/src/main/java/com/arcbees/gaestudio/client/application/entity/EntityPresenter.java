@@ -11,9 +11,6 @@ package com.arcbees.gaestudio.client.application.entity;
 
 import javax.inject.Inject;
 
-import org.fusesource.restygwt.client.MethodCallback;
-
-import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
@@ -21,9 +18,11 @@ import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEve
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.EntityService;
-import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestAction;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -62,6 +61,7 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     interface MyProxy extends ProxyPlace<EntityPresenter> {
     }
 
+    private final RestDispatch restDispatch;
     private final EntityService entityService;
     private final AppConstants appConstants;
 
@@ -69,10 +69,12 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     EntityPresenter(EventBus eventBus,
                     MyView view,
                     MyProxy proxy,
+                    RestDispatch restDispatch,
                     EntityService entityService,
                     AppConstants appConstants) {
         super(eventBus, view, proxy, VisualizerPresenter.SLOT_ENTITY_DETAILS);
 
+        this.restDispatch = restDispatch;
         this.entityService = entityService;
         this.appConstants = appConstants;
 
@@ -135,14 +137,17 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
 
         String failureMessage = appConstants.failedGettingEntity();
 
-        MethodCallback<EntityDto> methodCallback = new MethodCallbackImpl<EntityDto>(failureMessage) {
+        AsyncCallbackImpl<EntityDto> callback = new AsyncCallbackImpl<EntityDto>(failureMessage) {
             @Override
             public void onSuccess(EntityDto result) {
                 displayEntityDto(result);
             }
         };
 
-        entityService.getEntity(kind, appId, namespace, parentId, parentKind, name, Long.valueOf(id), methodCallback);
+        RestAction<EntityDto> getEntityAction =
+                entityService.getEntity(kind, appId, namespace, parentId, parentKind, name, Long.valueOf(id));
+
+        restDispatch.execute(getEntityAction, callback);
     }
 
     private void displayEntityDto(EntityDto entityDto) {

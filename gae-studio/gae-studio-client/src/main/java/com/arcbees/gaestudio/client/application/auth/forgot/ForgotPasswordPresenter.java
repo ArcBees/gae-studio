@@ -9,9 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.auth.forgot;
 
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
@@ -19,19 +16,26 @@ import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.NoGatekeeper;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 public class ForgotPasswordPresenter extends Presenter<ForgotPasswordPresenter.MyView, ForgotPasswordPresenter.MyProxy>
         implements ForgotPasswordUiHandlers {
     interface MyView extends View, HasUiHandlers<ForgotPasswordUiHandlers> {
+        void resetForm();
+
+        void resetSubmit();
     }
 
     @ProxyCodeSplit
@@ -41,6 +45,8 @@ public class ForgotPasswordPresenter extends Presenter<ForgotPasswordPresenter.M
     }
 
     private final AppConstants appConstants;
+    private final PlaceManager placeManager;
+    private final RestDispatch restDispatch;
     private final AuthService authService;
 
     @Inject
@@ -48,10 +54,14 @@ public class ForgotPasswordPresenter extends Presenter<ForgotPasswordPresenter.M
                             MyView view,
                             MyProxy proxy,
                             AppConstants appConstants,
+                            PlaceManager placeManager,
+                            RestDispatch restDispatch,
                             AuthService authService) {
         super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
         this.appConstants = appConstants;
+        this.placeManager = placeManager;
+        this.restDispatch = restDispatch;
         this.authService = authService;
 
         getView().setUiHandlers(this);
@@ -59,18 +69,32 @@ public class ForgotPasswordPresenter extends Presenter<ForgotPasswordPresenter.M
 
     @Override
     public void forgotPassword(String email) {
-        authService.generateResetToken(email, new MethodCallback<Void>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-                DisplayMessageEvent.fire(ForgotPasswordPresenter.this,
-                        new Message(appConstants.unableToRegister(), MessageStyle.ERROR));
-            }
+        restDispatch.execute(authService.generateResetToken(email),
+                new AsyncCallbackImpl<Void>(appConstants.unableToRegister()) {
+                    @Override
+                    public void onSuccess(Void result) {
+                        DisplayMessageEvent.fire(ForgotPasswordPresenter.this,
+                                new Message(appConstants.passwordReset(), MessageStyle.SUCCESS));
+                        getView().resetSubmit();
+                        redirectToAuth();
+                    }
 
-            @Override
-            public void onSuccess(Method method, Void result) {
-                DisplayMessageEvent.fire(ForgotPasswordPresenter.this,
-                        new Message(appConstants.passwordReset(), MessageStyle.SUCCESS));
-            }
-        });
+                    @Override
+                    public void handleFailure(Throwable caught) {
+                        getView().resetSubmit();
+                    }
+                });
+    }
+
+    @Override
+    protected void onReveal() {
+        super.onReveal();
+
+        getView().resetForm();
+    }
+
+    private void redirectToAuth() {
+        PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.auth).build();
+        placeManager.revealPlace(placeRequest);
     }
 }
