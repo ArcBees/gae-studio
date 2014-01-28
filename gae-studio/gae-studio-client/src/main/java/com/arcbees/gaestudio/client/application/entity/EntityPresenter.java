@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.entity;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;

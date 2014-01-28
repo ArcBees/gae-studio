@@ -24,7 +24,6 @@ import com.arcbees.gaestudio.client.rest.RestModule;
 import com.arcbees.gaestudio.client.ui.UiModule;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.CurrentUser;
-import com.arcbees.gaestudio.client.util.RestCallbackImpl;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.ErrorPlace;
 import com.gwtplatform.mvp.client.annotations.GaAccount;
