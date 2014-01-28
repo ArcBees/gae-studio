@@ -151,6 +151,8 @@ public interface AppResources extends ClientBundle {
         String className();
 
         String methodName();
+
+        String main();
     }
 
     public interface Sprites extends CssResource {
