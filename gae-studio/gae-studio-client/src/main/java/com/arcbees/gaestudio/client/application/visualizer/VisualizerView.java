@@ -11,8 +11,6 @@ package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.DockLayoutPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -33,10 +31,6 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     SimplePanel entityTypesSidebar;
     @UiField
     SimplePanel entityDetailsPanel;
-    @UiField
-    DockLayoutPanel dock;
-    @UiField
-    HTMLPanel centerContainer;
 
     @Inject
     VisualizerView(Binder uiBinder) {
@@ -70,21 +64,22 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
 
     @Override
     public void closeKindPanel() {
-        $(entityTypesSidebar, centerContainer, toolbar).parent().css("transition", "left 0.3s");
-
+        $(entityTypesSidebar, toolbar).parent().css("transition", "left 0.3s");
+//
         int width = getSidebarWidth();
         int widthWhenClosed = 20;
 
         setLeftInPixels(widthWhenClosed - width, entityTypesSidebar);
-        setLeftInPixels(widthWhenClosed, centerContainer, toolbar);
     }
 
     @Override
     public void openKindPanel() {
-        int width = getSidebarWidth();
-
         setLeftInPixels(0, entityTypesSidebar);
-        setLeftInPixels(width, centerContainer, toolbar);
+    }
+
+    @Override
+    public void activateFullScreen() {
+        setWidthPercentage(100, entityDetailsPanel);
     }
 
     private void setLeftInPixels(int left, Widget... widgets) {

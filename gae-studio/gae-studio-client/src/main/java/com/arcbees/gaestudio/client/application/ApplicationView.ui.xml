@@ -2,16 +2,12 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
-    <g:DockLayoutPanel unit="PX" debugId="{debugIds.getApplicationRoot}">
-        <g:north size="110">
-            <g:HTMLPanel addStyleNames="{res.styles.northSection}" ui:field="northSection">
-                <g:SimplePanel ui:field="version"/>
-                <g:SimplePanel ui:field="messages"/>
-                <g:SimplePanel ui:field="header"/>
-            </g:HTMLPanel>
-        </g:north>
-        <g:center styleName="{res.styles.noOverflow}">
-            <g:SimpleLayoutPanel ui:field="main" styleName="{res.styles.noOverflow}"/>
-        </g:center>
-    </g:DockLayoutPanel>
+    <g:HTMLPanel debugId="{debugIds.getApplicationRoot}" ui:field="root">
+        <g:HTMLPanel addStyleNames="{res.styles.northSection}" ui:field="northSection">
+            <g:SimplePanel ui:field="version"/>
+            <g:SimplePanel ui:field="messages"/>
+            <g:SimplePanel ui:field="header"/>
+        </g:HTMLPanel>
+        <g:SimplePanel ui:field="main" styleName="{res.styles.main}"/>
+    </g:HTMLPanel>
 </ui:UiBinder>

@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import org.fusesource.restygwt.client.MethodCallback;
 
+import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
@@ -23,6 +24,7 @@ import com.arcbees.gaestudio.client.rest.EntityService;
 import com.arcbees.gaestudio.client.util.MethodCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -39,8 +41,9 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
 public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPresenter.MyProxy> implements
-        KindSelectedEvent.KindSelectedHandler, RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler {
-    interface MyView extends View {
+        EntityUiHandlers, KindSelectedEvent.KindSelectedHandler, RowLockedEvent.RowLockedHandler,
+        RowUnlockedEvent.RowUnlockedHandler {
+    interface MyView extends View, HasUiHandlers<EntityUiHandlers> {
         void showEntity(EntityDto entityDto);
 
         void hideFullscreenButton();
@@ -72,6 +75,18 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
 
         this.entityService = entityService;
         this.appConstants = appConstants;
+
+        getView().setUiHandlers(this);
+    }
+
+    @Override
+    public void activateFullScreen() {
+        setFullScreen(true);
+    }
+
+    @Override
+    public void deactivateFullScreen() {
+        setFullScreen(false);
     }
 
     @Override
@@ -107,6 +122,10 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(RowLockedEvent.getType(), this);
         addRegisteredHandler(RowUnlockedEvent.getType(), this);
+    }
+
+    private void setFullScreen(boolean activate) {
+        getEventBus().fireEvent(new FullScreenEvent(activate));
     }
 
     private void displayEntityFromPlaceRequest(PlaceRequest request) {
