@@ -233,22 +233,18 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             }
         });
 
-        $(pagerButtons).click(new Function() {
-            @Override
-            public void f() {
-                unlockRows();
-                resetRightPanel();
-            }
-        });
+        $(pagerButtons).click(unlock);
 
-        $(deselectEntity).click(new Function() {
-            @Override
-            public void f() {
-                unlockRows();
-                resetRightPanel();
-            }
-        });
+        $(deselectEntity).click(unlock);
     }
+
+    private Function unlock = new Function() {
+        @Override
+        public void f() {
+            unlockRows();
+            resetRightPanel();
+        }
+    };
 
     private ParsedEntity getParsedEntityForRow(Element element) {
         int absoluteRowIndex = Integer.valueOf($(element).attr("__gwt_row"));
@@ -260,6 +256,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     private void initRightPanel(Element e) {
         $("." + secondTableHiddenStyleName).removeClass(secondTableHiddenStyleName);
+
         ParsedEntity parsedEntity = getParsedEntityForRow(e);
         getUiHandlers().onEntitySelected(parsedEntity);
 
