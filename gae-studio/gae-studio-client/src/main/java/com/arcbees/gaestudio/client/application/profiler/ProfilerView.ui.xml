@@ -31,7 +31,7 @@
             overflow: hidden;
         }
     </ui:style>
-    <g:HTMLPanel addStyleNames="{style.root}">
+    <g:HTMLPanel styleName="{style.root}">
         <g:SimplePanel ui:field="toolbarPanel" addStyleNames="{style.toolbar}"/>
         <g:SplitLayoutPanel addStyleNames="{style.splitLayoutPanel}">
             <g:west size="300">
