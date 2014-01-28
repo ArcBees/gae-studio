@@ -40,8 +40,8 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
-public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPresenter.MyProxy> implements
-        EntityUiHandlers, KindSelectedEvent.KindSelectedHandler, RowLockedEvent.RowLockedHandler,
+public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPresenter.MyProxy>
+        implements EntityUiHandlers, KindSelectedEvent.KindSelectedHandler, RowLockedEvent.RowLockedHandler,
         RowUnlockedEvent.RowUnlockedHandler {
     interface MyView extends View, HasUiHandlers<EntityUiHandlers> {
         void showEntity(EntityDto entityDto);
@@ -125,7 +125,7 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     }
 
     private void setFullScreen(boolean activate) {
-        getEventBus().fireEvent(new FullScreenEvent(activate));
+        FullScreenEvent.fire(this, activate);
     }
 
     private void displayEntityFromPlaceRequest(PlaceRequest request) {

@@ -91,9 +91,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
     @Override
     public void onFullScreen(FullScreenEvent event) {
-        boolean activate = event.isActivate();
-
-        if(activate) {
+        if (event.isActivate()) {
             getView().activateFullScreen();
         } else {
             getView().showEntityDetails();

@@ -11,10 +11,15 @@ package com.arcbees.gaestudio.client.application.event;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HasHandlers;
 
 public class FullScreenEvent extends GwtEvent<FullScreenEvent.FullScreenEventHandler> {
     public interface FullScreenEventHandler extends EventHandler {
         void onFullScreen(FullScreenEvent event);
+    }
+
+    public static void fire(HasHandlers hasHandlers, boolean activate) {
+        hasHandlers.fireEvent(new FullScreenEvent(activate));
     }
 
     public static Type<FullScreenEventHandler> getType() {
@@ -25,7 +30,7 @@ public class FullScreenEvent extends GwtEvent<FullScreenEvent.FullScreenEventHan
 
     private final boolean activate;
 
-    public FullScreenEvent(boolean activate) {
+    private FullScreenEvent(boolean activate) {
         this.activate = activate;
     }
 

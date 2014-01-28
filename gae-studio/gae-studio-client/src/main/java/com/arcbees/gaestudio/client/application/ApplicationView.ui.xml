@@ -3,7 +3,7 @@
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
     <g:HTMLPanel debugId="{debugIds.getApplicationRoot}" ui:field="root">
-        <g:HTMLPanel addStyleNames="{res.styles.northSection}" ui:field="northSection">
+        <g:HTMLPanel styleName="{res.styles.northSection}" ui:field="northSection">
             <g:SimplePanel ui:field="version"/>
             <g:SimplePanel ui:field="messages"/>
             <g:SimplePanel ui:field="header"/>

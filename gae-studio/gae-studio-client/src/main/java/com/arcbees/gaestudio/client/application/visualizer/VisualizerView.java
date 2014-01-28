@@ -65,7 +65,7 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     @Override
     public void closeKindPanel() {
         $(entityTypesSidebar, toolbar).parent().css("transition", "left 0.3s");
-//
+
         int width = getSidebarWidth();
         int widthWhenClosed = 20;
 
