@@ -41,7 +41,7 @@ input:focus, textarea:focus, button:focus {
 
 .toolbar {
     color: white;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    height: 100%;
 }
 
 .toolbarButton {
@@ -183,11 +183,10 @@ input:focus, textarea:focus, button:focus {
 
 .entityTypeSelector {
     background: #e0e0e0;
-    overflow-y: auto;
 
-    -webkit-box-shadow: 4px 7px 10px -5px rgba(0, 0, 0, 0.7);
-    -moz-box-shadow: 4px 7px 10px -5px rgba(0, 0, 0, 0.7);
-    box-shadow: 4px 7px 10px -5px rgba(0, 0, 0, 0.7);
+    float: left;
+    width: 250px;
+    height: 100%;
 }
 
 .entityTypeSelector > div {
@@ -222,6 +221,7 @@ input:focus, textarea:focus, button:focus {
 
 .entityDetailPanel {
     height: 100%;
+    width: 100%;
     position: absolute;
     top: 0;
     border-left: 1px solid #A2A2A2;
@@ -536,6 +536,17 @@ input:focus, textarea:focus, button:focus {
 
 .northSection {
     background-color: #2d2d2d;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    height: 110px;
+}
+
+.main {
+    width: 100%;
+    position: absolute;
+    top: 110px;
+    bottom: 0;
 }
 
 .panelToggle {
@@ -648,8 +659,8 @@ input:focus, textarea:focus, button:focus {
     background: #f6f6f6;
 
     -webkit-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
-    -moz-box-shadow:    4px 4px 5px 0px rgba(0, 0, 0, 0.12);
-    box-shadow:         4px 4px 5px 0px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
 
     z-index: 10000;
 }

@@ -151,6 +151,8 @@ public interface AppResources extends ClientBundle {
         String className();
 
         String methodName();
+
+        String main();
     }
 
     public interface Sprites extends CssResource {
@@ -218,6 +220,8 @@ public interface AppResources extends ClientBundle {
     ImageResource dropDownArrowUp();
 
     ImageResource dropDownArrowRl();
+
+    ImageResource listGraph();
 
     @Source("textcursor.png")
     DataResource whiteTextCursorResource();
