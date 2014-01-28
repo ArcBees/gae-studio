@@ -7,9 +7,12 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.util;
+package com.arcbees.gaestudio.client.application.entity;
 
-import com.gwtplatform.dispatch.rest.shared.RestCallback;
+import com.gwtplatform.mvp.client.UiHandlers;
 
-public abstract class RestCallbackImpl<T> extends AsyncCallbackImpl<T> implements RestCallback<T> {
+public interface EntityUiHandlers extends UiHandlers {
+    void activateFullScreen();
+
+    void deactivateFullScreen();
 }

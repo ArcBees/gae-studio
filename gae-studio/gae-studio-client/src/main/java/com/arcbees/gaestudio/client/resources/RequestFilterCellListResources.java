@@ -7,9 +7,15 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.util;
+package com.arcbees.gaestudio.client.resources;
 
-import com.gwtplatform.dispatch.rest.shared.RestCallback;
+import com.google.gwt.user.cellview.client.CellList;
 
-public abstract class RestCallbackImpl<T> extends AsyncCallbackImpl<T> implements RestCallback<T> {
+public interface RequestFilterCellListResources extends CellList.Resources {
+    interface ListStyle extends CellList.Style {
+    }
+
+    @Override
+    @Source({"requestFilterCellListStyles.css"})
+    ListStyle cellListStyle();
 }

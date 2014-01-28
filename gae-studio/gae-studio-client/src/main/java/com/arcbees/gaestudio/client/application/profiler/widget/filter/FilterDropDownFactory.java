@@ -7,9 +7,8 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.util;
+package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
-import com.gwtplatform.dispatch.rest.shared.RestCallback;
-
-public abstract class RestCallbackImpl<T> extends AsyncCallbackImpl<T> implements RestCallback<T> {
+public interface FilterDropDownFactory {
+    FiltersDropDown create(FiltersDropDown.FilterSelectedHandler handler);
 }

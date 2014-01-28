@@ -9,11 +9,14 @@
 
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
+import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class FilterModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
+        install(new GinFactoryModuleBuilder().build(FilterDropDownFactory.class));
+
         bindSingletonPresenterWidget(FiltersPresenter.class, FiltersPresenter.MyView.class,
                 FiltersView.class);
         bindSingletonPresenterWidget(RequestFilterPresenter.class, RequestFilterPresenter.MyView.class,

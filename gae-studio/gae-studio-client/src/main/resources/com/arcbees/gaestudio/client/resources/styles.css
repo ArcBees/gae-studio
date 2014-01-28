@@ -41,7 +41,7 @@ input:focus, textarea:focus, button:focus {
 
 .toolbar {
     color: white;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    height: 100%;
 }
 
 .toolbarButton {
@@ -183,11 +183,10 @@ input:focus, textarea:focus, button:focus {
 
 .entityTypeSelector {
     background: #e0e0e0;
-    overflow-y: auto;
 
-    -webkit-box-shadow: 4px 7px 10px -5px rgba(0, 0, 0, 0.7);
-    -moz-box-shadow: 4px 7px 10px -5px rgba(0, 0, 0, 0.7);
-    box-shadow: 4px 7px 10px -5px rgba(0, 0, 0, 0.7);
+    float: left;
+    width: 250px;
+    height: 100%;
 }
 
 .entityTypeSelector > div {
@@ -222,6 +221,7 @@ input:focus, textarea:focus, button:focus {
 
 .entityDetailPanel {
     height: 100%;
+    width: 100%;
     position: absolute;
     top: 0;
     border-left: 1px solid #A2A2A2;
@@ -536,6 +536,17 @@ input:focus, textarea:focus, button:focus {
 
 .northSection {
     background-color: #2d2d2d;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    height: 110px;
+}
+
+.main {
+    width: 100%;
+    position: absolute;
+    top: 110px;
+    bottom: 0;
 }
 
 .panelToggle {
@@ -633,4 +644,92 @@ input:focus, textarea:focus, button:focus {
 @sprite .statementImageRl, .statementImageDn {
     gwt-image: "listDotRl";
     cursor: pointer;
+}
+
+.ul {
+    list-style-type: none;
+    position: absolute;
+    background: #ececec;
+    width: 100%;
+    -webkit-padding-start: 0px;
+    margin: 0;
+}
+
+.openedList {
+    background: #f6f6f6;
+
+    -webkit-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
+
+    z-index: 10000;
+}
+
+@sprite .dropDownArrow {
+    gwt-image: "dropDownArrowUp";
+}
+
+@sprite .dropDownArrow:hover {
+    gwt-image: "dropDownArrowRl";
+    height: 46px;
+}
+
+.dropDownArrow, .dropDownArrow:hover {
+    width: 100%;
+    background-position-x: 95%;
+    background-position-y: 50%;
+}
+
+.ul li {
+    height: 46px;
+    line-height: 46px;
+    font-size: 1.3em;
+    text-transform: uppercase;
+}
+
+.ul li span {
+    color: #9b9b9b;
+
+    margin-left: 17px;
+}
+
+.ul li:hover {
+    background-color: #25aae1;
+    cursor: pointer;
+}
+
+.ul li:hover span {
+    color: white;
+}
+
+.ul:focus {
+    outline: none;
+}
+
+.hiddenLi {
+    display: none;
+}
+
+.shownLi {
+    display: list-item;
+}
+
+.selectedLi {
+    /* used as a selector */
+}
+
+.className {
+    font-size: 1.3em;
+}
+
+.methodName {
+    font-size: 1.1em;
+    line-height: 1.5em;
+    padding-left: 5px;
+}
+
+.methodName:hover {
+    cursor: pointer;
+    background-color: #25aae1;
+    color: white;
 }

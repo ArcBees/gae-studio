@@ -11,7 +11,6 @@ package com.arcbees.gaestudio.shared.dto.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import com.google.common.base.Objects;
 
 public class AppIdNamespaceDto {

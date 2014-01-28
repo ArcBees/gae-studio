@@ -10,21 +10,17 @@
 
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
-import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppResources;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implements FiltersPresenter.MyView,
-        ChangeHandler {
+        FiltersDropDown.FilterSelectedHandler {
     interface Binder extends UiBinder<Widget, FiltersView> {
     }
 
@@ -35,34 +31,30 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
     @UiField
     SimplePanel method;
     @UiField
-    ListBox filters;
-    @UiField
     SimplePanel type;
+    @UiField(provided = true)
+    FiltersDropDown filtersDropDown;
 
-    private final AppConstants myConstants;
     private Filter currentlySelectedFilter = Filter.REQUEST;
 
     @Inject
     FiltersView(Binder uiBinder,
                 AppResources resources,
-                AppConstants myConstants) {
+                FilterDropDownFactory filterDropDownFactory) {
         this.resources = resources;
-        this.myConstants = myConstants;
+        this.filtersDropDown = filterDropDownFactory.create(this);
 
         initWidget(uiBinder.createAndBindUi(this));
-        initFilters();
-    }
-
-    @Override
-    public void onChange(ChangeEvent event) {
-        int selectedIndex = filters.getSelectedIndex();
-        Filter filter = Filter.valueOf(filters.getValue(selectedIndex));
-        selectFilter(filter);
     }
 
     @Override
     public Filter getCurrentlyDisplayedFilter() {
         return currentlySelectedFilter;
+    }
+
+    @Override
+    public void onFilterSelected(Filter filter) {
+        selectFilter(filter);
     }
 
     @Override
@@ -74,13 +66,6 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers> implement
         } else if (slot == FiltersPresenter.SLOT_TYPE_FILTER) {
             type.setWidget(content);
         }
-    }
-
-    private void initFilters() {
-        filters.addItem(myConstants.filterByRequest(), Filter.REQUEST.toString());
-        filters.addItem(myConstants.filterByMethod(), Filter.METHOD.toString());
-        filters.addItem(myConstants.filterByType(), Filter.TYPE.toString());
-        filters.addChangeHandler(this);
     }
 
     private void selectFilter(Filter filter) {

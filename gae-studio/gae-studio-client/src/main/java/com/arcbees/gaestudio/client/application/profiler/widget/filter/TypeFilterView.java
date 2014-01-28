@@ -13,6 +13,7 @@ import java.util.List;
 
 import com.arcbees.gaestudio.client.application.profiler.ui.TypeFilterCell;
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.client.resources.RequestFilterCellListResources;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellList;
@@ -28,7 +29,6 @@ public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> imp
 
     @UiField(provided = true)
     CellList<FilterValue<OperationType>> requests;
-
     @UiField(provided = true)
     AppResources resources;
 
@@ -38,9 +38,10 @@ public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> imp
     @Inject
     TypeFilterView(Binder uiBinder,
                    AppResources resources,
-                   TypeFilterCell typeFilterCell) {
+                   TypeFilterCell typeFilterCell,
+                   RequestFilterCellListResources cellListResources) {
         this.resources = resources;
-        requests = new CellList<FilterValue<OperationType>>(typeFilterCell);
+        requests = new CellList<FilterValue<OperationType>>(typeFilterCell, cellListResources);
 
         initWidget(uiBinder.createAndBindUi(this));
 

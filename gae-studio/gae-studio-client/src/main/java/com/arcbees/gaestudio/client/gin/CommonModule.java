@@ -20,12 +20,10 @@ import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
-import com.arcbees.gaestudio.client.resources.StatementCellListResource;
 import com.arcbees.gaestudio.client.rest.RestModule;
 import com.arcbees.gaestudio.client.ui.UiModule;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.CurrentUser;
-import com.arcbees.gaestudio.client.util.RestCallbackImpl;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.ErrorPlace;
 import com.gwtplatform.mvp.client.annotations.GaAccount;
@@ -57,7 +55,6 @@ public class CommonModule extends AbstractPresenterModule {
         bind(AppConstants.class).in(Singleton.class);
         bind(AppMessages.class).in(Singleton.class);
         bind(CellTableResource.class).in(Singleton.class);
-        bind(StatementCellListResource.class).in(Singleton.class);
 
         bind(ResourceLoader.class).asEagerSingleton();
 

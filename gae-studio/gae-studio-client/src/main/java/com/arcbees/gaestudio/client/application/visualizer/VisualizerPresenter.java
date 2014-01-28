@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
+import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent;
@@ -33,7 +34,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler,
         RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler,
-        KindPanelToggleEvent.KindPanelToggleHandler {
+        KindPanelToggleEvent.KindPanelToggleHandler, FullScreenEvent.FullScreenEventHandler {
     interface MyView extends View {
         void showEntityDetails();
 
@@ -42,6 +43,8 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         void closeKindPanel();
 
         void openKindPanel();
+
+        void activateFullScreen();
     }
 
     @ProxyCodeSplit
@@ -87,6 +90,15 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     }
 
     @Override
+    public void onFullScreen(FullScreenEvent event) {
+        if (event.isActivate()) {
+            getView().activateFullScreen();
+        } else {
+            getView().showEntityDetails();
+        }
+    }
+
+    @Override
     public void onKindSelected(KindSelectedEvent event) {
         setInSlot(SLOT_ENTITIES, entityListPresenter);
 
@@ -125,5 +137,6 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         addRegisteredHandler(RowLockedEvent.getType(), this);
         addRegisteredHandler(RowUnlockedEvent.getType(), this);
         addRegisteredHandler(KindPanelToggleEvent.getType(), this);
+        addRegisteredHandler(FullScreenEvent.getType(), this);
     }
 }
