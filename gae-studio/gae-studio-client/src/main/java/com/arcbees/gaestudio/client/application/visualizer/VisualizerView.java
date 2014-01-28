@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer;
 
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -64,17 +65,12 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
 
     @Override
     public void closeKindPanel() {
-        $(entityTypesSidebar, toolbar).parent().css("transition", "left 0.3s");
-
-        int width = getSidebarWidth();
-        int widthWhenClosed = 20;
-
-        setLeftInPixels(widthWhenClosed - width, entityTypesSidebar);
+        setSidebarMarginLeft(-230d);
     }
 
     @Override
     public void openKindPanel() {
-        setLeftInPixels(0, entityTypesSidebar);
+        setSidebarMarginLeft(0d);
     }
 
     @Override
@@ -82,12 +78,8 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
         setWidthPercentage(100, entityDetailsPanel);
     }
 
-    private void setLeftInPixels(int left, Widget... widgets) {
-        $(widgets).parent().css("left", left + "px");
-    }
-
-    private int getSidebarWidth() {
-        return entityTypesSidebar.getElement().getOffsetWidth();
+    private void setSidebarMarginLeft(double marginLeft) {
+        entityTypesSidebar.getElement().getStyle().setMarginLeft(marginLeft, Style.Unit.PX);
     }
 
     private void setPanelsWidthPercentages(int leftPercentage, int rightPercentage) {
