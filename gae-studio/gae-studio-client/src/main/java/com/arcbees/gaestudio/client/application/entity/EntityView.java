@@ -14,7 +14,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.gwt.dom.client.AnchorElement;
@@ -28,11 +27,11 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.Range;
-import com.gwtplatform.mvp.client.ViewImpl;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class EntityView extends ViewImpl implements EntityPresenter.MyView {
+public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements EntityPresenter.MyView {
     interface Binder extends UiBinder<Widget, EntityView> {
     }
 
@@ -48,23 +47,17 @@ public class EntityView extends ViewImpl implements EntityPresenter.MyView {
     private final KeyValuePairBuilder keyValuePairBuilder;
     private final int pageSize = 15;
     private final CellTableResource cellTableResource;
-    private final String entityContainerStyleName;
-    private final String entityListContainerSelectedStyleName;
 
     private CellTable<KeyValuePair> table;
 
     @Inject
     EntityView(Binder binder,
                KeyValuePairBuilder keyValuePairBuilder,
-               CellTableResource cellTableResource,
-               AppResources appResources) {
+               CellTableResource cellTableResource) {
         this.keyValuePairBuilder = keyValuePairBuilder;
         this.cellTableResource = cellTableResource;
 
         initWidget(binder.createAndBindUi(this));
-
-        entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
-        entityContainerStyleName = appResources.styles().entityContainer();
 
         initTable();
     }
@@ -89,20 +82,28 @@ public class EntityView extends ViewImpl implements EntityPresenter.MyView {
         $(fullscreen).click(new Function() {
             @Override
             public void f(Element e) {
-                $("." + entityContainerStyleName).addClass(entityListContainerSelectedStyleName);
-                hideFullscreenButton();
-                $(back).show();
+                activateFullScreenMode();
             }
         });
 
         $(back).click(new Function() {
             @Override
             public void f() {
-                $("." + entityContainerStyleName).removeClass(entityListContainerSelectedStyleName);
-                showFullscreenButton();
-                $(back).hide();
+                deactivateFullScreenMode();
             }
         });
+    }
+
+    private void deactivateFullScreenMode() {
+        getUiHandlers().deactivateFullScreen();
+        showFullscreenButton();
+        $(back).hide();
+    }
+
+    private void activateFullScreenMode() {
+        getUiHandlers().activateFullScreen();
+        hideFullscreenButton();
+        $(back).show();
     }
 
     @Override

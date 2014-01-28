@@ -4,10 +4,9 @@
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:style>
         .content {
-            margin-left: 15px;
             position: absolute;
             top: 46px;
-            width: 90%;
+            width: 100%;
         }
 
         .whiteLine {
