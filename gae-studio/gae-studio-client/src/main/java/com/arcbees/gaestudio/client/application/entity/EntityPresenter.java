@@ -81,12 +81,12 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
 
     @Override
     public void activateFullScreen() {
-        setFullScreen(true);
+        FullScreenEvent.fire(this, true);
     }
 
     @Override
     public void deactivateFullScreen() {
-        setFullScreen(false);
+        FullScreenEvent.fire(this, false);
     }
 
     @Override
@@ -122,10 +122,6 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(RowLockedEvent.getType(), this);
         addRegisteredHandler(RowUnlockedEvent.getType(), this);
-    }
-
-    private void setFullScreen(boolean activate) {
-        FullScreenEvent.fire(this, activate);
     }
 
     private void displayEntityFromPlaceRequest(PlaceRequest request) {
