@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -44,7 +44,6 @@ import static com.google.gwt.query.client.GQuery.$;
 
 public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
     interface Binder extends UiBinder<Widget, EntityListView> {
-
     }
 
     private static final int PAGE_SIZE = 25;
@@ -54,21 +53,19 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     HTMLPanel panel;
     @UiField(provided = true)
     SimplePager pager;
-
     @UiField(provided = true)
     CellTable<ParsedEntity> entityTable;
-
     @UiField
     AnchorElement deselectEntity;
     @UiField(provided = true)
     ToolbarButton refresh;
     @UiField
     SimplePanel deleteByKind;
+
+    private final UiFactory uiFactory;
     private final String idStyleName;
     private final AppConstants myConstants;
-
     private final AppResources appResources;
-    protected final UiFactory uiFactory;
     private final String lockedRowStyleName;
     private final String namespaceStyleName;
     private final String namespaceSpanStyleName;
@@ -192,7 +189,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @Override
     public void removeKindSpecificColumns() {
-        while(entityTable.getColumnCount() > ParsedEntityColumnCreator.getDefaultColumnCount()) {
+        while (entityTable.getColumnCount() > ParsedEntityColumnCreator.getDefaultColumnCount()) {
             removeLastColumn(entityTable);
         }
     }
@@ -201,8 +198,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     public void setInSlot(Object slot, IsWidget content) {
         if (EntityListPresenter.SLOT_NAMESPACES == slot) {
             deleteByKind.setWidget(content);
-        } else {
-            super.setInSlot(slot, content);
         }
     }
 
@@ -336,7 +331,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                         getUiHandlers().refresh();
                         $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
                         $("." + entityListContainerSelectedStyleName).removeClass(entityListContainerSelectedStyleName);
-                        $("." + namespaceStyleName).hide(); //TODO check this
+                        $("." + namespaceStyleName).hide(); //TODO Check if we can remove all those stylename references
                         $("." + entityStyleName).hide();
                         $("." + idStyleName).text("no entity");
                         $("." + backButtonStyleName).hide();

@@ -13,7 +13,7 @@
             width: 80px;
         }
 
-        .deletByKind {
+        .deleteByKind {
             float: left;
         }
     </ui:style>
@@ -21,7 +21,7 @@
         <div class="{style.heading} {resources.styles.pager}">
             <cellview:SimplePager ui:field="pager"/>
             <gsui:ToolbarButton ui:field="refresh" addStyleNames="{style.refresh}"/>
-            <g:SimplePanel ui:field="deleteByKind" styleName="{style.deletByKind}"/>
+            <g:SimplePanel ui:field="deleteByKind" styleName="{style.deleteByKind}"/>
             <p class="{resources.styles.isDisplaying}">
                 Displaying entities of the kind <b class="{resources.styles.kindBold}">Kind</b>
             </p>
