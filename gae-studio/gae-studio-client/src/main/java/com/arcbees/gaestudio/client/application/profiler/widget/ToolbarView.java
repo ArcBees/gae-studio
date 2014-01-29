@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -47,7 +47,7 @@ public class ToolbarView extends ViewImpl implements ToolbarPresenter.MyView, Pa
         initWidget(uiBinder.createAndBindUi(this));
 
         toggle = panelToggleFactory.create(this);
-        toggle.asWidget().addStyleName(resources.styles().profilerToggle());
+        $(toggle).addClass(resources.styles().profilerToggle());
     }
 
     @Override
@@ -63,8 +63,8 @@ public class ToolbarView extends ViewImpl implements ToolbarPresenter.MyView, Pa
     public void setButtons(List<ToolbarButton> buttonsToSet) {
         buttons.clear();
 
-        for(ToolbarButton button : buttonsToSet) {
-            this.buttons.add(button);
+        for (ToolbarButton button : buttonsToSet) {
+            buttons.add(button);
         }
 
         this.buttons.add(toggle);
