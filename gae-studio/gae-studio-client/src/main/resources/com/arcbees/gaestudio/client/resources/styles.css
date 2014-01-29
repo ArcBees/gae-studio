@@ -108,6 +108,8 @@ input:focus, textarea:focus, button:focus {
 }
 
 .kindHeaderElement {
+    position: relative;
+
     line-height: 30px;
     font-size: 15px;
     font-weight: bold;
@@ -187,6 +189,10 @@ input:focus, textarea:focus, button:focus {
     float: left;
     width: 250px;
     height: 100%;
+
+    -webkit-transition: margin-left .5s ease;
+    -moz-transition: margin-left .5s ease;
+    -o-transition: margin-left .5s ease;
 }
 
 .entityTypeSelector > div {
