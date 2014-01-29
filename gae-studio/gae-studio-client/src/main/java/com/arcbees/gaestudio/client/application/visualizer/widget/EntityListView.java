@@ -12,7 +12,11 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
+import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
+import com.arcbees.gaestudio.client.application.ui.UiFactory;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.PagerResources;
@@ -28,6 +32,8 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.Range;
@@ -38,6 +44,7 @@ import static com.google.gwt.query.client.GQuery.$;
 
 public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
     interface Binder extends UiBinder<Widget, EntityListView> {
+
     }
 
     private static final int PAGE_SIZE = 25;
@@ -47,12 +54,21 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     HTMLPanel panel;
     @UiField(provided = true)
     SimplePager pager;
+
     @UiField(provided = true)
     CellTable<ParsedEntity> entityTable;
+
     @UiField
     AnchorElement deselectEntity;
-
+    @UiField(provided = true)
+    ToolbarButton refresh;
+    @UiField
+    SimplePanel deleteByKind;
     private final String idStyleName;
+    private final AppConstants myConstants;
+
+    private final AppResources appResources;
+    protected final UiFactory uiFactory;
     private final String lockedRowStyleName;
     private final String namespaceStyleName;
     private final String namespaceSpanStyleName;
@@ -64,6 +80,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final String kindStyleName;
     private final String firstTableStyleName;
     private final String pagerStyleName;
+    private final String backButtonStyleName;
+    private final String entityListContainerSelectedStyleName;
     private final ParsedEntityColumnCreator columnCreator;
 
     @Inject
@@ -71,8 +89,14 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                    CellTableResource cellTableResource,
                    PagerResources pagerResources,
                    AppResources appResources,
+                   AppConstants myConstants,
+                   UiFactory uiFactory,
                    ParsedEntityColumnCreator columnCreator) {
+        this.myConstants = myConstants;
+        this.uiFactory = uiFactory;
         this.columnCreator = columnCreator;
+        this.appResources = appResources;
+
         pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
 
         kindStyleName = appResources.styles().kindBold();
@@ -87,6 +111,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         firstTableRow = "." + firstTableStyleName + " tbody";
         secondTableStyleName = appResources.styles().secondTable();
         secondTableHiddenStyleName = appResources.styles().secondTableHidden();
+        backButtonStyleName = appResources.styles().backButton();
+        entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
 
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
@@ -95,6 +121,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 onEditTableAttachedOrDetached(event.isAttached());
             }
         });
+
+        refresh = createRefreshButton();
 
         initWidget(uiBinder.createAndBindUi(this));
 
@@ -166,6 +194,15 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     public void removeKindSpecificColumns() {
         while(entityTable.getColumnCount() > ParsedEntityColumnCreator.getDefaultColumnCount()) {
             removeLastColumn(entityTable);
+        }
+    }
+
+    @Override
+    public void setInSlot(Object slot, IsWidget content) {
+        if (EntityListPresenter.SLOT_NAMESPACES == slot) {
+            deleteByKind.setWidget(content);
+        } else {
+            super.setInSlot(slot, content);
         }
     }
 
@@ -289,5 +326,21 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         $("." + lockedRowStyleName).removeClass(lockedRowStyleName);
         $(deselectEntity).hide();
         getUiHandlers().onRowUnlock();
+    }
+
+    private ToolbarButton createRefreshButton() {
+        return uiFactory.createToolbarButton(myConstants.refresh(), appResources.styles().refresh(),
+                new ToolbarButtonCallback() {
+                    @Override
+                    public void onClicked() {
+                        getUiHandlers().refresh();
+                        $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
+                        $("." + entityListContainerSelectedStyleName).removeClass(entityListContainerSelectedStyleName);
+                        $("." + namespaceStyleName).hide(); //TODO check this
+                        $("." + entityStyleName).hide();
+                        $("." + idStyleName).text("no entity");
+                        $("." + backButtonStyleName).hide();
+                    }
+                });
     }
 }

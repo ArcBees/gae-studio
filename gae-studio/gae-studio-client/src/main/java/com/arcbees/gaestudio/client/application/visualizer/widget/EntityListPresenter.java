@@ -16,17 +16,23 @@ import java.util.Set;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent;
+import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.DeleteFromNamespaceHandler;
+import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
+import com.arcbees.gaestudio.shared.DeleteEntities;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.google.common.base.Strings;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -42,7 +48,6 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent.EntitiesDeletedHandler;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent.EntityDeletedHandler;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent.EntitySavedHandler;
-import static com.arcbees.gaestudio.client.application.visualizer.event.RefreshEntitiesEvent.RefreshEntitiesHandler;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
@@ -52,7 +57,7 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView> implements
-        EntityListUiHandlers, EntitySavedHandler, RefreshEntitiesHandler, EntityDeletedHandler, EntitiesDeletedHandler {
+        EntityListUiHandlers, EntitySavedHandler, EntityDeletedHandler, EntitiesDeletedHandler, DeleteFromNamespaceHandler {
     interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
 
@@ -75,10 +80,13 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void removeKindSpecificColumns();
     }
 
+    public static final Object SLOT_NAMESPACES = new Object();
+
     private final RestDispatch restDispatch;
     private final EntitiesService entitiesService;
     private final PlaceManager placeManager;
     private final PropertyNamesAggregator propertyNamesAggregator;
+    private final NamespacesListPresenter namespacesListPresenter;
 
     private String currentKind;
 
@@ -88,13 +96,15 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         PlaceManager placeManager,
                         RestDispatch restDispatch,
                         EntitiesService entitiesService,
-                        PropertyNamesAggregator propertyNamesAggregator) {
+                        PropertyNamesAggregator propertyNamesAggregator,
+                        NamespacesListPresenterFactory namespacesListPresenterFactory) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
         this.restDispatch = restDispatch;
         this.entitiesService = entitiesService;
         this.propertyNamesAggregator = propertyNamesAggregator;
+        this.namespacesListPresenter = namespacesListPresenterFactory.create(this);
 
         getView().setUiHandlers(this);
 
@@ -119,8 +129,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
-    public void onRefreshEntities(RefreshEntitiesEvent event) {
-        loadKind();
+    public void refresh() {
+        loadKind(this.currentKind);
     }
 
     public void loadKind(String kind) {
@@ -146,7 +156,18 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void onEntitiesDeleted(EntitiesDeletedEvent event) {
-        loadKind();
+        loadKind(this.currentKind);
+    }
+
+    @Override
+    public void onDeleteAllFromNamespace(AppIdNamespaceDto namespaceDto) {
+        if (!Strings.isNullOrEmpty(currentKind)) {
+            if (namespaceDto == null) {
+                DeleteEntitiesEvent.fire(this, DeleteEntities.KIND, currentKind);
+            } else {
+                DeleteEntitiesEvent.fire(this, DeleteEntities.KIND_NAMESPACE, currentKind, namespaceDto.getNamespace());
+            }
+        }
     }
 
     @Override
@@ -156,11 +177,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         addRegisteredHandler(EntitySavedEvent.getType(), this);
         addRegisteredHandler(EntityDeletedEvent.getType(), this);
         addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
-        addRegisteredHandler(RefreshEntitiesEvent.getType(), this);
-    }
 
-    private void loadKind() {
-        loadKind(this.currentKind);
+        setInSlot(SLOT_NAMESPACES, namespacesListPresenter);
     }
 
     private void setTableDataProvider() {

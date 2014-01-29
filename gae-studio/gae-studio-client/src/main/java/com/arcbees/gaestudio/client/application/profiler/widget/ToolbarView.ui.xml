@@ -9,6 +9,10 @@
             -webkit-transition: width .25s ease;
             -moz-transition: width .25s ease;
             -o-transition: width .25s ease;
+
+            background: #232323;
+
+            overflow: hidden;
         }
     </ui:style>
     <g:HTMLPanel ui:field="buttons" styleName="{resources.styles.toolbar} {style.buttons}"/>

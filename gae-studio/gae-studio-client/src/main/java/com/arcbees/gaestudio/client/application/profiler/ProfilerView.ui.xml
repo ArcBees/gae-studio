@@ -5,9 +5,6 @@
         .toolbar {
             height: 100%;
             float: left;
-            overflow: hidden;
-
-            background: #232323;
         }
 
         .whitePanel {

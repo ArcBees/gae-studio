@@ -596,7 +596,8 @@ input:focus, textarea:focus, button:focus {
 .stop,
 .toolbarButton:hover .stop,
 .toolbarButtonDisabled:hover .stop,
-.record {
+.record,
+.edit {
     height: 46px;
     width: 46px;
     background-position-x: 50%;

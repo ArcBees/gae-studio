@@ -13,12 +13,23 @@ import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
+import com.arcbees.gaestudio.client.application.profiler.widget.ToolbarPresenter;
+import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
+import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
+import com.arcbees.gaestudio.client.application.ui.UiFactory;
+import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntityEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListPresenter;
-import com.arcbees.gaestudio.client.application.visualizer.widget.VisualizerToolbarPresenter;
+import com.arcbees.gaestudio.client.debug.DebugIds;
 import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.resources.AppResources;
+import com.google.common.collect.Lists;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -34,7 +45,8 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler,
         RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler,
-        KindPanelToggleEvent.KindPanelToggleHandler, FullScreenEvent.FullScreenEventHandler {
+        KindPanelToggleEvent.KindPanelToggleHandler, FullScreenEvent.FullScreenEventHandler,
+        EntitySelectedEvent.EntitySelectedHandler, EntityPageLoadedEvent.EntityPageLoadedHandler {
     interface MyView extends View {
         void showEntityDetails();
 
@@ -62,21 +74,41 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
             .Type<RevealContentHandler<?>>();
 
     private final EntityListPresenter entityListPresenter;
-    private final VisualizerToolbarPresenter visualizerToolbarPresenter;
     private final SidebarPresenter sidebarPresenter;
+    private final ToolbarButton edit;
+    private final ToolbarButton delete;
+    private final UiFactory uiFactory;
+    private final AppResources resources;
+    private final AppConstants myConstants;
+    private final ToolbarPresenter toolbarPresenter;
+
+    private ParsedEntity currentParsedEntity;
+    private String currentKind = "";
 
     @Inject
     VisualizerPresenter(EventBus eventBus,
                         MyView view,
                         MyProxy proxy,
                         EntityListPresenter entityListPresenter,
-                        VisualizerToolbarPresenter visualizerToolbarPresenter,
-                        SidebarPresenter sidebarPresenter) {
+                        SidebarPresenter sidebarPresenter,
+                        UiFactory uiFactory,
+                        AppResources resources,
+                        AppConstants appConstants,
+                        ToolbarPresenter toolbarPresenter) {
         super(eventBus, view, proxy);
 
+        this.uiFactory = uiFactory;
         this.entityListPresenter = entityListPresenter;
-        this.visualizerToolbarPresenter = visualizerToolbarPresenter;
         this.sidebarPresenter = sidebarPresenter;
+        this.resources = resources;
+        this.myConstants = appConstants;
+        this.toolbarPresenter = toolbarPresenter;
+
+        edit = createEditButton();
+        delete = createDeleteButton();
+
+        edit.setEnabled(false);
+        delete.setEnabled(false);
     }
 
     @Override
@@ -102,13 +134,15 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     public void onKindSelected(KindSelectedEvent event) {
         setInSlot(SLOT_ENTITIES, entityListPresenter);
 
-        String kind = event.getKind();
+        currentKind = event.getKind();
 
-        if (kind.isEmpty()) {
+        if (currentKind.isEmpty()) {
             entityListPresenter.hideList();
         } else {
-            entityListPresenter.loadKind(kind);
+            entityListPresenter.loadKind(currentKind);
         }
+
+        toolbarPresenter.setVisible(!currentKind.isEmpty());
     }
 
     @Override
@@ -130,13 +164,72 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         super.onBind();
 
         setInSlot(SLOT_ENTITIES, entityListPresenter);
-        setInSlot(SLOT_TOOLBAR, visualizerToolbarPresenter);
+        setInSlot(SLOT_TOOLBAR, toolbarPresenter);
         setInSlot(SLOT_KINDS, sidebarPresenter);
+
+        toolbarPresenter.setButtons(Lists.newArrayList(edit, delete));
+        toolbarPresenter.setVisible(false);
 
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(RowLockedEvent.getType(), this);
         addRegisteredHandler(RowUnlockedEvent.getType(), this);
         addRegisteredHandler(KindPanelToggleEvent.getType(), this);
         addRegisteredHandler(FullScreenEvent.getType(), this);
+        addRegisteredHandler(EntitySelectedEvent.getType(), this);
+        addRegisteredHandler(EntityPageLoadedEvent.getType(), this);
+        addRegisteredHandler(KindSelectedEvent.getType(), this);
+    }
+
+    @Override
+    public void onEntityPageLoaded(EntityPageLoadedEvent event) {
+        disableContextualMenu();
+    }
+
+    @Override
+    public void onEntitySelected(EntitySelectedEvent event) {
+        currentParsedEntity = event.getParsedEntity();
+        enableContextualMenu();
+    }
+
+    private ToolbarButton createEditButton() {
+        return uiFactory.createToolbarButton(myConstants.edit(), resources.styles().edit(),
+                new ToolbarButtonCallback() {
+                    @Override
+                    public void onClicked() {
+                        edit();
+                    }
+                }, DebugIds.EDIT);
+    }
+
+    private ToolbarButton createDeleteButton() {
+        return uiFactory.createToolbarButton(myConstants.delete(), resources.styles().delete(),
+                new ToolbarButtonCallback() {
+                    @Override
+                    public void onClicked() {
+                        delete();
+                    }
+                });
+    }
+
+    private void edit() {
+        if (currentParsedEntity != null) {
+            EditEntityEvent.fire(this, currentParsedEntity);
+        }
+    }
+
+    private void delete() {
+        if (currentParsedEntity != null) {
+            DeleteEntityEvent.fire(this, currentParsedEntity);
+        }
+    }
+
+    private void enableContextualMenu() {
+        edit.setEnabled(true);
+        delete.setEnabled(true);
+    }
+
+    private void disableContextualMenu() {
+        edit.setEnabled(false);
+        delete.setEnabled(false);
     }
 }

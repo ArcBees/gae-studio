@@ -18,10 +18,9 @@ public class ProfilerWidgetModule extends AbstractPresenterModule {
                 StatementView.class);
         bindSingletonPresenterWidget(StatisticsPresenter.class, StatisticsPresenter.MyView.class,
                 StatisticsView.class);
-        bindSingletonPresenterWidget(ProfilerToolbarPresenter.class, ProfilerToolbarPresenter.MyView.class,
-                ProfilerToolbarView.class);
+        bindSingletonPresenterWidget(ToolbarPresenter.class, ToolbarPresenter.MyView.class,
+                ToolbarView.class);
 
         bind(StatementUiHandlers.class).to(StatementPresenter.class);
-        bind(ProfilerToolbarUiHandlers.class).to(ProfilerToolbarPresenter.class);
     }
 }
