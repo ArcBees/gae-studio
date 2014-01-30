@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -7,8 +7,14 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.profiler.widget.filter;
+package com.arcbees.gaestudio.client.application.widget;
 
-public interface FilterDropDownFactory {
-    FiltersDropDown create(FiltersDropDown.FilterSelectedHandler handler);
+import com.arcbees.gaestudio.client.application.widget.dropdown.DropdownModule;
+import com.google.gwt.inject.client.AbstractGinModule;
+
+public class WidgetModule extends AbstractGinModule {
+    @Override
+    protected void configure() {
+        install(new DropdownModule());
+    }
 }

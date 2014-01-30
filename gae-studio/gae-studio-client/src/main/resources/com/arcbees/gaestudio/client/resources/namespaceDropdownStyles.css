@@ -1,0 +1,66 @@
+.ul {
+    list-style-type: none;
+    position: absolute;
+    background: #ececec;
+    width: 85%;
+    -webkit-padding-start: 0px;
+    margin: 0;
+}
+
+.openedList {
+    background: #f6f6f6;
+
+    -webkit-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
+
+    z-index: 10000;
+}
+
+@sprite .dropDownArrow {
+    gwt-image: "dropDownArrowUp";
+}
+
+@sprite .dropDownArrow:hover {
+    gwt-image: "dropDownArrowRl";
+    height: 46px;
+}
+
+.ul li {
+    height: 46px;
+    line-height: 46px;
+    font-size: 1.3em;
+    text-transform: uppercase;
+}
+
+.ul li span {
+    color: #9b9b9b;
+
+    margin-left: 17px;
+}
+
+.ul li:hover {
+    background-color: #25aae1;
+    cursor: pointer;
+}
+
+.ul li:hover span {
+    color: white;
+}
+
+.ul:focus {
+    outline: none;
+}
+
+.dropDownArrow, .dropDownArrow:hover {
+    width: 100%;
+    background-position-x: 95%;
+    background-position-y: 50%;
+}
+
+.hiddenLi {
+    display: none;
+}
+
+.selectedLi {
+}

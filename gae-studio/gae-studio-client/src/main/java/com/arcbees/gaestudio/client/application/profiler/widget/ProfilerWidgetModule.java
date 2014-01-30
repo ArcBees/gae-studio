@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -18,8 +18,7 @@ public class ProfilerWidgetModule extends AbstractPresenterModule {
                 StatementView.class);
         bindSingletonPresenterWidget(StatisticsPresenter.class, StatisticsPresenter.MyView.class,
                 StatisticsView.class);
-        bindSingletonPresenterWidget(ToolbarPresenter.class, ToolbarPresenter.MyView.class,
-                ToolbarView.class);
+        bindPresenterWidget(ToolbarPresenter.class, ToolbarPresenter.MyView.class, ToolbarView.class);
 
         bind(StatementUiHandlers.class).to(StatementPresenter.class);
     }

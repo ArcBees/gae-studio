@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -9,14 +9,11 @@
 
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
-import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class FilterModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
-        install(new GinFactoryModuleBuilder().build(FilterDropDownFactory.class));
-
         bindSingletonPresenterWidget(FiltersPresenter.class, FiltersPresenter.MyView.class,
                 FiltersView.class);
         bindSingletonPresenterWidget(RequestFilterPresenter.class, RequestFilterPresenter.MyView.class,
