@@ -102,4 +102,8 @@ public class ToolbarButton implements AttachEvent.Handler, IsWidget {
             button.addStyleName(resources.styles().toolbarButtonDisabled());
         }
     }
+
+    public void setAddStyleNames(String style) {
+        asWidget().addStyleName(style);
+    }
 }

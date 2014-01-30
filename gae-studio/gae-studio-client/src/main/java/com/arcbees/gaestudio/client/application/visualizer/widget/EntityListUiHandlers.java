@@ -18,4 +18,6 @@ interface EntityListUiHandlers extends UiHandlers {
     void onRowLock();
 
     void onRowUnlock();
+
+    void refresh();
 }
