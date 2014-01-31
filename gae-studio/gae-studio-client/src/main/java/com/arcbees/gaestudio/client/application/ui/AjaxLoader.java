@@ -35,10 +35,6 @@ public class AjaxLoader implements IsWidget {
         widget.setVisible(false);
     }
 
-    public void addStyleName(String stylename) {
-        widget.addStyleName(stylename);
-    }
-
     @Override
     public Widget asWidget() {
         return widget;

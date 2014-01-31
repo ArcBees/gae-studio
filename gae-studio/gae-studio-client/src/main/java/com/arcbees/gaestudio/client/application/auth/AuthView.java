@@ -80,7 +80,7 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
         loginForm.setWidget(loginFormHelper.getLoginFormPanel());
 
         loginFormHelper.getLoginFormPanel().add(ajaxLoader);
-        ajaxLoader.addStyleName(appResources.styles().loginAjaxLoader());
+        ajaxLoader.asWidget().addStyleName(appResources.styles().loginAjaxLoader());
     }
 
     @Override
