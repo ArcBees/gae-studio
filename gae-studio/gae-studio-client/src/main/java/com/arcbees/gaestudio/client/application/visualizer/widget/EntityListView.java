@@ -95,7 +95,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         pager.setPageSize(PAGE_SIZE);
         pager.setDisplay(entityTable);
-        pager.setRangeLimited(false);
 
         columnCreator.initializeTable(entityTable);
     }
@@ -210,12 +209,19 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             KeyDto key = parsedEntity.getKey();
             if (isSameId(idString, key) || idString.equals(key.getName())) {
                 lockRow(entityTable.getRowElement(i));
+                return;
             }
         }
     }
 
     private boolean isSameId(String idString, KeyDto key) {
-        return key.getId() != 0 && Long.valueOf(idString).equals(key.getId());
+        try {
+            Long id = Long.valueOf(idString);
+            return key.getId() != 0 && id.equals(key.getId());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
     }
 
     private void removeLastColumn(CellTable<ParsedEntity> entityTable) {
