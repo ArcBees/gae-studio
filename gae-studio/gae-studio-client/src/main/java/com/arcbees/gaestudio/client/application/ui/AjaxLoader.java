@@ -23,7 +23,6 @@ public class AjaxLoader implements IsWidget {
     AjaxLoader(AppResources appResources) {
         this.widget = new Image();
         widget.setResource(appResources.ajaxLoader30px());
-        widget.addStyleName(appResources.styles().loginAjaxLoader());
 
         hide();
     }
@@ -34,6 +33,10 @@ public class AjaxLoader implements IsWidget {
 
     public void hide() {
         widget.setVisible(false);
+    }
+
+    public void addStyleName(String stylename) {
+        widget.addStyleName(stylename);
     }
 
     @Override
