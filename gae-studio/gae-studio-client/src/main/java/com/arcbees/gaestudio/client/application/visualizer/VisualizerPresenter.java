@@ -121,9 +121,12 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     @Override
     public void setStateFromPlaceRequest(SetStateFromPlaceRequestEvent event) {
         PlaceRequest placeRequest = event.getPlaceRequest();
-        currentKind = placeRequest.getParameter(ParameterTokens.KIND, "");
 
-        updateEntityListPresenter();
+        String kindFromPlaceRequest = placeRequest.getParameter(ParameterTokens.KIND, "");
+        if (!kindFromPlaceRequest.equals(currentKind)) {
+            currentKind = kindFromPlaceRequest;
+            updateEntityListPresenter();
+        }
     }
 
     @Override
