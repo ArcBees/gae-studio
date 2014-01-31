@@ -17,10 +17,8 @@ import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -51,7 +49,7 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
     private final CellTableResource cellTableResource;
 
     private CellTable<KeyValuePair> table;
-    private boolean fullScreen;
+    private boolean isFullscreen;
 
     @Inject
     EntityView(Binder binder,
@@ -93,7 +91,7 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
     }
 
     private void toggleFullScreenMode() {
-        if (fullScreen) {
+        if (isFullscreen) {
             deactivateFullScreenMode();
         } else {
             activateFullScreenMode();
@@ -102,14 +100,14 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
 
     private void deactivateFullScreenMode() {
         getUiHandlers().deactivateFullScreen();
-        fullScreen = false;
+        isFullscreen = false;
         $(fullscreen).addClass(appResources.styles().expand());
         $(fullscreen).removeClass(appResources.styles().collapse());
     }
 
     private void activateFullScreenMode() {
         getUiHandlers().activateFullScreen();
-        fullScreen = true;
+        isFullscreen = true;
         $(fullscreen).removeClass(appResources.styles().expand());
         $(fullscreen).addClass(appResources.styles().collapse());
     }

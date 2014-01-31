@@ -39,7 +39,7 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     private final String toolbarStyleName;
 
     private double kindPanelMargin = 0;
-    private boolean fullScreen = false;
+    private boolean isFullscreen = false;
     private boolean entityDetailsVisible;
 
     @Inject
@@ -66,7 +66,7 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
 
     @Override
     public void showEntityDetails() {
-        fullScreen = false;
+        isFullscreen = false;
         entityDetailsVisible = true;
         setPanelsWidthPercentages(50, 50);
     }
@@ -91,7 +91,7 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
 
     @Override
     public void activateFullScreen() {
-        fullScreen = true;
+        isFullscreen = true;
         setPanelsWidthPercentages(50, 100);
     }
 
@@ -106,14 +106,14 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     private int getRightPanelPercentage() {
         int rightPercentage = 0;
         if (entityDetailsVisible) {
-            rightPercentage = fullScreen ? 100 : 50;
+            rightPercentage = isFullscreen ? 100 : 50;
         }
+
         return rightPercentage;
     }
 
     private void waitForWidgets(final Function callback) {
-        if (!(toolbar.isAttached() && entityTypesSidebar.isAttached()) || toolbar.getWidget() == null
-                || (entityDetailsVisible && $(secondTableStyleName).widget() == null)) {
+        if (widgetsAreNotReady()) {
             $(asWidget()).delay(1, new Function() {
                 @Override
                 public void f() {
@@ -123,6 +123,18 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
         } else {
             callback.f();
         }
+    }
+
+    private boolean widgetsAreNotReady() {
+        return !toolbarAndSidebarAreAttached() || toolbar.getWidget() == null || entityDetailsNotAttached();
+    }
+
+    private boolean entityDetailsNotAttached() {
+        return (entityDetailsVisible && $(secondTableStyleName).widget() == null);
+    }
+
+    private boolean toolbarAndSidebarAreAttached() {
+        return toolbar.isAttached() && entityTypesSidebar.isAttached();
     }
 
     private void setSidebarMarginLeft(double marginLeft) {
