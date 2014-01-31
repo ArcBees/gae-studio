@@ -123,7 +123,6 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         PlaceRequest placeRequest = event.getPlaceRequest();
 
         String kindFromPlaceRequest = placeRequest.getParameter(ParameterTokens.KIND, "");
-
         if (!kindFromPlaceRequest.equals(currentKind)) {
             currentKind = kindFromPlaceRequest;
             updateEntityListPresenter();
