@@ -14,7 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
-import com.arcbees.gaestudio.client.application.visualizer.event.ToolbarToggleEvent2;
+import com.arcbees.gaestudio.client.application.visualizer.event.ToolbarToggleEvent;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -37,7 +37,7 @@ public class ToolbarPresenter extends PresenterWidget<ToolbarPresenter.MyView> i
 
     @Override
     public void onToggle(boolean opened) {
-        ToolbarToggleEvent2.fire(this, opened);
+        ToolbarToggleEvent.fire(this, opened);
     }
 
     public void setButtons(List<ToolbarButton> buttons) {
