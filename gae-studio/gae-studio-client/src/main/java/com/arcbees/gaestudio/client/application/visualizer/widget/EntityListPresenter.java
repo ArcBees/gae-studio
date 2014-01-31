@@ -85,6 +85,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void removeKindSpecificColumns();
 
         void unlockRows();
+
+        void setRowSelected(String idString);
     }
 
     public static final Object SLOT_NAMESPACES = new Object();
@@ -148,7 +150,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     public void loadKind(String kind) {
         this.currentKind = kind;
 
-        setTotalCount();
         getView().setNewKind(currentKind);
     }
 
@@ -188,6 +189,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         String idString = placeRequest.getParameter(ParameterTokens.ID, "");
 
         if (!Strings.isNullOrEmpty(idString)) {
+            getView().setRowSelected(idString);
             RowLockedEvent.fire(this);
         }
     }
@@ -250,6 +252,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         adjustColumns(parsedEntities);
         getView().setData(display.getVisibleRange(), parsedEntities);
+        setTotalCount();
     }
 
     private void adjustColumns(List<ParsedEntity> entities) {

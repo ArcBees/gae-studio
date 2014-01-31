@@ -17,22 +17,24 @@ import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.Range;
+import com.google.gwt.view.client.RowCountChangeEvent;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
@@ -64,6 +66,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final String firstTableRow;
     private final ParsedEntityColumnCreator columnCreator;
 
+    private HandlerRegistration firstLoadHandlerRegistration;
+
     @Inject
     EntityListView(Binder uiBinder,
                    CellTableResource cellTableResource,
@@ -89,8 +93,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         initWidget(uiBinder.createAndBindUi(this));
 
-        pager.setDisplay(entityTable);
         pager.setPageSize(PAGE_SIZE);
+        pager.setDisplay(entityTable);
+        pager.setRangeLimited(false);
 
         columnCreator.initializeTable(entityTable);
     }
@@ -178,6 +183,41 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         getUiHandlers().onRowUnlock();
     }
 
+    @Override
+    public void setRowSelected(final String idString) {
+        if (!entityTable.getLoadingIndicator().isVisible()) {
+            $(entityTable).delay(1, new Function() {
+                @Override
+                public void f() {
+                    doSetRowSelected(idString);
+                }
+            });
+        } else {
+            final RowCountChangeEvent.Handler handler = new RowCountChangeEvent.Handler() {
+                @Override
+                public void onRowCountChange(RowCountChangeEvent event) {
+                    doSetRowSelected(idString);
+                    firstLoadHandlerRegistration.removeHandler();
+                }
+            };
+            firstLoadHandlerRegistration = entityTable.addRowCountChangeHandler(handler);
+        }
+    }
+
+    private void doSetRowSelected(String idString) {
+        for (int i = 0; i < entityTable.getVisibleItems().size(); i++) {
+            ParsedEntity parsedEntity = entityTable.getVisibleItem(i);
+            KeyDto key = parsedEntity.getKey();
+            if (isSameId(idString, key) || idString.equals(key.getName())) {
+                lockRow(entityTable.getRowElement(i));
+            }
+        }
+    }
+
+    private boolean isSameId(String idString, KeyDto key) {
+        return key.getId() != 0 && Long.valueOf(idString).equals(key.getId());
+    }
+
     private void removeLastColumn(CellTable<ParsedEntity> entityTable) {
         int lastColumnIndex = entityTable.getColumnCount() - 1;
 
@@ -235,8 +275,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 if (!$(e).hasClass(lockedRowStyleName)) {
                     unlockRows();
                     lockRow(e);
-                    ParsedEntity parsedEntity = getParsedEntityForRow(e);
-                    getUiHandlers().onEntitySelected(parsedEntity);
                 } else {
                     unlockRows();
                 }
@@ -278,5 +316,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         $(deselect).click(unlock);
 
         getUiHandlers().onRowLock();
+
+        ParsedEntity parsedEntity = getParsedEntityForRow(e);
+        getUiHandlers().onEntitySelected(parsedEntity);
     }
 }
