@@ -46,7 +46,7 @@ public class RestIT {
 
     @Before
     public void setUp() {
-//        clearDatabase();
+        clearDatabase();
     }
 
     public void clearDatabase() {
