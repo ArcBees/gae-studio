@@ -24,7 +24,7 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedE
 import com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.ToolbarToggleEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.ToolbarToggleEvent2;
 import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListPresenter;
 import com.arcbees.gaestudio.client.debug.DebugIds;
@@ -51,7 +51,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler,
         KindPanelToggleEvent.KindPanelToggleHandler, FullScreenEvent.FullScreenEventHandler,
         EntitySelectedEvent.EntitySelectedHandler, EntityPageLoadedEvent.EntityPageLoadedHandler,
-        SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler, ToolbarToggleEvent.ToolbarToggleHandler {
+        SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler, ToolbarToggleEvent2.ToolbarToggleHandler {
     interface MyView extends View {
         void showEntityDetails();
 
@@ -139,7 +139,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     }
 
     @Override
-    public void onToolbarToggle(ToolbarToggleEvent event) {
+    public void onToolbarToggle(ToolbarToggleEvent2 event) {
         getView().updatePanelsWidth();
     }
 
@@ -202,7 +202,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(SetStateFromPlaceRequestEvent.getType(), this);
 
-        addVisibleHandler(ToolbarToggleEvent.getType(), this);
+        addVisibleHandler(ToolbarToggleEvent2.getType(), this);
     }
 
     private void updateEntityListPresenter() {

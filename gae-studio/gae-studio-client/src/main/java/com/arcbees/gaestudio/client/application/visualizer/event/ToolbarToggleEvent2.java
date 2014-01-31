@@ -13,13 +13,13 @@ import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 
-public class ToolbarToggleEvent extends GwtEvent<ToolbarToggleEvent.ToolbarToggleHandler> {
+public class ToolbarToggleEvent2 extends GwtEvent<ToolbarToggleEvent2.ToolbarToggleHandler> {
     public interface ToolbarToggleHandler extends EventHandler {
-        public void onToolbarToggle(ToolbarToggleEvent event);
+        public void onToolbarToggle(ToolbarToggleEvent2 event);
     }
 
     public static void fire(HasHandlers source, boolean open) {
-        source.fireEvent(new ToolbarToggleEvent(open));
+        source.fireEvent(new ToolbarToggleEvent2(open));
     }
 
     public static Type<ToolbarToggleHandler> getType() {
@@ -30,7 +30,7 @@ public class ToolbarToggleEvent extends GwtEvent<ToolbarToggleEvent.ToolbarToggl
 
     private final boolean open;
 
-    private ToolbarToggleEvent(boolean open) {
+    private ToolbarToggleEvent2(boolean open) {
         this.open = open;
     }
 
