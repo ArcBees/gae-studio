@@ -23,7 +23,6 @@ public class AjaxLoader implements IsWidget {
     AjaxLoader(AppResources appResources) {
         this.widget = new Image();
         widget.setResource(appResources.ajaxLoader30px());
-        widget.addStyleName(appResources.styles().loginAjaxLoader());
 
         hide();
     }

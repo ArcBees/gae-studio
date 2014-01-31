@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.client.application.auth;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.ui.AjaxLoader;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.query.client.Function;
@@ -49,6 +50,7 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
 
     @Inject
     AuthView(Binder uiBinder,
+             AppResources appResources,
              LoginFormHelper loginFormHelper,
              AjaxLoader ajaxLoader) {
         this.ajaxLoader = ajaxLoader;
@@ -78,6 +80,7 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
         loginForm.setWidget(loginFormHelper.getLoginFormPanel());
 
         loginFormHelper.getLoginFormPanel().add(ajaxLoader);
+        ajaxLoader.asWidget().addStyleName(appResources.styles().loginAjaxLoader());
     }
 
     @Override
