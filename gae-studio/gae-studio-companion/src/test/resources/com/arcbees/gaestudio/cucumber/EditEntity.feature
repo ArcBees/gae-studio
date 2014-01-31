@@ -3,6 +3,3 @@ Feature: Edit an Entity
     Given I create a Car
     And I modify the Car
     Then the Car should be modified
-
-  Scenario: Create a Car
-    Given I create a Car
