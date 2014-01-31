@@ -12,8 +12,6 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
-import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppConstants;
@@ -21,8 +19,8 @@ import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.BrowserEvents;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.query.client.Function;
@@ -55,15 +53,13 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiField(provided = true)
     CellTable<ParsedEntity> entityTable;
     @UiField
-    AnchorElement deselectEntity;
-    @UiField(provided = true)
-    ToolbarButton refresh;
+    DivElement refresh;
     @UiField
     SimplePanel deleteByKind;
+    @UiField
+    DivElement deselect;
 
-    private final UiFactory uiFactory;
     private final String idStyleName;
-    private final AppConstants myConstants;
     private final AppResources appResources;
     private final String lockedRowStyleName;
     private final String namespaceStyleName;
@@ -83,11 +79,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                    CellTableResource cellTableResource,
                    PagerResources pagerResources,
                    AppResources appResources,
-                   AppConstants myConstants,
-                   UiFactory uiFactory,
                    ParsedEntityColumnCreator columnCreator) {
-        this.myConstants = myConstants;
-        this.uiFactory = uiFactory;
         this.columnCreator = columnCreator;
         this.appResources = appResources;
 
@@ -113,8 +105,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 onEditTableAttachedOrDetached(event.isAttached());
             }
         });
-
-        refresh = createRefreshButton();
 
         initWidget(uiBinder.createAndBindUi(this));
 
@@ -269,7 +259,18 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         $(pagerButtons).click(unlock);
 
-        $(deselectEntity).click(unlock);
+        $(refresh).click(new Function() {
+            @Override
+            public void f() {
+                getUiHandlers().refresh();
+                $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
+                $("." + entityListContainerSelectedStyleName).removeClass(entityListContainerSelectedStyleName);
+                $("." + namespaceStyleName).hide(); //TODO Check if we can remove all those stylename references
+                $("." + entityStyleName).hide();
+                $("." + idStyleName).text("no entity");
+                $("." + backButtonStyleName).hide();
+            }
+        });
     }
 
     private Function unlock = new Function() {
@@ -309,29 +310,23 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     private void lockRow(Element e) {
         $(e).addClass(lockedRowStyleName);
-        $(deselectEntity).show();
+
+        AppResources.Styles styles = appResources.styles();
+        $(deselect).addClass(styles.deselect());
+        $(deselect).removeClass(styles.deselectDisabled());
+        $(deselect).click(unlock);
+
         getUiHandlers().onRowLock();
     }
 
     private void unlockRows() {
         $("." + lockedRowStyleName).removeClass(lockedRowStyleName);
-        $(deselectEntity).hide();
-        getUiHandlers().onRowUnlock();
-    }
 
-    private ToolbarButton createRefreshButton() {
-        return uiFactory.createToolbarButton(myConstants.refresh(), appResources.styles().refresh(),
-                new ToolbarButtonCallback() {
-                    @Override
-                    public void onClicked() {
-                        getUiHandlers().refresh();
-                        $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
-                        $("." + entityListContainerSelectedStyleName).removeClass(entityListContainerSelectedStyleName);
-                        $("." + namespaceStyleName).hide(); //TODO Check if we can remove all those stylename references
-                        $("." + entityStyleName).hide();
-                        $("." + idStyleName).text("no entity");
-                        $("." + backButtonStyleName).hide();
-                    }
-                });
+        AppResources.Styles styles = appResources.styles();
+        $(deselect).removeClass(styles.deselect());
+        $(deselect).addClass(styles.deselectDisabled());
+        $(deselect).unbind(BrowserEvents.CLICK, unlock);
+
+        getUiHandlers().onRowUnlock();
     }
 }

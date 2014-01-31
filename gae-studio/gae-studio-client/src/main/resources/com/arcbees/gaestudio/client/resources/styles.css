@@ -114,8 +114,9 @@ input:focus, textarea:focus, button:focus {
 }
 
 .kindListElement span {
-    padding: 3px 8px;
+    padding: 3px 16px;
     line-height: 26px;
+    font-size: 17px;
 }
 
 .kindListElement:hover, .kindListElementHovered {
@@ -225,13 +226,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .firstTable .lockedRow td {
-    background-color: colorBlue;
-    color: colorLightGrey;
-    text-shadow: 1px 1px 1px rgba(27, 27, 27, 0.55);
-
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-left: 0;
-    border-right: 0;
+    background-color: colorLightGrey;
 }
 
 .firstTable, .secondTable {
@@ -282,14 +277,24 @@ input:focus, textarea:focus, button:focus {
     gwt-image: "back_rl";
 }
 
+@sprite .trashSmall {
+    gwt-image: "trash_small_up";
+    cursor: pointer;
+    margin: 10px 10px 10px 15px;
+}
+
+@sprite .trashSmall:hover {
+    gwt-image: "trash_small_rl";
+}
+
 @sprite .fullscreenButton {
-    gwt-image: "fullScreen";
+    gwt-image: "fullscreen_up";
     cursor: pointer;
     margin: 10px 10px 10px 15px;
 }
 
 @sprite .fullscreenButton:hover {
-    gwt-image: "fullScreen_hover";
+    gwt-image: "fullscreen_rl";
 }
 
 .popup {
@@ -504,7 +509,29 @@ input:focus, textarea:focus, button:focus {
 }
 
 @sprite .refresh {
-    gwt-image: "refresh";
+    gwt-image: "refresh_up";
+    cursor: pointer;
+    display: inline-block;
+}
+
+@sprite .refresh:hover {
+    gwt-image: "refresh_rl";
+}
+
+@sprite .deselect {
+    gwt-image: "deselect_up";
+    cursor: pointer;
+    display: inline-block;
+}
+
+@sprite .deselectDisabled {
+    gwt-image: "deselect_dis";
+    cursor: default;
+    display: inline-block;
+}
+
+@sprite .deselect:hover {
+    gwt-image: "deselect_rl";
 }
 
 @sprite .toolbarButton:hover .delete {

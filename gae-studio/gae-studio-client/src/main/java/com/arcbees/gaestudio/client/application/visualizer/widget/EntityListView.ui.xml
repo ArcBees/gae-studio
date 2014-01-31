@@ -1,33 +1,55 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
-             xmlns:cellview="urn:import:com.google.gwt.user.cellview.client"
-             xmlns:gsui="urn:import:com.arcbees.gaestudio.client.application.ui">
+             xmlns:cellview="urn:import:com.google.gwt.user.cellview.client">
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
     <ui:style>
+        @eval colorLightGreyEB com.arcbees.gaestudio.client.resources.Colors.colorLightGreyEB;
+
         .heading {
             padding-left: 5px;
         }
 
-        .refresh {
-            width: 80px;
+        .deleteByKind {
+            float: right;
+            width: 200px;
         }
 
-        .deleteByKind {
-            float: left;
+        .table {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        .table table {
+            width: 100%;
+        }
+
+        .main {
+            overflow: hidden;
+        }
+
+        .refresh {
+            display: inline-block;
+            margin: 17px 0 0 30px;
+            border-right: 2px solid colorLightGreyEB;
+            padding-right: 6px;
+        }
+
+        .deselect {
+            display: inline-block;
+            margin-left: 2px;
         }
     </ui:style>
-    <g:HTMLPanel ui:field="panel" visible="false">
+    <g:HTMLPanel ui:field="panel" visible="false" styleName="{style.main}">
         <div class="{style.heading} {resources.styles.pager}">
             <cellview:SimplePager ui:field="pager"/>
-            <gsui:ToolbarButton ui:field="refresh" addStyleNames="{style.refresh}"/>
+            <div ui:field="refresh" class="{style.refresh} {resources.styles.refresh}"/>
+            <div ui:field="deselect" class="{style.deselect} {resources.styles.deselectDisabled}"/>
             <g:SimplePanel ui:field="deleteByKind" styleName="{style.deleteByKind}"/>
-            <p class="{resources.styles.isDisplaying}">
-                Displaying entities of the kind <b class="{resources.styles.kindBold}">Kind</b>
-            </p>
-            <a class="{resources.styles.unlockButton}" title="Deselect entity" ui:field="deselectEntity"/>
         </div>
-        <cellview:CellTable ui:field="entityTable" styleName="{resources.styles.firstTable}"
-                            debugId="{debugIds.getEntitiesTables}"/>
+        <div class="{style.table}">
+            <cellview:CellTable ui:field="entityTable" styleName="{resources.styles.firstTable}"
+                                debugId="{debugIds.getEntitiesTables}"/>
+        </div>
     </g:HTMLPanel>
 </ui:UiBinder>

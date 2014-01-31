@@ -15,15 +15,16 @@ import com.arcbees.gaestudio.client.application.widget.dropdown.Dropdown;
 import com.arcbees.gaestudio.client.application.widget.dropdown.DropdownFactory;
 import com.arcbees.gaestudio.client.resources.NamespaceDropdownResources;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
+
+import static com.google.gwt.query.client.GQuery.$;
 
 public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUiHandlers>
         implements NamespacesListPresenter.MyView {
@@ -31,7 +32,7 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
     }
 
     @UiField
-    Button delete;
+    DivElement delete;
     @UiField(provided = true)
     Dropdown<AppIdNamespaceDto> dropdown;
 
@@ -46,6 +47,13 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
         this.dropdown = dropdownFactory.create(appIdNamespaceRenderer, dropdownResources);
 
         initWidget(uiBinder.createAndBindUi(this));
+
+        $(delete).click(new Function() {
+            @Override
+            public void f() {
+                getUiHandlers().deleteAllFromNamespace(dropdown.getValue());
+            }
+        });
     }
 
     @Override
@@ -57,10 +65,5 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
         for (AppIdNamespaceDto namespace : namespaces) {
             dropdown.addValue(namespace);
         }
-    }
-
-    @UiHandler("delete")
-    void onDeleted(ClickEvent event) {
-        getUiHandlers().deleteAllFromNamespace(dropdown.getValue());
     }
 }

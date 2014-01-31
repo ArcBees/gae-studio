@@ -128,6 +128,12 @@ public interface AppResources extends ClientBundle {
         String toggleKindsPanel();
 
         String filterText();
+
+        String trashSmall();
+
+        String deselect();
+
+        String deselectDisabled();
     }
 
     public interface Sprites extends CssResource {
@@ -156,7 +162,15 @@ public interface AppResources extends ClientBundle {
 
     ImageResource delete();
 
-    ImageResource refresh();
+    ImageResource refresh_up();
+
+    ImageResource refresh_rl();
+
+    ImageResource deselect_up();
+
+    ImageResource deselect_rl();
+
+    ImageResource deselect_dis();
 
     ImageResource edit();
 
@@ -168,9 +182,13 @@ public interface AppResources extends ClientBundle {
 
     ImageResource closeToggle();
 
-    ImageResource fullScreen();
+    ImageResource trash_small_up();
 
-    ImageResource fullScreen_hover();
+    ImageResource trash_small_rl();
+
+    ImageResource fullscreen_up();
+
+    ImageResource fullscreen_rl();
 
     ImageResource unlock_rl();
 
