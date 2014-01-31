@@ -15,28 +15,12 @@ input:focus, textarea:focus, button:focus {
     outline: none;
 }
 
-.fleft {
-    float: left;
-}
-
-.fright {
-    float: right;
-}
-
 .clear {
     clear: both;
 }
 
 .list {
     overflow: auto;
-}
-
-.item:hover {
-    background-color: #d3d3d3;
-}
-
-.selected {
-    background-color: colorLightGray;
 }
 
 .toolbar {
@@ -102,11 +86,6 @@ input:focus, textarea:focus, button:focus {
     padding: 0 20px;
 }
 
-.wordWrap {
-    width: 100%;
-    word-wrap: break-word;
-}
-
 .kindHeaderElement {
     position: relative;
 
@@ -114,8 +93,6 @@ input:focus, textarea:focus, button:focus {
     font-size: 15px;
     font-weight: bold;
     padding: 3px 8px;
-    color: colorGrey2B;
-    background: rgb(241, 241, 241);
 
     display: block;
     overflow: hidden;
@@ -125,19 +102,15 @@ input:focus, textarea:focus, button:focus {
 
 .kindListElement {
     width: 100%;
-    border-top: 1px solid rgba(255, 255, 255, 0.5);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.85);
-    background-color: #e3e3e3;
 
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    transition: all .25s ease;
-    -webkit-transition: all .25s ease;
-    -moz-transition: all .25s ease;
-    -o-transition: all .25s ease;
+    transition: background-color .25s ease;
+    -webkit-transition: background-color .25s ease;
+    -moz-transition: background-color .25s ease;
+    -o-transition: background-color .25s ease;
 }
 
 .kindListElement span {
@@ -145,46 +118,16 @@ input:focus, textarea:focus, button:focus {
     line-height: 26px;
 }
 
-.kindListElement:hover {
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-    background-color: #fdfdfd;
+.kindListElement:hover, .kindListElementHovered {
+    background-color: #25aae1;
+    color: #f6f6f6;
 
     cursor: pointer;
 }
 
-.kindListElement:active, .kindListElement.kindListElementHovered {
-    background-color: colorBlue;
-    color: colorLightGrey;
-    text-shadow: 1px 1px 1px rgba(27, 27, 27, 0.55);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-left: none;
-}
-
-.profilerPlaceHolder {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    z-index: 30;
-    border-top: 1px solid colorLightGray;
-    background: #acacac;
-    color: #252525;
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.86);
-    text-align: center;
-    line-height: 375px;
-    font-size: 28px;
-}
-
-.profilerDockTemporary {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    z-index: 20;
-}
-
 .entityTypeSelector {
-    background: #e0e0e0;
+    background: #ececec;
+    color: #2d2d2d;
 
     float: left;
     width: 250px;
@@ -246,10 +189,6 @@ input:focus, textarea:focus, button:focus {
     left: 0%;
     width: 100%;
     margin-left: -1px;
-}
-
-.entityContainer {
-    /* used as selector */
 }
 
 .hiddenOverlay {
@@ -317,7 +256,7 @@ input:focus, textarea:focus, button:focus {
     display: none;
 }
 
-.noOverflow, .entityDetailPanelVisibility, .secondTableLock {
+.entityDetailPanelVisibility {
     overflow: visible;
 }
 
@@ -351,11 +290,6 @@ input:focus, textarea:focus, button:focus {
 
 @sprite .fullscreenButton:hover {
     gwt-image: "fullScreen_hover";
-}
-
-@url whiteTextCursor whiteTextCursorResource;
-.cursorWhite, .cursorWhite:selection {
-    cursor: whiteTextCursor, text;
 }
 
 .popup {
@@ -667,76 +601,14 @@ input:focus, textarea:focus, button:focus {
     cursor: pointer;
 }
 
-.ul {
-    list-style-type: none;
-    position: absolute;
-    background: #ececec;
-    width: 100%;
-    -webkit-padding-start: 0px;
-    margin: 0;
-}
-
-.openedList {
-    background: #f6f6f6;
-
-    -webkit-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
-    -moz-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
-    box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
-
-    z-index: 10000;
-}
-
-@sprite .dropDownArrow {
-    gwt-image: "dropDownArrowUp";
-}
-
-@sprite .dropDownArrow:hover {
-    gwt-image: "dropDownArrowRl";
-    height: 46px;
-}
-
-.dropDownArrow, .dropDownArrow:hover {
-    width: 100%;
-    background-position-x: 95%;
-    background-position-y: 50%;
-}
-
-.ul li {
-    height: 46px;
-    line-height: 46px;
-    font-size: 1.3em;
-    text-transform: uppercase;
-}
-
-.ul li span {
+.filterText {
     color: #9b9b9b;
 
     margin-left: 17px;
 }
 
-.ul li:hover {
-    background-color: #25aae1;
-    cursor: pointer;
-}
-
-.ul li:hover span {
+.filterText:hover {
     color: white;
-}
-
-.ul:focus {
-    outline: none;
-}
-
-.hiddenLi {
-    display: none;
-}
-
-.shownLi {
-    display: list-item;
-}
-
-.selectedLi {
-    /* used as a selector */
 }
 
 .className {

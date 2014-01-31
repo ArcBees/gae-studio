@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -20,6 +20,7 @@ import com.arcbees.gaestudio.client.application.profiler.ProfilerModule;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerModule;
 import com.arcbees.gaestudio.client.application.widget.HeaderModule;
+import com.arcbees.gaestudio.client.application.widget.WidgetModule;
 import com.arcbees.gaestudio.client.application.widget.message.MessagesModule;
 import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.Provides;
@@ -28,6 +29,7 @@ import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 public class ApplicationModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
+        install(new WidgetModule());
         install(new HeaderModule());
         install(new ProfilerModule());
         install(new VisualizerModule());

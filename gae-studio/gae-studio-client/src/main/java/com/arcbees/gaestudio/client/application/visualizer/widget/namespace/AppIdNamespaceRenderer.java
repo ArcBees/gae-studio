@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -9,19 +9,39 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 
+import javax.inject.Inject;
+
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.common.base.Strings;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.text.shared.AbstractRenderer;
 
 public class AppIdNamespaceRenderer extends AbstractRenderer<AppIdNamespaceDto> {
+    interface NamespaceTemplate extends SafeHtmlTemplates {
+        @SafeHtmlTemplates.Template("<span>{0}</span>")
+        SafeHtml namespaceTemplate(String namespace);
+    }
+
+    private final NamespaceTemplate template;
+
+    @Inject
+    AppIdNamespaceRenderer(NamespaceTemplate template) {
+        this.template = template;
+    }
+
     @Override
     public String render(AppIdNamespaceDto object) {
+        String namespace;
+
         if (object == null) {
-            return "All namespaces";
+            namespace = "All namespaces";
         } else if (Strings.isNullOrEmpty(object.getNamespace())) {
-            return "NS: <default>";
+            namespace = "NS: <default>";
         } else {
-            return "NS: " + object.getNamespace();
+            namespace = "NS: " + object.getNamespace();
         }
+
+        return template.namespaceTemplate(namespace).asString();
     }
 }
