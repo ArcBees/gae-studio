@@ -153,6 +153,12 @@ public interface AppResources extends ClientBundle {
         String methodName();
 
         String main();
+
+        String entityPanelTransitions();
+
+        String flipped();
+
+        String toggleKindsPanel();
     }
 
     public interface Sprites extends CssResource {
@@ -193,9 +199,9 @@ public interface AppResources extends ClientBundle {
 
     ImageResource closeToggle();
 
-    ImageResource fullscreen_rl();
+    ImageResource fullScreen();
 
-    ImageResource fullscreen_up();
+    ImageResource fullScreen_hover();
 
     ImageResource unlock_rl();
 

@@ -21,7 +21,6 @@ import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.Element;
@@ -75,8 +74,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final String secondTableStyleName;
     private final String secondTableHiddenStyleName;
     private final String kindStyleName;
-    private final String firstTableStyleName;
-    private final String pagerStyleName;
     private final String backButtonStyleName;
     private final String entityListContainerSelectedStyleName;
     private final ParsedEntityColumnCreator columnCreator;
@@ -101,11 +98,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         namespaceStyleName = appResources.styles().namespaceBold();
         namespaceSpanStyleName = appResources.styles().namespace();
         entityStyleName = appResources.styles().isDisplayingEntity();
-        firstTableStyleName = appResources.styles().firstTable();
-        pagerStyleName = appResources.styles().pager();
         lockedRowStyleName = appResources.styles().lockedRow();
-        pagerButtons = "." + pagerStyleName + " tbody tr td img";
-        firstTableRow = "." + firstTableStyleName + " tbody";
+        pagerButtons = "." + appResources.styles().pager() + " tbody tr td img";
+        firstTableRow = "." + appResources.styles().firstTable() + " tbody";
         secondTableStyleName = appResources.styles().secondTable();
         secondTableHiddenStyleName = appResources.styles().secondTableHidden();
         backButtonStyleName = appResources.styles().backButton();
@@ -195,6 +190,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
+    public void displayEntity() {
+        initRightPanel();
+    }
+
+    @Override
     public void setInSlot(Object slot, IsWidget content) {
         if (EntityListPresenter.SLOT_NAMESPACES == slot) {
             deleteByKind.setWidget(content);
@@ -258,7 +258,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 if (!$(e).hasClass(lockedRowStyleName)) {
                     unlockRows();
                     lockRow(e);
-                    initRightPanel(e);
+                    initRightPanel();
+                    ParsedEntity parsedEntity = getParsedEntityForRow(e);
+                    getUiHandlers().onEntitySelected(parsedEntity);
                 } else {
                     unlockRows();
                 }
@@ -286,15 +288,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         return entityTable.getVisibleItem(relativeIndex);
     }
 
-    private void initRightPanel(Element e) {
+    private void initRightPanel() {
         $("." + secondTableHiddenStyleName).removeClass(secondTableHiddenStyleName);
 
-        ParsedEntity parsedEntity = getParsedEntityForRow(e);
-        getUiHandlers().onEntitySelected(parsedEntity);
-
-        KeyDto parseEntityKey = parsedEntity.getKey();
-        $("." + idStyleName).text("ID " + parseEntityKey.getId());
-        $("." + namespaceStyleName).text(parseEntityKey.getAppIdNamespace().getNamespace());
 
         if ($("." + namespaceStyleName).text().equals(ParsedEntityColumnCreator.IS_UNDEFINED)) {
             $("." + namespaceSpanStyleName).hide();

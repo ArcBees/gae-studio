@@ -230,7 +230,6 @@ input:focus, textarea:focus, button:focus {
     width: 100%;
     position: absolute;
     top: 0;
-    border-left: 1px solid #A2A2A2;
     background: colorLightGreyEB;
 
     transition: left .5s ease;
@@ -298,13 +297,11 @@ input:focus, textarea:focus, button:focus {
 
 .firstTable, .secondTable {
     width: 100%;
-    -webkit-box-shadow: 0 4px 12px -4px colorLightGray;
-    -moz-box-shadow: 0 4px 12px -4px colorLightGray;
-    box-shadow: 0 4px 12px -4px colorLightGray;
 }
 
 .firstTable {
     margin-right: -1px;
+    padding: 0 15px;
     clear: both;
 }
 
@@ -340,7 +337,6 @@ input:focus, textarea:focus, button:focus {
     display: none;
     margin: 10px;
     cursor: pointer;
-    float: left;
 }
 
 @sprite .backButton:hover {
@@ -348,15 +344,13 @@ input:focus, textarea:focus, button:focus {
 }
 
 @sprite .fullscreenButton {
-    gwt-image: "fullscreen_up";
-    display: none;
-    margin: 10px;
+    gwt-image: "fullScreen";
     cursor: pointer;
-    float: left;
+    margin: 10px 10px 10px 15px;
 }
 
 @sprite .fullscreenButton:hover {
-    gwt-image: "fullscreen_rl";
+    gwt-image: "fullScreen_hover";
 }
 
 @url whiteTextCursor whiteTextCursorResource;
@@ -608,8 +602,28 @@ input:focus, textarea:focus, button:focus {
 .profilerToggle {
     float: right;
 
-    margin-right: 6px;
     margin-top: 6px;
+    padding: 4px;
+}
+
+.profilerToggle.flipped {
+    margin-right: 6px;
+}
+
+.flipped {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+}
+
+.toggleKindsPanel {
+    position: absolute;
+    right: 0;
+    top: 13px;
+    padding: 4px;
+}
+
+.toggleKindsPanel.flipped {
+    right: 5px;
 }
 
 @sprite .gwt-SplitLayoutPanel-HDragger, .gwt-SplitLayoutPanel-VDragger {
@@ -739,4 +753,11 @@ input:focus, textarea:focus, button:focus {
     cursor: pointer;
     background-color: #25aae1;
     color: white;
+}
+
+.entityPanelTransitions {
+    transition: width .5s ease;
+    -webkit-transition: width .5s ease;
+    -moz-transition: width .5s ease;
+    -o-transition: width .5s ease;
 }

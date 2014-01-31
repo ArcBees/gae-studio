@@ -11,10 +11,15 @@ package com.arcbees.gaestudio.client.application.event;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HasHandlers;
 
 public class RowLockedEvent extends GwtEvent<RowLockedEvent.RowLockedHandler> {
     public interface RowLockedHandler extends EventHandler {
         void onRowLocked(RowLockedEvent rowLockedEvent);
+    }
+
+    public static void fire(HasHandlers source) {
+        source.fireEvent(new RowLockedEvent());
     }
 
     public static Type<RowLockedHandler> getType() {

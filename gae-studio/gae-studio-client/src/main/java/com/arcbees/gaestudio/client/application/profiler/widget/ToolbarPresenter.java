@@ -14,12 +14,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
+import com.arcbees.gaestudio.client.application.visualizer.event.ToolbarToggleEvent;
+import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
-public class ToolbarPresenter extends PresenterWidget<ToolbarPresenter.MyView> {
-    interface MyView extends View {
+public class ToolbarPresenter extends PresenterWidget<ToolbarPresenter.MyView> implements ToolbarUiHandlers {
+    interface MyView extends View, HasUiHandlers<ToolbarUiHandlers> {
         void setButtons(List<ToolbarButton> buttons);
 
         void setVisible(boolean visible);
@@ -29,6 +32,13 @@ public class ToolbarPresenter extends PresenterWidget<ToolbarPresenter.MyView> {
     ToolbarPresenter(EventBus eventBus,
                      MyView view) {
         super(eventBus, view);
+
+        getView().setUiHandlers(this);
+    }
+
+    @Override
+    public void onToggle(boolean opened) {
+        ToolbarToggleEvent.fire(this, opened);
     }
 
     public void setButtons(List<ToolbarButton> buttons) {

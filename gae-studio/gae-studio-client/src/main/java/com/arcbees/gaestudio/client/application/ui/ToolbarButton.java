@@ -96,11 +96,7 @@ public class ToolbarButton implements AttachEvent.Handler, IsWidget {
     }
 
     public void setEnabled(Boolean enabled) {
-        if (enabled) {
-            button.removeStyleName(resources.styles().toolbarButtonDisabled());
-        } else {
-            button.addStyleName(resources.styles().toolbarButtonDisabled());
-        }
+        $(button).toggleClass(resources.styles().toolbarButtonDisabled(), !enabled);
     }
 
     public void setAddStyleNames(String style) {

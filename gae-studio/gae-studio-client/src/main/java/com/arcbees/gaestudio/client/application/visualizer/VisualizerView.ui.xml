@@ -6,11 +6,6 @@
         .entityPanel {
             width: 0;
             float: right;
-
-            transition: width .5s ease;
-            -webkit-transition: width .5s ease;
-            -moz-transition: width .5s ease;
-            -o-transition: width .5s ease;
         }
 
         .toolbar {
@@ -33,7 +28,7 @@
             <g:SimplePanel ui:field="entityListPanel"
                            addStyleNames="{resources.styles.entityListPanel}"/>
             <g:SimplePanel ui:field="entityDetailsPanel"
-                           addStyleNames="{style.entityPanel}"/>
+                           addStyleNames="{style.entityPanel} {resources.styles.entityPanelTransitions}"/>
         </div>
     </g:HTMLPanel>
 </ui:UiBinder>

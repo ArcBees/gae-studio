@@ -14,13 +14,19 @@ import javax.inject.Inject;
 import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
 import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.client.place.ParameterTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.EntityService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
@@ -46,11 +52,7 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     interface MyView extends View, HasUiHandlers<EntityUiHandlers> {
         void showEntity(EntityDto entityDto);
 
-        void hideFullscreenButton();
-
         void bind();
-
-        void showFullscreenButton();
 
         void hideEntityDetails();
 
@@ -94,25 +96,31 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
 
     @Override
     public void onKindSelected(KindSelectedEvent event) {
-        getView().hideFullscreenButton();
     }
 
     @Override
-    public void prepareFromRequest(PlaceRequest request) {
+    public void prepareFromRequest(final PlaceRequest request) {
         super.prepareFromRequest(request);
+
+        if (!isVisible()) {
+            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                @Override
+                public void execute() {
+                    SetStateFromPlaceRequestEvent.fire(EntityPresenter.this, request);
+                }
+            });
+        }
 
         displayEntityFromPlaceRequest(request);
     }
 
     @Override
     public void onRowLocked(RowLockedEvent rowLockedEvent) {
-        getView().showFullscreenButton();
         getView().showEntityDetails();
     }
 
     @Override
     public void onRowUnlocked(RowUnlockedEvent rowLockedEvent) {
-        getView().hideFullscreenButton();
         getView().hideEntityDetails();
     }
 

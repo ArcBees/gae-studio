@@ -15,16 +15,19 @@ import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.ui.PanelToggle;
 import com.arcbees.gaestudio.client.ui.PanelToggleFactory;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.ViewImpl;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class ToolbarView extends ViewImpl implements ToolbarPresenter.MyView, PanelToggle.ToggleHandler {
+public class ToolbarView extends ViewWithUiHandlers<ToolbarUiHandlers>
+        implements ToolbarPresenter.MyView, PanelToggle.ToggleHandler {
     interface Binder extends UiBinder<Widget, ToolbarView> {
     }
 
@@ -52,11 +55,19 @@ public class ToolbarView extends ViewImpl implements ToolbarPresenter.MyView, Pa
 
     @Override
     public void onToggle() {
-        if (toggle.getDirection().equals(PanelToggle.Direction.LEFT)) {
+        final boolean isOpened = toggle.isOpen();
+        if (isOpened) {
             $(buttons).width(PANEL_WIDTH_CLOSED);
         } else {
             $(buttons).width(PANEL_WIDTH_OPENED);
         }
+
+        $(buttons).delay(275, new Function() {
+            @Override
+            public void f() {
+                onToggleEnd();
+            }
+        });
     }
 
     @Override
@@ -73,5 +84,9 @@ public class ToolbarView extends ViewImpl implements ToolbarPresenter.MyView, Pa
     @Override
     public void setVisible(boolean visible) {
         asWidget().setVisible(visible);
+    }
+
+    private void onToggleEnd() {
+        getUiHandlers().onToggle(toggle.isOpen());
     }
 }

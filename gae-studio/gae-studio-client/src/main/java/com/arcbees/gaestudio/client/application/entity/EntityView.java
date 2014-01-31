@@ -17,7 +17,9 @@ import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.gwt.dom.client.AnchorElement;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -40,15 +42,14 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
     @UiField
     HTMLPanel panelRoot;
     @UiField
-    AnchorElement back;
-    @UiField
-    AnchorElement fullscreen;
+    DivElement fullscreen;
 
     private final KeyValuePairBuilder keyValuePairBuilder;
     private final int pageSize = 15;
     private final CellTableResource cellTableResource;
 
     private CellTable<KeyValuePair> table;
+    private boolean fullScreen;
 
     @Inject
     EntityView(Binder binder,
@@ -73,42 +74,13 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
     }
 
     @Override
-    public void hideFullscreenButton() {
-        $(fullscreen).hide();
-    }
-
-    @Override
     public void bind() {
         $(fullscreen).click(new Function() {
             @Override
             public void f(Element e) {
-                activateFullScreenMode();
+                toggleFullScreenMode();
             }
         });
-
-        $(back).click(new Function() {
-            @Override
-            public void f() {
-                deactivateFullScreenMode();
-            }
-        });
-    }
-
-    private void deactivateFullScreenMode() {
-        getUiHandlers().deactivateFullScreen();
-        showFullscreenButton();
-        $(back).hide();
-    }
-
-    private void activateFullScreenMode() {
-        getUiHandlers().activateFullScreen();
-        hideFullscreenButton();
-        $(back).show();
-    }
-
-    @Override
-    public void showFullscreenButton() {
-        $(fullscreen).show();
     }
 
     @Override
@@ -119,6 +91,24 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
     @Override
     public void showEntityDetails() {
         $(panelRoot).show();
+    }
+
+    private void toggleFullScreenMode() {
+        if (fullScreen) {
+            deactivateFullScreenMode();
+        } else {
+            activateFullScreenMode();
+        }
+    }
+
+    private void deactivateFullScreenMode() {
+        getUiHandlers().deactivateFullScreen();
+        fullScreen = false;
+    }
+
+    private void activateFullScreenMode() {
+        getUiHandlers().activateFullScreen();
+        fullScreen = true;
     }
 
     private void initTable() {
