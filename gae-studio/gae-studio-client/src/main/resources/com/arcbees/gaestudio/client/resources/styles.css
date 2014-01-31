@@ -182,16 +182,6 @@ input:focus, textarea:focus, button:focus {
     -o-transition: left .5s ease, width .5s ease;
 }
 
-.entityListContainerSelected .entityListPanel {
-    left: -50%;
-}
-
-.entityListContainerSelected .entityDetailPanel {
-    left: 0%;
-    width: 100%;
-    margin-left: -1px;
-}
-
 .hiddenOverlay {
     position: relative;
 }
@@ -221,7 +211,7 @@ input:focus, textarea:focus, button:focus {
     margin-right: 5px;
 }
 
-.firstTable, .secondTable, .pager, .secondTableHidden, .unlockButton {
+.firstTable, .secondTable, .pager {
     overflow: visible;
 }
 
@@ -247,34 +237,8 @@ input:focus, textarea:focus, button:focus {
     cursor: pointer;
 }
 
-.secondTableHidden {
-    display: none;
-}
-
 .entityDetailPanelVisibility {
     overflow: visible;
-}
-
-@sprite .unlockButton {
-    gwt-image: "unlock_up";
-    margin: 10px 5px;
-    cursor: pointer;
-    float: left;
-}
-
-@sprite .unlockButton:hover {
-    gwt-image: "unlock_rl";
-}
-
-@sprite .backButton {
-    gwt-image: "back_up";
-    display: none;
-    margin: 10px;
-    cursor: pointer;
-}
-
-@sprite .backButton:hover {
-    gwt-image: "back_rl";
 }
 
 @sprite .trashSmall {
@@ -287,14 +251,22 @@ input:focus, textarea:focus, button:focus {
     gwt-image: "trash_small_rl";
 }
 
-@sprite .fullscreenButton {
-    gwt-image: "fullscreen_up";
+@sprite .expand {
+    gwt-image: "expand_up";
     cursor: pointer;
-    margin: 10px 10px 10px 15px;
 }
 
-@sprite .fullscreenButton:hover {
-    gwt-image: "fullscreen_rl";
+@sprite .expand:hover {
+    gwt-image: "expand_rl";
+}
+
+@sprite .collapse {
+    gwt-image: "collapse_up";
+    cursor: pointer;
+}
+
+@sprite .collapse:hover {
+    gwt-image: "collapse_rl";
 }
 
 .popup {
@@ -346,34 +318,6 @@ input:focus, textarea:focus, button:focus {
     -webkit-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
     -moz-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
     box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
-}
-
-.kindBold, .idBold, .namespaceBold {
-    font-weight: bold;
-}
-
-.isDisplaying {
-    background: #d2d2d2;
-    color: #5d5d5d;
-    line-height: 27px;
-
-    float: left;
-    display: inline;
-    padding: 0 5px;
-    margin: 10px 5px;
-
-    -webkit-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
-    -moz-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
-    box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
-    text-shadow: 1px 0 2px rgba(255, 255, 255, 0.2);
-
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-}
-
-.isDisplayingEntity, .namespace {
-    display: none;
 }
 
 .authForm {
@@ -504,8 +448,12 @@ input:focus, textarea:focus, button:focus {
     gwt-image: "record";
 }
 
-@sprite .edit {
-    gwt-image: "edit";
+@sprite .pencil {
+    gwt-image: "pencil_up";
+}
+
+@sprite .toolbarButton:hover .pencil {
+    gwt-image: "pencil_rl";
 }
 
 @sprite .refresh {
@@ -552,7 +500,8 @@ input:focus, textarea:focus, button:focus {
 .toolbarButton:hover .stop,
 .toolbarButtonDisabled:hover .stop,
 .record,
-.edit {
+.toolbarButton .pencil,
+.toolbarButton:hover .pencil {
     height: 46px;
     width: 46px;
     background-position-x: 50%;

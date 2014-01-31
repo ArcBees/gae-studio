@@ -11,10 +11,15 @@ package com.arcbees.gaestudio.client.application.event;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HasHandlers;
 
 public class RowUnlockedEvent extends GwtEvent<RowUnlockedEvent.RowUnlockedHandler> {
     public interface RowUnlockedHandler extends EventHandler {
         void onRowUnlocked(RowUnlockedEvent rowLockedEvent);
+    }
+
+    public static void fire(HasHandlers source) {
+        source.fireEvent(new RowUnlockedEvent());
     }
 
     public static Type<RowUnlockedHandler> getType() {
@@ -22,6 +27,9 @@ public class RowUnlockedEvent extends GwtEvent<RowUnlockedEvent.RowUnlockedHandl
     }
 
     private static final Type<RowUnlockedHandler> TYPE = new Type<RowUnlockedHandler>();
+
+    private RowUnlockedEvent() {
+    }
 
     @Override
     public Type<RowUnlockedHandler> getAssociatedType() {

@@ -28,6 +28,9 @@ public class RowLockedEvent extends GwtEvent<RowLockedEvent.RowLockedHandler> {
 
     private static final Type<RowLockedHandler> TYPE = new Type<RowLockedHandler>();
 
+    private RowLockedEvent() {
+    }
+
     @Override
     public Type<RowLockedHandler> getAssociatedType() {
         return TYPE;

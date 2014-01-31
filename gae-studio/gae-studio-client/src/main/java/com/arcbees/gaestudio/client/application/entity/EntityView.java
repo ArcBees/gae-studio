@@ -14,6 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.gwt.dom.client.AnchorElement;
@@ -44,6 +45,7 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
     @UiField
     DivElement fullscreen;
 
+    private final AppResources appResources;
     private final KeyValuePairBuilder keyValuePairBuilder;
     private final int pageSize = 15;
     private final CellTableResource cellTableResource;
@@ -53,8 +55,10 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
 
     @Inject
     EntityView(Binder binder,
+               AppResources appResources,
                KeyValuePairBuilder keyValuePairBuilder,
                CellTableResource cellTableResource) {
+        this.appResources = appResources;
         this.keyValuePairBuilder = keyValuePairBuilder;
         this.cellTableResource = cellTableResource;
 
@@ -84,13 +88,8 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
     }
 
     @Override
-    public void hideEntityDetails() {
-        $(panelRoot).hide();
-    }
-
-    @Override
-    public void showEntityDetails() {
-        $(panelRoot).show();
+    public void resetFullScreen() {
+        deactivateFullScreenMode();
     }
 
     private void toggleFullScreenMode() {
@@ -104,11 +103,15 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
     private void deactivateFullScreenMode() {
         getUiHandlers().deactivateFullScreen();
         fullScreen = false;
+        $(fullscreen).addClass(appResources.styles().expand());
+        $(fullscreen).removeClass(appResources.styles().collapse());
     }
 
     private void activateFullScreenMode() {
         getUiHandlers().activateFullScreen();
         fullScreen = true;
+        $(fullscreen).removeClass(appResources.styles().expand());
+        $(fullscreen).addClass(appResources.styles().collapse());
     }
 
     private void initTable() {

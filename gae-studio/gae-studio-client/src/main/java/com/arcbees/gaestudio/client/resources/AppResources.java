@@ -49,17 +49,13 @@ public interface AppResources extends ClientBundle {
 
         String pager();
 
-        String secondTableHidden();
-
         String entityListPanel();
-
-        String entityListContainerSelected();
 
         String entityDetailPanelVisibility();
 
-        String backButton();
+        String expand();
 
-        String fullscreenButton();
+        String collapse();
 
         String entityDetailPanel();
 
@@ -67,21 +63,7 @@ public interface AppResources extends ClientBundle {
 
         String glassPanel();
 
-        String kindBold();
-
-        String idBold();
-
-        String isDisplaying();
-
-        String isDisplayingEntity();
-
-        String namespaceBold();
-
-        String namespace();
-
         String lockedRow();
-
-        String unlockButton();
 
         String embeddedEntityProperties();
 
@@ -105,7 +87,7 @@ public interface AppResources extends ClientBundle {
 
         String refresh();
 
-        String edit();
+        String pencil();
 
         String statementDetails();
 
@@ -172,13 +154,11 @@ public interface AppResources extends ClientBundle {
 
     ImageResource deselect_dis();
 
-    ImageResource edit();
+    ImageResource pencil_up();
+
+    ImageResource pencil_rl();
 
     ImageResource create();
-
-    ImageResource back_rl();
-
-    ImageResource back_up();
 
     ImageResource closeToggle();
 
@@ -186,13 +166,13 @@ public interface AppResources extends ClientBundle {
 
     ImageResource trash_small_rl();
 
-    ImageResource fullscreen_up();
+    ImageResource expand_up();
 
-    ImageResource fullscreen_rl();
+    ImageResource expand_rl();
 
-    ImageResource unlock_rl();
+    ImageResource collapse_up();
 
-    ImageResource unlock_up();
+    ImageResource collapse_rl();
 
     ImageResource splashLogo();
 

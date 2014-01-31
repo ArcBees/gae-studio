@@ -12,21 +12,15 @@ package com.arcbees.gaestudio.client.application.entity;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
-import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
-import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
-import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
-import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
 import com.arcbees.gaestudio.client.place.NameTokens;
-import com.arcbees.gaestudio.client.place.ParameterTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.EntityService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
@@ -47,16 +41,13 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
 public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPresenter.MyProxy>
-        implements EntityUiHandlers, KindSelectedEvent.KindSelectedHandler, RowLockedEvent.RowLockedHandler,
-        RowUnlockedEvent.RowUnlockedHandler {
+        implements EntityUiHandlers, KindSelectedEvent.KindSelectedHandler {
     interface MyView extends View, HasUiHandlers<EntityUiHandlers> {
         void showEntity(EntityDto entityDto);
 
         void bind();
 
-        void hideEntityDetails();
-
-        void showEntityDetails();
+        void resetFullScreen();
     }
 
     @ProxyStandard
@@ -85,6 +76,11 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     }
 
     @Override
+    public void onKindSelected(KindSelectedEvent event) {
+        getView().resetFullScreen();
+    }
+
+    @Override
     public void activateFullScreen() {
         FullScreenEvent.fire(this, true);
     }
@@ -92,10 +88,6 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     @Override
     public void deactivateFullScreen() {
         FullScreenEvent.fire(this, false);
-    }
-
-    @Override
-    public void onKindSelected(KindSelectedEvent event) {
     }
 
     @Override
@@ -115,24 +107,12 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     }
 
     @Override
-    public void onRowLocked(RowLockedEvent rowLockedEvent) {
-        getView().showEntityDetails();
-    }
-
-    @Override
-    public void onRowUnlocked(RowUnlockedEvent rowLockedEvent) {
-        getView().hideEntityDetails();
-    }
-
-    @Override
     protected void onBind() {
         super.onBind();
 
         getView().bind();
 
         addRegisteredHandler(KindSelectedEvent.getType(), this);
-        addRegisteredHandler(RowLockedEvent.getType(), this);
-        addRegisteredHandler(RowUnlockedEvent.getType(), this);
     }
 
     private void displayEntityFromPlaceRequest(PlaceRequest request) {

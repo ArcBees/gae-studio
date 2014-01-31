@@ -7,7 +7,7 @@
         @eval colorLightGreyEB com.arcbees.gaestudio.client.resources.Colors.colorLightGreyEB;
 
         .heading {
-            padding-left: 5px;
+            padding-left: 10px;
         }
 
         .deleteByKind {

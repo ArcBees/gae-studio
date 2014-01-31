@@ -11,11 +11,15 @@
         .root table {
             width: 100%;
         }
+
+        .fullscreen {
+            margin: 17px 15px;
+        }
     </ui:style>
 
     <g:HTMLPanel styleName="{res.styles.entityDetailPanel}" ui:field="panelRoot">
         <div class="{res.styles.entityDetailPanelVisibility}">
-            <div class="{res.styles.fullscreenButton}" title="View in full screen" ui:field="fullscreen"/>
+            <div class="{style.fullscreen} {res.styles.expand}" title="View in full screen" ui:field="fullscreen"/>
             <g:SimplePanel ui:field="root" addStyleNames="{style.root} {res.styles.secondTable} {res.styles.entityPanelTransitions}"/>
         </div>
     </g:HTMLPanel>

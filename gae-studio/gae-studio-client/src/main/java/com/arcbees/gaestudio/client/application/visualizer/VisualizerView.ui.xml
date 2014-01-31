@@ -26,7 +26,7 @@
         <g:SimplePanel ui:field="toolbar" styleName="{style.toolbar}"/>
         <div class="{style.entity}">
             <g:SimplePanel ui:field="entityListPanel"
-                           addStyleNames="{resources.styles.entityListPanel}"/>
+                           addStyleNames="{resources.styles.entityListPanel} {resources.styles.entityPanelTransitions}"/>
             <g:SimplePanel ui:field="entityDetailsPanel"
                            addStyleNames="{style.entityPanel} {resources.styles.entityPanelTransitions}"/>
         </div>

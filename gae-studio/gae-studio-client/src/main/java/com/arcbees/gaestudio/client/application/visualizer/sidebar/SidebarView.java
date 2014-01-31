@@ -62,14 +62,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private final String hiddenOverlayStyleName;
     private final String revealOverlayStyleName;
     private final String revealUnderOverlayStyleName;
-    private final String secondTableStyleName;
-    private final String secondTableHiddenStyleName;
-    private final String entityListContainerSelectedStyleName;
     private final String entityDetailPanelVisibilityStyleName;
-    private final String namespaceStyleName;
-    private final String idStyleName;
-    private final String entityStyleName;
-    private final String backButtonStyleName;
 
     private String currentKind;
 
@@ -86,18 +79,11 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
         initWidget(binder.createAndBindUi(this));
 
-        secondTableStyleName = appResources.styles().secondTable();
-        secondTableHiddenStyleName = appResources.styles().secondTableHidden();
-        entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
         emptyListTypeStyleName = appResources.styles().entityTypeSelectorEmpty();
         hiddenOverlayStyleName = appResources.styles().hiddenOverlay();
         revealOverlayStyleName = appResources.styles().revealOverlay();
         revealUnderOverlayStyleName = appResources.styles().revealUnderOverlay();
-        namespaceStyleName = appResources.styles().namespace();
-        idStyleName = appResources.styles().idBold();
-        entityStyleName = appResources.styles().isDisplayingEntity();
         entityDetailPanelVisibilityStyleName = appResources.styles().entityDetailPanelVisibility();
-        backButtonStyleName = appResources.styles().backButton();
     }
 
     @Override
@@ -162,13 +148,6 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     }
 
     private void onKindSelected(Element e) {
-        $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
-        $("." + entityListContainerSelectedStyleName).removeClass(entityListContainerSelectedStyleName);
-        $("." + namespaceStyleName).hide();
-        $("." + entityStyleName).hide();
-        $("." + idStyleName).text("no entity");
-        $("." + backButtonStyleName).hide();
-
         setActive(e);
 
         currentKind = $("span", e).html();
