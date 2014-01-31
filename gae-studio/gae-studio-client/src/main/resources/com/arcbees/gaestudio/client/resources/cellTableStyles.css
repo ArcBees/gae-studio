@@ -1,17 +1,14 @@
 @eval colorBlue com.arcbees.gaestudio.client.resources.Colors.colorBlue;
+@eval colorLightGray com.arcbees.gaestudio.client.resources.Colors.colorLightGray;
 @eval colorLightGrey com.arcbees.gaestudio.client.resources.Colors.colorLightGrey;
 @eval colorLightGreyEB com.arcbees.gaestudio.client.resources.Colors.colorLightGreyEB;
 @eval colorGrey2B com.arcbees.gaestudio.client.resources.Colors.colorGrey2B;
 
-.cellTableCell {
-    word-break: break-word;
-}
-
 .cellTableEvenRow, .cellTableOddRow {
-    border-top: 1px solid rgba(255, 255, 255, 0.5);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    border: none;
     text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.85);
     background-color: transparent;
+    line-height: 20px;
 
     overflow: hidden;
     text-overflow: ellipsis;
@@ -23,58 +20,37 @@
     -o-transition: all .25s ease;
 }
 
-.cellTableOddRow {
-    background-color: #d9d9d9;
-}
-
-.cellTableEvenRow {
-    background-color: colorLightGreyEB;
-}
-
 .cellTableCell {
-    border-top: 1px solid rgba(255, 255, 255, 0.5);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    border: none;
+    padding: 2px 20px 2px 0;
 
     text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.85);
     text-overflow: ellipsis;
     white-space: nowrap;
+    word-break: break-word;
+    font-size: 15px;
 
     transition: all 0.25s ease;
     -webkit-transition: all 0.25s ease;
     -moz-transition: all 0.25s ease;
     -o-transition: all 0.25s ease;
-
-    border-left: 0;
-    border-right: 0;
 }
 
 .cellTableHoveredRow .cellTableCell {
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-    background-color: rgba(163, 163, 163, 0.64);
 }
 
-.cellTableSelectedRow .cellTableCell {
-    background-color: colorBlue;
-    color: colorLightGrey;
-    text-shadow: 1px 1px 1px rgba(27, 27, 27, 0.55);
-
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-left: 0;
-    border-right: 0;
-}
-
-.cellTableHeader{
-    color: colorGrey2B;
-    font-size: 15px;
+.cellTableHeader {
+    color: colorLightGray;
+    font-size: 12px;
     font-weight: bold;
     line-height: 30px;
+    text-transform: uppercase;
 
-    padding: 3px 8px;
-    background-color: #dcdcdc;
+    padding: 3px 15px 3px 0;
 
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border-bottom: none;
+    border: none;
+    border-top: 1px solid #a2a2a2;
 }

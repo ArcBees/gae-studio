@@ -20,21 +20,16 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
 
-public class PanelToggle implements ClickHandler, IsWidget {
-    public enum Direction {
-        LEFT, RIGHT
-    }
+import static com.google.gwt.query.client.GQuery.$;
 
+public class PanelToggle implements ClickHandler, IsWidget {
     public interface ToggleHandler {
         void onToggle();
     }
 
-    private static final String TRANSFORM = "webkitTransform";
-
     private final ToggleHandler toggleHandler;
     private final Image widget;
-
-    private Direction direction = Direction.LEFT;
+    private final String flipped;
 
     @Inject
     PanelToggle(AppResources appResources,
@@ -46,6 +41,8 @@ public class PanelToggle implements ClickHandler, IsWidget {
         widget.setResource(appResources.closeToggle());
         widget.addStyleName(appResources.styles().panelToggle());
         widget.addClickHandler(this);
+
+        flipped = appResources.styles().flipped();
     }
 
     public void setAddStyleNames(String stylename) {
@@ -63,35 +60,11 @@ public class PanelToggle implements ClickHandler, IsWidget {
         rotateToggle();
     }
 
-    public Direction getDirection() {
-        return direction;
+    public boolean isOpen() {
+        return !$(widget).hasClass(flipped);
     }
 
     private void rotateToggle() {
-        if (isFlipped()) {
-            this.direction = Direction.LEFT;
-            setRotation(0);
-        } else {
-            this.direction = Direction.RIGHT;
-            setRotation(180);
-        }
-    }
-
-    private boolean isFlipped() {
-        return getToggleTransform().equals(buildRotateString(180));
-    }
-
-    private String getToggleTransform() {
-        Style style = widget.getElement().getStyle();
-        return style.getProperty(TRANSFORM);
-    }
-
-    private void setRotation(int rotationInDegrees) {
-        Style style = widget.getElement().getStyle();
-        style.setProperty(TRANSFORM, buildRotateString(rotationInDegrees));
-    }
-
-    private String buildRotateString(int rotationInDegrees) {
-        return "rotateY(" + rotationInDegrees + "deg)";
+        $(widget).toggleClass(flipped);
     }
 }

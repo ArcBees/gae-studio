@@ -84,6 +84,8 @@
             font-size: 1.2em;
 
             display: none;
+
+            z-index: 10000;
         }
 
         .rightContainer ul li {

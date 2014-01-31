@@ -5,14 +5,17 @@
     <ui:style>
         .root {
             position: relative;
+            height: 46px;
         }
 
         .delete {
-            margin-top: 50px;
+            position: absolute;
+            right: 5px;
+            top: 7px;
         }
     </ui:style>
     <g:HTMLPanel styleName="{style.root}">
         <dd:Dropdown ui:field="dropdown"/>
-        <g:Button ui:field="delete" styleName="{style.delete}" text="Delete All"/>
+        <div ui:field="delete" class="{style.delete} {res.styles.trashSmall}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

@@ -49,17 +49,13 @@ public interface AppResources extends ClientBundle {
 
         String pager();
 
-        String secondTableHidden();
-
         String entityListPanel();
-
-        String entityListContainerSelected();
 
         String entityDetailPanelVisibility();
 
-        String backButton();
+        String expand();
 
-        String fullscreenButton();
+        String collapse();
 
         String entityDetailPanel();
 
@@ -67,21 +63,7 @@ public interface AppResources extends ClientBundle {
 
         String glassPanel();
 
-        String kindBold();
-
-        String idBold();
-
-        String isDisplaying();
-
-        String isDisplayingEntity();
-
-        String namespaceBold();
-
-        String namespace();
-
         String lockedRow();
-
-        String unlockButton();
 
         String embeddedEntityProperties();
 
@@ -105,7 +87,7 @@ public interface AppResources extends ClientBundle {
 
         String refresh();
 
-        String edit();
+        String pencil();
 
         String statementDetails();
 
@@ -121,7 +103,19 @@ public interface AppResources extends ClientBundle {
 
         String main();
 
+        String entityPanelTransitions();
+
+        String flipped();
+
+        String toggleKindsPanel();
+
         String filterText();
+
+        String trashSmall();
+
+        String deselect();
+
+        String deselectDisabled();
     }
 
     public interface Sprites extends CssResource {
@@ -150,25 +144,35 @@ public interface AppResources extends ClientBundle {
 
     ImageResource delete();
 
-    ImageResource refresh();
+    ImageResource refresh_up();
 
-    ImageResource edit();
+    ImageResource refresh_rl();
+
+    ImageResource deselect_up();
+
+    ImageResource deselect_rl();
+
+    ImageResource deselect_dis();
+
+    ImageResource pencil_up();
+
+    ImageResource pencil_rl();
 
     ImageResource create();
 
-    ImageResource back_rl();
-
-    ImageResource back_up();
-
     ImageResource closeToggle();
 
-    ImageResource fullscreen_rl();
+    ImageResource trash_small_up();
 
-    ImageResource fullscreen_up();
+    ImageResource trash_small_rl();
 
-    ImageResource unlock_rl();
+    ImageResource expand_up();
 
-    ImageResource unlock_up();
+    ImageResource expand_rl();
+
+    ImageResource collapse_up();
+
+    ImageResource collapse_rl();
 
     ImageResource splashLogo();
 

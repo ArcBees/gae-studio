@@ -12,20 +12,17 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
-import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
-import com.arcbees.gaestudio.client.application.ui.UiFactory;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.BrowserEvents;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -37,6 +34,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.Range;
+import com.google.gwt.view.client.RowCountChangeEvent;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
@@ -56,60 +54,34 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiField(provided = true)
     CellTable<ParsedEntity> entityTable;
     @UiField
-    AnchorElement deselectEntity;
-    @UiField(provided = true)
-    ToolbarButton refresh;
+    DivElement refresh;
     @UiField
     SimplePanel deleteByKind;
+    @UiField
+    DivElement deselect;
 
-    private final UiFactory uiFactory;
-    private final String idStyleName;
-    private final AppConstants myConstants;
     private final AppResources appResources;
     private final String lockedRowStyleName;
-    private final String namespaceStyleName;
-    private final String namespaceSpanStyleName;
     private final String pagerButtons;
     private final String firstTableRow;
-    private final String entityStyleName;
-    private final String secondTableStyleName;
-    private final String secondTableHiddenStyleName;
-    private final String kindStyleName;
-    private final String firstTableStyleName;
-    private final String pagerStyleName;
-    private final String backButtonStyleName;
-    private final String entityListContainerSelectedStyleName;
     private final ParsedEntityColumnCreator columnCreator;
+
+    private HandlerRegistration firstLoadHandlerRegistration;
 
     @Inject
     EntityListView(Binder uiBinder,
                    CellTableResource cellTableResource,
                    PagerResources pagerResources,
                    AppResources appResources,
-                   AppConstants myConstants,
-                   UiFactory uiFactory,
                    ParsedEntityColumnCreator columnCreator) {
-        this.myConstants = myConstants;
-        this.uiFactory = uiFactory;
         this.columnCreator = columnCreator;
         this.appResources = appResources;
 
         pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
 
-        kindStyleName = appResources.styles().kindBold();
-        idStyleName = appResources.styles().idBold();
-        namespaceStyleName = appResources.styles().namespaceBold();
-        namespaceSpanStyleName = appResources.styles().namespace();
-        entityStyleName = appResources.styles().isDisplayingEntity();
-        firstTableStyleName = appResources.styles().firstTable();
-        pagerStyleName = appResources.styles().pager();
         lockedRowStyleName = appResources.styles().lockedRow();
-        pagerButtons = "." + pagerStyleName + " tbody tr td img";
-        firstTableRow = "." + firstTableStyleName + " tbody";
-        secondTableStyleName = appResources.styles().secondTable();
-        secondTableHiddenStyleName = appResources.styles().secondTableHidden();
-        backButtonStyleName = appResources.styles().backButton();
-        entityListContainerSelectedStyleName = appResources.styles().entityListContainerSelected();
+        pagerButtons = "." + appResources.styles().pager() + " tbody tr td img";
+        firstTableRow = "." + appResources.styles().firstTable() + " tbody";
 
         entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
@@ -119,12 +91,10 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             }
         });
 
-        refresh = createRefreshButton();
-
         initWidget(uiBinder.createAndBindUi(this));
 
-        pager.setDisplay(entityTable);
         pager.setPageSize(PAGE_SIZE);
+        pager.setDisplay(entityTable);
 
         columnCreator.initializeTable(entityTable);
     }
@@ -142,7 +112,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @Override
     public void setNewKind(String currentKind) {
         panel.setVisible(true);
-        $("." + kindStyleName).html(currentKind);
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
     }
 
@@ -199,6 +168,60 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         if (EntityListPresenter.SLOT_NAMESPACES == slot) {
             deleteByKind.setWidget(content);
         }
+    }
+
+    @Override
+    public void unlockRows() {
+        $("." + lockedRowStyleName).removeClass(lockedRowStyleName);
+
+        AppResources.Styles styles = appResources.styles();
+        $(deselect).removeClass(styles.deselect());
+        $(deselect).addClass(styles.deselectDisabled());
+        $(deselect).unbind(BrowserEvents.CLICK, unlock);
+
+        getUiHandlers().onRowUnlock();
+    }
+
+    @Override
+    public void setRowSelected(final String idString) {
+        if (!entityTable.getLoadingIndicator().isVisible()) {
+            $(entityTable).delay(1, new Function() {
+                @Override
+                public void f() {
+                    doSetRowSelected(idString);
+                }
+            });
+        } else {
+            final RowCountChangeEvent.Handler handler = new RowCountChangeEvent.Handler() {
+                @Override
+                public void onRowCountChange(RowCountChangeEvent event) {
+                    doSetRowSelected(idString);
+                    firstLoadHandlerRegistration.removeHandler();
+                }
+            };
+            firstLoadHandlerRegistration = entityTable.addRowCountChangeHandler(handler);
+        }
+    }
+
+    private void doSetRowSelected(String idString) {
+        for (int i = 0; i < entityTable.getVisibleItems().size(); i++) {
+            ParsedEntity parsedEntity = entityTable.getVisibleItem(i);
+            KeyDto key = parsedEntity.getKey();
+            if (isSameId(idString, key) || idString.equals(key.getName())) {
+                lockRow(entityTable.getRowElement(i));
+                return;
+            }
+        }
+    }
+
+    private boolean isSameId(String idString, KeyDto key) {
+        try {
+            Long id = Long.valueOf(idString);
+            return key.getId() != 0 && id.equals(key.getId());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
     }
 
     private void removeLastColumn(CellTable<ParsedEntity> entityTable) {
@@ -258,7 +281,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 if (!$(e).hasClass(lockedRowStyleName)) {
                     unlockRows();
                     lockRow(e);
-                    initRightPanel(e);
                 } else {
                     unlockRows();
                 }
@@ -267,14 +289,19 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         $(pagerButtons).click(unlock);
 
-        $(deselectEntity).click(unlock);
+        $(refresh).click(new Function() {
+            @Override
+            public void f() {
+                getUiHandlers().refresh();
+                unlockRows();
+            }
+        });
     }
 
     private Function unlock = new Function() {
         @Override
         public void f() {
             unlockRows();
-            resetRightPanel();
         }
     };
 
@@ -286,56 +313,17 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         return entityTable.getVisibleItem(relativeIndex);
     }
 
-    private void initRightPanel(Element e) {
-        $("." + secondTableHiddenStyleName).removeClass(secondTableHiddenStyleName);
+    private void lockRow(Element e) {
+        $(e).addClass(lockedRowStyleName);
+
+        AppResources.Styles styles = appResources.styles();
+        $(deselect).addClass(styles.deselect());
+        $(deselect).removeClass(styles.deselectDisabled());
+        $(deselect).click(unlock);
+
+        getUiHandlers().onRowLock();
 
         ParsedEntity parsedEntity = getParsedEntityForRow(e);
         getUiHandlers().onEntitySelected(parsedEntity);
-
-        KeyDto parseEntityKey = parsedEntity.getKey();
-        $("." + idStyleName).text("ID " + parseEntityKey.getId());
-        $("." + namespaceStyleName).text(parseEntityKey.getAppIdNamespace().getNamespace());
-
-        if ($("." + namespaceStyleName).text().equals(ParsedEntityColumnCreator.IS_UNDEFINED)) {
-            $("." + namespaceSpanStyleName).hide();
-        } else {
-            $("." + namespaceSpanStyleName).show();
-        }
-        $("." + secondTableStyleName).removeClass(secondTableHiddenStyleName);
-    }
-
-    private void resetRightPanel() {
-        $("." + namespaceSpanStyleName).hide();
-        $("." + entityStyleName).hide();
-        $("." + idStyleName).text("no entity");
-        $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
-    }
-
-    private void lockRow(Element e) {
-        $(e).addClass(lockedRowStyleName);
-        $(deselectEntity).show();
-        getUiHandlers().onRowLock();
-    }
-
-    private void unlockRows() {
-        $("." + lockedRowStyleName).removeClass(lockedRowStyleName);
-        $(deselectEntity).hide();
-        getUiHandlers().onRowUnlock();
-    }
-
-    private ToolbarButton createRefreshButton() {
-        return uiFactory.createToolbarButton(myConstants.refresh(), appResources.styles().refresh(),
-                new ToolbarButtonCallback() {
-                    @Override
-                    public void onClicked() {
-                        getUiHandlers().refresh();
-                        $("." + secondTableStyleName).addClass(secondTableHiddenStyleName);
-                        $("." + entityListContainerSelectedStyleName).removeClass(entityListContainerSelectedStyleName);
-                        $("." + namespaceStyleName).hide(); //TODO Check if we can remove all those stylename references
-                        $("." + entityStyleName).hide();
-                        $("." + idStyleName).text("no entity");
-                        $("." + backButtonStyleName).hide();
-                    }
-                });
     }
 }

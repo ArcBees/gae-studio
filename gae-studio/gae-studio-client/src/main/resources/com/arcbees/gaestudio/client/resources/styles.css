@@ -114,8 +114,9 @@ input:focus, textarea:focus, button:focus {
 }
 
 .kindListElement span {
-    padding: 3px 8px;
+    padding: 3px 16px;
     line-height: 26px;
+    font-size: 17px;
 }
 
 .kindListElement:hover, .kindListElementHovered {
@@ -173,23 +174,12 @@ input:focus, textarea:focus, button:focus {
     width: 100%;
     position: absolute;
     top: 0;
-    border-left: 1px solid #A2A2A2;
     background: colorLightGreyEB;
 
     transition: left .5s ease;
     -webkit-transition: left .5s ease, width .5s ease;
     -moz-transition: left .5s ease, width .5s ease;
     -o-transition: left .5s ease, width .5s ease;
-}
-
-.entityListContainerSelected .entityListPanel {
-    left: -50%;
-}
-
-.entityListContainerSelected .entityDetailPanel {
-    left: 0%;
-    width: 100%;
-    margin-left: -1px;
 }
 
 .hiddenOverlay {
@@ -221,29 +211,21 @@ input:focus, textarea:focus, button:focus {
     margin-right: 5px;
 }
 
-.firstTable, .secondTable, .pager, .secondTableHidden, .unlockButton {
+.firstTable, .secondTable, .pager {
     overflow: visible;
 }
 
 .firstTable .lockedRow td {
-    background-color: colorBlue;
-    color: colorLightGrey;
-    text-shadow: 1px 1px 1px rgba(27, 27, 27, 0.55);
-
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-left: 0;
-    border-right: 0;
+    background-color: colorLightGrey;
 }
 
 .firstTable, .secondTable {
     width: 100%;
-    -webkit-box-shadow: 0 4px 12px -4px colorLightGray;
-    -moz-box-shadow: 0 4px 12px -4px colorLightGray;
-    box-shadow: 0 4px 12px -4px colorLightGray;
 }
 
 .firstTable {
     margin-right: -1px;
+    padding: 0 15px;
     clear: both;
 }
 
@@ -255,47 +237,36 @@ input:focus, textarea:focus, button:focus {
     cursor: pointer;
 }
 
-.secondTableHidden {
-    display: none;
-}
-
 .entityDetailPanelVisibility {
     overflow: visible;
 }
 
-@sprite .unlockButton {
-    gwt-image: "unlock_up";
-    margin: 10px 5px;
+@sprite .trashSmall {
+    gwt-image: "trash_small_up";
     cursor: pointer;
-    float: left;
+    margin: 10px 10px 10px 15px;
 }
 
-@sprite .unlockButton:hover {
-    gwt-image: "unlock_rl";
+@sprite .trashSmall:hover {
+    gwt-image: "trash_small_rl";
 }
 
-@sprite .backButton {
-    gwt-image: "back_up";
-    display: none;
-    margin: 10px;
+@sprite .expand {
+    gwt-image: "expand_up";
     cursor: pointer;
-    float: left;
 }
 
-@sprite .backButton:hover {
-    gwt-image: "back_rl";
+@sprite .expand:hover {
+    gwt-image: "expand_rl";
 }
 
-@sprite .fullscreenButton {
-    gwt-image: "fullscreen_up";
-    display: none;
-    margin: 10px;
+@sprite .collapse {
+    gwt-image: "collapse_up";
     cursor: pointer;
-    float: left;
 }
 
-@sprite .fullscreenButton:hover {
-    gwt-image: "fullscreen_rl";
+@sprite .collapse:hover {
+    gwt-image: "collapse_rl";
 }
 
 .popup {
@@ -347,34 +318,6 @@ input:focus, textarea:focus, button:focus {
     -webkit-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
     -moz-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
     box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
-}
-
-.kindBold, .idBold, .namespaceBold {
-    font-weight: bold;
-}
-
-.isDisplaying {
-    background: #d2d2d2;
-    color: #5d5d5d;
-    line-height: 27px;
-
-    float: left;
-    display: inline;
-    padding: 0 5px;
-    margin: 10px 5px;
-
-    -webkit-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
-    -moz-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
-    box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
-    text-shadow: 1px 0 2px rgba(255, 255, 255, 0.2);
-
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-}
-
-.isDisplayingEntity, .namespace {
-    display: none;
 }
 
 .authForm {
@@ -505,12 +448,38 @@ input:focus, textarea:focus, button:focus {
     gwt-image: "record";
 }
 
-@sprite .edit {
-    gwt-image: "edit";
+@sprite .pencil {
+    gwt-image: "pencil_up";
+}
+
+@sprite .toolbarButton:hover .pencil {
+    gwt-image: "pencil_rl";
 }
 
 @sprite .refresh {
-    gwt-image: "refresh";
+    gwt-image: "refresh_up";
+    cursor: pointer;
+    display: inline-block;
+}
+
+@sprite .refresh:hover {
+    gwt-image: "refresh_rl";
+}
+
+@sprite .deselect {
+    gwt-image: "deselect_up";
+    cursor: pointer;
+    display: inline-block;
+}
+
+@sprite .deselectDisabled {
+    gwt-image: "deselect_dis";
+    cursor: default;
+    display: inline-block;
+}
+
+@sprite .deselect:hover {
+    gwt-image: "deselect_rl";
 }
 
 @sprite .toolbarButton:hover .delete {
@@ -531,7 +500,8 @@ input:focus, textarea:focus, button:focus {
 .toolbarButton:hover .stop,
 .toolbarButtonDisabled:hover .stop,
 .record,
-.edit {
+.toolbarButton .pencil,
+.toolbarButton:hover .pencil {
     height: 46px;
     width: 46px;
     background-position-x: 50%;
@@ -542,8 +512,28 @@ input:focus, textarea:focus, button:focus {
 .profilerToggle {
     float: right;
 
-    margin-right: 6px;
     margin-top: 6px;
+    padding: 4px;
+}
+
+.profilerToggle.flipped {
+    margin-right: 6px;
+}
+
+.flipped {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+}
+
+.toggleKindsPanel {
+    position: absolute;
+    right: 0;
+    top: 13px;
+    padding: 4px;
+}
+
+.toggleKindsPanel.flipped {
+    right: 5px;
 }
 
 @sprite .gwt-SplitLayoutPanel-HDragger, .gwt-SplitLayoutPanel-VDragger {
@@ -611,4 +601,11 @@ input:focus, textarea:focus, button:focus {
     cursor: pointer;
     background-color: #25aae1;
     color: white;
+}
+
+.entityPanelTransitions {
+    transition: width .5s ease;
+    -webkit-transition: width .5s ease;
+    -moz-transition: width .5s ease;
+    -o-transition: width .5s ease;
 }

@@ -52,7 +52,7 @@ public class ParsedEntityColumnCreator {
 
     public void initializeTable(CellTable<ParsedEntity> entityTable) {
         TextColumn<ParsedEntity> idColumn = buildIdColumn();
-        entityTable.addColumn(idColumn, "ID");
+        entityTable.addColumn(idColumn, "ID/NAME");
 
         TextColumn<ParsedEntity> parentKindColumn = buildParentKindColumn();
         entityTable.addColumn(parentKindColumn, "Parent Kind");

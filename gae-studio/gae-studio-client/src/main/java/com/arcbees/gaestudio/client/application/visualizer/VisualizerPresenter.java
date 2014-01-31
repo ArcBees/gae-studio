@@ -23,13 +23,17 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoade
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.ToolbarToggleEvent;
 import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListPresenter;
 import com.arcbees.gaestudio.client.debug.DebugIds;
 import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.client.place.ParameterTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.common.collect.Lists;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -38,15 +42,16 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler,
         RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler,
         KindPanelToggleEvent.KindPanelToggleHandler, FullScreenEvent.FullScreenEventHandler,
-        EntitySelectedEvent.EntitySelectedHandler, EntityPageLoadedEvent.EntityPageLoadedHandler {
+        EntitySelectedEvent.EntitySelectedHandler, EntityPageLoadedEvent.EntityPageLoadedHandler,
+        SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler, ToolbarToggleEvent.ToolbarToggleHandler {
     interface MyView extends View {
         void showEntityDetails();
 
@@ -57,6 +62,8 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         void openKindPanel();
 
         void activateFullScreen();
+
+        void updatePanelsWidth();
     }
 
     @ProxyCodeSplit
@@ -95,7 +102,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
                         AppResources resources,
                         AppConstants appConstants,
                         ToolbarPresenter toolbarPresenter) {
-        super(eventBus, view, proxy);
+        super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
         this.uiFactory = uiFactory;
         this.entityListPresenter = entityListPresenter;
@@ -112,13 +119,31 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     }
 
     @Override
+    public void setStateFromPlaceRequest(SetStateFromPlaceRequestEvent event) {
+        PlaceRequest placeRequest = event.getPlaceRequest();
+
+        String kindFromPlaceRequest = placeRequest.getParameter(ParameterTokens.KIND, "");
+        if (!kindFromPlaceRequest.equals(currentKind)) {
+            currentKind = kindFromPlaceRequest;
+            updateEntityListPresenter();
+        }
+    }
+
+    @Override
     public void onRowLocked(RowLockedEvent rowLockedEvent) {
         getView().showEntityDetails();
+        enableContextualMenu();
     }
 
     @Override
     public void onRowUnlocked(RowUnlockedEvent rowLockedEvent) {
         getView().collapseEntityDetails();
+        disableContextualMenu();
+    }
+
+    @Override
+    public void onToolbarToggle(ToolbarToggleEvent event) {
+        getView().updatePanelsWidth();
     }
 
     @Override
@@ -132,17 +157,11 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
     @Override
     public void onKindSelected(KindSelectedEvent event) {
-        setInSlot(SLOT_ENTITIES, entityListPresenter);
-
         currentKind = event.getKind();
 
-        if (currentKind.isEmpty()) {
-            entityListPresenter.hideList();
-        } else {
-            entityListPresenter.loadKind(currentKind);
-        }
+        getView().collapseEntityDetails();
 
-        toolbarPresenter.setVisible(!currentKind.isEmpty());
+        updateEntityListPresenter();
     }
 
     @Override
@@ -155,8 +174,14 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     }
 
     @Override
-    protected void revealInParent() {
-        RevealContentEvent.fire(this, ApplicationPresenter.SLOT_MAIN, this);
+    public void onEntityPageLoaded(EntityPageLoadedEvent event) {
+        disableContextualMenu();
+    }
+
+    @Override
+    public void onEntitySelected(EntitySelectedEvent event) {
+        currentParsedEntity = event.getParsedEntity();
+        enableContextualMenu();
     }
 
     @Override
@@ -178,21 +203,29 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         addRegisteredHandler(EntitySelectedEvent.getType(), this);
         addRegisteredHandler(EntityPageLoadedEvent.getType(), this);
         addRegisteredHandler(KindSelectedEvent.getType(), this);
+        addRegisteredHandler(SetStateFromPlaceRequestEvent.getType(), this);
+
+        addVisibleHandler(ToolbarToggleEvent.getType(), this);
     }
 
-    @Override
-    public void onEntityPageLoaded(EntityPageLoadedEvent event) {
-        disableContextualMenu();
-    }
+    private void updateEntityListPresenter() {
+        setInSlot(SLOT_ENTITIES, entityListPresenter);
+        if (currentKind.isEmpty()) {
+            entityListPresenter.hideList();
+        } else {
+            entityListPresenter.loadKind(currentKind);
+        }
 
-    @Override
-    public void onEntitySelected(EntitySelectedEvent event) {
-        currentParsedEntity = event.getParsedEntity();
-        enableContextualMenu();
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+            @Override
+            public void execute() {
+                toolbarPresenter.setVisible(!currentKind.isEmpty());
+            }
+        });
     }
 
     private ToolbarButton createEditButton() {
-        return uiFactory.createToolbarButton(myConstants.edit(), resources.styles().edit(),
+        return uiFactory.createToolbarButton(myConstants.edit(), resources.styles().pencil(),
                 new ToolbarButtonCallback() {
                     @Override
                     public void onClicked() {

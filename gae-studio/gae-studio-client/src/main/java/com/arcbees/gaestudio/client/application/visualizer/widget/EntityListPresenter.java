@@ -22,10 +22,13 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEv
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.DeleteFromNamespaceHandler;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
 import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.client.place.ParameterTokens;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
@@ -56,8 +59,10 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
-public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView> implements
-        EntityListUiHandlers, EntitySavedHandler, EntityDeletedHandler, EntitiesDeletedHandler, DeleteFromNamespaceHandler {
+public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
+        implements EntityListUiHandlers, EntitySavedHandler, EntityDeletedHandler, EntitiesDeletedHandler,
+        DeleteFromNamespaceHandler, SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler,
+        KindSelectedEvent.KindSelectedHandler {
     interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
 
@@ -78,6 +83,10 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void redraw();
 
         void removeKindSpecificColumns();
+
+        void unlockRows();
+
+        void setRowSelected(String idString);
     }
 
     public static final Object SLOT_NAMESPACES = new Object();
@@ -112,6 +121,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
+    public void onKindSelected(KindSelectedEvent event) {
+        getView().unlockRows();
+    }
+
+    @Override
     public void onEntitySelected(ParsedEntity parsedEntity) {
         getEventBus().fireEvent(new EntitySelectedEvent(parsedEntity));
 
@@ -120,23 +134,22 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void onRowLock() {
-        getEventBus().fireEvent(new RowLockedEvent());
+        RowLockedEvent.fire(this);
     }
 
     @Override
     public void onRowUnlock() {
-        getEventBus().fireEvent(new RowUnlockedEvent());
+        RowUnlockedEvent.fire(this);
     }
 
     @Override
     public void refresh() {
-        loadKind(this.currentKind);
+        KindSelectedEvent.fire(this, currentKind);
     }
 
     public void loadKind(String kind) {
         this.currentKind = kind;
 
-        setTotalCount();
         getView().setNewKind(currentKind);
     }
 
@@ -171,12 +184,25 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
+    public void setStateFromPlaceRequest(SetStateFromPlaceRequestEvent event) {
+        PlaceRequest placeRequest = event.getPlaceRequest();
+        String idString = placeRequest.getParameter(ParameterTokens.ID, "");
+
+        if (!Strings.isNullOrEmpty(idString)) {
+            getView().setRowSelected(idString);
+            RowLockedEvent.fire(this);
+        }
+    }
+
+    @Override
     protected void onBind() {
         super.onBind();
 
         addRegisteredHandler(EntitySavedEvent.getType(), this);
         addRegisteredHandler(EntityDeletedEvent.getType(), this);
         addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
+        addRegisteredHandler(SetStateFromPlaceRequestEvent.getType(), this);
+        addRegisteredHandler(KindSelectedEvent.getType(), this);
 
         setInSlot(SLOT_NAMESPACES, namespacesListPresenter);
     }
@@ -226,6 +252,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         adjustColumns(parsedEntities);
         getView().setData(display.getVisibleRange(), parsedEntities);
+        setTotalCount();
     }
 
     private void adjustColumns(List<ParsedEntity> entities) {

@@ -14,9 +14,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.google.gwt.dom.client.AnchorElement;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -40,20 +41,22 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
     @UiField
     HTMLPanel panelRoot;
     @UiField
-    AnchorElement back;
-    @UiField
-    AnchorElement fullscreen;
+    DivElement fullscreen;
 
+    private final AppResources appResources;
     private final KeyValuePairBuilder keyValuePairBuilder;
     private final int pageSize = 15;
     private final CellTableResource cellTableResource;
 
     private CellTable<KeyValuePair> table;
+    private boolean isFullscreen;
 
     @Inject
     EntityView(Binder binder,
+               AppResources appResources,
                KeyValuePairBuilder keyValuePairBuilder,
                CellTableResource cellTableResource) {
+        this.appResources = appResources;
         this.keyValuePairBuilder = keyValuePairBuilder;
         this.cellTableResource = cellTableResource;
 
@@ -73,52 +76,40 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
     }
 
     @Override
-    public void hideFullscreenButton() {
-        $(fullscreen).hide();
-    }
-
-    @Override
     public void bind() {
         $(fullscreen).click(new Function() {
             @Override
             public void f(Element e) {
-                activateFullScreenMode();
+                toggleFullScreenMode();
             }
         });
+    }
 
-        $(back).click(new Function() {
-            @Override
-            public void f() {
-                deactivateFullScreenMode();
-            }
-        });
+    @Override
+    public void resetFullScreen() {
+        deactivateFullScreenMode();
+    }
+
+    private void toggleFullScreenMode() {
+        if (isFullscreen) {
+            deactivateFullScreenMode();
+        } else {
+            activateFullScreenMode();
+        }
     }
 
     private void deactivateFullScreenMode() {
         getUiHandlers().deactivateFullScreen();
-        showFullscreenButton();
-        $(back).hide();
+        isFullscreen = false;
+        $(fullscreen).addClass(appResources.styles().expand());
+        $(fullscreen).removeClass(appResources.styles().collapse());
     }
 
     private void activateFullScreenMode() {
         getUiHandlers().activateFullScreen();
-        hideFullscreenButton();
-        $(back).show();
-    }
-
-    @Override
-    public void showFullscreenButton() {
-        $(fullscreen).show();
-    }
-
-    @Override
-    public void hideEntityDetails() {
-        $(panelRoot).hide();
-    }
-
-    @Override
-    public void showEntityDetails() {
-        $(panelRoot).show();
+        isFullscreen = true;
+        $(fullscreen).removeClass(appResources.styles().expand());
+        $(fullscreen).addClass(appResources.styles().collapse());
     }
 
     private void initTable() {

@@ -1,7 +1,7 @@
 .ul {
     list-style-type: none;
     position: absolute;
-    background: #ececec;
+    background: transparent;
     width: 85%;
     -webkit-padding-start: 0px;
     margin: 0;

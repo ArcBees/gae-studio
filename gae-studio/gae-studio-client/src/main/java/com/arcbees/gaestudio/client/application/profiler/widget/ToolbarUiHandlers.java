@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -7,12 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.resources;
+package com.arcbees.gaestudio.client.application.profiler.widget;
 
-import com.arcbees.gquery.tooltip.client.TooltipResources;
+import com.gwtplatform.mvp.client.UiHandlers;
 
-public interface EntityListTooltipResources extends TooltipResources {
-    @Override
-    @Source("com/arcbees/gaestudio/client/resources/EntityListTooltip.css")
-    TooltipStyle css();
+public interface ToolbarUiHandlers extends UiHandlers {
+    void onToggle(boolean opened);
 }

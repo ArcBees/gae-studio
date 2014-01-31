@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.ui;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.ParagraphElement;
 import com.google.gwt.event.logical.shared.AttachEvent;
@@ -41,6 +42,8 @@ public class ToolbarButton implements AttachEvent.Handler, IsWidget {
 
     private final ToolbarButtonCallback callback;
     private final Widget widget;
+
+    private Function buttonClickFunction;
 
     @AssistedInject
     ToolbarButton(Binder binder,
@@ -86,20 +89,23 @@ public class ToolbarButton implements AttachEvent.Handler, IsWidget {
     }
 
     private void register(final ToolbarButtonCallback callback) {
-        $(button).click(new Function() {
+        buttonClickFunction = new Function() {
             @Override
             public boolean f(Event e) {
                 callback.onClicked();
                 return true;
             }
-        });
+        };
+
+        setEnabled(!$(button).hasClass(resources.styles().toolbarButtonDisabled()));
     }
 
     public void setEnabled(Boolean enabled) {
+        $(button).toggleClass(resources.styles().toolbarButtonDisabled(), !enabled);
         if (enabled) {
-            button.removeStyleName(resources.styles().toolbarButtonDisabled());
+            $(button).click(buttonClickFunction);
         } else {
-            button.addStyleName(resources.styles().toolbarButtonDisabled());
+            $(button).unbind(BrowserEvents.CLICK, buttonClickFunction);
         }
     }
 
