@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -11,22 +11,13 @@ package com.arcbees.gaestudio.client.resources;
 
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.DataResource;
 import com.google.gwt.resources.client.ImageResource;
 
 public interface AppResources extends ClientBundle {
     public interface Styles extends CssResource {
-        String fleft();
-
-        String fright();
-
         String clear();
 
         String list();
-
-        String item();
-
-        String selected();
 
         String toolbar();
 
@@ -35,12 +26,6 @@ public interface AppResources extends ClientBundle {
         String toolbarButtonDisabled();
 
         String tabs();
-
-        String wordWrap();
-
-        String profilerPlaceHolder();
-
-        String profilerDockTemporary();
 
         String kindListElement();
 
@@ -64,8 +49,6 @@ public interface AppResources extends ClientBundle {
 
         String pager();
 
-        String noOverflow();
-
         String secondTableHidden();
 
         String entityListPanel();
@@ -80,13 +63,9 @@ public interface AppResources extends ClientBundle {
 
         String entityDetailPanel();
 
-        String entityContainer();
-
         String popup();
 
         String glassPanel();
-
-        String cursorWhite();
 
         String kindBold();
 
@@ -99,8 +78,6 @@ public interface AppResources extends ClientBundle {
         String namespaceBold();
 
         String namespace();
-
-        String secondTableLock();
 
         String lockedRow();
 
@@ -138,21 +115,13 @@ public interface AppResources extends ClientBundle {
 
         String statementImageDn();
 
-        String ul();
-
-        String openedList();
-
-        String hiddenLi();
-
-        String selectedLi();
-
-        String dropDownArrow();
-
         String className();
 
         String methodName();
 
         String main();
+
+        String filterText();
     }
 
     public interface Sprites extends CssResource {
@@ -222,7 +191,4 @@ public interface AppResources extends ClientBundle {
     ImageResource dropDownArrowRl();
 
     ImageResource listGraph();
-
-    @Source("textcursor.png")
-    DataResource whiteTextCursorResource();
 }

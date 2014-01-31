@@ -1,8 +1,18 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:dd='urn:import:com.arcbees.gaestudio.client.application.widget.dropdown'>
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
-    <g:HTMLPanel>
-        <g:ValueListBox ui:field="namespaces"/>
-        <g:Button ui:field="delete" text="Delete All"/>
+    <ui:style>
+        .root {
+            position: relative;
+        }
+
+        .delete {
+            margin-top: 50px;
+        }
+    </ui:style>
+    <g:HTMLPanel styleName="{style.root}">
+        <dd:Dropdown ui:field="dropdown"/>
+        <g:Button ui:field="delete" styleName="{style.delete}" text="Delete All"/>
     </g:HTMLPanel>
 </ui:UiBinder>
