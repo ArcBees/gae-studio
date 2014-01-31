@@ -65,7 +65,7 @@ public class ToolbarView extends ViewWithUiHandlers<ToolbarUiHandlers>
         $(buttons).delay(275, new Function() {
             @Override
             public void f() {
-                onToggleEnd();
+                getUiHandlers().onToggle(toggle.isOpen());
             }
         });
     }
@@ -84,9 +84,5 @@ public class ToolbarView extends ViewWithUiHandlers<ToolbarUiHandlers>
     @Override
     public void setVisible(boolean visible) {
         asWidget().setVisible(visible);
-    }
-
-    private void onToggleEnd() {
-        getUiHandlers().onToggle(toggle.isOpen());
     }
 }
