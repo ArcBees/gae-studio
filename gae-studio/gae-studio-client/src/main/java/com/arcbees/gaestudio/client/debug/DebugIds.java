@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.debug;
 
 public class DebugIds {
+
     public static String getApplicationRoot() {
         return APPLICATION_ROOT;
     }
@@ -48,6 +49,8 @@ public class DebugIds {
     public static final String ENTITIES_TABLES = "entities-table";
     public static final String EDIT = "edit";
     public static final String SAVE = "save";
+    public static final String DELETE = "delete";
+    public static final String DELETE_CONFIRM = "delete-confirm";
     public static final String ENTITY_EDITOR = "entity-editor";
     public static final String MESSAGE = "message";
     public static final String RECORD = "record";

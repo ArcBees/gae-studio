@@ -9,26 +9,21 @@
 
 package com.arcbees.gaestudio.cucumber.stepdefs;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.companion.domain.Car;
-import com.arcbees.gaestudio.companion.domain.Wheel;
 import com.arcbees.gaestudio.cucumber.page.BasePage;
 import com.arcbees.gaestudio.cucumber.page.VisualizerPage;
+import com.arcbees.gaestudio.factories.CarFactory;
 import com.arcbees.gaestudio.server.rest.RestIT;
-import com.google.appengine.api.datastore.GeoPt;
-import com.google.common.collect.Lists;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 
+import javax.inject.Inject;
+
 import static org.junit.Assert.assertEquals;
 
 public class EditEntityStepDefs {
-    private final String make = "Ford";
     private final String newMake = "Mercedes";
     private final String aNewString = "a new string";
     private final float delta = 0.0001f;
@@ -37,19 +32,23 @@ public class EditEntityStepDefs {
     private final VisualizerPage visualizerPage;
 
     private long carId;
+    private CarFactory carFactory;
 
     @Inject
     EditEntityStepDefs(RestIT restIT,
                        BasePage basePage,
-                       VisualizerPage visualizerPage) {
+                       VisualizerPage visualizerPage,
+                       CarFactory carFactory) {
         this.basePage = basePage;
         this.restIT = restIT;
         this.visualizerPage = visualizerPage;
+        this.carFactory = carFactory;
     }
 
     @Given("^I create a Car$")
     public void I_create_a_Car() throws Throwable {
-        carId = createCar();
+        Car car = carFactory.createFakeCar();
+        carId = restIT.createRemoteCar(car);
     }
 
     @And("^I modify the Car$")
@@ -60,26 +59,6 @@ public class EditEntityStepDefs {
     @Then("^the Car should be modified$")
     public void the_Car_should_be_modified() throws Throwable {
         assertCarIsModified(carId);
-    }
-
-    private long createCar() {
-        Car car = buildCar();
-
-        return restIT.createRemoteCar(car);
-    }
-
-    private Car buildCar() {
-        Car car = new Car();
-        car.setMake(make);
-        car.setBooleans(Lists.newArrayList(true, true, true));
-        car.setGeoPts(Lists.newArrayList(new GeoPt(10.5f, 10.5f), new GeoPt(0.0f, 0.0f),
-                new GeoPt(-10.12345f, -10.12345f)));
-        car.setWheels(Lists.newArrayList(new Wheel(5.25), new Wheel(10.0), new Wheel(20.75)));
-
-        List<Object> mixedProperties = Lists.<Object>newArrayList(1, "some string", new GeoPt(10.0f, 10.0f));
-        car.setMixedProperties(mixedProperties);
-
-        return car;
     }
 
     private void editCar() {
@@ -94,6 +73,7 @@ public class EditEntityStepDefs {
     }
 
     private void changeCarData() {
+        String make = "Ford";
         visualizerPage.changeCarString(make, newMake);
         visualizerPage.changeCarBooleans();
         visualizerPage.changeCarGeoPts();

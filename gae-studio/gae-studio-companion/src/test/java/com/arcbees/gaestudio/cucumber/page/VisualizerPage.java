@@ -106,4 +106,14 @@ public class VisualizerPage {
     private List<WebElement> getKindWebElements(WebElement allKinds, String kindToFind) {
         return allKinds.findElements(By.xpath("//span[text()='" + kindToFind + "']"));
     }
+
+    public void clickDeleteButton() {
+        WebElement deleteButton = webDriverHelper.waitUntilElementIsClickable(ByDebugId.id(DebugIds.DELETE));
+        deleteButton.click();
+    }
+
+    public void clickDeleteConfirmButton() {
+        WebElement deleteConfirmButton = webDriverHelper.waitUntilElementIsClickable(ByDebugId.id(DebugIds.DELETE_CONFIRM));
+        deleteConfirmButton.click();
+    }
 }

@@ -55,8 +55,10 @@ public class CarResource {
     @GET
     public Response getCar(@QueryParam(TestEndPoints.PARAM_ID) Long id) {
         Car car = carDao.get(id);
-
-        return Response.ok(car).build();
+        if(car == null)
+            return Response.status(404).build();
+        else
+            return Response.ok(car).build();
     }
 
     @DELETE

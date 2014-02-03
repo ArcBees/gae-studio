@@ -67,6 +67,11 @@ public class RestIT {
         return createRemoteCar(new Car());
     }
 
+    public int getRemoteCarResponseCode(Long id){
+        System.out.println(given().queryParam(TestEndPoints.PARAM_ID, id).get(getAbsoluteUri(TestEndPoints.CAR)).getBody().prettyPrint());
+        return given().queryParam(TestEndPoints.PARAM_ID, id).get(getAbsoluteUri(TestEndPoints.CAR)).statusCode();
+    }
+
     public Response createStringIdEntity(StringIdEntity stringIdEntity) {
         return given().body(stringIdEntity).post(getAbsoluteUri(TestEndPoints.STRING_ID_ENTITY));
     }

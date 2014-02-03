@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.debug.DebugIds;
 import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.google.common.base.Strings;
@@ -48,6 +49,8 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
         this.messages = messages;
 
         initWidget(uiBinder.createAndBindUi(this));
+
+        delete.ensureDebugId(DebugIds.DELETE_CONFIRM);
     }
 
     @Override

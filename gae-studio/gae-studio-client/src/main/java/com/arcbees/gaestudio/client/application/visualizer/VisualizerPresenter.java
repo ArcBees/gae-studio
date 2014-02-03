@@ -241,7 +241,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
                     public void onClicked() {
                         delete();
                     }
-                });
+                }, DebugIds.DELETE);
     }
 
     private void edit() {
