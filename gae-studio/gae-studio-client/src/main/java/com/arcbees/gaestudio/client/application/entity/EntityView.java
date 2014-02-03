@@ -87,7 +87,9 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
 
     @Override
     public void resetFullScreen() {
-        deactivateFullScreenMode();
+        isFullscreen = false;
+        $(fullscreen).addClass(appResources.styles().expand());
+        $(fullscreen).removeClass(appResources.styles().collapse());
     }
 
     private void toggleFullScreenMode() {
@@ -100,9 +102,7 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
 
     private void deactivateFullScreenMode() {
         getUiHandlers().deactivateFullScreen();
-        isFullscreen = false;
-        $(fullscreen).addClass(appResources.styles().expand());
-        $(fullscreen).removeClass(appResources.styles().collapse());
+        resetFullScreen();
     }
 
     private void activateFullScreenMode() {

@@ -64,7 +64,7 @@ public class EntityResource {
         } else {
             Entity entity;
 
-            if (entityId != null) {
+            if (entityId != null && entityId != 0) {
                 entity = entityService.getEntity(entityId, namespace, appId, kind, parentId, parentKind);
             } else {
                 entity = entityService.getEntity(entityName, namespace, appId, kind, parentId, parentKind);
