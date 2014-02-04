@@ -79,6 +79,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     @ContentSlot
     public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_ENTITY_DETAILS = new GwtEvent
             .Type<RevealContentHandler<?>>();
+
     private final EntityListPresenter entityListPresenter;
     private final SidebarPresenter sidebarPresenter;
     private final ToolbarButton edit;
@@ -87,6 +88,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     private final AppResources resources;
     private final AppConstants myConstants;
     private final ToolbarPresenter toolbarPresenter;
+
     private ParsedEntity currentParsedEntity;
     private String currentKind = "";
 
@@ -116,38 +118,6 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         delete.setEnabled(false);
     }
 
-    private ToolbarButton createDeleteButton() {
-        return uiFactory.createToolbarButton(myConstants.delete(), resources.styles().delete(),
-                new ToolbarButtonCallback() {
-                    @Override
-                    public void onClicked() {
-                        delete();
-                    }
-                }, DebugIds.DELETE_ENGAGE);
-    }
-
-    private void delete() {
-        if (currentParsedEntity != null) {
-            DeleteEntityEvent.fire(this, currentParsedEntity);
-        }
-    }
-
-    private ToolbarButton createEditButton() {
-        return uiFactory.createToolbarButton(myConstants.edit(), resources.styles().pencil(),
-                new ToolbarButtonCallback() {
-                    @Override
-                    public void onClicked() {
-                        edit();
-                    }
-                }, DebugIds.EDIT);
-    }
-
-    private void edit() {
-        if (currentParsedEntity != null) {
-            EditEntityEvent.fire(this, currentParsedEntity);
-        }
-    }
-
     @Override
     public void setStateFromPlaceRequest(SetStateFromPlaceRequestEvent event) {
         PlaceRequest placeRequest = event.getPlaceRequest();
@@ -159,43 +129,16 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         }
     }
 
-    private void updateEntityListPresenter() {
-        setInSlot(SLOT_ENTITIES, entityListPresenter);
-
-        if (currentKind.isEmpty()) {
-            entityListPresenter.hideList();
-        } else {
-            entityListPresenter.loadKind(currentKind);
-        }
-
-        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-            @Override
-            public void execute() {
-                toolbarPresenter.setVisible(!currentKind.isEmpty());
-            }
-        });
-    }
-
     @Override
     public void onRowLocked(RowLockedEvent rowLockedEvent) {
         getView().showEntityDetails();
         enableContextualMenu();
     }
 
-    private void enableContextualMenu() {
-        edit.setEnabled(true);
-        delete.setEnabled(true);
-    }
-
     @Override
     public void onRowUnlocked(RowUnlockedEvent rowLockedEvent) {
         getView().collapseEntityDetails();
         disableContextualMenu();
-    }
-
-    private void disableContextualMenu() {
-        edit.setEnabled(false);
-        delete.setEnabled(false);
     }
 
     @Override
@@ -263,5 +206,64 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         addRegisteredHandler(SetStateFromPlaceRequestEvent.getType(), this);
 
         addVisibleHandler(ToolbarToggleEvent.getType(), this);
+    }
+
+    private ToolbarButton createDeleteButton() {
+        return uiFactory.createToolbarButton(myConstants.delete(), resources.styles().delete(),
+                new ToolbarButtonCallback() {
+                    @Override
+                    public void onClicked() {
+                        delete();
+                    }
+                }, DebugIds.DELETE_ENGAGE);
+    }
+
+    private void delete() {
+        if (currentParsedEntity != null) {
+            DeleteEntityEvent.fire(this, currentParsedEntity);
+        }
+    }
+
+    private ToolbarButton createEditButton() {
+        return uiFactory.createToolbarButton(myConstants.edit(), resources.styles().pencil(),
+                new ToolbarButtonCallback() {
+                    @Override
+                    public void onClicked() {
+                        edit();
+                    }
+                }, DebugIds.EDIT);
+    }
+
+    private void edit() {
+        if (currentParsedEntity != null) {
+            EditEntityEvent.fire(this, currentParsedEntity);
+        }
+    }
+
+    private void updateEntityListPresenter() {
+        setInSlot(SLOT_ENTITIES, entityListPresenter);
+
+        if (currentKind.isEmpty()) {
+            entityListPresenter.hideList();
+        } else {
+            entityListPresenter.loadKind(currentKind);
+        }
+
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+            @Override
+            public void execute() {
+                toolbarPresenter.setVisible(!currentKind.isEmpty());
+            }
+        });
+    }
+
+    private void enableContextualMenu() {
+        edit.setEnabled(true);
+        delete.setEnabled(true);
+    }
+
+    private void disableContextualMenu() {
+        edit.setEnabled(false);
+        delete.setEnabled(false);
     }
 }
