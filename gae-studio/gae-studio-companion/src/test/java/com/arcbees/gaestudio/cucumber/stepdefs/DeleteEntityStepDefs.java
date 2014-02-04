@@ -1,6 +1,16 @@
+/**
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
+ * This source code, and resulting software, is the confidential and proprietary information
+ * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
+ * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
+ * shall use it only in accordance with the terms and conditions of any and all license
+ * agreements you have entered into with The Company.
+ */
+
 package com.arcbees.gaestudio.cucumber.stepdefs;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.companion.domain.Car;
@@ -16,10 +26,10 @@ import cucumber.api.java.en.Then;
 import static org.junit.Assert.assertEquals;
 
 public class DeleteEntityStepDefs {
-    private RestIT restIT;
     private final BasePage basePage;
     private final VisualizerPage visualizerPage;
-    private CarFactory carFactory;
+    private final RestIT restIT;
+    private final CarFactory carFactory;
     private Long carId;
 
     @Inject
@@ -44,13 +54,13 @@ public class DeleteEntityStepDefs {
         assertEntityIsDeleted(carId);
     }
 
-    private void assertEntityIsDeleted(long carId) {
-        assertEquals(404, restIT.getRemoteCarResponseCode(carId));
-    }
-
     @And("^I delete the entity")
     public void I_delete_the_entity() throws Throwable {
         deleteEntity();
+    }
+
+    private void assertEntityIsDeleted(long carId) {
+        assertEquals(Response.Status.NOT_FOUND.getStatusCode(), restIT.getRemoteCarResponseCode(carId).getStatusCode());
     }
 
     private void deleteEntity() {
@@ -60,8 +70,7 @@ public class DeleteEntityStepDefs {
         visualizerPage.clickOnEntityinTable();
         visualizerPage.clickDeleteButton();
         visualizerPage.clickDeleteConfirmButton();
+
         basePage.waitForSaveConfirmation("Entity deleted");
     }
-
-
 }

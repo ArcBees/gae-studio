@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -10,6 +10,18 @@
 package com.arcbees.gaestudio.client.debug;
 
 public class DebugIds {
+
+    public static final String APPLICATION_ROOT = "application-root";
+    public static final String VISUALIZER = "visualizer";
+    public static final String KINDS = "kinds";
+    public static final String ENTITIES_TABLES = "entities-table";
+    public static final String EDIT = "edit";
+    public static final String SAVE = "save";
+    public static final String DELETE_ENGAGE = "delete-engage";
+    public static final String DELETE_CONFIRM = "delete-confirm";
+    public static final String ENTITY_EDITOR = "entity-editor";
+    public static final String MESSAGE = "message";
+    public static final String RECORD = "record";
 
     public static String getApplicationRoot() {
         return APPLICATION_ROOT;
@@ -42,16 +54,4 @@ public class DebugIds {
     public static String getEdit() {
         return EDIT;
     }
-
-    public static final String APPLICATION_ROOT = "application-root";
-    public static final String VISUALIZER = "visualizer";
-    public static final String KINDS = "kinds";
-    public static final String ENTITIES_TABLES = "entities-table";
-    public static final String EDIT = "edit";
-    public static final String SAVE = "save";
-    public static final String DELETE = "delete";
-    public static final String DELETE_CONFIRM = "delete-confirm";
-    public static final String ENTITY_EDITOR = "entity-editor";
-    public static final String MESSAGE = "message";
-    public static final String RECORD = "record";
 }

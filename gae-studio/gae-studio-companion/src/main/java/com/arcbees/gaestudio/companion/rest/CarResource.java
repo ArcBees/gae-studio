@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -52,22 +52,6 @@ public class CarResource {
         return Response.ok(car.getId()).build();
     }
 
-    @GET
-    public Response getCar(@QueryParam(TestEndPoints.PARAM_ID) Long id) {
-        Car car = carDao.get(id);
-        if(car == null)
-            return Response.status(404).build();
-        else
-            return Response.ok(car).build();
-    }
-
-    @DELETE
-    public Response deleteCar(Long id) {
-        carDao.delete(id);
-
-        return Response.noContent().build();
-    }
-
     private void convertGeoPts(Car car) {
         List<Object> mixedProperties = car.getMixedProperties();
         for (int i = 0; i < mixedProperties.size(); i++) {
@@ -97,5 +81,19 @@ public class CarResource {
         }
 
         return isGeoPt;
+    }
+
+    @GET
+    public Response getCar(@QueryParam(TestEndPoints.PARAM_ID) Long id) {
+        Car car = carDao.get(id);
+
+        return car != null ? Response.ok(car).build() : Response.status(Response.Status.NOT_FOUND).build();
+    }
+
+    @DELETE
+    public Response deleteCar(Long id) {
+        carDao.delete(id);
+
+        return Response.noContent().build();
     }
 }

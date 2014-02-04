@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -33,9 +33,9 @@ public class RestIT {
     public static final String HOSTNAME;
 
     protected final Gson gson = new GsonBuilder().create();
-    protected String CAR_KIND = "Car";
-    protected String STRING_ENTITY_KIND = "StringIdEntity";
-    protected String AN_ENTITY_NAME = "An entity name";
+    protected static final String CAR_KIND = "Car";
+    protected static final String STRING_ENTITY_KIND = "StringIdEntity";
+    protected static final String AN_ENTITY_NAME = "An entity name";
 
     static {
         RestAssured.defaultParser = Parser.JSON;
@@ -67,9 +67,9 @@ public class RestIT {
         return createRemoteCar(new Car());
     }
 
-    public int getRemoteCarResponseCode(Long id){
+    public Response getRemoteCarResponseCode(Long id){
         System.out.println(given().queryParam(TestEndPoints.PARAM_ID, id).get(getAbsoluteUri(TestEndPoints.CAR)).getBody().prettyPrint());
-        return given().queryParam(TestEndPoints.PARAM_ID, id).get(getAbsoluteUri(TestEndPoints.CAR)).statusCode();
+        return given().queryParam(TestEndPoints.PARAM_ID, id).get(getAbsoluteUri(TestEndPoints.CAR));
     }
 
     public Response createStringIdEntity(StringIdEntity stringIdEntity) {

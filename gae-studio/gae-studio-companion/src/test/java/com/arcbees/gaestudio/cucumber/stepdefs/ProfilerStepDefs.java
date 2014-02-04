@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -13,7 +13,9 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.cucumber.page.BasePage;
+import com.arcbees.gaestudio.cucumber.page.ProfilerPage;
 import com.arcbees.gaestudio.server.rest.RestIT;
+
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
