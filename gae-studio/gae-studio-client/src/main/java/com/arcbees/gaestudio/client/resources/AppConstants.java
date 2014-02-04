@@ -99,4 +99,6 @@ public interface AppConstants extends Constants {
     String wrongPwdOrEmail();
 
     String oops();
+
+    String registerKey();
 }
