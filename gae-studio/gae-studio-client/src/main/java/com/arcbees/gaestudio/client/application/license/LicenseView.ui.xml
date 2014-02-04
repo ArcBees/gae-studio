@@ -1,9 +1,8 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <g:HTMLPanel>
-        <h4 ui:field="message">Your version is expired.</h4>
+        <h4 ui:field="message"/>
         <g:HTMLPanel ui:field="keyEntrySection">
-            <h4>Enter a valid key</h4>
             <g:TextBox ui:field="key"/>
             <g:Button ui:field="register">Register</g:Button>
         </g:HTMLPanel>
