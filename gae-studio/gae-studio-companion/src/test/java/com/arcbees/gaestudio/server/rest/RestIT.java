@@ -31,8 +31,6 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class RestIT {
     public static final String HOSTNAME;
-
-    protected final Gson gson = new GsonBuilder().create();
     protected static final String CAR_KIND = "Car";
     protected static final String STRING_ENTITY_KIND = "StringIdEntity";
     protected static final String AN_ENTITY_NAME = "An entity name";
@@ -44,6 +42,8 @@ public class RestIT {
         HOSTNAME = "http://localhost:8888/";
     }
 
+    protected final Gson gson = new GsonBuilder().create();
+
     @Before
     public void setUp() {
         clearDatabase();
@@ -53,8 +53,8 @@ public class RestIT {
         get(getAbsoluteUri(TestEndPoints.CLEAR));
     }
 
-    public Long createRemoteCar(Car car) {
-        return given().body(car).post(getAbsoluteUri(TestEndPoints.CAR)).as(Long.class);
+    protected String getAbsoluteUri(String relativeLocation) {
+        return HOSTNAME + TestEndPoints.ROOT + relativeLocation;
     }
 
     public Car getRemoteCar(Long id) {
@@ -67,13 +67,12 @@ public class RestIT {
         return createRemoteCar(new Car());
     }
 
-    public Response getRemoteCarResponseCode(Long id){
-        System.out.println(given().queryParam(TestEndPoints.PARAM_ID, id).get(getAbsoluteUri(TestEndPoints.CAR)).getBody().prettyPrint());
-        return given().queryParam(TestEndPoints.PARAM_ID, id).get(getAbsoluteUri(TestEndPoints.CAR));
+    public Long createRemoteCar(Car car) {
+        return given().body(car).post(getAbsoluteUri(TestEndPoints.CAR)).as(Long.class);
     }
 
-    public Response createStringIdEntity(StringIdEntity stringIdEntity) {
-        return given().body(stringIdEntity).post(getAbsoluteUri(TestEndPoints.STRING_ID_ENTITY));
+    public Response getRemoteCarResponseCode(Long id) {
+        return given().queryParam(TestEndPoints.PARAM_ID, id).get(getAbsoluteUri(TestEndPoints.CAR));
     }
 
     public Response createStringIdEntity(String name) {
@@ -84,8 +83,8 @@ public class RestIT {
         return createStringIdEntity(stringIdEntity);
     }
 
-    protected String getAbsoluteUri(String relativeLocation) {
-        return HOSTNAME + TestEndPoints.ROOT + relativeLocation;
+    public Response createStringIdEntity(StringIdEntity stringIdEntity) {
+        return given().body(stringIdEntity).post(getAbsoluteUri(TestEndPoints.STRING_ID_ENTITY));
     }
 
     protected Set<String> getRemoteKindsResponse() {
