@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -87,7 +87,9 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
 
     @Override
     public void resetFullScreen() {
-        deactivateFullScreenMode();
+        isFullscreen = false;
+        $(fullscreen).addClass(appResources.styles().expand());
+        $(fullscreen).removeClass(appResources.styles().collapse());
     }
 
     private void toggleFullScreenMode() {
@@ -100,9 +102,7 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
 
     private void deactivateFullScreenMode() {
         getUiHandlers().deactivateFullScreen();
-        isFullscreen = false;
-        $(fullscreen).addClass(appResources.styles().expand());
-        $(fullscreen).removeClass(appResources.styles().collapse());
+        resetFullScreen();
     }
 
     private void activateFullScreenMode() {

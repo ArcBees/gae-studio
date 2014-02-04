@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -15,7 +15,6 @@ import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.rest.LicenseRegistration;
 import com.arcbees.gaestudio.client.rest.LicenseService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
@@ -55,7 +54,6 @@ public class LicensePresenter
     private final CurrentUser currentUser;
     private final PlaceManager placeManager;
     private final AppConstants appConstants;
-    private final AppMessages appMessages;
 
     @Inject
     LicensePresenter(EventBus eventBus,
@@ -65,8 +63,7 @@ public class LicensePresenter
                      LicenseService licenseService,
                      CurrentUser currentUser,
                      PlaceManager placeManager,
-                     AppConstants appConstants,
-                     AppMessages appMessages) {
+                     AppConstants appConstants) {
         super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
         this.restDispatch = restDispatch;
@@ -74,7 +71,6 @@ public class LicensePresenter
         this.currentUser = currentUser;
         this.placeManager = placeManager;
         this.appConstants = appConstants;
-        this.appMessages = appMessages;
 
         getView().setUiHandlers(this);
     }
@@ -138,12 +134,12 @@ public class LicensePresenter
         if (statusCode == HttpStatusCodes.STATUS_CODE_OK) {
             displayValidLicenseMessage();
         } else if (statusCode == HttpStatusCodes.STATUS_CODE_FORBIDDEN) {
-            displayInvalidLicenseMessage(response.getText());
+            displayRegisterLicenseMessage();
         }
     }
 
-    private void displayInvalidLicenseMessage(String error) {
-        getView().showMessage(appMessages.invalidKey(error));
+    private void displayRegisterLicenseMessage() {
+        getView().showMessage(appConstants.registerKey());
         getView().setKeyEntrySectionVisible(true);
     }
 

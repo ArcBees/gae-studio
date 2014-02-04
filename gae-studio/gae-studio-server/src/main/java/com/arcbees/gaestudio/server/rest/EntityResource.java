@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -64,7 +64,7 @@ public class EntityResource {
         } else {
             Entity entity;
 
-            if (entityId != null) {
+            if (entityId != null && entityId != 0) {
                 entity = entityService.getEntity(entityId, namespace, appId, kind, parentId, parentKind);
             } else {
                 entity = entityService.getEntity(entityName, namespace, appId, kind, parentId, parentKind);
