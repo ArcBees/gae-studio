@@ -45,10 +45,10 @@ public class LicensePresenterTest {
     LicensePresenter presenter;
 
     @Test
-    public void onReaveal_licenseCheckReturns403_printsMessageInView(LicensePresenter.MyView view,
-                                                                     RestDispatch dispatch,
-                                                                     CurrentUser currentUser,
-                                                                     AppConstants constants) {
+    public void onReveal_licenseCheckReturns403_printsMessageInView(LicensePresenter.MyView view,
+                                                                    RestDispatch dispatch,
+                                                                    CurrentUser currentUser,
+                                                                    AppConstants constants) {
         //given
         makeDispatcherReturn(dispatch, HttpStatusCodes.STATUS_CODE_FORBIDDEN);
         when(currentUser.getUser()).thenReturn(mock(User.class));
