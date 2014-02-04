@@ -52,6 +52,25 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         KindPanelToggleEvent.KindPanelToggleHandler, FullScreenEvent.FullScreenEventHandler,
         EntitySelectedEvent.EntitySelectedHandler, EntityPageLoadedEvent.EntityPageLoadedHandler,
         SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler, ToolbarToggleEvent.ToolbarToggleHandler {
+    interface MyView extends View {
+        void showEntityDetails();
+
+        void collapseEntityDetails();
+
+        void closeKindPanel();
+
+        void openKindPanel();
+
+        void activateFullScreen();
+
+        void updatePanelsWidth();
+    }
+
+    @ProxyCodeSplit
+    @NameToken(NameTokens.visualizer)
+    interface MyProxy extends ProxyPlace<VisualizerPresenter> {
+    }
+
     @ContentSlot
     public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_ENTITIES = new GwtEvent
             .Type<RevealContentHandler<?>>();
@@ -97,22 +116,6 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         delete.setEnabled(false);
     }
 
-    private ToolbarButton createEditButton() {
-        return uiFactory.createToolbarButton(myConstants.edit(), resources.styles().pencil(),
-                new ToolbarButtonCallback() {
-                    @Override
-                    public void onClicked() {
-                        edit();
-                    }
-                }, DebugIds.EDIT);
-    }
-
-    private void edit() {
-        if (currentParsedEntity != null) {
-            EditEntityEvent.fire(this, currentParsedEntity);
-        }
-    }
-
     private ToolbarButton createDeleteButton() {
         return uiFactory.createToolbarButton(myConstants.delete(), resources.styles().delete(),
                 new ToolbarButtonCallback() {
@@ -129,6 +132,22 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         }
     }
 
+    private ToolbarButton createEditButton() {
+        return uiFactory.createToolbarButton(myConstants.edit(), resources.styles().pencil(),
+                new ToolbarButtonCallback() {
+                    @Override
+                    public void onClicked() {
+                        edit();
+                    }
+                }, DebugIds.EDIT);
+    }
+
+    private void edit() {
+        if (currentParsedEntity != null) {
+            EditEntityEvent.fire(this, currentParsedEntity);
+        }
+    }
+
     @Override
     public void setStateFromPlaceRequest(SetStateFromPlaceRequestEvent event) {
         PlaceRequest placeRequest = event.getPlaceRequest();
@@ -142,6 +161,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
     private void updateEntityListPresenter() {
         setInSlot(SLOT_ENTITIES, entityListPresenter);
+
         if (currentKind.isEmpty()) {
             entityListPresenter.hideList();
         } else {
@@ -243,24 +263,5 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         addRegisteredHandler(SetStateFromPlaceRequestEvent.getType(), this);
 
         addVisibleHandler(ToolbarToggleEvent.getType(), this);
-    }
-
-    interface MyView extends View {
-        void showEntityDetails();
-
-        void collapseEntityDetails();
-
-        void closeKindPanel();
-
-        void openKindPanel();
-
-        void activateFullScreen();
-
-        void updatePanelsWidth();
-    }
-
-    @ProxyCodeSplit
-    @NameToken(NameTokens.visualizer)
-    interface MyProxy extends ProxyPlace<VisualizerPresenter> {
     }
 }

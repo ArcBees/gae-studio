@@ -10,7 +10,6 @@
 package com.arcbees.gaestudio.client.debug;
 
 public class DebugIds {
-
     public static final String APPLICATION_ROOT = "application-root";
     public static final String VISUALIZER = "visualizer";
     public static final String KINDS = "kinds";
