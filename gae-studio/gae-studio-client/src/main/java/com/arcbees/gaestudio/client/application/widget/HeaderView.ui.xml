@@ -102,7 +102,7 @@
             <g:Image resource="{resources.logo}"/>
         </a>
         <div class="{style.rightContainer}">
-            <div ui:field="logout" class="{resources.styles.power}"/>
+            <g:Anchor ui:field="logout" styleName="{resources.styles.power}"/>
             <div class="{style.cogplay}" ui:field="cog">
                 <g:Image resource="{resources.cogplay}"/>
                 <ul ui:field="themes">

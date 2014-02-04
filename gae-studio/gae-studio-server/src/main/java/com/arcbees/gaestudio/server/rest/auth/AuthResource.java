@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.server.rest.auth;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -75,7 +76,7 @@ public class AuthResource {
         return Response.ok(authToken).build();
     }
 
-    @POST
+    @DELETE
     @Path(EndPoints.LOGOUT)
     public Response logout() {
         authService.logout();
