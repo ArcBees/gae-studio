@@ -53,10 +53,6 @@ public class RestIT {
         get(getAbsoluteUri(TestEndPoints.CLEAR));
     }
 
-    protected String getAbsoluteUri(String relativeLocation) {
-        return HOSTNAME + TestEndPoints.ROOT + relativeLocation;
-    }
-
     public Car getRemoteCar(Long id) {
         Response response = given().queryParam(TestEndPoints.PARAM_ID, id).get(getAbsoluteUri(TestEndPoints.CAR));
 
@@ -85,6 +81,10 @@ public class RestIT {
 
     public Response createStringIdEntity(StringIdEntity stringIdEntity) {
         return given().body(stringIdEntity).post(getAbsoluteUri(TestEndPoints.STRING_ID_ENTITY));
+    }
+
+    protected String getAbsoluteUri(String relativeLocation) {
+        return HOSTNAME + TestEndPoints.ROOT + relativeLocation;
     }
 
     protected Set<String> getRemoteKindsResponse() {

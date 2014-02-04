@@ -52,6 +52,20 @@ public class CarResource {
         return Response.ok(car.getId()).build();
     }
 
+    @GET
+    public Response getCar(@QueryParam(TestEndPoints.PARAM_ID) Long id) {
+        Car car = carDao.get(id);
+
+        return car != null ? Response.ok(car).build() : Response.status(Response.Status.NOT_FOUND).build();
+    }
+
+    @DELETE
+    public Response deleteCar(Long id) {
+        carDao.delete(id);
+
+        return Response.noContent().build();
+    }
+
     private void convertGeoPts(Car car) {
         List<Object> mixedProperties = car.getMixedProperties();
         for (int i = 0; i < mixedProperties.size(); i++) {
@@ -81,19 +95,5 @@ public class CarResource {
         }
 
         return isGeoPt;
-    }
-
-    @GET
-    public Response getCar(@QueryParam(TestEndPoints.PARAM_ID) Long id) {
-        Car car = carDao.get(id);
-
-        return car != null ? Response.ok(car).build() : Response.status(Response.Status.NOT_FOUND).build();
-    }
-
-    @DELETE
-    public Response deleteCar(Long id) {
-        carDao.delete(id);
-
-        return Response.noContent().build();
     }
 }

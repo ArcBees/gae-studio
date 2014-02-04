@@ -103,10 +103,6 @@ public class VisualizerPage {
         webDriverHelper.typeInTextBox(textbox, aNewString);
     }
 
-    private List<WebElement> getKindWebElements(WebElement allKinds, String kindToFind) {
-        return allKinds.findElements(By.xpath("//span[text()='" + kindToFind + "']"));
-    }
-
     public void clickDeleteButton() {
         WebElement deleteButton = webDriverHelper.waitUntilElementIsClickable(ByDebugId.id(DebugIds.DELETE_ENGAGE));
         deleteButton.click();
@@ -115,5 +111,9 @@ public class VisualizerPage {
     public void clickDeleteConfirmButton() {
         WebElement deleteConfirmButton = webDriverHelper.waitUntilElementIsClickable(ByDebugId.id(DebugIds.DELETE_CONFIRM));
         deleteConfirmButton.click();
+    }
+
+    private List<WebElement> getKindWebElements(WebElement allKinds, String kindToFind) {
+        return allKinds.findElements(By.xpath("//span[text()='" + kindToFind + "']"));
     }
 }
