@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 by ArcBees Inc., All rights reserved.
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
  * This source code, and resulting software, is the confidential and proprietary information
  * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
  * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
@@ -14,7 +14,7 @@ import javax.inject.Singleton;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import com.arcbees.gaestudio.cucumber.setupteardown.CucumberTestSetupTeardown;
+import com.arcbees.gaestudio.cucumber.stepdefs.setupteardown.CucumberTestSetupTeardown;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 
