@@ -44,6 +44,10 @@ public interface AuthService extends RestService {
     RestAction<Token> login(@FormParam(UrlParameters.EMAIL) String email,
                             @FormParam(UrlParameters.PASSWORD) String password);
 
+    @POST
+    @Path(EndPoints.LOGOUT)
+    RestAction<Void> logout();
+
     @GET
     @Path(EndPoints.LOGIN)
     RestAction<User> checkLogin();

@@ -27,4 +27,5 @@ public class EndPoints {
     public static final String CHECK = "check/";
     public static final String ARCBEES_LICENSE_SERVICE = "https://arcbees-license-service.appspot.com/key/";
     public static final String TOKEN = "token/";
+    public static final String LOGOUT = "logout/";
 }

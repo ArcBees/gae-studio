@@ -31,4 +31,8 @@ public class UnsecureAuthService implements AuthService{
     public Token login(String email, String password) {
         return null;
     }
+
+    @Override
+    public void logout() {
+    }
 }

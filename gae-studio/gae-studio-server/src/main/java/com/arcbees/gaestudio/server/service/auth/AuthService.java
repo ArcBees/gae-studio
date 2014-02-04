@@ -20,4 +20,6 @@ public interface AuthService {
     User checkLogin();
 
     Token login(String email, String password);
+
+    void logout();
 }

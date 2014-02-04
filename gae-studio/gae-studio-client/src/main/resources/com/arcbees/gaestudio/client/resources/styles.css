@@ -609,3 +609,16 @@ input:focus, textarea:focus, button:focus {
     -moz-transition: width .5s ease;
     -o-transition: width .5s ease;
 }
+
+@sprite .power {
+    gwt-image: "power";
+
+    float: right;
+    background-position-y: 40%;
+    height: 100%;
+    margin: 0 10px;
+}
+
+.power:hover {
+    cursor: pointer;
+}

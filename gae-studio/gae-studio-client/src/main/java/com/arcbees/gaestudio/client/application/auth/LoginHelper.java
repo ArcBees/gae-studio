@@ -9,51 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.auth;
 
-import javax.inject.Inject;
-
-import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
-import com.arcbees.gaestudio.client.application.widget.message.Message;
-import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
-import com.arcbees.gaestudio.client.place.NameTokens;
-import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.arcbees.gaestudio.client.util.CurrentUser;
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.HasHandlers;
-import com.google.gwt.user.client.Window;
-import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.mvp.client.proxy.PlaceManager;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-
-public class LoginHelper implements HasHandlers {
-    private final EventBus eventBus;
-    private final CurrentUser currentUser;
-    private final PlaceManager placeManager;
-    private final AppConstants appConstants;
-
-    @Inject
-    LoginHelper(EventBus eventBus,
-                CurrentUser currentUser,
-                PlaceManager placeManager,
-                AppConstants appConstants) {
-        this.eventBus = eventBus;
-        this.currentUser = currentUser;
-        this.placeManager = placeManager;
-        this.appConstants = appConstants;
-    }
-
-    @Override
-    public void fireEvent(GwtEvent<?> event) {
-        eventBus.fireEventFromSource(event, this);
-    }
-
-    public void reloadApp() {
-        DisplayMessageEvent.fire(this, new Message(appConstants.loggedInSuccessfully(), MessageStyle.SUCCESS));
-
-        currentUser.setLoggedIn(true);
-
-        PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.visualizer).build();
-        placeManager.revealPlace(placeRequest);
-
-        Window.Location.reload();
-    }
+public interface LoginHelper {
+    void login();
 }

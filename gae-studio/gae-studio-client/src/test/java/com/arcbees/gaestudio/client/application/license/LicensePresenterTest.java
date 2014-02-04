@@ -64,7 +64,7 @@ public class LicensePresenterTest {
 
     private void makeDispatcherReturn(RestDispatch dispatch, int statuscode) {
         Response response = buildResponse(statuscode);
-        AsyncMockStubber.callWithResponse(response).when(dispatch).execute(Matchers.<RestAction>any(),
+        AsyncMockStubber.callResponseWith(response).when(dispatch).execute(Matchers.<RestAction>any(),
                 Matchers.<AsyncCallback>any());
     }
 

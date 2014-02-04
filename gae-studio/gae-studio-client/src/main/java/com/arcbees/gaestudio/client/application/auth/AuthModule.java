@@ -21,5 +21,7 @@ public class AuthModule extends AbstractPresenterModule {
 
         bindPresenter(AuthPresenter.class, AuthPresenter.MyView.class, AuthView.class,
                 AuthPresenter.MyProxy.class);
+
+        bind(LoginHelper.class).to(LoginHelperImpl.class);
     }
 }

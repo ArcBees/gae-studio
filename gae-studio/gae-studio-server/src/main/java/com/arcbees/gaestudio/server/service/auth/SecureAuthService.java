@@ -75,6 +75,13 @@ public class SecureAuthService implements AuthService {
         return token;
     }
 
+    @Override
+    public void logout() {
+        String authToken = getSavedAuthToken();
+
+        oAuthClient.logout(authToken);
+    }
+
     private String getSavedAuthToken() {
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
 

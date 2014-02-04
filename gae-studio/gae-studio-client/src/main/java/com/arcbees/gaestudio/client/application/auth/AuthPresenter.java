@@ -42,27 +42,27 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
     }
 
     private final PlaceManager placeManager;
-    private final LoginHelper loginHelper;
     private final RestDispatch restDispatch;
     private final AuthService authService;
     private final AppConstants appConstants;
+    private final LoginHelper loginHelper;
 
     @Inject
     AuthPresenter(EventBus eventBus,
                   MyView view,
                   MyProxy proxy,
                   PlaceManager placeManager,
-                  LoginHelper loginHelper,
                   RestDispatch restDispatch,
                   AuthService authService,
-                  AppConstants appConstants) {
+                  AppConstants appConstants,
+                  LoginHelper loginHelper) {
         super(eventBus, view, proxy, RevealType.Root);
 
         this.placeManager = placeManager;
-        this.loginHelper = loginHelper;
         this.restDispatch = restDispatch;
         this.authService = authService;
         this.appConstants = appConstants;
+        this.loginHelper = loginHelper;
 
         getView().setUiHandlers(this);
     }
@@ -85,7 +85,7 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
                 new RestCallbackImpl<Token>() {
                     @Override
                     public void onSuccess(Token result) {
-                        loginHelper.reloadApp();
+                        loginHelper.login();
                     }
 
                     @Override

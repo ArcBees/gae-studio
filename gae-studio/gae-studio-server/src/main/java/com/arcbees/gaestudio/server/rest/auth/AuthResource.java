@@ -74,4 +74,12 @@ public class AuthResource {
 
         return Response.ok(authToken).build();
     }
+
+    @POST
+    @Path(EndPoints.LOGOUT)
+    public Response logout() {
+        authService.logout();
+
+        return Response.ok().build();
+    }
 }
