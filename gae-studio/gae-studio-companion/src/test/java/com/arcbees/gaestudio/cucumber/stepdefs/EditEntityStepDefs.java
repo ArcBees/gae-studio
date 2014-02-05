@@ -68,7 +68,7 @@ public class EditEntityStepDefs {
         basePage.navigate(NameTokens.visualizer);
 
         visualizerPage.clickOnKind(Car.class.getSimpleName());
-        visualizerPage.clickOnEntityinTable();
+        visualizerPage.clickOnEntityInTable();
         visualizerPage.clickEditButton();
 
         changeCarData();

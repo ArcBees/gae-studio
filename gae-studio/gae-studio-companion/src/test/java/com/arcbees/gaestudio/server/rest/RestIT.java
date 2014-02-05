@@ -31,6 +31,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 public class RestIT {
     public static final String HOSTNAME;
+
     protected static final String CAR_KIND = "Car";
     protected static final String STRING_ENTITY_KIND = "StringIdEntity";
     protected static final String AN_ENTITY_NAME = "An entity name";

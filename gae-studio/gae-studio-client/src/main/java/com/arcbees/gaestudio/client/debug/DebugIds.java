@@ -53,4 +53,8 @@ public class DebugIds {
     public static String getEdit() {
         return EDIT;
     }
+
+    public static String getDeleteConfirm() {
+        return DELETE_CONFIRM;
+    }
 }

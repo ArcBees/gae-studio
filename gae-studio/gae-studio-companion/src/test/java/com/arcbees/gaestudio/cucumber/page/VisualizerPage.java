@@ -69,7 +69,7 @@ public class VisualizerPage {
         webDriverHelper.typeInTextBox(textbox, "2.0");
     }
 
-    public void clickOnEntityinTable() {
+    public void clickOnEntityInTable() {
         WebElement table = webDriverHelper.waitUntilPresenceOfElementLocated(ByDebugId.id(DebugIds.ENTITIES_TABLES));
         WebElement row = webDriverHelper.findChild(table, By.xpath(".//tr[@__gwt_row='0']"));
         row.click();

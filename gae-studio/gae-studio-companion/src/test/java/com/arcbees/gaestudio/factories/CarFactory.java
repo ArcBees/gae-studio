@@ -17,7 +17,6 @@ import com.google.appengine.api.datastore.GeoPt;
 import com.google.common.collect.Lists;
 
 public class CarFactory {
-
     private static final GeoPt POINT1 = new GeoPt(0.0f, 0.0f);
     private static final GeoPt POINT2 = new GeoPt(0.0f, 0.0f);
     private static final GeoPt POINT3 = new GeoPt(10.0f, 10.0f);

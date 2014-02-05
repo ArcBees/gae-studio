@@ -30,7 +30,7 @@ public class DeleteEntityStepDefs {
     private final VisualizerPage visualizerPage;
     private final RestIT restIT;
     private final CarFactory carFactory;
-    
+
     private Long carId;
 
     @Inject
@@ -55,20 +55,20 @@ public class DeleteEntityStepDefs {
         assertEntityIsDeleted(carId);
     }
 
-    private void assertEntityIsDeleted(long carId) {
-        assertEquals(Response.Status.NOT_FOUND.getStatusCode(), restIT.getRemoteCarResponseCode(carId).getStatusCode());
-    }
-
     @And("^I delete the entity")
     public void I_delete_the_entity() throws Throwable {
         deleteEntity();
+    }
+
+    private void assertEntityIsDeleted(long carId) {
+        assertEquals(Response.Status.NOT_FOUND.getStatusCode(), restIT.getRemoteCarResponseCode(carId).getStatusCode());
     }
 
     private void deleteEntity() {
         basePage.navigate(NameTokens.visualizer);
 
         visualizerPage.clickOnKind(Car.class.getSimpleName());
-        visualizerPage.clickOnEntityinTable();
+        visualizerPage.clickOnEntityInTable();
         visualizerPage.clickDeleteButton();
         visualizerPage.clickDeleteConfirmButton();
 
