@@ -116,6 +116,8 @@ public interface AppResources extends ClientBundle {
         String deselect();
 
         String deselectDisabled();
+
+        String power();
     }
 
     public interface Sprites extends CssResource {
@@ -195,4 +197,6 @@ public interface AppResources extends ClientBundle {
     ImageResource dropDownArrowRl();
 
     ImageResource listGraph();
+
+    ImageResource power();
 }

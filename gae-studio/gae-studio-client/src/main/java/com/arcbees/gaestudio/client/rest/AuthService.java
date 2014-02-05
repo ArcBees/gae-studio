@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.rest;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -43,6 +44,10 @@ public interface AuthService extends RestService {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     RestAction<Token> login(@FormParam(UrlParameters.EMAIL) String email,
                             @FormParam(UrlParameters.PASSWORD) String password);
+
+    @DELETE
+    @Path(EndPoints.LOGIN)
+    RestAction<Void> logout();
 
     @GET
     @Path(EndPoints.LOGIN)
