@@ -46,7 +46,7 @@ public interface AuthService extends RestService {
                             @FormParam(UrlParameters.PASSWORD) String password);
 
     @DELETE
-    @Path(EndPoints.LOGOUT)
+    @Path(EndPoints.LOGIN)
     RestAction<Void> logout();
 
     @GET

@@ -77,7 +77,7 @@ public class AuthResource {
     }
 
     @DELETE
-    @Path(EndPoints.LOGOUT)
+    @Path(EndPoints.LOGIN)
     public Response logout() {
         authService.logout();
 
