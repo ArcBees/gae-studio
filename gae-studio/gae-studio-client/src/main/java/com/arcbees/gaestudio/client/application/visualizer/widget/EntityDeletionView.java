@@ -30,14 +30,14 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
     interface Binder extends UiBinder<Widget, EntityDeletionView> {
     }
 
-    private final AppMessages messages;
-
     @UiField
     Button delete;
     @UiField
     Button cancel;
     @UiField
     HeadingElement message;
+
+    private final AppMessages messages;
 
     @Inject
     EntityDeletionView(Binder uiBinder,
