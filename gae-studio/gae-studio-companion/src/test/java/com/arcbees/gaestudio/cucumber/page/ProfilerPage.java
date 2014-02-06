@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.cucumber.stepdefs;
+package com.arcbees.gaestudio.cucumber.page;
 
 import javax.inject.Inject;
 

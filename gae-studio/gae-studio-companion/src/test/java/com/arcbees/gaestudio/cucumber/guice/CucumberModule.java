@@ -14,7 +14,7 @@ import javax.inject.Singleton;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import com.arcbees.gaestudio.cucumber.setupteardown.CucumberTestSetupTeardown;
+import com.arcbees.gaestudio.cucumber.stepdefs.setupteardown.CucumberTestSetupTeardown;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 

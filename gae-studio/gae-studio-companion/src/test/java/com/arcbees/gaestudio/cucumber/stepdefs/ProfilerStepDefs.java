@@ -13,7 +13,9 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.cucumber.page.BasePage;
+import com.arcbees.gaestudio.cucumber.page.ProfilerPage;
 import com.arcbees.gaestudio.server.rest.RestIT;
+
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;

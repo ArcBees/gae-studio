@@ -208,20 +208,20 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         addVisibleHandler(ToolbarToggleEvent.getType(), this);
     }
 
-    private void updateEntityListPresenter() {
-        setInSlot(SLOT_ENTITIES, entityListPresenter);
-        if (currentKind.isEmpty()) {
-            entityListPresenter.hideList();
-        } else {
-            entityListPresenter.loadKind(currentKind);
-        }
+    private ToolbarButton createDeleteButton() {
+        return uiFactory.createToolbarButton(myConstants.delete(), resources.styles().delete(),
+                new ToolbarButtonCallback() {
+                    @Override
+                    public void onClicked() {
+                        delete();
+                    }
+                }, DebugIds.DELETE_ENGAGE);
+    }
 
-        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-            @Override
-            public void execute() {
-                toolbarPresenter.setVisible(!currentKind.isEmpty());
-            }
-        });
+    private void delete() {
+        if (currentParsedEntity != null) {
+            DeleteEntityEvent.fire(this, currentParsedEntity);
+        }
     }
 
     private ToolbarButton createEditButton() {
@@ -234,26 +234,27 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
                 }, DebugIds.EDIT);
     }
 
-    private ToolbarButton createDeleteButton() {
-        return uiFactory.createToolbarButton(myConstants.delete(), resources.styles().delete(),
-                new ToolbarButtonCallback() {
-                    @Override
-                    public void onClicked() {
-                        delete();
-                    }
-                });
-    }
-
     private void edit() {
         if (currentParsedEntity != null) {
             EditEntityEvent.fire(this, currentParsedEntity);
         }
     }
 
-    private void delete() {
-        if (currentParsedEntity != null) {
-            DeleteEntityEvent.fire(this, currentParsedEntity);
+    private void updateEntityListPresenter() {
+        setInSlot(SLOT_ENTITIES, entityListPresenter);
+
+        if (currentKind.isEmpty()) {
+            entityListPresenter.hideList();
+        } else {
+            entityListPresenter.loadKind(currentKind);
         }
+
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+            @Override
+            public void execute() {
+                toolbarPresenter.setVisible(!currentKind.isEmpty());
+            }
+        });
     }
 
     private void enableContextualMenu() {

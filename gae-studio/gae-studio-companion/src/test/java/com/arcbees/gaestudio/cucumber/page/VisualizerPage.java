@@ -69,7 +69,7 @@ public class VisualizerPage {
         webDriverHelper.typeInTextBox(textbox, "2.0");
     }
 
-    public void clickOnEntityinTable() {
+    public void clickOnEntityInTable() {
         WebElement table = webDriverHelper.waitUntilPresenceOfElementLocated(ByDebugId.id(DebugIds.ENTITIES_TABLES));
         WebElement row = webDriverHelper.findChild(table, By.xpath(".//tr[@__gwt_row='0']"));
         row.click();
@@ -101,6 +101,16 @@ public class VisualizerPage {
         WebElement textbox = targetproperty.findElement(By.tagName("input"));
 
         webDriverHelper.typeInTextBox(textbox, aNewString);
+    }
+
+    public void clickDeleteButton() {
+        WebElement deleteButton = webDriverHelper.waitUntilElementIsClickable(ByDebugId.id(DebugIds.DELETE_ENGAGE));
+        deleteButton.click();
+    }
+
+    public void clickDeleteConfirmButton() {
+        WebElement deleteConfirmButton = webDriverHelper.waitUntilElementIsClickable(ByDebugId.id(DebugIds.DELETE_CONFIRM));
+        deleteConfirmButton.click();
     }
 
     private List<WebElement> getKindWebElements(WebElement allKinds, String kindToFind) {

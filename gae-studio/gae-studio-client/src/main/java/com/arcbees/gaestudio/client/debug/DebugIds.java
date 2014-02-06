@@ -10,6 +10,18 @@
 package com.arcbees.gaestudio.client.debug;
 
 public class DebugIds {
+    public static final String APPLICATION_ROOT = "application-root";
+    public static final String VISUALIZER = "visualizer";
+    public static final String KINDS = "kinds";
+    public static final String ENTITIES_TABLES = "entities-table";
+    public static final String EDIT = "edit";
+    public static final String SAVE = "save";
+    public static final String DELETE_ENGAGE = "delete-engage";
+    public static final String DELETE_CONFIRM = "delete-confirm";
+    public static final String ENTITY_EDITOR = "entity-editor";
+    public static final String MESSAGE = "message";
+    public static final String RECORD = "record";
+
     public static String getApplicationRoot() {
         return APPLICATION_ROOT;
     }
@@ -42,13 +54,7 @@ public class DebugIds {
         return EDIT;
     }
 
-    public static final String APPLICATION_ROOT = "application-root";
-    public static final String VISUALIZER = "visualizer";
-    public static final String KINDS = "kinds";
-    public static final String ENTITIES_TABLES = "entities-table";
-    public static final String EDIT = "edit";
-    public static final String SAVE = "save";
-    public static final String ENTITY_EDITOR = "entity-editor";
-    public static final String MESSAGE = "message";
-    public static final String RECORD = "record";
+    public static String getDeleteConfirm() {
+        return DELETE_CONFIRM;
+    }
 }

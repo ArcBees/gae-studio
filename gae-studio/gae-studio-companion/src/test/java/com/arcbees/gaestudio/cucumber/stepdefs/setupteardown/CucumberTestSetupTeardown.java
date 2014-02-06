@@ -7,13 +7,14 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.cucumber.setupteardown;
+package com.arcbees.gaestudio.cucumber.stepdefs.setupteardown;
 
 import javax.inject.Inject;
 
 import org.openqa.selenium.WebDriver;
 
 import com.arcbees.gaestudio.server.rest.RestIT;
+
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 

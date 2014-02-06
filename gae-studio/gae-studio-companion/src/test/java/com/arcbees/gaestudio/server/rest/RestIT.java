@@ -32,10 +32,9 @@ import static com.jayway.restassured.RestAssured.given;
 public class RestIT {
     public static final String HOSTNAME;
 
-    protected final Gson gson = new GsonBuilder().create();
-    protected String CAR_KIND = "Car";
-    protected String STRING_ENTITY_KIND = "StringIdEntity";
-    protected String AN_ENTITY_NAME = "An entity name";
+    protected static final String CAR_KIND = "Car";
+    protected static final String STRING_ENTITY_KIND = "StringIdEntity";
+    protected static final String AN_ENTITY_NAME = "An entity name";
 
     static {
         RestAssured.defaultParser = Parser.JSON;
@@ -44,6 +43,8 @@ public class RestIT {
         HOSTNAME = "http://localhost:8888/";
     }
 
+    protected final Gson gson = new GsonBuilder().create();
+
     @Before
     public void setUp() {
         clearDatabase();
@@ -51,10 +52,6 @@ public class RestIT {
 
     public void clearDatabase() {
         get(getAbsoluteUri(TestEndPoints.CLEAR));
-    }
-
-    public Long createRemoteCar(Car car) {
-        return given().body(car).post(getAbsoluteUri(TestEndPoints.CAR)).as(Long.class);
     }
 
     public Car getRemoteCar(Long id) {
@@ -67,8 +64,12 @@ public class RestIT {
         return createRemoteCar(new Car());
     }
 
-    public Response createStringIdEntity(StringIdEntity stringIdEntity) {
-        return given().body(stringIdEntity).post(getAbsoluteUri(TestEndPoints.STRING_ID_ENTITY));
+    public Long createRemoteCar(Car car) {
+        return given().body(car).post(getAbsoluteUri(TestEndPoints.CAR)).as(Long.class);
+    }
+
+    public Response getRemoteCarResponseCode(Long id) {
+        return given().queryParam(TestEndPoints.PARAM_ID, id).get(getAbsoluteUri(TestEndPoints.CAR));
     }
 
     public Response createStringIdEntity(String name) {
@@ -77,6 +78,10 @@ public class RestIT {
         stringIdEntity.setName(name);
 
         return createStringIdEntity(stringIdEntity);
+    }
+
+    public Response createStringIdEntity(StringIdEntity stringIdEntity) {
+        return given().body(stringIdEntity).post(getAbsoluteUri(TestEndPoints.STRING_ID_ENTITY));
     }
 
     protected String getAbsoluteUri(String relativeLocation) {
