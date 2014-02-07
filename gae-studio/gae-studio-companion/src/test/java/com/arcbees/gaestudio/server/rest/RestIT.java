@@ -16,7 +16,6 @@ import org.junit.Before;
 import com.arcbees.gaestudio.companion.domain.Car;
 import com.arcbees.gaestudio.companion.domain.StringIdEntity;
 import com.arcbees.gaestudio.companion.rest.TestEndPoints;
-import com.arcbees.gaestudio.factories.CarFactory;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.common.collect.Sets;
@@ -62,8 +61,7 @@ public class RestIT {
     }
 
     public Long createRemoteCar() {
-        CarFactory carFactory = new CarFactory();
-        return createRemoteCar(carFactory.createFakeCar());
+        return createRemoteCar(new Car());
     }
 
     public Long createRemoteCar(Car car) {

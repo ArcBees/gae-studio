@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.cucumber.page.BasePage;
 import com.arcbees.gaestudio.cucumber.page.ProfilerPage;
+import com.arcbees.gaestudio.factories.CarFactory;
 import com.arcbees.gaestudio.server.rest.RestIT;
 
 import cucumber.api.java.en.And;
@@ -24,14 +25,17 @@ public class ProfilerStepDefs {
     private final BasePage basePage;
     private final RestIT restIT;
     private final ProfilerPage profilerPage;
+    private final CarFactory carFactory;
 
     @Inject
     ProfilerStepDefs(BasePage basePage,
                      RestIT restIT,
-                     ProfilerPage profilerPage) {
+                     ProfilerPage profilerPage,
+                     CarFactory carFactory) {
         this.basePage = basePage;
         this.restIT = restIT;
         this.profilerPage = profilerPage;
+        this.carFactory = carFactory;
     }
 
     @Given("^I start recording$")
@@ -43,7 +47,7 @@ public class ProfilerStepDefs {
 
     @And("^I interact with the datastore$")
     public void I_interact_with_the_datastore() {
-        restIT.createRemoteCar();
+        restIT.createRemoteCar(carFactory.createFakeCar());
     }
 
     @Then("^I should see requests in the Profiler$")
