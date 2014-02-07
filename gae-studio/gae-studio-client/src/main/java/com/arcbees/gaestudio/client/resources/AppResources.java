@@ -118,6 +118,10 @@ public interface AppResources extends ClientBundle {
         String deselectDisabled();
 
         String power();
+
+        String checked();
+
+        String booleanKey();
     }
 
     public interface Sprites extends CssResource {

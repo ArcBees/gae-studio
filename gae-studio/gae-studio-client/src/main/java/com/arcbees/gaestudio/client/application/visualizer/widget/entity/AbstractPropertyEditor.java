@@ -44,8 +44,8 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
 
     protected final String key;
 
-    private final PropertyEditorUiFields fields;
-    private final Widget widget;
+    protected final PropertyEditorUiFields fields;
+    protected final Widget widget;
 
     protected AbstractPropertyEditor(String key) {
         this.key = key;
@@ -98,7 +98,11 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
         dispatchError(key + " (" + error + ")");
     }
 
-    private void dispatchError(String error) {
+    protected void setKeyStyle(String keyStyle) {
+        fields.key.setStyleName(keyStyle);
+    }
+
+    protected void dispatchError(String error) {
         eventBus.fireEventFromSource(new PropertyEditorErrorEvent(error), this);
     }
 }

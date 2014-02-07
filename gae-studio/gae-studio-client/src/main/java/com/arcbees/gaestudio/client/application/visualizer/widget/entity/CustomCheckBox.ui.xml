@@ -1,0 +1,21 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:style>
+        .root {
+            width: 1em;
+            height: 1em;
+            color: white;
+            text-align: center;
+            line-height: 1em;
+            margin-top: 5px;
+            border: 2px solid #25aae1;
+            float: left;
+            margin-right: 10px;
+        }
+
+        .root:hover {
+            cursor: pointer;
+        }
+    </ui:style>
+    <g:HTMLPanel styleName="{style.root}"/>
+</ui:UiBinder>
