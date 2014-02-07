@@ -12,7 +12,7 @@ package com.arcbees.gaestudio.client.application.visualizer.event;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 public class SetStateFromPlaceRequestEvent extends GwtEvent<SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler> {
     public interface SetStateFromPlaceRequestHandler extends EventHandler {
