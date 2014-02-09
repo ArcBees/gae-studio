@@ -17,15 +17,23 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
+import static com.google.gwt.query.client.GQuery.$;
+
 public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> implements RegisterPresenter.MyView {
     interface Binder extends UiBinder<Widget, RegisterView> {
     }
 
+    private final static Integer REGISTER_PANEL = 0;
+    private final static Integer ACTIVATE_PANEL = 1;
+
+    @UiField
+    DeckPanel registerPanel;
     @UiField
     TextBox firstName;
     @UiField
@@ -45,6 +53,11 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
         this.ajaxLoader = ajaxLoader;
 
         initWidget(uiBinder.createAndBindUi(this));
+
+        $(firstName).attr("placeholder", "First Name");
+        $(lastName).attr("placeholder", "Last Name");
+        $(registerEmail).attr("placeholder", "Email");
+        $(registerPassword).attr("placeholder", "Password");
     }
 
     @Override
@@ -59,8 +72,14 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
         lastName.setText("");
         registerEmail.setText("");
         registerPassword.setText("");
+        registerPanel.showWidget(REGISTER_PANEL);
 
         resetSubmit();
+    }
+
+    @Override
+    public void showConfirmActivation() {
+        registerPanel.showWidget(ACTIVATE_PANEL);
     }
 
     @UiHandler("register")
