@@ -99,7 +99,7 @@
                 <div class="{res.styles.authForm}">
                     <g:Image resource="{res.splashLogo}" addStyleNames="{style.logo}"/>
 
-                    <g:HTMLPanel styleName="{res.styles.authForm}">
+                    <div class="{res.styles.authForm}">
                         <h3 class="{style.formTitle}">Welcome !</h3>
                         <div ui:field="errorMessage" class="{style.errorMessage}"/>
 
@@ -127,12 +127,10 @@
                                 <cui:AjaxLoader ui:field="ajaxLoader"/>
                             </div>
                         </div>
-                    </g:HTMLPanel>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="{style.footer}"/>
     </g:HTMLPanel>
-
-
 </ui:UiBinder>

@@ -87,7 +87,7 @@
                 <div class="{style.middleBlueBar}"/>
                 <div class="{res.styles.authForm}">
                     <g:Image resource="{res.splashLogo}" addStyleNames="{style.logo}"/>
-                    <g:HTMLPanel styleName="{res.styles.authForm}">
+                    <div class="{res.styles.authForm}">
                         <h3 class="{style.formTitle}">Activate your account</h3>
 
                         <div class="{style.wrapper}">
@@ -99,7 +99,7 @@
                                 Go to the login page
                             </g:InlineHyperlink>
                         </div>
-                    </g:HTMLPanel>
+                    </div>
                 </div>
             </div>
         </div>
