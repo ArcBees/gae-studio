@@ -63,10 +63,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     SimplePanel deleteByKind;
     @UiField
     DivElement deselect;
-    @UiField
-    Button exportKind;
-    @UiField
-    Frame downloadFrame;
 
     private final AppResources appResources;
     private final String lockedRowStyleName;
@@ -209,16 +205,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             };
             firstLoadHandlerRegistration = entityTable.addRowCountChangeHandler(handler);
         }
-    }
-
-    @Override
-    public void setDownloadUrl(String downloadUrl) {
-        downloadFrame.setUrl(downloadUrl);
-    }
-
-    @UiHandler("exportKind")
-    void onExportClicked(ClickEvent event) {
-        getUiHandlers().exportCurrentKind();
     }
 
     private void doSetRowSelected(String idString) {

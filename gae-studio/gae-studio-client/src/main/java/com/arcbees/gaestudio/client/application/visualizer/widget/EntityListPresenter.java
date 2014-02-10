@@ -88,8 +88,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void unlockRows();
 
         void setRowSelected(String idString);
-
-        void setDownloadUrl(String downloadUrl);
     }
 
     public static final Object SLOT_NAMESPACES = new Object();
@@ -97,7 +95,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private final RestDispatch restDispatch;
     private final EntitiesService entitiesService;
     private final PlaceManager placeManager;
-    private final ExportService exportService;
     private final PropertyNamesAggregator propertyNamesAggregator;
     private final NamespacesListPresenter namespacesListPresenter;
 
@@ -109,7 +106,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         PlaceManager placeManager,
                         RestDispatch restDispatch,
                         EntitiesService entitiesService,
-                        ExportService exportService,
                         PropertyNamesAggregator propertyNamesAggregator,
                         NamespacesListPresenterFactory namespacesListPresenterFactory) {
         super(eventBus, view);
@@ -117,7 +113,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         this.placeManager = placeManager;
         this.restDispatch = restDispatch;
         this.entitiesService = entitiesService;
-        this.exportService = exportService;
         this.propertyNamesAggregator = propertyNamesAggregator;
         this.namespacesListPresenter = namespacesListPresenterFactory.create(this);
 
@@ -151,13 +146,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Override
     public void refresh() {
         KindSelectedEvent.fire(this, currentKind);
-    }
-
-    @Override
-    public void exportCurrentKind() {
-        String exportKindUrl = exportService.getExportKindUrl(currentKind);
-
-        getView().setDownloadUrl(exportKindUrl);
     }
 
     public void loadKind(String kind) {

@@ -26,6 +26,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -59,6 +60,10 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     PanelToggle closeToggle;
     @UiField
     Button importKind;
+    @UiField
+    Button exportKind;
+    @UiField
+    Frame downloadFrame;
 
     private final KindTemplate kindTemplate;
     private final EmptyKindsTemplate emptyKindsTemplate;
@@ -124,6 +129,16 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     }
 
     @Override
+    public void setDownloadUrl(String downloadUrl) {
+        downloadFrame.setUrl(downloadUrl);
+    }
+
+    @Override
+    public void setExportEnabled(boolean enabled) {
+        exportKind.setEnabled(enabled);
+    }
+
+    @Override
     public void onToggle() {
         getUiHandlers().onCloseHandleActivated();
     }
@@ -131,6 +146,11 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     @UiHandler("importKind")
     void onImportClicked(ClickEvent event) {
         getUiHandlers().importKind();
+    }
+
+    @UiHandler("exportKind")
+    void onExportClicked(ClickEvent event) {
+        getUiHandlers().exportCurrentKind();
     }
 
     private void addKind(String kind) {

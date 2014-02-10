@@ -17,4 +17,6 @@ interface SidebarUiHandlers extends UiHandlers {
     void onCloseHandleActivated();
 
     void importKind();
+
+    void exportCurrentKind();
 }

@@ -50,12 +50,10 @@
         }
     </ui:style>
     <g:HTMLPanel ui:field="panel" visible="false" styleName="{style.main}">
-        <g:Frame ui:field="downloadFrame" width="0" height="0" visible="false"/>
         <div class="{style.heading} {resources.styles.pager}">
             <cellview:SimplePager ui:field="pager"/>
             <div ui:field="refresh" class="{style.refresh} {resources.styles.refresh}"/>
             <div ui:field="deselect" class="{style.deselect} {resources.styles.deselectDisabled}"/>
-            <g:Button ui:field="exportKind" text="Export"/>
             <g:SimplePanel ui:field="deleteByKind" styleName="{style.deleteByKind}"/>
         </div>
         <div class="{style.table}">
