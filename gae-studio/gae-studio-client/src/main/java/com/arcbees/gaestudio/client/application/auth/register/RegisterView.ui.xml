@@ -84,27 +84,10 @@
             margin-bottom: 25px;
         }
 
-        .wrapper {
-            font-size: 1.2em;
-            text-align: center;
-        }
-
-        .paragraph {
-            margin-bottom: 30px;
-        }
-
-        .loginLink {
-            color: #25AAE1;
-            text-decoration: none;
-        }
-
-
-        .loginLink:hover {
-            color: #0e76bc !important;
-        }
-
-        .loginLink:visited {
-            color: #25AAE1;
+        .separator {
+            background-color: #25aae1;
+            padding: 5px;
+            margin-bottom: 10px;
         }
     </ui:style>
 
@@ -115,46 +98,36 @@
                 <div class="{style.middleBlueBar}"/>
                 <div class="{res.styles.authForm}">
                     <g:Image resource="{res.splashLogo}" addStyleNames="{style.logo}"/>
-                    <div ui:field="errorMessage" class="{style.errorMessage}"/>
 
-                    <g:DeckPanel ui:field="registerPanel">
-                        <g:HTMLPanel styleName="{res.styles.authForm}">
-                            <h3 class="{style.formTitle}">Welcome !</h3>
+                    <g:HTMLPanel styleName="{res.styles.authForm}">
+                        <h3 class="{style.formTitle}">Welcome !</h3>
+                        <div ui:field="errorMessage" class="{style.errorMessage}"/>
 
-                            <div>
-                                <g:TextBox ui:field="firstName"/>
-                            </div>
-                            <div>
-                                <g:TextBox ui:field="lastName"/>
-                            </div>
-                            <div>
-                                <g:TextBox ui:field="registerEmail"/>
-                            </div>
-                            <div>
-                                <g:PasswordTextBox ui:field="registerPassword"/>
-                            </div>
-                            <div class="{style.buttonContainer}">
-                                <g:Button ui:field="register" text="Create your account" styleName="{res.styles.loginBtn}"/>
-                                <div class="{style.ajaxContainer}">
-                                    <cui:AjaxLoader ui:field="ajaxLoader"/>
-                                </div>
-                            </div>
-                        </g:HTMLPanel>
+                        <div>
+                            <g:TextBox ui:field="firstName"/>
+                        </div>
+                        <div>
+                            <g:TextBox ui:field="lastName"/>
+                        </div>
 
-                        <g:HTMLPanel styleName="{res.styles.authForm}">
-                            <h3 class="{style.formTitle}">Activate your account</h3>
+                        <div class="{style.separator}"/>
 
-                            <div class="{style.wrapper}">
-                                <p class="{style.paragraph}">
-                                    A confirmation was sent to your e-mail to activate you account
-                                </p>
-
-                                <g:InlineHyperlink styleName="{style.loginLink}" targetHistoryToken="{nametokens.getAuth}">
-                                    Go to the login page
-                                </g:InlineHyperlink>
+                        <div>
+                            <g:TextBox ui:field="registerEmail"/>
+                        </div>
+                        <div>
+                            <g:PasswordTextBox ui:field="registerPassword"/>
+                        </div>
+                        <div>
+                            <g:PasswordTextBox ui:field="confirmPassword"/>
+                        </div>
+                        <div class="{style.buttonContainer}">
+                            <g:Button ui:field="register" text="Create your account" styleName="{res.styles.loginBtn}"/>
+                            <div class="{style.ajaxContainer}">
+                                <cui:AjaxLoader ui:field="ajaxLoader"/>
                             </div>
-                        </g:HTMLPanel>
-                    </g:DeckPanel>
+                        </div>
+                    </g:HTMLPanel>
                 </div>
             </div>
         </div>

@@ -12,12 +12,14 @@ package com.arcbees.gaestudio.client.application.auth.register;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.ui.AjaxLoader;
+import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.google.common.base.Strings;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -29,11 +31,6 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
     interface Binder extends UiBinder<Widget, RegisterView> {
     }
 
-    private final static Integer REGISTER_PANEL = 0;
-    private final static Integer ACTIVATE_PANEL = 1;
-
-    @UiField
-    DeckPanel registerPanel;
     @UiField
     TextBox firstName;
     @UiField
@@ -43,14 +40,22 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
     @UiField
     PasswordTextBox registerPassword;
     @UiField
+    PasswordTextBox confirmPassword;
+    @UiField
     Button register;
     @UiField(provided = true)
     AjaxLoader ajaxLoader;
+    @UiField
+    DivElement errorMessage;
+
+    private final AppConstants constants;
 
     @Inject
     RegisterView(Binder uiBinder,
-                 AjaxLoader ajaxLoader) {
+                 AjaxLoader ajaxLoader,
+                 AppConstants constants) {
         this.ajaxLoader = ajaxLoader;
+        this.constants = constants;
 
         initWidget(uiBinder.createAndBindUi(this));
 
@@ -58,12 +63,14 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
         $(lastName).attr("placeholder", "Last Name");
         $(registerEmail).attr("placeholder", "Email");
         $(registerPassword).attr("placeholder", "Password");
+        $(confirmPassword).attr("placeholder", "Confirm your password");
     }
 
     @Override
     public void resetSubmit() {
         ajaxLoader.hide();
         register.setEnabled(true);
+        clearErrorMessage();
     }
 
     @Override
@@ -72,22 +79,41 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
         lastName.setText("");
         registerEmail.setText("");
         registerPassword.setText("");
-        registerPanel.showWidget(REGISTER_PANEL);
 
+        clearErrorMessage();
         resetSubmit();
-    }
-
-    @Override
-    public void showConfirmActivation() {
-        registerPanel.showWidget(ACTIVATE_PANEL);
     }
 
     @UiHandler("register")
     void onRegisterClicked(ClickEvent event) {
-        ajaxLoader.show();
-        register.setEnabled(false);
+        if (passwordMatch()) {
+            ajaxLoader.show();
+            register.setEnabled(false);
 
-        getUiHandlers().register(firstName.getText(), lastName.getText(), registerEmail.getText(),
-                registerPassword.getText());
+            getUiHandlers().register(firstName.getText(), lastName.getText(), registerEmail.getText(),
+                    registerPassword.getText());
+        } else {
+            showErrorMessage(constants.passwordDontMatch());
+        }
+    }
+
+    private Boolean passwordMatch() {
+        return !Strings.isNullOrEmpty(registerPassword.getText()) &&
+                !Strings.isNullOrEmpty(confirmPassword.getText()) &&
+                registerPassword.getText().equals(confirmPassword.getText());
+    }
+
+    private void showErrorMessage(String message) {
+        errorMessage.setInnerText(message);
+        setErrorMessageOpacity(1.0f);
+    }
+
+    private void clearErrorMessage() {
+        errorMessage.setInnerText("");
+        setErrorMessageOpacity(0f);
+    }
+
+    private void setErrorMessageOpacity(float opacity) {
+        $(errorMessage).css("opacity", Float.toString(opacity));
     }
 }

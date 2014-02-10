@@ -26,6 +26,8 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.NoGatekeeper;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, RegisterPresenter.MyProxy> implements
@@ -34,8 +36,6 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
         void resetSubmit();
 
         void resetForm();
-
-        void showConfirmActivation();
     }
 
     @ProxyCodeSplit
@@ -47,6 +47,7 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
     private final AppConstants appConstants;
     private final RestDispatch restDispatch;
     private final AuthService authService;
+    private final PlaceManager placeManager;
 
     @Inject
     RegisterPresenter(EventBus eventBus,
@@ -54,12 +55,14 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
                       MyProxy proxy,
                       AppConstants appConstants,
                       RestDispatch restDispatch,
-                      AuthService authService) {
+                      AuthService authService,
+                      PlaceManager placeManager) {
         super(eventBus, view, proxy, RevealType.Root);
 
         this.appConstants = appConstants;
         this.restDispatch = restDispatch;
         this.authService = authService;
+        this.placeManager = placeManager;
 
         getView().setUiHandlers(this);
     }
@@ -76,7 +79,9 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
                         DisplayMessageEvent.fire(RegisterPresenter.this,
                                 new Message(appConstants.registerSuccessfull(), MessageStyle.SUCCESS));
                         getView().resetSubmit();
-                        getView().showConfirmActivation();
+
+                        PlaceRequest place = new PlaceRequest.Builder().nameToken(NameTokens.getActivation()).build();
+                        placeManager.revealPlace(place);
                     }
 
                     @Override
