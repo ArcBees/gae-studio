@@ -21,17 +21,18 @@ import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class UploadForm extends Composite implements FormPanel.SubmitCompleteHandler {
+public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
     public interface Handler {
         void onFileChosen(String chosenFileName);
 
@@ -66,8 +67,6 @@ public class UploadForm extends Composite implements FormPanel.SubmitCompleteHan
 
         formPanel = new FormPanel();
 
-        initWidget(formPanel);
-
         fileUpload.setName(FILE_UPLOAD);
         fileUpload.setVisible(false);
 
@@ -80,6 +79,11 @@ public class UploadForm extends Composite implements FormPanel.SubmitCompleteHan
 
     public boolean hasFileToUpload() {
         return !Strings.isNullOrEmpty(fileUpload.getFilename());
+    }
+
+    @Override
+    public Widget asWidget() {
+        return formPanel;
     }
 
     @Override
