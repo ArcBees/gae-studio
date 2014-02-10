@@ -28,7 +28,7 @@ public class ImportServiceImpl implements ImportService {
     }
 
     @Override
-    public void importData(List<Entity> entities) {
+    public void importEntities(List<Entity> entities) {
         String defaultNamespace = NamespaceManager.get();
 
         List<Entity> newEntites = Lists.newArrayList();

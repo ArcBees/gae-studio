@@ -1,7 +1,8 @@
 package com.arcbees.gaestudio.server.util;
 
 import com.google.appengine.api.blobstore.BlobKey;
+import com.google.gson.stream.JsonReader;
 
 public interface JsonBlobReaderFactory {
-    JsonBlobReader create(BlobKey blobKey);
+    JsonReader create(BlobKey blobKey);
 }

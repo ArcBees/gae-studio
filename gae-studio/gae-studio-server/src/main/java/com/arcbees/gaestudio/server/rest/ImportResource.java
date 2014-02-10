@@ -28,6 +28,7 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.fileupload.FileUploadException;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
+import com.arcbees.gaestudio.server.service.BlobsService;
 import com.arcbees.gaestudio.server.service.ImportService;
 import com.arcbees.gaestudio.server.util.JsonBlobReaderFactory;
 import com.arcbees.gaestudio.shared.BaseRestPath;
@@ -41,8 +42,6 @@ import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
 
 @Path(EndPoints.IMPORT)
 @GaeStudioResource
@@ -73,24 +72,24 @@ public class ImportResource extends HttpServlet {
     }
 
     private final BlobstoreService blobstoreService;
+    private final BlobsService blobsService;
     private final ImportService importService;
     private final Gson gson;
-    private final JsonBlobReaderFactory jsonBlobReaderFactory;
     private final Provider<Queue> queueProvider;
     private final String uploadUrl;
     private final String taskUrl;
 
     @Inject
     ImportResource(BlobstoreService blobstoreService,
+                   BlobsService blobsService,
                    ImportService importService,
                    Gson gson,
-                   JsonBlobReaderFactory jsonBlobReaderFactory,
                    Provider<Queue> queueProvider,
                    @BaseRestPath String baseRestPath) {
         this.blobstoreService = blobstoreService;
+        this.blobsService = blobsService;
         this.importService = importService;
         this.gson = gson;
-        this.jsonBlobReaderFactory = jsonBlobReaderFactory;
         this.queueProvider = queueProvider;
         uploadUrl = createPath(baseRestPath + EndPoints.IMPORT);
         taskUrl = createPath(baseRestPath + EndPoints.IMPORT_TASK);
@@ -131,11 +130,9 @@ public class ImportResource extends HttpServlet {
             BlobKey blobKey = new BlobKey(blobKeyString);
 
             try {
-                JsonReader jsonReader = jsonBlobReaderFactory.create(blobKey);
+                List<Entity> entities = blobsService.extractEntitiesFromBlob(blobKey);
 
-                List<Entity> entities = gson.fromJson(jsonReader, new TypeToken<List<Entity>>() {}.getType());
-
-                importService.importData(entities);
+                importService.importEntities(entities);
             } finally {
                 blobstoreService.delete(blobKey);
             }

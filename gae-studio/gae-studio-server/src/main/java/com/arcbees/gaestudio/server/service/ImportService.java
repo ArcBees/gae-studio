@@ -14,5 +14,5 @@ import java.util.List;
 import com.google.appengine.api.datastore.Entity;
 
 public interface ImportService {
-    void importData(List<Entity> data);
+    void importEntities(List<Entity> entities);
 }

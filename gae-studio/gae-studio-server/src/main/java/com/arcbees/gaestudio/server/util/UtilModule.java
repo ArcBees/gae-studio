@@ -9,12 +9,15 @@
 
 package com.arcbees.gaestudio.server.util;
 
+import com.google.gson.stream.JsonReader;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 
 public class UtilModule extends AbstractModule {
     @Override
     protected void configure() {
-        install(new FactoryModuleBuilder().build(JsonBlobReaderFactory.class));
+        install(new FactoryModuleBuilder()
+                .implement(JsonReader.class, JsonBlobReader.class)
+                .build(JsonBlobReaderFactory.class));
     }
 }
