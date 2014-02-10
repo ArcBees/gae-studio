@@ -17,9 +17,7 @@ import javax.validation.Validator;
 import com.arcbees.gaestudio.client.application.ui.AjaxLoader;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.shared.auth.User;
-import com.google.common.base.Function;
 import com.google.common.base.Strings;
-import com.google.common.collect.FluentIterable;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
@@ -33,7 +31,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
-import java.util.List;
 import java.util.Set;
 
 import static com.google.gwt.query.client.GQuery.$;
