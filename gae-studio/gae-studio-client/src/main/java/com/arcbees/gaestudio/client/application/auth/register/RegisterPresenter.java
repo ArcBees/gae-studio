@@ -33,7 +33,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, RegisterPresenter.MyProxy> implements
         RegisterUiHandlers {
     interface MyView extends View, HasUiHandlers<RegisterUiHandlers> {
-        void setupForm(User user);
+        void edit(User user);
     }
 
     @ProxyCodeSplit
@@ -85,13 +85,13 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
 
                     @Override
                     public void handleFailure(Throwable caught) {
-                        getView().setupForm(user);
+                        getView().edit(user);
                     }
                 });
     }
 
     @Override
     protected void onReveal() {
-        getView().setupForm(new User());
+        getView().edit(new User());
     }
 }

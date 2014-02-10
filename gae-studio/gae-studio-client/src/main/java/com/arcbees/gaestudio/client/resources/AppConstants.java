@@ -103,4 +103,6 @@ public interface AppConstants extends Constants {
     String registerKey();
 
     String passwordDontMatch();
+
+    String allFieldsAreRequired();
 }

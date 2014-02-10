@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.auth.register;
 
+import java.util.Set;
+
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -30,8 +32,6 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
-
-import java.util.Set;
 
 import static com.google.gwt.query.client.GQuery.$;
 
@@ -86,7 +86,7 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
     }
 
     @Override
-    public void setupForm(User user) {
+    public void edit(User user) {
         ajaxLoader.hide();
         register.setEnabled(true);
         driver.edit(user);
@@ -109,6 +109,9 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
     private Boolean validateEntity(User user) {
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<User>> violations = validator.validate(user);
+        if (!violations.isEmpty()) {
+            showErrorMessage(constants.allFieldsAreRequired());
+        }
 
         return violations.isEmpty();
     }

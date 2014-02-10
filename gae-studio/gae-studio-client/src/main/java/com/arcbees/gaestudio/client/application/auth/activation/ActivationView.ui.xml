@@ -92,7 +92,7 @@
 
                         <div class="{style.wrapper}">
                             <p class="{style.paragraph}">
-                                A confirmation was sent to your e-mail to activate you account
+                                A confirmation was sent to your e-mail address to activate your account
                             </p>
 
                             <g:InlineHyperlink styleName="{style.loginLink}" targetHistoryToken="{nametokens.getAuth}">

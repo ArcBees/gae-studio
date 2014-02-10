@@ -104,19 +104,19 @@
                         <div ui:field="errorMessage" class="{style.errorMessage}"/>
 
                         <div>
-                            <g:TextBox ui:field="firstName"/>
+                            <g:TextBox ui:field="firstName" name=""/>
                         </div>
                         <div>
-                            <g:TextBox ui:field="lastName"/>
+                            <g:TextBox ui:field="lastName" name=""/>
                         </div>
 
                         <div class="{style.separator}"/>
 
                         <div>
-                            <g:TextBox ui:field="email"/>
+                            <g:TextBox ui:field="email" name=""/>
                         </div>
                         <div>
-                            <g:PasswordTextBox ui:field="password"/>
+                            <g:PasswordTextBox ui:field="password" name=""/>
                         </div>
                         <div>
                             <g:PasswordTextBox ui:field="confirmPassword"/>
