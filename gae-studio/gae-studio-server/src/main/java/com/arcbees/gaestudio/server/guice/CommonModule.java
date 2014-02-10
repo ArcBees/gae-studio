@@ -14,17 +14,20 @@ import javax.servlet.ServletContext;
 
 import com.arcbees.gaestudio.server.ConnectFilter;
 import com.arcbees.gaestudio.server.analytic.AnalyticModule;
+import com.arcbees.gaestudio.server.appengine.AppEngineModule;
 import com.arcbees.gaestudio.server.dto.mapper.MapperModule;
 import com.arcbees.gaestudio.server.exception.ExceptionModule;
+import com.arcbees.gaestudio.server.guice.devserver.DevModule;
 import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
 import com.arcbees.gaestudio.server.rest.RestModule;
 import com.arcbees.gaestudio.server.service.ServiceModule;
+import com.arcbees.gaestudio.server.util.UtilModule;
 import com.arcbees.gaestudio.server.velocity.VelocityModule;
 import com.arcbees.gaestudio.shared.BaseRestPath;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.appengine.api.datastore.GsonModule;
+import com.google.appengine.api.utils.SystemProperty;
 import com.google.common.base.Strings;
-import com.google.inject.Provides;
 import com.google.inject.servlet.ServletModule;
 
 import static org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters.RESTEASY_SERVLET_MAPPING_PREFIX;
@@ -57,18 +60,22 @@ public class CommonModule extends ServletModule {
         install(new MapperModule());
         install(new ServiceModule());
         install(new VelocityModule());
+        install(new AppEngineModule());
+        install(new UtilModule());
 
         bindConstant().annotatedWith(BaseRestPath.class).to(restPath);
 
         String fullRestPath = parseFullRestPath();
-
         filter(fullRestPath + "*").through(GuiceRestEasyFilterDispatcher.class);
 
         bind(ConnectFilter.class).in(Singleton.class);
         filter("/_ah/channel/connected/", "/_ah/channel/disconnected/").through(ConnectFilter.class);
+
+        if (SystemProperty.environment.value() != SystemProperty.Environment.Value.Production) {
+            install(new DevModule());
+        }
     }
 
-    @Provides
     private String parseFullRestPath() {
         String baseRestPath = restPath == null ? "/" : "/" + restPath + "/";
         return (baseRestPath + EndPoints.REST_PATH).replace("//", "/");

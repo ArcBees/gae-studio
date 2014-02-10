@@ -12,11 +12,13 @@ package com.arcbees.gaestudio.client.application.visualizer.sidebar;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.widget.ImportPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.DeleteFromNamespaceHandler;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
@@ -48,6 +50,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
 
     private final RestDispatch restDispatch;
     private final KindsService kindsService;
+    private final Provider<ImportPresenter> importPresenterProvider;
     private final NamespacesListPresenter namespacesListPresenter;
     private KindPanelToggleEvent.Action action = CLOSE;
 
@@ -56,11 +59,13 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
                      MyView view,
                      RestDispatch restDispatch,
                      KindsService kindsService,
+                     Provider<ImportPresenter> importPresenterProvider,
                      NamespacesListPresenterFactory namespacesListPresenterFactory) {
         super(eventBus, view);
 
         this.restDispatch = restDispatch;
         this.kindsService = kindsService;
+        this.importPresenterProvider = importPresenterProvider;
         namespacesListPresenter = namespacesListPresenterFactory.create(this);
 
         getView().setUiHandlers(this);
@@ -78,6 +83,11 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     @Override
     public void onEntitiesDeleted(EntitiesDeletedEvent event) {
         updateKinds();
+    }
+
+    @Override
+    public void importKind() {
+        addToPopupSlot(importPresenterProvider.get());
     }
 
     @Override

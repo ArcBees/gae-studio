@@ -30,6 +30,7 @@ import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.Name
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.place.ParameterTokens;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
+import com.arcbees.gaestudio.client.rest.ExportService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
@@ -46,7 +47,7 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent.EntitiesDeletedHandler;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent.EntityDeletedHandler;
@@ -87,6 +88,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void unlockRows();
 
         void setRowSelected(String idString);
+
+        void setDownloadUrl(String downloadUrl);
     }
 
     public static final Object SLOT_NAMESPACES = new Object();
@@ -94,6 +97,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private final RestDispatch restDispatch;
     private final EntitiesService entitiesService;
     private final PlaceManager placeManager;
+    private final ExportService exportService;
     private final PropertyNamesAggregator propertyNamesAggregator;
     private final NamespacesListPresenter namespacesListPresenter;
 
@@ -105,6 +109,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         PlaceManager placeManager,
                         RestDispatch restDispatch,
                         EntitiesService entitiesService,
+                        ExportService exportService,
                         PropertyNamesAggregator propertyNamesAggregator,
                         NamespacesListPresenterFactory namespacesListPresenterFactory) {
         super(eventBus, view);
@@ -112,6 +117,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         this.placeManager = placeManager;
         this.restDispatch = restDispatch;
         this.entitiesService = entitiesService;
+        this.exportService = exportService;
         this.propertyNamesAggregator = propertyNamesAggregator;
         this.namespacesListPresenter = namespacesListPresenterFactory.create(this);
 
@@ -145,6 +151,13 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Override
     public void refresh() {
         KindSelectedEvent.fire(this, currentKind);
+    }
+
+    @Override
+    public void exportCurrentKind() {
+        String exportKindUrl = exportService.getExportKindUrl(currentKind);
+
+        getView().setDownloadUrl(exportKindUrl);
     }
 
     public void loadKind(String kind) {

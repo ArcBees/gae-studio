@@ -21,13 +21,17 @@ import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -59,6 +63,10 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     SimplePanel deleteByKind;
     @UiField
     DivElement deselect;
+    @UiField
+    Button exportKind;
+    @UiField
+    Frame downloadFrame;
 
     private final AppResources appResources;
     private final String lockedRowStyleName;
@@ -201,6 +209,16 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             };
             firstLoadHandlerRegistration = entityTable.addRowCountChangeHandler(handler);
         }
+    }
+
+    @Override
+    public void setDownloadUrl(String downloadUrl) {
+        downloadFrame.setUrl(downloadUrl);
+    }
+
+    @UiHandler("exportKind")
+    void onExportClicked(ClickEvent event) {
+        getUiHandlers().exportCurrentKind();
     }
 
     private void doSetRowSelected(String idString) {

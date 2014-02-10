@@ -7,19 +7,16 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.arcbees.gaestudio.server.guice.devserver;
 
-import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.gwtplatform.mvp.client.UiHandlers;
+import javax.inject.Singleton;
 
-interface EntityListUiHandlers extends UiHandlers {
-    void onEntitySelected(ParsedEntity parsedEntity);
+import com.google.inject.servlet.ServletModule;
 
-    void onRowLock();
-
-    void onRowUnlock();
-
-    void refresh();
-
-    void exportCurrentKind();
+public class DevModule extends ServletModule {
+    @Override
+    protected void configureServlets() {
+        filter("/_ah/upload/*").through(BlobUploadFilter.class);
+        bind(DebugCorsInterceptor.class).in(Singleton.class);
+    }
 }

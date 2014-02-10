@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityWidgetModule;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespaceWidgetModule;
+import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class VisualizerWidgetModule extends AbstractPresenterModule {
@@ -18,6 +19,8 @@ public class VisualizerWidgetModule extends AbstractPresenterModule {
     protected void configure() {
         install(new NamespaceWidgetModule());
         install(new EntityWidgetModule());
+
+        bindPresenterWidget(ImportPresenter.class, ImportPresenter.MyView.class, ImportView.class);
 
         bindSingletonPresenterWidget(EntityListPresenter.class, EntityListPresenter.MyView.class,
                 EntityListView.class);
@@ -27,5 +30,7 @@ public class VisualizerWidgetModule extends AbstractPresenterModule {
 
         bind(EntityDeletionPresenter.class).asEagerSingleton();
         bind(EntityDeletionPresenter.MyView.class).to(EntityDeletionView.class);
+
+        install(new GinFactoryModuleBuilder().build(UploadFormFactory.class));
     }
 }

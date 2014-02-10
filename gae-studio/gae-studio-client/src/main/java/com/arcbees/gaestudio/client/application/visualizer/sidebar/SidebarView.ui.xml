@@ -9,6 +9,7 @@
         }
     </ui:style>
     <g:HTMLPanel>
+        <g:Button ui:field="importKind" text="Import"/>
         <span class='{res.styles.kindHeaderElement}'>Kinds
             <widget:PanelToggle ui:field="closeToggle" addStyleNames="{res.styles.toggleKindsPanel}"/>
         </span>

@@ -7,6 +7,11 @@
     margin: 0;
 }
 
+ul.openedList {
+    min-width: 85%;
+    width: auto;
+}
+
 .openedList {
     background: #f6f6f6;
 
@@ -37,6 +42,19 @@
     color: #9b9b9b;
 
     margin-left: 17px;
+    margin-right: 17px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: literal('calc(100% - 52px)');
+    display: inline-block;
+}
+
+.ul.openedList li span {
+    color: #9b9b9b;
+
+    margin-left: 17px;
+    width: auto;
 }
 
 .ul li:hover {
@@ -54,7 +72,7 @@
 
 .dropDownArrow, .dropDownArrow:hover {
     width: 100%;
-    background-position-x: 95%;
+    background-position-x: literal('calc(100% - 12px)');
     background-position-y: 50%;
 }
 

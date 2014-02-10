@@ -7,26 +7,14 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
+package com.arcbees.gaestudio.server.util;
 
-import com.arcbees.gaestudio.server.rest.auth.AuthResource;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 
-public class RestModule extends AbstractModule {
+public class UtilModule extends AbstractModule {
     @Override
     protected void configure() {
-        install(new FactoryModuleBuilder().build(SubresourceFactory.class));
-
-        bind(BlobsResource.class);
-        bind(NamespacesResource.class);
-        bind(KindsResource.class);
-        bind(EntitiesResource.class);
-        bind(OperationsResource.class);
-        bind(RecordResource.class);
-        bind(AuthResource.class);
-        bind(EntityResource.class);
-        bind(ExportResource.class);
-        bind(ImportResource.class);
+        install(new FactoryModuleBuilder().build(JsonBlobReaderFactory.class));
     }
 }

@@ -19,7 +19,7 @@
         <maven-gae-plugin.version>0.9.6</maven-gae-plugin.version>
         <maven-war-plugin.version>2.3</maven-war-plugin.version>
         <cucumber.version>1.1.5</cucumber.version>
-        <gae.version>1.8.5</gae.version>
+        <gae.version>1.8.9</gae.version>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
     </properties>
 
@@ -176,7 +176,7 @@
                     <dependency>
                         <groupId>net.kindleit</groupId>
                         <artifactId>gae-runtime</artifactId>
-                        <version>1.8.6</version>
+                        <version>1.8.8</version>
                         <type>pom</type>
                     </dependency>
                 </dependencies>

@@ -9,17 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.gwtplatform.mvp.client.UiHandlers;
 
-interface EntityListUiHandlers extends UiHandlers {
-    void onEntitySelected(ParsedEntity parsedEntity);
-
-    void onRowLock();
-
-    void onRowUnlock();
-
-    void refresh();
-
-    void exportCurrentKind();
+interface ImportUiHandlers extends UiHandlers, UploadForm.Handler {
 }

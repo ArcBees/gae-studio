@@ -18,7 +18,9 @@
         }
 
         .entity {
-            overflow: hidden;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: visible;
         }
     </ui:style>
     <g:HTMLPanel debugId="{debugIds.getVisualizer}" styleName="{style.root}">

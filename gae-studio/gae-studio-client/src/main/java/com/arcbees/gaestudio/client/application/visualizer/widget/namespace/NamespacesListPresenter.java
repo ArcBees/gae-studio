@@ -68,10 +68,15 @@ public class NamespacesListPresenter extends PresenterWidget<NamespacesListPrese
     }
 
     @Override
-    protected void onReveal() {
-        super.onReveal();
+    protected void onReset() {
+        super.onReset();
 
         updateNamespaces();
+    }
+
+    @Override
+    protected void onReveal() {
+        super.onReveal();
     }
 
     private void updateNamespaces() {
