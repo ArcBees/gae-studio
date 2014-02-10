@@ -79,9 +79,11 @@ public class BlobGenerator {
     private ServletConfig mockServletConfig() {
         ServletConfig servletConfig = mock(ServletConfig.class);
         ServletContext servletContext = mock(ServletContext.class, RETURNS_DEEP_STUBS);
+
         when(servletContext.getAttribute(eq("com.google.appengine.devappserver.ApiProxyLocal")))
                 .thenReturn(new ApiProxyLocalFactory().create(mock(LocalServerEnvironment.class, RETURNS_DEEP_STUBS)));
         when(servletConfig.getServletContext()).thenReturn(servletContext);
+
         return servletConfig;
     }
 
