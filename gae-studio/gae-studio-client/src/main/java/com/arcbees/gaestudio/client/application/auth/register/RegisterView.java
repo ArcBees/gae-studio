@@ -10,11 +10,19 @@
 package com.arcbees.gaestudio.client.application.auth.register;
 
 import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 
 import com.arcbees.gaestudio.client.application.ui.AjaxLoader;
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.shared.auth.User;
+import com.google.common.base.Function;
 import com.google.common.base.Strings;
+import com.google.common.collect.FluentIterable;
 import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.editor.client.Editor;
+import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -25,21 +33,31 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
+import java.util.List;
+import java.util.Set;
+
 import static com.google.gwt.query.client.GQuery.$;
 
-public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> implements RegisterPresenter.MyView {
+public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
+        implements RegisterPresenter.MyView, Editor<User> {
     interface Binder extends UiBinder<Widget, RegisterView> {
     }
 
+    interface Driver extends SimpleBeanEditorDriver<User, RegisterView> {
+    }
+
     @UiField
+    @Path("profile.firstName")
     TextBox firstName;
     @UiField
+    @Path("profile.lastName")
     TextBox lastName;
     @UiField
-    TextBox registerEmail;
+    TextBox email;
     @UiField
-    PasswordTextBox registerPassword;
+    PasswordTextBox password;
     @UiField
+    @Ignore
     PasswordTextBox confirmPassword;
     @UiField
     Button register;
@@ -48,59 +66,60 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
     @UiField
     DivElement errorMessage;
 
+    private final Driver driver;
     private final AppConstants constants;
 
     @Inject
     RegisterView(Binder uiBinder,
                  AjaxLoader ajaxLoader,
+                 Driver driver,
                  AppConstants constants) {
         this.ajaxLoader = ajaxLoader;
+        this.driver = driver;
         this.constants = constants;
 
         initWidget(uiBinder.createAndBindUi(this));
+        driver.initialize(this);
 
         $(firstName).attr("placeholder", "First Name");
         $(lastName).attr("placeholder", "Last Name");
-        $(registerEmail).attr("placeholder", "Email");
-        $(registerPassword).attr("placeholder", "Password");
+        $(email).attr("placeholder", "Email");
+        $(password).attr("placeholder", "Password");
         $(confirmPassword).attr("placeholder", "Confirm your password");
     }
 
     @Override
-    public void resetSubmit() {
+    public void setupForm(User user) {
         ajaxLoader.hide();
         register.setEnabled(true);
-        clearErrorMessage();
-    }
-
-    @Override
-    public void resetForm() {
-        firstName.setText("");
-        lastName.setText("");
-        registerEmail.setText("");
-        registerPassword.setText("");
+        driver.edit(user);
 
         clearErrorMessage();
-        resetSubmit();
     }
 
     @UiHandler("register")
     void onRegisterClicked(ClickEvent event) {
-        if (passwordMatch()) {
-            ajaxLoader.show();
-            register.setEnabled(false);
-
-            getUiHandlers().register(firstName.getText(), lastName.getText(), registerEmail.getText(),
-                    registerPassword.getText());
-        } else {
-            showErrorMessage(constants.passwordDontMatch());
+        User user = driver.flush();
+        if (validateEntity(user)) {
+            if (passwordMatch()) {
+                getUiHandlers().register(user);
+            } else {
+                showErrorMessage(constants.passwordDontMatch());
+            }
         }
     }
 
+    private Boolean validateEntity(User user) {
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+
+        return violations.isEmpty();
+    }
+
     private Boolean passwordMatch() {
-        return !Strings.isNullOrEmpty(registerPassword.getText()) &&
+        return !Strings.isNullOrEmpty(password.getText()) &&
                 !Strings.isNullOrEmpty(confirmPassword.getText()) &&
-                registerPassword.getText().equals(confirmPassword.getText());
+                password.getText().equals(confirmPassword.getText());
     }
 
     private void showErrorMessage(String message) {

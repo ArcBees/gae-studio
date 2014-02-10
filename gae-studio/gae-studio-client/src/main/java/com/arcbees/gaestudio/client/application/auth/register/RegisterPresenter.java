@@ -33,9 +33,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, RegisterPresenter.MyProxy> implements
         RegisterUiHandlers {
     interface MyView extends View, HasUiHandlers<RegisterUiHandlers> {
-        void resetSubmit();
-
-        void resetForm();
+        void setupForm(User user);
     }
 
     @ProxyCodeSplit
@@ -68,17 +66,18 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
     }
 
     @Override
-    public void register(String firstName,
-                         String lastName,
-                         final String email,
-                         final String password) {
+    public void register(final User user) {
+        String email = user.getEmail();
+        String password = user.getPassword();
+        String firstName = user.getProfile().getFirstName();
+        String lastName = user.getProfile().getLastName();
+
         restDispatch.execute(authService.register(email, password, firstName, lastName),
                 new AsyncCallbackImpl<User>(appConstants.unableToRegister()) {
                     @Override
                     public void onSuccess(User user) {
                         DisplayMessageEvent.fire(RegisterPresenter.this,
                                 new Message(appConstants.registerSuccessfull(), MessageStyle.SUCCESS));
-                        getView().resetSubmit();
 
                         PlaceRequest place = new PlaceRequest.Builder().nameToken(NameTokens.getActivation()).build();
                         placeManager.revealPlace(place);
@@ -86,15 +85,13 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
 
                     @Override
                     public void handleFailure(Throwable caught) {
-                        getView().resetSubmit();
+                        getView().setupForm(user);
                     }
                 });
     }
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
-        getView().resetForm();
+        getView().setupForm(new User());
     }
 }

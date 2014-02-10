@@ -9,11 +9,16 @@
 
 package com.arcbees.gaestudio.shared.auth;
 
+import com.arcbees.gaestudio.shared.util.Validation;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.util.Date;
 
 public class User {
     private Long id;
+    @NotEmpty(message = Validation.REQUIRED)
     private String email;
+    @NotEmpty(message = Validation.REQUIRED)
     private String password;
     private Profile profile = new Profile();
     private Long dateActivated;

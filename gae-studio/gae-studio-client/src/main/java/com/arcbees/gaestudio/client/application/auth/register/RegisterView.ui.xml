@@ -113,10 +113,10 @@
                         <div class="{style.separator}"/>
 
                         <div>
-                            <g:TextBox ui:field="registerEmail"/>
+                            <g:TextBox ui:field="email"/>
                         </div>
                         <div>
-                            <g:PasswordTextBox ui:field="registerPassword"/>
+                            <g:PasswordTextBox ui:field="password"/>
                         </div>
                         <div>
                             <g:PasswordTextBox ui:field="confirmPassword"/>

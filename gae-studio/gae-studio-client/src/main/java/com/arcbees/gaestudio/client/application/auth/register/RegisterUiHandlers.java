@@ -9,8 +9,9 @@
 
 package com.arcbees.gaestudio.client.application.auth.register;
 
+import com.arcbees.gaestudio.shared.auth.User;
 import com.gwtplatform.mvp.client.UiHandlers;
 
 public interface RegisterUiHandlers extends UiHandlers {
-    void register(String firstName, String lastName, String email, String password);
+    void register(User user);
 }
