@@ -25,12 +25,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.apache.commons.fileupload.FileUploadException;
-
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.service.BlobsService;
 import com.arcbees.gaestudio.server.service.ImportService;
-import com.arcbees.gaestudio.server.util.JsonBlobReaderFactory;
 import com.arcbees.gaestudio.shared.BaseRestPath;
 import com.arcbees.gaestudio.shared.dto.ObjectWrapper;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
@@ -104,7 +101,7 @@ public class ImportResource extends HttpServlet {
 
     @POST
     @Produces(MediaType.TEXT_HTML)
-    public Response importData(@Context HttpServletRequest request) throws IOException, FileUploadException {
+    public Response importData(@Context HttpServletRequest request) throws IOException {
         BlobKey blobKey = extractBlobKey(request);
 
         UploadResponse uploadResponse;
