@@ -15,17 +15,11 @@ import com.arcbees.gaestudio.shared.dto.ObjectWrapper;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.client.RestDispatchAsync;
-import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PopupView;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
-
-public class ImportPresenter extends PresenterWidget<ImportPresenter.MyView> implements ImportUiHandlers {
-    private final RestDispatchAsync restDispatch;
-    private final ImportService importService;
-    private final UploadFormFactory uploadFormFactory;
-
-    interface MyView extends PopupView, HasUiHandlers<ImportUiHandlers> {
+public class ImportPresenter extends PresenterWidget<ImportPresenter.MyView> implements UploadForm.Handler {
+    interface MyView extends PopupView {
         void hide();
 
         void setUploadWidget(UploadForm uploadWidget);
@@ -34,6 +28,10 @@ public class ImportPresenter extends PresenterWidget<ImportPresenter.MyView> imp
 
         void prepareForNewUpload();
     }
+
+    private final RestDispatchAsync restDispatch;
+    private final ImportService importService;
+    private final UploadFormFactory uploadFormFactory;
 
     @Inject
     ImportPresenter(EventBus eventBus,
@@ -46,8 +44,6 @@ public class ImportPresenter extends PresenterWidget<ImportPresenter.MyView> imp
         this.restDispatch = restDispatch;
         this.importService = importService;
         this.uploadFormFactory = uploadFormFactory;
-
-        getView().setUiHandlers(this);
 
         getUploadUrl();
     }

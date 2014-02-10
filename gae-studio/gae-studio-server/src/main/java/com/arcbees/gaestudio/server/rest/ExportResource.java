@@ -20,32 +20,25 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
-import com.arcbees.gaestudio.server.service.EntitiesService;
+import com.arcbees.gaestudio.server.service.ExportService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
-import com.google.appengine.api.datastore.Entity;
-import com.google.gson.Gson;
 
 @Path(EndPoints.EXPORT)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
 public class ExportResource {
-    private final EntitiesService entitiesService;
-    private final Gson gson;
+    private final ExportService exportService;
 
     @Inject
-    ExportResource(EntitiesService entitiesService,
-                   Gson gson) {
-        this.entitiesService = entitiesService;
-        this.gson = gson;
+    ExportResource(ExportService exportService) {
+        this.exportService = exportService;
     }
 
     @GET
     public Response exportKind(@QueryParam(UrlParameters.KIND) String kind) {
-        Iterable<Entity> entities = entitiesService.getEntities(kind, null, null);
-
-        String data = gson.toJson(entities);
+        String data = exportService.exportKindToJson(kind);
 
         return Response.ok(data)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + kind + ".json\"")

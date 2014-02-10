@@ -19,9 +19,9 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
+import com.gwtplatform.mvp.client.PopupViewImpl;
 
-public class ImportView extends PopupViewWithUiHandlers<ImportUiHandlers> implements ImportPresenter.MyView {
+public class ImportView extends PopupViewImpl implements ImportPresenter.MyView {
     interface Binder extends UiBinder<Widget, ImportView> {
     }
 

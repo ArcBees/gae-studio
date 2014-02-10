@@ -14,7 +14,6 @@ import javax.inject.Inject;
 import com.google.common.base.Strings;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.BrowserEvents;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.json.client.JSONObject;
@@ -113,7 +112,7 @@ public class UploadForm extends Composite implements FormPanel.SubmitCompleteHan
             @Override
             public void onClick(ClickEvent event) {
                 registerFileChangedHandler();
-                redirectClick(fileUpload.getElement());
+                $(fileUpload).click();
             }
         });
         flowPanel.add(button);
@@ -148,8 +147,4 @@ public class UploadForm extends Composite implements FormPanel.SubmitCompleteHan
 
         return object.getJavaScriptObject().cast();
     }
-
-    private native void redirectClick(Element el)/*-{
-        el.click();
-    }-*/;
 }

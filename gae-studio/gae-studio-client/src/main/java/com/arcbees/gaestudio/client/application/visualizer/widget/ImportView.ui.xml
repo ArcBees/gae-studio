@@ -11,7 +11,9 @@
                   styleName="{res.styles.popup}" autoHideEnabled="true">
         <g:HTMLPanel styleName="{style.container}">
             <g:SimplePanel ui:field="uploadFormContainer"/>
-            <w:AjaxLoader ui:field="ajaxLoader"/>
+            <div>
+                <w:AjaxLoader ui:field="ajaxLoader"/>
+            </div>
             <g:Button ui:field="upload" enabled="false">Upload</g:Button>
             <g:Button ui:field="cancel">Cancel</g:Button>
         </g:HTMLPanel>

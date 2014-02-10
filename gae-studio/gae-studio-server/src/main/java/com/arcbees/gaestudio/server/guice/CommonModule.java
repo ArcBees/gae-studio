@@ -17,7 +17,7 @@ import com.arcbees.gaestudio.server.analytic.AnalyticModule;
 import com.arcbees.gaestudio.server.appengine.AppEngineModule;
 import com.arcbees.gaestudio.server.dto.mapper.MapperModule;
 import com.arcbees.gaestudio.server.exception.ExceptionModule;
-import com.arcbees.gaestudio.server.guice.devserver.DevModule;
+import com.arcbees.gaestudio.server.guice.devserver.DevServerModule;
 import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
 import com.arcbees.gaestudio.server.rest.RestModule;
 import com.arcbees.gaestudio.server.service.ServiceModule;
@@ -72,7 +72,7 @@ public class CommonModule extends ServletModule {
         filter("/_ah/channel/connected/", "/_ah/channel/disconnected/").through(ConnectFilter.class);
 
         if (SystemProperty.environment.value() != SystemProperty.Environment.Value.Production) {
-            install(new DevModule());
+            install(new DevServerModule());
         }
     }
 

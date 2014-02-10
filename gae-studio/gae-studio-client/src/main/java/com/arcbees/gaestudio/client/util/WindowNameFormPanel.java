@@ -13,6 +13,10 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.impl.FormPanelImpl;
 import com.google.gwt.user.client.ui.impl.FormPanelImplHost;
 
+/**
+ * Class used to hack the same-origin policy when uploading to the blobstore from a different host than the Blobstore
+ * upload url
+ */
 public class WindowNameFormPanel extends FormPanelImpl {
     @Override
     public native String getContents(Element iframe) /*-{

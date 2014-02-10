@@ -13,7 +13,7 @@ import javax.inject.Singleton;
 
 import com.google.inject.servlet.ServletModule;
 
-public class DevModule extends ServletModule {
+public class DevServerModule extends ServletModule {
     @Override
     protected void configureServlets() {
         filter("/_ah/upload/*").through(BlobUploadFilter.class);

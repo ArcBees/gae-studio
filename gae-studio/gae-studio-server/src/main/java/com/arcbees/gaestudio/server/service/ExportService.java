@@ -7,9 +7,8 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.arcbees.gaestudio.server.service;
 
-import com.gwtplatform.mvp.client.UiHandlers;
-
-interface ImportUiHandlers extends UiHandlers, UploadForm.Handler {
+public interface ExportService {
+    String exportKindToJson(String kind);
 }

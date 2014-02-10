@@ -34,6 +34,7 @@ public class ImportServiceImpl implements ImportService {
         List<Entity> newEntites = Lists.newArrayList();
 
         for (Entity entity : entities) {
+            // Entities imported might not have the correct appId, we need to make a copy
             Entity newEntity = createEntityCopy(entity);
             newEntites.add(newEntity);
         }
@@ -44,11 +45,10 @@ public class ImportServiceImpl implements ImportService {
     }
 
     private Entity createEntityCopy(Entity entity) {
-        Key newKey;
-
         Key key = entity.getKey();
         NamespaceManager.set(key.getNamespace());
 
+        Key newKey;
         if (key.getId() == 0) {
             newKey = KeyFactory.createKey(key.getKind(), key.getName());
         } else {

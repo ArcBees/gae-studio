@@ -52,6 +52,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     private final KindsService kindsService;
     private final Provider<ImportPresenter> importPresenterProvider;
     private final NamespacesListPresenter namespacesListPresenter;
+    
     private KindPanelToggleEvent.Action action = CLOSE;
 
     @Inject

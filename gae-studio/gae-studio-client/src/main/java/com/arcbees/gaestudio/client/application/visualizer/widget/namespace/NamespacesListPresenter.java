@@ -74,11 +74,6 @@ public class NamespacesListPresenter extends PresenterWidget<NamespacesListPrese
         updateNamespaces();
     }
 
-    @Override
-    protected void onReveal() {
-        super.onReveal();
-    }
-
     private void updateNamespaces() {
         restDispatch.execute(namespacesService.getNamespaces(), new AsyncCallbackImpl<List<AppIdNamespaceDto>>() {
             @Override
