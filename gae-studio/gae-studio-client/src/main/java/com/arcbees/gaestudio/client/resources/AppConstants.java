@@ -101,4 +101,8 @@ public interface AppConstants extends Constants {
     String oops();
 
     String registerKey();
+
+    String passwordDontMatch();
+
+    String allFieldsAreRequired();
 }

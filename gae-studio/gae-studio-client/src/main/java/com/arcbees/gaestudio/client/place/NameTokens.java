@@ -17,9 +17,14 @@ public class NameTokens {
     public static final String auth = "auth";
     public static final String forgotpass = "forgotpass";
     public static final String register = "register";
+    public static final String activation = "activation";
 
     public static String getRegister() {
         return register;
+    }
+
+    public static String getActivation() {
+        return activation;
     }
 
     public static String getForgotpass() {

@@ -68,6 +68,30 @@
             <version>${gwtquery.version}</version>
         </dependency>
 
+        <!-- Validation dependencies -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${javax.validation.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-source.version}</version>
+            <classifier>sources</classifier>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Other dependencies -->
         <dependency>
             <groupId>com.google.guava</groupId>
