@@ -118,6 +118,8 @@ public interface AppResources extends ClientBundle {
         String deselectDisabled();
 
         String power();
+
+        String errorField();
     }
 
     public interface Sprites extends CssResource {

@@ -18,12 +18,17 @@ import javax.validation.Validator;
 
 import com.arcbees.gaestudio.client.application.ui.AjaxLoader;
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.shared.auth.User;
+import com.arcbees.gquery.tooltip.client.Tooltip;
+import com.arcbees.gquery.tooltip.client.TooltipOptions;
 import com.google.common.base.Strings;
 import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -65,14 +70,17 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
 
     private final Driver driver;
     private final AppConstants constants;
+    private final AppResources resources;
 
     @Inject
     RegisterView(Binder uiBinder,
                  AjaxLoader ajaxLoader,
                  Driver driver,
+                 AppResources resources,
                  AppConstants constants) {
         this.ajaxLoader = ajaxLoader;
         this.driver = driver;
+        this.resources = resources;
         this.constants = constants;
 
         initWidget(uiBinder.createAndBindUi(this));
@@ -87,6 +95,7 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
 
     @Override
     public void edit(User user) {
+        confirmPassword.setText("");
         ajaxLoader.hide();
         register.setEnabled(true);
         driver.edit(user);
@@ -109,17 +118,25 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
     private Boolean validateEntity(User user) {
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<User>> violations = validator.validate(user);
-        if (!violations.isEmpty()) {
-            showErrorMessage(constants.allFieldsAreRequired());
+
+        for (ConstraintViolation<User> violation : violations) {
+            String nameSelector = "[name = \"" + violation.getPropertyPath().toString() + "\"]";
+            $(nameSelector).addClass(resources.styles().errorField());
+            $(nameSelector).as(Tooltip.Tooltip).tooltip(new TooltipOptions()
+                    .withContent(violation.getMessage())
+                    .withPlacement(TooltipOptions.TooltipPlacement.TOP));
         }
 
         return violations.isEmpty();
     }
 
     private Boolean passwordMatch() {
-        return !Strings.isNullOrEmpty(password.getText()) &&
-                !Strings.isNullOrEmpty(confirmPassword.getText()) &&
-                password.getText().equals(confirmPassword.getText());
+        String passwordText = password.getText();
+        String confirmPasswordText = confirmPassword.getText();
+
+        return !Strings.isNullOrEmpty(passwordText) &&
+                !Strings.isNullOrEmpty(confirmPasswordText) &&
+                passwordText.equals(confirmPasswordText);
     }
 
     private void showErrorMessage(String message) {
@@ -128,8 +145,15 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
     }
 
     private void clearErrorMessage() {
-        errorMessage.setInnerText("");
         setErrorMessageOpacity(0f);
+        errorMessage.setInnerText("");
+        $("." + resources.styles().errorField()).each(new Function() {
+            @Override
+            public void f(Element e) {
+                $(e).removeClass(resources.styles().errorField());
+                $(e).as(Tooltip.Tooltip).destroy();
+            }
+        });
     }
 
     private void setErrorMessageOpacity(float opacity) {
