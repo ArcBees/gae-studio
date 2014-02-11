@@ -9,15 +9,10 @@
 
 package com.arcbees.gaestudio.server.service;
 
-import java.util.Iterator;
 import java.util.List;
 
-import com.google.appengine.api.blobstore.BlobInfo;
-import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Entity;
 
-public interface BlobsService {
-    Iterator<BlobInfo> getAllBlobInfos();
-
-    List<Entity> extractEntitiesFromBlob(BlobKey blobKey);
+public interface ImportService {
+    void importEntities(List<Entity> entities);
 }

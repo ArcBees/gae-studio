@@ -9,15 +9,26 @@
 
 package com.arcbees.gaestudio.server.service;
 
-import java.util.Iterator;
-import java.util.List;
+import javax.inject.Inject;
 
-import com.google.appengine.api.blobstore.BlobInfo;
-import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Entity;
+import com.google.gson.Gson;
 
-public interface BlobsService {
-    Iterator<BlobInfo> getAllBlobInfos();
+public class ExportServiceImpl implements ExportService {
+    private final EntitiesService entitiesService;
+    private final Gson gson;
 
-    List<Entity> extractEntitiesFromBlob(BlobKey blobKey);
+    @Inject
+    ExportServiceImpl(EntitiesService entitiesService,
+                      Gson gson) {
+        this.entitiesService = entitiesService;
+        this.gson = gson;
+    }
+
+    @Override
+    public String exportKindToJson(String kind) {
+        Iterable<Entity> entities = entitiesService.getEntities(kind, null, null);
+
+        return gson.toJson(entities);
+    }
 }

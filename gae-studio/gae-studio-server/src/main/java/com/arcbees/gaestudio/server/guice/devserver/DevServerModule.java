@@ -7,17 +7,16 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.service;
+package com.arcbees.gaestudio.server.guice.devserver;
 
-import java.util.Iterator;
-import java.util.List;
+import javax.inject.Singleton;
 
-import com.google.appengine.api.blobstore.BlobInfo;
-import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.datastore.Entity;
+import com.google.inject.servlet.ServletModule;
 
-public interface BlobsService {
-    Iterator<BlobInfo> getAllBlobInfos();
-
-    List<Entity> extractEntitiesFromBlob(BlobKey blobKey);
+public class DevServerModule extends ServletModule {
+    @Override
+    protected void configureServlets() {
+        filter("/_ah/upload/*").through(BlobUploadFilter.class);
+        bind(DebugCorsInterceptor.class).in(Singleton.class);
+    }
 }

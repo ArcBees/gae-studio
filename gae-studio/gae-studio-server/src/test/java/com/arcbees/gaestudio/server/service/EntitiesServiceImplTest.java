@@ -46,6 +46,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
     private static final String UNINDEXED_PROPERTY_NAME = "unindexed-property-name";
     private static final String A_NAME = "a-name";
     private static final String ANOTHER_NAME = "another-name";
+    private static final String A_NAMESPACE = "a-namespace";
 
     @Inject
     EntitiesService entitiesService;
@@ -120,13 +121,13 @@ public class EntitiesServiceImplTest extends GaeTestBase {
     public void deleteEntitiesByNamespace_twoEntitiesStored_shouldHaveOneMoreEntities() {
         //given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
-        createEntityInDatastore(GAE_KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
+        createEntityInNamespace(A_NAMESPACE, KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
         //when
         entitiesService.deleteEntities(null, "", DeleteEntities.NAMESPACE);
 
         //then
-        assertEquals(1l, (long) entitiesService.getCount(GAE_KIND_NAME));
+        assertEquals(1l, (long) entitiesService.getCount(KIND_NAME));
     }
 
     @Test

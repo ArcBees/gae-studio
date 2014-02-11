@@ -7,17 +7,9 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.service;
+package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import java.util.Iterator;
-import java.util.List;
-
-import com.google.appengine.api.blobstore.BlobInfo;
-import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.datastore.Entity;
-
-public interface BlobsService {
-    Iterator<BlobInfo> getAllBlobInfos();
-
-    List<Entity> extractEntitiesFromBlob(BlobKey blobKey);
+public interface UploadFormFactory {
+    UploadForm createForm(String uploadUrl,
+                          UploadForm.Handler handler);
 }

@@ -7,17 +7,11 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.service;
+package com.arcbees.gaestudio.server.util;
 
-import java.util.Iterator;
-import java.util.List;
-
-import com.google.appengine.api.blobstore.BlobInfo;
 import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.datastore.Entity;
+import com.google.gson.stream.JsonReader;
 
-public interface BlobsService {
-    Iterator<BlobInfo> getAllBlobInfos();
-
-    List<Entity> extractEntitiesFromBlob(BlobKey blobKey);
+public interface JsonBlobReaderFactory {
+    JsonReader create(BlobKey blobKey);
 }

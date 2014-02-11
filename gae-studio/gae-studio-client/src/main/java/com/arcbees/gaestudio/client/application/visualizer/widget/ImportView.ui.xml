@@ -1,0 +1,21 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:w='urn:import:com.arcbees.gaestudio.client.application.ui'>
+    <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <ui:style>
+        .container {
+            width: 100%;
+        }
+    </ui:style>
+    <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{res.styles.glassPanel}" modal="true"
+                  styleName="{res.styles.popup}" autoHideEnabled="false">
+        <g:HTMLPanel styleName="{style.container}">
+            <g:SimplePanel ui:field="uploadFormContainer"/>
+            <div>
+                <w:AjaxLoader ui:field="ajaxLoader"/>
+            </div>
+            <g:Button ui:field="upload" enabled="false">Upload</g:Button>
+            <g:Button ui:field="cancel">Cancel</g:Button>
+        </g:HTMLPanel>
+    </g:PopupPanel>
+</ui:UiBinder>

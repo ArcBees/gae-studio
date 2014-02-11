@@ -7,17 +7,20 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.service;
+package com.arcbees.gaestudio.shared.dto;
 
-import java.util.Iterator;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.google.appengine.api.blobstore.BlobInfo;
-import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.datastore.Entity;
+public class ObjectWrapper<T> {
+    private final T value;
 
-public interface BlobsService {
-    Iterator<BlobInfo> getAllBlobInfos();
+    @JsonCreator
+    public ObjectWrapper(@JsonProperty("value") T value) {
+        this.value = value;
+    }
 
-    List<Entity> extractEntitiesFromBlob(BlobKey blobKey);
+    public T getValue() {
+        return value;
+    }
 }

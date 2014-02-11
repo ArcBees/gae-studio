@@ -38,7 +38,7 @@
         <gwt-jackson.version>0.4.0</gwt-jackson.version>
 
         <!-- server -->
-        <gae.version>1.8.5</gae.version>
+        <gae.version>1.8.9</gae.version>
         <servlet-api.version>2.5</servlet-api.version>
         <guava.version>16.0</guava.version>
         <gson.version>2.2.4</gson.version>
@@ -46,7 +46,7 @@
         <objectify.version>4.0rc1</objectify.version>
         <persistence-api.version>1.0.2</persistence-api.version>
         <google-http-client-appengine.version>1.15.0-rc</google-http-client-appengine.version>
-        <resteasy.version>3.0.4.Final</resteasy.version>
+        <resteasy.version>3.0.6.Final</resteasy.version>
         <velocity.version>1.7</velocity.version>
         <oauth-client.version>1.0-SNAPSHOT</oauth-client.version>
         <jackson-annotations.version>2.2.3</jackson-annotations.version>
