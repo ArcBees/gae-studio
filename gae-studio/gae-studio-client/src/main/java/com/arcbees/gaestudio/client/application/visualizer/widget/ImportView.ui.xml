@@ -8,7 +8,7 @@
         }
     </ui:style>
     <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{res.styles.glassPanel}" modal="true"
-                  styleName="{res.styles.popup}" autoHideEnabled="true">
+                  styleName="{res.styles.popup}" autoHideEnabled="false">
         <g:HTMLPanel styleName="{style.container}">
             <g:SimplePanel ui:field="uploadFormContainer"/>
             <div>
