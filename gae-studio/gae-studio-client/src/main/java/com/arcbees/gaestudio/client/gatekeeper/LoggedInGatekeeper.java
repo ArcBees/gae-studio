@@ -16,7 +16,7 @@ import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.gwtplatform.mvp.client.annotations.DefaultGatekeeper;
 import com.gwtplatform.mvp.client.proxy.Gatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 @DefaultGatekeeper
 public class LoggedInGatekeeper implements Gatekeeper {

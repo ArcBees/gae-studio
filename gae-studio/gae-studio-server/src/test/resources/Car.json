@@ -1,0 +1,106 @@
+[
+  {
+    "key": {
+      "parentKey": null,
+      "kind": "Car",
+      "appId": null,
+      "id": 4785074604081152,
+      "name": null,
+      "appIdNamespace": {
+        "appId": "companion",
+        "namespace": ""
+      }
+    },
+    "propertyMap": {
+      "mixedProperties": {
+        "value": [
+          {
+            "value": 1,
+            "__gaePropertyType": "NUMERIC"
+          },
+          {
+            "value": "some string",
+            "__gaePropertyType": "STRING"
+          },
+          {
+            "value": {
+              "latitude": 10.0,
+              "longitude": 10.0
+            },
+            "__gaePropertyType": "GEO_PT"
+          }
+        ],
+        "__indexed": false,
+        "__gaePropertyType": "COLLECTION"
+      },
+      "geoPts": {
+        "value": [
+          {
+            "value": {
+              "latitude": 0.0,
+              "longitude": 0.0
+            },
+            "__gaePropertyType": "GEO_PT"
+          },
+          {
+            "value": {
+              "latitude": 0.0,
+              "longitude": 0.0
+            },
+            "__gaePropertyType": "GEO_PT"
+          },
+          {
+            "value": {
+              "latitude": 10.0,
+              "longitude": 10.0
+            },
+            "__gaePropertyType": "GEO_PT"
+          }
+        ],
+        "__indexed": false,
+        "__gaePropertyType": "COLLECTION"
+      },
+      "wheels.size": {
+        "value": [
+          {
+            "value": 5.25,
+            "__gaePropertyType": "FLOATING"
+          },
+          {
+            "value": 10.0,
+            "__gaePropertyType": "FLOATING"
+          },
+          {
+            "value": 20.75,
+            "__gaePropertyType": "FLOATING"
+          }
+        ],
+        "__indexed": false,
+        "__gaePropertyType": "COLLECTION"
+      },
+      "booleans": {
+        "value": [
+          {
+            "value": true,
+            "__gaePropertyType": "BOOLEAN"
+          },
+          {
+            "value": true,
+            "__gaePropertyType": "BOOLEAN"
+          },
+          {
+            "value": true,
+            "__gaePropertyType": "BOOLEAN"
+          }
+        ],
+        "__indexed": false,
+        "__gaePropertyType": "COLLECTION"
+      },
+      "make": {
+        "value": "Ford",
+        "__gaePropertyType": "STRING",
+        "__indexed": false
+      }
+    }
+  }
+]

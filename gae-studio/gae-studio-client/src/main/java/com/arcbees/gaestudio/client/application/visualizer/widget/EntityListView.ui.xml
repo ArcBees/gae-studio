@@ -11,8 +11,16 @@
         }
 
         .deleteByKind {
+            width: 242px;
             float: right;
-            width: 200px;
+        }
+
+        .deleteByKind ul {
+            right: 38px;
+        }
+
+        .deleteByKind ul span {
+            max-width: 450px;
         }
 
         .table {
@@ -25,7 +33,8 @@
         }
 
         .main {
-            overflow: hidden;
+            position: relative;
+            height: 100%;
         }
 
         .refresh {

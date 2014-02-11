@@ -37,9 +37,9 @@ public class AppIdNamespaceRenderer extends AbstractRenderer<AppIdNamespaceDto> 
         if (object == null) {
             namespace = "All namespaces";
         } else if (Strings.isNullOrEmpty(object.getNamespace())) {
-            namespace = "NS: <default>";
+            namespace = "<default>";
         } else {
-            namespace = "NS: " + object.getNamespace();
+            namespace = object.getNamespace();
         }
 
         return template.namespaceTemplate(namespace).asString();
