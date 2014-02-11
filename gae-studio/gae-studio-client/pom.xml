@@ -60,7 +60,7 @@
         <dependency>
             <groupId>com.arcbees.gquery</groupId>
             <artifactId>tooltip</artifactId>
-            <version>1.0</version>
+            <version>${gquery-plugins.version}</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.gwtquery</groupId>
