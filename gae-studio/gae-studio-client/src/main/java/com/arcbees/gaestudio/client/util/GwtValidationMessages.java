@@ -7,11 +7,12 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.auth.register;
+package com.arcbees.gaestudio.client.util;
 
-import com.arcbees.gaestudio.shared.auth.User;
-import com.gwtplatform.mvp.client.UiHandlers;
+import com.arcbees.gaestudio.shared.util.Validation;
+import com.google.gwt.i18n.client.ConstantsWithLookup;
 
-public interface RegisterUiHandlers extends UiHandlers {
-    void register(User user);
+public interface GwtValidationMessages extends ConstantsWithLookup {
+    @Key(Validation.REQUIRED_KEY)
+    String required();
 }

@@ -622,3 +622,8 @@ input:focus, textarea:focus, button:focus {
 .power:hover {
     cursor: pointer;
 }
+
+.errorField {
+    outline: #ff5400 solid 2px;
+    outline-offset: -2px;
+}

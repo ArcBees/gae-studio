@@ -1,0 +1,108 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:with field="nametokens" type="com.arcbees.gaestudio.client.place.NameTokens"/>
+    <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+
+    <ui:style>
+        body, html, .root {
+            height: 100%;
+        }
+
+        .topBlueBar {
+            height: 4px;
+        }
+
+        .middleBlueBar {
+            height: 75px;
+            margin-top: 195px;
+        }
+
+        .topBlueBar, .middleBlueBar, .footer {
+            background-color: #25aae1;
+        }
+
+        .root {
+            background-color: #e6e6e6;
+        }
+
+        .wrap {
+            min-height: 100%;
+        }
+
+        .footer {
+            position: relative;
+            margin-top: -14px;
+            height: 14px;
+            clear: both;
+        }
+
+        .main {
+            overflow: auto;
+            padding-bottom: 14px;
+        }
+
+        .logo {
+            margin-top: -168px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .formTitle {
+            color: #353535;
+            font-size: 20px;
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+        .wrapper {
+            font-size: 1.2em;
+            text-align: center;
+        }
+
+        .paragraph {
+            margin-bottom: 30px;
+        }
+
+        .loginLink {
+            color: #25AAE1;
+            text-decoration: none;
+        }
+
+        .loginLink:hover {
+            color: #0e76bc !important;
+        }
+
+        .loginLink:visited {
+            color: #25AAE1;
+        }
+    </ui:style>
+
+    <g:HTMLPanel styleName="{style.root}">
+        <div class="{style.wrap}">
+            <div class="{style.main}">
+                <div class="{style.topBlueBar}"/>
+                <div class="{style.middleBlueBar}"/>
+                <div class="{res.styles.authForm}">
+                    <g:Image resource="{res.splashLogo}" addStyleNames="{style.logo}"/>
+                    <div class="{res.styles.authForm}">
+                        <h3 class="{style.formTitle}">Activate your account</h3>
+
+                        <div class="{style.wrapper}">
+                            <p class="{style.paragraph}">
+                                A confirmation was sent to your e-mail address to activate your account
+                            </p>
+
+                            <g:InlineHyperlink styleName="{style.loginLink}" targetHistoryToken="{nametokens.getAuth}">
+                                Go to the login page
+                            </g:InlineHyperlink>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="{style.footer}"/>
+    </g:HTMLPanel>
+</ui:UiBinder>
