@@ -71,18 +71,18 @@ public class LoginHelperImpl implements LoginHelper, HasHandlers {
             @Override
             public void handleFailure(Throwable throwable) {
                 currentUser.setLicenseValid(false);
-                navigateToVisualizer(placeToReveal);
+                navigate(placeToReveal);
             }
 
             @Override
             public void onSuccess(Void aVoid) {
                 currentUser.setLicenseValid(true);
-                navigateToVisualizer(placeToReveal);
+                navigate(placeToReveal);
             }
         });
     }
 
-    private void navigateToVisualizer(PlaceRequest placeToReveal) {
+    private void navigate(PlaceRequest placeToReveal) {
         placeManager.revealPlace(placeToReveal);
     }
 }
