@@ -23,13 +23,13 @@ import com.arcbees.gaestudio.shared.auth.User;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.rest.client.RestDispatchAsync;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 public class LoginHelperImpl implements LoginHelper, HasHandlers {
     private final EventBus eventBus;
-    private final RestDispatchAsync restDispatch;
+    private final RestDispatch restDispatch;
     private final LicenseService licenseService;
     private final CurrentUser currentUser;
     private final PlaceManager placeManager;
@@ -37,7 +37,7 @@ public class LoginHelperImpl implements LoginHelper, HasHandlers {
 
     @Inject
     LoginHelperImpl(EventBus eventBus,
-                    RestDispatchAsync restDispatch,
+                    RestDispatch restDispatch,
                     LicenseService licenseService,
                     CurrentUser currentUser,
                     PlaceManager placeManager,
