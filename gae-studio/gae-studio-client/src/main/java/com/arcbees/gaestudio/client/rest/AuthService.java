@@ -17,7 +17,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
-import com.arcbees.gaestudio.shared.auth.Token;
 import com.arcbees.gaestudio.shared.auth.User;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
@@ -43,7 +42,7 @@ public interface AuthService extends RestService {
     @Path(EndPoints.LOGIN)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     RestAction<User> login(@FormParam(UrlParameters.EMAIL) String email,
-                            @FormParam(UrlParameters.PASSWORD) String password);
+                           @FormParam(UrlParameters.PASSWORD) String password);
 
     @DELETE
     @Path(EndPoints.LOGIN)
