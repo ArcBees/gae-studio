@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <link href='../resources/messageStyles.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="mailWrapper">
+    <table class="mailHeader">
+        <tr>
+            <td>
+                <div class="topBlueBar" >
+                <div class="middleBlueBar" >
+                <div class="logoImg" >
+            </td>
+        </tr>
+    </table>
+    <table class="mailContent" align="center">
+        <tr>
+            <td>${textMessage}</td>
+        </tr>
+    </table>
+    <table class="mailFooter">
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+</body>
+</html>

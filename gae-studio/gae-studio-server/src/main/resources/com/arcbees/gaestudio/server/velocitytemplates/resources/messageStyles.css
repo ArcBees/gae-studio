@@ -1,0 +1,79 @@
+body, * {
+    font-family: Source Sans Pro, Verdana, sans-serif;
+}
+
+input:focus, textarea:focus, button:focus {
+    outline: none;
+}
+
+.clear {
+    clear: both;
+}
+
+.mailHeader, .mailFooter {
+    overflow: visible;
+    width: 100%;
+}
+
+.mailContent {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+}
+
+.mailHeader {
+    margin-right: -1px;
+    padding: 0 15px;
+    clear: both;
+    margin-bottom: 25px;
+}
+
+.mailFooter {
+    align-content: center;
+    position: relative;
+    margin-top: -14px;
+    height: 14px;
+    clear: both;
+    background-color: #25aae1;
+}
+
+.mailWrapper {
+    width: 100%;
+    position: absolute;
+    top: 110px;
+    background-color: #e6e6e6;
+}
+
+.mailWrapper a {
+    cursor: pointer;
+}
+
+.mailWrapper a:active {
+    color: #25aae1;
+    font-size: 1.2em;
+    text-decoration: none;
+}
+
+.topBlueBar {
+    height: 4px;
+    background-color: #25aae1;
+}
+
+.middleBlueBar {
+    height: 75px;
+    margin-top: 195px;
+    background-color: #25aae1;
+}
+
+.logo {
+    margin-top: -168px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.logoImg {
+    background: url(../resources/logo.png) no-repeat;
+}
