@@ -42,7 +42,7 @@ public interface AuthService extends RestService {
     @POST
     @Path(EndPoints.LOGIN)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    RestAction<Token> login(@FormParam(UrlParameters.EMAIL) String email,
+    RestAction<User> login(@FormParam(UrlParameters.EMAIL) String email,
                             @FormParam(UrlParameters.PASSWORD) String password);
 
     @DELETE

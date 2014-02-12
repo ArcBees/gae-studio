@@ -13,7 +13,7 @@ import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
 import com.arcbees.gaestudio.client.util.RestCallbackImpl;
-import com.arcbees.gaestudio.shared.auth.Token;
+import com.arcbees.gaestudio.shared.auth.User;
 import com.google.gwt.http.client.Response;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -82,10 +82,10 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
     @Override
     public void login(String email, String password) {
         restDispatch.execute(authService.login(email, password),
-                new RestCallbackImpl<Token>() {
+                new RestCallbackImpl<User>() {
                     @Override
-                    public void onSuccess(Token result) {
-                        loginHelper.login();
+                    public void onSuccess(User user) {
+                        loginHelper.login(user);
                     }
 
                     @Override

@@ -19,6 +19,7 @@ import org.mockito.Matchers;
 
 import com.arcbees.gaestudio.client.util.AsyncMockStubber;
 import com.arcbees.gaestudio.shared.auth.Token;
+import com.arcbees.gaestudio.shared.auth.User;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
@@ -42,15 +43,15 @@ public class AuthPresenterTest {
     @Test
     public void login_success_callsLoginHelper(LoginHelper loginHelper,
                                                RestDispatch dispatch,
-                                               Token token) {
+                                               User user) {
         //given
-        AsyncMockStubber.callSuccessWith(token).when(dispatch).execute(Matchers.<RestAction>any(),
+        AsyncMockStubber.callSuccessWith(user).when(dispatch).execute(Matchers.<RestAction>any(),
                 Matchers.<AsyncCallback>any());
 
         //when
         presenter.login(ANY_STRING, ANY_STRING);
 
         //then
-        verify(loginHelper).login();
+        verify(loginHelper).login(user);
     }
 }

@@ -23,7 +23,6 @@ import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.service.auth.AuthService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
-import com.arcbees.oauth.client.domain.Token;
 import com.arcbees.oauth.client.domain.User;
 
 @Path(EndPoints.AUTH)
@@ -71,9 +70,9 @@ public class AuthResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response login(@FormParam(UrlParameters.EMAIL) String email,
                           @FormParam(UrlParameters.PASSWORD) String password) {
-        Token authToken = authService.login(email, password);
+        authService.login(email, password);
 
-        return Response.ok(authToken).build();
+        return checkLogin();
     }
 
     @DELETE

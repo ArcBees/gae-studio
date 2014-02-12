@@ -11,40 +11,49 @@ package com.arcbees.gaestudio.client.gin;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.application.auth.LoginHelper;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.rest.AuthService;
-import com.arcbees.gaestudio.client.rest.LicenseService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.arcbees.gaestudio.shared.auth.User;
+import com.google.common.base.Strings;
 import com.google.gwt.user.client.History;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.Bootstrapper;
+import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.UnauthorizedPlace;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
+import com.gwtplatform.mvp.shared.proxy.TokenFormatter;
 
 public class BootstrapperImpl implements Bootstrapper {
     private final CurrentUser currentUser;
     private final AuthService authService;
     private final PlaceManager placeManager;
     private final RestDispatch restDispatch;
+    private final LoginHelper loginHelper;
+    private final TokenFormatter tokenFormatter;
+    private final String defaultPlaceNameToken;
     private final String unauthorizedPlace;
-    private final LicenseService licenseService;
 
     @Inject
     BootstrapperImpl(CurrentUser currentUser,
                      AuthService authService,
                      PlaceManager placeManager,
                      RestDispatch restDispatch,
-                     LicenseService licenseService,
+                     LoginHelper loginHelper,
+                     TokenFormatter tokenFormatter,
+                     @DefaultPlace String defaultPlaceNameToken,
                      @UnauthorizedPlace String unauthorizedPlace) {
         this.currentUser = currentUser;
         this.authService = authService;
         this.placeManager = placeManager;
         this.restDispatch = restDispatch;
+        this.loginHelper = loginHelper;
+        this.tokenFormatter = tokenFormatter;
+        this.defaultPlaceNameToken = defaultPlaceNameToken;
         this.unauthorizedPlace = unauthorizedPlace;
-        this.licenseService = licenseService;
     }
 
     @Override
@@ -66,32 +75,29 @@ public class BootstrapperImpl implements Bootstrapper {
         currentUser.setUser(user);
         currentUser.setLoggedIn(user != null);
 
+        PlaceRequest placeRequestToReveal = getPlaceRequestToReveal();
         if (user != null) {
-            restDispatch.execute(licenseService.checkLicense(user.getId()), new AsyncCallbackImpl<Void>() {
-                @Override
-                public void handleFailure(Throwable throwable) {
-                    currentUser.setLicenseValid(false);
-                    navigate();
-                }
-
-                @Override
-                public void onSuccess(Void aVoid) {
-                    currentUser.setLicenseValid(true);
-                    navigate();
-                }
-            });
+            loginHelper.checkLicense(placeRequestToReveal);
         } else {
             currentUser.setLicenseValid(false);
-            navigate();
+            placeManager.revealPlace(placeRequestToReveal);
         }
     }
 
-    private void navigate() {
+    private PlaceRequest getPlaceRequestToReveal() {
         String historyToken = History.getToken();
+
+        PlaceRequest placeRequest;
         if (unauthorizedPlace.equals(historyToken)) {
-            placeManager.revealPlace(new PlaceRequest.Builder().nameToken(NameTokens.visualizer).build());
+            placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.visualizer).build();
         } else {
-            placeManager.revealCurrentPlace();
+            if (Strings.isNullOrEmpty(historyToken)) {
+                placeRequest = new PlaceRequest.Builder().nameToken(defaultPlaceNameToken).build();
+            } else {
+                placeRequest = tokenFormatter.toPlaceRequest(historyToken);
+            }
         }
+
+        return placeRequest;
     }
 }
