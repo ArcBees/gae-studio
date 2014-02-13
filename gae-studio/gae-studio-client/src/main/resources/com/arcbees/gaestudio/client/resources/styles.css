@@ -267,6 +267,12 @@ input:focus, textarea:focus, button:focus {
     gwt-image: "collapse_rl";
 }
 
+@sprite .importSmall {
+    gwt-image: "import_small_up";
+    cursor: none;
+    margin: 0px;
+}
+
 .popup {
     padding: 6px 20px 20px 20px;
     background-color: #EBEBEB;
@@ -311,7 +317,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .popup button {
-    padding: 5px 20px 5px 20px;
+    padding: 5px 32px 5px 32px;
     border: none;
     display: inline-block;
     margin-right: 5px;

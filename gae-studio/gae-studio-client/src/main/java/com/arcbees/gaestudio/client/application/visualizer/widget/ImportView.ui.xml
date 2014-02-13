@@ -7,6 +7,12 @@
             width: 100%;
         }
 
+        .import {
+            position: absolute;
+            left: 0px;
+            top: 4px;
+        }
+
         .buttonContainer {
             padding-top: 5px;
             margin: 0 auto;
@@ -22,10 +28,11 @@
         }
 
         .popupContent {
-            margin-bottom: 20px;
-            min-width: 300px;
             font-size: 1.1em;
             text-align: right;
+
+            width: 250px;
+            margin-bottom: 20px;
         }
     </ui:style>
     <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{res.styles.glassPanel}" modal="true"
@@ -36,6 +43,7 @@
                 <div class="{res.styles.clear}"></div>
             </div>
             <div class="{res.styles.popupHeader}">
+                <div class="{style.import} {res.styles.importSmall}"/>
                 Import
             </div>
             <div class="{style.popupContent}">

@@ -64,9 +64,9 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
     private final Label selectedFile;
 
     @Inject
-    public UploadForm(AppResources resources,
-                      @Assisted String uploadUrl,
-                      @Assisted Handler handler) {
+    UploadForm(AppResources resources,
+               @Assisted String uploadUrl,
+               @Assisted Handler handler) {
         this.handler = handler;
 
         formPanel = new FormPanel();

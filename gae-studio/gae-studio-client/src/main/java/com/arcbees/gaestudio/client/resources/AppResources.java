@@ -117,6 +117,8 @@ public interface AppResources extends ClientBundle {
 
         String trashSmall();
 
+        String importSmall();
+
         String deselect();
 
         String deselectDisabled();
@@ -175,6 +177,8 @@ public interface AppResources extends ClientBundle {
     ImageResource closeToggle();
 
     ImageResource trash_small_up();
+
+    ImageResource import_small_up();
 
     ImageResource trash_small_rl();
 
