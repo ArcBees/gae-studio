@@ -44,10 +44,7 @@
     <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{res.styles.glassPanel}" modal="true"
                   styleName="{res.styles.popup}" autoHideEnabled="true">
         <g:HTMLPanel styleName="{style.container}">
-            <div>
-                <g:Anchor ui:field="close" styleName="{res.styles.close}" text="×"/>
-                <div class="{res.styles.clear}"></div>
-            </div>
+            <g:Anchor ui:field="close" styleName="{res.styles.close}" text="×"/>
             <div class="{res.styles.popupHeader}">
                 <div class="{style.delete} {res.styles.trashSmall}"/>
                 Delete
