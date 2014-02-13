@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.common.base.Strings;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.BrowserEvents;
@@ -26,6 +27,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
@@ -59,13 +61,17 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
     private final FileUpload fileUpload = new FileUpload();
     private final FormPanel formPanel;
     private final Handler handler;
+    private final Label selectedFile;
 
     @Inject
-    public UploadForm(@Assisted String uploadUrl,
+    public UploadForm(AppResources resources,
+                      @Assisted String uploadUrl,
                       @Assisted Handler handler) {
         this.handler = handler;
 
         formPanel = new FormPanel();
+        selectedFile = new Label("...");
+        selectedFile.setStyleName(resources.styles().uploadLabel());
 
         fileUpload.setName(FILE_UPLOAD);
         fileUpload.setVisible(false);
@@ -119,6 +125,7 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
                 $(fileUpload).click();
             }
         });
+        flowPanel.add(selectedFile);
         flowPanel.add(button);
 
         return flowPanel;
@@ -131,6 +138,7 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
             public void f() {
                 String path = fileUpload.getFilename();
                 String fileName = extractFileNameFromPath(path);
+                selectedFile.setText(fileUpload.getFilename());
                 handler.onFileChosen(fileName);
             }
         });

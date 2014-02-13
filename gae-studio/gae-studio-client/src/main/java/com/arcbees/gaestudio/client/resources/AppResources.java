@@ -126,6 +126,8 @@ public interface AppResources extends ClientBundle {
         String errorField();
 
         String gray();
+
+        String uploadLabel();
     }
 
     public interface Sprites extends CssResource {

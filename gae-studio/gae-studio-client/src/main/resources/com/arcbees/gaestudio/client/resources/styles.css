@@ -688,3 +688,13 @@ input:focus, textarea:focus, button:focus {
     outline: #ff5400 solid 2px;
     outline-offset: -2px;
 }
+
+.uploadLabel {
+    background: #c4c4c4;
+    font-size: 1.1em;
+    padding: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    height: 24px;
+    text-align: left;
+}
