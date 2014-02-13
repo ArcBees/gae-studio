@@ -690,11 +690,12 @@ input:focus, textarea:focus, button:focus {
 }
 
 .uploadLabel {
-    background: #c4c4c4;
     font-size: 1.1em;
+    background: #c4c4c4;
+    text-align: left;
+
+    height: 24px;
     padding: 5px;
     margin-right: 5px;
     margin-bottom: 10px;
-    height: 24px;
-    text-align: left;
 }
