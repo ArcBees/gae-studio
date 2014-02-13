@@ -26,11 +26,13 @@
         }
 
         .delete {
-            position: absolute;
-            left: 0px;
-            top: 4px;
             cursor: none !important;
+
+            position: absolute;
             margin: 0px !important;
+
+            top: 4px;
+            left: 0px;
         }
 
         .popupContent {
