@@ -61,6 +61,10 @@ public interface AppResources extends ClientBundle {
 
         String popup();
 
+        String popupHeader();
+
+        String close();
+
         String glassPanel();
 
         String lockedRow();
@@ -120,6 +124,8 @@ public interface AppResources extends ClientBundle {
         String power();
 
         String errorField();
+
+        String gray();
     }
 
     public interface Sprites extends CssResource {
