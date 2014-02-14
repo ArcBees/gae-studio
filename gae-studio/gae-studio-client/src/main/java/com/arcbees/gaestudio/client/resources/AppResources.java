@@ -127,6 +127,12 @@ public interface AppResources extends ClientBundle {
 
         String errorField();
 
+        String importBtn();
+
+        String exportBtn();
+
+        String exportBtnDisabled();
+
         String gray();
 
         String uploadLabel();
@@ -213,4 +219,8 @@ public interface AppResources extends ClientBundle {
     ImageResource listGraph();
 
     ImageResource power();
+
+    ImageResource importBtn();
+
+    ImageResource exportBtn();
 }

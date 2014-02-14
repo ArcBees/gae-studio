@@ -706,6 +706,35 @@ input:focus, textarea:focus, button:focus {
     outline-offset: -2px;
 }
 
+@sprite .importBtn {
+    gwt-image: "importBtn";
+}
+
+@sprite .exportBtn {
+    gwt-image: "exportBtn";
+}
+
+.exportBtn, .importBtn {
+    background-color: #3d3c3c;
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+
+    height: 23px;
+    width: 23px;
+    margin: 2px;
+
+    float: left;
+}
+
+.exportBtn:hover, .importBtn:hover {
+    background-color: #25aae1;
+}
+
+.exportBtnDisabled, .exportBtnDisabled:hover {
+    background-color: #B7B7B7;
+}
+
 .uploadLabel {
     font-size: 1.1em;
     background: #c4c4c4;
