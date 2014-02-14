@@ -29,7 +29,6 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(JukitoRunner.class)
 public class MessageServiceImplTest extends GaeTestBase {
-
     public static class Module extends JukitoModule {
         @Override
         protected void configureTest() {
