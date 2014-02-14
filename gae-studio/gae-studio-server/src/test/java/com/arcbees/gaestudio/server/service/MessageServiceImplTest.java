@@ -9,18 +9,21 @@
 
 package com.arcbees.gaestudio.server.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.inject.Inject;
+
+import org.jukito.JukitoModule;
+import org.jukito.JukitoRunner;
+import org.jukito.TestSingleton;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import com.arcbees.gaestudio.server.velocity.VelocityModule;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapper;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapperFactory;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
-import org.jukito.JukitoModule;
-import org.jukito.JukitoRunner;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import javax.inject.Inject;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -31,22 +34,23 @@ public class MessageServiceImplTest extends GaeTestBase {
         @Override
         protected void configureTest() {
             install(new VelocityModule());
+            bind(MessageService.class).to(MessageServiceImpl.class).in(TestSingleton.class);
         }
     }
 
     @Inject
     VelocityWrapperFactory velocityWrapperFactory;
 
-	private VelocityWrapper velocityWrapper;
+    private VelocityWrapper velocityWrapper;
 
     @Test
-    public void testGenerate_SendNotification() {
+    public void testGenerateNotificationTemplate() {
         // Given
-		String templateLocation =
-				"com/arcbees/gaestudio/server/velocitytemplates/messages/notification.vm";
-		velocityWrapper = velocityWrapperFactory.create(templateLocation);
+        String templateLocation =
+                "com/arcbees/gaestudio/server/velocitytemplates/messages/notification.vm";
+        velocityWrapper = velocityWrapperFactory.create(templateLocation);
 
-		// when
+        // when
         velocityWrapper.put("msgDate", new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()));
         velocityWrapper.put("textMessage", "Gae notification message");
         String notification = velocityWrapper.generate();
