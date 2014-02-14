@@ -25,6 +25,7 @@ import com.arcbees.gquery.tooltip.client.TooltipOptions;
 import com.google.common.base.Strings;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -141,11 +142,11 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
 
     private void showErrorMessage(String message) {
         errorMessage.setInnerText(message);
-        setErrorMessageOpacity(1.0f);
+        errorMessage.getStyle().setDisplay(Style.Display.BLOCK);
     }
 
     private void clearErrorMessage() {
-        setErrorMessageOpacity(0f);
+        errorMessage.getStyle().setDisplay(Style.Display.NONE);
         errorMessage.setInnerText("");
         $("." + resources.styles().errorField()).each(new Function() {
             @Override
@@ -154,9 +155,5 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
                 $(e).as(Tooltip.Tooltip).destroy();
             }
         });
-    }
-
-    private void setErrorMessageOpacity(float opacity) {
-        $(errorMessage).css("opacity", Float.toString(opacity));
     }
 }

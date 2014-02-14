@@ -12,7 +12,7 @@ package com.arcbees.gaestudio.server.service.auth;
 import com.arcbees.oauth.client.domain.Token;
 import com.arcbees.oauth.client.domain.User;
 
-public class UnsecureAuthService implements AuthService{
+public class UnsecureAuthService implements AuthService {
     @Override
     public User register(String email, String password, String firstName, String lastName) {
         return null;

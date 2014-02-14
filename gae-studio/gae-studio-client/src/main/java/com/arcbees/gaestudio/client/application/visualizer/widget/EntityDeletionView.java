@@ -13,13 +13,13 @@ import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.google.common.base.Strings;
-import com.google.gwt.dom.client.HeadingElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -35,7 +35,7 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
     @UiField
     Button cancel;
     @UiField
-    HeadingElement message;
+    HTML message;
 
     private final AppMessages messages;
 
@@ -52,7 +52,7 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
 
     @Override
     public void displayEntityDeletion(ParsedEntity p) {
-        message.setInnerSafeHtml(messages.deleteEntity(p.getKey().getKind(), p.getKey().getId()));
+        message.setHTML(messages.deleteEntity(p.getKey().getKind(), p.getKey().getId()));
 
         asPopupPanel().center();
     }
@@ -83,7 +83,7 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
                 break;
         }
 
-        this.message.setInnerSafeHtml(message);
+        this.message.setHTML(message);
         asPopupPanel().center();
     }
 
@@ -93,7 +93,7 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
         asPopupPanel().hide();
     }
 
-    @UiHandler("cancel")
+    @UiHandler({"cancel", "close"})
     void onCancelClicked(ClickEvent event) {
         getUiHandlers().reset();
         asPopupPanel().hide();

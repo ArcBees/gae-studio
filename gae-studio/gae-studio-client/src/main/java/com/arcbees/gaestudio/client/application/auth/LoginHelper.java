@@ -9,6 +9,11 @@
 
 package com.arcbees.gaestudio.client.application.auth;
 
+import com.arcbees.gaestudio.shared.auth.User;
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
+
 public interface LoginHelper {
-    void login();
+    void login(User user);
+
+    void checkLicense(PlaceRequest placeToReveal);
 }
