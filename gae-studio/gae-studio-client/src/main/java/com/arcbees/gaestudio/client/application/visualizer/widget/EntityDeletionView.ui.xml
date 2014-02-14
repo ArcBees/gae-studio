@@ -9,8 +9,8 @@
 
         .buttonContainer {
             padding-top: 5px;
-            width: 150px;
             margin: 0 auto;
+            text-align: center;
         }
 
         .buttonContainer button {
@@ -24,14 +24,37 @@
         .container {
             width: 100%;
         }
+
+        .delete {
+            cursor: none !important;
+
+            position: absolute;
+            margin: 0px !important;
+
+            top: 4px;
+            left: 0px;
+        }
+
+        .popupContent {
+            margin-bottom: 20px;
+            width: 250px;
+            font-size: 1.1em;
+        }
     </ui:style>
     <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{res.styles.glassPanel}" modal="true"
                   styleName="{res.styles.popup}" autoHideEnabled="true">
         <g:HTMLPanel styleName="{style.container}">
-            <h3 ui:field="message"/>
+            <g:Anchor ui:field="close" styleName="{res.styles.close}" text="×"/>
+            <div class="{res.styles.popupHeader}">
+                <div class="{style.delete} {res.styles.trashSmall}"/>
+                Delete
+            </div>
+            <div class="{style.popupContent}">
+                <g:HTML ui:field="message"/>
+            </div>
             <div class="{style.buttonContainer}">
-                <g:Button ui:field="delete" styleName="{res.styles.toolbarButton}" debugId="{debugIds.getDeleteConfirm}">Delete</g:Button>
-                <g:Button ui:field="cancel" styleName="{res.styles.toolbarButton}">Cancel</g:Button>
+                <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.gray}"/>
+                <g:Button ui:field="delete" text="Delete" debugId="{debugIds.getDeleteConfirm}"/>
             </div>
         </g:HTMLPanel>
     </g:PopupPanel>
