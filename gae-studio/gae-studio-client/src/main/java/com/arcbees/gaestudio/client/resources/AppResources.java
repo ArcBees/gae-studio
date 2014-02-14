@@ -120,6 +120,12 @@ public interface AppResources extends ClientBundle {
         String power();
 
         String errorField();
+
+        String importBtn();
+
+        String exportBtn();
+
+        String exportBtnDisabled();
     }
 
     public interface Sprites extends CssResource {
@@ -201,4 +207,8 @@ public interface AppResources extends ClientBundle {
     ImageResource listGraph();
 
     ImageResource power();
+
+    ImageResource importBtn();
+
+    ImageResource exportBtn();
 }
