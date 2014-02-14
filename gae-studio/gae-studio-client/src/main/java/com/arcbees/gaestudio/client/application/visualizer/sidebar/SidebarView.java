@@ -129,10 +129,6 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         emptyKinds.setHTML(html);
     }
 
-    public void showCloseHandle() {
-        this.closeToggle.asWidget().setVisible(true);
-    }
-
     @Override
     public void setInSlot(Object slot, IsWidget content) {
         if (SidebarPresenter.SLOT_NAMESPACES.equals(slot)) {
@@ -145,17 +141,21 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         downloadFrame.setUrl(downloadUrl);
     }
 
-    public void setExportEnabled(boolean enabled) {
+    @Override
+    public void onToggle() {
+        getUiHandlers().onCloseHandleActivated();
+    }
+
+    private void showCloseHandle() {
+        this.closeToggle.asWidget().setVisible(true);
+    }
+
+    private void setExportEnabled(boolean enabled) {
         if (enabled) {
             exportKind.removeClassName(appResources.styles().exportBtnDisabled());
         } else {
             exportKind.addClassName(appResources.styles().exportBtnDisabled());
         }
-    }
-
-    @Override
-    public void onToggle() {
-        getUiHandlers().onCloseHandleActivated();
     }
 
     private void addKind(String kind) {
