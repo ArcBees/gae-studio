@@ -16,7 +16,6 @@ import javax.inject.Inject;
 
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
-import org.jukito.TestSingleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -33,7 +32,6 @@ public class MessageServiceImplTest extends GaeTestBase {
         @Override
         protected void configureTest() {
             install(new VelocityModule());
-            bind(MessageService.class).to(MessageServiceImpl.class).in(TestSingleton.class);
         }
     }
 
