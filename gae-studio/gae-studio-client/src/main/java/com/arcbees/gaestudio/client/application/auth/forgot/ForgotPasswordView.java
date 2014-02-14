@@ -12,6 +12,10 @@ package com.arcbees.gaestudio.client.application.auth.forgot;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.ui.AjaxLoader;
+import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.google.common.base.Strings;
+import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -20,6 +24,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+
+import static com.google.gwt.query.client.GQuery.$;
 
 public class ForgotPasswordView extends ViewWithUiHandlers<ForgotPasswordUiHandlers>
         implements ForgotPasswordPresenter.MyView {
@@ -32,13 +38,21 @@ public class ForgotPasswordView extends ViewWithUiHandlers<ForgotPasswordUiHandl
     Button submit;
     @UiField(provided = true)
     AjaxLoader ajaxLoader;
+    @UiField
+    DivElement errorMessage;
+
+    private final AppConstants constants;
 
     @Inject
     ForgotPasswordView(Binder uiBinder,
-                       AjaxLoader ajaxLoader) {
+                       AjaxLoader ajaxLoader,
+                       AppConstants constants) {
         this.ajaxLoader = ajaxLoader;
+        this.constants = constants;
 
         initWidget(uiBinder.createAndBindUi(this));
+
+        $(email).attr("placeholder", "Email");
     }
 
     @Override
@@ -51,13 +65,28 @@ public class ForgotPasswordView extends ViewWithUiHandlers<ForgotPasswordUiHandl
     public void resetSubmit() {
         ajaxLoader.hide();
         submit.setEnabled(true);
+        clearErrorMessage();
     }
 
     @UiHandler("submit")
     void onRegisterClicked(ClickEvent event) {
-        ajaxLoader.show();
-        submit.setEnabled(false);
+        if (Strings.isNullOrEmpty(email.getText())) {
+            showErrorMessage(constants.allFieldsAreRequired());
+        } else {
+            ajaxLoader.show();
+            submit.setEnabled(false);
 
-        getUiHandlers().forgotPassword(email.getText());
+            getUiHandlers().forgotPassword(email.getText());
+        }
+    }
+
+    private void showErrorMessage(String message) {
+        errorMessage.setInnerText(message);
+        errorMessage.getStyle().setDisplay(Style.Display.BLOCK);
+    }
+
+    private void clearErrorMessage() {
+        errorMessage.getStyle().setDisplay(Style.Display.NONE);
+        errorMessage.setInnerText("");
     }
 }
