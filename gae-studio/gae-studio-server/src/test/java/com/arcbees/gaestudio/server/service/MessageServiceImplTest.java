@@ -52,7 +52,6 @@ public class MessageServiceImplTest extends GaeTestBase {
         String notification = velocityWrapper.generate();
 
         // then
-        // verify(mailService).get(mailReturnedDto);
         assertNotNull(notification);
     }
 }
