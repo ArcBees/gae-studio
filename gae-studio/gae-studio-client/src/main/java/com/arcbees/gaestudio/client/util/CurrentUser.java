@@ -47,4 +47,8 @@ public class CurrentUser {
     public void setLicenseValid(boolean licenseValid) {
         this.licenseValid = licenseValid;
     }
+
+    public Long getUserId() {
+        return user != null ? user.getId() : null;
+    }
 }
