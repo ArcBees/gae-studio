@@ -37,7 +37,7 @@
 
         .popupContent {
             margin-bottom: 20px;
-            min-width: 300px;
+            width: 250px;
             font-size: 1.1em;
         }
     </ui:style>

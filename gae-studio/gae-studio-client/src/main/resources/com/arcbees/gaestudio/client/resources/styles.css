@@ -267,6 +267,12 @@ input:focus, textarea:focus, button:focus {
     gwt-image: "collapse_rl";
 }
 
+@sprite .importSmall {
+    gwt-image: "import_small_up";
+    cursor: none;
+    margin: 0px;
+}
+
 .popup {
     background-color: #EBEBEB;
     color: #3d3c3c;
@@ -322,7 +328,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .popup button {
-    padding: 5px 20px 5px 20px;
+    padding: 5px 32px 5px 32px;
     border: none;
     display: inline-block;
     margin-right: 5px;
@@ -698,4 +704,15 @@ input:focus, textarea:focus, button:focus {
 .errorField {
     outline: #ff5400 solid 2px;
     outline-offset: -2px;
+}
+
+.uploadLabel {
+    font-size: 1.1em;
+    background: #c4c4c4;
+    text-align: left;
+
+    height: 24px;
+    padding: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
 }
