@@ -73,7 +73,7 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
         ajaxLoader.show();
     }
 
-    @UiHandler("cancel")
+    @UiHandler({"cancel", "close"})
     void onCancelClicked(ClickEvent event) {
         asPopupPanel().hide();
     }
