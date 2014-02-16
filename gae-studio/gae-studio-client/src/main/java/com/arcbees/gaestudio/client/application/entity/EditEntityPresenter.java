@@ -7,43 +7,59 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.arcbees.gaestudio.client.application.entity;
 
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.application.visualizer.event.EditEntityEvent;
+import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorFactory;
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.InvalidEntityFieldsException;
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyEditorErrorEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
+import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.EntityService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.google.gwt.core.client.Scheduler;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestAction;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
-import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.ProxyStandard;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
-public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresenter.MyView>
-        implements EditEntityEvent.EditEntityHandler, EntityDetailsUiHandlers,
-        PropertyEditorErrorEvent.PropertyEditorErrorHandler {
-    interface MyView extends View, HasUiHandlers<EntityDetailsUiHandlers> {
-        void displayEntityDetails();
+import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.NAME;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
+import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
-        void hide();
-
+public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, EditEntityPresenter.MyProxy>
+        implements EditEntityUiHandlers, PropertyEditorErrorEvent.PropertyEditorErrorHandler {
+    interface MyView extends View, HasUiHandlers<EditEntityUiHandlers> {
         void showError(String message);
 
         void clearErrors();
 
         void showErrorsTitle(String title);
+    }
+
+    @ProxyStandard
+    @NameToken(NameTokens.editEntity)
+    interface MyProxy extends ProxyPlace<EditEntityPresenter> {
     }
 
     public static final Object EDITOR_SLOT = new Object();
@@ -56,13 +72,14 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     private EntityEditorPresenter entityEditor;
 
     @Inject
-    EntityDetailsPresenter(EventBus eventBus,
-                           MyView view,
-                           RestDispatch restDispatch,
-                           EntityService entityService,
-                           EntityEditorFactory entityEditorFactory,
-                           AppConstants appConstants) {
-        super(eventBus, view);
+    EditEntityPresenter(EventBus eventBus,
+                        MyView view,
+                        MyProxy proxy,
+                        RestDispatch restDispatch,
+                        EntityService entityService,
+                        EntityEditorFactory entityEditorFactory,
+                        AppConstants appConstants) {
+        super(eventBus, view, proxy, VisualizerPresenter.SLOT_ENTITY_DETAILS);
 
         this.restDispatch = restDispatch;
         this.entityService = entityService;
@@ -73,12 +90,19 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     }
 
     @Override
-    public void onEditEntity(EditEntityEvent event) {
-        ParsedEntity parsedEntity = event.getParsedEntity();
-        entityEditor = entityEditorFactory.create(parsedEntity);
+    public void prepareFromRequest(final PlaceRequest request) {
+        super.prepareFromRequest(request);
 
-        setInSlot(EDITOR_SLOT, entityEditor);
-        getView().displayEntityDetails();
+        if (!isVisible()) {
+            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                @Override
+                public void execute() {
+                    SetStateFromPlaceRequestEvent.fire(EditEntityPresenter.this, request);
+                }
+            });
+        }
+
+        editEntity(request);
     }
 
     @Override
@@ -101,7 +125,6 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
     protected void onBind() {
         super.onBind();
 
-        addRegisteredHandler(EditEntityEvent.getType(), this);
         addRegisteredHandler(PropertyEditorErrorEvent.getType(), this);
     }
 
@@ -113,11 +136,37 @@ public class EntityDetailsPresenter extends PresenterWidget<EntityDetailsPresent
         getView().showError(message);
     }
 
+    private void editEntity(PlaceRequest request) {
+        String kind = request.getParameter(KIND, null);
+        String id = request.getParameter(ID, "-1");
+        String name = request.getParameter(NAME, null);
+        String parentKind = request.getParameter(PARENT_KIND, "");
+        String parentId = request.getParameter(PARENT_ID, "");
+        String namespace = request.getParameter(NAMESPACE, null);
+        String appId = request.getParameter(APP_ID, null);
+
+        String failureMessage = appConstants.failedGettingEntity();
+
+        AsyncCallbackImpl<EntityDto> callback = new AsyncCallbackImpl<EntityDto>(failureMessage) {
+            @Override
+            public void onSuccess(EntityDto result) {
+                ParsedEntity parsedEntity = new ParsedEntity(result);
+                entityEditor = entityEditorFactory.create(parsedEntity);
+
+                setInSlot(EDITOR_SLOT, entityEditor);
+            }
+        };
+
+        RestAction<EntityDto> getEntityAction =
+                entityService.getEntity(kind, appId, namespace, parentId, parentKind, name, Long.valueOf(id));
+
+        restDispatch.execute(getEntityAction, callback);
+    }
+
     private void onSaveEntitySucceeded(EntityDto newEntityDto) {
         EntitySavedEvent.fire(this, newEntityDto);
         Message message = new Message("Entity saved.", MessageStyle.SUCCESS);
         DisplayMessageEvent.fire(this, message);
-        getView().hide();
     }
 
     private void updateEntity() throws InvalidEntityFieldsException {
