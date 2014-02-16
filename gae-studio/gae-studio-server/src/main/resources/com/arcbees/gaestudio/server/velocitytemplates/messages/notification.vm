@@ -1,259 +1,141 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" style="padding: 0;margin: 0;color: #3f3f3f;">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>*|MC:SUBJECT|*</title>
-
-    <style type="text/css">
-        /* Reinit Styles */
-        /* Client-specific Styles */ #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
-        body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;} /* Prevent Webkit and Windows Mobile platforms from changing default font sizes, while not breaking desktop design. */ .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */ .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing. More on that: http://www.emailonacid.com/forum/viewthread/43/ */ #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;} /* End reset */
-
-        /* Custom Styles */
-        html,body,div,p,table,tbody,td,tr{
-            padding: 0;
-            margin: 0;
-            font-family:arial,sans-serif;
-            font:arial,sans-serif;
-            color: #3f3f3f;
-        }
-
-        .trouble-viewing{
-            color: #aaaaaa;
-            font-size: 11px;
-            width: 600px;
-            padding: 15px;
-            margin: 0;
-        }
-
-        .trouble-viewing a{
-            text-decoration: underline;
-        }
-
-        a, a:hover{
-            color:#25aae1;
-            cursor: pointer;
-        }
-
-        a{
-            text-decoration: none;
-        }
-
-        a:hover{
-            text-decoration: underline;
-        }
-
-        #wrapper{
-            width: 600px;
-            background-color: #e6e6e6;
-            bgcolor:#e6e6e6;
-            border-top: 3px solid #25aae1;
-            padding-top: 14px;
-        }
-
-        .ribbon td{
-            background-color: #25aae1;
-            bgcolor:#25aae1;
-            height: 37px;
-        }
-
-        #header{
-            padding-bottom: 10px;
-        }
-
-        .main{
-            background-color: #ffffff;
-            bgcolor: #ffffff;
-            padding-bottom: 9px;
-        }
-
-        .date{
-            background-color: #e6e6e6;
-            bgcolor: #e6e6e6;
-        }
-
-        .date p{
-            color:#25aae1;
-            font-size: 10px;
-            line-height: 20px;
-            min-width: 200px;
-        }
-
-        .content tr{
-            padding: 0 40px;
-        }
-
-        .content h2{
-            font-weight: bold;
-            font-size: 16px;
-            padding:0;
-            margin:0;
-        }
-
-        .content p{
-            font-size: 12px;
-            line-height: 18px;
-            margin:0;
-            padding:0;
-            min-height: 100px;
-        }
-
-        #footer{
-            background-color: #25aae1;
-            bgcolor:#25aae1;
-            font-size: 12px;
-        }
-
-        #footer a, #footer p{
-            line-height: 25px;
-            color: #ffffff;
-        }
-
-        .arcbeesLink{
-            font-weight: bold;
-        }
-
-        #unsubscribe{
-            background-color: #3f3f3f;
-            bgcolor: #3f3f3f;
-        }
-
-        #unsubscribe a{
-            font-size: 11px;
-        }
-    </style>
 </head>
-<body>
+<body style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;margin: 0;padding: 0;font-facmily: arial,sans-serif;font: arial,sans-serif;color: #3f3f3f;width: 100%;">
 <center>
-<!-- *|IFNOT:ARCHIVE_PAGE|* -->
-<table class="trouble-viewing" align="center">
-    <tr>
-        <td align="center">
-            <p>Trouble viewing this email? <a href="*|ARCHIVE|*" target="_blank">View in Browser</a></p>
-        </td>
-    </tr>
-</table>
-<!-- *|END:IF|* -->
-
-<table id="wrapper" cellpadding="0" cellspacing="0">
-<tr>
-<td>
-<!-- Header -->
-<table id="header" align="center" cellpadding="0" cellspacing="0">
-    <tr>
-        <td></td>
-        <td rowspan="2">
-            <table align="center" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td width="600" height="54"></td>
-                </tr>
-                <tr class="ribbon">
-                    <td width="600" height="37"></td>
-                </tr>
-                <tr>
-                    <td width="600" height="55"></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2" width="600" height="149">
-            <center>
-                <img src="http://gallery.mailchimp.com/ff185fb1ab344bb030197dd9b/images/gaeLogo.png" alt="Gae Studio Logo">
-            </center>
-        </td>
-    </tr>
-</table>
-<!-- Header End -->
-
-<!-- Main Content -->
-<center mc:repeatable="">
-    <!-- First News -->
-    <table width="530" cellpadding="0" cellspacing="0" align="center" mc:edit="dateContainer" mc:hideable="">
-        <tr class="date" align="right">
-            <td width="488" height="20"></td>
-            <td width="42" height="20">
-                <p mc:edit="date">${msgDate}</p>
+    <!-- *|IFNOT:ARCHIVE_PAGE|* -->
+    <table class="trouble-viewing" align="center" style="padding: 15px;margin: 0;color: #aaaaaa;font-size: 11px;width: 600px;">
+        <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+            <td align="center" style="padding: 0;margin: 0;color: #3f3f3f;">
+                <p style="padding: 0;margin: 0;color: #3f3f3f;">Trouble viewing this email? <a href="*|ARCHIVE|*" target="_blank" style="color: #25aae1;cursor: pointer;text-decoration: underline;">View in Browser</a></p>
             </td>
         </tr>
     </table>
-    <table class="main" width="530" cellpadding="0" cellspacing="0">
-        <tr>
-            <td>
-                <center>
-                    <table class="content" width="450" cellpadding="0" cellspacing="0">
-                        <tr height="40" cellpadding="0" cellspacing="0">
-                            <td>
-                                <p>${textMessage}</p>
+    <!-- *|END:IF|* -->
+
+    <table id="wrapper" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;width: 600px;background-color: #e6e6e6;bgcolor: #e6e6e6;border-top: 3px solid #25aae1;padding-top: 14px;">
+        <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+            <td style="padding: 0;margin: 0;color: #3f3f3f;">
+                <!-- Header -->
+                <table id="header" align="center" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;padding-bottom: 10px;">
+                    <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                        <td rowspan="2" style="padding: 0;margin: 0;color: #3f3f3f;">
+                            <table align="center" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                                <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                                    <td width="600" height="54" style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                                </tr>
+                                <tr class="ribbon" style="padding: 0;margin: 0;color: #3f3f3f;">
+                                    <td width="600" height="37" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #25aae1;bgcolor: #25aae1;height: 37px;"></td>
+                                </tr>
+                                <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                                    <td width="600" height="55" style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td colspan="2" width="600" height="149" style="padding: 0;margin: 0;color: #3f3f3f;">
+                            <center>
+                                <img src="http://gallery.mailchimp.com/ff185fb1ab344bb030197dd9b/images/gaeLogo.png" alt="Gae Studio Logo">
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+                <!-- Header End -->
+
+                <!-- Main Content -->
+                <center mc:repeatable="">
+                    <!-- First News -->
+                    <table width="530" cellpadding="0" cellspacing="0" align="center" mc:edit="dateContainer" mc:hideable="" style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <tr class="date" align="right" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #e6e6e6;bgcolor: #e6e6e6;">
+                            <td width="488" height="20" style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                            <td width="42" height="20" style="padding: 0;margin: 0;color: #3f3f3f;">
+                                <p mc:edit="date" style="padding: 0;margin: 0;color: #25aae1;font-size: 10px;line-height: 20px;min-width: 200px;">${msgDate}</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="main" width="530" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #ffffff;bgcolor: #ffffff;padding-bottom: 9px;">
+                        <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                            <td style="padding: 0;margin: 0;color: #3f3f3f;">
+                                <center>
+                                    <table class="content" width="450" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                                        <tr height="40" cellpadding="0" cellspacing="0" style="padding: 0 40px;margin: 0;color: #3f3f3f;">
+                                            <td style="padding: 0;margin: 0;color: #3f3f3f;">
+                                                <p style="padding: 0;margin: 0;color: #3f3f3f;font-size: 12px;line-height: 18px;min-height: 100px;">${textMessage}</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </center>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <tr height="20" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                            <td style="padding: 0;margin: 0;color: #3f3f3f;">
                             </td>
                         </tr>
                     </table>
                 </center>
-            </td>
-        </tr>
-    </table>
-    <table>
-        <tr height="20" cellpadding="0" cellspacing="0">
-            <td>
-            </td>
-        </tr>
-    </table>
-</center>
-<!-- Main Content End -->
+                <!-- Main Content End -->
 
-<!-- Footer -->
-<table>
-    <tr height="10" cellpadding="0" cellspacing="0">
-        <td></td>
-    </tr>
-</table>
-<table id="footer" align="center" cellpadding="0" cellspacing="0">
-    <tr height="11" cellpadding="0" cellspacing="0">
-        <td></td>
-    </tr>
-    <tr>
-        <td width="600">
-            <center>
-                <p>
-                    GAE STUDIO is a product from
-                </p>
-            </center>
-        </td>
-    </tr>
-    <tr height="0" cellpadding="0" cellspacing="0">
-        <td></td>
-    </tr>
-    <tr>
-        <td width="600">
-            <center>
-                <p>
-                    <img src="http://gallery.mailchimp.com/ff185fb1ab344bb030197dd9b/images/arcbeesLogo.png" alt="ArcBees Logo">
-                </p>
-            </center>
-        </td>
-    </tr>
-    <tr height="13" cellpadding="0" cellspacing="0">
-        <td></td>
-    </tr>
-    <tr>
-        <td width="600" height="30">
-            <center>
-                <a href="http://arcbees.com/" target="_blank" class="arcbeesLink">arcbees.com</a>
-            </center>
-        </td>
-    </tr>
-    <tr height="4" cellpadding="0" cellspacing="0">
-        <td></td>
-    </tr>
-    <tr id="unsubscribe">
-        <td width="600" height="25">
-        </td>
-    </tr>
-</table>
-<!-- Footer End -->
-</td>
-</tr>
-</table>
+                <!-- Footer -->
+                <table style="padding: 0;margin: 0;color: #3f3f3f;">
+                    <tr height="10" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                    </tr>
+                </table>
+                <table id="footer" align="center" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #25aae1;bgcolor: #25aae1;font-size: 12px;">
+                    <tr height="11" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                    </tr>
+                    <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td width="600" style="padding: 0;margin: 0;color: #3f3f3f;">
+                            <center>
+                                <p style="padding: 0;margin: 0;color: #ffffff;line-height: 25px;">
+                                    GAE STUDIO is a product from
+                                </p>
+                            </center>
+                        </td>
+                    </tr>
+                    <tr height="0" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                    </tr>
+                    <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td width="600" style="padding: 0;margin: 0;color: #3f3f3f;">
+                            <center>
+                                <p style="padding: 0;margin: 0;color: #ffffff;line-height: 25px;">
+                                    <img src="http://gallery.mailchimp.com/ff185fb1ab344bb030197dd9b/images/arcbeesLogo.png" alt="ArcBees Logo">
+                                </p>
+                            </center>
+                        </td>
+                    </tr>
+                    <tr height="13" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                    </tr>
+                    <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td width="600" height="30" style="padding: 0;margin: 0;color: #3f3f3f;">
+                            <center>
+                                <a href="http://arcbees.com/" target="_blank" class="arcbeesLink"
+                                   style="color: #ffffff;cursor: pointer;text-decoration: none;font-weight: bold;line-height: 25px;">arcbees.com</a>
+                            </center>
+                        </td>
+                    </tr>
+                    <tr height="4" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                    </tr>
+                    <tr id="unsubscribe" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #3f3f3f;bgcolor: #3f3f3f;">
+                        <td width="600" height="25" style="padding: 0;margin: 0;color: #3f3f3f;">
+                        </td>
+                    </tr>
+                </table>
+                <!-- Footer End -->
+            </td>
+        </tr>
+    </table>
 </center>
 </body>
 </html>
