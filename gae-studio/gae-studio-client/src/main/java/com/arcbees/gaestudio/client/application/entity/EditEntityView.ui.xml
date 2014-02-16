@@ -1,10 +1,21 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-        xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
     <ui:style>
-        h3 {
-            margin: 0px 0px 10px 0px;
+        .detailHeader {
+            padding: 12px 0px;
+            margin: 0px 10px;
+            border-bottom: 1px solid #a2a2a2;
+            text-transform: uppercase;
+            font-size: 1.2em;
+            position: relative;
+        }
+
+        .detailHeader h3 {
+            padding: 0px;
+            margin: 0px;
+            font-weight: normal;
         }
 
         .error {
@@ -21,39 +32,46 @@
         }
 
         .buttonContainer {
-            margin-top: 10px;
-            float: right;
+            position: absolute;
+            top: 0px;
+            right: 0px;
         }
 
-        .buttonContainer button {
-            margin: 0px;
+        .overrideButton {
+            text-align: center;
+            width: 100px;
+            padding: 5px;
+            font-size: 1em;
         }
 
-        .buttonContainer > :first-child {
-            margin-right: 6px;
+        .mainContent {
+            padding: 10px 10px;
+            height: 100%;
+            overflow-y: auto;
         }
 
         .editForm {
-            overflow-y: auto;
-            width: 400px;
             padding-left: 5px;
-            max-height: 500px;
         }
     </ui:style>
 
     <g:HTMLPanel styleName="{res.styles.entityDetailPanel}">
-        <div class="{res.styles.entityDetailPanelVisibility}">
+        <div class="{style.detailHeader}">
             <h3>Entity Details</h3>
-            <g:FlowPanel ui:field="errors" styleName="{style.error}"/>
-
-            <g:SimplePanel ui:field="editorPanel" styleName="{style.editForm}" debugId="{debugIds.getEntityEditor}"/>
 
             <div class="{style.buttonContainer}">
-                <g:Button ui:field="save" styleName="{res.styles.toolbarButton}" debugId="{debugIds.getSave}">
-                    Save
-                </g:Button>
-                <g:Button ui:field="cancel" styleName="{res.styles.toolbarButton}">Cancel</g:Button>
+                <g:Button ui:field="cancel" styleName="{res.styles.button} {res.styles.gray}" text="Cancel"
+                          addStyleNames="{style.overrideButton}"/>
+                <g:Button ui:field="save" styleName="{res.styles.button}" text="Save"
+                          debugId="{debugIds.getSave}" addStyleNames="{style.overrideButton}"/>
             </div>
+        </div>
+
+        <div class="{style.mainContent}">
+            <g:FlowPanel ui:field="errors" styleName="{style.error}"/>
+
+            <g:SimplePanel ui:field="editorPanel" styleName="{style.editForm}"
+                           debugId="{debugIds.getEntityEditor}"/>
         </div>
     </g:HTMLPanel>
 </ui:UiBinder>

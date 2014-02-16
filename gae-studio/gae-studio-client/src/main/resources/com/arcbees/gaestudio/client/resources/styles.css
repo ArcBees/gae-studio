@@ -330,7 +330,7 @@ input:focus, textarea:focus, button:focus {
     background: rgba(0, 0, 0, 0.4);
 }
 
-.popup button {
+.button {
     padding: 5px 32px 5px 32px;
     border: none;
     display: inline-block;
@@ -347,7 +347,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
 }
 
-.popup button:hover {
+.button:hover {
     color: #DFDFDF;
     border: none;
     background: #21a8ff;
@@ -358,7 +358,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
 }
 
-.popup button:active {
+.button:active {
     border: none;
     background: #104b74;
     text-shadow: none;
@@ -368,7 +368,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
 }
 
-.popup button.gray {
+.button.gray {
     border: none;
 
     background: #c4c4c4;
@@ -380,7 +380,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
 }
 
-.popup button.gray:hover {
+.button.gray:hover {
     color: #3d3c3c;
     border: none;
     background: #d1d1d1;
@@ -391,7 +391,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
 }
 
-.popup button.gray:active {
+.button.gray:active {
     border: none;
     background: #c4c4c4;
     text-shadow: none;

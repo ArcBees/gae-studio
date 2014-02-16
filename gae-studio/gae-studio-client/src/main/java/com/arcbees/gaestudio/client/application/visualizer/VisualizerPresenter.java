@@ -43,6 +43,7 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
@@ -251,7 +252,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
             EntityDto entityDto = currentParsedEntity.getEntityDto();
             KeyDto keyDto = entityDto.getKey();
 
-            PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.entity)
+            PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.editEntity)
                     .with(KIND, keyDto.getKind())
                     .with(ID, Long.toString(keyDto.getId()))
                     .with(NAME, keyDto.getName())

@@ -58,9 +58,9 @@
                 <w:AjaxLoader ui:field="ajaxLoader"/>
             </div>
             <div class="{style.buttonContainer}">
-                <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.gray}"/>
+                <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.button} {res.styles.gray}"/>
                 <g:Button ui:field="upload" enabled="false" text="Upload"
-                          styleName="{res.styles.gray} {style.importButton}"/>
+                          styleName="{res.styles.button} {res.styles.gray} {style.importButton}"/>
             </div>
         </g:HTMLPanel>
     </g:PopupPanel>

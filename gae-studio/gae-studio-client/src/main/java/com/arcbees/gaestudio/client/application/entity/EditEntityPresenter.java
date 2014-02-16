@@ -12,8 +12,9 @@ package com.arcbees.gaestudio.client.application.entity;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
+import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;;
+import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
 import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorFactory;
@@ -36,7 +37,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
@@ -102,6 +103,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
             });
         }
 
+        FullScreenEvent.fire(this, false);
         editEntity(request);
     }
 

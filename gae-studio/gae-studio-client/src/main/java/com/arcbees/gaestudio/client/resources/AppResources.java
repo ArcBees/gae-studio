@@ -137,6 +137,8 @@ public interface AppResources extends ClientBundle {
 
         String exportBtnDisabled();
 
+        String button();
+
         String gray();
 
         String uploadLabel();

@@ -53,8 +53,9 @@
                 <g:HTML ui:field="message"/>
             </div>
             <div class="{style.buttonContainer}">
-                <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.gray}"/>
-                <g:Button ui:field="delete" text="Delete" debugId="{debugIds.getDeleteConfirm}"/>
+                <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.button} {res.styles.gray}"/>
+                <g:Button ui:field="delete" text="Delete" styleName="{res.styles.button}"
+                          debugId="{debugIds.getDeleteConfirm}"/>
             </div>
         </g:HTMLPanel>
     </g:PopupPanel>
