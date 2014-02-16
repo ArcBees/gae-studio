@@ -25,4 +25,5 @@ public class UrlParameters {
     public static final String PASSWORD = "password";
     public static final String FIRST_NAME = "firstname";
     public static final String LAST_NAME = "lastname";
+    public static final String KEY = "key";
 }

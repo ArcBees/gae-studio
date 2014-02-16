@@ -16,13 +16,15 @@ import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.tools.development.testing.LocalBlobstoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalSearchServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 
 public class GaeTestBase {
-    private static final LocalServiceTestHelper helper = new LocalServiceTestHelper(new
-            LocalDatastoreServiceTestConfig(), new LocalSearchServiceTestConfig());
+    private static final LocalServiceTestHelper helper = new LocalServiceTestHelper(
+            new LocalDatastoreServiceTestConfig(), new LocalSearchServiceTestConfig(),
+            new LocalBlobstoreServiceTestConfig());
 
     @Before
     public void setUp() {

@@ -16,6 +16,8 @@
     <inherits name="com.arcbees.gquery.tooltip.Tooltip"/>
     <inherits name="com.google.gwt.appengine.channel.Channel"/>
     <inherits name="com.github.nmorel.gwtjackson.GwtJackson" />
+    <inherits name="com.google.gwt.validation.Validation"/>
+    <inherits name="org.hibernate.validator.HibernateValidator"/>
 
     <!-- Specify the paths for translatable code -->
     <source path='client'/>
@@ -29,4 +31,15 @@
 
     <set-configuration-property name="gwtp.bootstrapper"
                                 value="com.arcbees.gaestudio.client.gin.BootstrapperImpl"/>
+
+    <replace-with class="com.arcbees.gaestudio.client.util.ValidatorFactory">
+        <when-type-is class="javax.validation.ValidatorFactory"/>
+    </replace-with>
+    <replace-with class="com.arcbees.gaestudio.client.util.CustomValidationMessagesResolver">
+        <when-type-is class="com.google.gwt.validation.client.UserValidationMessagesResolver"/>
+    </replace-with>
+
+    <replace-with class="com.arcbees.gaestudio.client.util.WindowNameFormPanel">
+        <when-type-is class="com.google.gwt.user.client.ui.impl.FormPanelImpl"/>
+    </replace-with>
 </module>

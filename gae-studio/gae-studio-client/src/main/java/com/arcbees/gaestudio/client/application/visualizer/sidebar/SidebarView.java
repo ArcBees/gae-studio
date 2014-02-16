@@ -16,13 +16,16 @@ import javax.inject.Inject;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.ui.PanelToggle;
 import com.arcbees.gaestudio.client.ui.PanelToggleFactory;
+import com.google.common.base.Strings;
 import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -54,6 +57,12 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     SimplePanel namespaces;
     @UiField(provided = true)
     PanelToggle closeToggle;
+    @UiField
+    DivElement importKind;
+    @UiField
+    DivElement exportKind;
+    @UiField
+    Frame downloadFrame;
 
     private final KindTemplate kindTemplate;
     private final EmptyKindsTemplate emptyKindsTemplate;
@@ -84,6 +93,20 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         revealOverlayStyleName = appResources.styles().revealOverlay();
         revealUnderOverlayStyleName = appResources.styles().revealUnderOverlay();
         entityDetailPanelVisibilityStyleName = appResources.styles().entityDetailPanelVisibility();
+
+        $(importKind).click(new Function() {
+            @Override
+            public void f() {
+                getUiHandlers().importKind();
+            }
+        });
+
+        $(exportKind).click(new Function() {
+            @Override
+            public void f() {
+                getUiHandlers().exportCurrentKind();
+            }
+        });
     }
 
     @Override
@@ -107,11 +130,6 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     }
 
     @Override
-    public void showCloseHandle() {
-        this.closeToggle.asWidget().setVisible(true);
-    }
-
-    @Override
     public void setInSlot(Object slot, IsWidget content) {
         if (SidebarPresenter.SLOT_NAMESPACES.equals(slot)) {
             namespaces.setWidget(content);
@@ -119,8 +137,25 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     }
 
     @Override
+    public void setDownloadUrl(String downloadUrl) {
+        downloadFrame.setUrl(downloadUrl);
+    }
+
+    @Override
     public void onToggle() {
         getUiHandlers().onCloseHandleActivated();
+    }
+
+    private void showCloseHandle() {
+        this.closeToggle.asWidget().setVisible(true);
+    }
+
+    private void setExportEnabled(boolean enabled) {
+        if (enabled) {
+            exportKind.removeClassName(appResources.styles().exportBtnDisabled());
+        } else {
+            exportKind.addClassName(appResources.styles().exportBtnDisabled());
+        }
     }
 
     private void addKind(String kind) {
@@ -152,6 +187,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
         currentKind = $("span", e).html();
 
+        showCloseHandle();
+        setExportEnabled(!Strings.isNullOrEmpty(currentKind));
         getUiHandlers().displayEntitiesOfSelectedKind(currentKind);
     }
 

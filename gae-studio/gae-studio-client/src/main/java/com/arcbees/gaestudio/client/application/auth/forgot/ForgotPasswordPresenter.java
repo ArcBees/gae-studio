@@ -9,7 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.auth.forgot;
 
-import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
@@ -27,8 +26,8 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.NoGatekeeper;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 public class ForgotPasswordPresenter extends Presenter<ForgotPasswordPresenter.MyView, ForgotPasswordPresenter.MyProxy>
         implements ForgotPasswordUiHandlers {
@@ -57,7 +56,7 @@ public class ForgotPasswordPresenter extends Presenter<ForgotPasswordPresenter.M
                             PlaceManager placeManager,
                             RestDispatch restDispatch,
                             AuthService authService) {
-        super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
+        super(eventBus, view, proxy, RevealType.Root);
 
         this.appConstants = appConstants;
         this.placeManager = placeManager;

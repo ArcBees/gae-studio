@@ -27,6 +27,7 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
+import com.google.common.collect.Iterables;
 import com.google.storage.onestore.v3.OnestoreEntity.EntityProto;
 
 public class EntitiesServiceImpl implements EntitiesService {
@@ -105,12 +106,18 @@ public class EntitiesServiceImpl implements EntitiesService {
     public Integer getCount(String kind) {
         AppEngineHelper.disableApiHooks();
 
+        Query query = new Query(kind).setKeysOnly();
+
+        return Iterables.size(datastoreHelper.queryOnAllNamespaces(query));
+    }
+
+    @Override
+    public void put(Iterable<Entity> entities) {
+        AppEngineHelper.disableApiHooks();
+
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-        Query query = new Query(kind);
-        FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
-
-        return datastore.prepare(query).countEntities(fetchOptions);
+        datastore.put(entities);
     }
 
     private Entity createEmptyEntityFromTemplate(Entity template) {

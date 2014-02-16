@@ -12,14 +12,17 @@ package com.arcbees.gaestudio.client.application.visualizer.sidebar;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.widget.ImportPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.DeleteFromNamespaceHandler;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
+import com.arcbees.gaestudio.client.rest.ExportService;
 import com.arcbees.gaestudio.client.rest.KindsService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
@@ -41,26 +44,34 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
 
         void addEmptyEntityListStyle();
 
-        void showCloseHandle();
+        void setDownloadUrl(String downloadUrl);
     }
 
     public static final Object SLOT_NAMESPACES = new Object();
 
     private final RestDispatch restDispatch;
     private final KindsService kindsService;
+    private final ExportService exportService;
+    private final Provider<ImportPresenter> importPresenterProvider;
     private final NamespacesListPresenter namespacesListPresenter;
+
     private KindPanelToggleEvent.Action action = CLOSE;
+    private String currentKind;
 
     @Inject
     SidebarPresenter(EventBus eventBus,
                      MyView view,
                      RestDispatch restDispatch,
                      KindsService kindsService,
+                     ExportService exportService,
+                     Provider<ImportPresenter> importPresenterProvider,
                      NamespacesListPresenterFactory namespacesListPresenterFactory) {
         super(eventBus, view);
 
         this.restDispatch = restDispatch;
         this.kindsService = kindsService;
+        this.exportService = exportService;
+        this.importPresenterProvider = importPresenterProvider;
         namespacesListPresenter = namespacesListPresenterFactory.create(this);
 
         getView().setUiHandlers(this);
@@ -81,10 +92,15 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     }
 
     @Override
-    public void displayEntitiesOfSelectedKind(String kind) {
-        KindSelectedEvent.fire(this, kind);
+    public void importKind() {
+        addToPopupSlot(importPresenterProvider.get());
+    }
 
-        allowClosingSidebar();
+    @Override
+    public void displayEntitiesOfSelectedKind(String kind) {
+        currentKind = kind;
+
+        KindSelectedEvent.fire(this, kind);
     }
 
     @Override
@@ -96,6 +112,13 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         } else {
             action = CLOSE;
         }
+    }
+
+    @Override
+    public void exportCurrentKind() {
+        String exportKindUrl = exportService.getExportKindUrl(currentKind);
+
+        getView().setDownloadUrl(exportKindUrl);
     }
 
     @Override
@@ -112,10 +135,6 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         super.onReveal();
 
         updateKinds();
-    }
-
-    private void allowClosingSidebar() {
-        getView().showCloseHandle();
     }
 
     private void updateKinds() {

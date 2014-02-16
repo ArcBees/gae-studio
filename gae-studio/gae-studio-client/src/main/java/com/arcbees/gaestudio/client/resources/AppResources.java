@@ -61,6 +61,10 @@ public interface AppResources extends ClientBundle {
 
         String popup();
 
+        String popupHeader();
+
+        String close();
+
         String glassPanel();
 
         String lockedRow();
@@ -113,6 +117,8 @@ public interface AppResources extends ClientBundle {
 
         String trashSmall();
 
+        String importSmall();
+
         String deselect();
 
         String deselectDisabled();
@@ -122,6 +128,18 @@ public interface AppResources extends ClientBundle {
         String checked();
 
         String booleanKey();
+
+        String errorField();
+
+        String importBtn();
+
+        String exportBtn();
+
+        String exportBtnDisabled();
+
+        String gray();
+
+        String uploadLabel();
     }
 
     public interface Sprites extends CssResource {
@@ -170,6 +188,8 @@ public interface AppResources extends ClientBundle {
 
     ImageResource trash_small_up();
 
+    ImageResource import_small_up();
+
     ImageResource trash_small_rl();
 
     ImageResource expand_up();
@@ -203,4 +223,8 @@ public interface AppResources extends ClientBundle {
     ImageResource listGraph();
 
     ImageResource power();
+
+    ImageResource importBtn();
+
+    ImageResource exportBtn();
 }

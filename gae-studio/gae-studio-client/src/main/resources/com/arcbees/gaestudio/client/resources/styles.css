@@ -270,14 +270,58 @@ input:focus, textarea:focus, button:focus {
     gwt-image: "collapse_rl";
 }
 
+@sprite .importSmall {
+    gwt-image: "import_small_up";
+    cursor: none;
+    margin: 0px;
+}
+
 .popup {
-    padding: 20px;
     background-color: #EBEBEB;
-    border-radius: 10px;
+    color: #3d3c3c;
+
+    padding: 20px 20px 20px 20px;
+
     z-index: 110;
+    position: relative;
+
     -webkit-shadow: 0px 1px 16px -2px rgba(0, 0, 0, 0.35);
     -moz-shadow: 0px 1px 16px -2px rgba(0, 0, 0, 0.35);
     box-shadow: 0px 1px 16px -2px rgba(0, 0, 0, 0.35);
+}
+
+.popupHeader {
+    color: #3d3c3c;
+    font-weight: bold;
+    font-size: 1.3em;
+    text-transform: uppercase;
+
+    padding-left: 20px;
+    margin-bottom: 20px;
+
+    position: relative;
+}
+
+.close {
+    float:right;
+    font-size:20px;
+    font-weight:bold;
+    line-height:20px;
+    color:#000000;
+    text-shadow:0 1px 0 #ffffff;
+    opacity:0.2;
+    filter:alpha(opacity=20);
+    position: absolute;
+    right: 6px;
+    top: 2px;
+}
+
+.close:hover {
+    color:#000000;
+    text-decoration:none;
+    cursor:pointer;
+    opacity:0.4;
+    filter:alpha(opacity=40);
 }
 
 .glassPanel {
@@ -287,13 +331,16 @@ input:focus, textarea:focus, button:focus {
 }
 
 .popup button {
-    padding: 5px 10px 5px 10px;
-    border: 1px solid #355b87;
+    padding: 5px 32px 5px 32px;
+    border: none;
+    display: inline-block;
+    margin-right: 5px;
 
-    font-size: 1.3em;
+    font-size: 1.2em;
+    text-transform: uppercase;
     background: #1397ff;
     color: #EBEBEB;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.30);
+    text-shadow: none;
 
     -webkit-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
@@ -302,9 +349,9 @@ input:focus, textarea:focus, button:focus {
 
 .popup button:hover {
     color: #DFDFDF;
-    border: 1px solid #1a3160;
+    border: none;
     background: #21a8ff;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.50);
+    text-shadow: none;
 
     -webkit-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
@@ -312,9 +359,42 @@ input:focus, textarea:focus, button:focus {
 }
 
 .popup button:active {
-    border: 1px solid #1c1c1c;
+    border: none;
     background: #104b74;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.75);
+    text-shadow: none;
+
+    -webkit-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
+    -moz-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
+    box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
+}
+
+.popup button.gray {
+    border: none;
+
+    background: #c4c4c4;
+    color: #3d3c3c;
+    text-shadow: none;
+
+    -webkit-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
+}
+
+.popup button.gray:hover {
+    color: #3d3c3c;
+    border: none;
+    background: #d1d1d1;
+    text-shadow: none;
+
+    -webkit-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
+    box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
+}
+
+.popup button.gray:active {
+    border: none;
+    background: #c4c4c4;
+    text-shadow: none;
 
     -webkit-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
     -moz-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
@@ -409,6 +489,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .embeddedEntityProperties {
+    padding-left: 15px;
 }
 
 .loginAjaxLoader {
@@ -621,6 +702,51 @@ input:focus, textarea:focus, button:focus {
 
 .power:hover {
     cursor: pointer;
+}
+
+.errorField {
+    outline: #ff5400 solid 2px;
+    outline-offset: -2px;
+}
+
+@sprite .importBtn {
+    gwt-image: "importBtn";
+}
+
+@sprite .exportBtn {
+    gwt-image: "exportBtn";
+}
+
+.exportBtn, .importBtn {
+    background-color: #3d3c3c;
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+
+    height: 23px;
+    width: 23px;
+    margin: 2px;
+
+    float: left;
+}
+
+.exportBtn:hover, .importBtn:hover {
+    background-color: #25aae1;
+}
+
+.exportBtnDisabled, .exportBtnDisabled:hover {
+    background-color: #B7B7B7;
+}
+
+.uploadLabel {
+    font-size: 1.1em;
+    background: #c4c4c4;
+    text-align: left;
+
+    height: 24px;
+    padding: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
 }
 
 .checked {

@@ -15,4 +15,8 @@ interface SidebarUiHandlers extends UiHandlers {
     void displayEntitiesOfSelectedKind(String kind);
 
     void onCloseHandleActivated();
+
+    void importKind();
+
+    void exportCurrentKind();
 }

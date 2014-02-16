@@ -71,7 +71,6 @@ public class EntitiesResource {
     // We will need to create an implementation to support Objectify, Twig persist, etc.
     // For objectify we can use : ObjectifyService.factory().getMetadataForEntity(String kind);
     // And call method metadata.toEntity
-
     @POST
     public Response createEmptyEntity(@QueryParam(UrlParameters.KIND) String kind) {
         ResponseBuilder responseBuilder;

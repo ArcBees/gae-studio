@@ -7,10 +7,22 @@
         .namespaces {
             width: 240px;
         }
+
+        .actionsPanel {
+            position: absolute;
+            right: 25px;
+            top: 5px;
+        }
+
     </ui:style>
     <g:HTMLPanel>
+        <g:Frame ui:field="downloadFrame" width="0" height="0" visible="false"/>
         <span class='{res.styles.kindHeaderElement}'>Kinds
             <widget:PanelToggle ui:field="closeToggle" addStyleNames="{res.styles.toggleKindsPanel}"/>
+            <div class="{style.actionsPanel}">
+                <div ui:field="importKind" class="{res.styles.importBtn}"/>
+                <div ui:field="exportKind" class="{res.styles.exportBtn} {res.styles.exportBtnDisabled}"/>
+            </div>
         </span>
         <g:SimplePanel ui:field="namespaces" styleName="{style.namespaces}"/>
         <g:HTML ui:field="emptyKinds"/>
