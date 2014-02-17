@@ -3,9 +3,14 @@
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
     <ui:style>
+        .root {
+            overflow-x: auto;
+            width: 50%;
+            padding-left: 15px;
+        }
+
         .detailHeader {
             padding: 12px 0px;
-            margin: 0px 10px;
             border-bottom: 1px solid #a2a2a2;
             text-transform: uppercase;
             font-size: 1.2em;
@@ -33,8 +38,8 @@
 
         .buttonContainer {
             position: absolute;
-            top: 0px;
-            right: 0px;
+            top: 8px;
+            right: -5px;
         }
 
         .overrideButton {
@@ -45,7 +50,7 @@
         }
 
         .mainContent {
-            padding: 10px 10px;
+            padding-top: 20px;
             height: 100%;
             overflow-y: auto;
         }
@@ -56,22 +61,24 @@
     </ui:style>
 
     <g:HTMLPanel styleName="{res.styles.entityDetailPanel}">
-        <div class="{style.detailHeader}">
-            <h3>Entity Details</h3>
+        <g:HTMLPanel styleName="{style.root} {res.styles.secondTable}">
+            <div class="{style.detailHeader}">
+                <h3>Entity Details</h3>
 
-            <div class="{style.buttonContainer}">
-                <g:Button ui:field="cancel" styleName="{res.styles.button} {res.styles.gray}" text="Cancel"
-                          addStyleNames="{style.overrideButton}"/>
-                <g:Button ui:field="save" styleName="{res.styles.button}" text="Save"
-                          debugId="{debugIds.getSave}" addStyleNames="{style.overrideButton}"/>
+                <div class="{style.buttonContainer}">
+                    <g:Button ui:field="cancel" styleName="{res.styles.button} {res.styles.gray}" text="Cancel"
+                              addStyleNames="{style.overrideButton}"/>
+                    <g:Button ui:field="save" styleName="{res.styles.button}" text="Save"
+                              debugId="{debugIds.getSave}" addStyleNames="{style.overrideButton}"/>
+                </div>
             </div>
-        </div>
 
-        <div class="{style.mainContent}">
-            <g:FlowPanel ui:field="errors" styleName="{style.error}"/>
+            <g:HTMLPanel styleName="{style.mainContent}">
+                <g:FlowPanel ui:field="errors" styleName="{style.error}"/>
 
-            <g:SimplePanel ui:field="editorPanel" styleName="{style.editForm}"
-                           debugId="{debugIds.getEntityEditor}"/>
-        </div>
+                <g:SimplePanel ui:field="editorPanel" styleName="{style.editForm}"
+                               debugId="{debugIds.getEntityEditor}"/>
+            </g:HTMLPanel>
+        </g:HTMLPanel>
     </g:HTMLPanel>
 </ui:UiBinder>

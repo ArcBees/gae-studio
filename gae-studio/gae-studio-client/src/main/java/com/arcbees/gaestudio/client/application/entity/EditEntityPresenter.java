@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
+import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
@@ -103,7 +104,6 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
             });
         }
 
-        FullScreenEvent.fire(this, false);
         editEntity(request);
     }
 
@@ -156,6 +156,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
                 entityEditor = entityEditorFactory.create(parsedEntity);
 
                 setInSlot(EDITOR_SLOT, entityEditor);
+                RowLockedEvent.fire(this);
             }
         };
 
