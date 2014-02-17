@@ -24,16 +24,17 @@ import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.
 
 public class BooleanPropertyEditor extends AbstractPropertyEditorWithWidgetLeftside<Boolean> {
     @UiTemplate("BooleanPropertyEditor.ui.xml")
-    static interface Binder extends UiBinder<Widget, PropertyEditorUiFields> {
+    interface Binder extends UiBinder<Widget, PropertyEditorUiFields> {
     }
+
     private final CustomCheckBox checkBox;
     private final JSONValue property;
 
     @Inject
-    BooleanPropertyEditor(@Assisted String key,
-                          @Assisted JSONValue property,
-                          CustomCheckBox customCheckBox,
-                          AppResources appResources) {
+    BooleanPropertyEditor(CustomCheckBox customCheckBox,
+                          AppResources appResources,
+                          @Assisted String key,
+                          @Assisted JSONValue property) {
         super(key);
 
         this.property = property;

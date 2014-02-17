@@ -12,7 +12,6 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -23,17 +22,16 @@ import com.google.gwt.user.client.ui.Widget;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class CustomCheckBox implements IsWidget, AttachEvent.Handler {
-    interface SuperCheckBoxUiBinder extends UiBinder<Widget, CustomCheckBox> {
+    interface Binder extends UiBinder<Widget, CustomCheckBox> {
     }
-
-    private static SuperCheckBoxUiBinder ourUiBinder = GWT.create(SuperCheckBoxUiBinder.class);
 
     private final Widget widget;
     private final AppResources appResources;
 
     @Inject
-    public CustomCheckBox(AppResources appResources) {
-        widget = ourUiBinder.createAndBindUi(this);
+    CustomCheckBox(Binder uiBinder,
+                  AppResources appResources) {
+        widget = uiBinder.createAndBindUi(this);
 
         this.appResources = appResources;
 
@@ -54,10 +52,6 @@ public class CustomCheckBox implements IsWidget, AttachEvent.Handler {
         }
     }
 
-    private void toggleChecked() {
-        setValue(!getValue());
-    }
-
     @Override
     public Widget asWidget() {
         return widget;
@@ -75,5 +69,9 @@ public class CustomCheckBox implements IsWidget, AttachEvent.Handler {
             $(widget).removeClass(appResources.styles().checked());
             $(widget).html("");
         }
+    }
+
+    private void toggleChecked() {
+        setValue(!getValue());
     }
 }

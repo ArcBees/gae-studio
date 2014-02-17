@@ -144,7 +144,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
     private void onSaveEntityFailed(Throwable caught) {
         String message = caught.getMessage();
         if (message == null) {
-            message = "Unable to save the changes in the datastore.";
+            message = appConstants.errorSavingChanges();
         }
         getView().showError(message);
     }
@@ -177,7 +177,6 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
         String appId = request.getParameter(APP_ID, null);
 
         String failureMessage = appConstants.failedGettingEntity();
-
         AsyncCallbackImpl<EntityDto> callback = new AsyncCallbackImpl<EntityDto>(failureMessage) {
             @Override
             public void onSuccess(EntityDto result) {

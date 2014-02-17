@@ -23,7 +23,7 @@ import com.google.web.bindery.event.shared.EventBus;
 
 public abstract class AbstractPropertyEditorWithWidgetLeftside<T> implements PropertyEditor<T> {
     @UiTemplate("AbstractPropertyEditorWithWidgetLeftside.ui.xml")
-    static interface Binder extends UiBinder<Widget, PropertyEditorUiFields> {
+    interface Binder extends UiBinder<Widget, PropertyEditorUiFields> {
     }
 
     /**

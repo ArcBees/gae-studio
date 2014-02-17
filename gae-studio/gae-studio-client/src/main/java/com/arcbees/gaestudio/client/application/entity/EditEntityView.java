@@ -61,6 +61,7 @@ public class EditEntityView extends ViewWithUiHandlers<EditEntityUiHandlers> imp
     @Override
     public void setInSlot(Object slot, IsWidget content) {
         super.setInSlot(slot, content);
+
         errors.setVisible(false);
 
         if (slot == EditEntityPresenter.EDITOR_SLOT) {

@@ -4,7 +4,7 @@
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
     <ui:style>
         .root {
-            overflow-x: auto;
+            overflow: auto;
             width: 50%;
             padding-left: 15px;
         }
@@ -79,12 +79,12 @@
                 </div>
             </div>
 
-            <g:HTMLPanel styleName="{style.mainContent}">
+            <div class="{style.mainContent}">
                 <g:FlowPanel ui:field="errors" styleName="{style.error}"/>
 
                 <g:SimplePanel ui:field="editorPanel" styleName="{style.editForm}"
                                debugId="{debugIds.getEntityEditor}"/>
-            </g:HTMLPanel>
+            </div>
         </g:HTMLPanel>
     </g:HTMLPanel>
 </ui:UiBinder>
