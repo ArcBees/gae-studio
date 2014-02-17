@@ -75,5 +75,6 @@ public class EditEntityView extends ViewWithUiHandlers<EditEntityUiHandlers> imp
 
     @UiHandler("cancel")
     void onCancelClicked(ClickEvent event) {
+        getUiHandlers().cancelEdit();
     }
 }

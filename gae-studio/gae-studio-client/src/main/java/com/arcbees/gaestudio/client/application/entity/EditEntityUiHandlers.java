@@ -13,4 +13,6 @@ import com.gwtplatform.mvp.client.UiHandlers;
 
 interface EditEntityUiHandlers extends UiHandlers {
     void saveEntity();
+
+    void cancelEdit();
 }

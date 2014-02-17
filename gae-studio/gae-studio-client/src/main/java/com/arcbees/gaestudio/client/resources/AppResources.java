@@ -119,6 +119,8 @@ public interface AppResources extends ClientBundle {
 
         String importSmall();
 
+        String pencilSmall();
+
         String deselect();
 
         String deselectDisabled();
@@ -183,6 +185,8 @@ public interface AppResources extends ClientBundle {
     ImageResource pencil_up();
 
     ImageResource pencil_rl();
+
+    ImageResource pencil_small();
 
     ImageResource create();
 

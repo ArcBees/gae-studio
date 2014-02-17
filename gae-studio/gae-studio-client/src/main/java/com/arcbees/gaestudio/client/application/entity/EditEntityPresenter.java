@@ -29,6 +29,7 @@ import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.EntityService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.core.client.Scheduler;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
@@ -38,6 +39,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
@@ -70,7 +72,9 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
     private final EntityService entityService;
     private final EntityEditorFactory entityEditorFactory;
     private final AppConstants appConstants;
+    private final PlaceManager placeManager;
 
+    private ParsedEntity currentEntity;
     private EntityEditorPresenter entityEditor;
 
     @Inject
@@ -78,6 +82,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
                         MyView view,
                         MyProxy proxy,
                         RestDispatch restDispatch,
+                        PlaceManager placeManager,
                         EntityService entityService,
                         EntityEditorFactory entityEditorFactory,
                         AppConstants appConstants) {
@@ -85,6 +90,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
 
         this.restDispatch = restDispatch;
         this.entityService = entityService;
+        this.placeManager = placeManager;
         this.entityEditorFactory = entityEditorFactory;
         this.appConstants = appConstants;
 
@@ -119,6 +125,11 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
     }
 
     @Override
+    public void cancelEdit() {
+        revealDetailEntity();
+    }
+
+    @Override
     public void onPropertyEditorError(PropertyEditorErrorEvent event) {
         getView().showError(event.getError());
     }
@@ -138,6 +149,24 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
         getView().showError(message);
     }
 
+    private void revealDetailEntity() {
+        KeyDto keyDto = currentEntity.getKey();
+
+        PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.entity)
+                .with(KIND, keyDto.getKind())
+                .with(ID, Long.toString(keyDto.getId()))
+                .with(NAME, keyDto.getName())
+                .with(NAMESPACE, keyDto.getAppIdNamespace().getNamespace())
+                .with(APP_ID, keyDto.getAppIdNamespace().getAppId());
+
+        if (keyDto.getParentKey() != null) {
+            builder = builder.with(PARENT_KIND, keyDto.getParentKey().getKind())
+                    .with(PARENT_ID, Long.toString(keyDto.getParentKey().getId()));
+        }
+
+        placeManager.revealPlace(builder.build());
+    }
+
     private void editEntity(PlaceRequest request) {
         String kind = request.getParameter(KIND, null);
         String id = request.getParameter(ID, "-1");
@@ -152,8 +181,8 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
         AsyncCallbackImpl<EntityDto> callback = new AsyncCallbackImpl<EntityDto>(failureMessage) {
             @Override
             public void onSuccess(EntityDto result) {
-                ParsedEntity parsedEntity = new ParsedEntity(result);
-                entityEditor = entityEditorFactory.create(parsedEntity);
+                currentEntity = new ParsedEntity(result);
+                entityEditor = entityEditorFactory.create(currentEntity);
 
                 setInSlot(EDITOR_SLOT, entityEditor);
                 RowLockedEvent.fire(this);
@@ -170,6 +199,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
         EntitySavedEvent.fire(this, newEntityDto);
         Message message = new Message("Entity saved.", MessageStyle.SUCCESS);
         DisplayMessageEvent.fire(this, message);
+        revealDetailEntity();
     }
 
     private void updateEntity() throws InvalidEntityFieldsException {

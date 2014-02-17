@@ -10,11 +10,17 @@
         }
 
         .detailHeader {
-            padding: 12px 0px;
+            padding: 12px 0 12px 20px;
             border-bottom: 1px solid #a2a2a2;
             text-transform: uppercase;
             font-size: 1.2em;
             position: relative;
+        }
+
+        .pencilIcon {
+            position: absolute;
+            top: 18px;
+            left: 0px;
         }
 
         .detailHeader h3 {
@@ -63,8 +69,8 @@
     <g:HTMLPanel styleName="{res.styles.entityDetailPanel}">
         <g:HTMLPanel styleName="{style.root} {res.styles.secondTable}">
             <div class="{style.detailHeader}">
+                <div class="{res.styles.pencilSmall} {style.pencilIcon}"/>
                 <h3>Entity Details</h3>
-
                 <div class="{style.buttonContainer}">
                     <g:Button ui:field="cancel" styleName="{res.styles.button} {res.styles.gray}" text="Cancel"
                               addStyleNames="{style.overrideButton}"/>

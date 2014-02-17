@@ -276,6 +276,12 @@ input:focus, textarea:focus, button:focus {
     margin: 0px;
 }
 
+@sprite .pencilSmall {
+    gwt-image: "pencil_small";
+    cursor: none;
+    margin: 0px;
+}
+
 .popup {
     background-color: #EBEBEB;
     color: #3d3c3c;
