@@ -4,9 +4,10 @@
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
     <ui:style>
         .root {
-            overflow: auto;
             width: 50%;
             padding-left: 15px;
+            height: 100%;
+            overflow-x: hidden;
         }
 
         .detailHeader {
@@ -20,12 +21,12 @@
         .pencilIcon {
             position: absolute;
             top: 18px;
-            left: 0px;
+            left: 0;
         }
 
         .detailHeader h3 {
-            padding: 0px;
-            margin: 0px;
+            padding: 0;
+            margin: 0;
             font-weight: normal;
         }
 
@@ -57,7 +58,7 @@
 
         .mainContent {
             padding-top: 20px;
-            height: 100%;
+            height: literal('calc(100% - 80px)');
             overflow-y: auto;
         }
 
