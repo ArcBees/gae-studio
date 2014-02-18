@@ -12,7 +12,7 @@ package com.arcbees.gaestudio.client.application.entity;
 import com.gwtplatform.mvp.client.UiHandlers;
 
 interface EditEntityUiHandlers extends UiHandlers {
-    void saveEntity();
+    void save();
 
-    void cancelEdit();
+    void cancel();
 }

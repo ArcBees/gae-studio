@@ -62,14 +62,6 @@ public abstract class AbstractPropertyEditorWithWidgetLeftside<T> implements Pro
         return widget;
     }
 
-    protected void initFormWidget(IsWidget formWidget) {
-        if (fields.form.getWidget() != null) {
-            throw new IllegalStateException("Property Widget already set.");
-        }
-
-        fields.form.setWidget(formWidget);
-    }
-
     @Override
     public final boolean isValid() {
         boolean valid = validate();
@@ -78,6 +70,14 @@ public abstract class AbstractPropertyEditorWithWidgetLeftside<T> implements Pro
         }
 
         return valid;
+    }
+
+    protected void initFormWidget(IsWidget formWidget) {
+        if (fields.form.getWidget() != null) {
+            throw new IllegalStateException("Property Widget already set.");
+        }
+
+        fields.form.setWidget(formWidget);
     }
 
     protected boolean validate() {
@@ -89,7 +89,7 @@ public abstract class AbstractPropertyEditorWithWidgetLeftside<T> implements Pro
     }
 
     protected final void showErrors(Iterable<String> errors) {
-        for(String error : errors) {
+        for (String error : errors) {
             showError(error);
         }
     }

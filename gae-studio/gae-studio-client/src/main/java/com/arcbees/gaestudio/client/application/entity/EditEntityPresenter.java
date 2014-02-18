@@ -114,7 +114,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
     }
 
     @Override
-    public void saveEntity() {
+    public void save() {
         getView().clearErrors();
 
         try {
@@ -125,7 +125,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
     }
 
     @Override
-    public void cancelEdit() {
+    public void cancel() {
         revealDetailEntity();
     }
 
@@ -184,7 +184,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
                 entityEditor = entityEditorFactory.create(currentEntity);
 
                 setInSlot(EDITOR_SLOT, entityEditor);
-                RowLockedEvent.fire(this);
+                FullScreenEvent.fire(this, false);
             }
         };
 

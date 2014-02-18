@@ -30,7 +30,7 @@ public class CustomCheckBox implements IsWidget, AttachEvent.Handler {
 
     @Inject
     CustomCheckBox(Binder uiBinder,
-                  AppResources appResources) {
+                   AppResources appResources) {
         widget = uiBinder.createAndBindUi(this);
 
         this.appResources = appResources;
@@ -40,7 +40,7 @@ public class CustomCheckBox implements IsWidget, AttachEvent.Handler {
 
     @Override
     public void onAttachOrDetach(AttachEvent event) {
-        if(event.isAttached()) {
+        if (event.isAttached()) {
             $(widget).click(new Function() {
                 @Override
                 public boolean f(Event e) {

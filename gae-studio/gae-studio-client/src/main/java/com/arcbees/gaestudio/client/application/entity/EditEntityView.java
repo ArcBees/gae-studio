@@ -71,11 +71,11 @@ public class EditEntityView extends ViewWithUiHandlers<EditEntityUiHandlers> imp
 
     @UiHandler("save")
     void onEditClicked(ClickEvent event) {
-        getUiHandlers().saveEntity();
+        getUiHandlers().save();
     }
 
     @UiHandler("cancel")
     void onCancelClicked(ClickEvent event) {
-        getUiHandlers().cancelEdit();
+        getUiHandlers().cancel();
     }
 }

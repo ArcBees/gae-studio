@@ -15,18 +15,11 @@ import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
 
 import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.parseJsonValueWithMetadata;
 
 public class BooleanPropertyEditor extends AbstractPropertyEditorWithWidgetLeftside<Boolean> {
-    @UiTemplate("BooleanPropertyEditor.ui.xml")
-    interface Binder extends UiBinder<Widget, PropertyEditorUiFields> {
-    }
-
     private final CustomCheckBox checkBox;
     private final JSONValue property;
 
