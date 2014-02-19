@@ -336,6 +336,14 @@ input:focus, textarea:focus, button:focus {
     background: rgba(0, 0, 0, 0.4);
 }
 
+.chooseFileButton {
+    text-align: center;
+
+    padding: 5px;
+    width: 140px;
+    margin-right: 0px !important;
+}
+
 .button {
     border: none;
     display: inline-block;
@@ -750,8 +758,7 @@ input:focus, textarea:focus, button:focus {
     text-align: left;
 
     height: 24px;
-    padding: 5px;
-    margin-right: 5px;
+    padding: 5px !important;
     margin-bottom: 10px;
 }
 

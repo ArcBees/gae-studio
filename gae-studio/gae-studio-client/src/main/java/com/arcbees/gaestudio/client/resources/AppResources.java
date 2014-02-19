@@ -141,6 +141,8 @@ public interface AppResources extends ClientBundle {
 
         String button();
 
+        String chooseFileButton();
+
         String gray();
 
         String uploadLabel();
