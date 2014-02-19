@@ -420,8 +420,9 @@ input:focus, textarea:focus, button:focus {
 
 .authForm input {
     width: 96%;
-    padding: 0 0 0 4%;
+    padding: 0 0 0 4% !important;
     margin-bottom: 11px;
+    background-color: #FFFFFF !important;
 
     box-shadow: inset 2px 2px 6px 1px rgba(0, 0, 0, 0.2);
     border: none;
