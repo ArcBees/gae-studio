@@ -25,10 +25,6 @@
             padding: 5px;
         }
 
-        .noMargin {
-            margin-right: 0px;
-        }
-
         .buttonContainer > :first-child {
             margin-right: 6px;
         }
@@ -63,7 +59,7 @@
                           addStyleNames="{style.overrideButton}"/>
                 <g:Button ui:field="upload" enabled="false" text="Upload"
                           styleName="{res.styles.button} {res.styles.gray}"
-                          addStyleNames="{style.overrideButton} {style.noMargin}"/>
+                          addStyleNames="{style.overrideButton} {res.styles.noMarginRight}"/>
             </div>
         </g:HTMLPanel>
     </g:PopupPanel>

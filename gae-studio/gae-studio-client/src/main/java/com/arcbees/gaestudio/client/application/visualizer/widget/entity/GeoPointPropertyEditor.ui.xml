@@ -12,12 +12,12 @@
 
     <g:HTMLPanel styleName="{res.styles.embeddedEntityProperties}">
         <div>
-            <g:Label text="Latitude" styleName="{style.label}"/>
+            <Label class="{style.label}">Latitude</Label>
             <g:DoubleBox ui:field="latitude"/>
         </div>
 
         <div>
-            <g:Label text="Longitude" styleName="{style.label}"/>
+            <Label class="{style.label}">Longitude</Label>
             <g:DoubleBox ui:field="longitude"/>
         </div>
     </g:HTMLPanel>

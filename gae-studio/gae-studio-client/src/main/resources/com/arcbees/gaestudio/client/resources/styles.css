@@ -773,6 +773,10 @@ input:focus, textarea:focus, button:focus {
     line-height: 1em;
 }
 
+.noMarginRight {
+    margin-right: 0px;
+}
+
 input[type=text] {
     background-color: lightgray;
     color: black;

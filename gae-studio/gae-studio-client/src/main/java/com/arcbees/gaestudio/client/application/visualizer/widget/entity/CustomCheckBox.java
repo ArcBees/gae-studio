@@ -62,7 +62,7 @@ public class CustomCheckBox implements IsWidget, AttachEvent.Handler {
     }
 
     public void setValue(boolean checked) {
-        if(checked) {
+        if (checked) {
             $(widget).addClass(appResources.styles().checked());
             $(widget).html("✓");
         } else {

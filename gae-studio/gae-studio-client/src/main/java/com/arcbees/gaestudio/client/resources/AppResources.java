@@ -146,6 +146,8 @@ public interface AppResources extends ClientBundle {
         String gray();
 
         String uploadLabel();
+
+        String noMarginRight();
     }
 
     public interface Sprites extends CssResource {

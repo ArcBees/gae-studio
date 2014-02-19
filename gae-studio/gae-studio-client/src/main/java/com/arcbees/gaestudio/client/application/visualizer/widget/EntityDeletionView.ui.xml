@@ -19,10 +19,6 @@
             padding: 5px;
         }
 
-        .noMargin {
-            margin-right: 0px;
-        }
-
         .container {
             width: 100%;
         }
@@ -58,7 +54,7 @@
                 <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.button} {res.styles.gray}"
                           addStyleNames="{style.overrideButton}"/>
                 <g:Button ui:field="delete" text="Delete" styleName="{res.styles.button}"
-                          addStyleNames="{style.overrideButton} {style.noMargin}"
+                          addStyleNames="{style.overrideButton} {res.styles.noMarginRight}"
                           debugId="{debugIds.getDeleteConfirm}"/>
             </div>
         </g:HTMLPanel>
