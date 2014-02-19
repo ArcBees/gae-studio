@@ -19,13 +19,10 @@
             text-align: center;
         }
 
-        .buttonContainer button {
-            margin: 0px;
-        }
-
-        .importButton {
-            margin-right: 0px !important;
-            padding: 5px 27px 5px 27px !important;
+        .overrideButton {
+            text-align: center;
+            width: 120px;
+            padding: 5px;
         }
 
         .buttonContainer > :first-child {
@@ -58,9 +55,11 @@
                 <w:AjaxLoader ui:field="ajaxLoader"/>
             </div>
             <div class="{style.buttonContainer}">
-                <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.gray}"/>
+                <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.button} {res.styles.gray}"
+                          addStyleNames="{style.overrideButton}"/>
                 <g:Button ui:field="upload" enabled="false" text="Upload"
-                          styleName="{res.styles.gray} {style.importButton}"/>
+                          styleName="{res.styles.button} {res.styles.gray}"
+                          addStyleNames="{style.overrideButton} {res.styles.noMarginRight}"/>
             </div>
         </g:HTMLPanel>
     </g:PopupPanel>

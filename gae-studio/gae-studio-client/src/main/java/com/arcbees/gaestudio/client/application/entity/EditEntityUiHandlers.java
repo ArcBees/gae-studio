@@ -7,10 +7,12 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.arcbees.gaestudio.client.application.entity;
 
 import com.gwtplatform.mvp.client.UiHandlers;
 
-interface EntityDetailsUiHandlers extends UiHandlers {
-    void saveEntity();
+interface EditEntityUiHandlers extends UiHandlers {
+    void save();
+
+    void cancel();
 }

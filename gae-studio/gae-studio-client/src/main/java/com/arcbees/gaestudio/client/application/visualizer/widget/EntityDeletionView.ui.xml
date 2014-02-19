@@ -13,12 +13,10 @@
             text-align: center;
         }
 
-        .buttonContainer button {
-            margin: 0px;
-        }
-
-        .buttonContainer > :first-child {
-            margin-right: 6px;
+        .overrideButton {
+            text-align: center;
+            width: 118px;
+            padding: 5px;
         }
 
         .container {
@@ -53,8 +51,11 @@
                 <g:HTML ui:field="message"/>
             </div>
             <div class="{style.buttonContainer}">
-                <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.gray}"/>
-                <g:Button ui:field="delete" text="Delete" debugId="{debugIds.getDeleteConfirm}"/>
+                <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.button} {res.styles.gray}"
+                          addStyleNames="{style.overrideButton}"/>
+                <g:Button ui:field="delete" text="Delete" styleName="{res.styles.button}"
+                          addStyleNames="{style.overrideButton} {res.styles.noMarginRight}"
+                          debugId="{debugIds.getDeleteConfirm}"/>
             </div>
         </g:HTMLPanel>
     </g:PopupPanel>

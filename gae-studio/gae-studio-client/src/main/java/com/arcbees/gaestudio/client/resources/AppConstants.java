@@ -105,4 +105,6 @@ public interface AppConstants extends Constants {
     String passwordDontMatch();
 
     String allFieldsAreRequired();
+
+    String errorSavingChanges();
 }

@@ -158,8 +158,11 @@ input:focus, textarea:focus, button:focus {
 .entityListPanel {
     width: 100%;
     height: 100%;
+    float: left;
+    padding-left: 5px;
 
     zoom: 1;
+    overflow-y: auto;
 
     transition: left .5s ease;
     -webkit-transition: left .5s ease;
@@ -273,6 +276,12 @@ input:focus, textarea:focus, button:focus {
     margin: 0px;
 }
 
+@sprite .pencilSmall {
+    gwt-image: "pencil_small";
+    cursor: none;
+    margin: 0px;
+}
+
 .popup {
     background-color: #EBEBEB;
     color: #3d3c3c;
@@ -327,8 +336,15 @@ input:focus, textarea:focus, button:focus {
     background: rgba(0, 0, 0, 0.4);
 }
 
-.popup button {
-    padding: 5px 32px 5px 32px;
+.chooseFileButton {
+    text-align: center;
+
+    padding: 5px;
+    width: 140px;
+    margin-right: 0px !important;
+}
+
+.button {
     border: none;
     display: inline-block;
     margin-right: 5px;
@@ -344,7 +360,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
 }
 
-.popup button:hover {
+.button:hover {
     color: #DFDFDF;
     border: none;
     background: #21a8ff;
@@ -355,7 +371,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
 }
 
-.popup button:active {
+.button:active {
     border: none;
     background: #104b74;
     text-shadow: none;
@@ -365,7 +381,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
 }
 
-.popup button.gray {
+.button.gray {
     border: none;
 
     background: #c4c4c4;
@@ -377,7 +393,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
 }
 
-.popup button.gray:hover {
+.button.gray:hover {
     color: #3d3c3c;
     border: none;
     background: #d1d1d1;
@@ -388,7 +404,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
 }
 
-.popup button.gray:active {
+.button.gray:active {
     border: none;
     background: #c4c4c4;
     text-shadow: none;
@@ -411,8 +427,9 @@ input:focus, textarea:focus, button:focus {
 
 .authForm input {
     width: 96%;
-    padding: 0 0 0 4%;
+    padding: 0 0 0 4% !important;
     margin-bottom: 11px;
+    background-color: #FFFFFF !important;
 
     box-shadow: inset 2px 2px 6px 1px rgba(0, 0, 0, 0.2);
     border: none;
@@ -487,6 +504,7 @@ input:focus, textarea:focus, button:focus {
 
 .embeddedEntityProperties {
     padding-left: 15px;
+    margin-bottom: 20px;
 }
 
 .loginAjaxLoader {
@@ -741,7 +759,27 @@ input:focus, textarea:focus, button:focus {
     text-align: left;
 
     height: 24px;
-    padding: 5px;
-    margin-right: 5px;
+    padding: 5px !important;
     margin-bottom: 10px;
+}
+
+.checked {
+    background-color: #25aae1;
+}
+
+.booleanKey {
+    float: left;
+    margin: 5px 0 5px 0;
+    line-height: 1em;
+}
+
+.noMarginRight {
+    margin-right: 0px;
+}
+
+input[type=text] {
+    background-color: lightgray;
+    color: black;
+    border: none;
+    padding-left: 4px;
 }
