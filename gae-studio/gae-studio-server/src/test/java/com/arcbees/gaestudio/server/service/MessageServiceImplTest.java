@@ -49,7 +49,8 @@ public class MessageServiceImplTest extends GaeTestBase {
 
         // when
         velocityWrapper.put("msgDate", new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()));
-        velocityWrapper.put("textMessage", "Gae notification message");
+        velocityWrapper.put("title", "Gae Alert");
+        velocityWrapper.put("textMessage", "Notification message");
         String notification = velocityWrapper.generate();
 
         // then

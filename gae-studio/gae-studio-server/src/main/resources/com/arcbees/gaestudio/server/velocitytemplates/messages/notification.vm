@@ -2,20 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" style="padding: 0;margin: 0;color: #3f3f3f;">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>*|MC:SUBJECT|*</title>
+    <title>${title}</title>
 </head>
 <body style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;margin: 0;padding: 0;font-family: arial,sans-serif;font: arial,sans-serif;color: #3f3f3f;width: 100%;">
 <center>
-    <!-- *|IFNOT:ARCHIVE_PAGE|* -->
-    <table class="trouble-viewing" align="center" style="padding: 15px;margin: 0;color: #aaaaaa;font-size: 11px;width: 600px;">
-        <tr style="padding: 0;margin: 0;color: #3f3f3f;">
-            <td align="center" style="padding: 0;margin: 0;color: #3f3f3f;">
-                <p style="padding: 0;margin: 0;color: #3f3f3f;">Trouble viewing this email? <a href="*|ARCHIVE|*" target="_blank" style="color: #25aae1;cursor: pointer;text-decoration: underline;">View in Browser</a></p>
-            </td>
-        </tr>
-    </table>
-    <!-- *|END:IF|* -->
-
     <table id="wrapper" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;width: 600px;background-color: #e6e6e6;bgcolor: #e6e6e6;border-top: 3px solid #25aae1;padding-top: 14px;">
         <tr style="padding: 0;margin: 0;color: #3f3f3f;">
             <td style="padding: 0;margin: 0;color: #3f3f3f;">
@@ -49,7 +39,7 @@
 
                 <!-- Main Content -->
                 <center mc:repeatable="">
-                    <!-- First News -->
+                    <!-- Notification -->
                     <table width="530" cellpadding="0" cellspacing="0" align="center" mc:edit="dateContainer" mc:hideable="" style="padding: 0;margin: 0;color: #3f3f3f;">
                         <tr class="date" align="right" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #e6e6e6;bgcolor: #e6e6e6;">
                             <td width="488" height="20" style="padding: 0;margin: 0;color: #3f3f3f;"></td>
@@ -126,10 +116,6 @@
                     </tr>
                     <tr height="4" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
                         <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
-                    </tr>
-                    <tr id="unsubscribe" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #3f3f3f;bgcolor: #3f3f3f;">
-                        <td width="600" height="25" style="padding: 0;margin: 0;color: #3f3f3f;">
-                        </td>
                     </tr>
                 </table>
                 <!-- Footer End -->
