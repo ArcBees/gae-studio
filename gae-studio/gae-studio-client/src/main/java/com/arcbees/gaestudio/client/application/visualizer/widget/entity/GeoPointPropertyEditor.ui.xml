@@ -2,11 +2,23 @@
         xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
 
-    <g:HTMLPanel styleName="{res.styles.embeddedEntityProperties}">
-        <g:Label>Latitude</g:Label>
-        <g:DoubleBox ui:field="latitude"/>
+    <ui:style>
+        .label {
+            display: inline-block;
+            width: 60px;
+            text-align: right;
+        }
+    </ui:style>
 
-        <g:Label>Longitude</g:Label>
-        <g:DoubleBox ui:field="longitude"/>
+    <g:HTMLPanel styleName="{res.styles.embeddedEntityProperties}">
+        <div>
+            <g:Label text="Latitude" styleName="{style.label}"/>
+            <g:DoubleBox ui:field="latitude"/>
+        </div>
+
+        <div>
+            <g:Label text="Longitude" styleName="{style.label}"/>
+            <g:DoubleBox ui:field="longitude"/>
+        </div>
     </g:HTMLPanel>
 </ui:UiBinder>
