@@ -43,7 +43,7 @@ public class VisualizerPage {
 
     public void changeCarBooleans() {
         WebElement booleansContainer = webDriverHelper.waitUntilPresenceOfElementLocated(ByDebugId.id("booleans"));
-        List<WebElement> checkboxes = booleansContainer.findElements(By.tagName("input"));
+        List<WebElement> checkboxes = booleansContainer.findElements(By.className("checkbox"));
 
         WebElement middleCheckbox = checkboxes.get(1);
         webDriverHelper.waitUntilElementIsClickable(middleCheckbox);

@@ -58,7 +58,7 @@
 
         .mainContent {
             padding-top: 20px;
-            height: literal('calc(100% - 80px)');
+            height: literal('calc(100% - 68px)');
             overflow-y: auto;
         }
 

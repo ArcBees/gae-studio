@@ -504,6 +504,7 @@ input:focus, textarea:focus, button:focus {
 
 .embeddedEntityProperties {
     padding-left: 15px;
+    margin-bottom: 20px;
 }
 
 .loginAjaxLoader {
