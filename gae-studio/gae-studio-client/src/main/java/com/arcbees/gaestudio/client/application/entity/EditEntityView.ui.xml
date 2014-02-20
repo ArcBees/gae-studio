@@ -52,7 +52,7 @@
             width: 210px;
 
             position: absolute;
-            top: 3px;
+            top: 2px;
             right: 0;
         }
     </ui:style>
