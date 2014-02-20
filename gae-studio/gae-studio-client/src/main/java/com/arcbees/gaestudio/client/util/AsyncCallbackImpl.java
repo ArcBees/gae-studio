@@ -49,4 +49,8 @@ public abstract class AsyncCallbackImpl<T> implements AsyncCallback<T>, HasHandl
 
         handleFailure(caught);
     }
+
+    protected Boolean isConflictingException(Throwable caught) {
+        return caught.getMessage().equals("Conflict");
+    }
 }

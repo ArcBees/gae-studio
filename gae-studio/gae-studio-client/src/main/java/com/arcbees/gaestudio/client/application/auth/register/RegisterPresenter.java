@@ -34,6 +34,8 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
         RegisterUiHandlers {
     interface MyView extends View, HasUiHandlers<RegisterUiHandlers> {
         void edit(User user);
+
+        void userAlreadyExist();
     }
 
     @ProxyCodeSplit
@@ -86,6 +88,10 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
                     @Override
                     public void handleFailure(Throwable caught) {
                         getView().edit(user);
+
+                        if (isConflictingException(caught)) {
+                            getView().userAlreadyExist();
+                        }
                     }
                 });
     }
