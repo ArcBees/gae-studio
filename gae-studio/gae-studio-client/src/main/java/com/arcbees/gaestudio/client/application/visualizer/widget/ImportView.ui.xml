@@ -7,34 +7,18 @@
             width: 100%;
         }
 
-        .importIcon {
-            position: absolute;
-            left: 0px;
-            top: 4px;
-        }
-
-        .buttonContainer {
-            padding-top: 5px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .overrideButton {
-            text-align: center;
-            width: 120px;
-            padding: 5px;
-        }
-
-        .buttonContainer > :first-child {
-            margin-right: 6px;
-        }
-
         .popupContent {
             font-size: 1.1em;
             text-align: right;
 
-            width: 250px;
+            width: 290px;
             margin-bottom: 20px;
+        }
+
+        .ajaxLoader {
+            position: absolute;
+            top: 109px;
+            left: 128px;
         }
     </ui:style>
     <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{res.styles.glassPanel}" modal="true"
@@ -42,24 +26,20 @@
         <g:HTMLPanel styleName="{style.container}">
             <div>
                 <g:Anchor ui:field="close" styleName="{res.styles.close}" text="×"/>
-                <div class="{res.styles.clear}"></div>
+                <div class="{res.styles.clear}"/>
             </div>
             <div class="{res.styles.popupHeader}">
-                <div class="{style.importIcon} {res.styles.importSmall}"/>
+                <div class="{res.styles.popupIcon} {res.styles.importSmall}"/>
                 Import
             </div>
             <div class="{style.popupContent}">
                 <g:SimplePanel ui:field="uploadFormContainer"/>
             </div>
-            <div>
-                <w:AjaxLoader ui:field="ajaxLoader"/>
-            </div>
-            <div class="{style.buttonContainer}">
-                <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.button} {res.styles.gray}"
-                          addStyleNames="{style.overrideButton}"/>
+            <w:AjaxLoader ui:field="ajaxLoader" styleName="{style.ajaxLoader}"/>
+            <div class="{res.styles.buttonContainer}">
+                <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.button} {res.styles.gray}"/>
                 <g:Button ui:field="upload" enabled="false" text="Upload"
-                          styleName="{res.styles.button} {res.styles.gray}"
-                          addStyleNames="{style.overrideButton} {res.styles.noMarginRight}"/>
+                          styleName="{res.styles.button} {res.styles.gray}"/>
             </div>
         </g:HTMLPanel>
     </g:PopupPanel>

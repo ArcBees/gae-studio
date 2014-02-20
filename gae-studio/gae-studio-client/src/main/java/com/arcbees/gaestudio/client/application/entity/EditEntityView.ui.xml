@@ -11,23 +11,18 @@
         }
 
         .detailHeader {
-            padding: 12px 0 12px 20px;
+            padding: 12px 0 12px 0;
             border-bottom: 1px solid #a2a2a2;
             text-transform: uppercase;
             font-size: 1.2em;
             position: relative;
         }
 
-        .pencilIcon {
-            position: absolute;
-            top: 18px;
-            left: 0;
-        }
-
         .detailHeader h3 {
             padding: 0;
             margin: 0;
             font-weight: normal;
+            display: inline-block;
         }
 
         .error {
@@ -43,19 +38,6 @@
             -moz-border-radius: 5px;
         }
 
-        .buttonContainer {
-            position: absolute;
-            top: 8px;
-            right: -5px;
-        }
-
-        .overrideButton {
-            text-align: center;
-            width: 100px;
-            padding: 5px;
-            font-size: 1em;
-        }
-
         .mainContent {
             padding-top: 20px;
             height: literal('calc(100% - 68px)');
@@ -65,18 +47,25 @@
         .editForm {
             padding-left: 5px;
         }
+
+        .buttonContainer {
+            width: 210px;
+
+            position: absolute;
+            top: 3px;
+            right: 0;
+        }
     </ui:style>
 
     <g:HTMLPanel styleName="{res.styles.entityDetailPanel}">
         <g:HTMLPanel styleName="{style.root} {res.styles.secondTable}">
             <div class="{style.detailHeader}">
-                <div class="{res.styles.pencilSmall} {style.pencilIcon}"/>
+                <div class="{res.styles.pencilSmall} {res.styles.popupIcon}"/>
                 <h3>Entity Details</h3>
-                <div class="{style.buttonContainer}">
-                    <g:Button ui:field="cancel" styleName="{res.styles.button} {res.styles.gray}" text="Cancel"
-                              addStyleNames="{style.overrideButton}"/>
+                <div class="{res.styles.buttonContainer} {style.buttonContainer}">
+                    <g:Button ui:field="cancel" styleName="{res.styles.button} {res.styles.gray}" text="Cancel"/>
                     <g:Button ui:field="save" styleName="{res.styles.button}" text="Save"
-                              debugId="{debugIds.getSave}" addStyleNames="{style.overrideButton}"/>
+                              debugId="{debugIds.getSave}"/>
                 </div>
             </div>
 

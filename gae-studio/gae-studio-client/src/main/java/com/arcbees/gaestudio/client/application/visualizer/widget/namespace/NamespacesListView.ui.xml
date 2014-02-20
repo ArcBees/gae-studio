@@ -12,6 +12,8 @@
             position: absolute;
             right: 5px;
             top: 7px;
+            cursor: pointer;
+            margin: 10px 10px 10px 15px;
         }
     </ui:style>
     <g:HTMLPanel styleName="{style.root}">
