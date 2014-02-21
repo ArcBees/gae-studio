@@ -7,10 +7,11 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest.visualizer;
+package com.arcbees.gaestudio.server.api.visualizer;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -19,27 +20,25 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
-import com.arcbees.gaestudio.server.service.visualizer.NamespacesService;
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.server.service.visualizer.KindsService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.google.inject.Inject;
 
-@Path(EndPoints.NAMESPACES)
+@Path(EndPoints.KINDS)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
-public class NamespacesResource {
-    private final NamespacesService namespacesService;
+public class KindsResource {
+    private final KindsService kindsService;
 
     @Inject
-    NamespacesResource(NamespacesService namespacesService) {
-        this.namespacesService = namespacesService;
+    KindsResource(KindsService kindsService) {
+        this.kindsService = kindsService;
     }
 
     @GET
-    public Response getNamespaces() {
-        List<AppIdNamespaceDto> namespaces = namespacesService.getNamespaces();
+    public Response getKinds() {
+        List<String> kinds = kindsService.getKinds();
 
-        return Response.ok(namespaces).build();
+        return Response.ok(kinds).build();
     }
 }

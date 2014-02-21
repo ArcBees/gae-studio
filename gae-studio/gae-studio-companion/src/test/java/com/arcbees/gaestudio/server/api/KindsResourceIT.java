@@ -7,19 +7,25 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.util;
+package com.arcbees.gaestudio.server.api;
+
+import java.util.Set;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.hasItem;
+import static org.junit.Assert.assertThat;
 
-public class PackageHelperTest {
+public class KindsResourceIT extends RestIT {
     @Test
-    public void testGetLeafPackageName() throws Exception {
-        Package aPackage = Package.getPackage("com.arcbees.gaestudio.server.util");
+    public void createObject_getKinds_KindIsReturned() {
+        //given
+        createRemoteCar();
 
-        String leafPackageName = PackageHelper.getLeafPackageName(aPackage);
+        //when
+        Set<String> response = getRemoteKindsResponse();
 
-        assertEquals("util", leafPackageName);
+        //then
+        assertThat(response, hasItem("Car"));
     }
 }

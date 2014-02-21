@@ -7,22 +7,22 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
+package com.arcbees.gaestudio.server.api;
 
-import com.arcbees.gaestudio.server.rest.auth.AuthResource;
-import com.arcbees.gaestudio.server.rest.profiler.OperationsResource;
-import com.arcbees.gaestudio.server.rest.profiler.RecordResource;
-import com.arcbees.gaestudio.server.rest.visualizer.BlobsResource;
-import com.arcbees.gaestudio.server.rest.visualizer.EntitiesResource;
-import com.arcbees.gaestudio.server.rest.visualizer.EntityResource;
-import com.arcbees.gaestudio.server.rest.visualizer.ExportResource;
-import com.arcbees.gaestudio.server.rest.visualizer.ImportResource;
-import com.arcbees.gaestudio.server.rest.visualizer.KindsResource;
-import com.arcbees.gaestudio.server.rest.visualizer.NamespacesResource;
+import com.arcbees.gaestudio.server.api.auth.AuthResource;
+import com.arcbees.gaestudio.server.api.profiler.OperationsResource;
+import com.arcbees.gaestudio.server.api.profiler.RecordResource;
+import com.arcbees.gaestudio.server.api.visualizer.BlobsResource;
+import com.arcbees.gaestudio.server.api.visualizer.EntitiesResource;
+import com.arcbees.gaestudio.server.api.visualizer.EntityResource;
+import com.arcbees.gaestudio.server.api.visualizer.ExportResource;
+import com.arcbees.gaestudio.server.api.visualizer.ImportResource;
+import com.arcbees.gaestudio.server.api.visualizer.KindsResource;
+import com.arcbees.gaestudio.server.api.visualizer.NamespacesResource;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 
-public class RestModule extends AbstractModule {
+public class ApiModule extends AbstractModule {
     @Override
     protected void configure() {
         install(new FactoryModuleBuilder().build(SubresourceFactory.class));

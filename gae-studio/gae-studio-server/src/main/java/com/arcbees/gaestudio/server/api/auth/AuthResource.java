@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest.auth;
+package com.arcbees.gaestudio.server.api.auth;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;

@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest.visualizer;
+package com.arcbees.gaestudio.server.api.visualizer;
 
 import java.util.Iterator;
 import java.util.List;
@@ -20,8 +20,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.arcbees.gaestudio.server.analytic.Analytic;
-import com.arcbees.gaestudio.server.analytic.GoogleAnalyticConstants;
 import com.arcbees.gaestudio.server.dto.mapper.BlobInfoMapper;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.service.visualizer.BlobsService;
@@ -33,7 +31,6 @@ import com.google.appengine.api.blobstore.BlobInfo;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
-@Analytic(label = GoogleAnalyticConstants.VISUALIZER_LABEL)
 public class BlobsResource {
     private final BlobsService blobsService;
 

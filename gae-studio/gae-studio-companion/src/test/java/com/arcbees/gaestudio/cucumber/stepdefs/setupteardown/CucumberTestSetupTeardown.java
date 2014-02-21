@@ -13,7 +13,7 @@ import javax.inject.Inject;
 
 import org.openqa.selenium.WebDriver;
 
-import com.arcbees.gaestudio.server.rest.RestIT;
+import com.arcbees.gaestudio.server.api.RestIT;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;

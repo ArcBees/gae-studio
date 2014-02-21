@@ -7,9 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
+package com.arcbees.gaestudio.server.api;
 
-import com.arcbees.gaestudio.server.rest.visualizer.EntityResource;
+import com.arcbees.gaestudio.server.api.visualizer.EntityResource;
+
 public interface SubresourceFactory {
     EntityResource createEntityResource(Long entityId, String name);
 }

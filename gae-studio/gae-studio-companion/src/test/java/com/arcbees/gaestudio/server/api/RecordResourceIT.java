@@ -7,25 +7,36 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
+package com.arcbees.gaestudio.server.api;
 
 import org.junit.Test;
 
-import com.jayway.restassured.response.Response;
-
-import static javax.ws.rs.core.Response.Status.OK;
 import static org.junit.Assert.assertEquals;
 
-public class NamespacesResourceIT extends RestIT {
+public class RecordResourceIT extends RestIT {
     @Test
-    public void createObject_getKinds_KindIsReturned() {
+    public void record_createOneObject_shouldReturnOneOperationRecorded() {
         //given
-        createRemoteCar();
+        Long lastOperationId = startRecording();
 
         //when
-        Response response = getRemoteNamespacesResponse();
+        createRemoteCar();
+
+        Long currentOperationId = stopRecording();
 
         //then
-        assertEquals(OK.getStatusCode(), response.getStatusCode());
+        assertEquals(1, currentOperationId - lastOperationId);
+    }
+
+    @Test
+    public void record_noOperations_shouldHaveNotIncremented() {
+        //given
+        Long lastOperationId = startRecording();
+
+        //when
+        Long operationId = stopRecording();
+
+        //then
+        assertEquals(0, operationId - lastOperationId);
     }
 }

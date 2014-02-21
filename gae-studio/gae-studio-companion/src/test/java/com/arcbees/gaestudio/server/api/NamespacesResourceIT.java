@@ -7,25 +7,25 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
-
-import java.util.Set;
+package com.arcbees.gaestudio.server.api;
 
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.hasItem;
-import static org.junit.Assert.assertThat;
+import com.jayway.restassured.response.Response;
 
-public class KindsResourceIT extends RestIT {
+import static javax.ws.rs.core.Response.Status.OK;
+import static org.junit.Assert.assertEquals;
+
+public class NamespacesResourceIT extends RestIT {
     @Test
     public void createObject_getKinds_KindIsReturned() {
         //given
         createRemoteCar();
 
         //when
-        Set<String> response = getRemoteKindsResponse();
+        Response response = getRemoteNamespacesResponse();
 
         //then
-        assertThat(response, hasItem("Car"));
+        assertEquals(OK.getStatusCode(), response.getStatusCode());
     }
 }

@@ -7,36 +7,41 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest.profiler;
+package com.arcbees.gaestudio.server.api.visualizer;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
-import com.arcbees.gaestudio.shared.Constants;
-import com.arcbees.gaestudio.shared.channel.Token;
+import com.arcbees.gaestudio.server.service.visualizer.ExportService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.google.appengine.api.channel.ChannelService;
-import com.google.appengine.api.channel.ChannelServiceFactory;
+import com.arcbees.gaestudio.shared.rest.UrlParameters;
 
-@Path(EndPoints.OPERATIONS)
+@Path(EndPoints.EXPORT)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
-public class OperationsResource {
-    @Path(EndPoints.TOKEN)
+public class ExportResource {
+    private final ExportService exportService;
+
+    @Inject
+    ExportResource(ExportService exportService) {
+        this.exportService = exportService;
+    }
+
     @GET
-    public Response createToken(@QueryParam(Constants.CLIENT_ID) String cliendId) {
-        ChannelService channelService = ChannelServiceFactory.getChannelService();
-        String tokenValue = channelService.createChannel(cliendId);
+    public Response exportKind(@QueryParam(UrlParameters.KIND) String kind) {
+        String data = exportService.exportKindToJson(kind);
 
-        Token token = new Token(tokenValue);
-
-        return Response.ok(token).build();
+        return Response.ok(data)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + kind + ".json\"")
+                .build();
     }
 }

@@ -18,7 +18,6 @@ import org.junit.Test;
  * This tests must be run while having an internet connexion as it will try to contact GoogleAnalytic
  */
 public class GoogleAnalyticTest {
-
     private static final String GA_TEST_TRACKING_ID = "UA-41550930-5";
     private static final String APP_NAME = "GAE-Studio";
     private static final String APP_VERSION = "1.0";

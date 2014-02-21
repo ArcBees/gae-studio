@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest.visualizer;
+package com.arcbees.gaestudio.server.api.visualizer;
 
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;

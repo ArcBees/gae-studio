@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest.profiler;
+package com.arcbees.gaestudio.server.api.profiler;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -17,8 +17,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.arcbees.gaestudio.server.analytic.Analytic;
-import com.arcbees.gaestudio.server.analytic.GoogleAnalyticConstants;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.service.profiler.OperationService;
 import com.arcbees.gaestudio.server.service.profiler.RecordService;
@@ -28,7 +26,6 @@ import com.arcbees.gaestudio.shared.rest.EndPoints;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
-@Analytic(label = GoogleAnalyticConstants.PROFILER_LABEL)
 public class RecordResource {
     private final RecordService recordService;
     private final OperationService operationService;

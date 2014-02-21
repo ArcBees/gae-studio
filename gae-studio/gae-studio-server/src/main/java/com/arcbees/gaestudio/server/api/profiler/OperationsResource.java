@@ -7,38 +7,36 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest.visualizer;
+package com.arcbees.gaestudio.server.api.profiler;
 
-import java.util.List;
-
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
-import com.arcbees.gaestudio.server.service.visualizer.KindsService;
+import com.arcbees.gaestudio.shared.Constants;
+import com.arcbees.gaestudio.shared.channel.Token;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.google.appengine.api.channel.ChannelService;
+import com.google.appengine.api.channel.ChannelServiceFactory;
 
-@Path(EndPoints.KINDS)
+@Path(EndPoints.OPERATIONS)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
-public class KindsResource {
-    private final KindsService kindsService;
-
-    @Inject
-    KindsResource(KindsService kindsService) {
-        this.kindsService = kindsService;
-    }
-
+public class OperationsResource {
+    @Path(EndPoints.TOKEN)
     @GET
-    public Response getKinds() {
-        List<String> kinds = kindsService.getKinds();
+    public Response createToken(@QueryParam(Constants.CLIENT_ID) String cliendId) {
+        ChannelService channelService = ChannelServiceFactory.getChannelService();
+        String tokenValue = channelService.createChannel(cliendId);
 
-        return Response.ok(kinds).build();
+        Token token = new Token(tokenValue);
+
+        return Response.ok(token).build();
     }
 }
