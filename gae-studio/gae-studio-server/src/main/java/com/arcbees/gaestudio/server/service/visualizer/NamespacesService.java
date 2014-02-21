@@ -7,9 +7,12 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
+package com.arcbees.gaestudio.server.service.visualizer;
 
-import com.arcbees.gaestudio.server.rest.visualizer.EntityResource;
-public interface SubresourceFactory {
-    EntityResource createEntityResource(Long entityId, String name);
+import java.util.List;
+
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+
+public interface NamespacesService {
+    List<AppIdNamespaceDto> getNamespaces();
 }

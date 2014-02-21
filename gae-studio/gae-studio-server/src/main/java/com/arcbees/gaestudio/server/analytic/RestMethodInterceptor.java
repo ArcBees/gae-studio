@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
+import com.arcbees.gaestudio.server.util.PackageHelper;
 import com.arcbees.googleanalytic.GoogleAnalytic;
 
 class RestMethodInterceptor implements MethodInterceptor {
@@ -28,10 +29,13 @@ class RestMethodInterceptor implements MethodInterceptor {
     public Object invoke(MethodInvocation invocation) throws Throwable {
         HttpServletRequest request = httpServletRequestProvider.get();
 
+        Package resourcePackage = invocation.getMethod().getDeclaringClass().getPackage();
+        String label = PackageHelper.getLeafPackageName(resourcePackage);
+
         String path = request.getRequestURI();
         String event = String.format("%s %s", request.getMethod(), path);
 
-        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, event);
+        googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_SERVER_CALL, event, label);
 
         return invocation.proceed();
     }

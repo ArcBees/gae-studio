@@ -7,9 +7,19 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.rest;
+package com.arcbees.gaestudio.server.service.visualizer;
 
-import com.arcbees.gaestudio.server.rest.visualizer.EntityResource;
-public interface SubresourceFactory {
-    EntityResource createEntityResource(Long entityId, String name);
+import com.arcbees.gaestudio.shared.DeleteEntities;
+import com.google.appengine.api.datastore.Entity;
+
+public interface EntitiesService {
+    Iterable<Entity> getEntities(String kind, Integer offset, Integer limit);
+
+    Entity createEmptyEntity(String kind);
+
+    void deleteEntities(String kind, String namespace, DeleteEntities deleteType);
+
+    Integer getCount(String kind);
+
+    void put(Iterable<Entity> entities);
 }

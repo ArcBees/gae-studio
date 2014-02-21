@@ -32,7 +32,7 @@ public class AnalyticModule extends AbstractModule {
         RestMethodInterceptor restMethodInterceptor = new RestMethodInterceptor();
         requestInjection(restMethodInterceptor);
 
-        Matcher<Class> packageMatcher = Matchers.inPackage(Package.getPackage("com.arcbees.gaestudio.server.rest"));
+        Matcher<Class> packageMatcher = Matchers.inSubpackage("com.arcbees.gaestudio.server.rest");
 
         bindInterceptor(packageMatcher, Matchers.annotatedWith(GET.class), restMethodInterceptor);
         bindInterceptor(packageMatcher, Matchers.annotatedWith(POST.class), restMethodInterceptor);

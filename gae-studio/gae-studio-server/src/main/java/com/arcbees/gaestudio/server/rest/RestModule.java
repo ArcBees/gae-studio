@@ -10,6 +10,15 @@
 package com.arcbees.gaestudio.server.rest;
 
 import com.arcbees.gaestudio.server.rest.auth.AuthResource;
+import com.arcbees.gaestudio.server.rest.profiler.OperationsResource;
+import com.arcbees.gaestudio.server.rest.profiler.RecordResource;
+import com.arcbees.gaestudio.server.rest.visualizer.BlobsResource;
+import com.arcbees.gaestudio.server.rest.visualizer.EntitiesResource;
+import com.arcbees.gaestudio.server.rest.visualizer.EntityResource;
+import com.arcbees.gaestudio.server.rest.visualizer.ExportResource;
+import com.arcbees.gaestudio.server.rest.visualizer.ImportResource;
+import com.arcbees.gaestudio.server.rest.visualizer.KindsResource;
+import com.arcbees.gaestudio.server.rest.visualizer.NamespacesResource;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 
