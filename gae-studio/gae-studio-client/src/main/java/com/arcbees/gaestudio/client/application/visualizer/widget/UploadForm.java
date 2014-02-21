@@ -142,7 +142,7 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
             public void f() {
                 String path = fileUpload.getFilename();
                 String fileName = extractFileNameFromPath(path);
-                selectedFile.setText(fileUpload.getFilename());
+                selectedFile.setText(fileName);
                 handler.onFileChosen(fileName);
             }
         });

@@ -244,8 +244,10 @@ input:focus, textarea:focus, button:focus {
 
 @sprite .trashSmall {
     gwt-image: "trash_small_up";
-    cursor: pointer;
-    margin: 10px 10px 10px 15px;
+}
+
+@sprite .trashSmallNoHover {
+    gwt-image: "trash_small_up";
 }
 
 @sprite .trashSmall:hover {
@@ -272,14 +274,12 @@ input:focus, textarea:focus, button:focus {
 
 @sprite .importSmall {
     gwt-image: "import_small_up";
-    cursor: none;
-    margin: 0px;
+    margin: 0;
 }
 
 @sprite .pencilSmall {
     gwt-image: "pencil_small";
-    cursor: none;
-    margin: 0px;
+    margin: 0;
 }
 
 .popup {
@@ -296,13 +296,17 @@ input:focus, textarea:focus, button:focus {
     box-shadow: 0px 1px 16px -2px rgba(0, 0, 0, 0.35);
 }
 
+.popupIcon {
+    display: inline-block;
+    margin-right: 5px;
+}
+
 .popupHeader {
     color: #3d3c3c;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 1.4em;
     text-transform: uppercase;
 
-    padding-left: 20px;
     margin-bottom: 20px;
 
     position: relative;
@@ -336,20 +340,11 @@ input:focus, textarea:focus, button:focus {
     background: rgba(0, 0, 0, 0.4);
 }
 
-.chooseFileButton {
-    text-align: center;
-
-    padding: 5px;
-    width: 140px;
-    margin-right: 0px !important;
-}
-
 .button {
     border: none;
     display: inline-block;
-    margin-right: 5px;
 
-    font-size: 1.2em;
+    font-size: 18px;
     text-transform: uppercase;
     background: #1397ff;
     color: #EBEBEB;
@@ -360,7 +355,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
 }
 
-.button:hover {
+.button:hover:enabled {
     color: #DFDFDF;
     border: none;
     background: #21a8ff;
@@ -393,7 +388,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
 }
 
-.button.gray:hover {
+.button.gray:hover:enabled {
     color: #3d3c3c;
     border: none;
     background: #d1d1d1;
@@ -773,13 +768,27 @@ input:focus, textarea:focus, button:focus {
     line-height: 1em;
 }
 
-.noMarginRight {
-    margin-right: 0px;
-}
-
 input[type=text] {
     background-color: lightgray;
     color: black;
     border: none;
     padding-left: 4px;
+}
+
+.buttonContainer {
+    padding-top: 5px;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.buttonContainer button, .chooseFileButton {
+    margin: 0;
+    text-align: center;
+    width: literal('calc(50% - 5px)');
+    padding: 5px;
+}
+
+.buttonContainer > :first-child {
+    margin-right: 6px;
 }

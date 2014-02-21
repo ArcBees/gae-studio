@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.ui.AjaxLoader;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -20,6 +21,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PopupViewImpl;
+
+import static com.google.gwt.query.client.GQuery.$;
 
 public class ImportView extends PopupViewImpl implements ImportPresenter.MyView {
     interface Binder extends UiBinder<Widget, ImportView> {
@@ -33,6 +36,8 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
     SimplePanel uploadFormContainer;
     @UiField(provided = true)
     AjaxLoader ajaxLoader;
+    @UiField
+    AppResources res;
 
     private UploadForm uploadForm;
 
@@ -51,12 +56,12 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
 
     @Override
     public void onFileChosen(String chosenFileName) {
-        upload.setEnabled(uploadForm.hasFileToUpload());
+        setUploadButtonEnabled(uploadForm.hasFileToUpload());
     }
 
     @Override
     public void prepareForNewUpload() {
-        upload.setEnabled(false);
+        setUploadButtonEnabled(false);
     }
 
     @Override
@@ -76,5 +81,10 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
     @UiHandler({"cancel", "close"})
     void onCancelClicked(ClickEvent event) {
         asPopupPanel().hide();
+    }
+
+    private void setUploadButtonEnabled(boolean enabled) {
+        $(upload).toggleClass(res.styles().gray(), !enabled);
+        upload.setEnabled(enabled);
     }
 }
