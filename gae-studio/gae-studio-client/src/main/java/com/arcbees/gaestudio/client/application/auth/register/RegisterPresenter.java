@@ -16,7 +16,9 @@ import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
+import com.arcbees.gaestudio.client.util.RestCallbackImpl;
 import com.arcbees.gaestudio.shared.auth.User;
+import com.google.gwt.http.client.Response;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
@@ -73,6 +75,26 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
         String password = user.getPassword();
         String firstName = user.getProfile().getFirstName();
         String lastName = user.getProfile().getLastName();
+
+        restDispatch.execute(authService.register(email, password, firstName, lastName), new RestCallbackImpl<User>() {
+            @Override
+            public void setResponse(Response response) {
+                getView().edit(user);
+
+                if (response.getStatusCode() == 409) {
+                    getView().userAlreadyExist();
+                }
+            }
+
+            @Override
+            public void onSuccess(User user) {
+                DisplayMessageEvent.fire(RegisterPresenter.this,
+                        new Message(appConstants.registerSuccessfull(), MessageStyle.SUCCESS));
+
+                PlaceRequest place = new PlaceRequest.Builder().nameToken(NameTokens.getActivation()).build();
+                placeManager.revealPlace(place);
+            }
+        });
 
         restDispatch.execute(authService.register(email, password, firstName, lastName),
                 new AsyncCallbackImpl<User>(appConstants.unableToRegister()) {
