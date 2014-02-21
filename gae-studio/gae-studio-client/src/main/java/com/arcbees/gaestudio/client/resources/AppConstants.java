@@ -72,6 +72,8 @@ public interface AppConstants extends Constants {
 
     String registerSuccessfull();
 
+    String alreadyRegistred();
+
     String unableToLogin();
 
     String loggedInSuccessfully();
