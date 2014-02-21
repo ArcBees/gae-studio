@@ -17,6 +17,7 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
+import com.arcbees.gaestudio.server.guice.devserver.BlobUploadFilter;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 
 @Provider
@@ -36,14 +37,29 @@ public class LicenseFilter implements ContainerRequestFilter {
             return;
         }
 
-        Boolean isLicenseValid = checker.isLicenseValid();
+        if (!isBlobUpload()) {
+            Boolean isLicenseValid = checker.isLicenseValid();
 
-        if (!isLicenseValid) {
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+            if (!isLicenseValid) {
+                requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+            }
         }
     }
 
     private boolean isAllowedPath(String path) {
-        return path.contains(EndPoints.AUTH);
+        return path.contains(EndPoints.AUTH) || path.contains(EndPoints.IMPORT_TASK);
+    }
+
+    private boolean isBlobUpload() {
+        Class<?> myClass = BlobUploadFilter.class;
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+
+        for (StackTraceElement element : stackTrace) {
+            if (element.getClassName().equals(myClass.getCanonicalName())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

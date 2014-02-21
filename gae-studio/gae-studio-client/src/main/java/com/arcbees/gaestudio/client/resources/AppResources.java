@@ -119,6 +119,8 @@ public interface AppResources extends ClientBundle {
 
         String importSmall();
 
+        String trashSmallNoHover();
+
         String pencilSmall();
 
         String deselect();
@@ -147,7 +149,9 @@ public interface AppResources extends ClientBundle {
 
         String uploadLabel();
 
-        String noMarginRight();
+        String popupIcon();
+
+        String buttonContainer();
     }
 
     public interface Sprites extends CssResource {
