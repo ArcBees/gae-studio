@@ -19,7 +19,7 @@ import org.aopalliance.intercept.MethodInvocation;
 import com.arcbees.gaestudio.server.util.PackageHelper;
 import com.arcbees.googleanalytic.GoogleAnalytic;
 
-class RestMethodInterceptor implements MethodInterceptor {
+class ApiMethodInterceptor implements MethodInterceptor {
     @Inject
     protected GoogleAnalytic googleAnalytic;
     @Inject

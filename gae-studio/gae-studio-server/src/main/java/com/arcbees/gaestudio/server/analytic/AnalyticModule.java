@@ -29,15 +29,15 @@ public class AnalyticModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        RestMethodInterceptor restMethodInterceptor = new RestMethodInterceptor();
-        requestInjection(restMethodInterceptor);
+        ApiMethodInterceptor apiMethodInterceptor = new ApiMethodInterceptor();
+        requestInjection(apiMethodInterceptor);
 
-        Matcher<Class> packageMatcher = Matchers.inSubpackage("com.arcbees.gaestudio.server.rest");
+        Matcher<Class> packageMatcher = Matchers.inSubpackage("com.arcbees.gaestudio.server.api");
 
-        bindInterceptor(packageMatcher, Matchers.annotatedWith(GET.class), restMethodInterceptor);
-        bindInterceptor(packageMatcher, Matchers.annotatedWith(POST.class), restMethodInterceptor);
-        bindInterceptor(packageMatcher, Matchers.annotatedWith(PUT.class), restMethodInterceptor);
-        bindInterceptor(packageMatcher, Matchers.annotatedWith(DELETE.class), restMethodInterceptor);
+        bindInterceptor(packageMatcher, Matchers.annotatedWith(GET.class), apiMethodInterceptor);
+        bindInterceptor(packageMatcher, Matchers.annotatedWith(POST.class), apiMethodInterceptor);
+        bindInterceptor(packageMatcher, Matchers.annotatedWith(PUT.class), apiMethodInterceptor);
+        bindInterceptor(packageMatcher, Matchers.annotatedWith(DELETE.class), apiMethodInterceptor);
     }
 
     @Provides
