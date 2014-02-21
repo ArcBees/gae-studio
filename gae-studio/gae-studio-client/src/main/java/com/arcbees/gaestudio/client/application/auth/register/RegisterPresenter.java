@@ -15,7 +15,6 @@ import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.AuthService;
-import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.RestCallbackImpl;
 import com.arcbees.gaestudio.shared.auth.User;
 import com.google.gwt.http.client.Response;
@@ -95,27 +94,6 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
                 placeManager.revealPlace(place);
             }
         });
-
-        restDispatch.execute(authService.register(email, password, firstName, lastName),
-                new AsyncCallbackImpl<User>(appConstants.unableToRegister()) {
-                    @Override
-                    public void onSuccess(User user) {
-                        DisplayMessageEvent.fire(RegisterPresenter.this,
-                                new Message(appConstants.registerSuccessfull(), MessageStyle.SUCCESS));
-
-                        PlaceRequest place = new PlaceRequest.Builder().nameToken(NameTokens.getActivation()).build();
-                        placeManager.revealPlace(place);
-                    }
-
-                    @Override
-                    public void handleFailure(Throwable caught) {
-                        getView().edit(user);
-
-                        if (isConflictingException(caught)) {
-                            getView().userAlreadyExist();
-                        }
-                    }
-                });
     }
 
     @Override
