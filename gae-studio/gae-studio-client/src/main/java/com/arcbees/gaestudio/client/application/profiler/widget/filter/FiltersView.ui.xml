@@ -3,26 +3,22 @@
              xmlns:dd='urn:import:com.arcbees.gaestudio.client.application.widget.dropdown'>
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:style>
-        .content {
-            position: absolute;
-            top: 46px;
-            width: 100%;
-        }
-
-        .whiteLine {
-            width: 100%;
-            height: 1px;
-            background: white;
-            margin-bottom: 12px;
+        .filterContainer {
+            overflow-y: auto;
+            border-top: 1px #ffffff solid;
+            padding-top: 12px;
         }
     </ui:style>
-    <g:HTMLPanel>
-        <dd:Dropdown ui:field="dropdown"/>
-        <div class="{style.content}">
-            <div class="{style.whiteLine}"/>
-            <g:SimplePanel ui:field="request"/>
-            <g:SimplePanel ui:field="method" visible="false"/>
-            <g:SimplePanel ui:field="type" visible="false"/>
-        </div>
-    </g:HTMLPanel>
+    <g:LayoutPanel>
+        <g:layer top="0" height="46px">
+            <dd:Dropdown ui:field="dropdown"/>
+        </g:layer>
+        <g:layer top="46px" bottom="0px">
+            <g:HTMLPanel styleName="{style.filterContainer}">
+                <g:SimplePanel ui:field="request"/>
+                <g:SimplePanel ui:field="method" visible="false"/>
+                <g:SimplePanel ui:field="type" visible="false"/>
+            </g:HTMLPanel>
+        </g:layer>
+    </g:LayoutPanel>
 </ui:UiBinder>
