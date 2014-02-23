@@ -11,28 +11,32 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.inject.assistedinject.Assisted;
 
 import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.parseJsonValueWithMetadata;
 
-public class BooleanPropertyEditor extends AbstractPropertyEditor<Boolean> {
-    private final CheckBox checkBox;
+public class BooleanPropertyEditor extends AbstractPropertyEditorWithWidgetLeftside<Boolean> {
+    private final CustomCheckBox checkBox;
     private final JSONValue property;
 
     @Inject
-    BooleanPropertyEditor(@Assisted String key,
+    BooleanPropertyEditor(CustomCheckBox customCheckBox,
+                          AppResources appResources,
+                          @Assisted String key,
                           @Assisted JSONValue property) {
         super(key);
 
         this.property = property;
-        checkBox = new CheckBox();
+        this.checkBox = customCheckBox;
 
         initFormWidget(checkBox);
         setValue(PropertyUtil.getPropertyValue(property).isBoolean().booleanValue());
+
+        setKeyStyle(appResources.styles().booleanKey());
     }
 
     @Override

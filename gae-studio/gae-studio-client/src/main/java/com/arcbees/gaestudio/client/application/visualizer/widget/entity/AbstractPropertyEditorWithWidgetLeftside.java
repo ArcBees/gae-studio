@@ -21,9 +21,9 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.EventBus;
 
-public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
-    @UiTemplate("AbstractPropertyEditor.ui.xml")
-    static interface Binder extends UiBinder<Widget, PropertyEditorUiFields> {
+public abstract class AbstractPropertyEditorWithWidgetLeftside<T> implements PropertyEditor<T> {
+    @UiTemplate("AbstractPropertyEditorWithWidgetLeftside.ui.xml")
+    interface Binder extends UiBinder<Widget, PropertyEditorUiFields> {
     }
 
     /**
@@ -47,7 +47,7 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
     protected final PropertyEditorUiFields fields;
     protected final Widget widget;
 
-    protected AbstractPropertyEditor(String key) {
+    protected AbstractPropertyEditorWithWidgetLeftside(String key) {
         this.key = key;
         fields = new PropertyEditorUiFields();
 
@@ -62,14 +62,6 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
         return widget;
     }
 
-    protected void initFormWidget(IsWidget formWidget) {
-        if (fields.form.getWidget() != null) {
-            throw new IllegalStateException("Property Widget already set.");
-        }
-
-        fields.form.setWidget(formWidget);
-    }
-
     @Override
     public final boolean isValid() {
         boolean valid = validate();
@@ -78,6 +70,14 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
         }
 
         return valid;
+    }
+
+    protected void initFormWidget(IsWidget formWidget) {
+        if (fields.form.getWidget() != null) {
+            throw new IllegalStateException("Property Widget already set.");
+        }
+
+        fields.form.setWidget(formWidget);
     }
 
     protected boolean validate() {
@@ -89,7 +89,7 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
     }
 
     protected final void showErrors(Iterable<String> errors) {
-        for(String error : errors) {
+        for (String error : errors) {
             showError(error);
         }
     }

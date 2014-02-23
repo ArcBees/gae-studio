@@ -72,6 +72,8 @@ public interface AppConstants extends Constants {
 
     String registerSuccessfull();
 
+    String alreadyRegistred();
+
     String unableToLogin();
 
     String loggedInSuccessfully();
@@ -105,4 +107,6 @@ public interface AppConstants extends Constants {
     String passwordDontMatch();
 
     String allFieldsAreRequired();
+
+    String errorSavingChanges();
 }

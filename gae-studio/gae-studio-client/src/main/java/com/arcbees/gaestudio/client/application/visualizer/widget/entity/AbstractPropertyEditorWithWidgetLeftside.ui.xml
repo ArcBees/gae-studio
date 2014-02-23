@@ -1,12 +1,13 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
         xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:style>
-        .label {
-            text-transform: uppercase;
+        .clear {
+            clear: both;
         }
     </ui:style>
     <g:HTMLPanel>
-        <g:Label ui:field="key" styleName="{style.label}"/>
         <g:SimplePanel ui:field="form"/>
+        <g:Label ui:field="key"/>
+        <g:HTMLPanel ui:field="clear" styleName="{style.clear}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

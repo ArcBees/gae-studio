@@ -7,11 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.arcbees.gaestudio.client.application.entity;
 
 import javax.inject.Inject;
 
-import com.arcbees.gaestudio.client.application.visualizer.widget.EntityDetailsPresenter.MyView;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -22,11 +21,10 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
-public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHandlers> implements MyView {
-    interface Binder extends UiBinder<Widget, EntityDetailsView> {
+public class EditEntityView extends ViewWithUiHandlers<EditEntityUiHandlers> implements EditEntityPresenter.MyView {
+    interface Binder extends UiBinder<Widget, EditEntityView> {
     }
 
     @UiField
@@ -39,16 +37,8 @@ public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHa
     FlowPanel errors;
 
     @Inject
-    EntityDetailsView(Binder uiBinder,
-                      EventBus eventBus) {
-        super(eventBus);
+    EditEntityView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
-    }
-
-    @Override
-    public void displayEntityDetails() {
-        asPopupPanel().center();
-        errors.setVisible(false);
     }
 
     @Override
@@ -72,18 +62,20 @@ public class EntityDetailsView extends PopupViewWithUiHandlers<EntityDetailsUiHa
     public void setInSlot(Object slot, IsWidget content) {
         super.setInSlot(slot, content);
 
-        if (slot == EntityDetailsPresenter.EDITOR_SLOT) {
+        errors.setVisible(false);
+
+        if (slot == EditEntityPresenter.EDITOR_SLOT) {
             editorPanel.setWidget(content);
         }
     }
 
     @UiHandler("save")
     void onEditClicked(ClickEvent event) {
-        getUiHandlers().saveEntity();
+        getUiHandlers().save();
     }
 
     @UiHandler("cancel")
     void onCancelClicked(ClickEvent event) {
-        asPopupPanel().hide();
+        getUiHandlers().cancel();
     }
 }

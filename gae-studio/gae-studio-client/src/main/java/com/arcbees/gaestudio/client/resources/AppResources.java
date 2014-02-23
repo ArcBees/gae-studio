@@ -119,17 +119,39 @@ public interface AppResources extends ClientBundle {
 
         String importSmall();
 
+        String trashSmallNoHover();
+
+        String pencilSmall();
+
         String deselect();
 
         String deselectDisabled();
 
         String power();
 
+        String checked();
+
+        String booleanKey();
+
         String errorField();
+
+        String importBtn();
+
+        String exportBtn();
+
+        String exportBtnDisabled();
+
+        String button();
+
+        String chooseFileButton();
 
         String gray();
 
         String uploadLabel();
+
+        String popupIcon();
+
+        String buttonContainer();
     }
 
     public interface Sprites extends CssResource {
@@ -172,6 +194,8 @@ public interface AppResources extends ClientBundle {
 
     ImageResource pencil_rl();
 
+    ImageResource pencil_small();
+
     ImageResource create();
 
     ImageResource closeToggle();
@@ -213,4 +237,8 @@ public interface AppResources extends ClientBundle {
     ImageResource listGraph();
 
     ImageResource power();
+
+    ImageResource importBtn();
+
+    ImageResource exportBtn();
 }

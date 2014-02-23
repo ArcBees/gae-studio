@@ -96,12 +96,18 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
 
     @Override
     public void edit(User user) {
+        user.setPassword("");
         confirmPassword.setText("");
         ajaxLoader.hide();
         register.setEnabled(true);
         driver.edit(user);
 
         clearErrorMessage();
+    }
+
+    @Override
+    public void userAlreadyExist() {
+        showErrorMessage(constants.alreadyRegistred());
     }
 
     @UiHandler("register")

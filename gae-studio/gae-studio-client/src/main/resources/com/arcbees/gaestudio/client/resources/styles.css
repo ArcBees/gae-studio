@@ -158,8 +158,11 @@ input:focus, textarea:focus, button:focus {
 .entityListPanel {
     width: 100%;
     height: 100%;
+    float: left;
+    padding-left: 5px;
 
     zoom: 1;
+    overflow-y: auto;
 
     transition: left .5s ease;
     -webkit-transition: left .5s ease;
@@ -241,8 +244,10 @@ input:focus, textarea:focus, button:focus {
 
 @sprite .trashSmall {
     gwt-image: "trash_small_up";
-    cursor: pointer;
-    margin: 10px 10px 10px 15px;
+}
+
+@sprite .trashSmallNoHover {
+    gwt-image: "trash_small_up";
 }
 
 @sprite .trashSmall:hover {
@@ -269,8 +274,12 @@ input:focus, textarea:focus, button:focus {
 
 @sprite .importSmall {
     gwt-image: "import_small_up";
-    cursor: none;
-    margin: 0px;
+    margin: 0;
+}
+
+@sprite .pencilSmall {
+    gwt-image: "pencil_small";
+    margin: 0;
 }
 
 .popup {
@@ -287,13 +296,17 @@ input:focus, textarea:focus, button:focus {
     box-shadow: 0px 1px 16px -2px rgba(0, 0, 0, 0.35);
 }
 
+.popupIcon {
+    display: inline-block;
+    margin-right: 5px;
+}
+
 .popupHeader {
     color: #3d3c3c;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 1.4em;
     text-transform: uppercase;
 
-    padding-left: 20px;
     margin-bottom: 20px;
 
     position: relative;
@@ -327,13 +340,11 @@ input:focus, textarea:focus, button:focus {
     background: rgba(0, 0, 0, 0.4);
 }
 
-.popup button {
-    padding: 5px 32px 5px 32px;
+.button {
     border: none;
     display: inline-block;
-    margin-right: 5px;
 
-    font-size: 1.2em;
+    font-size: 18px;
     text-transform: uppercase;
     background: #1397ff;
     color: #EBEBEB;
@@ -344,7 +355,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
 }
 
-.popup button:hover {
+.button:hover:enabled {
     color: #DFDFDF;
     border: none;
     background: #21a8ff;
@@ -355,7 +366,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
 }
 
-.popup button:active {
+.button:active {
     border: none;
     background: #104b74;
     text-shadow: none;
@@ -365,7 +376,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
 }
 
-.popup button.gray {
+.button.gray {
     border: none;
 
     background: #c4c4c4;
@@ -377,7 +388,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
 }
 
-.popup button.gray:hover {
+.button.gray:hover:enabled {
     color: #3d3c3c;
     border: none;
     background: #d1d1d1;
@@ -388,7 +399,7 @@ input:focus, textarea:focus, button:focus {
     box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
 }
 
-.popup button.gray:active {
+.button.gray:active {
     border: none;
     background: #c4c4c4;
     text-shadow: none;
@@ -411,8 +422,9 @@ input:focus, textarea:focus, button:focus {
 
 .authForm input {
     width: 96%;
-    padding: 0 0 0 4%;
+    padding: 0 0 0 4% !important;
     margin-bottom: 11px;
+    background-color: #FFFFFF !important;
 
     box-shadow: inset 2px 2px 6px 1px rgba(0, 0, 0, 0.2);
     border: none;
@@ -487,6 +499,7 @@ input:focus, textarea:focus, button:focus {
 
 .embeddedEntityProperties {
     padding-left: 15px;
+    margin-bottom: 20px;
 }
 
 .loginAjaxLoader {
@@ -706,13 +719,76 @@ input:focus, textarea:focus, button:focus {
     outline-offset: -2px;
 }
 
+@sprite .importBtn {
+    gwt-image: "importBtn";
+}
+
+@sprite .exportBtn {
+    gwt-image: "exportBtn";
+}
+
+.exportBtn, .importBtn {
+    background-color: #3d3c3c;
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+
+    height: 23px;
+    width: 23px;
+    margin: 2px;
+
+    float: left;
+}
+
+.exportBtn:hover, .importBtn:hover {
+    background-color: #25aae1;
+}
+
+.exportBtnDisabled, .exportBtnDisabled:hover {
+    background-color: #B7B7B7;
+}
+
 .uploadLabel {
     font-size: 1.1em;
     background: #c4c4c4;
     text-align: left;
 
     height: 24px;
-    padding: 5px;
-    margin-right: 5px;
+    padding: 5px !important;
     margin-bottom: 10px;
+}
+
+.checked {
+    background-color: #25aae1;
+}
+
+.booleanKey {
+    float: left;
+    margin: 5px 0 5px 0;
+    line-height: 1em;
+}
+
+input[type=text] {
+    background-color: lightgray;
+    color: black;
+    border: none;
+    padding-left: 4px;
+}
+
+.buttonContainer {
+    padding-top: 5px;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.buttonContainer button, .chooseFileButton {
+    margin: 0;
+    text-align: center;
+    width: literal('calc(50% - 5px)');
+    padding: 5px;
+}
+
+.buttonContainer > :first-child {
+    margin-right: 6px;
 }

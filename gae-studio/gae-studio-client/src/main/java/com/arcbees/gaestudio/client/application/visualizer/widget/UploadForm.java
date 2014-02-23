@@ -62,12 +62,14 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
     private final FormPanel formPanel;
     private final Handler handler;
     private final Label selectedFile;
+    private final AppResources resources;
 
     @Inject
     UploadForm(AppResources resources,
                @Assisted String uploadUrl,
                @Assisted Handler handler) {
         this.handler = handler;
+        this.resources = resources;
 
         formPanel = new FormPanel();
         selectedFile = new Label("...");
@@ -125,6 +127,8 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
                 $(fileUpload).click();
             }
         });
+        button.setStyleName(resources.styles().button());
+        button.addStyleName(resources.styles().chooseFileButton());
         flowPanel.add(selectedFile);
         flowPanel.add(button);
 
@@ -138,7 +142,7 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
             public void f() {
                 String path = fileUpload.getFilename();
                 String fileName = extractFileNameFromPath(path);
-                selectedFile.setText(fileUpload.getFilename());
+                selectedFile.setText(fileName);
                 handler.onFileChosen(fileName);
             }
         });
