@@ -38,13 +38,13 @@
                 <!-- Header End -->
 
                 <!-- Main Content -->
-                <center mc:repeatable="">
+                <center>
                     <!-- Notification -->
-                    <table width="530" cellpadding="0" cellspacing="0" align="center" mc:edit="dateContainer" mc:hideable="" style="padding: 0;margin: 0;color: #3f3f3f;">
+                    <table width="530" cellpadding="0" cellspacing="0" align="center" style="padding: 0;margin: 0;color: #3f3f3f;">
                         <tr class="date" align="right" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #e6e6e6;bgcolor: #e6e6e6;">
                             <td width="488" height="20" style="padding: 0;margin: 0;color: #3f3f3f;"></td>
                             <td width="42" height="20" style="padding: 0;margin: 0;color: #3f3f3f;">
-                                <p mc:edit="date" style="padding: 0;margin: 0;color: #25aae1;font-size: 10px;line-height: 20px;min-width: 200px;">${msgDate}</p>
+                                <p style="padding: 0;margin: 0;color: #25aae1;font-size: 10px;line-height: 20px;min-width: 200px;">${msgDate}</p>
                             </td>
                         </tr>
                     </table>
