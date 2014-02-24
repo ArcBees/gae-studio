@@ -7,16 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.analytic;
+package com.arcbees.gaestudio.server.api;
 
-public class GoogleAnalyticConstants {
-    public static final String CAT_INITIALIZATION = "Initialization";
+import com.arcbees.gaestudio.server.api.visualizer.EntityResource;
 
-    public static final String CAT_SERVER_CALL = "Server Call";
-
-    public static final String APPLICATION_LOADED = "Application Loaded";
-
-    public static final String VISUALIZER_LABEL = "visualizer";
-
-    public static final String PROFILER_LABEL = "profiler";
+public interface SubresourceFactory {
+    EntityResource createEntityResource(Long entityId, String name);
 }

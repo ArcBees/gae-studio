@@ -7,16 +7,19 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.analytic;
+package com.arcbees.gaestudio.server.util;
 
-public class GoogleAnalyticConstants {
-    public static final String CAT_INITIALIZATION = "Initialization";
+import org.junit.Test;
 
-    public static final String CAT_SERVER_CALL = "Server Call";
+import static org.junit.Assert.assertEquals;
 
-    public static final String APPLICATION_LOADED = "Application Loaded";
+public class PackageHelperTest {
+    @Test
+    public void testGetLeafPackageName() throws Exception {
+        Package aPackage = Package.getPackage("com.arcbees.gaestudio.server.util");
 
-    public static final String VISUALIZER_LABEL = "visualizer";
+        String leafPackageName = PackageHelper.getLeafPackageName(aPackage);
 
-    public static final String PROFILER_LABEL = "profiler";
+        assertEquals("util", leafPackageName);
+    }
 }

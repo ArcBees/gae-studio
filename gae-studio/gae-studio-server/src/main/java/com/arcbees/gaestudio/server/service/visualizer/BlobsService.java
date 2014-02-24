@@ -7,16 +7,17 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.analytic;
+package com.arcbees.gaestudio.server.service.visualizer;
 
-public class GoogleAnalyticConstants {
-    public static final String CAT_INITIALIZATION = "Initialization";
+import java.util.Iterator;
+import java.util.List;
 
-    public static final String CAT_SERVER_CALL = "Server Call";
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.datastore.Entity;
 
-    public static final String APPLICATION_LOADED = "Application Loaded";
+public interface BlobsService {
+    Iterator<BlobInfo> getAllBlobInfos();
 
-    public static final String VISUALIZER_LABEL = "visualizer";
-
-    public static final String PROFILER_LABEL = "profiler";
+    List<Entity> extractEntitiesFromBlob(BlobKey blobKey);
 }

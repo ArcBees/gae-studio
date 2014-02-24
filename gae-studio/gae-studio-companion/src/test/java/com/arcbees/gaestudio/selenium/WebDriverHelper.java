@@ -20,7 +20,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.arcbees.gaestudio.server.rest.RestIT;
+import com.arcbees.gaestudio.server.api.RestIT;
 import com.google.common.base.Predicate;
 
 public class WebDriverHelper {

@@ -11,6 +11,24 @@ package com.arcbees.gaestudio.server.service;
 
 import javax.inject.Singleton;
 
+import com.arcbees.gaestudio.server.service.profiler.OperationService;
+import com.arcbees.gaestudio.server.service.profiler.OperationServiceImpl;
+import com.arcbees.gaestudio.server.service.profiler.RecordService;
+import com.arcbees.gaestudio.server.service.profiler.RecordServiceImpl;
+import com.arcbees.gaestudio.server.service.visualizer.BlobsService;
+import com.arcbees.gaestudio.server.service.visualizer.BlobsServiceImpl;
+import com.arcbees.gaestudio.server.service.visualizer.EntitiesService;
+import com.arcbees.gaestudio.server.service.visualizer.EntitiesServiceImpl;
+import com.arcbees.gaestudio.server.service.visualizer.EntityService;
+import com.arcbees.gaestudio.server.service.visualizer.EntityServiceImpl;
+import com.arcbees.gaestudio.server.service.visualizer.ExportService;
+import com.arcbees.gaestudio.server.service.visualizer.ExportServiceImpl;
+import com.arcbees.gaestudio.server.service.visualizer.ImportService;
+import com.arcbees.gaestudio.server.service.visualizer.ImportServiceImpl;
+import com.arcbees.gaestudio.server.service.visualizer.KindsService;
+import com.arcbees.gaestudio.server.service.visualizer.KindsServiceImpl;
+import com.arcbees.gaestudio.server.service.visualizer.NamespacesService;
+import com.arcbees.gaestudio.server.service.visualizer.NamespacesServiceImpl;
 import com.google.inject.AbstractModule;
 
 public class ServiceModule extends AbstractModule {

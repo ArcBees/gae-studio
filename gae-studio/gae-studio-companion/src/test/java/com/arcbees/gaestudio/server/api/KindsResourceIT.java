@@ -7,16 +7,25 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.analytic;
+package com.arcbees.gaestudio.server.api;
 
-public class GoogleAnalyticConstants {
-    public static final String CAT_INITIALIZATION = "Initialization";
+import java.util.Set;
 
-    public static final String CAT_SERVER_CALL = "Server Call";
+import org.junit.Test;
 
-    public static final String APPLICATION_LOADED = "Application Loaded";
+import static org.hamcrest.Matchers.hasItem;
+import static org.junit.Assert.assertThat;
 
-    public static final String VISUALIZER_LABEL = "visualizer";
+public class KindsResourceIT extends RestIT {
+    @Test
+    public void createObject_getKinds_KindIsReturned() {
+        //given
+        createRemoteCar();
 
-    public static final String PROFILER_LABEL = "profiler";
+        //when
+        Set<String> response = getRemoteKindsResponse();
+
+        //then
+        assertThat(response, hasItem("Car"));
+    }
 }

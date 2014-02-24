@@ -16,7 +16,7 @@ import com.arcbees.gaestudio.companion.domain.Car;
 import com.arcbees.gaestudio.cucumber.page.BasePage;
 import com.arcbees.gaestudio.cucumber.page.VisualizerPage;
 import com.arcbees.gaestudio.factories.CarFactory;
-import com.arcbees.gaestudio.server.rest.RestIT;
+import com.arcbees.gaestudio.server.api.RestIT;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
