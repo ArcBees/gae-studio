@@ -137,6 +137,13 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         updateKinds();
     }
 
+    @Override
+    protected void onHide() {
+        super.onHide();
+
+        getView().setDownloadUrl("");
+    }
+
     private void updateKinds() {
         restDispatch.execute(kindsService.getKinds(),
                 new AsyncCallbackImpl<List<String>>("Failed getting Entity Kinds: ") {
