@@ -1,4 +1,4 @@
-REM Usage : sign <KEY ID> <VERSION>
+REM Usage : prepare-release <KEY ID> <VERSION>
 
 copy release.pom.xml gae-studio-webapp-%2.pom
 copy release.pom.xml gae-studio-webapp-%2-javadoc.jar
