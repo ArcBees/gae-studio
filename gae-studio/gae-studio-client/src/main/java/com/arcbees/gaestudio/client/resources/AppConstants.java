@@ -86,7 +86,7 @@ public interface AppConstants extends Constants {
 
     String invalidJson();
 
-    String failedRegistration();
+    String keyDoesNotExist();
 
     String successfulRegistration();
 
@@ -109,4 +109,6 @@ public interface AppConstants extends Constants {
     String allFieldsAreRequired();
 
     String errorSavingChanges();
+
+    String enterAKey();
 }

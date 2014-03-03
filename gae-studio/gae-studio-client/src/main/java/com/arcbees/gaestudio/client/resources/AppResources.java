@@ -161,6 +161,8 @@ public interface AppResources extends ClientBundle {
     @CssResource.NotStrict
     public Styles styles();
 
+    public AuthStyles authStyles();
+
     public Sprites sprites();
 
     @ImageResource.ImageOptions(repeatStyle = ImageResource.RepeatStyle.Horizontal)

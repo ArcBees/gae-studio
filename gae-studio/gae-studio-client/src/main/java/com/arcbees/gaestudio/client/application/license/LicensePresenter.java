@@ -22,6 +22,7 @@ import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.arcbees.gaestudio.client.util.RestCallbackImpl;
 import com.arcbees.gaestudio.shared.auth.User;
 import com.google.api.client.http.HttpStatusCodes;
+import com.google.common.base.Strings;
 import com.google.gwt.http.client.Response;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -42,6 +43,8 @@ public class LicensePresenter
         void setKeyEntrySectionVisible(boolean visible);
 
         String getKey();
+
+        void showValidationError(String error);
     }
 
     @ProxyCodeSplit
@@ -77,23 +80,33 @@ public class LicensePresenter
 
     @Override
     public void onRegister() {
-        LicenseRegistration licenseRegistration = getLicenseRegistration();
+        String key = getView().getKey();
 
-        restDispatch.execute(licenseService.register(licenseRegistration),
-                new AsyncCallbackImpl<Void>(appConstants.failedRegistration()) {
-            @Override
-            public void handleFailure(Throwable throwable) {
-                currentUser.setLicenseValid(false);
-            }
+        if (!Strings.isNullOrEmpty(key)) {
+            LicenseRegistration licenseRegistration = getLicenseRegistration();
 
-            @Override
-            public void onSuccess(Void aVoid) {
-                DisplayMessageEvent.fire(LicensePresenter.this,
-                        new Message(appConstants.successfulRegistration(), MessageStyle.SUCCESS));
-                currentUser.setLicenseValid(true);
-                placeManager.revealDefaultPlace();
-            }
-        });
+            restDispatch.execute(licenseService.register(licenseRegistration),
+                    new RestCallbackImpl<Void>() {
+                        @Override
+                        public void setResponse(Response response) {
+                            int statusCode = response.getStatusCode();
+
+                            if (statusCode == HttpStatusCodes.STATUS_CODE_OK) {
+                                onValidLicense();
+                            } else if (statusCode == HttpStatusCodes.STATUS_CODE_FORBIDDEN) {
+                                currentUser.setLicenseValid(false);
+                                getView().showValidationError(appConstants.keyDoesNotExist());
+                            }
+                        }
+
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            // Response is handled in setResponse
+                        }
+                    });
+        } else {
+            getView().showValidationError(appConstants.enterAKey());
+        }
     }
 
     @Override
@@ -132,19 +145,20 @@ public class LicensePresenter
         int statusCode = response.getStatusCode();
 
         if (statusCode == HttpStatusCodes.STATUS_CODE_OK) {
-            displayValidLicenseMessage();
-        } else if (statusCode == HttpStatusCodes.STATUS_CODE_FORBIDDEN) {
-            displayRegisterLicenseMessage();
+            onValidLicense();
         }
     }
 
-    private void displayRegisterLicenseMessage() {
-        getView().showMessage(appConstants.registerKey());
-        getView().setKeyEntrySectionVisible(true);
+    private void onValidLicense() {
+        currentUser.setLicenseValid(true);
+        displayValidLicenseMessage();
     }
 
     private void displayValidLicenseMessage() {
-        getView().showMessage(appConstants.validLicense());
         getView().setKeyEntrySectionVisible(false);
+        getView().showMessage(appConstants.validLicense());
+
+        DisplayMessageEvent.fire(LicensePresenter.this,
+                new Message(appConstants.successfulRegistration(), MessageStyle.SUCCESS));
     }
 }
