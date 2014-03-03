@@ -97,6 +97,7 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
     public void resetLoginForm() {
         ajaxLoader.hide();
         setLoginButtonEnabled(true);
+        loginFormHelper.getPasswordElement().setValue("");
     }
 
     private void setLoginButtonEnabled(boolean enabled) {
