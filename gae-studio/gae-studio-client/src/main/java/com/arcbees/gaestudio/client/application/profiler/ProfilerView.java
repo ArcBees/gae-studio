@@ -23,7 +23,7 @@ public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
     }
 
     @UiField
-    SimpleLayoutPanel requestPanel;
+    SimplePanel requestPanel;
     @UiField
     SimplePanel statisticsPanel;
     @UiField

@@ -36,7 +36,7 @@
             <g:west size="300">
                 <g:SplitLayoutPanel>
                     <g:center>
-                        <g:SimpleLayoutPanel ui:field="requestPanel" addStyleNames="{style.lightGrey}"/>
+                        <g:SimplePanel ui:field="requestPanel" addStyleNames="{style.lightGrey}"/>
                     </g:center>
                     <g:south size="350">
                         <g:SimplePanel ui:field="statisticsPanel" addStyleNames="{style.mediumGrey}"/>
