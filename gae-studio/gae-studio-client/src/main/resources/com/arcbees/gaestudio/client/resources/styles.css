@@ -52,6 +52,16 @@ input:focus, textarea:focus, button:focus {
 .toolbarButton:hover {
     background: white;
     color: black;
+    border-left: 2px solid #25aae1;
+    margin-left: 0;
+    transition: margin-left 0;
+    -webkit-transition: margin-left 0;
+    -moz-transition: margin-left 0;
+    -o-transition: margin-left 0;
+}
+
+.toolbarButton:hover > div:first-child {
+    margin-left: -2px;
 }
 
 .toolbarButton:active {
