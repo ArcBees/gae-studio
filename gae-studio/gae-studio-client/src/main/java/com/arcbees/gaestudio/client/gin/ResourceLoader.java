@@ -23,7 +23,6 @@ public class ResourceLoader {
                           PagerResources pagerResources) {
         resources.styles().ensureInjected();
         resources.authStyles().ensureInjected();
-        resources.sprites().ensureInjected();
         cellTableResource.cellTableStyle().ensureInjected();
         messageResources.styles().ensureInjected();
         pagerResources.simplePagerStyle().ensureInjected();

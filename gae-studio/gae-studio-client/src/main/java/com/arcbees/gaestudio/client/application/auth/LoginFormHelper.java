@@ -33,7 +33,7 @@ public class LoginFormHelper {
         form = FormPanel.wrap(Document.get().getElementById(LOGINFORM_ID), false);
         form.setAction("javascript:__gwt_login(0)");
 
-        getSubmitButton().addClassName(appResources.styles().loginBtn());
+        getSubmitButton().addClassName(appResources.styles().bigBlueBtn());
     }
 
     public FormPanel getLoginFormPanel() {

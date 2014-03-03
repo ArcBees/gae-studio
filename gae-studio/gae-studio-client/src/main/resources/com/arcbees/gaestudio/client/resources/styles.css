@@ -439,11 +439,11 @@ input:focus, textarea:focus, button:focus {
     outline-offset: -2px;
 }
 
-.loginBtn:hover, .loginBtn:active {
+.bigBlueBtn:hover, .bigBlueBtn:active {
     box-shadow: inset 2px 2px 6px 1px rgba(0, 0, 0, 0.4);
 }
 
-.loginBtn {
+.bigBlueBtn {
     width: 100%;
     margin-bottom: 20px;
 
@@ -452,19 +452,19 @@ input:focus, textarea:focus, button:focus {
     color: white;
 }
 
-.loginBtn:hover {
+.bigBlueBtn:hover {
     cursor: pointer;
 }
 
-.loginBtn:active {
+.bigBlueBtn:active {
     background-color: #0e76bc;
 }
 
-.authForm input, .loginBtn {
+.authForm input, .bigBlueBtn {
     height: 37px;
 }
 
-.authForm input, .loginBtn, #loginForm #registerLink {
+.authForm input, .bigBlueBtn, #loginForm #registerLink {
     font-size: 1.5em;
 }
 
