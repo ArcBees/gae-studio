@@ -112,8 +112,8 @@
                     </li>
                 </ul>
             </div>
-            <div class="{style.menu}">
-                <a href="#{nameTokens.getVisualizer}">
+            <div ui:field="menu" class="{style.menu}">
+                <a href="#{nameTokens.getVisualizer}" class="{style.activeState}">
                     Visualizer
                 </a>
                 <a href="#{nameTokens.getProfiler}">
