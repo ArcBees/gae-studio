@@ -115,6 +115,7 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
         User user = driver.flush();
         if (validateEntity(user)) {
             if (passwordMatch()) {
+                ajaxLoader.show();
                 getUiHandlers().register(user);
             } else {
                 showErrorMessage(constants.passwordDontMatch());

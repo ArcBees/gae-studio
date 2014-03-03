@@ -12,3 +12,4 @@ META-INF
 .checkstyle
 out
 gen
+velocity.log
