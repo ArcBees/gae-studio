@@ -48,7 +48,7 @@
                             <g:PasswordTextBox ui:field="confirmPassword"/>
                         </div>
                         <div class="{style.buttonContainer}">
-                            <g:Button ui:field="register" text="Create your account" styleName="{res.styles.bigBlueBtn}"/>
+                            <g:Button ui:field="register" text="Create your account" styleName="{res.styles.button}"/>
                             <div class="{res.authStyles.ajaxContainer}">
                                 <cui:AjaxLoader ui:field="ajaxLoader"/>
                             </div>

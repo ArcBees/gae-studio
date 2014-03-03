@@ -71,7 +71,7 @@ public interface AppResources extends ClientBundle {
 
         String embeddedEntityProperties();
 
-        String bigBlueBtn();
+        String button();
 
         String authForm();
 
@@ -140,8 +140,6 @@ public interface AppResources extends ClientBundle {
         String exportBtn();
 
         String exportBtnDisabled();
-
-        String button();
 
         String chooseFileButton();
 
