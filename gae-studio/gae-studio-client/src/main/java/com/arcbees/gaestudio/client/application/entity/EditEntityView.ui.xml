@@ -55,13 +55,9 @@
             top: 2px;
             right: 0;
         }
-
-        .entityEditPanel {
-            border-left: 3px solid #25AEE1;
-        }
     </ui:style>
 
-    <g:HTMLPanel styleName="{res.styles.entityDetailPanel} {style.entityEditPanel}">
+    <g:HTMLPanel styleName="{res.styles.entityDetailPanel}">
         <g:HTMLPanel styleName="{style.root} {res.styles.secondTable}">
             <div class="{style.detailHeader}">
                 <div class="{res.styles.pencilSmall} {res.styles.popupIcon}"/>

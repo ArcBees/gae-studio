@@ -189,6 +189,8 @@ input:focus, textarea:focus, button:focus {
     top: 0;
     background: colorLightGreyEB;
 
+    border-left: 3px solid #25AEE1;
+
     transition: left .5s ease;
     -webkit-transition: left .5s ease, width .5s ease;
     -moz-transition: left .5s ease, width .5s ease;
