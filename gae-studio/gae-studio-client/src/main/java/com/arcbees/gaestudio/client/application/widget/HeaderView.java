@@ -46,6 +46,8 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     Anchor logout;
     @UiField
     Styles style;
+    @UiField
+    DivElement menu;
 
     private final String activeStyleName;
     private final Function showThemes = new Function() {
@@ -71,12 +73,20 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
         activeStyleName = style.activeState();
 
         asWidget().addAttachHandler(this);
+
+        $("a", menu).click(new Function() {
+            @Override
+            public void f() {
+                $("." + activeStyleName).removeClass(activeStyleName);
+                $(getElement()).addClass(activeStyleName);
+            }
+        });
     }
 
     @Override
-    public void activateCurrentLink(String nameTokens) {
+    public void setProfilerActive() {
         $("." + activeStyleName).removeClass(activeStyleName);
-        $("a[href=#" + nameTokens + "]").addClass(activeStyleName);
+        $("a", menu).get(1).addClassName(activeStyleName);
     }
 
     @Override
