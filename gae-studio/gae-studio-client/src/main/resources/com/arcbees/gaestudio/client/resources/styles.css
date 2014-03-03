@@ -229,7 +229,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .firstTable .lockedRow td {
-    background-color: colorLightGrey;
+    background-color: colorBlue;
 }
 
 .firstTable, .secondTable {
