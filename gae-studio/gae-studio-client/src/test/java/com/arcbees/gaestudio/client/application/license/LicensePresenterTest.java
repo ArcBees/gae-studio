@@ -17,7 +17,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 
-import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.util.AsyncMockStubber;
 import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.arcbees.gaestudio.shared.auth.User;
@@ -27,8 +26,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -45,21 +45,18 @@ public class LicensePresenterTest {
     LicensePresenter presenter;
 
     @Test
-    public void onReveal_licenseCheckReturns403_printsMessageInView(LicensePresenter.MyView view,
-                                                                    RestDispatch dispatch,
-                                                                    CurrentUser currentUser,
-                                                                    AppConstants constants) {
+    public void onReveal_licenseCheckReturns403_noErrorMessages(LicensePresenter.MyView view,
+                                                                RestDispatch dispatch,
+                                                                CurrentUser currentUser) {
         //given
         makeDispatcherReturn(dispatch, HttpStatusCodes.STATUS_CODE_FORBIDDEN);
         when(currentUser.getUser()).thenReturn(mock(User.class));
-        String expectedMessage = "some string";
-        given(constants.registerKey()).willReturn(expectedMessage);
 
         //when
         presenter.onReveal();
 
         //then
-        verify(view).showMessage(expectedMessage);
+        verify(view, times(0)).showMessage(anyString());
     }
 
     private void makeDispatcherReturn(RestDispatch dispatch, int statuscode) {
