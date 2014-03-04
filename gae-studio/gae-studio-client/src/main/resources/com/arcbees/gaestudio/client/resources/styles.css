@@ -39,9 +39,7 @@ input:focus, textarea:focus, button:focus {
     height: 46px;
     float: left;
     position: relative;
-    background: #3d3c3c;
-
-    background: #3d3c3c;
+    background: #2d2d2d;
 
     transition: all .25s ease;
     -webkit-transition: all .25s ease;
@@ -52,6 +50,16 @@ input:focus, textarea:focus, button:focus {
 .toolbarButton:hover {
     background: white;
     color: black;
+    border-left: 2px solid #25aae1;
+    margin-left: 0;
+    transition: margin-left 0;
+    -webkit-transition: margin-left 0;
+    -moz-transition: margin-left 0;
+    -o-transition: margin-left 0;
+}
+
+.toolbarButton:hover > div:first-child {
+    margin-left: -2px;
 }
 
 .toolbarButton:active {
@@ -181,6 +189,8 @@ input:focus, textarea:focus, button:focus {
     top: 0;
     background: colorLightGreyEB;
 
+    border-left: 3px solid #25AEE1;
+
     transition: left .5s ease;
     -webkit-transition: left .5s ease, width .5s ease;
     -moz-transition: left .5s ease, width .5s ease;
@@ -221,7 +231,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .firstTable .lockedRow td {
-    background-color: colorLightGrey;
+    background-color: colorBlue;
 }
 
 .firstTable, .secondTable {
@@ -288,7 +298,7 @@ input:focus, textarea:focus, button:focus {
 
 .popup {
     background-color: #EBEBEB;
-    color: #3d3c3c;
+    color: #2d2d2d;
 
     padding: 20px 20px 20px 20px;
 
@@ -306,7 +316,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .popupHeader {
-    color: #3d3c3c;
+    color: #2d2d2d;
     font-weight: bold;
     font-size: 1.4em;
     text-transform: uppercase;
@@ -344,75 +354,6 @@ input:focus, textarea:focus, button:focus {
     background: rgba(0, 0, 0, 0.4);
 }
 
-.button {
-    border: none;
-    display: inline-block;
-
-    font-size: 18px;
-    text-transform: uppercase;
-    background: #1397ff;
-    color: #EBEBEB;
-    text-shadow: none;
-
-    -webkit-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
-    box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
-}
-
-.button:hover:enabled {
-    color: #DFDFDF;
-    border: none;
-    background: #21a8ff;
-    text-shadow: none;
-
-    -webkit-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
-    box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
-}
-
-.button:active {
-    border: none;
-    background: #104b74;
-    text-shadow: none;
-
-    -webkit-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
-    -moz-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
-    box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
-}
-
-.button.gray {
-    border: none;
-
-    background: #c4c4c4;
-    color: #3d3c3c;
-    text-shadow: none;
-
-    -webkit-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
-    box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.3), 0px 2px 7px -3px rgba(0, 0, 0, 0.3);
-}
-
-.button.gray:hover:enabled {
-    color: #3d3c3c;
-    border: none;
-    background: #d1d1d1;
-    text-shadow: none;
-
-    -webkit-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
-    box-shadow: inset 0 2px 3px -1px rgba(255, 255, 255, 0.5), 0px 3px 7px -3px rgba(0, 0, 0, 0.75);
-}
-
-.button.gray:active {
-    border: none;
-    background: #c4c4c4;
-    text-shadow: none;
-
-    -webkit-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
-    -moz-box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
-    box-shadow: inset 0 1px 5px -1px rgba(42, 42, 42, 0.55);
-}
-
 .authForm {
     width: 345px;
     margin-left: auto;
@@ -439,32 +380,59 @@ input:focus, textarea:focus, button:focus {
     outline-offset: -2px;
 }
 
-.loginBtn:hover, .loginBtn:active {
+.button:hover:enabled, .button:active:enabled {
     box-shadow: inset 2px 2px 6px 1px rgba(0, 0, 0, 0.4);
 }
 
-.loginBtn {
+.button {
     width: 100%;
-    margin-bottom: 20px;
+    font-size: 18px;
+    text-transform: uppercase;
 
     border: none;
     background-color: #25aae1;
     color: white;
 }
 
-.loginBtn:hover {
+.button:hover:enabled {
     cursor: pointer;
 }
 
-.loginBtn:active {
+.button:active:enabled {
     background-color: #0e76bc;
 }
 
-.authForm input, .loginBtn {
+.button.gray {
+    border: none;
+
+    background: #b7b7b7;
+    color: #2d2d2d;
+    text-shadow: none;
+}
+
+.button.gray:hover:enabled {
+    background: #b7b7b7;
+    color: #2d2d2d;
+    border: none;
+    text-shadow: none;
+}
+
+.button.gray:active:enabled {
+    border: none;
+    background: #8d8d8d;
+    text-shadow: none;
+}
+
+.authForm input, .authForm .button {
     height: 37px;
 }
 
-.authForm input, .loginBtn, #loginForm #registerLink {
+.authForm .button {
+    margin-bottom: 20px;
+    text-transform: none;
+}
+
+.authForm input, .authForm .button, #loginForm #registerLink {
     font-size: 1.5em;
 }
 
@@ -732,7 +700,8 @@ input:focus, textarea:focus, button:focus {
 }
 
 .exportBtn, .importBtn {
-    background-color: #3d3c3c;
+    /*Do not optimize*/
+    background-color: #2d2d2d;
     background-repeat: no-repeat;
     background-position: center center;
     cursor: pointer;
@@ -754,7 +723,7 @@ input:focus, textarea:focus, button:focus {
 
 .uploadLabel {
     font-size: 1.1em;
-    background: #c4c4c4;
+    background: #d9d9d9;
     text-align: left;
 
     height: 24px;

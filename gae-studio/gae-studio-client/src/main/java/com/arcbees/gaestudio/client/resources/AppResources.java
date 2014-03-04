@@ -71,7 +71,7 @@ public interface AppResources extends ClientBundle {
 
         String embeddedEntityProperties();
 
-        String loginBtn();
+        String button();
 
         String authForm();
 
@@ -141,8 +141,6 @@ public interface AppResources extends ClientBundle {
 
         String exportBtnDisabled();
 
-        String button();
-
         String chooseFileButton();
 
         String gray();
@@ -154,25 +152,10 @@ public interface AppResources extends ClientBundle {
         String buttonContainer();
     }
 
-    public interface Sprites extends CssResource {
-        String topmenuBgActive();
-    }
-
     @CssResource.NotStrict
     public Styles styles();
 
     public AuthStyles authStyles();
-
-    public Sprites sprites();
-
-    @ImageResource.ImageOptions(repeatStyle = ImageResource.RepeatStyle.Horizontal)
-    ImageResource topmenuBg();
-
-    @ImageResource.ImageOptions(repeatStyle = ImageResource.RepeatStyle.Horizontal)
-    ImageResource topmenuBgHover();
-
-    @ImageResource.ImageOptions(repeatStyle = ImageResource.RepeatStyle.Horizontal)
-    ImageResource topmenuBgActive();
 
     ImageResource logo();
 
