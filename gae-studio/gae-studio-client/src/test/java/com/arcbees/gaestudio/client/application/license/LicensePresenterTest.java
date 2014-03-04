@@ -28,6 +28,7 @@ import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -56,7 +57,7 @@ public class LicensePresenterTest {
         presenter.onReveal();
 
         //then
-        verify(view, times(0)).showMessage(anyString());
+        verify(view, never()).showMessage(anyString());
     }
 
     private void makeDispatcherReturn(RestDispatch dispatch, int statuscode) {
