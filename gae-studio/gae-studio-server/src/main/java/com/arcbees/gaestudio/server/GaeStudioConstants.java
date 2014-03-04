@@ -18,4 +18,6 @@ public class GaeStudioConstants {
     public static final String REQUEST_ID = "requestId";
     public static final String VISUALIZER_NAMESPACE = "gae.visualizer";
     public static final String REQUEST_COUNTER = "request.counter";
+    public static final String ARCBEES_MAIL_SENDER = "zom.bee@arcbees.com";
+    public static final String ARCBEES_OAUTH_SERVICE = "https://arcbees-oauth.appspot.com/" ;
 }

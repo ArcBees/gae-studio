@@ -122,6 +122,11 @@
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.arcbees.appengine</groupId>
+            <artifactId>mail</artifactId>
+            <version>${arcbees-mail.version}</version>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>

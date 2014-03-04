@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<h1>GAE Studio - Confirm registration</h1>
+
+We've received a registration request for your email.
+
+<a href="${redirectionUri}?id=${tokenId}">Confirm your registration</a>
+
+If you have not requested a registration, just ignore that email.
+</body>
+</html>

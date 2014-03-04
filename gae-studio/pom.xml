@@ -52,6 +52,7 @@
         <jackson-annotations.version>2.2.3</jackson-annotations.version>
         <slf4j.version>1.5.8</slf4j.version>
         <hibernate.version>4.1.0.Final</hibernate.version>
+        <arcbees-mail.version>1.2</arcbees-mail.version>
         <hibernate-source.version>4.1.0.Final</hibernate-source.version>
         <javax.validation.version>1.0.0.GA</javax.validation.version>
 
@@ -75,6 +76,9 @@
         <gae.home>
             ${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}
         </gae.home>
+
+        <!-- Variables -->
+        <sender.email>zom.bee@arcbees.com</sender.email>
 
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <gaes.buildtime>${maven.build.timestamp}</gaes.buildtime>

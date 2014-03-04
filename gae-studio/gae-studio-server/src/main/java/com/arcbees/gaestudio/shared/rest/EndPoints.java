@@ -31,4 +31,6 @@ public class EndPoints {
     public static final String IMPORT = REST_PATH + "import/";
     public static final String TASK = "task/";
     public static final String IMPORT_TASK = IMPORT + TASK;
+    public static final String MAIL = "mail/";
+    public static final String NOTIFICATION = "notification/";
 }
