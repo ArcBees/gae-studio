@@ -20,7 +20,7 @@
             <div ui:field="errorMessage" class="{res.authStyles.errorMessage}"/>
             <g:TextBox ui:field="key"/>
             <div class="{style.buttonContainer}">
-                <g:Button ui:field="register" text="Register" styleName="{res.styles.bigBlueBtn}"/>
+                <g:Button ui:field="register" text="Register" styleName="{res.styles.button}"/>
                 <div class="{res.authStyles.ajaxContainer}">
                     <cui:AjaxLoader ui:field="ajaxLoader"/>
                 </div>
