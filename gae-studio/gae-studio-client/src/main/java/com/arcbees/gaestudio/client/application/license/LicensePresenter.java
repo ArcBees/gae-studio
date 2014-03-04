@@ -98,11 +98,6 @@ public class LicensePresenter
                                 getView().showValidationError(appConstants.keyDoesNotExist());
                             }
                         }
-
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            // Response is handled in setResponse
-                        }
                     });
         } else {
             getView().showValidationError(appConstants.enterAKey());
@@ -120,11 +115,6 @@ public class LicensePresenter
                 @Override
                 public void setResponse(Response response) {
                     handleLicenseCheck(response);
-                }
-
-                @Override
-                public void onSuccess(Void aVoid) {
-                    // Response is handled in setResponse
                 }
             });
         }
