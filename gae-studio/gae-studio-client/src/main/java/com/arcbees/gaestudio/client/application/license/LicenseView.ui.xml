@@ -14,7 +14,6 @@
     </ui:style>
 
     <g:HTMLPanel styleName="{style.main}">
-        <h4 ui:field="message"/>
         <g:HTMLPanel ui:field="keyEntrySection" styleName="{res.styles.authForm}">
             <h3 ui:field="formTitle" class="{res.authStyles.formTitle}"/>
             <div ui:field="errorMessage" class="{res.authStyles.errorMessage}"/>

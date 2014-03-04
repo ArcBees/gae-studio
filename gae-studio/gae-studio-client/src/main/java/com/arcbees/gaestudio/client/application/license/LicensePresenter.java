@@ -34,14 +34,11 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 public class LicensePresenter
         extends Presenter<LicensePresenter.MyView, LicensePresenter.MyProxy> implements LicenseUiHandlers {
     interface MyView extends View, HasUiHandlers<LicenseUiHandlers> {
-        void showMessage(String message);
-
-        void setKeyEntrySectionVisible(boolean visible);
-
         String getKey();
 
         void showValidationError(String error);
@@ -141,14 +138,11 @@ public class LicensePresenter
 
     private void onValidLicense() {
         currentUser.setLicenseValid(true);
-        displayValidLicenseMessage();
-    }
-
-    private void displayValidLicenseMessage() {
-        getView().setKeyEntrySectionVisible(false);
-        getView().showMessage(appConstants.validLicense());
 
         DisplayMessageEvent.fire(LicensePresenter.this,
                 new Message(appConstants.successfulRegistration(), MessageStyle.SUCCESS));
+
+        PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.visualizer).build();
+        placeManager.revealPlace(placeRequest);
     }
 }

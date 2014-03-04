@@ -33,8 +33,6 @@ public class LicenseView extends ViewWithUiHandlers<LicenseUiHandlers> implement
     }
 
     @UiField
-    HeadingElement message;
-    @UiField
     HTMLPanel keyEntrySection;
     @UiField
     TextBox key;
@@ -57,16 +55,6 @@ public class LicenseView extends ViewWithUiHandlers<LicenseUiHandlers> implement
 
         formTitle.setInnerText(appConstants.registerKey());
         $(errorMessage).hide();
-    }
-
-    @Override
-    public void showMessage(String message) {
-        this.message.setInnerSafeHtml(SafeHtmlUtils.fromString(message));
-    }
-
-    @Override
-    public void setKeyEntrySectionVisible(boolean visible) {
-        keyEntrySection.setVisible(visible);
     }
 
     @Override
