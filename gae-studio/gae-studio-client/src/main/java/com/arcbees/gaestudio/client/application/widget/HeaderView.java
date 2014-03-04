@@ -10,11 +10,13 @@
 package com.arcbees.gaestudio.client.application.widget;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.UListElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.query.client.Function;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -30,6 +32,11 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     interface Binder extends UiBinder<Widget, HeaderView> {
     }
 
+    @SuppressWarnings("GwtCssResourceErrors")
+    interface Styles extends CssResource {
+        String activeState();
+    }
+
     @UiField(provided = true)
     AppResources resources;
     @UiField
@@ -38,6 +45,12 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     UListElement themes;
     @UiField
     Anchor logout;
+    @UiField
+    Styles style;
+    @UiField
+    DivElement menu;
+    @UiField
+    AnchorElement profilerAnchor;
 
     private final String activeStyleName;
     private final Function showThemes = new Function() {
@@ -60,15 +73,23 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
 
         initWidget(uiBinder.createAndBindUi(this));
 
-        activeStyleName = resources.sprites().topmenuBgActive();
+        activeStyleName = style.activeState();
 
         asWidget().addAttachHandler(this);
+
+        $("a", menu).click(new Function() {
+            @Override
+            public void f() {
+                $("." + activeStyleName).removeClass(activeStyleName);
+                $(getElement()).addClass(activeStyleName);
+            }
+        });
     }
 
     @Override
-    public void activateCurrentLink(String nameTokens) {
+    public void setProfilerActive() {
         $("." + activeStyleName).removeClass(activeStyleName);
-        $("." + nameTokens).addClass(activeStyleName);
+        $(profilerAnchor).addClass(activeStyleName);
     }
 
     @Override

@@ -17,7 +17,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 
-import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.util.AsyncMockStubber;
 import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.arcbees.gaestudio.shared.auth.User;
@@ -26,10 +25,15 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
@@ -45,21 +49,21 @@ public class LicensePresenterTest {
     LicensePresenter presenter;
 
     @Test
-    public void onReveal_licenseCheckReturns403_printsMessageInView(LicensePresenter.MyView view,
-                                                                    RestDispatch dispatch,
-                                                                    CurrentUser currentUser,
-                                                                    AppConstants constants) {
+    public void onReveal_licenseCheckReturns403_noErrorMessages(LicensePresenter.MyView view,
+                                                                RestDispatch dispatch,
+                                                                PlaceManager placeManager,
+                                                                CurrentUser currentUser) {
         //given
         makeDispatcherReturn(dispatch, HttpStatusCodes.STATUS_CODE_FORBIDDEN);
         when(currentUser.getUser()).thenReturn(mock(User.class));
-        String expectedMessage = "some string";
-        given(constants.registerKey()).willReturn(expectedMessage);
+        verify(view).setUiHandlers(presenter);
 
         //when
         presenter.onReveal();
 
         //then
-        verify(view).showMessage(expectedMessage);
+        verifyZeroInteractions(placeManager);
+        verifyNoMoreInteractions(view);
     }
 
     private void makeDispatcherReturn(RestDispatch dispatch, int statuscode) {

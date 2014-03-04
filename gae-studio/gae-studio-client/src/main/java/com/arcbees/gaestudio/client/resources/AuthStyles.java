@@ -9,10 +9,26 @@
 
 package com.arcbees.gaestudio.client.resources;
 
-public class Colors {
-    public static String colorBlue = "#25aae1";
-    public static String colorLightGrey = "#ececec";
-    public static String colorLightGray = "#7a7a7a";
-    public static String colorLightGreyEB = "#ebebeb";
-    public static String colorGrey2B = "#2b2b2b";
+import com.google.gwt.resources.client.CssResource;
+
+public interface AuthStyles extends CssResource {
+    String errorMessage();
+
+    String logo();
+
+    String formTitle();
+
+    String ajaxContainer();
+
+    String root();
+
+    String wrap();
+
+    String main();
+
+    String topBlueBar();
+
+    String middleBlueBar();
+
+    String footer();
 }
