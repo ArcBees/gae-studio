@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.widget;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.UListElement;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -48,6 +49,8 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     Styles style;
     @UiField
     DivElement menu;
+    @UiField
+    AnchorElement profilerAnchor;
 
     private final String activeStyleName;
     private final Function showThemes = new Function() {
@@ -86,7 +89,7 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     @Override
     public void setProfilerActive() {
         $("." + activeStyleName).removeClass(activeStyleName);
-        $("a", menu).get(1).addClassName(activeStyleName);
+        $(profilerAnchor).addClass(activeStyleName);
     }
 
     @Override

@@ -116,7 +116,7 @@
                 <a href="#{nameTokens.getVisualizer}" class="{style.activeState}">
                     Visualizer
                 </a>
-                <a href="#{nameTokens.getProfiler}">
+                <a ui:field="profilerAnchor" href="#{nameTokens.getProfiler}">
                     Profiler
                 </a>
             </div>
