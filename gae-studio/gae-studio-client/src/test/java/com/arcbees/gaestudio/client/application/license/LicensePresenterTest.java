@@ -25,12 +25,15 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
@@ -48,16 +51,19 @@ public class LicensePresenterTest {
     @Test
     public void onReveal_licenseCheckReturns403_noErrorMessages(LicensePresenter.MyView view,
                                                                 RestDispatch dispatch,
+                                                                PlaceManager placeManager,
                                                                 CurrentUser currentUser) {
         //given
         makeDispatcherReturn(dispatch, HttpStatusCodes.STATUS_CODE_FORBIDDEN);
         when(currentUser.getUser()).thenReturn(mock(User.class));
+        verify(view).setUiHandlers(presenter);
 
         //when
         presenter.onReveal();
 
         //then
-        verify(view, never()).showMessage(anyString());
+        verifyZeroInteractions(placeManager);
+        verifyNoMoreInteractions(view);
     }
 
     private void makeDispatcherReturn(RestDispatch dispatch, int statuscode) {
