@@ -50,6 +50,16 @@ input:focus, textarea:focus, button:focus {
 .toolbarButton:hover {
     background: white;
     color: black;
+    border-left: 2px solid #25aae1;
+    margin-left: 0;
+    transition: margin-left 0;
+    -webkit-transition: margin-left 0;
+    -moz-transition: margin-left 0;
+    -o-transition: margin-left 0;
+}
+
+.toolbarButton:hover > div:first-child {
+    margin-left: -2px;
 }
 
 .toolbarButton:active {
@@ -179,6 +189,8 @@ input:focus, textarea:focus, button:focus {
     top: 0;
     background: colorLightGreyEB;
 
+    border-left: 3px solid #25AEE1;
+
     transition: left .5s ease;
     -webkit-transition: left .5s ease, width .5s ease;
     -moz-transition: left .5s ease, width .5s ease;
@@ -219,7 +231,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .firstTable .lockedRow td {
-    background-color: colorLightGrey;
+    background-color: colorBlue;
 }
 
 .firstTable, .secondTable {
