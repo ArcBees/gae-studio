@@ -21,7 +21,7 @@ public class ResetPasswordEmailSender {
         this.messageService = messageService;
     }
 
-    public void sendEmail(String emailAddress, String token) {
+    public void sendPasswordEmail(String emailAddress, String token) {
         String body = resetPasswordEmailBuilder.generateBody(emailAddress, token);
         String message = emailMessageGenerator.generateBody(SUBJECT, body);
 

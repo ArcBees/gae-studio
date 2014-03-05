@@ -1,5 +1,7 @@
 package com.arcbees.gaestudio.server.service.mail;
 
 public interface MessageService {
-    void sendEmail(String emailAddress, String subject, String message);
+    void sendConfirmationEmail(String emailAddress, String tokenId, String redirectionUri);
+
+    void sendPasswordEmail(String emailAddress, String token);
 }
