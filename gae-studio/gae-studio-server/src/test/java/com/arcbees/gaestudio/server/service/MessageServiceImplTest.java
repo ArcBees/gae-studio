@@ -51,8 +51,6 @@ public class MessageServiceImplTest extends GaeTestBase {
     ResetPasswordEmailBuilder resetPasswordEmailBuilder;
     @Inject
     VelocityWrapperFactory velocityWrapperFactory;
-    @Inject
-    MessageService messageService;
 
     private VelocityWrapper velocityWrapper;
 

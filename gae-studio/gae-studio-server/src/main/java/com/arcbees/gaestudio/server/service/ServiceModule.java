@@ -47,7 +47,6 @@ public class ServiceModule extends AbstractModule {
         bind(RecordService.class).to(RecordServiceImpl.class).in(Singleton.class);
         bind(ImportService.class).to(ImportServiceImpl.class).in(Singleton.class);
         bind(ExportService.class).to(ExportServiceImpl.class).in(Singleton.class);
-        bind(EmailSender.class).to(EmailSenderImpl.class).in(Singleton.class);
         bind(MessageService.class).to(MessageServiceImpl.class).in(Singleton.class);
     }
 }
