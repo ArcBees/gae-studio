@@ -11,6 +11,8 @@ package com.arcbees.gaestudio.server.service;
 
 import javax.inject.Singleton;
 
+import com.arcbees.appengine.mail.EmailSender;
+import com.arcbees.appengine.mail.EmailSenderImpl;
 import com.arcbees.gaestudio.server.service.mail.MessageService;
 import com.arcbees.gaestudio.server.service.mail.MessageServiceImpl;
 import com.arcbees.gaestudio.server.service.profiler.OperationService;
@@ -45,6 +47,7 @@ public class ServiceModule extends AbstractModule {
         bind(RecordService.class).to(RecordServiceImpl.class).in(Singleton.class);
         bind(ImportService.class).to(ImportServiceImpl.class).in(Singleton.class);
         bind(ExportService.class).to(ExportServiceImpl.class).in(Singleton.class);
+        bind(EmailSender.class).to(EmailSenderImpl.class).in(Singleton.class);
         bind(MessageService.class).to(MessageServiceImpl.class).in(Singleton.class);
     }
 }
