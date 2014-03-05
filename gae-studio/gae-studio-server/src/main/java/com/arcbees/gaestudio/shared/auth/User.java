@@ -9,11 +9,11 @@
 
 package com.arcbees.gaestudio.shared.auth;
 
-import com.arcbees.gaestudio.shared.util.Validation;
+import javax.validation.Valid;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.Valid;
-import java.util.Date;
+import com.arcbees.gaestudio.shared.util.Validation;
 
 public class User {
     private Long id;
@@ -23,8 +23,6 @@ public class User {
     private String password;
     @Valid
     private Profile profile = new Profile();
-    private Long dateActivated;
-    private Date dateCreated;
 
     public String getEmail() {
         return email;
@@ -38,32 +36,12 @@ public class User {
         return profile;
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Long getDateActivated() {
-        return dateActivated;
-    }
-
-    public void setDateActivated(Long dateActivated) {
-        this.dateActivated = dateActivated;
     }
 
     public Long getId() {
