@@ -3,6 +3,7 @@ package com.arcbees.gaestudio.server.service.mail;
 import com.arcbees.appengine.mail.Email;
 import com.arcbees.appengine.mail.EmailBuilder;
 import com.arcbees.appengine.mail.EmailSender;
+import com.arcbees.appengine.mail.EmailSenderImpl;
 import com.arcbees.gaestudio.server.GaeStudioConstants;
 import com.google.inject.Inject;
 
@@ -10,7 +11,7 @@ public class MessageServiceImpl implements MessageService {
     private final EmailSender emailSender;
 
     @Inject
-    MessageServiceImpl(EmailSender emailSender) {
+    MessageServiceImpl(EmailSenderImpl emailSender) {
         this.emailSender = emailSender;
     }
 
