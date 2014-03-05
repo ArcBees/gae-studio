@@ -20,8 +20,10 @@ import org.jukito.TestSingleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.arcbees.gaestudio.server.email.ConfirmRegistrationEmailGenerator;
-import com.arcbees.gaestudio.server.email.ResetPasswordEmailBodyGenerator;
+import com.arcbees.gaestudio.server.email.ConfirmRegistrationEmailBuilder;
+import com.arcbees.gaestudio.server.email.ResetPasswordEmailBuilder;
+import com.arcbees.gaestudio.server.service.mail.MessageService;
+import com.arcbees.gaestudio.server.service.mail.MessageServiceImpl;
 import com.arcbees.gaestudio.server.velocity.VelocityModule;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapper;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapperFactory;
@@ -44,9 +46,9 @@ public class MessageServiceImplTest extends GaeTestBase {
     private final String ANY_TOKEN = "randomToken";
 
     @Inject
-    ConfirmRegistrationEmailGenerator confirmRegistrationEmailGenerator;
+    ConfirmRegistrationEmailBuilder confirmRegistrationEmailBuilder;
     @Inject
-    ResetPasswordEmailBodyGenerator resetPasswordEmailBodyGenerator;
+    ResetPasswordEmailBuilder resetPasswordEmailBuilder;
     @Inject
     VelocityWrapperFactory velocityWrapperFactory;
     @Inject
@@ -58,7 +60,7 @@ public class MessageServiceImplTest extends GaeTestBase {
     public void testGenerateNotificationTemplate() {
         // Given
         String templateLocation =
-                "com/arcbees/gaestudio/server/velocitytemplates/messages/notification.vm";
+                "com/arcbees/gaestudio/server/velocitytemplates/messages/mailwrappertemplate.vm";
         velocityWrapper = velocityWrapperFactory.create(templateLocation);
 
         // when
@@ -74,7 +76,7 @@ public class MessageServiceImplTest extends GaeTestBase {
     @Test
     public void confirmRegistration_emailWithPlus_shouldEncode() {
         //when
-        String body = confirmRegistrationEmailGenerator.generateBody(EMAIL_ADDRESS_WITH_PLUS, ANY_TOKEN);
+        String body = confirmRegistrationEmailBuilder.generateBody(ANY_TOKEN, EMAIL_ADDRESS_WITH_PLUS);
 
         //then
         assertTrue(body.contains("zom.bee%2Bhello%40arcbees.com"));
@@ -83,7 +85,7 @@ public class MessageServiceImplTest extends GaeTestBase {
     @Test
     public void resetPassword_emailWithPlus_shouldEncode() {
         //when
-        String body = resetPasswordEmailBodyGenerator.generateBody(EMAIL_ADDRESS_WITH_PLUS, ANY_TOKEN);
+        String body = resetPasswordEmailBuilder.generateBody(EMAIL_ADDRESS_WITH_PLUS, ANY_TOKEN);
 
         //then
         assertTrue(body.contains("zom.bee%2Bhello%40arcbees.com"));

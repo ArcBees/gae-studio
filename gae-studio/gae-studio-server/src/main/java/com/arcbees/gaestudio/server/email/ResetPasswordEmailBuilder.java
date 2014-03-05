@@ -12,7 +12,7 @@ import com.arcbees.gaestudio.server.velocity.VelocityWrapperFactory;
 
 public class ResetPasswordEmailBuilder {
     private final static String templateLocation =
-            "";
+            "com/arcbees/gaestudio/server/velocitytemplates/messages/resetpasswordtemplate.vm";
     private final VelocityWrapper velocityWrapper;
 
     @Inject
