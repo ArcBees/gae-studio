@@ -77,9 +77,6 @@
             ${settings.localRepository}/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}
         </gae.home>
 
-        <!-- Variables -->
-        <sender.email>zom.bee@arcbees.com</sender.email>
-
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <gaes.buildtime>${maven.build.timestamp}</gaes.buildtime>
         <repackage>com.arcbees.gaestudio.repackaged</repackage>
