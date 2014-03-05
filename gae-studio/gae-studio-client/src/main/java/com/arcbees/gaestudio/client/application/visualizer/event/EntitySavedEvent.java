@@ -13,14 +13,9 @@ import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class EntitySavedEvent extends GwtEvent<EntitySavedEvent.EntitySavedHandler> {
     private EntityDto entityDto;
-
-    protected EntitySavedEvent() {
-        // Possibly for serialization.
-    }
 
     public EntitySavedEvent(EntityDto entityDto) {
         this.entityDto = entityDto;
@@ -33,10 +28,6 @@ public class EntitySavedEvent extends GwtEvent<EntitySavedEvent.EntitySavedHandl
 
     public static void fire(HasHandlers source, EntitySavedEvent eventInstance) {
         source.fireEvent(eventInstance);
-    }
-
-    public interface HasEntitySavedHandlers extends HasHandlers {
-        HandlerRegistration addEntitySavedHandler(EntitySavedHandler handler);
     }
 
     public interface EntitySavedHandler extends EventHandler {

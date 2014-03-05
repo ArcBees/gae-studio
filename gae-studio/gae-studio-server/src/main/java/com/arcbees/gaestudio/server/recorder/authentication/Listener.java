@@ -18,7 +18,7 @@ public class Listener {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Listener == false) {
+        if (!(o instanceof Listener)) {
             return false;
         }
         Listener other = (Listener) o;

@@ -28,8 +28,11 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiRenderer;
+import com.google.gwt.user.client.ui.Widget;
 
 import static com.google.gwt.dom.client.Style.Display.BLOCK;
 import static com.google.gwt.dom.client.Style.Display.NONE;
@@ -46,6 +49,12 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
 
         SpanElement getImgContainer(Element parent);
     }
+
+    interface Binder extends UiBinder<Widget, StatementCell> {
+    }
+
+    @UiField
+    SpanElement imgContainer;
 
     private final Renderer renderer;
     private final AppResources appResources;
@@ -82,7 +91,7 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
     }
 
     @UiHandler("imgContainer")
-    void onRemoveImgContainerClicked(ClickEvent event, Element parent, DbOperationRecordDto value) {
+    void onRemoveImgContainerClicked(ClickEvent event, Element parent) {
         DivElement details = renderer.getDetails(parent);
         toggleDetails(details);
 
@@ -91,13 +100,13 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
     }
 
     @UiHandler("imgContainer")
-    void onRemoveImgContainerMouseOver(MouseOverEvent event, Element parent, DbOperationRecordDto value) {
+    void onRemoveImgContainerMouseOver(MouseOverEvent event, Element parent) {
         SpanElement imgContainer = getIcon(parent);
         imgContainer.addClassName(appResources.styles().statementImageRl());
     }
 
     @UiHandler("imgContainer")
-    void onRemoveImgContainerMouseOut(MouseOutEvent event, Element parent, DbOperationRecordDto value) {
+    void onRemoveImgContainerMouseOut(MouseOutEvent event, Element parent) {
         SpanElement imgContainer = getIcon(parent);
         imgContainer.removeClassName(appResources.styles().statementImageRl());
     }

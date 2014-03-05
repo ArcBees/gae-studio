@@ -13,14 +13,9 @@ import com.arcbees.gaestudio.client.application.profiler.widget.filter.FilterVal
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class FilterValueSelectedEvent extends GwtEvent<FilterValueSelectedEvent.FilterValueSelectedHandler> {
     private FilterValue<?> filterValue;
-
-    protected FilterValueSelectedEvent() {
-        // Possibly for serialization.
-    }
 
     public FilterValueSelectedEvent(FilterValue<?> filterValue) {
         this.filterValue = filterValue;
@@ -29,10 +24,6 @@ public class FilterValueSelectedEvent extends GwtEvent<FilterValueSelectedEvent.
     public static void fire(HasHandlers source, FilterValue<?> filterValue) {
         FilterValueSelectedEvent eventInstance = new FilterValueSelectedEvent(filterValue);
         source.fireEvent(eventInstance);
-    }
-
-    public interface HasFilterValueSelectedHandlers extends HasHandlers {
-        HandlerRegistration addFilterValueSelectedHandler(FilterValueSelectedHandler handler);
     }
 
     public interface FilterValueSelectedHandler extends EventHandler {
