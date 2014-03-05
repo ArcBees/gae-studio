@@ -39,6 +39,7 @@ public class ToolbarToggleEvent extends GwtEvent<ToolbarToggleEvent.ToolbarToggl
         return TYPE;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public boolean isOpen() {
         return open;
     }

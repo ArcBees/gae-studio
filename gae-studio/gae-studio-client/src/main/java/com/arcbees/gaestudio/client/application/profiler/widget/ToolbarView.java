@@ -15,7 +15,6 @@ import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.ui.PanelToggle;
 import com.arcbees.gaestudio.client.ui.PanelToggleFactory;
-import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;

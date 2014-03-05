@@ -222,7 +222,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
             @Override
             public void onSuccess(Long result) {
                 setRecordingState(start);
-                RecordingStateChangedEvent.fire(ProfilerPresenter.this, start, result);
+                RecordingStateChangedEvent.fire(ProfilerPresenter.this, start);
             }
         };
     }

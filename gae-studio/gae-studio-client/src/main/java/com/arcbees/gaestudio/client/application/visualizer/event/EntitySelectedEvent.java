@@ -13,14 +13,9 @@ import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class EntitySelectedEvent extends GwtEvent<EntitySelectedEvent.EntitySelectedHandler> {
     private ParsedEntity parsedEntity;
-
-    protected EntitySelectedEvent() {
-        // Possibly for serialization.
-    }
 
     public EntitySelectedEvent(ParsedEntity parsedEntity) {
         this.parsedEntity = parsedEntity;
@@ -33,10 +28,6 @@ public class EntitySelectedEvent extends GwtEvent<EntitySelectedEvent.EntitySele
 
     public static void fire(HasHandlers source, EntitySelectedEvent eventInstance) {
         source.fireEvent(eventInstance);
-    }
-
-    public interface HasEntitySelectedHandlers extends HasHandlers {
-        HandlerRegistration addEntitySelectedHandler(EntitySelectedHandler handler);
     }
 
     public interface EntitySelectedHandler extends EventHandler {

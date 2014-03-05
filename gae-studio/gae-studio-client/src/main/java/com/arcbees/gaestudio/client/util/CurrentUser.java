@@ -35,11 +35,6 @@ public class CurrentUser {
         isLoggedIn = loggedIn;
     }
 
-    public void logout() {
-        user = null;
-        isLoggedIn = false;
-    }
-
     public boolean isLicenseValid() {
         return licenseValid;
     }

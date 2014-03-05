@@ -60,9 +60,6 @@ public class DateValueAdapter implements JsonSerializer<Date>, JsonDeserializer<
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(DateValueAdapter.class.getSimpleName());
-        sb.append('(').append(dateFormat.getClass().getSimpleName()).append(')');
-        return sb.toString();
+        return DateValueAdapter.class.getSimpleName() + '(' + dateFormat.getClass().getSimpleName() + ')';
     }
 }

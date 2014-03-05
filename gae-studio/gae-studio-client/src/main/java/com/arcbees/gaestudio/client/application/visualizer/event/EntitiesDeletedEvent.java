@@ -12,7 +12,6 @@ package com.arcbees.gaestudio.client.application.visualizer.event;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class EntitiesDeletedEvent extends GwtEvent<EntitiesDeletedEvent.EntitiesDeletedHandler> {
     public EntitiesDeletedEvent() {
@@ -24,10 +23,6 @@ public class EntitiesDeletedEvent extends GwtEvent<EntitiesDeletedEvent.Entities
 
     public static void fire(HasHandlers source, EntitiesDeletedEvent eventInstance) {
         source.fireEvent(eventInstance);
-    }
-
-    public interface HasEntitiesDeletedHandlers extends HasHandlers {
-        HandlerRegistration addEntityDeletedHandler(EntitiesDeletedHandler handler);
     }
 
     public interface EntitiesDeletedHandler extends EventHandler {

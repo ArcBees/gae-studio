@@ -13,7 +13,6 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
-import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
