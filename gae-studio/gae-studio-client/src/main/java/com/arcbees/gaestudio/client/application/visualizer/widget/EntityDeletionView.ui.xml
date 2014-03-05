@@ -4,35 +4,11 @@
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
     <ui:style>
         h3 {
-            margin: 0px 0px 10px 0px;
-        }
-
-        .buttonContainer {
-            padding-top: 5px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .buttonContainer button {
-            margin: 0px;
-        }
-
-        .buttonContainer > :first-child {
-            margin-right: 6px;
+            margin: 0 0 10px 0;
         }
 
         .container {
             width: 100%;
-        }
-
-        .delete {
-            cursor: none !important;
-
-            position: absolute;
-            margin: 0px !important;
-
-            top: 4px;
-            left: 0px;
         }
 
         .popupContent {
@@ -46,15 +22,16 @@
         <g:HTMLPanel styleName="{style.container}">
             <g:Anchor ui:field="close" styleName="{res.styles.close}" text="×"/>
             <div class="{res.styles.popupHeader}">
-                <div class="{style.delete} {res.styles.trashSmall}"/>
+                <div class="{res.styles.popupIcon} {res.styles.trashSmallNoHover}"/>
                 Delete
             </div>
             <div class="{style.popupContent}">
                 <g:HTML ui:field="message"/>
             </div>
-            <div class="{style.buttonContainer}">
-                <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.gray}"/>
-                <g:Button ui:field="delete" text="Delete" debugId="{debugIds.getDeleteConfirm}"/>
+            <div class="{res.styles.buttonContainer}">
+                <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.button} {res.styles.gray}"/>
+                <g:Button ui:field="delete" text="Delete" styleName="{res.styles.button}"
+                          debugId="{debugIds.getDeleteConfirm}"/>
             </div>
         </g:HTMLPanel>
     </g:PopupPanel>

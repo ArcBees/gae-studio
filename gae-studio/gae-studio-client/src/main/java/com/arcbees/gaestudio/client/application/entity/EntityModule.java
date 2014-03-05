@@ -16,5 +16,7 @@ public class EntityModule extends AbstractPresenterModule {
     protected void configure() {
         bindPresenter(EntityPresenter.class, EntityPresenter.MyView.class, EntityView.class,
                 EntityPresenter.MyProxy.class);
+        bindPresenter(EditEntityPresenter.class, EditEntityPresenter.MyView.class, EditEntityView.class,
+                EditEntityPresenter.MyProxy.class);
     }
 }

@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import com.arcbees.gaestudio.client.application.ui.AjaxLoader;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.query.client.GQuery;
@@ -81,13 +82,15 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
 
         loginFormHelper.getLoginFormPanel().add(ajaxLoader);
         ajaxLoader.asWidget().addStyleName(appResources.styles().loginAjaxLoader());
+
+        setErrorMessageVisible(false);
     }
 
     @Override
     public void showErrorMessage(String message) {
         this.errorMessage.setInnerText(message);
 
-        setErrorMessageOpacity(1.0f);
+        setErrorMessageVisible(true);
         showRedBoxes();
 
         resetLoginForm();
@@ -97,6 +100,7 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
     public void resetLoginForm() {
         ajaxLoader.hide();
         setLoginButtonEnabled(true);
+        loginFormHelper.getPasswordElement().setValue("");
     }
 
     private void setLoginButtonEnabled(boolean enabled) {
@@ -104,7 +108,7 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
     }
 
     private void doLogin() {
-        setErrorMessageOpacity(0.0f);
+        setErrorMessageVisible(false);
         ajaxLoader.show();
         setLoginButtonEnabled(false);
         hideRedBoxes();
@@ -125,8 +129,8 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
         return $("input", loginForm);
     }
 
-    private void setErrorMessageOpacity(float opacity) {
-        $(errorMessage).css("opacity", Float.toString(opacity));
+    private void setErrorMessageVisible(boolean visible) {
+        errorMessage.getStyle().setVisibility(visible ? Style.Visibility.VISIBLE : Style.Visibility.HIDDEN);
     }
 
     private native void injectLoginFunction() /*-{

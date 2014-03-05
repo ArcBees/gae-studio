@@ -39,4 +39,8 @@ public class AjaxLoader implements IsWidget {
     public Widget asWidget() {
         return widget;
     }
+
+    public void setStyleName(String styleName) {
+        asWidget().setStyleName(styleName);
+    }
 }

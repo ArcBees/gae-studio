@@ -2,7 +2,7 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:with type="com.arcbees.gaestudio.client.place.NameTokens" field="nameTokens"/>
-    <ui:style>
+    <ui:style field="style" type="com.arcbees.gaestudio.client.application.widget.HeaderView.Styles">
         .header {
             position: relative;
         }
@@ -29,11 +29,9 @@
             position: relative;
 
             line-height: 30px;
-
-            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
         }
 
-        .menu a:hover {
+        .menu a:hover, .activeState {
             background: #25aae1;
         }
 
@@ -114,11 +112,11 @@
                     </li>
                 </ul>
             </div>
-            <div class="{style.menu}">
-                <a href="#{nameTokens.getVisualizer}">
+            <div ui:field="menu" class="{style.menu}">
+                <a href="#{nameTokens.getVisualizer}" class="{style.activeState}">
                     Visualizer
                 </a>
-                <a href="#{nameTokens.getProfiler}">
+                <a ui:field="profilerAnchor" href="#{nameTokens.getProfiler}">
                     Profiler
                 </a>
             </div>

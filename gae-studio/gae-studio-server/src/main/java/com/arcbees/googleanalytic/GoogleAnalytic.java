@@ -43,8 +43,8 @@ public class GoogleAnalytic {
         return measureProtocolRequest.executeRequest();
     }
 
-    public boolean trackEvent(String category,
-                              String action,
+    public boolean trackEvent(String eventCategory,
+                              String eventAction,
                               String eventLabel) {
         MeasureProtocolRequest measureProtocolRequest = new MeasureProtocolRequest.Builder()
                 .protocolVersion(PROTOCOL_VERSION)
@@ -53,8 +53,8 @@ public class GoogleAnalytic {
                 .applicationVersion(appVersion)
                 .trackingCode(trackingCode)
                 .hitType(GaParameterConstants.EVENT_HIT_TYPE)
-                .eventCategory(category)
-                .eventAction(action)
+                .eventCategory(eventCategory)
+                .eventAction(eventAction)
                 .eventLabel(eventLabel)
                 .build();
 

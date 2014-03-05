@@ -7,6 +7,8 @@
             position: absolute;
             top: 46px;
             width: 100%;
+            height: literal('calc(100% - 46px)');
+            overflow-y: auto;
         }
 
         .whiteLine {
@@ -15,8 +17,12 @@
             background: white;
             margin-bottom: 12px;
         }
+
+        .main {
+            height: 100%;
+        }
     </ui:style>
-    <g:HTMLPanel>
+    <g:HTMLPanel styleName="{style.main}}">
         <dd:Dropdown ui:field="dropdown"/>
         <div class="{style.content}">
             <div class="{style.whiteLine}"/>

@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="padding: 0;margin: 0;color: #3f3f3f;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>${title}</title>
+</head>
+<body style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;margin: 0;padding: 0;font-family: arial,sans-serif;font: arial,sans-serif;color: #3f3f3f;width: 100%;">
+<center>
+    <table id="wrapper" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;width: 600px;background-color: #e6e6e6;bgcolor: #e6e6e6;border-top: 3px solid #25aae1;padding-top: 14px;">
+        <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+            <td style="padding: 0;margin: 0;color: #3f3f3f;">
+                <!-- Header -->
+                <table id="header" align="center" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;padding-bottom: 10px;">
+                    <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                        <td rowspan="2" style="padding: 0;margin: 0;color: #3f3f3f;">
+                            <table align="center" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                                <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                                    <td width="600" height="54" style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                                </tr>
+                                <tr class="ribbon" style="padding: 0;margin: 0;color: #3f3f3f;">
+                                    <td width="600" height="37" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #25aae1;bgcolor: #25aae1;height: 37px;"></td>
+                                </tr>
+                                <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                                    <td width="600" height="55" style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td colspan="2" width="600" height="149" style="padding: 0;margin: 0;color: #3f3f3f;">
+                            <center>
+                                <img src="http://gallery.mailchimp.com/ff185fb1ab344bb030197dd9b/images/gaeLogo.png" alt="Gae Studio Logo">
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+                <!-- Header End -->
+
+                <!-- Main Content -->
+                <center>
+                    <!-- Notification -->
+                    <table width="93%" cellpadding="0" cellspacing="0" align="center" style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <tr class="date" align="right" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #e6e6e6;bgcolor: #e6e6e6;">
+                            <td width="488" height="20" style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                            <td width="42" height="20" style="padding: 0;margin: 0;color: #3f3f3f;">
+                                <p style="padding: 0;margin: 0;color: #25aae1;font-size: 10px;line-height: 20px;min-width: 200px;">${msgDate}</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="main" width="530" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #ffffff;bgcolor: #ffffff;padding-bottom: 9px;">
+                        <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                            <td style="padding: 0;margin: 0;color: #3f3f3f;">
+                                <center>
+                                    <table class="content" width="450" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                                        <tr height="40" cellpadding="0" cellspacing="0" style="padding: 0 40px;margin: 0;color: #3f3f3f;">
+                                            <td style="padding: 0;margin: 0;color: #3f3f3f;">
+                                                <div style="padding: 4px;margin: 0;color: #3f3f3f;font-size: 12px;line-height: 18px;min-height: 100px; min-width: 550px">${textMessage}</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </center>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <tr height="20" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                            <td style="padding: 0;margin: 0;color: #3f3f3f;">
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+                <!-- Main Content End -->
+
+                <!-- Footer -->
+                <table style="padding: 0;margin: 0;color: #3f3f3f;">
+                    <tr height="10" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                    </tr>
+                </table>
+                <table id="footer" align="center" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #25aae1;bgcolor: #25aae1;font-size: 12px;">
+                    <tr height="11" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                    </tr>
+                    <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td width="600" style="padding: 0;margin: 0;color: #3f3f3f;">
+                            <center>
+                                <p style="padding: 0;margin: 0;color: #ffffff;line-height: 25px;">
+                                    GAE STUDIO is a product from
+                                </p>
+                            </center>
+                        </td>
+                    </tr>
+                    <tr height="0" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                    </tr>
+                    <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td width="600" style="padding: 0;margin: 0;color: #3f3f3f;">
+                            <center>
+                                <p style="padding: 0;margin: 0;color: #ffffff;line-height: 25px;">
+                                    <img src="http://gallery.mailchimp.com/ff185fb1ab344bb030197dd9b/images/arcbeesLogo.png" alt="ArcBees Logo">
+                                </p>
+                            </center>
+                        </td>
+                    </tr>
+                    <tr height="13" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                    </tr>
+                    <tr style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td width="600" height="30" style="padding: 0;margin: 0;color: #3f3f3f;">
+                            <center>
+                                <a href="http://arcbees.com/" target="_blank" class="arcbeesLink"
+                                   style="color: #ffffff;cursor: pointer;text-decoration: none;font-weight: bold;line-height: 25px;">arcbees.com</a>
+                            </center>
+                        </td>
+                    </tr>
+                    <tr height="4" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
+                        <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
+                    </tr>
+                </table>
+                <!-- Footer End -->
+            </td>
+        </tr>
+    </table>
+</center>
+</body>
+</html>

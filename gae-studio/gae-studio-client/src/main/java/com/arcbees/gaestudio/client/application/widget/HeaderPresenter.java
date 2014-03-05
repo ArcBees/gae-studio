@@ -25,7 +25,7 @@ import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> implements HeaderUiHandlers {
     interface MyView extends View, HasUiHandlers<HeaderUiHandlers> {
-        void activateCurrentLink(String nameToken);
+        void setProfilerActive();
     }
 
     private final PlaceManager placeManager;
@@ -66,7 +66,7 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
     }
 
     @Override
-    protected void onReset() {
+    protected void onReveal() {
         super.onReset();
 
         activateCurrentLinks();
@@ -76,6 +76,8 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
         PlaceRequest placeRequest = placeManager.getCurrentPlaceRequest();
         String nameToken = placeRequest.getNameToken();
 
-        getView().activateCurrentLink(nameToken);
+        if (NameTokens.profiler.equals(nameToken)) {
+            getView().setProfilerActive();
+        }
     }
 }

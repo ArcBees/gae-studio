@@ -6,7 +6,6 @@
 
 .cellTableEvenRow, .cellTableOddRow {
     border: none;
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.85);
     background-color: transparent;
     line-height: 20px;
 
@@ -24,7 +23,6 @@
     border: none;
     padding: 2px 20px 2px 0;
 
-    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.85);
     text-overflow: ellipsis;
     white-space: nowrap;
     word-break: break-word;
@@ -45,6 +43,7 @@
     font-weight: bold;
     line-height: 30px;
     text-transform: uppercase;
+    text-shadow: none;
 
     padding: 3px 15px 3px 0;
 

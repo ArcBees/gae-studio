@@ -19,7 +19,7 @@ import com.arcbees.gaestudio.server.dto.mapper.MapperModule;
 import com.arcbees.gaestudio.server.exception.ExceptionModule;
 import com.arcbees.gaestudio.server.guice.devserver.DevServerModule;
 import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
-import com.arcbees.gaestudio.server.rest.RestModule;
+import com.arcbees.gaestudio.server.api.ApiModule;
 import com.arcbees.gaestudio.server.service.ServiceModule;
 import com.arcbees.gaestudio.server.util.UtilModule;
 import com.arcbees.gaestudio.server.velocity.VelocityModule;
@@ -51,8 +51,8 @@ public class CommonModule extends ServletModule {
 
     @Override
     protected void configureServlets() {
-        // RestModule needs to be loaded before AnalyticsModule, since it binds interceptors in the rest package
-        install(new RestModule());
+        // ApiModule needs to be loaded before AnalyticsModule, since it binds interceptors in the rest package
+        install(new ApiModule());
         install(new AnalyticModule());
         install(new ExceptionModule());
         install(new GaeStudioRecorderModule());

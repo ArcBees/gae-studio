@@ -27,7 +27,6 @@ import com.arcbees.gaestudio.client.rest.KindsService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.google.common.base.Strings;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -45,11 +44,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
 
         void addEmptyEntityListStyle();
 
-        void showCloseHandle();
-
         void setDownloadUrl(String downloadUrl);
-
-        void setExportEnabled(boolean enabled);
     }
 
     public static final Object SLOT_NAMESPACES = new Object();
@@ -106,10 +101,6 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         currentKind = kind;
 
         KindSelectedEvent.fire(this, kind);
-
-        allowClosingSidebar();
-
-        getView().setExportEnabled(!Strings.isNullOrEmpty(kind));
     }
 
     @Override
@@ -146,8 +137,11 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         updateKinds();
     }
 
-    private void allowClosingSidebar() {
-        getView().showCloseHandle();
+    @Override
+    protected void onHide() {
+        super.onHide();
+
+        getView().setDownloadUrl("");
     }
 
     private void updateKinds() {

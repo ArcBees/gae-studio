@@ -72,6 +72,8 @@ public interface AppConstants extends Constants {
 
     String registerSuccessfull();
 
+    String alreadyRegistred();
+
     String unableToLogin();
 
     String loggedInSuccessfully();
@@ -84,7 +86,7 @@ public interface AppConstants extends Constants {
 
     String invalidJson();
 
-    String failedRegistration();
+    String keyDoesNotExist();
 
     String successfulRegistration();
 
@@ -105,4 +107,8 @@ public interface AppConstants extends Constants {
     String passwordDontMatch();
 
     String allFieldsAreRequired();
+
+    String errorSavingChanges();
+
+    String enterAKey();
 }

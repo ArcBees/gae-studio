@@ -6,7 +6,7 @@
     <parent>
         <artifactId>gae-studio</artifactId>
         <groupId>com.arcbees.gaestudio</groupId>
-        <version>0.8-SNAPSHOT</version>
+        <version>0.9-SNAPSHOT</version>
     </parent>
 
     <artifactId>gae-studio-webapp</artifactId>
@@ -34,6 +34,7 @@
 
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <shadeSourcesContent>true</shadeSourcesContent>
                             <relocations>
                                 <relocation>
                                     <pattern>com.googlecode.objectify</pattern>
@@ -42,6 +43,14 @@
                                 <relocation>
                                     <pattern>com.google.common</pattern>
                                     <shadedPattern>${repackage}.com.google.common</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.hibernate</pattern>
+                                    <shadedPattern>${repackage}.org.hibernate</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.slf4j</pattern>
+                                    <shadedPattern>${repackage}.org.slf4j</shadedPattern>
                                 </relocation>
                             </relocations>
                             <artifactSet>

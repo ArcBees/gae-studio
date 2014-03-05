@@ -96,6 +96,7 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
 
     @Override
     public void edit(User user) {
+        user.setPassword("");
         confirmPassword.setText("");
         ajaxLoader.hide();
         register.setEnabled(true);
@@ -104,11 +105,17 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
         clearErrorMessage();
     }
 
+    @Override
+    public void userAlreadyExist() {
+        showErrorMessage(constants.alreadyRegistred());
+    }
+
     @UiHandler("register")
     void onRegisterClicked(ClickEvent event) {
         User user = driver.flush();
         if (validateEntity(user)) {
             if (passwordMatch()) {
+                ajaxLoader.show();
                 getUiHandlers().register(user);
             } else {
                 showErrorMessage(constants.passwordDontMatch());

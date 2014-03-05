@@ -71,7 +71,7 @@ public interface AppResources extends ClientBundle {
 
         String embeddedEntityProperties();
 
-        String loginBtn();
+        String button();
 
         String authForm();
 
@@ -119,36 +119,43 @@ public interface AppResources extends ClientBundle {
 
         String importSmall();
 
+        String trashSmallNoHover();
+
+        String pencilSmall();
+
         String deselect();
 
         String deselectDisabled();
 
         String power();
 
+        String checked();
+
+        String booleanKey();
+
         String errorField();
+
+        String importBtn();
+
+        String exportBtn();
+
+        String exportBtnDisabled();
+
+        String chooseFileButton();
 
         String gray();
 
         String uploadLabel();
-    }
 
-    public interface Sprites extends CssResource {
-        String topmenuBgActive();
+        String popupIcon();
+
+        String buttonContainer();
     }
 
     @CssResource.NotStrict
     public Styles styles();
 
-    public Sprites sprites();
-
-    @ImageResource.ImageOptions(repeatStyle = ImageResource.RepeatStyle.Horizontal)
-    ImageResource topmenuBg();
-
-    @ImageResource.ImageOptions(repeatStyle = ImageResource.RepeatStyle.Horizontal)
-    ImageResource topmenuBgHover();
-
-    @ImageResource.ImageOptions(repeatStyle = ImageResource.RepeatStyle.Horizontal)
-    ImageResource topmenuBgActive();
+    public AuthStyles authStyles();
 
     ImageResource logo();
 
@@ -171,6 +178,8 @@ public interface AppResources extends ClientBundle {
     ImageResource pencil_up();
 
     ImageResource pencil_rl();
+
+    ImageResource pencil_small();
 
     ImageResource create();
 
@@ -213,4 +222,8 @@ public interface AppResources extends ClientBundle {
     ImageResource listGraph();
 
     ImageResource power();
+
+    ImageResource importBtn();
+
+    ImageResource exportBtn();
 }
