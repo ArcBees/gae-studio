@@ -28,5 +28,5 @@ public class UrlParameters {
     public static final String KEY = "key";
 
     public static final String TOKEN = "token";
-    public static final String REDIRECT_URI = "redirectUri";
+    public static final String TOKEN_ID = "tokenid";
 }

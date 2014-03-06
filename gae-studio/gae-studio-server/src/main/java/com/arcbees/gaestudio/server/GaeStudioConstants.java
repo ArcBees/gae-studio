@@ -20,6 +20,7 @@ public class GaeStudioConstants {
     public static final String REQUEST_COUNTER = "request.counter";
     public static final String ARCBEES_MAIL_SENDER = "zom.bee@arcbees.com";
     public static final String ARCBEES_OAUTH_SERVICE = "https://arcbees-oauth.appspot.com/" ;
+    public static final String OAUTH_USER_REGISTRATION = "https://arcbees-oauth.appspot.com/registration" ;
     public static final String TEMPLATE_MAIL_WRAPPER =
             "com/arcbees/gaestudio/server/velocitytemplates/messages/mailwrappertemplate.vm";
 }

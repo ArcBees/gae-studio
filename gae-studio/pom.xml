@@ -47,12 +47,12 @@
         <persistence-api.version>1.0.2</persistence-api.version>
         <google-http-client-appengine.version>1.15.0-rc</google-http-client-appengine.version>
         <resteasy.version>3.0.6.Final</resteasy.version>
+        <rest-assured.version>1.8.1</rest-assured.version>
         <velocity.version>1.7</velocity.version>
         <oauth-client.version>1.0-SNAPSHOT</oauth-client.version>
         <jackson-annotations.version>2.2.3</jackson-annotations.version>
         <slf4j.version>1.5.8</slf4j.version>
         <hibernate.version>4.1.0.Final</hibernate.version>
-        <arcbees-mail.version>1.2</arcbees-mail.version>
         <hibernate-source.version>4.1.0.Final</hibernate-source.version>
         <javax.validation.version>1.0.0.GA</javax.validation.version>
 

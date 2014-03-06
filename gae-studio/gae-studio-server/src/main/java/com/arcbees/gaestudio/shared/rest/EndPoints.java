@@ -32,6 +32,6 @@ public class EndPoints {
     public static final String TASK = "task/";
     public static final String IMPORT_TASK = IMPORT + TASK;
     public static final String MAIL = "mail/";
-    public static final String SEND_REGISTRATION = "sendregistration/";
-    public static final String SEND_RESET_PASSWORD = "sendresetpassword/";
+    public static final String REGISTRATION = "registration/";
+    public static final String ARCBEES_MAIL_SERVICE = "http://mail.arcbees.com/";
 }

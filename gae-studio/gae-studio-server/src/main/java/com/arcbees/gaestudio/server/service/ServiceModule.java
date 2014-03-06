@@ -11,6 +11,8 @@ package com.arcbees.gaestudio.server.service;
 
 import javax.inject.Singleton;
 
+import com.arcbees.gaestudio.server.service.mail.MessageService;
+import com.arcbees.gaestudio.server.service.mail.MessageServiceImpl;
 import com.arcbees.gaestudio.server.service.profiler.OperationService;
 import com.arcbees.gaestudio.server.service.profiler.OperationServiceImpl;
 import com.arcbees.gaestudio.server.service.profiler.RecordService;
@@ -42,5 +44,7 @@ public class ServiceModule extends AbstractModule {
         bind(OperationService.class).to(OperationServiceImpl.class).in(Singleton.class);
         bind(RecordService.class).to(RecordServiceImpl.class).in(Singleton.class);
         bind(ImportService.class).to(ImportServiceImpl.class).in(Singleton.class);
-        bind(ExportService.class).to(ExportServiceImpl.class).in(Singleton.class);    }
+        bind(ExportService.class).to(ExportServiceImpl.class).in(Singleton.class);
+        bind(MessageService.class).to(MessageServiceImpl.class).in(Singleton.class);
+    }
 }
