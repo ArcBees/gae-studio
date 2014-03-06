@@ -29,6 +29,7 @@ import com.arcbees.gaestudio.server.velocity.VelocityWrapper;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapperFactory;
 import com.arcbees.gaestudio.shared.dto.EmailDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.arcbees.gaestudio.shared.rest.TestEndPoints;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
 import com.jayway.restassured.http.ContentType;
 
@@ -85,7 +86,7 @@ public class MessageServiceImplTest extends GaeTestBase {
 
         given().contentType(ContentType.JSON).body(confirmRegistration).header(HttpHeaders.AUTHORIZATION, "apikey")
                 .expect().response().statusCode(NO_CONTENT.getStatusCode())
-                .when().post(EndPoints.ARCBEES_MAIL_SERVICE + EndPoints.MAIL);
+                .when().post(TestEndPoints.ARCBEES_MAIL_SERVICE + EndPoints.MAIL);
     }
 
     @Test
