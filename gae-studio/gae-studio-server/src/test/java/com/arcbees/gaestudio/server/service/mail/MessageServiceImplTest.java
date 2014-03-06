@@ -89,15 +89,6 @@ public class MessageServiceImplTest extends GaeTestBase {
     }
 
     @Test
-    public void confirmRegistration_emailWithPlus_shouldEncode() {
-        //when
-        String body = confirmRegistrationEmailBuilder.generateBody(ANY_TOKEN, EMAIL_ADDRESS_WITH_PLUS);
-
-        //then
-        assertTrue(body.contains("zom.bee%2Bhello%40arcbees.com"));
-    }
-
-    @Test
     public void resetPassword_emailWithPlus_shouldEncode() {
         //when
         String body = resetPasswordEmailBuilder.generateBody(EMAIL_ADDRESS_WITH_PLUS, ANY_TOKEN);
