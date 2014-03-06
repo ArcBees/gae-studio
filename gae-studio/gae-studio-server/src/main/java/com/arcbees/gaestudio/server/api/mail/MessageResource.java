@@ -41,7 +41,6 @@ public class MessageResource {
     @Path(EndPoints.REGISTRATION + EndPoints.MAIL)
     public Response buildRegistration(@QueryParam(UrlParameters.EMAIL) String email,
                                       @QueryParam(UrlParameters.TOKEN_ID) String tokenId) {
-
         EmailDto emailToSend = messageService.buildConfirmationEmail(email, tokenId,
                 GaeStudioConstants.OAUTH_USER_REGISTRATION);
         ResponseBuilder responseBuilder = Response.ok(emailToSend);
@@ -53,7 +52,6 @@ public class MessageResource {
     @Path(EndPoints.RESET_PASSWORD + EndPoints.MAIL)
     public Response buildResetPassword(@QueryParam(UrlParameters.EMAIL) String email,
                                        @QueryParam(UrlParameters.TOKEN) String token) {
-
         EmailDto emailToSend = messageService.buildPasswordEmail(email, token);
         ResponseBuilder responseBuilder = Response.ok(emailToSend);
 

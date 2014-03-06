@@ -28,13 +28,13 @@ public interface MessageService extends RestService {
     @Path(EndPoints.REGISTRATION + EndPoints.MAIL)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     RestAction<EmailDto> sendRegistration(@FormParam(UrlParameters.EMAIL) String email,
-                                       @FormParam(UrlParameters.TOKEN_ID) String token);
+                                          @FormParam(UrlParameters.TOKEN_ID) String token);
 
     @POST
     @Path(EndPoints.RESET_PASSWORD + EndPoints.MAIL)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     RestAction<EmailDto> sendResetPassword(@FormParam(UrlParameters.EMAIL) String email,
-                                        @FormParam(UrlParameters.TOKEN) String token);
+                                           @FormParam(UrlParameters.TOKEN) String token);
 
     @POST
     @Path(EndPoints.ARCBEES_MAIL_SERVICE + EndPoints.MAIL)
