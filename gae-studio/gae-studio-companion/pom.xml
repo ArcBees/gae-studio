@@ -211,7 +211,6 @@
                 <artifactId>gwt-maven-plugin</artifactId>
                 <version>${gwt.version}</version>
                 <configuration>
-                    <strict>true</strict>
                     <testTimeOut>180</testTimeOut>
                     <includes>**/*GwtTest.java</includes>
                     <mode>htmlunit</mode>
