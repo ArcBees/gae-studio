@@ -610,8 +610,8 @@ input:focus, textarea:focus, button:focus {
 }
 
 .gwt-SplitLayoutPanel-VDragger {
-    padding-bottom: 5px;
-    background-position-y: 5px;
+    padding-bottom: 7px;
+    background-position-y: 7px;
 }
 
 .statementDetails {
