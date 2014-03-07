@@ -20,8 +20,7 @@ import com.arcbees.oauth.client.domain.User;
 import com.google.common.base.Strings;
 
 public class SecureAuthService implements AuthService {
-    public static final String API_TOKEN = "ljhs98234h24o8dsyfjehrljqh01923874j2hj";
-
+    private static final String CONSUMER_KEY = "d066ee54-3fad-4bb4-8e4b-c5b1c5bb9f99";
     private static final String TOKEN = "token";
 
     private final OAuthClient oAuthClient;
@@ -41,7 +40,10 @@ public class SecureAuthService implements AuthService {
     public User register(String email, String password, String firstName, String lastName) {
         Token bearerToken = getBearerToken();
 
-        return userClient.register(bearerToken, email, password, firstName, lastName);
+        User user =  userClient.register(bearerToken, email, password, firstName, lastName);
+        userClient.addUserPermission(bearerToken, user.getId());
+
+        return user;
     }
 
     @Override
@@ -65,7 +67,8 @@ public class SecureAuthService implements AuthService {
 
     @Override
     public Token login(String email, String password) {
-        Token token = oAuthClient.login(email, password);
+        Token bearerToken = oAuthClient.getBearerToken(CONSUMER_KEY);
+        Token token = oAuthClient.login(bearerToken.getToken(), email, password);
 
         saveAuthToken(token);
 
@@ -88,6 +91,6 @@ public class SecureAuthService implements AuthService {
     }
 
     private Token getBearerToken() {
-        return oAuthClient.getBearerToken(API_TOKEN);
+        return oAuthClient.getBearerToken(CONSUMER_KEY);
     }
 }
