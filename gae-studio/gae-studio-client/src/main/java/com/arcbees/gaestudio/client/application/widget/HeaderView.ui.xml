@@ -97,7 +97,7 @@
         }
 
         .inactive {
-            color: #dddddd;
+            color: #ddd;
         }
     </ui:style>
     <g:HTMLPanel styleName="{style.header}">
