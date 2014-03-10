@@ -31,7 +31,8 @@
             line-height: 30px;
         }
 
-        .menu a:hover {
+        /* .activeState is needed */
+        .menu a:hover, .activeState {
             background: #25aae1;
         }
 
