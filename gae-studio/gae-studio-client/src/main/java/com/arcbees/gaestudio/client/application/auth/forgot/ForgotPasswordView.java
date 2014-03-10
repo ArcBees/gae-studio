@@ -17,6 +17,9 @@ import com.google.common.base.Strings;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -42,6 +45,14 @@ public class ForgotPasswordView extends ViewWithUiHandlers<ForgotPasswordUiHandl
     DivElement errorMessage;
 
     private final AppConstants constants;
+    private final KeyDownHandler submitOnEnter = new KeyDownHandler() {
+        @Override
+        public void onKeyDown(KeyDownEvent event) {
+            if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+                doSubmit();
+            }
+        }
+    };
 
     @Inject
     ForgotPasswordView(Binder uiBinder,
@@ -53,6 +64,8 @@ public class ForgotPasswordView extends ViewWithUiHandlers<ForgotPasswordUiHandl
         initWidget(uiBinder.createAndBindUi(this));
 
         $(email).attr("placeholder", "Email");
+
+        email.addKeyDownHandler(submitOnEnter);
     }
 
     @Override
@@ -69,7 +82,11 @@ public class ForgotPasswordView extends ViewWithUiHandlers<ForgotPasswordUiHandl
     }
 
     @UiHandler("submit")
-    void onRegisterClicked(ClickEvent event) {
+    void onSubmitClicked(ClickEvent event) {
+        doSubmit();
+    }
+
+    private void doSubmit() {
         if (Strings.isNullOrEmpty(email.getText())) {
             showErrorMessage(constants.allFieldsAreRequired());
         } else {
