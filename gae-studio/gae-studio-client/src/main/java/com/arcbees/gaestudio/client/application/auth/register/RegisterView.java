@@ -31,7 +31,6 @@ import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -75,14 +74,6 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
     private final Driver driver;
     private final AppConstants constants;
     private final AppResources resources;
-    private final KeyDownHandler registerOnEnter = new KeyDownHandler() {
-        @Override
-        public void onKeyDown(KeyDownEvent event) {
-            if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-                doRegister();
-            }
-        }
-    };
 
     @Inject
     RegisterView(Binder uiBinder,
@@ -103,12 +94,6 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
         $(email).attr("placeholder", "Email");
         $(password).attr("placeholder", "Password");
         $(confirmPassword).attr("placeholder", "Confirm your password");
-
-        firstName.addKeyDownHandler(registerOnEnter);
-        lastName.addKeyDownHandler(registerOnEnter);
-        email.addKeyDownHandler(registerOnEnter);
-        password.addKeyDownHandler(registerOnEnter);
-        confirmPassword.addKeyDownHandler(registerOnEnter);
     }
 
     @Override
@@ -130,6 +115,13 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
     @UiHandler("register")
     void onRegisterClicked(ClickEvent event) {
         doRegister();
+    }
+
+    @UiHandler({"firstName", "lastName", "email", "password", "confirmPassword"})
+    void onEnter(KeyDownEvent event) {
+        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+            doRegister();
+        }
     }
 
     private void doRegister() {
