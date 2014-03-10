@@ -17,6 +17,8 @@ import com.google.common.base.Strings;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -69,7 +71,18 @@ public class ForgotPasswordView extends ViewWithUiHandlers<ForgotPasswordUiHandl
     }
 
     @UiHandler("submit")
-    void onRegisterClicked(ClickEvent event) {
+    void onSubmitClicked(ClickEvent event) {
+        doSubmit();
+    }
+
+    @UiHandler("email")
+    void onEnter(KeyDownEvent event) {
+        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+            doSubmit();
+        }
+    }
+
+    private void doSubmit() {
         if (Strings.isNullOrEmpty(email.getText())) {
             showErrorMessage(constants.allFieldsAreRequired());
         } else {

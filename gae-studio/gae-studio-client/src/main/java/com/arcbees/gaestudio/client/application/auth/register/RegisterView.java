@@ -29,6 +29,8 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -112,6 +114,17 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers>
 
     @UiHandler("register")
     void onRegisterClicked(ClickEvent event) {
+        doRegister();
+    }
+
+    @UiHandler({"firstName", "lastName", "email", "password", "confirmPassword"})
+    void onEnter(KeyDownEvent event) {
+        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+            doRegister();
+        }
+    }
+
+    private void doRegister() {
         User user = driver.flush();
         if (validateEntity(user)) {
             if (passwordMatch()) {
