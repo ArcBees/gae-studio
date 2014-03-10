@@ -606,6 +606,12 @@ input:focus, textarea:focus, button:focus {
     background-color: transparent;
     background-position-x: 50%;
     background-position-y: 50%;
+    z-index: 10;
+}
+
+.gwt-SplitLayoutPanel-VDragger {
+    padding-bottom: 7px;
+    background-position-y: 7px;
 }
 
 .statementDetails {

@@ -13,6 +13,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
@@ -29,9 +30,15 @@ public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
     SimplePanel statementPanel;
     @UiField
     SimplePanel toolbarPanel;
+    @UiField(provided = true)
+    SplitLayoutPanel leftPanel;
+
+    private static final int SPLITTER_SIZE = 7;
 
     @Inject
     ProfilerView(Binder uiBinder) {
+        leftPanel = new SplitLayoutPanel(SPLITTER_SIZE);
+
         initWidget(uiBinder.createAndBindUi(this));
     }
 
