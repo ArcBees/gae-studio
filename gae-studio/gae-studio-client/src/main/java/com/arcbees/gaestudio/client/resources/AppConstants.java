@@ -111,4 +111,8 @@ public interface AppConstants extends Constants {
     String errorSavingChanges();
 
     String enterAKey();
+
+    String invalidEmail();
+
+    String emailIsRequired();
 }
