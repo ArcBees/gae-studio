@@ -31,6 +31,7 @@
             line-height: 30px;
         }
 
+        /* .activeState is needed */
         .menu a:hover, .activeState {
             background: #25aae1;
         }
@@ -94,6 +95,10 @@
             background: #dfdfdf;
             cursor: pointer;
         }
+
+        .inactive {
+            color: #ddd;
+        }
     </ui:style>
     <g:HTMLPanel styleName="{style.header}">
         <a href="" class="{style.logo}">
@@ -107,7 +112,7 @@
                     <li>
                         Clear Theme
                     </li>
-                    <li>
+                    <li class="{style.inactive}">
                         Dark Theme
                     </li>
                 </ul>

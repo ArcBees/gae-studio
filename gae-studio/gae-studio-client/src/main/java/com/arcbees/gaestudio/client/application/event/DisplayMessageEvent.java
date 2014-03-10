@@ -13,14 +13,9 @@ import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class DisplayMessageEvent extends GwtEvent<DisplayMessageEvent.DisplayMessageHandler> {
     private Message message;
-
-    protected DisplayMessageEvent() {
-        // Possibly for serialization.
-    }
 
     public DisplayMessageEvent(Message message) {
         this.message = message;
@@ -33,10 +28,6 @@ public class DisplayMessageEvent extends GwtEvent<DisplayMessageEvent.DisplayMes
 
     public static void fire(HasHandlers source, DisplayMessageEvent eventInstance) {
         source.fireEvent(eventInstance);
-    }
-
-    public interface HasDisplayMessageHandlers extends HasHandlers {
-        HandlerRegistration addDisplayMessageHandler(DisplayMessageHandler handler);
     }
 
     public interface DisplayMessageHandler extends EventHandler {

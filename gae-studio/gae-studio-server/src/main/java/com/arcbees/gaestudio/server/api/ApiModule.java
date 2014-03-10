@@ -20,13 +20,10 @@ import com.arcbees.gaestudio.server.api.visualizer.ImportResource;
 import com.arcbees.gaestudio.server.api.visualizer.KindsResource;
 import com.arcbees.gaestudio.server.api.visualizer.NamespacesResource;
 import com.google.inject.AbstractModule;
-import com.google.inject.assistedinject.FactoryModuleBuilder;
 
 public class ApiModule extends AbstractModule {
     @Override
     protected void configure() {
-        install(new FactoryModuleBuilder().build(SubresourceFactory.class));
-
         bind(BlobsResource.class);
         bind(NamespacesResource.class);
         bind(KindsResource.class);

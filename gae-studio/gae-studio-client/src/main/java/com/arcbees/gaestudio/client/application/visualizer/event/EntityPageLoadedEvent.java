@@ -12,7 +12,6 @@ package com.arcbees.gaestudio.client.application.visualizer.event;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class EntityPageLoadedEvent extends GwtEvent<EntityPageLoadedEvent.EntityPageLoadedHandler> {
     public EntityPageLoadedEvent() {
@@ -26,10 +25,6 @@ public class EntityPageLoadedEvent extends GwtEvent<EntityPageLoadedEvent.Entity
 
     public static void fire(HasHandlers source, EntityPageLoadedEvent eventInstance) {
         source.fireEvent(eventInstance);
-    }
-
-    public interface HasEntityPageLoadedHandlers extends HasHandlers {
-        HandlerRegistration addEntityPageLoadedHandler(EntityPageLoadedHandler handler);
     }
 
     public interface EntityPageLoadedHandler extends EventHandler {

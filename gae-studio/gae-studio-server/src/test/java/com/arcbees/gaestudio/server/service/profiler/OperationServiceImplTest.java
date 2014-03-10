@@ -19,7 +19,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.arcbees.gaestudio.server.recorder.MemcacheKey;
-import com.arcbees.gaestudio.server.service.profiler.OperationServiceImpl;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.common.collect.Lists;
@@ -118,7 +117,7 @@ public class OperationServiceImplTest {
         List<DbOperationRecordDto> results = operationService.getOperations(lastId, null);
 
         // then
-        verify(memcacheService).getAll(Lists.<String>newArrayList(MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() +
+        verify(memcacheService).getAll(Lists.newArrayList(MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() +
                 2));
         verify(memcacheService).get(MemcacheKey.DB_OPERATION_COUNTER.getName());
         assertEquals(1, results.size());
@@ -142,7 +141,7 @@ public class OperationServiceImplTest {
 
         // then
         verify(memcacheService).get(MemcacheKey.DB_OPERATION_COUNTER.getName());
-        verify(memcacheService).getAll(Lists.<String>newArrayList(MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() +
+        verify(memcacheService).getAll(Lists.newArrayList(MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() +
                 2, MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() + 3, MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() +
                 4));
         assertEquals(3, results.size());
@@ -166,7 +165,7 @@ public class OperationServiceImplTest {
 
         // then
         verify(memcacheService).get(MemcacheKey.DB_OPERATION_COUNTER.getName());
-        verify(memcacheService).getAll(Lists.<String>newArrayList(MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() +
+        verify(memcacheService).getAll(Lists.newArrayList(MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() +
                 2));
         assertEquals(1, results.size());
         assertEquals(dtoFromMemCache, results.get(0));

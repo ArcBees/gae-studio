@@ -13,24 +13,15 @@ import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class DeleteEntityEvent extends GwtEvent<DeleteEntityEvent.DeleteEntityHandler> {
     public interface DeleteEntityHandler extends EventHandler {
         public void onDeleteEntity(DeleteEntityEvent event);
     }
 
-    public interface HasDeleteEntityHandlers extends HasHandlers {
-        HandlerRegistration addDeleteEntityHandler(DeleteEntityHandler handler);
-    }
-
     private static final Type<DeleteEntityHandler> TYPE = new Type<DeleteEntityHandler>();
 
     private ParsedEntity parsedEntity;
-
-    protected DeleteEntityEvent() {
-        // Possibly for serialization.
-    }
 
     @Override
     protected void dispatch(DeleteEntityHandler handler) {

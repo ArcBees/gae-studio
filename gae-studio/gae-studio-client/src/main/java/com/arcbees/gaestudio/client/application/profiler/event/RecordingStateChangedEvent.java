@@ -15,19 +15,13 @@ import com.google.gwt.event.shared.HasHandlers;
 
 public class RecordingStateChangedEvent extends GwtEvent<RecordingStateChangedEvent.RecordingStateChangedHandler> {
     private boolean starting;
-    private Long currentRecordId;
 
-    protected RecordingStateChangedEvent() {
-        // Possibly for serialization.
-    }
-
-    public RecordingStateChangedEvent(boolean starting, Long currentRecordId) {
+    public RecordingStateChangedEvent(boolean starting) {
         this.starting = starting;
-        this.currentRecordId = currentRecordId;
     }
 
-    public static void fire(HasHandlers source, boolean starting, Long currentRecordId) {
-        RecordingStateChangedEvent eventInstance = new RecordingStateChangedEvent(starting, currentRecordId);
+    public static void fire(HasHandlers source, boolean starting) {
+        RecordingStateChangedEvent eventInstance = new RecordingStateChangedEvent(starting);
         source.fireEvent(eventInstance);
     }
 
@@ -53,9 +47,5 @@ public class RecordingStateChangedEvent extends GwtEvent<RecordingStateChangedEv
 
     public boolean isStarting() {
         return starting;
-    }
-
-    public Long getCurrentRecordId() {
-        return currentRecordId;
     }
 }

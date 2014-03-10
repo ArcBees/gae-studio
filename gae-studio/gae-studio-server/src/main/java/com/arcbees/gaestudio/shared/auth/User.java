@@ -9,11 +9,13 @@
 
 package com.arcbees.gaestudio.shared.auth;
 
-import com.arcbees.gaestudio.shared.util.Validation;
-import org.hibernate.validator.constraints.NotEmpty;
+import java.util.Date;
 
 import javax.validation.Valid;
-import java.util.Date;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.arcbees.gaestudio.shared.util.Validation;
 
 public class User {
     private Long id;
@@ -50,20 +52,20 @@ public class User {
         this.password = password;
     }
 
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
     public Long getDateActivated() {
         return dateActivated;
     }
 
     public void setDateActivated(Long dateActivated) {
         this.dateActivated = dateActivated;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     public Long getId() {
