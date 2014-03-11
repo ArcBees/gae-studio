@@ -48,9 +48,6 @@ public class MessageServiceImplTest extends GaeTestBase {
         }
     }
 
-    private final String EMAIL_ADDRESS_WITH_PLUS = "zom.bee+hello@arcbees.com";
-    private final String ANY_TOKEN = "randomToken";
-
     @Inject
     ConfirmRegistrationEmailBuilder confirmRegistrationEmailBuilder;
     @Inject
@@ -59,6 +56,9 @@ public class MessageServiceImplTest extends GaeTestBase {
     VelocityWrapperFactory velocityWrapperFactory;
     @Inject
     MessageService messageService;
+
+    private final String ANY_TOKEN = "randomToken";
+    private final String EMAIL_ADDRESS_WITH_PLUS = "zom.bee+hello@arcbees.com";
 
     private VelocityWrapper velocityWrapper;
 
