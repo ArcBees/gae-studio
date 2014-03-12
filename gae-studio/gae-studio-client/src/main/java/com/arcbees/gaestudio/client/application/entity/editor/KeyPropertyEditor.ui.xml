@@ -1,6 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
-             xmlns:prop='urn:import:com.arcbees.gaestudio.client.application.visualizer.widget.entity'>
+             xmlns:prop='urn:import:com.arcbees.gaestudio.client.application.entity.editor'>
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
 
     <g:HTMLPanel styleName="{res.styles.embeddedEntityProperties}">

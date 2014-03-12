@@ -9,11 +9,14 @@
 
 package com.arcbees.gaestudio.client.application.entity;
 
+import com.arcbees.gaestudio.client.application.entity.editor.EntityWidgetModule;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class EntityModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
+        install(new EntityWidgetModule());
+
         bindPresenter(EntityPresenter.class, EntityPresenter.MyView.class, EntityView.class,
                 EntityPresenter.MyProxy.class);
         bindPresenter(EditEntityPresenter.class, EditEntityPresenter.MyView.class, EditEntityView.class,

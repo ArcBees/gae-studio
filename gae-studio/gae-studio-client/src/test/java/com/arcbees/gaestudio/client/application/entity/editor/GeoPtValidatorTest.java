@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
+package com.arcbees.gaestudio.client.application.entity.editor;
 
 import org.jukito.All;
 import org.jukito.JukitoModule;

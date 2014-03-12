@@ -12,7 +12,7 @@ package com.arcbees.gaestudio.client.application.entity.editor;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 
-import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.getPropertyAsString;
+import static com.arcbees.gaestudio.client.application.entity.editor.PropertyUtil.getPropertyAsString;
 
 public class User {
     private static final String EMAIL = "email";

@@ -11,8 +11,8 @@ package com.arcbees.gaestudio.client.application.entity.editor;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.application.entity.editor.EntityEditorPresenter.MyView;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorPresenter.MyView;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.inject.assistedinject.Assisted;
 import com.google.web.bindery.event.shared.EventBus;

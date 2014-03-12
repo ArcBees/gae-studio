@@ -17,7 +17,7 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.inject.assistedinject.Assisted;
 
-import static com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyUtil.parseJsonValueWithMetadata;
+import static com.arcbees.gaestudio.client.application.entity.editor.PropertyUtil.parseJsonValueWithMetadata;
 
 public class StringPropertyEditor extends AbstractPropertyEditor<String> {
     private final TextBox textBox;

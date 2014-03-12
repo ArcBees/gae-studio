@@ -9,7 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.entity.editor;
 
-import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorPresenter.MyView;
+import com.arcbees.gaestudio.client.application.entity.editor.EntityEditorPresenter.MyView;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.gwtplatform.mvp.client.ViewImpl;

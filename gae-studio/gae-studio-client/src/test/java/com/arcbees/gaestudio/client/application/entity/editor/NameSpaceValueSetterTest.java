@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget.entity;
+package com.arcbees.gaestudio.client.application.entity.editor;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -15,7 +15,7 @@ import java.util.Map;
 
 import javax.inject.Singleton;
 
-import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorPresenter.MyView;
+import com.arcbees.gaestudio.client.application.entity.editor.EntityEditorPresenter.MyView;
 import com.arcbees.gaestudio.shared.dto.entity.BlobInfoDto;
 import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.TypeLiteral;
