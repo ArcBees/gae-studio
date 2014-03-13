@@ -9,7 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.entity.editor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,8 +18,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 
+import com.arcbees.gaestudio.client.application.widget.dropdown.Dropdown;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.google.gwt.user.client.ui.HasConstrainedValue;
+import com.google.common.collect.Lists;
 
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -36,10 +36,9 @@ public class NameSpaceValueSetterTest {
         List<AppIdNamespaceDto> namespaces = mock(List.class);
         AppIdNamespaceDto appIdNamespaceDto = mock(AppIdNamespaceDto.class);
 
-        List<HasConstrainedValue<AppIdNamespaceDto>> listboxes = new
-                ArrayList<HasConstrainedValue<AppIdNamespaceDto>>();
-        HasConstrainedValue<AppIdNamespaceDto> listbox1 = mock(HasConstrainedValue.class);
-        HasConstrainedValue<AppIdNamespaceDto> listbox2 = mock(HasConstrainedValue.class);
+        List<Dropdown<AppIdNamespaceDto>> listboxes = Lists.newArrayList();
+        Dropdown<AppIdNamespaceDto> listbox1 = mock(Dropdown.class);
+        Dropdown<AppIdNamespaceDto> listbox2 = mock(Dropdown.class);
         listboxes.add(listbox1);
         listboxes.add(listbox2);
 
@@ -49,10 +48,9 @@ public class NameSpaceValueSetterTest {
         //then
         InOrder inOrder = inOrder(listbox2, listbox1, namespaces);
 
-        inOrder.verify(namespaces).add(null);
+        inOrder.verify(listbox1).addValues(namespaces);
         inOrder.verify(listbox1).setValue(appIdNamespaceDto);
-        inOrder.verify(listbox1).setAcceptableValues(namespaces);
+        inOrder.verify(listbox2).addValues(namespaces);
         inOrder.verify(listbox2).setValue(appIdNamespaceDto);
-        inOrder.verify(listbox2).setAcceptableValues(namespaces);
     }
 }
