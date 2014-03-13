@@ -470,9 +470,6 @@ input:focus, textarea:focus, button:focus {
     text-decoration: underline;
 }
 
-.embeddedEntityProperties {
-}
-
 .loginAjaxLoader {
     position: absolute;
     right: -36px;

@@ -30,7 +30,6 @@ public class LongPropertyEditor extends AbstractPropertyEditor<Long> {
 
         this.property = property;
         longBox = new LongBox();
-        longBox.addStyleName("gwt-TextBox");
 
         initFormWidget(longBox);
         setValue((long) PropertyUtil.getPropertyValue(property).isNumber().doubleValue());

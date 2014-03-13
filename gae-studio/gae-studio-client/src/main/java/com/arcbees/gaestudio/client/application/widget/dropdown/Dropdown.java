@@ -117,6 +117,7 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
         for (Map.Entry<Element, T> valueEntry : valuesIndex.entrySet()) {
             if (valueEntry.getValue() == value) {
                 makeSelected($(valueEntry.getKey()));
+                return;
             }
         }
     }

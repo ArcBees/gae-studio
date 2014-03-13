@@ -24,8 +24,6 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.safehtml.client.SafeHtmlTemplates;
-import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.text.shared.AbstractRenderer;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -40,6 +38,13 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
         implements FetchNamespacesRunner.FetchNamespacesCallback, FetchKindsRunner.FetchKindsCallback {
 
     interface Binder extends UiBinder<Widget, KeyPropertyEditor> {
+    }
+
+    private static class StringRenderer extends AbstractRenderer<String> {
+        @Override
+        public String render(String value) {
+            return value;
+        }
     }
 
     @UiField
@@ -87,12 +92,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
 
         appIdNamespace = dropdownFactory.create(appIdRenderer, dropdownResources);
         namespace = dropdownFactory.create(appIdNamespaceRenderer, dropdownResources);
-        kind = dropdownFactory.create(new AbstractRenderer<String>() {
-            @Override
-            public String render(String value) {
-                return value;
-            }
-        }, dropdownResources);
+        kind = dropdownFactory.create(new StringRenderer(), dropdownResources);
 
         fetchNamespaces(fetchNamespacesRunner);
         fetchKinds(fetchKindsRunner);
@@ -131,9 +131,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     }
 
     private void setNamespaces(List<AppIdNamespaceDto> namespaces) {
-        List<Dropdown<AppIdNamespaceDto>> listboxes = Lists.newArrayList();
-        listboxes.add(namespace);
-        listboxes.add(appIdNamespace);
+        List<Dropdown<AppIdNamespaceDto>> listboxes = Lists.newArrayList(namespace, appIdNamespace);
 
         nameSpaceValueSetter.setNamespace(namespaces, key.getAppIdNamespace(), listboxes);
     }
