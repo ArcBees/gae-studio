@@ -57,7 +57,7 @@ public class CommonModule extends AbstractPresenterModule {
 
         bind(ResourceLoader.class).asEagerSingleton();
 
-        bindConstant().annotatedWith(GaAccount.class).to("UA-41550930-4");
+        bindConstant().annotatedWith(GaAccount.class).to("UA-41550930-6");
         bind(GoogleAnalyticsNavigationTracker.class).asEagerSingleton();
     }
 }
