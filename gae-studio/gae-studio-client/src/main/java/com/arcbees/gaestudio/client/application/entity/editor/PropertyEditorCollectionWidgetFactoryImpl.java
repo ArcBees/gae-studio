@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.rest.BlobsService;
 import com.arcbees.gaestudio.client.rest.KindsService;
 import com.arcbees.gaestudio.client.rest.NamespacesService;
@@ -25,6 +26,8 @@ import com.google.common.collect.Maps;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
+
+import static com.google.gwt.query.client.GQuery.$;
 
 public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditorCollectionWidgetFactory {
     private final FetchBlobKeysRunner fetchBlobKeysRunner = new FetchBlobKeysRunner() {
@@ -62,6 +65,7 @@ public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditor
         }
     };
 
+    private final AppResources resources;
     private final PropertyEditorFactory propertyEditorFactory;
     private final RestDispatch restDispatch;
     private final BlobsService blobsService;
@@ -69,11 +73,13 @@ public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditor
     private final NamespacesService namespacesService;
 
     @Inject
-    PropertyEditorCollectionWidgetFactoryImpl(PropertyEditorFactory propertyEditorFactory,
+    PropertyEditorCollectionWidgetFactoryImpl(AppResources resources,
+                                              PropertyEditorFactory propertyEditorFactory,
                                               RestDispatch restDispatch,
                                               BlobsService blobsService,
                                               KindsService kindsService,
                                               NamespacesService namespacesService) {
+        this.resources = resources;
         this.propertyEditorFactory = propertyEditorFactory;
         this.restDispatch = restDispatch;
         this.blobsService = blobsService;

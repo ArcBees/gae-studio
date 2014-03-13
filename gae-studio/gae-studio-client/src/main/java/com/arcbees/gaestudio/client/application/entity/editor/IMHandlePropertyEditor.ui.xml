@@ -3,11 +3,11 @@
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
 
     <g:HTMLPanel styleName="{res.styles.embeddedEntityProperties}">
-        <g:Label>Protocol</g:Label>
+        <g:Label styleName="{res.styles.editorLabel}">Protocol</g:Label>
         <g:TextBox ui:field="protocol"
                 title="The protocol value is either a standard IM scheme (sip, unknown or xmpp) or a URL identifying the IM network for the protocol (e.g. http://aim.com/)."/>
 
-        <g:Label>Address</g:Label>
+        <g:Label styleName="{res.styles.editorLabel}">Address</g:Label>
         <g:TextBox ui:field="address"/>
     </g:HTMLPanel>
 </ui:UiBinder>

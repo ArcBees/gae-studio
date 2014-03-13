@@ -1,12 +1,9 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-        xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <ui:style>
-        .label {
-            text-transform: uppercase;
-        }
-    </ui:style>
-    <g:HTMLPanel>
-        <g:Label ui:field="key" styleName="{style.label}"/>
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <g:HTMLPanel styleName="{res.styles.editorMain}">
+        <g:Label ui:field="key" styleName="{res.styles.editorLabel}"/>
+        <div class="{res.styles.editorLabelSeparator}"/>
         <g:SimplePanel ui:field="form"/>
     </g:HTMLPanel>
 </ui:UiBinder>

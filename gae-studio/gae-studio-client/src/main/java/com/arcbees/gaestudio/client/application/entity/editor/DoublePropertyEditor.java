@@ -30,6 +30,7 @@ public class DoublePropertyEditor extends AbstractPropertyEditor<Double> {
 
         this.property = property;
         doubleBox = new DoubleBox();
+        doubleBox.addStyleName("gwt-TextBox");
 
         initFormWidget(doubleBox);
         setValue(PropertyUtil.getPropertyValue(property).isNumber().doubleValue());

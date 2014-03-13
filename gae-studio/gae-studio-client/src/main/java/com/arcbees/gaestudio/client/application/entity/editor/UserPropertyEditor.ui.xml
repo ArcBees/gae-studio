@@ -3,16 +3,16 @@
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
 
     <g:HTMLPanel styleName="{res.styles.embeddedEntityProperties}">
-        <g:Label>Email</g:Label>
+        <g:Label styleName="{res.styles.editorLabel}">Email</g:Label>
         <g:TextBox ui:field="email"/>
 
-        <g:Label>Auth Domain</g:Label>
+        <g:Label styleName="{res.styles.editorLabel}">Auth Domain</g:Label>
         <g:TextBox ui:field="authDomain"/>
 
-        <g:Label>User ID</g:Label>
+        <g:Label styleName="{res.styles.editorLabel}">User ID</g:Label>
         <g:TextBox ui:field="userId"/>
 
-        <g:Label>Federated Identity</g:Label>
+        <g:Label styleName="{res.styles.editorLabel}">Federated Identity</g:Label>
         <g:TextBox ui:field="federatedIdentity"/>
     </g:HTMLPanel>
 </ui:UiBinder>
