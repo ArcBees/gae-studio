@@ -9,27 +9,26 @@
 
 package com.arcbees.gaestudio.client.application.entity.editor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.AppIdRenderer;
+import com.arcbees.gaestudio.client.application.widget.dropdown.Dropdown;
+import com.arcbees.gaestudio.client.application.widget.dropdown.DropdownFactory;
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.resources.KeyPropertyEditorDropdownResources;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.text.shared.AbstractRenderer;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.HasConstrainedValue;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.LongBox;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
 
@@ -37,20 +36,15 @@ import static com.arcbees.gaestudio.client.application.entity.editor.PropertyUti
 
 public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
         implements FetchNamespacesRunner.FetchNamespacesCallback, FetchKindsRunner.FetchKindsCallback {
-    static class AppIdNamespaceRenderer extends AbstractRenderer<AppIdNamespaceDto> {
-        @Override
-        public String render(AppIdNamespaceDto object) {
-            if (object == null) {
-                return "<null>";
-            } else if (Strings.isNullOrEmpty(object.getNamespace())) {
-                return "<default>";
-            }
-
-            return object.getNamespace();
-        }
-    }
 
     interface Binder extends UiBinder<Widget, KeyPropertyEditor> {
+    }
+
+    private static class StringRenderer extends AbstractRenderer<String> {
+        @Override
+        public String render(String value) {
+            return value;
+        }
     }
 
     @UiField
@@ -58,11 +52,11 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     @UiField
     TextBox appId;
     @UiField(provided = true)
-    ValueListBox<AppIdNamespaceDto> appIdNamespace;
+    Dropdown<AppIdNamespaceDto> appIdNamespace;
     @UiField(provided = true)
-    ValueListBox<AppIdNamespaceDto> namespace;
+    Dropdown<AppIdNamespaceDto> namespace;
     @UiField(provided = true)
-    ListBox kind;
+    Dropdown<String> kind;
     @UiField
     TextBox name;
     @UiField(provided = true)
@@ -81,6 +75,8 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
                       AppConstants appConstants,
                       PropertyEditorFactory propertyEditorFactory,
                       NameSpaceValueSetter nameSpaceValueSetter,
+                      DropdownFactory dropdownFactory,
+                      KeyPropertyEditorDropdownResources dropdownResources,
                       @Assisted String key,
                       @Assisted JSONValue property,
                       @Assisted FetchKindsRunner fetchKindsRunner,
@@ -94,9 +90,9 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
         parentKey = (RawPropertyEditor) propertyEditorFactory
                 .createRawEditor(PropertyName.PARENT_KEY, property.isObject().get(PropertyName.PARENT_KEY));
 
-        appIdNamespace = new ValueListBox<AppIdNamespaceDto>(appIdRenderer);
-        namespace = new ValueListBox<AppIdNamespaceDto>(appIdNamespaceRenderer);
-        kind = new ListBox();
+        appIdNamespace = dropdownFactory.create(appIdRenderer, dropdownResources);
+        namespace = dropdownFactory.create(appIdNamespaceRenderer, dropdownResources);
+        kind = dropdownFactory.create(new StringRenderer(), dropdownResources);
 
         fetchNamespaces(fetchNamespacesRunner);
         fetchKinds(fetchKindsRunner);
@@ -113,10 +109,10 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     @Override
     public void onKindsFetched(List<String> kinds) {
         kind.clear();
-        kind.addItem("<null>", (String) null);
+        kind.addValue("<null>");
 
         for (String kind : kinds) {
-            this.kind.addItem(kind, kind);
+            this.kind.addValue(kind);
         }
 
         setSelectedKind(key.getKind());
@@ -135,10 +131,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     }
 
     private void setNamespaces(List<AppIdNamespaceDto> namespaces) {
-        List<HasConstrainedValue<AppIdNamespaceDto>> listboxes =
-                new ArrayList<HasConstrainedValue<AppIdNamespaceDto>>();
-        listboxes.add(namespace);
-        listboxes.add(appIdNamespace);
+        List<Dropdown<AppIdNamespaceDto>> listboxes = Lists.newArrayList(namespace, appIdNamespace);
 
         nameSpaceValueSetter.setNamespace(namespaces, key.getAppIdNamespace(), listboxes);
     }
@@ -150,7 +143,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
             parentKey = Key.fromJsonObject(parentKeyObject.isObject());
         }
 
-        return new Key(kind.getValue(kind.getSelectedIndex()), Strings.emptyToNull(name.getText()),
+        return new Key(kind.getValue(), Strings.emptyToNull(name.getText()),
                 Strings.emptyToNull(appId.getText()), id.getValue(),
                 new AppIdNamespaceDto(appIdNamespace.getValue().getAppId(), namespace.getValue().getNamespace()),
                 parentKey);
@@ -181,18 +174,12 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     private void fetchKinds(FetchKindsRunner fetchKindsRunner) {
         String loading = "Loading kinds...";
         kind.clear();
-        kind.addItem(loading);
+        kind.addValue(loading);
 
         fetchKindsRunner.fetch(this);
     }
 
     private void setSelectedKind(String kind) {
-        for (int i = 0; i < this.kind.getItemCount(); i++) {
-            String item = this.kind.getValue(i);
-            if (item.equals(kind)) {
-                this.kind.setSelectedIndex(i);
-                break;
-            }
-        }
+        this.kind.setValue(kind);
     }
 }

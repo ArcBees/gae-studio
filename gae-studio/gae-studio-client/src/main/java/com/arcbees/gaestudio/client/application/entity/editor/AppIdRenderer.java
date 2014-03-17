@@ -9,18 +9,28 @@
 
 package com.arcbees.gaestudio.client.application.entity.editor;
 
-import java.util.List;
+import javax.inject.Inject;
 
-import com.arcbees.gaestudio.client.application.widget.dropdown.Dropdown;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.google.gwt.user.client.ui.HasConstrainedValue;
+import com.google.gwt.text.shared.AbstractRenderer;
 
-public class NameSpaceValueSetter {
-    public void setNamespace(List<AppIdNamespaceDto> namespaces, AppIdNamespaceDto appIdNamespaceDto,
-                             List<Dropdown<AppIdNamespaceDto>> listboxes) {
-        for (Dropdown<AppIdNamespaceDto> listBox : listboxes) {
-            listBox.addValues(namespaces);
-            listBox.setValue(appIdNamespaceDto);
+class AppIdRenderer extends AbstractRenderer<AppIdNamespaceDto> {
+    private final NamespaceTemplate template;
+
+    @Inject
+    AppIdRenderer(NamespaceTemplate template) {
+        this.template = template;
+    }
+
+    @Override
+    public String render(AppIdNamespaceDto object) {
+        String value;
+        if (object == null) {
+            value = "<null>";
+        } else {
+            value = object.getAppId();
         }
+
+        return template.namespaceTemplate(value).asString();
     }
 }

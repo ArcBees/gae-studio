@@ -7,18 +7,12 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
+package com.arcbees.gaestudio.client.application.entity.editor;
 
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.google.gwt.text.shared.AbstractRenderer;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
 
-public class AppIdRenderer extends AbstractRenderer<AppIdNamespaceDto> {
-    @Override
-    public String render(AppIdNamespaceDto object) {
-        if (object == null) {
-            return "<null>";
-        }
-
-        return object.getAppId();
-    }
+interface NamespaceTemplate extends SafeHtmlTemplates {
+    @Template("<span>{0}</span>")
+    SafeHtml namespaceTemplate(String namespace);
 }

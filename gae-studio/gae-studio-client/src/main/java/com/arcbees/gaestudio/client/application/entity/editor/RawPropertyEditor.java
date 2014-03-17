@@ -48,6 +48,10 @@ public class RawPropertyEditor extends AbstractPropertyEditor<String> {
         }
     }
 
+    public void setStyleName(String styleName) {
+        widget.setStyleName(styleName);
+    }
+
     @Override
     protected boolean validate() {
         return jsonParsingDoesNotThrow();

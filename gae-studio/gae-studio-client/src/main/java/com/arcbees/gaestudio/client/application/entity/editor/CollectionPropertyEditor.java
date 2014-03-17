@@ -46,6 +46,7 @@ public class CollectionPropertyEditor extends AbstractPropertyEditor<Collection<
 
         widget = factory.create(object);
         widget.asWidget().addStyleName(appResources.styles().embeddedEntityProperties());
+        widget.asWidget().addStyleName(appResources.styles().collectionEditor());
 
         IsWidget form = widget.asWidget();
         initFormWidget(form);
