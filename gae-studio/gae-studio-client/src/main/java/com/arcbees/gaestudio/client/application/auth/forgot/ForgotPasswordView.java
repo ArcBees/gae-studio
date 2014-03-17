@@ -84,13 +84,21 @@ public class ForgotPasswordView extends ViewWithUiHandlers<ForgotPasswordUiHandl
 
     private void doSubmit() {
         if (Strings.isNullOrEmpty(email.getText())) {
-            showErrorMessage(constants.allFieldsAreRequired());
+            showErrorMessage(constants.emailIsRequired());
         } else {
-            ajaxLoader.show();
-            submit.setEnabled(false);
+            if (isInvalidEmail(email.getText())) {
+                showErrorMessage(constants.invalidEmail());
+            } else {
+                ajaxLoader.show();
+                submit.setEnabled(false);
 
-            getUiHandlers().forgotPassword(email.getText());
+                getUiHandlers().forgotPassword(email.getText());
+            }
         }
+    }
+
+    private boolean isInvalidEmail(String email) {
+        return !email.matches(".*@.*\\..*");
     }
 
     private void showErrorMessage(String message) {
