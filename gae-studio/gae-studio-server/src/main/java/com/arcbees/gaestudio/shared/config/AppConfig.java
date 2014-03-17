@@ -17,6 +17,7 @@ public class AppConfig {
         private String restPath;
         private String clientId;
         private String version;
+        private String latestVersion;
 
         private Builder() {
         }
@@ -36,8 +37,13 @@ public class AppConfig {
             return this;
         }
 
+        public Builder latestVersion(String latestVersion) {
+            this.latestVersion = latestVersion;
+            return this;
+        }
+
         public AppConfig build() {
-            return new AppConfig(restPath, clientId, version);
+            return new AppConfig(restPath, clientId, version, latestVersion);
         }
     }
 
@@ -50,14 +56,17 @@ public class AppConfig {
     private final String clientId;
     private final String restPath;
     private final String version;
+    private final String latestVersion;
 
     @JsonCreator
     private AppConfig(@JsonProperty("restPath") String restPath,
                       @JsonProperty("clientId") String clientId,
-                      @JsonProperty("version") String version) {
+                      @JsonProperty("version") String version,
+                      @JsonProperty("latestVersion") String latestVersion) {
         this.restPath = restPath;
         this.clientId = clientId;
         this.version = version;
+        this.latestVersion = latestVersion;
     }
 
     public String getVersion() {
@@ -70,5 +79,9 @@ public class AppConfig {
 
     public String getClientId() {
         return clientId;
+    }
+
+    public String getLatestVersion() {
+        return latestVersion;
     }
 }

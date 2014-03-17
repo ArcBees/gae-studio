@@ -13,7 +13,7 @@ import javax.inject.Inject;
 
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
@@ -22,7 +22,7 @@ public class VersionView extends ViewImpl implements VersionPresenter.MyView {
     }
 
     @UiField
-    Label label;
+    InlineHTML label;
 
     @Inject
     VersionView(Binder binder) {
@@ -30,7 +30,13 @@ public class VersionView extends ViewImpl implements VersionPresenter.MyView {
     }
 
     @Override
-    public void setVersion(String version) {
-        label.setText(version);
+    public void setVersion(String version, String latestVersion) {
+        String newVersion = "Newest version";
+
+        if(!latestVersion.equals(version)) {
+            newVersion = "<b>Latest version: " + latestVersion + "</b>";
+        }
+
+        label.setHTML("Version: " + version + " (" + newVersion + ")");
     }
 }

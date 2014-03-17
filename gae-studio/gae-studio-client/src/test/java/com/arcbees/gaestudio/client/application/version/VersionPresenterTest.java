@@ -24,6 +24,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(JukitoRunner.class)
 public class VersionPresenterTest {
     private static final String SOME_VERSION = "some version";
+    private static final String LATEST_VERSION = "latest version";
 
     @Inject
     Provider<VersionPresenter> provider;
@@ -32,11 +33,12 @@ public class VersionPresenterTest {
     public void onBind_anyVersion_setsVersionInView(VersionPresenter.MyView view, AppConfig appConfig) {
         //given
         given(appConfig.getVersion()).willReturn(SOME_VERSION);
+        given(appConfig.getLatestVersion()).willReturn(LATEST_VERSION);
 
         //when
         provider.get();
 
         //then
-        verify(view).setVersion(SOME_VERSION);
+        verify(view).setVersion(SOME_VERSION, LATEST_VERSION);
     }
 }
