@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.version;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.InlineHTML;
@@ -21,19 +22,22 @@ public class VersionView extends ViewImpl implements VersionPresenter.MyView {
     interface Binder extends UiBinder<Widget, VersionView> {
     }
 
-    private static final String NEWEST_VERSION = "Newest version";
+    private final AppConstants appConstants;
 
     @UiField
     InlineHTML label;
 
     @Inject
-    VersionView(Binder binder) {
+    VersionView(Binder binder,
+                AppConstants appConstants) {
+        this.appConstants = appConstants;
+
         initWidget(binder.createAndBindUi(this));
     }
 
     @Override
     public void setVersion(String version, String latestVersion) {
-        String newVersion = NEWEST_VERSION;
+        String newVersion = appConstants.newestVersion();
 
         if (!latestVersion.equals(version)) {
             newVersion = "<b>Latest version: " + latestVersion + "</b>";
