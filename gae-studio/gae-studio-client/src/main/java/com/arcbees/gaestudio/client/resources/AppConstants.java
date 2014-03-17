@@ -115,6 +115,4 @@ public interface AppConstants extends Constants {
     String invalidEmail();
 
     String emailIsRequired();
-
-    String newestVersion();
 }

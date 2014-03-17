@@ -11,7 +11,8 @@ package com.arcbees.gaestudio.client.application.version;
 
 import javax.inject.Inject;
 
-import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.InlineHTML;
@@ -22,27 +23,35 @@ public class VersionView extends ViewImpl implements VersionPresenter.MyView {
     interface Binder extends UiBinder<Widget, VersionView> {
     }
 
-    private final AppConstants appConstants;
+    interface VersionTemplate extends SafeHtmlTemplates {
+        @SafeHtmlTemplates.Template("Version: {0} (<b>Latest version: {1}</b>)")
+        SafeHtml thereIsANewerVersion(String version, String latestVersion);
+
+        @SafeHtmlTemplates.Template("Version: {0} (Newest version)</b>")
+        SafeHtml youHaveTheNewestVersion(String version);
+    }
+
+    private final VersionTemplate versionTemplate;
 
     @UiField
     InlineHTML label;
 
     @Inject
     VersionView(Binder binder,
-                AppConstants appConstants) {
-        this.appConstants = appConstants;
+                VersionTemplate versionTemplate) {
+        this.versionTemplate = versionTemplate;
 
         initWidget(binder.createAndBindUi(this));
     }
 
     @Override
     public void setVersion(String version, String latestVersion) {
-        String newVersion = appConstants.newestVersion();
+        SafeHtml versionHtml = versionTemplate.youHaveTheNewestVersion(version);
 
         if (!latestVersion.equals(version)) {
-            newVersion = "<b>Latest version: " + latestVersion + "</b>";
+            versionHtml = versionTemplate.thereIsANewerVersion(version, latestVersion);
         }
 
-        label.setHTML("Version: " + version + " (" + newVersion + ")");
+        label.setHTML(versionHtml);
     }
 }
