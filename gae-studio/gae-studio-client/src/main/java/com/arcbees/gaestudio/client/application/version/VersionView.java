@@ -21,6 +21,8 @@ public class VersionView extends ViewImpl implements VersionPresenter.MyView {
     interface Binder extends UiBinder<Widget, VersionView> {
     }
 
+    private static final String NEWEST_VERSION = "Newest version";
+
     @UiField
     InlineHTML label;
 
@@ -31,9 +33,9 @@ public class VersionView extends ViewImpl implements VersionPresenter.MyView {
 
     @Override
     public void setVersion(String version, String latestVersion) {
-        String newVersion = "Newest version";
+        String newVersion = NEWEST_VERSION;
 
-        if(!latestVersion.equals(version)) {
+        if (!latestVersion.equals(version)) {
             newVersion = "<b>Latest version: " + latestVersion + "</b>";
         }
 

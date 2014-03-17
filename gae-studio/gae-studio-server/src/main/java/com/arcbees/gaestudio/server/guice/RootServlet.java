@@ -73,11 +73,11 @@ public class RootServlet extends HttpServlet {
 
     private AppConfig buildAppConfig() throws IOException {
         return AppConfig.with()
-                    .restPath(restPath)
-                    .clientId(UUID.randomUUID().toString())
-                    .version(BuildConstants.VERSION)
-                    .latestVersion(retrieveLatestVersion())
-                    .build();
+                .restPath(restPath)
+                .clientId(UUID.randomUUID().toString())
+                .version(BuildConstants.VERSION)
+                .latestVersion(retrieveLatestVersion())
+                .build();
     }
 
     private String retrieveLatestVersion() throws IOException {
@@ -104,7 +104,7 @@ public class RootServlet extends HttpServlet {
         BufferedReader input = new BufferedReader(new InputStreamReader(inputStream));
 
         String inputLine;
-        while((inputLine = input.readLine()) != null) {
+        while ((inputLine = input.readLine()) != null) {
             response += inputLine;
         }
 
