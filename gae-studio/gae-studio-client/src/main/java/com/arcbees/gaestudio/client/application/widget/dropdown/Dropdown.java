@@ -10,8 +10,10 @@
 package com.arcbees.gaestudio.client.application.widget.dropdown;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent;
@@ -103,6 +105,21 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
         $(list).append(elem);
 
         $(elem).unbind(Event.ONCLICK).click(clickhandler);
+    }
+
+    public void addValues(List<T> values) {
+        for (T value : values) {
+            addValue(value);
+        }
+    }
+
+    public void setValue(T value) {
+        for (Map.Entry<Element, T> valueEntry : valuesIndex.entrySet()) {
+            if (valueEntry.getValue() == value) {
+                makeSelected($(valueEntry.getKey()));
+                return;
+            }
+        }
     }
 
     private Function clickhandler = new Function() {

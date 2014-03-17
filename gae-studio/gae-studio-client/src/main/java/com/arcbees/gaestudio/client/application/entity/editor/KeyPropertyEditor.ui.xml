@@ -1,0 +1,41 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:prop='urn:import:com.arcbees.gaestudio.client.application.entity.editor'
+             xmlns:dd='urn:import:com.arcbees.gaestudio.client.application.widget.dropdown'>
+    <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+
+    <ui:style>
+        .dropdown {
+            position: relative;
+            height: 24px;
+        }
+    </ui:style>
+
+    <g:HTMLPanel styleName="{res.styles.embeddedEntityProperties}">
+        <g:Label styleName="{res.styles.editorLabel}">Kind</g:Label>
+        <div class="{style.dropdown}">
+            <dd:Dropdown ui:field="kind"/>
+        </div>
+
+        <g:Label styleName="{res.styles.editorLabel}">Id</g:Label>
+        <g:LongBox ui:field="id" addStyleNames="gwt-TextBox"/>
+
+        <g:Label styleName="{res.styles.editorLabel}">App Id</g:Label>
+        <g:TextBox ui:field="appId"/>
+
+        <g:Label styleName="{res.styles.editorLabel}">Name</g:Label>
+        <g:TextBox ui:field="name"/>
+
+        <g:Label styleName="{res.styles.editorLabel}">Namespace</g:Label>
+        <div class="{style.dropdown}">
+            <dd:Dropdown ui:field="namespace"/>
+        </div>
+
+        <g:Label styleName="{res.styles.editorLabel}">Namespace's App Id</g:Label>
+        <div class="{style.dropdown}">
+            <dd:Dropdown ui:field="appIdNamespace"/>
+        </div>
+
+        <prop:RawPropertyEditor ui:field="parentKey" styleName="{res.styles.embeddedEntityProperties}"/>
+    </g:HTMLPanel>
+</ui:UiBinder>

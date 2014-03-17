@@ -11,16 +11,16 @@ package com.arcbees.gaestudio.client.application.entity;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.application.entity.editor.EntityEditorFactory;
+import com.arcbees.gaestudio.client.application.entity.editor.EntityEditorPresenter;
+import com.arcbees.gaestudio.client.application.entity.editor.InvalidEntityFieldsException;
+import com.arcbees.gaestudio.client.application.entity.editor.PropertyEditorErrorEvent;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
-import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorFactory;
-import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityEditorPresenter;
-import com.arcbees.gaestudio.client.application.visualizer.widget.entity.InvalidEntityFieldsException;
-import com.arcbees.gaestudio.client.application.visualizer.widget.entity.PropertyEditorErrorEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
@@ -39,8 +39,8 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
-import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;

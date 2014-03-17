@@ -7,20 +7,14 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.auth.activation;
+package com.arcbees.gaestudio.client.application.entity.editor;
 
-import javax.inject.Inject;
-
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.ViewImpl;
-
-public class ActivationView extends ViewImpl implements ActivationPresenter.MyView {
-    interface Binder extends UiBinder<Widget, ActivationView> {
+public class GeoPtValidator {
+    public boolean isLatitudeValid(Double latitude) {
+        return -90d <= latitude && latitude <= 90d;
     }
 
-    @Inject
-    ActivationView(Binder uiBinder) {
-        initWidget(uiBinder.createAndBindUi(this));
+    public boolean isLongitudeValid(Double longitude) {
+        return -180d <= longitude && longitude <= 180d;
     }
 }

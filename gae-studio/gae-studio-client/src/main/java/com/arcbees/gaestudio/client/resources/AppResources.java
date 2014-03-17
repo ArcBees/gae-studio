@@ -150,6 +150,14 @@ public interface AppResources extends ClientBundle {
         String popupIcon();
 
         String buttonContainer();
+
+        String editorLabel();
+
+        String editorMain();
+
+        String collectionEditor();
+
+        String editorLabelSeparator();
     }
 
     @CssResource.NotStrict

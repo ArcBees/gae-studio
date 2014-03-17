@@ -7,20 +7,16 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.auth.activation;
+package com.arcbees.gaestudio.client.application.entity.editor;
 
-import javax.inject.Inject;
+import java.util.List;
 
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.ViewImpl;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 
-public class ActivationView extends ViewImpl implements ActivationPresenter.MyView {
-    interface Binder extends UiBinder<Widget, ActivationView> {
+public interface FetchNamespacesRunner {
+    public interface FetchNamespacesCallback {
+        void onNamespacesFetched(List<AppIdNamespaceDto> namespaces);
     }
 
-    @Inject
-    ActivationView(Binder uiBinder) {
-        initWidget(uiBinder.createAndBindUi(this));
-    }
+    void fetch(FetchNamespacesCallback callback);
 }
