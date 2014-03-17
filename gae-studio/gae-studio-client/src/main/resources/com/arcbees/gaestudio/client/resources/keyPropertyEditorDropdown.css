@@ -1,14 +1,17 @@
 @eval editInputWidth com.arcbees.gaestudio.client.resources.CssConstants.editInputWidth;
 
 .ul {
-    list-style-type: none;
     background: lightgray;
+
+    width: editInputWidth;
+    margin: 0;
+
     position: absolute;
     top: 0;
     left: 0;
-    width: editInputWidth;
+
     -webkit-padding-start: 0px;
-    margin: 0;
+    list-style-type: none;
 }
 
 ul.openedList {
@@ -32,25 +35,24 @@ ul.openedList {
 }
 
 .ul li {
+    font-size: 16px;
+    background-color: lightgray;
+
     height: 20px;
     line-height: 20px;
-    font-size: 16px;
     width: 100%;
-
-    background-color: lightgray;
     padding: 2px 4px;
 }
 
 .ul li span {
     color: black;
 
+    display: inline-block;
+    overflow: hidden;
     margin-left: 4px;
 
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow: hidden;
-
-    display: inline-block;
 }
 
 .ul.openedList li span {
