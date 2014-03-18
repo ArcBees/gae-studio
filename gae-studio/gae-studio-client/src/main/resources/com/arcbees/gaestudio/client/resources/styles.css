@@ -743,16 +743,6 @@ input:focus, textarea:focus, button:focus {
     line-height: 19px;
 }
 
-input[type=text] {
-    font-size: 16px;
-    color: black;
-    background-color: lightgray;
-
-    width: editInputWidth;
-    padding: 2px 4px;
-    border: none;
-}
-
 .buttonContainer {
     padding-top: 5px;
     margin: 0;
@@ -806,4 +796,14 @@ input[type=text] {
 
 .editorMain {
     margin-bottom: 15px;
+}
+
+.editorMain input[type=text] {
+    font-size: 16px;
+    color: black;
+    background-color: lightgray;
+
+    width: editInputWidth;
+    padding: 2px 4px;
+    border: none;
 }
