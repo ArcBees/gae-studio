@@ -1,0 +1,7 @@
+<h3>GAE Studio - Confirm registration</h3>
+
+We've received a registration request for your email.
+<br />
+<a href="${redirectionUri}?id=${tokenId}">Confirm your registration</a>
+<br />
+If you have not requested a registration, just ignore that email.
