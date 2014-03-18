@@ -717,10 +717,13 @@ input:focus, textarea:focus, button:focus {
 
 .exportBtn:hover, .importBtn:hover {
     background-color: #25aae1;
+    cursor: pointer;
 }
 
 .exportBtnDisabled, .exportBtnDisabled:hover {
     background-color: #B7B7B7;
+    pointer-events: none;
+    cursor: default;
 }
 
 .uploadLabel {
