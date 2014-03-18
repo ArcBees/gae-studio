@@ -115,7 +115,6 @@
                         <artifactId>gwt-maven-plugin</artifactId>
                         <version>${gwt.version}</version>
                         <configuration>
-                            <strict>true</strict>
 
                             <logLevel>INFO</logLevel>
 
