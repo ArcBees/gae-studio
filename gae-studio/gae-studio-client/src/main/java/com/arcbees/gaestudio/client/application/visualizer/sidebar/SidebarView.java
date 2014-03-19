@@ -115,6 +115,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
         if (kinds.isEmpty()) {
             addEmptyEntityListStyle();
+            setExportEnabled(false);
+
             return;
         }
 
@@ -180,6 +182,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 }
             });
         }
+
+        emptyKinds.setHTML("");
     }
 
     private void onKindSelected(Element e) {
