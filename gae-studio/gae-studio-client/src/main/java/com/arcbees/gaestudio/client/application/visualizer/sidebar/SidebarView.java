@@ -30,12 +30,16 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import static com.google.gwt.query.client.GQuery.$;
 
 public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implements SidebarPresenter.MyView,
         PanelToggle.ToggleHandler {
+
+    private Widget selectedKind;
+
     interface KindTemplate extends SafeHtmlTemplates {
         @SafeHtmlTemplates.Template("<div class=\"{1}\"><span>{0}</span></div>")
         SafeHtml create(String kindName, String cssClass);
@@ -145,6 +149,13 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     @Override
     public void onToggle() {
+        boolean closing = closeToggle.isOpen();
+        if (closing) {
+            selectedKind = $("." + appResources.styles().kindListElementSelected()).widget();
+        }
+        $(selectedKind).toggleClass(appResources.styles().kindListElementSelected(), !closing);
+        $(selectedKind).toggleClass(appResources.styles().kindListElementSelectedHidden(), closing);
+
         getUiHandlers().onCloseHandleActivated();
     }
 
@@ -198,7 +209,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     private void setActive(final Element e) {
         revealEntityDivNToolbar();
-        final String activeClass = appResources.styles().kindListElementHovered();
+        final String activeClass = appResources.styles().kindListElementSelected();
         $(kinds).find("div").removeClass(activeClass);
 
         Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {

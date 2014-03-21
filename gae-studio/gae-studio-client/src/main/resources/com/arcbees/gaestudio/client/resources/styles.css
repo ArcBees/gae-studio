@@ -105,7 +105,7 @@ input:focus, textarea:focus, button:focus {
     line-height: 30px;
     font-size: 15px;
     font-weight: bold;
-    padding: 3px 8px;
+    padding: 3px 16px;
 
     display: block;
     overflow: hidden;
@@ -132,11 +132,15 @@ input:focus, textarea:focus, button:focus {
     font-size: 17px;
 }
 
-.kindListElement:hover, .kindListElementHovered {
+.kindListElement:hover, .kindListElementSelected {
     background-color: #25aae1;
     color: #f6f6f6;
 
     cursor: pointer;
+}
+
+.kindListElementSelected, .kindListElementSelectedHidden {
+    transition: background-color .25s ease .3s;
 }
 
 .entityTypeSelector {
@@ -233,6 +237,7 @@ input:focus, textarea:focus, button:focus {
 
 .firstTable .lockedRow td {
     background-color: colorBlue;
+    color: #fff;
 }
 
 .firstTable, .secondTable {
@@ -572,11 +577,10 @@ input:focus, textarea:focus, button:focus {
     float: right;
 
     margin-top: 6px;
-    padding: 4px;
+    padding: 4px 8px;
 }
 
 .profilerToggle.flipped {
-    margin-right: 6px;
 }
 
 .flipped {
@@ -586,13 +590,13 @@ input:focus, textarea:focus, button:focus {
 
 .toggleKindsPanel {
     position: absolute;
-    right: 0;
+    right: 3px;
     top: 13px;
     padding: 4px;
 }
 
 .toggleKindsPanel.flipped {
-    right: 5px;
+    right: 1px;
 }
 
 @sprite .gwt-SplitLayoutPanel-HDragger, .gwt-SplitLayoutPanel-VDragger {
