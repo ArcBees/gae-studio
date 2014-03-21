@@ -37,9 +37,6 @@ import static com.google.gwt.query.client.GQuery.$;
 
 public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implements SidebarPresenter.MyView,
         PanelToggle.ToggleHandler {
-
-    private Widget selectedKind;
-
     interface KindTemplate extends SafeHtmlTemplates {
         @SafeHtmlTemplates.Template("<div class=\"{1}\"><span>{0}</span></div>")
         SafeHtml create(String kindName, String cssClass);
@@ -77,6 +74,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private final String revealUnderOverlayStyleName;
     private final String entityDetailPanelVisibilityStyleName;
 
+    private Widget selectedKind;
     private String currentKind;
 
     @Inject
