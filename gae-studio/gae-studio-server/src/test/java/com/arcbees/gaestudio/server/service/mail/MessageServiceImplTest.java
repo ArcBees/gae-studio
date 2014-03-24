@@ -13,7 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.inject.Inject;
-import javax.ws.rs.core.HttpHeaders;
 
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
@@ -21,20 +20,13 @@ import org.jukito.TestSingleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.arcbees.gaestudio.server.GaeStudioConstants;
 import com.arcbees.gaestudio.server.email.ConfirmRegistrationEmailBuilder;
 import com.arcbees.gaestudio.server.email.ResetPasswordEmailBuilder;
 import com.arcbees.gaestudio.server.velocity.VelocityModule;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapper;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapperFactory;
-import com.arcbees.gaestudio.shared.dto.EmailDto;
-import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.arcbees.gaestudio.shared.rest.TestEndPoints;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
-import com.jayway.restassured.http.ContentType;
 
-import static com.jayway.restassured.RestAssured.given;
-import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -77,16 +69,6 @@ public class MessageServiceImplTest extends GaeTestBase {
 
         // then
         assertNotNull(notification);
-    }
-
-    @Test
-    public void sendConfirmtion_shouldReturnNoContent() {
-        EmailDto confirmRegistration = messageService.buildConfirmationEmail(GaeStudioConstants.ARCBEES_MAIL_SENDER,
-                ANY_TOKEN, GaeStudioConstants.OAUTH_USER_REGISTRATION);
-
-        given().contentType(ContentType.JSON).body(confirmRegistration).header(HttpHeaders.AUTHORIZATION, "apikey")
-                .expect().response().statusCode(NO_CONTENT.getStatusCode())
-                .when().post(TestEndPoints.ARCBEES_MAIL_SERVICE + EndPoints.MAIL);
     }
 
     @Test
