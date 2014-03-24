@@ -115,14 +115,10 @@
                         <artifactId>gwt-maven-plugin</artifactId>
                         <version>${gwt.version}</version>
                         <configuration>
-                            <strict>true</strict>
-
+                            <failOnError>true</failOnError>
                             <logLevel>INFO</logLevel>
-
                             <copyWebapp>true</copyWebapp>
-
                             <module>${client.module}</module>
-
                             <compileReport>true</compileReport>
                         </configuration>
                         <executions>

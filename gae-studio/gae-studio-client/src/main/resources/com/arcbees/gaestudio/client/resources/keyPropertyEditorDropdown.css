@@ -1,0 +1,87 @@
+@eval editInputWidth com.arcbees.gaestudio.client.resources.CssConstants.editInputWidth;
+
+.ul {
+    background: lightgray;
+
+    width: editInputWidth;
+    margin: 0;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    -webkit-padding-start: 0px;
+    list-style-type: none;
+}
+
+ul.openedList {
+    min-width: editInputWidth;
+    width: auto;
+}
+
+.openedList {
+    background: lightgray;
+
+    z-index: 10000;
+}
+
+@sprite .dropDownArrow {
+    gwt-image: "dropDownArrowUp";
+}
+
+@sprite .dropDownArrow:hover {
+    gwt-image: "dropDownArrowRl";
+    height: 20px;
+}
+
+.ul li {
+    font-size: 16px;
+    background-color: lightgray;
+
+    height: 20px;
+    line-height: 20px;
+    width: 100%;
+    padding: 2px 4px;
+}
+
+.ul li span {
+    color: black;
+
+    display: inline-block;
+    overflow: hidden;
+    margin-left: 4px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ul.openedList li span {
+    width: auto;
+}
+
+.ul li:hover {
+    background-color: #25aae1;
+    color: #fff;
+    cursor: pointer;
+}
+
+.ul li:hover span {
+    color: #fff;
+}
+
+.ul:focus {
+    outline: none;
+}
+
+.dropDownArrow, .dropDownArrow:hover {
+    width: 100%;
+    background-position-x: literal('calc(100% - 12px)');
+    background-position-y: 50%;
+}
+
+.hiddenLi {
+    display: none;
+}
+
+.selectedLi {
+}

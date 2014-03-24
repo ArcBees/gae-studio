@@ -26,4 +26,7 @@ public class UrlParameters {
     public static final String FIRST_NAME = "firstname";
     public static final String LAST_NAME = "lastname";
     public static final String KEY = "key";
+
+    public static final String TOKEN = "token";
+    public static final String TOKEN_ID = "tokenid";
 }

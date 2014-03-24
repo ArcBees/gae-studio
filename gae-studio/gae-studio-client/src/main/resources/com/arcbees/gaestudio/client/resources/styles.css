@@ -3,6 +3,7 @@
 @eval colorLightGrey com.arcbees.gaestudio.client.resources.Colors.colorLightGrey;
 @eval colorLightGray com.arcbees.gaestudio.client.resources.Colors.colorLightGray;
 @eval colorLightGreyEB com.arcbees.gaestudio.client.resources.Colors.colorLightGreyEB;
+@eval editInputWidth com.arcbees.gaestudio.client.resources.CssConstants.editInputWidth;
 
 @external .gwt-SplitLayoutPanel-HDragger;
 @external .gwt-SplitLayoutPanel-VDragger;
@@ -469,11 +470,6 @@ input:focus, textarea:focus, button:focus {
     text-decoration: underline;
 }
 
-.embeddedEntityProperties {
-    padding-left: 15px;
-    margin-bottom: 20px;
-}
-
 .loginAjaxLoader {
     position: absolute;
     right: -36px;
@@ -721,10 +717,13 @@ input:focus, textarea:focus, button:focus {
 
 .exportBtn:hover, .importBtn:hover {
     background-color: #25aae1;
+    cursor: pointer;
 }
 
 .exportBtnDisabled, .exportBtnDisabled:hover {
     background-color: #B7B7B7;
+    pointer-events: none;
+    cursor: default;
 }
 
 .uploadLabel {
@@ -744,14 +743,7 @@ input:focus, textarea:focus, button:focus {
 .booleanKey {
     float: left;
     margin: 5px 0 5px 0;
-    line-height: 1em;
-}
-
-input[type=text] {
-    background-color: lightgray;
-    color: black;
-    border: none;
-    padding-left: 4px;
+    line-height: 19px;
 }
 
 .buttonContainer {
@@ -770,4 +762,51 @@ input[type=text] {
 
 .buttonContainer > :first-child {
     margin-right: 6px;
+}
+
+.embeddedEntityProperties .editorLabelSeparator {
+    display: none;
+}
+
+.editorLabelSeparator {
+    width: 12px;
+    height: 2px;
+    margin-top: 3px;
+    margin-bottom: 1px;
+    background-color: #25aae1;
+}
+
+.embeddedEntityProperties > .editorLabel {
+    display: block;
+    color: #848484;
+}
+
+.embeddedEntityProperties.collectionEditor > .editorMain > .editorLabel {
+    font-size: 16px;
+    color: #000;
+}
+
+.editorLabel {
+    font-size: 12px;
+    font-weight: bold;
+    color: #25aae1;
+    text-transform: uppercase;
+}
+
+.embeddedEntityProperties .editorMain {
+    margin-bottom: 5px;
+}
+
+.editorMain {
+    margin-bottom: 15px;
+}
+
+.editorMain input[type=text] {
+    font-size: 16px;
+    color: black;
+    background-color: lightgray;
+
+    width: editInputWidth;
+    padding: 2px 4px;
+    border: none;
 }

@@ -9,7 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import com.arcbees.gaestudio.client.application.visualizer.widget.entity.EntityWidgetModule;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespaceWidgetModule;
 import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
@@ -18,7 +17,6 @@ public class VisualizerWidgetModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
         install(new NamespaceWidgetModule());
-        install(new EntityWidgetModule());
 
         bindPresenterWidget(ImportPresenter.class, ImportPresenter.MyView.class, ImportView.class);
 
