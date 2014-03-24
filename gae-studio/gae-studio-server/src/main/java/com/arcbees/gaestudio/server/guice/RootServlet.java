@@ -9,14 +9,8 @@
 
 package com.arcbees.gaestudio.server.guice;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.Socket;
 import java.net.URL;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -33,6 +27,12 @@ import com.arcbees.gaestudio.server.velocity.VelocityWrapper;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapperFactory;
 import com.arcbees.gaestudio.shared.BaseRestPath;
 import com.arcbees.gaestudio.shared.config.AppConfig;
+import com.google.appengine.api.urlfetch.FetchOptions;
+import com.google.appengine.api.urlfetch.HTTPMethod;
+import com.google.appengine.api.urlfetch.HTTPRequest;
+import com.google.appengine.api.urlfetch.HTTPResponse;
+import com.google.appengine.api.urlfetch.URLFetchService;
+import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.Gson;
 import com.google.inject.Singleton;
 
@@ -81,34 +81,18 @@ public class RootServlet extends HttpServlet {
     }
 
     private String retrieveLatestVersion() throws IOException {
-        String json;
-
         URL maven = new URL(MAVEN_URL);
+        URLFetchService urlFetchService = URLFetchServiceFactory.getURLFetchService();
 
-        try (Socket socket = new Socket(maven.getHost(), 80)) {
-            PrintWriter output = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())));
-            output.println("GET " + maven.getFile() + " HTTP/1.1");
-            output.println("Host: " + maven.getHost());
-            output.println("Connection: close");
-            output.println();
-            output.flush();
+        FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
 
-            json = readJson(socket.getInputStream());
-        }
+        HTTPRequest request = new HTTPRequest(maven, HTTPMethod.GET, fetchOptions);
+
+        HTTPResponse httpResponse = urlFetchService.fetch(request);
+
+        String json = extractResponseContent(new String(httpResponse.getContent()));
 
         return extractLatestVersion(json);
-    }
-
-    private String readJson(InputStream inputStream) throws IOException {
-        String response = "";
-        BufferedReader input = new BufferedReader(new InputStreamReader(inputStream));
-
-        String inputLine;
-        while ((inputLine = input.readLine()) != null) {
-            response += inputLine;
-        }
-
-        return extractResponseContent(response);
     }
 
     private String extractResponseContent(String response) {
