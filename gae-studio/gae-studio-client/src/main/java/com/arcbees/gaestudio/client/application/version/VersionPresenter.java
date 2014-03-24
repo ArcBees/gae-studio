@@ -18,7 +18,7 @@ import com.gwtplatform.mvp.client.View;
 
 public class VersionPresenter extends PresenterWidget<VersionPresenter.MyView> {
     public interface MyView extends View {
-        void setVersion(String version);
+        void setVersion(String version, String latestVersion);
     }
 
     private final AppConfig appConfig;
@@ -36,6 +36,6 @@ public class VersionPresenter extends PresenterWidget<VersionPresenter.MyView> {
     protected void onBind() {
         super.onBind();
 
-        getView().setVersion(appConfig.getVersion());
+        getView().setVersion(appConfig.getVersion(), appConfig.getLatestVersion());
     }
 }

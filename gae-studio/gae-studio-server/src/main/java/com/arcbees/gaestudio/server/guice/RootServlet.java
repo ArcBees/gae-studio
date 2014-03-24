@@ -11,7 +11,10 @@ package com.arcbees.gaestudio.server.guice;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -24,6 +27,12 @@ import com.arcbees.gaestudio.server.velocity.VelocityWrapper;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapperFactory;
 import com.arcbees.gaestudio.shared.BaseRestPath;
 import com.arcbees.gaestudio.shared.config.AppConfig;
+import com.google.appengine.api.urlfetch.FetchOptions;
+import com.google.appengine.api.urlfetch.HTTPMethod;
+import com.google.appengine.api.urlfetch.HTTPRequest;
+import com.google.appengine.api.urlfetch.HTTPResponse;
+import com.google.appengine.api.urlfetch.URLFetchService;
+import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.Gson;
 import com.google.inject.Singleton;
 
@@ -31,6 +40,9 @@ import com.google.inject.Singleton;
 public class RootServlet extends HttpServlet {
     private final static String templateLocation =
             "com/arcbees/gaestudio/server/velocitytemplates/gae-studio.vm";
+    private final static String MAVEN_URL = "http://search.maven.org/solrsearch/select?wt=json&q=gae-studio-webapp";
+    private final static Pattern LATEST_VERSION_PATTERN = Pattern.compile("\"latestVersion\":\\s*\"([0-9](?:\\.[0-9])*)\"");
+    private final static Pattern RESPONSE_CONTENT_PATTERN = Pattern.compile("^[^{]*(\\{.*\\})$");
 
     protected final String restPath;
     private final VelocityWrapper velocityWrapper;
@@ -53,17 +65,46 @@ public class RootServlet extends HttpServlet {
         printWriter.append(generated);
     }
 
-    private void setParameters() {
+    private void setParameters() throws IOException {
         AppConfig config = buildAppConfig();
         String json = new Gson().toJson(config);
         velocityWrapper.put(AppConfig.OBJECT_KEY, "var " + AppConfig.OBJECT_KEY + " = " + json + ";");
     }
 
-    private AppConfig buildAppConfig() {
+    private AppConfig buildAppConfig() throws IOException {
         return AppConfig.with()
-                    .restPath(restPath)
-                    .clientId(UUID.randomUUID().toString())
-                    .version("Version: " + BuildConstants.VERSION)
-                    .build();
+                .restPath(restPath)
+                .clientId(UUID.randomUUID().toString())
+                .version(BuildConstants.VERSION)
+                .latestVersion(retrieveLatestVersion())
+                .build();
+    }
+
+    private String retrieveLatestVersion() throws IOException {
+        URL maven = new URL(MAVEN_URL);
+        URLFetchService urlFetchService = URLFetchServiceFactory.getURLFetchService();
+
+        FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
+
+        HTTPRequest request = new HTTPRequest(maven, HTTPMethod.GET, fetchOptions);
+        HTTPResponse httpResponse = urlFetchService.fetch(request);
+
+        String json = extractResponseContent(new String(httpResponse.getContent()));
+
+        return extractLatestVersion(json);
+    }
+
+    private String extractResponseContent(String response) {
+        Matcher matcher = RESPONSE_CONTENT_PATTERN.matcher(response);
+        matcher.find();
+
+        return matcher.group(1);
+    }
+
+    private String extractLatestVersion(String json) {
+        Matcher matcher = LATEST_VERSION_PATTERN.matcher(json);
+        matcher.find();
+
+        return matcher.group(1);
     }
 }
