@@ -87,7 +87,6 @@ public class RootServlet extends HttpServlet {
         FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
 
         HTTPRequest request = new HTTPRequest(maven, HTTPMethod.GET, fetchOptions);
-
         HTTPResponse httpResponse = urlFetchService.fetch(request);
 
         String json = extractResponseContent(new String(httpResponse.getContent()));
