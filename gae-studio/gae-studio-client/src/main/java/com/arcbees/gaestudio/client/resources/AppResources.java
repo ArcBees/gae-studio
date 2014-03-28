@@ -29,7 +29,9 @@ public interface AppResources extends ClientBundle {
 
         String kindListElement();
 
-        String kindListElementHovered();
+        String kindListElementSelected();
+
+        String kindListElementSelectedHidden();
 
         String entityTypeSelectorEmpty();
 

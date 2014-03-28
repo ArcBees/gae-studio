@@ -2,7 +2,7 @@
     list-style-type: none;
     position: absolute;
     background: transparent;
-    width: 85%;
+    width: 197px;
     -webkit-padding-start: 0px;
     margin: 0;
 }
@@ -72,7 +72,7 @@ ul.openedList {
 
 .dropDownArrow, .dropDownArrow:hover {
     width: 100%;
-    background-position-x: literal('calc(100% - 12px)');
+    background-position-x: literal('calc(100% - 7px)');
     background-position-y: 50%;
 }
 
