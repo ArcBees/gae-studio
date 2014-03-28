@@ -39,13 +39,9 @@
         }
 
         .mainContent {
-            padding-top: 20px;
+            padding-top: 10px;
             height: literal('calc(100% - 68px)');
             overflow-y: auto;
-        }
-
-        .editForm {
-            padding-left: 5px;
         }
 
         .buttonContainer {
@@ -54,6 +50,10 @@
             position: absolute;
             top: 2px;
             right: 0;
+        }
+
+        .editorPanel {
+            font-size: 16px;
         }
     </ui:style>
 
@@ -72,7 +72,7 @@
             <div class="{style.mainContent}">
                 <g:FlowPanel ui:field="errors" styleName="{style.error}"/>
 
-                <g:SimplePanel ui:field="editorPanel" styleName="{style.editForm}"
+                <g:SimplePanel ui:field="editorPanel" styleName="{style.editorPanel}"
                                debugId="{debugIds.getEntityEditor}"/>
             </div>
         </g:HTMLPanel>

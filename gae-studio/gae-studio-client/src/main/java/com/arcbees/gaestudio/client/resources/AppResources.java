@@ -29,7 +29,9 @@ public interface AppResources extends ClientBundle {
 
         String kindListElement();
 
-        String kindListElementHovered();
+        String kindListElementSelected();
+
+        String kindListElementSelectedHidden();
 
         String entityTypeSelectorEmpty();
 
@@ -150,6 +152,14 @@ public interface AppResources extends ClientBundle {
         String popupIcon();
 
         String buttonContainer();
+
+        String editorLabel();
+
+        String editorMain();
+
+        String collectionEditor();
+
+        String editorLabelSeparator();
     }
 
     @CssResource.NotStrict

@@ -17,6 +17,8 @@ import com.google.common.base.Strings;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -69,15 +71,34 @@ public class ForgotPasswordView extends ViewWithUiHandlers<ForgotPasswordUiHandl
     }
 
     @UiHandler("submit")
-    void onRegisterClicked(ClickEvent event) {
-        if (Strings.isNullOrEmpty(email.getText())) {
-            showErrorMessage(constants.allFieldsAreRequired());
-        } else {
-            ajaxLoader.show();
-            submit.setEnabled(false);
+    void onSubmitClicked(ClickEvent event) {
+        doSubmit();
+    }
 
-            getUiHandlers().forgotPassword(email.getText());
+    @UiHandler("email")
+    void onEnter(KeyDownEvent event) {
+        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+            doSubmit();
         }
+    }
+
+    private void doSubmit() {
+        if (Strings.isNullOrEmpty(email.getText())) {
+            showErrorMessage(constants.emailIsRequired());
+        } else {
+            if (isInvalidEmail(email.getText())) {
+                showErrorMessage(constants.invalidEmail());
+            } else {
+                ajaxLoader.show();
+                submit.setEnabled(false);
+
+                getUiHandlers().forgotPassword(email.getText());
+            }
+        }
+    }
+
+    private boolean isInvalidEmail(String email) {
+        return !email.matches(".*@.*\\..*");
     }
 
     private void showErrorMessage(String message) {

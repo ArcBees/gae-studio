@@ -7,5 +7,5 @@
             bottom: 5px;
         }
     </ui:style>
-    <g:Label ui:field="label" addStyleNames="{style.version}"/>
+    <g:InlineHTML ui:field="label" addStyleNames="{style.version}"/>
 </ui:UiBinder>
