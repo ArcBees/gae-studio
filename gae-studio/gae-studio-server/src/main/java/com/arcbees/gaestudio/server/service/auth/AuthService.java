@@ -13,7 +13,7 @@ import com.arcbees.oauth.client.domain.Token;
 import com.arcbees.oauth.client.domain.User;
 
 public interface AuthService {
-    User register(String email, String password, String firstName, String lastName);
+    Long register(String email, String password, String firstName, String lastName);
 
     void requestResetToken(String email);
 

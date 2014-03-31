@@ -43,9 +43,9 @@ public class AuthResource {
                              @FormParam(UrlParameters.FIRST_NAME) String firstName,
                              @FormParam(UrlParameters.LAST_NAME) String lastName) {
 
-        User user = authService.register(email, password, firstName, lastName);
+        Long userId = authService.register(email, password, firstName, lastName);
 
-        return Response.ok(user).build();
+        return Response.ok(userId).build();
     }
 
     @POST

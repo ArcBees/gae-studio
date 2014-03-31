@@ -75,7 +75,7 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
         String firstName = user.getProfile().getFirstName();
         String lastName = user.getProfile().getLastName();
 
-        restDispatch.execute(authService.register(email, password, firstName, lastName), new RestCallbackImpl<User>() {
+        restDispatch.execute(authService.register(email, password, firstName, lastName), new RestCallbackImpl<Long>() {
             @Override
             public void setResponse(Response response) {
                 getView().edit(user);
@@ -86,7 +86,7 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
             }
 
             @Override
-            public void onSuccess(User user) {
+            public void onSuccess(Long userId) {
                 DisplayMessageEvent.fire(RegisterPresenter.this,
                         new Message(appConstants.registerSuccessfull(), MessageStyle.SUCCESS));
 
