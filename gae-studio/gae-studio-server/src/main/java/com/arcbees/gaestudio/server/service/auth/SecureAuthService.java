@@ -20,7 +20,7 @@ import com.arcbees.oauth.client.domain.User;
 import com.google.common.base.Strings;
 
 public class SecureAuthService implements AuthService {
-    private static final String CONSUMER_KEY = "d066ee54-3fad-4bb4-8e4b-c5b1c5bb9f99";
+    private static final String CONSUMER_KEY = "4da6441e-ec71-4ca1-94a9-1c9bb05bc9af";
     private static final String TOKEN = "token";
 
     private final OAuthClient oAuthClient;

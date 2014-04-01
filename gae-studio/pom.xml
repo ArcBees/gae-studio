@@ -80,6 +80,7 @@
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <gaes.buildtime>${maven.build.timestamp}</gaes.buildtime>
         <repackage>com.arcbees.gaestudio.repackaged</repackage>
+        <googleappengine.id>gaestudio-staging</googleappengine.id>
     </properties>
 
     <build>
