@@ -21,6 +21,7 @@
         <cucumber.version>1.1.5</cucumber.version>
         <gae.version>1.9.0</gae.version>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+        <webXmlPath>src/main/webapp/WEB-INF/web.xml</webXmlPath>
     </properties>
 
     <dependencies>
@@ -270,6 +271,7 @@
                             <targetPath>WEB-INF</targetPath>
                         </resource>
                     </webResources>
+                    <webXml>${webXmlPath}</webXml>
                 </configuration>
             </plugin>
         </plugins>
@@ -367,6 +369,12 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>staging</id>
+            <properties>
+                <webXmlPath>src/main/webapp/WEB-INF/staging-web.xml</webXmlPath>
+            </properties>
         </profile>
     </profiles>
 </project>

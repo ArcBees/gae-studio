@@ -7,19 +7,16 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.service.auth;
+package com.arcbees.gaestudio.companion.guice;
 
-import com.arcbees.oauth.client.domain.Token;
-import com.arcbees.oauth.client.domain.User;
+import com.arcbees.gaestudio.server.guice.GaeStudioModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.servlet.GuiceServletContextListener;
 
-public interface AuthService {
-    Long register(String email, String password, String firstName, String lastName);
-
-    void requestResetToken(String email);
-
-    User checkLogin();
-
-    Token login(String email, String password);
-
-    void logout();
+public class StagingGuiceServletConfig extends GuiceServletContextListener {
+    @Override
+    protected Injector getInjector() {
+        return Guice.createInjector(new ServerModule(), new GaeStudioModule());
+    }
 }

@@ -28,7 +28,7 @@ public interface AuthService extends RestService {
     @POST
     @Path(EndPoints.REGISTER)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    RestAction<User> register(@FormParam(UrlParameters.EMAIL) String email,
+    RestAction<Long> register(@FormParam(UrlParameters.EMAIL) String email,
                               @FormParam(UrlParameters.PASSWORD) String password,
                               @FormParam(UrlParameters.FIRST_NAME) String firstName,
                               @FormParam(UrlParameters.LAST_NAME) String lastName);
