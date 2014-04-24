@@ -47,7 +47,7 @@ public class LicenseFilter implements ContainerRequestFilter {
     }
 
     private boolean isAllowedPath(String path) {
-        return path.contains(EndPoints.AUTH) || path.contains(EndPoints.IMPORT_TASK);
+        return path.contains(EndPoints.AUTH) || path.contains(EndPoints.IMPORT_TASK) || !path.startsWith("/" + EndPoints.REST_PATH);
     }
 
     private boolean isBlobUpload() {

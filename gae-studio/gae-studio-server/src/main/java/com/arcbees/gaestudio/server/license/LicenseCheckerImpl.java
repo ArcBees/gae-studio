@@ -16,6 +16,7 @@ import java.net.URL;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import com.arcbees.gaestudio.server.exception.UserNotLoggedInException;
 import com.arcbees.gaestudio.server.service.auth.AuthService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.oauth.client.domain.User;
@@ -62,7 +63,7 @@ public class LicenseCheckerImpl implements LicenseChecker {
         return responseCode == 200;
     }
 
-    private HTTPResponse getHttpResponse(URL url)  {
+    private HTTPResponse getHttpResponse(URL url) {
         URLFetchService service = URLFetchServiceFactory.getURLFetchService();
 
         HTTPRequest httpRequest = new HTTPRequest(url, HTTPMethod.GET);
@@ -77,6 +78,11 @@ public class LicenseCheckerImpl implements LicenseChecker {
 
     private URL getUrl() {
         User user = authService.checkLogin();
+
+        if (user == null) {
+            throw new UserNotLoggedInException();
+        }
+
         Long userId = user.getId();
 
         try {
