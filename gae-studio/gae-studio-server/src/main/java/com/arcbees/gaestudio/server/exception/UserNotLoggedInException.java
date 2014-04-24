@@ -9,17 +9,5 @@
 
 package com.arcbees.gaestudio.server.exception;
 
-import javax.inject.Singleton;
-
-import com.google.inject.AbstractModule;
-
-public class ExceptionModule extends AbstractModule {
-    @Override
-    protected void configure() {
-        bind(EntityNotFoundExceptionMapper.class).in(Singleton.class);
-        bind(IllegalAccessExceptionMapper.class).in(Singleton.class);
-        bind(InstantiationExceptionMapper.class).in(Singleton.class);
-        bind(ResponseExceptionMapper.class).in(Singleton.class);
-        bind(UserNotLoggedInExceptionMapper.class).in(Singleton.class);
-    }
+public class UserNotLoggedInException extends RuntimeException {
 }
