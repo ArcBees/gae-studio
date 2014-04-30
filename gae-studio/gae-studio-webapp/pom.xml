@@ -52,11 +52,16 @@
                                     <pattern>org.slf4j</pattern>
                                     <shadedPattern>${repackage}.org.slf4j</shadedPattern>
                                 </relocation>
+                                <relocation>
+                                    <pattern>com.google.gwt</pattern>
+                                    <shadedPattern>${repackage}.com.google.gwt</shadedPattern>
+                                </relocation>
                             </relocations>
                             <artifactSet>
                                 <excludes>
                                     <exclude>com.google.appengine:*</exclude>
-                                    <exclude>com.google.gwt:*</exclude>
+                                    <exclude>com.google.gwt:gwt-dev</exclude>
+                                    <exclude>com.google.gwt:gwt-user</exclude>
                                 </excludes>
                             </artifactSet>
                             <transformers>
