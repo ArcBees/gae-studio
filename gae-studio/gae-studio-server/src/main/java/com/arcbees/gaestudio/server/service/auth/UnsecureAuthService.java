@@ -9,8 +9,8 @@
 
 package com.arcbees.gaestudio.server.service.auth;
 
-import com.arcbees.oauth.client.domain.Token;
-import com.arcbees.oauth.client.domain.User;
+import com.arcbees.oauth.api.domain.Token;
+import com.arcbees.oauth.api.domain.User;
 
 public class UnsecureAuthService implements AuthService {
     @Override
