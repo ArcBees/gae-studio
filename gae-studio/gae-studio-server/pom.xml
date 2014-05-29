@@ -93,7 +93,7 @@
 
         <dependency>
             <groupId>com.arcbees.oauth</groupId>
-            <artifactId>client</artifactId>
+            <artifactId>sdk</artifactId>
             <version>${oauth-client.version}</version>
         </dependency>
 

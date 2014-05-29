@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import com.arcbees.oauth.client.util.ResponseException;
+import com.arcbees.oauth.api.util.ResponseException;
 
 @Provider
 public class ResponseExceptionMapper implements ExceptionMapper<ResponseException> {

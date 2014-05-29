@@ -19,7 +19,7 @@ import javax.inject.Provider;
 import com.arcbees.gaestudio.server.exception.UserNotLoggedInException;
 import com.arcbees.gaestudio.server.service.auth.AuthService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.arcbees.oauth.client.domain.User;
+import com.arcbees.oauth.api.domain.User;
 import com.google.appengine.api.urlfetch.HTTPMethod;
 import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.HTTPResponse;

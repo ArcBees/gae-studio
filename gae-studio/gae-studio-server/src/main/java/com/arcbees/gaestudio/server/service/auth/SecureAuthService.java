@@ -13,14 +13,14 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.servlet.http.HttpSession;
 
-import com.arcbees.oauth.client.OAuthClient;
-import com.arcbees.oauth.client.UserClient;
-import com.arcbees.oauth.client.domain.Token;
-import com.arcbees.oauth.client.domain.User;
+import com.arcbees.oauth.api.OAuthClient;
+import com.arcbees.oauth.api.UserClient;
+import com.arcbees.oauth.api.domain.Token;
+import com.arcbees.oauth.api.domain.User;
 import com.google.common.base.Strings;
 
 public class SecureAuthService implements AuthService {
-    private static final String CONSUMER_KEY = "4da6441e-ec71-4ca1-94a9-1c9bb05bc9af";
+    private static final String CONSUMER_KEY = "00a2ba2d-d30c-4630-9ced-5d11b4ba5330";
     private static final String TOKEN = "token";
 
     private final OAuthClient oAuthClient;

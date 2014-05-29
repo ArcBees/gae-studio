@@ -23,7 +23,7 @@ import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.service.auth.AuthService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
-import com.arcbees.oauth.client.domain.User;
+import com.arcbees.oauth.api.domain.User;
 
 @Path(EndPoints.AUTH)
 @GaeStudioResource
