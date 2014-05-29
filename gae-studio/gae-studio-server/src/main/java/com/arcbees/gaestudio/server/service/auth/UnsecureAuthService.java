@@ -14,7 +14,7 @@ import com.arcbees.oauth.api.domain.User;
 
 public class UnsecureAuthService implements AuthService {
     @Override
-    public Long register(String email, String password, String firstName, String lastName) {
+    public String register(String email, String password, String firstName, String lastName) {
         return null;
     }
 
