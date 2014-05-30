@@ -19,8 +19,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.arcbees.gaestudio.server.GaeStudioConstants;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.service.auth.AuthService;
+import com.arcbees.gaestudio.server.service.mail.MessageService;
+import com.arcbees.gaestudio.shared.dto.EmailDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.arcbees.oauth.api.domain.User;
@@ -29,10 +32,13 @@ import com.arcbees.oauth.api.domain.User;
 @GaeStudioResource
 public class AuthResource {
     private final AuthService authService;
+    private final MessageService messageService;
 
     @Inject
-    AuthResource(AuthService authService) {
+    AuthResource(AuthService authService,
+                 MessageService messageService) {
         this.authService = authService;
+        this.messageService = messageService;
     }
 
     @POST
@@ -43,9 +49,11 @@ public class AuthResource {
                              @FormParam(UrlParameters.FIRST_NAME) String firstName,
                              @FormParam(UrlParameters.LAST_NAME) String lastName) {
 
-        Long userId = authService.register(email, password, firstName, lastName);
+        String registrationToken = authService.register(email, password, firstName, lastName);
 
-        return Response.ok(userId).build();
+        messageService.sendConfirmationEmail(email, registrationToken, GaeStudioConstants.OAUTH_USER_REGISTRATION);
+
+        return Response.ok(registrationToken).build();
     }
 
     @POST

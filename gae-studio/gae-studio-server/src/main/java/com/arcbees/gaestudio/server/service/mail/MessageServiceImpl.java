@@ -13,7 +13,17 @@ import com.arcbees.gaestudio.server.email.ConfirmRegistrationEmailBuilder;
 import com.arcbees.gaestudio.server.email.EmailMessageGenerator;
 import com.arcbees.gaestudio.server.email.ResetPasswordEmailBuilder;
 import com.arcbees.gaestudio.shared.dto.EmailDto;
+import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.google.appengine.api.urlfetch.HTTPHeader;
+import com.google.appengine.api.urlfetch.HTTPMethod;
+import com.google.appengine.api.urlfetch.HTTPRequest;
+import com.google.appengine.api.urlfetch.URLFetchService;
+import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
+import com.google.gson.Gson;
 import com.google.inject.Inject;
+
+import java.io.IOException;
+import java.net.URL;
 
 public class MessageServiceImpl implements MessageService {
     private static final String CONFIRM_SUBJECT = "GAE Studio - Confirm your registration";
@@ -34,24 +44,46 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public EmailDto buildConfirmationEmail(String emailAddress, String tokenId, String redirectionUri) {
+    public void sendConfirmationEmail(String emailAddress, String tokenId, String redirectionUri) {
         String body = confirmRegistrationEmailBuilder.generateBody(tokenId, redirectionUri);
         String message = emailMessageGenerator.generateBody(CONFIRM_SUBJECT, body);
 
-        return buildEmail(emailAddress, CONFIRM_SUBJECT, message);
+        EmailDto emailDto = buildEmail(emailAddress, CONFIRM_SUBJECT, message);
+
+        sendEmail(emailDto);
     }
 
     @Override
-    public EmailDto buildPasswordEmail(String emailAddress, String token) {
+    public void sendResetPasswordEmail(String emailAddress, String token) {
         String body = resetPasswordEmailBuilder.generateBody(emailAddress, token);
         String message = emailMessageGenerator.generateBody(RESET_PASSWORD_SUBJECT, body);
 
-        return buildEmail(emailAddress, RESET_PASSWORD_SUBJECT, message);
+        EmailDto emailDto = buildEmail(emailAddress, RESET_PASSWORD_SUBJECT, message);
+
+        sendEmail(emailDto);
     }
 
     private EmailDto buildEmail(String emailAddress, String subject, String message) {
-        EmailDto email = new EmailDto(emailAddress, "GAE Studio", message, subject);
+        return new EmailDto(emailAddress, "GAE Studio", message, subject);
+    }
 
-        return email;
+    private void sendEmail(EmailDto emailDto) {
+        try {
+            URL url = new URL(EndPoints.ARCBEES_MAIL_SERVICE);
+
+            URLFetchService urlFetchService = URLFetchServiceFactory.getURLFetchService();
+            HTTPRequest request = new HTTPRequest(url, HTTPMethod.POST);
+            request.addHeader(new HTTPHeader("Content-Type", "application/json"));
+            request.addHeader(new HTTPHeader("Authorization", "apikey"));
+            request.getFetchOptions().setDeadline(60.0);
+
+            Gson gson = new Gson();
+            String jsonEmail = gson.toJson(emailDto);
+            request.setPayload(jsonEmail.getBytes());
+
+            urlFetchService.fetch(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

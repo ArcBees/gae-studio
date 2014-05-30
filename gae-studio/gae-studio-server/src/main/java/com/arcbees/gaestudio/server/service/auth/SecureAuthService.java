@@ -37,13 +37,12 @@ public class SecureAuthService implements AuthService {
     }
 
     @Override
-    public Long register(String email, String password, String firstName, String lastName) {
+    public String register(String email, String password, String firstName, String lastName) {
         Token bearerToken = getBearerToken();
 
         Long userId = userClient.register(bearerToken, email, password, firstName, lastName);
-        userClient.addUserPermission(bearerToken, userId);
 
-        return userId;
+        return userClient.getRegistrationToken(userId);
     }
 
     @Override
