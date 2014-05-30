@@ -5,6 +5,7 @@
             position: fixed;
             right: 5px;
             bottom: 5px;
+            z-index: 1000;
         }
     </ui:style>
     <g:InlineHTML ui:field="label" addStyleNames="{style.version}"/>
