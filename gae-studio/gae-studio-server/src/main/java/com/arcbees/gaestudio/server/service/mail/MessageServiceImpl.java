@@ -76,7 +76,6 @@ public class MessageServiceImpl implements MessageService {
             request.addHeader(new HTTPHeader("Content-Type", "application/json"));
             request.addHeader(new HTTPHeader("Authorization", "apikey"));
             request.getFetchOptions().setDeadline(60.0);
-            request.getFetchOptions().doNotValidateCertificate();
 
             Gson gson = new Gson();
             String jsonEmail = gson.toJson(emailDto);
