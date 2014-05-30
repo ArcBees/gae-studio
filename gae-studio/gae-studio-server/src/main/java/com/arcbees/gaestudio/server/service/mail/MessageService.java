@@ -9,10 +9,8 @@
 
 package com.arcbees.gaestudio.server.service.mail;
 
-import com.arcbees.gaestudio.shared.dto.EmailDto;
-
 public interface MessageService {
-    EmailDto buildConfirmationEmail(String emailAddress, String tokenId, String redirectionUri);
+    void sendConfirmationEmail(String emailAddress, String tokenId, String redirectionUri);
 
-    EmailDto buildPasswordEmail(String emailAddress, String token);
+    void sendResetPasswordEmail(String emailAddress, String token);
 }
