@@ -34,24 +34,30 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public EmailDto buildConfirmationEmail(String emailAddress, String tokenId, String redirectionUri) {
+    public void sendConfirmationEmail(String emailAddress, String tokenId, String redirectionUri) {
         String body = confirmRegistrationEmailBuilder.generateBody(tokenId, redirectionUri);
         String message = emailMessageGenerator.generateBody(CONFIRM_SUBJECT, body);
 
-        return buildEmail(emailAddress, CONFIRM_SUBJECT, message);
+        EmailDto emailDto = buildEmail(emailAddress, CONFIRM_SUBJECT, message);
+
+        sendEmail(emailDto);
     }
 
     @Override
-    public EmailDto buildPasswordEmail(String emailAddress, String token) {
+    public void sendResetPasswordEmail(String emailAddress, String token) {
         String body = resetPasswordEmailBuilder.generateBody(emailAddress, token);
         String message = emailMessageGenerator.generateBody(RESET_PASSWORD_SUBJECT, body);
 
-        return buildEmail(emailAddress, RESET_PASSWORD_SUBJECT, message);
+        EmailDto emailDto = buildEmail(emailAddress, RESET_PASSWORD_SUBJECT, message);
+
+        sendEmail(emailDto);
     }
 
     private EmailDto buildEmail(String emailAddress, String subject, String message) {
-        EmailDto email = new EmailDto(emailAddress, "GAE Studio", message, subject);
+        return new EmailDto(emailAddress, "GAE Studio", message, subject);
+    }
 
-        return email;
+    private void sendEmail(EmailDto emailDto) {
+        //TODO : Call ArcBees Mail Service
     }
 }

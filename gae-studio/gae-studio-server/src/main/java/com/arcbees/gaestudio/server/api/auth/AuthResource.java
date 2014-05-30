@@ -51,10 +51,7 @@ public class AuthResource {
 
         String registrationToken = authService.register(email, password, firstName, lastName);
 
-        EmailDto emailToSend = messageService.buildConfirmationEmail(email, registrationToken,
-                GaeStudioConstants.OAUTH_USER_REGISTRATION);
-
-        sendEmail(emailToSend);
+        messageService.sendConfirmationEmail(email, registrationToken, GaeStudioConstants.OAUTH_USER_REGISTRATION);
 
         return Response.ok(registrationToken).build();
     }
@@ -92,9 +89,5 @@ public class AuthResource {
         authService.logout();
 
         return Response.ok().build();
-    }
-
-    private void sendEmail(EmailDto emailToSend) {
-        //TODO : Send email with ArcBees mail service
     }
 }
