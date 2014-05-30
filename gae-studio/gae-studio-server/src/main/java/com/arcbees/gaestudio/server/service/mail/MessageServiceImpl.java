@@ -14,7 +14,11 @@ import com.arcbees.gaestudio.server.email.EmailMessageGenerator;
 import com.arcbees.gaestudio.server.email.ResetPasswordEmailBuilder;
 import com.arcbees.gaestudio.shared.dto.EmailDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.google.appengine.api.urlfetch.*;
+import com.google.appengine.api.urlfetch.HTTPHeader;
+import com.google.appengine.api.urlfetch.HTTPMethod;
+import com.google.appengine.api.urlfetch.HTTPRequest;
+import com.google.appengine.api.urlfetch.URLFetchService;
+import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 
