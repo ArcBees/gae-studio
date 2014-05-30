@@ -13,7 +13,13 @@ import com.arcbees.gaestudio.server.email.ConfirmRegistrationEmailBuilder;
 import com.arcbees.gaestudio.server.email.EmailMessageGenerator;
 import com.arcbees.gaestudio.server.email.ResetPasswordEmailBuilder;
 import com.arcbees.gaestudio.shared.dto.EmailDto;
+import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.google.appengine.api.urlfetch.*;
+import com.google.gson.Gson;
 import com.google.inject.Inject;
+
+import java.io.IOException;
+import java.net.URL;
 
 public class MessageServiceImpl implements MessageService {
     private static final String CONFIRM_SUBJECT = "GAE Studio - Confirm your registration";
@@ -58,6 +64,23 @@ public class MessageServiceImpl implements MessageService {
     }
 
     private void sendEmail(EmailDto emailDto) {
-        //TODO : Call ArcBees Mail Service
+        try {
+            URL url = new URL(EndPoints.ARCBEES_MAIL_SERVICE);
+
+            URLFetchService urlFetchService = URLFetchServiceFactory.getURLFetchService();
+            HTTPRequest request = new HTTPRequest(url, HTTPMethod.POST);
+            request.addHeader(new HTTPHeader("Content-Type", "application/json"));
+            request.addHeader(new HTTPHeader("Authorization", "apikey"));
+            request.getFetchOptions().setDeadline(60.0);
+            request.getFetchOptions().doNotValidateCertificate();
+
+            Gson gson = new Gson();
+            String jsonEmail = gson.toJson(emailDto);
+            request.setPayload(jsonEmail.getBytes());
+
+            urlFetchService.fetch(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
