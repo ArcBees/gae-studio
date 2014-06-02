@@ -41,6 +41,7 @@ public class SecureAuthService implements AuthService {
         Token bearerToken = getBearerToken();
 
         Long userId = userClient.register(bearerToken, email, password, firstName, lastName);
+        userClient.addUserPermission(bearerToken, userId);
 
         return userClient.getRegistrationToken(userId);
     }
