@@ -9,9 +9,9 @@
 
 package com.arcbees.gaestudio.client.resources;
 
-import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.GssResource;
 
-public interface AuthStyles extends CssResource {
+public interface AuthStyles extends GssResource {
     String errorMessage();
 
     String logo();

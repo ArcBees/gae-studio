@@ -22,12 +22,12 @@ ul.openedList {
     z-index: 10000;
 }
 
-@sprite .dropDownArrow {
-    gwt-image: "dropDownArrowUp";
+.dropDownArrow {
+    gwt-sprite: "dropDownArrowUp";
 }
 
-@sprite .dropDownArrow:hover {
-    gwt-image: "dropDownArrowRl";
+.dropDownArrow:hover {
+    gwt-sprite: "dropDownArrowRl";
     height: 46px;
 }
 

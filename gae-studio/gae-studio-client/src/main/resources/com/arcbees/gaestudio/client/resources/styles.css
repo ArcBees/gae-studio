@@ -1,12 +1,12 @@
-@eval colorBlue com.arcbees.gaestudio.client.resources.Colors.colorBlue;
-@eval colorGrey2B com.arcbees.gaestudio.client.resources.Colors.colorGrey2B;
-@eval colorLightGrey com.arcbees.gaestudio.client.resources.Colors.colorLightGrey;
-@eval colorLightGray com.arcbees.gaestudio.client.resources.Colors.colorLightGray;
-@eval colorLightGreyEB com.arcbees.gaestudio.client.resources.Colors.colorLightGreyEB;
-@eval editInputWidth com.arcbees.gaestudio.client.resources.CssConstants.editInputWidth;
+@def colorBlue eval("com.arcbees.gaestudio.client.resources.Colors.colorBlue");
+@def colorGrey2B eval("com.arcbees.gaestudio.client.resources.Colors.colorGrey2B");
+@def colorLightGrey eval("com.arcbees.gaestudio.client.resources.Colors.colorLightGrey");
+@def colorLightGray eval("com.arcbees.gaestudio.client.resources.Colors.colorLightGray");
+@def colorLightGreyEB eval("com.arcbees.gaestudio.client.resources.Colors.colorLightGreyEB");
+@def editInputWidth eval("com.arcbees.gaestudio.client.resources.CssConstants.editInputWidth");
 
-@external .gwt-SplitLayoutPanel-HDragger;
-@external .gwt-SplitLayoutPanel-VDragger;
+/* @external .gwt-SplitLayoutPanel-HDragger;
+@external .gwt-SplitLayoutPanel-VDragger;*/
 
 body, * {
     font-family: Source Sans Pro, Verdana, sans-serif;
@@ -262,43 +262,43 @@ input:focus, textarea:focus, button:focus {
     overflow: visible;
 }
 
-@sprite .trashSmall {
-    gwt-image: "trash_small_up";
+.trashSmall {
+    gwt-sprite: "trash_small_up";
 }
 
-@sprite .trashSmallNoHover {
-    gwt-image: "trash_small_up";
+.trashSmallNoHover {
+    gwt-sprite: "trash_small_up";
 }
 
-@sprite .trashSmall:hover {
-    gwt-image: "trash_small_rl";
+.trashSmall:hover {
+    gwt-sprite: "trash_small_rl";
 }
 
-@sprite .expand {
-    gwt-image: "expand_up";
+.expand {
+    gwt-sprite: "expand_up";
     cursor: pointer;
 }
 
-@sprite .expand:hover {
-    gwt-image: "expand_rl";
+.expand:hover {
+    gwt-sprite: "expand_rl";
 }
 
-@sprite .collapse {
-    gwt-image: "collapse_up";
+.collapse {
+    gwt-sprite: "collapse_up";
     cursor: pointer;
 }
 
-@sprite .collapse:hover {
-    gwt-image: "collapse_rl";
+.collapse:hover {
+    gwt-sprite: "collapse_rl";
 }
 
-@sprite .importSmall {
-    gwt-image: "import_small_up";
+.importSmall {
+    gwt-sprite: "import_small_up";
     margin: 0;
 }
 
-@sprite .pencilSmall {
-    gwt-image: "pencil_small";
+.pencilSmall {
+    gwt-sprite: "pencil_small";
     margin: 0;
 }
 
@@ -504,58 +504,58 @@ input:focus, textarea:focus, button:focus {
     cursor: pointer;
 }
 
-@sprite .delete {
-    gwt-image: "delete";
+.delete {
+    gwt-sprite: "delete";
 }
 
-@sprite .record {
-    gwt-image: "record";
+.record {
+    gwt-sprite: "record";
 }
 
-@sprite .pencil {
-    gwt-image: "pencil_up";
+.pencil {
+    gwt-sprite: "pencil_up";
 }
 
-@sprite .toolbarButton:hover .pencil {
-    gwt-image: "pencil_rl";
+.toolbarButton:hover .pencil {
+    gwt-sprite: "pencil_rl";
 }
 
-@sprite .refresh {
-    gwt-image: "refresh_up";
+.refresh {
+    gwt-sprite: "refresh_up";
     cursor: pointer;
     display: inline-block;
 }
 
-@sprite .refresh:hover {
-    gwt-image: "refresh_rl";
+.refresh:hover {
+    gwt-sprite: "refresh_rl";
 }
 
-@sprite .deselect {
-    gwt-image: "deselect_up";
+.deselect {
+    gwt-sprite: "deselect_up";
     cursor: pointer;
     display: inline-block;
 }
 
-@sprite .deselectDisabled {
-    gwt-image: "deselect_dis";
+.deselectDisabled {
+    gwt-sprite: "deselect_dis";
     cursor: default;
     display: inline-block;
 }
 
-@sprite .deselect:hover {
-    gwt-image: "deselect_rl";
+.deselect:hover {
+    gwt-sprite: "deselect_rl";
 }
 
-@sprite .toolbarButton:hover .delete {
-    gwt-image: "deleteRl";
+.toolbarButton:hover .delete {
+    gwt-sprite: "deleteRl";
 }
 
-@sprite .toolbarButton:hover .stop {
-    gwt-image: "stopRl";
+.toolbarButton:hover .stop {
+    gwt-sprite: "stopRl";
 }
 
-@sprite .stop, .toolbarButtonDisabled:hover .stop {
-    gwt-image: "stop";
+.stop, .toolbarButtonDisabled:hover .stop {
+    gwt-sprite: "stop";
 }
 
 .delete,
@@ -599,8 +599,8 @@ input:focus, textarea:focus, button:focus {
     right: 1px;
 }
 
-@sprite .gwt-SplitLayoutPanel-HDragger, .gwt-SplitLayoutPanel-VDragger {
-    gwt-image: "resize";
+.gwt-SplitLayoutPanel-HDragger, .gwt-SplitLayoutPanel-VDragger {
+    gwt-sprite: "resize";
     width: 100%;
     height: 100%;
     background-color: transparent;
@@ -635,14 +635,14 @@ input:focus, textarea:focus, button:focus {
     text-transform: uppercase;
 }
 
-@sprite .statementImage {
-    gwt-image: "listDot";
+.statementImage {
+    gwt-sprite: "listDot";
     margin-right: 5px;
     display: inline-block;
 }
 
-@sprite .statementImageRl, .statementImageDn {
-    gwt-image: "listDotRl";
+.statementImageRl, .statementImageDn {
+    gwt-sprite: "listDotRl";
     cursor: pointer;
 }
 
@@ -679,8 +679,8 @@ input:focus, textarea:focus, button:focus {
     -o-transition: width .5s ease;
 }
 
-@sprite .power {
-    gwt-image: "power";
+.power {
+    gwt-sprite: "power";
 
     float: right;
     background-position-y: 40%;
@@ -697,12 +697,12 @@ input:focus, textarea:focus, button:focus {
     outline-offset: -2px;
 }
 
-@sprite .importBtn {
-    gwt-image: "importBtn";
+.importBtn {
+    gwt-sprite: "importBtn";
 }
 
-@sprite .exportBtn {
-    gwt-image: "exportBtn";
+.exportBtn {
+    gwt-sprite: "exportBtn";
 }
 
 .exportBtn, .importBtn {

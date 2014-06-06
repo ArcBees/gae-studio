@@ -10,10 +10,10 @@
 package com.arcbees.gaestudio.client.ui;
 
 import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.GssResource;
 
 public interface MessageResources extends ClientBundle {
-    interface Styles extends CssResource {
+    interface Styles extends GssResource {
         String success();
 
         String error();
