@@ -1,9 +1,5 @@
-@def colorBlue eval("com.arcbees.gaestudio.client.resources.Colors.colorBlue");
-@def colorGrey2B eval("com.arcbees.gaestudio.client.resources.Colors.colorGrey2B");
-@def colorLightGrey eval("com.arcbees.gaestudio.client.resources.Colors.colorLightGrey");
-@def colorLightGray eval("com.arcbees.gaestudio.client.resources.Colors.colorLightGray");
-@def colorLightGreyEB eval("com.arcbees.gaestudio.client.resources.Colors.colorLightGreyEB");
-@def editInputWidth eval("com.arcbees.gaestudio.client.resources.CssConstants.editInputWidth");
+@def COLOR_BLUE eval("com.arcbees.gaestudio.client.resources.Colors.colorBlue");
+@def COLOR_LIGHT_GREY_EB eval("com.arcbees.gaestudio.client.resources.Colors.colorLightGreyEB");
 
 /* @external .gwt-SplitLayoutPanel-HDragger;
 @external .gwt-SplitLayoutPanel-VDragger;*/
@@ -192,7 +188,7 @@ input:focus, textarea:focus, button:focus {
     width: 100%;
     position: absolute;
     top: 0;
-    background: colorLightGreyEB;
+    background: COLOR_LIGHT_GREY_EB;
 
     border-left: 3px solid #25AEE1;
 
@@ -236,7 +232,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .firstTable .lockedRow td {
-    background-color: colorBlue;
+    background-color: COLOR_BLUE;
     color: #fff;
 }
 
@@ -760,7 +756,7 @@ input:focus, textarea:focus, button:focus {
 .buttonContainer button, .chooseFileButton {
     margin: 0;
     text-align: center;
-    width: literal('calc(50% - 5px)');
+    width: calc(50% - 5px);
     padding: 5px;
 }
 

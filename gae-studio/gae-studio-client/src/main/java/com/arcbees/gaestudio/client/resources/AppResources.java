@@ -163,7 +163,6 @@ public interface AppResources extends ClientBundle {
         String editorLabelSeparator();
     }
 
-    @CssResource.NotStrict
     public Styles styles();
 
     public AuthStyles authStyles();

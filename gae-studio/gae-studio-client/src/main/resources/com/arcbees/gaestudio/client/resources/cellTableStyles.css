@@ -1,9 +1,4 @@
-@def colorBlue eval("com.arcbees.gaestudio.client.resources.Colors.colorBlue");
-@def colorGrey2B eval("com.arcbees.gaestudio.client.resources.Colors.colorGrey2B");
-@def colorLightGrey eval("com.arcbees.gaestudio.client.resources.Colors.colorLightGrey");
-@def colorLightGray eval("com.arcbees.gaestudio.client.resources.Colors.colorLightGray");
-@def colorLightGreyEB eval("com.arcbees.gaestudio.client.resources.Colors.colorLightGreyEB");
-@def editInputWidth eval("com.arcbees.gaestudio.client.resources.CssConstants.editInputWidth");
+@def COLOR_LIGHT_GRAY eval("com.arcbees.gaestudio.client.resources.Colors.colorLightGray");
 
 .cellTableEvenRow, .cellTableOddRow {
     border: none;
@@ -39,7 +34,7 @@
 }
 
 .cellTableHeader {
-    color: colorLightGray;
+    color: COLOR_LIGHT_GRAY;
     font-size: 12px;
     font-weight: bold;
     line-height: 30px;

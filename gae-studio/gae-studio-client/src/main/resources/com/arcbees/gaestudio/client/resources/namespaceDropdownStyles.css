@@ -46,7 +46,7 @@ ul.openedList {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    width: literal('calc(100% - 52px)');
+    width: calc(100% - 52px);
     display: inline-block;
 }
 
@@ -72,7 +72,7 @@ ul.openedList {
 
 .dropDownArrow, .dropDownArrow:hover {
     width: 100%;
-    background-position-x: literal('calc(100% - 7px)');
+    background-position-x: calc(100% - 7px);
     background-position-y: 50%;
 }
 
