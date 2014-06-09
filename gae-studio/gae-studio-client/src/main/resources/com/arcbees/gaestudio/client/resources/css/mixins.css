@@ -12,3 +12,14 @@
     -moz-box-shadow: HORIZONTAL VERTICAL BLUR SPREAD COLOR;
     box-shadow: HORIZONTAL VERTICAL BLUR SPREAD COLOR;
 }
+
+@defmixin boxShadowNone() {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+@defmixin rotate180() {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}

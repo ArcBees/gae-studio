@@ -1,6 +1,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <ui:with field="widgetRes" type="com.arcbees.gaestudio.client.resources.WidgetResources"/>
     <ui:with type="com.arcbees.gaestudio.client.place.NameTokens" field="nameTokens"/>
     <ui:style field="style" type="com.arcbees.gaestudio.client.application.widget.HeaderView.Styles">
         .header {
@@ -100,25 +101,25 @@
             color: #ddd;
         }
     </ui:style>
-    <g:HTMLPanel styleName="{style.header}">
-        <a href="" class="{style.logo}">
+    <g:HTMLPanel styleName="{widgetRes.header.header}">
+        <a href="" class="{widgetRes.header.logo}">
             <g:Image resource="{resources.logo}"/>
         </a>
-        <div class="{style.rightContainer}">
+        <div class="{widgetRes.header.rightContainer}">
             <g:Anchor ui:field="logout" styleName="{resources.styles.power}"/>
-            <div class="{style.cogplay}" ui:field="cog">
+            <div class="{widgetRes.header.cogplay}" ui:field="cog">
                 <g:Image resource="{resources.cogplay}"/>
                 <ul ui:field="themes">
                     <li>
                         Clear Theme
                     </li>
-                    <li class="{style.inactive}">
+                    <li class="{widgetRes.header.inactive}">
                         Dark Theme
                     </li>
                 </ul>
             </div>
-            <div ui:field="menu" class="{style.menu}">
-                <a href="#{nameTokens.getVisualizer}" class="{style.activeState}">
+            <div ui:field="menu" class="{widgetRes.header.menu}">
+                <a href="#{nameTokens.getVisualizer}" class="{widgetRes.header.activeState}">
                     Visualizer
                 </a>
                 <a ui:field="profilerAnchor" href="#{nameTokens.getProfiler}">
