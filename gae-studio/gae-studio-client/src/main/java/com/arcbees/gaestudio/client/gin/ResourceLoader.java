@@ -13,7 +13,7 @@ import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.client.resources.VisualizerResources;
-import com.arcbees.gaestudio.client.ui.MessageResources;
+import com.arcbees.gaestudio.client.resources.MessageResources;
 import com.google.inject.Inject;
 
 public class ResourceLoader {

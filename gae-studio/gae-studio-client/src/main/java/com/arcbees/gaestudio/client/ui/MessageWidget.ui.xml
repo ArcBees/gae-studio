@@ -1,6 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder' xmlns:g="urn:import:com.google.gwt.user.client.ui">
     <ui:with field="messageResources"
-             type="com.arcbees.gaestudio.client.ui.MessageResources"/>
+             type="com.arcbees.gaestudio.client.resources.MessageResources"/>
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
     <g:HTMLPanel ui:field="messageBox" styleName="{messageResources.styles.message}" visible="false">
         <g:InlineLabel ui:field="messageLabel" debugId="{debugIds.getMessage}"/>

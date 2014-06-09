@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.ui;
+package com.arcbees.gaestudio.client.resources;
 
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.GssResource;
@@ -23,6 +23,6 @@ public interface MessageResources extends ClientBundle {
         String close();
     }
 
-    @Source({"../resources/css/colors.css", "css/styles.css"})
+    @Source({"css/colors.css", "css/messagestyles.css"})
     Styles styles();
 }
