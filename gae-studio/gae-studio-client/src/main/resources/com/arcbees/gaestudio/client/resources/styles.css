@@ -1,8 +1,7 @@
 @def COLOR_BLUE eval("com.arcbees.gaestudio.client.resources.Colors.colorBlue");
 @def COLOR_LIGHT_GREY_EB eval("com.arcbees.gaestudio.client.resources.Colors.colorLightGreyEB");
 
-/* @external .gwt-SplitLayoutPanel-HDragger;
-@external .gwt-SplitLayoutPanel-VDragger;*/
+@external gwt-SplitLayoutPanel-HDragger gwt-SplitLayoutPanel-VDragger;
 
 body, * {
     font-family: Source Sans Pro, Verdana, sans-serif;
