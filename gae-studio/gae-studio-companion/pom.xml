@@ -227,6 +227,7 @@
                     <appEngineVersion>${gae.version}</appEngineVersion>
                     <appEngineHome>${gae.home}</appEngineHome>
                     <extraJvmArgs>-Dappengine.sdk.root=${gae.home}</extraJvmArgs>
+                    <runTarget>gae-studio.html</runTarget>
 
                     <module>com.arcbees.gaestudio.companion.Companion</module>
                 </configuration>

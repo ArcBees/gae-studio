@@ -116,6 +116,11 @@
             <artifactId>gwt-jackson</artifactId>
             <version>${gwt-jackson.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.jdramaix</groupId>
+            <artifactId>gssresource</artifactId>
+            <version>${gss.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
