@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageCloseDelay;
+import com.arcbees.gaestudio.client.resources.MessageResources;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
