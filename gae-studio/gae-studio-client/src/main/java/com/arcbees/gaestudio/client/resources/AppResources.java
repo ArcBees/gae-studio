@@ -10,7 +10,6 @@
 package com.arcbees.gaestudio.client.resources;
 
 import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.GssResource;
 import com.google.gwt.resources.client.ImageResource;
 
@@ -163,77 +162,114 @@ public interface AppResources extends ClientBundle {
         String editorLabelSeparator();
     }
 
+    @Source({"css/colors.css", "css/mixins.css", "css/styles.css"})
     public Styles styles();
 
+    @Source("css/authStyles.css")
     public AuthStyles authStyles();
 
-    ImageResource logo();
-
-    ImageResource record();
-
-    ImageResource stop();
-
-    ImageResource delete();
-
-    ImageResource refresh_up();
-
-    ImageResource refresh_rl();
-
-    ImageResource deselect_up();
-
-    ImageResource deselect_rl();
-
-    ImageResource deselect_dis();
-
-    ImageResource pencil_up();
-
-    ImageResource pencil_rl();
-
-    ImageResource pencil_small();
-
+    @Source("images/create.png")
     ImageResource create();
 
+    @Source("images/delete.png")
+    ImageResource delete();
+
+    @Source("images/deselect_up.png")
+    ImageResource deselect_up();
+
+    @Source("images/deselect_rl.png")
+    ImageResource deselect_rl();
+
+    @Source("images/deselect_dis.png")
+    ImageResource deselect_dis();
+
+    @Source("images/logo.png")
+    ImageResource logo();
+
+    @Source("images/pencil_up.png")
+    ImageResource pencil_up();
+
+    @Source("images/pencil_rl.png")
+    ImageResource pencil_rl();
+
+    @Source("images/pencil_small.png")
+    ImageResource pencil_small();
+
+    @Source("images/record.png")
+    ImageResource record();
+
+    @Source("images/refresh_up.png")
+    ImageResource refresh_up();
+
+    @Source("images/refresh_rl.png")
+    ImageResource refresh_rl();
+
+    @Source("images/stop.png")
+    ImageResource stop();
+
+    @Source("images/closeToggle.png")
     ImageResource closeToggle();
 
+    @Source("images/trash_small_up.png")
     ImageResource trash_small_up();
 
-    ImageResource import_small_up();
-
+    @Source("images/trash_small_rl.png")
     ImageResource trash_small_rl();
 
+    @Source("images/import_small_up.png")
+    ImageResource import_small_up();
+
+    @Source("images/expand_up.png")
     ImageResource expand_up();
 
+    @Source("images/expand_rl.png")
     ImageResource expand_rl();
 
+    @Source("images/collapse_up.png")
     ImageResource collapse_up();
 
+    @Source("images/collapse_rl.png")
     ImageResource collapse_rl();
 
+    @Source("images/splashLogo.png")
     ImageResource splashLogo();
 
+    @Source("images/ajaxLoader30px.gif")
     ImageResource ajaxLoader30px();
 
+    @Source("images/cogplay.png")
     ImageResource cogplay();
 
+    @Source("images/deleteRl.png")
     ImageResource deleteRl();
 
+    @Source("images/stopRl.png")
     ImageResource stopRl();
 
+    @Source("images/resize.png")
     ImageResource resize();
 
+    @Source("images/listDot.png")
     ImageResource listDot();
 
+    @Source("images/listDotRl.png")
     ImageResource listDotRl();
 
-    ImageResource dropDownArrowUp();
-
-    ImageResource dropDownArrowRl();
-
+    @Source("images/listGraph.png")
     ImageResource listGraph();
 
+    @Source("images/power.png")
     ImageResource power();
 
+    @Source("images/importBtn.png")
     ImageResource importBtn();
 
+    @Source("images/exportBtn.png")
     ImageResource exportBtn();
+
+    @Source("images/dropdown/dropDownArrowUp.png")
+    ImageResource dropDownArrowUp();
+
+    @Source("images/dropdown/dropDownArrowRl.png")
+    ImageResource dropDownArrowRl();
 }

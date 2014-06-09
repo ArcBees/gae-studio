@@ -17,14 +17,14 @@ public interface NamespaceDropdownResources extends Dropdown.Resources {
     }
 
     @Override
-    @Source("dropDownArrowRl.png")
+    @Source("images/dropdown/dropDownArrowRl.png")
     ImageResource dropDownArrowRl();
 
     @Override
-    @Source("dropDownArrowUp.png")
+    @Source("images/dropdown/dropDownArrowUp.png")
     ImageResource dropDownArrowUp();
 
     @Override
-    @Source("namespaceDropdownStyles.css")
+    @Source("css/namespaceDropdownStyles.css")
     MyDropdownStyle styles();
 }

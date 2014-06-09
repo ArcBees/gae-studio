@@ -16,6 +16,6 @@ public interface RequestFilterCellListResources extends CellList.Resources {
     }
 
     @Override
-    @Source({"requestFilterCellListStyles.css"})
+    @Source({"css/requestFilterCellListStyles.css"})
     ListStyle cellListStyle();
 }

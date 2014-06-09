@@ -1,0 +1,14 @@
+@provide 'mixins';
+
+@defmixin transition(TYPE, TIME, EASE) {
+    transition: TYPE TIME EASE;
+    -webkit-transition: TYPE TIME EASE;
+    -moz-transition: TYPE TIME EASE;
+    -o-transition: TYPE TIME EASE;
+}
+
+@defmixin boxShadow(HORIZONTAL, VERTICAL, BLUR, SPREAD, COLOR) {
+    -webkit-box-shadow: HORIZONTAL VERTICAL BLUR SPREAD COLOR;
+    -moz-box-shadow: HORIZONTAL VERTICAL BLUR SPREAD COLOR;
+    box-shadow: HORIZONTAL VERTICAL BLUR SPREAD COLOR;
+}

@@ -1,0 +1,93 @@
+.entityPanel {
+    width: 0;
+    float: right;
+}
+
+.toolbar {
+    float: left;
+    height: 100%;
+}
+
+.root {
+    height: 100%;
+}
+
+.entity {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+.container {
+    width: 100%;
+}
+
+.popupContent {
+    font-size: 1.1em;
+
+    margin-bottom: 20px;
+}
+
+/* -> Import View -- */
+
+.popupContentImport {
+    text-align: right;
+
+    width: 290px;
+}
+
+.ajaxLoader {
+    position: absolute;
+    top: 109px;
+    left: 128px;
+}
+
+/* -> Entity deletion -- */
+
+.deletion h3 {
+    margin: 0 0 10px 0;
+}
+
+.popupContentDeletion {
+    width: 250px;
+}
+
+/* -> Sidebar -- */
+
+.sidebar .namespaces {
+    width: 232px;
+}
+
+.sidebar .actionsPanel {
+    position: absolute;
+    right: 25px;
+    top: 5px;
+}
+
+/* -> UI -- */
+
+.ui .content {
+    max-height: 255px;
+    text-align: left;
+    overflow: hidden;
+}
+
+.ui .dots {
+    text-align: left;
+    display: block;
+}
+
+/* -> Namespace -- */
+
+.namespace.root {
+    position: relative;
+    height: 46px;
+}
+
+.namespace .delete {
+    position: absolute;
+    right: 5px;
+    top: 7px;
+    cursor: pointer;
+    margin: 10px 10px 10px 15px;
+}

@@ -1,36 +1,16 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <ui:with field="visualizer" type="com.arcbees.gaestudio.client.resources.VisualizerResources"/>
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
-    <ui:style>
-        .entityPanel {
-            width: 0;
-            float: right;
-        }
-
-        .toolbar {
-            float: left;
-            height: 100%;
-        }
-
-        .root {
-            height: 100%;
-        }
-
-        .entity {
-            height: 100%;
-            overflow-x: hidden;
-            overflow-y: visible;
-        }
-    </ui:style>
-    <g:HTMLPanel debugId="{debugIds.getVisualizer}" styleName="{style.root}">
+    <g:HTMLPanel debugId="{debugIds.getVisualizer}" styleName="{visualizer.styles.root}">
         <g:SimplePanel ui:field="entityTypesSidebar" addStyleNames="{resources.styles.entityTypeSelector}"/>
-        <g:SimplePanel ui:field="toolbar" styleName="{style.toolbar}"/>
-        <div class="{style.entity}">
+        <g:SimplePanel ui:field="toolbar" styleName="{visualizer.styles.toolbar}"/>
+        <div class="{visualizer.styles.entity}">
             <g:SimplePanel ui:field="entityListPanel"
                            addStyleNames="{resources.styles.entityListPanel} {resources.styles.entityPanelTransitions}"/>
             <g:SimplePanel ui:field="entityDetailsPanel"
-                           addStyleNames="{style.entityPanel} {resources.styles.entityPanelTransitions}"/>
+                           addStyleNames="{visualizer.styles.entityPanel} {resources.styles.entityPanelTransitions}"/>
         </div>
     </g:HTMLPanel>
 </ui:UiBinder>

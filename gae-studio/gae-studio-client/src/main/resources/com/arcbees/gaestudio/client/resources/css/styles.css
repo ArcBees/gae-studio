@@ -1,6 +1,3 @@
-@def COLOR_BLUE eval("com.arcbees.gaestudio.client.resources.Colors.colorBlue");
-@def COLOR_LIGHT_GREY_EB eval("com.arcbees.gaestudio.client.resources.Colors.colorLightGreyEB");
-
 @external gwt-SplitLayoutPanel-HDragger gwt-SplitLayoutPanel-VDragger;
 
 body, * {
@@ -37,21 +34,16 @@ input:focus, textarea:focus, button:focus {
     position: relative;
     background: #2d2d2d;
 
-    transition: all .25s ease;
-    -webkit-transition: all .25s ease;
-    -moz-transition: all .25s ease;
-    -o-transition: all .25s ease;
+    @mixin transition(all, .25s, ease);
 }
 
 .toolbarButton:hover {
     background: white;
     color: black;
-    border-left: 2px solid #25aae1;
+    border-left: 2px solid C_PRIMARY;
     margin-left: 0;
-    transition: margin-left 0;
-    -webkit-transition: margin-left 0;
-    -moz-transition: margin-left 0;
-    -o-transition: margin-left 0;
+
+    @mixin transition(margin-left, 0, ease);
 }
 
 .toolbarButton:hover > div:first-child {
@@ -115,10 +107,7 @@ input:focus, textarea:focus, button:focus {
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    transition: background-color .25s ease;
-    -webkit-transition: background-color .25s ease;
-    -moz-transition: background-color .25s ease;
-    -o-transition: background-color .25s ease;
+    @mixin transition(background-color, .25s, ease);
 }
 
 .kindListElement span {
@@ -128,7 +117,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .kindListElement:hover, .kindListElementSelected {
-    background-color: #25aae1;
+    background-color: C_PRIMARY;
     color: #f6f6f6;
 
     cursor: pointer;
@@ -139,16 +128,14 @@ input:focus, textarea:focus, button:focus {
 }
 
 .entityTypeSelector {
-    background: #ececec;
+    background: C_SECONDARY_LIGHT;
     color: #2d2d2d;
 
     float: left;
     width: 250px;
     height: 100%;
 
-    -webkit-transition: margin-left .5s ease;
-    -moz-transition: margin-left .5s ease;
-    -o-transition: margin-left .5s ease;
+    @mixin transition(margin-left, .5s, ease);
 }
 
 .entityTypeSelector > div {
@@ -176,10 +163,7 @@ input:focus, textarea:focus, button:focus {
     zoom: 1;
     overflow-y: auto;
 
-    transition: left .5s ease;
-    -webkit-transition: left .5s ease;
-    -moz-transition: left .5s ease;
-    -o-transition: left .5s ease;
+    @mixin transition(left, .5s, ease);
 }
 
 .entityDetailPanel {
@@ -187,14 +171,11 @@ input:focus, textarea:focus, button:focus {
     width: 100%;
     position: absolute;
     top: 0;
-    background: COLOR_LIGHT_GREY_EB;
+    background: C_SECONDARY_LIGHT;
 
     border-left: 3px solid #25AEE1;
 
-    transition: left .5s ease;
-    -webkit-transition: left .5s ease, width .5s ease;
-    -moz-transition: left .5s ease, width .5s ease;
-    -o-transition: left .5s ease, width .5s ease;
+    @mixin transition(left, .5s, ease);
 }
 
 .hiddenOverlay {
@@ -207,10 +188,7 @@ input:focus, textarea:focus, button:focus {
     padding-left: 8px;
     opacity: 1;
 
-    transition: all .5s ease;
-    -webkit-transition: all .5s ease;
-    -moz-transition: all .5s ease;
-    -o-transition: all .5s ease;
+    @mixin transition(all, .5s, ease);
 }
 
 .hiddenOverlay.revealOverlay > div:before {
@@ -231,7 +209,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .firstTable .lockedRow td {
-    background-color: COLOR_BLUE;
+    background-color: C_PRIMARY;
     color: #fff;
 }
 
@@ -298,7 +276,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .popup {
-    background-color: #EBEBEB;
+    background-color: C_SECONDARY_LIGHT;
     color: #2d2d2d;
 
     padding: 20px 20px 20px 20px;
@@ -377,7 +355,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .authForm input:hover, .authForm input:focus {
-    outline: 2px solid #25aae1;
+    outline: 2px solid C_PRIMARY;
     outline-offset: -2px;
 }
 
@@ -391,7 +369,7 @@ input:focus, textarea:focus, button:focus {
     text-transform: uppercase;
 
     border: none;
-    background-color: #25aae1;
+    background-color: C_PRIMARY;
     color: white;
 }
 
@@ -443,7 +421,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 #loginForm #forgotLink {
-    color: #25aae1;
+    color: C_PRIMARY;
     font-size: 1.2em;
 }
 
@@ -610,7 +588,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .statementDetails {
-    background-color: #ececec;
+    background-color: C_SECONDARY_LIGHT;
     overflow: hidden;
     padding: 15px;
     margin-left: 12px;
@@ -618,14 +596,11 @@ input:focus, textarea:focus, button:focus {
 
     display: none;
 
-    transition: height .5s ease;
-    -webkit-transition: height .5s ease;
-    -moz-transition: height .5s ease;
-    -o-transition: height .5s ease;
+    @mixin transition(height, .5s, ease);
 }
 
 .statementDetails p {
-    color: #7a7a7a;
+    color: C_SECONDARY;
     margin: 0;
     text-transform: uppercase;
 }
@@ -663,15 +638,12 @@ input:focus, textarea:focus, button:focus {
 
 .methodName:hover {
     cursor: pointer;
-    background-color: #25aae1;
+    background-color: C_PRIMARY;
     color: white;
 }
 
 .entityPanelTransitions {
-    transition: width .5s ease;
-    -webkit-transition: width .5s ease;
-    -moz-transition: width .5s ease;
-    -o-transition: width .5s ease;
+    @mixin transition(width, .5s, ease);
 }
 
 .power {
@@ -715,7 +687,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .exportBtn:hover, .importBtn:hover {
-    background-color: #25aae1;
+    background-color: C_PRIMARY;
     cursor: pointer;
 }
 
@@ -736,7 +708,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .checked {
-    background-color: #25aae1;
+    background-color: C_PRIMARY;
 }
 
 .booleanKey {
@@ -772,7 +744,7 @@ input:focus, textarea:focus, button:focus {
     height: 2px;
     margin-top: 3px;
     margin-bottom: 1px;
-    background-color: #25aae1;
+    background-color: C_PRIMARY;
 }
 
 .embeddedEntityProperties > .editorLabel {
@@ -788,7 +760,7 @@ input:focus, textarea:focus, button:focus {
 .editorLabel {
     font-size: 12px;
     font-weight: bold;
-    color: #25aae1;
+    color: C_PRIMARY;
     text-transform: uppercase;
 }
 

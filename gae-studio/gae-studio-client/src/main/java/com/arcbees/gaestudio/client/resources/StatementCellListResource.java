@@ -16,6 +16,6 @@ public interface StatementCellListResource extends CellList.Resources {
     }
 
     @Override
-    @Source({CellList.Style.DEFAULT_CSS, "statementCellListStyles.css"})
+    @Source({CellList.Style.DEFAULT_CSS, "css/statementCellListStyles.css"})
     ListStyle cellListStyle();
 }

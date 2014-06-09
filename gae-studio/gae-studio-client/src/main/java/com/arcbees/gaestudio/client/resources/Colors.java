@@ -10,9 +10,10 @@
 package com.arcbees.gaestudio.client.resources;
 
 public class Colors {
-    public static String colorBlue = "#25aae1";
-    public static String colorLightGrey = "#ececec";
-    public static String colorLightGray = "#7a7a7a";
-    public static String colorLightGreyEB = "#ebebeb";
-    public static String colorGrey2B = "#2b2b2b";
+    public static String C_PRIMARY = "#25aae1";
+    public static String C_SECONDARY = "#7a7a7a";
+    public static String C_SECONDARY_LIGHT = "#ececec";
+    public static String C_SECONDARY_DARK = "#2b2b2b";
+    public static String C_ACTION_SUCCESS = "#20BE02";
+    public static String C_ACTION_ERROR = "#DB0707";
 }

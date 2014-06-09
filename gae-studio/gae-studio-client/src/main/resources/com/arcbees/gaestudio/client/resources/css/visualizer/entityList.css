@@ -1,0 +1,42 @@
+.heading {
+    padding-left: 10px;
+}
+
+.deleteByKind {
+    width: 242px;
+    float: right;
+}
+
+.deleteByKind ul {
+    right: 38px;
+}
+
+.deleteByKind ul span {
+    max-width: 450px;
+}
+
+.table {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.table table {
+    width: 100%;
+}
+
+.main {
+    position: relative;
+    height: 100%;
+}
+
+.refresh {
+    display: inline-block;
+    margin: 17px 0 0 30px;
+    border-right: 2px solid C_SECONDARY_LIGHT;
+    padding-right: 6px;
+}
+
+.deselect {
+    display: inline-block;
+    margin-left: 2px;
+}

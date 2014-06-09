@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.client.gin;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.PagerResources;
+import com.arcbees.gaestudio.client.resources.VisualizerResources;
 import com.arcbees.gaestudio.client.ui.MessageResources;
 import com.google.inject.Inject;
 
@@ -20,11 +21,14 @@ public class ResourceLoader {
     public ResourceLoader(AppResources resources,
                           MessageResources messageResources,
                           CellTableResource cellTableResource,
-                          PagerResources pagerResources) {
+                          PagerResources pagerResources,
+                          VisualizerResources visualizerResources) {
         resources.styles().ensureInjected();
         resources.authStyles().ensureInjected();
         cellTableResource.cellTableStyle().ensureInjected();
         messageResources.styles().ensureInjected();
         pagerResources.simplePagerStyle().ensureInjected();
+        visualizerResources.styles().ensureInjected();
+        visualizerResources.entityList().ensureInjected();
     }
 }
