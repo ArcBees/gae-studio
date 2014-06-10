@@ -15,7 +15,7 @@
     margin-bottom: 11px;
     background-color: #FFFFFF !important;
 
-    @mixin boxshadow_inset(2px 2px 6px 1px rgba(0, 0, 0, 0.2));
+    @mixin boxshadow_inset(2px, 2px, 6px, 1px, rgba(0, 0, 0, 0.2));
     border: none;
 }
 

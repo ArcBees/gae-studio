@@ -504,7 +504,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .flipped {
-    @mixin rotate_180();
+    @mixin flip_horizontal();
 }
 
 .toggleKindsPanel {

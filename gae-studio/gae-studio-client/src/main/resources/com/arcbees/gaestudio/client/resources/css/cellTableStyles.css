@@ -7,7 +7,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    @mixin transition(all, .25s, ease);
+    @mixin transition_effect(all, .25s, ease);
 }
 
 .cellTableCell {
@@ -19,7 +19,7 @@
     word-break: break-word;
     font-size: 15px;
 
-    @mixin transition(all, .25s, ease);
+    @mixin transition_effect(all, .25s, ease);
 }
 
 .cellTableHoveredRow .cellTableCell {
