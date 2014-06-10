@@ -75,8 +75,6 @@ public interface AppResources extends ClientBundle {
 
         String button();
 
-        String authForm();
-
         String loginAjaxLoader();
 
         String northSection();
@@ -160,13 +158,18 @@ public interface AppResources extends ClientBundle {
         String collectionEditor();
 
         String editorLabelSeparator();
+
+        String license();
+
+        String licenseButtonContainer();
+
+        String innerContainer();
+
+        String version();
     }
 
     @Source({"css/colors.css", "css/mixins.css", "css/styles.css"})
     public Styles styles();
-
-    @Source("css/authStyles.css")
-    public AuthStyles authStyles();
 
     @Source("images/create.png")
     ImageResource create();

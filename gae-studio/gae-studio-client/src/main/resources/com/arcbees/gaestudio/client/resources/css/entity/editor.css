@@ -1,0 +1,34 @@
+@external checkbox;
+
+/* -> Abstract Property Editor With Widget Left Side view -- */
+
+.clear {
+    clear: both;
+}
+
+/* -> Custom Checkbox view -- */
+
+.checkbox {
+    color: white;
+    text-align: center;
+    line-height: 1em;
+
+    width: 1em;
+    height: 1em;
+    margin-top: 5px;
+    margin-right: 10px;
+    border: 2px solid C_PRIMARY;
+
+    float: left;
+}
+
+.checkbox:hover {
+    cursor: pointer;
+}
+
+/* -> Key Property Editor view -- */
+
+.dropdown {
+    position: relative;
+    height: 24px;
+}

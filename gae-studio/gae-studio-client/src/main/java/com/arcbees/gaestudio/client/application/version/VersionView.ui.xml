@@ -1,12 +1,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <ui:style>
-        .version {
-            position: fixed;
-            right: 5px;
-            bottom: 5px;
-            z-index: 1000;
-        }
-    </ui:style>
-    <g:InlineHTML ui:field="label" addStyleNames="{style.version}"/>
+
+    <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+
+    <g:InlineHTML ui:field="label" addStyleNames="{resources.styles.version}"/>
 </ui:UiBinder>

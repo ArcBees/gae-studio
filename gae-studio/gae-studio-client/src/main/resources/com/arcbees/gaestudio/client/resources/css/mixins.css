@@ -1,25 +1,209 @@
 @provide 'mixins';
 
-@defmixin transition(TYPE, TIME, EASE) {
-    transition: TYPE TIME EASE;
-    -webkit-transition: TYPE TIME EASE;
-    -moz-transition: TYPE TIME EASE;
-    -o-transition: TYPE TIME EASE;
+/**
+ * GSS Mixins Library
+ *
+ * - Border Radius
+ * -- borderradius(TOP_RIGHT BOTTOM_RIGHT BOTTOM_LEFT TOP_LEFT)
+ * -- rounded(SIZE)
+ * - Box Shadow
+ * -- boxshadow(HORIZONTAL VERTICAL BLUR SPREAD COLOR)
+ * -- boxshadow_inset(HORIZONTAL VERTICAL BLUR SPREAD COLOR)
+ * -- boxshadow_none()
+ * - Box Sizing
+ * -- boxsizing()
+ * - Drop Shadow
+ * -- dropshadow(HORIZONTAL VERTICAL BLUR ALPHA)
+ * - Inner Shadow
+ * -- innershadow(HORIZONTAL VERTICAL BLUR ALPHA)
+ * - Opacity
+ * -- opacity(ALPHA)
+ * - Transform
+ * -- Rotate
+ * --- rotate(DEGREE)
+ * --- rotate_180()
+ * -- Scale
+ * --- scale(RATIO_HORIZONTAL RATIO_VERTICAL)
+ * -- Translate
+ * --- translate(HORIZONTAL VERTICAL)
+ * - Transition
+ * -- transition(PROPERTY DURATION)
+ * -- transition_effect(PROPERTY DURATION EFFECT)
+ * -- transition_delay(PROPERTY DURATION EFFECT DELAY)
+ */
+
+/**
+ * Border Radius
+ *
+ * @param TOP_RIGHT size of the top right corner
+ * @param BOTTOM_RIGHT size of the bottom right corner
+ * @param BOTTOM_LEFT size of the bottom left corner
+ * @param TOP_LEFT size of the top left corner
+ * @param SIZE size of all corners
+ */
+
+@defmixin borderradius(TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT, TOP_LEFT) {
+    -webkit-border-top-right-radius: TOP_RIGHT;
+    -webkit-border-bottom-right-radius: BOTTOM_RIGHT;
+    -webkit-border-bottom-left-radius: BOTTOM_LEFT;
+    -webkit-border-top-left-radius: TOP_LEFT;
+    -moz-border-radius-topright: TOP_RIGHT;
+    -moz-border-radius-bottomright: BOTTOM_RIGHT;
+    -moz-border-radius-bottomleft: BOTTOM_LEFT;
+    -moz-border-radius-topleft: TOP_LEFT;
+    border-top-right-radius: TOP_RIGHT;
+    border-bottom-right-radius: BOTTOM_RIGHT;
+    border-bottom-left-radius: BOTTOM_LEFT;
+    border-top-left-radius: TOP_LEFT;
 }
 
-@defmixin boxShadow(HORIZONTAL, VERTICAL, BLUR, SPREAD, COLOR) {
+@defmixin rounded(SIZE) {
+    -webkit-border-radius: SIZE;
+    -moz-border-radius: SIZE;
+    border-radius: SIZE;
+}
+
+/**
+ * Box Shadow
+ * @param HORIZONTAL position of the horizontal shadow
+ * @param VERTICAL position of the vertical shadow
+ * @param BLUR distance of the blur
+ * @param SPREAD shadow size
+ * @param COLOR shadow color
+ */
+
+@defmixin boxshadow(HORIZONTAL, VERTICAL, BLUR, SPREAD, COLOR) {
     -webkit-box-shadow: HORIZONTAL VERTICAL BLUR SPREAD COLOR;
     -moz-box-shadow: HORIZONTAL VERTICAL BLUR SPREAD COLOR;
     box-shadow: HORIZONTAL VERTICAL BLUR SPREAD COLOR;
 }
 
-@defmixin boxShadowNone() {
+@defmixin boxshadow_inset(HORIZONTAL, VERTICAL, BLUR, SPREAD, COLOR) {
+    -webkit-box-shadow: inset HORIZONTAL VERTICAL BLUR SPREAD COLOR;
+    -moz-box-shadow: inset HORIZONTAL VERTICAL BLUR SPREAD COLOR;
+    box-shadow: inset HORIZONTAL VERTICAL BLUR SPREAD COLOR;
+}
+
+@defmixin boxshadow_none() {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
 }
 
-@defmixin rotate180() {
+/**
+ * Box Sizing
+ */
+
+@defmixin boxsizing() {
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/**
+ * Drop Shadow
+ * @param HORIZONTAL position of the horizontal shadow
+ * @param VERTICAL position of the vertical shadow
+ * @param BLUR distance of the blur
+ * @param ALPHA shadow opacity (0 to 1)
+ */
+
+@defmixin dropshadow(HORIZONTAL, VERTICAL, BLUR, ALPHA) {
+    -webkit-box-shadow: HORIZONTAL VERTICAL BLUR rgba(0, 0, 0, ALPHA);
+    -moz-box-shadow: HORIZONTAL VERTICAL BLUR rgba(0, 0, 0, ALPHA);
+    box-shadow: HORIZONTAL VERTICAL BLUR rgba(0, 0, 0, ALPHA);
+}
+
+/**
+ * Inner Shadow
+ * @param HORIZONTAL position of the horizontal shadow
+ * @param VERTICAL position of the vertical shadow
+ * @param BLUR distance of the blur
+ * @param ALPHA shadow opacity (0 to 1)
+ */
+
+@defmixin innershadow(HORIZONTAL, VERTICAL, BLUR, ALPHA) {
+    -webkit-box-shadow: inset HORIZONTAL VERTICAL BLUR rgba(0, 0, 0, ALPHA);
+    -moz-box-shadow: inset HORIZONTAL VERTICAL BLUR rgba(0, 0, 0, ALPHA);
+    box-shadow: inset HORIZONTAL VERTICAL BLUR rgba(0, 0, 0, ALPHA);
+}
+
+/**
+ * Opacity
+ * @param ALPHA shadow opacity (0 to 1)
+ */
+
+@defmixin opacity(ALPHA) {
+    -moz-opacity: ALPHA;
+    -khtml-opacity: ALPHA;
+    -webkit-opacity: ALPHA;
+    opacity: ALPHA;
+}
+
+/**
+ * Transform
+ * @param DEGREES angle of the rotation
+ * @param RATIO_HORIZONTAL horizontal ratio (x) where 1 = no changes and 2 = twice the size
+ * @param RATIO_VERTICAL vertical ratio (y) where 1 = no changes and 2 = twice the size
+ * @param HORIZONTAL horizontal change (x) in pixels
+ * @param VERTICAL vertical change (x) in pixels
+ */
+
+@defmixin rotate(DEGREES){
+    -webkit-transform: rotate(DEGREES);
+    -moz-transform: rotate(DEGREES);
+    -o-transform: rotate(DEGREES);
+    -ms-transform: rotate(DEGREES);
+    transform: rotate(DEGREES);
+}
+
+@defmixin rotate_180() {
     -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
+}
+
+@defmixin scale(RATIO_HORIZONTAL, RATIO_VERTICAL){
+    -webkit-transform: scale(RATIO_HORIZONTAL, RATIO_VERTICAL);
+    -moz-transform: scale(RATIO_HORIZONTAL, RATIO_VERTICAL);
+    -o-transform: scale(RATIO_HORIZONTAL, RATIO_VERTICAL);
+    -ms-transform: scale(RATIO_HORIZONTAL, RATIO_VERTICAL);
+    transform: scale(RATIO_HORIZONTAL, RATIO_VERTICAL);
+}
+
+@defmixin translate(HORIZONTAL, VERTICAL){
+    -webkit-transform: translate(HORIZONTAL, VERTICAL);
+    -moz-transform: translate(HORIZONTAL, VERTICAL);
+    -o-transform: translate(HORIZONTAL, VERTICAL);
+    -ms-transform: translate(HORIZONTAL, VERTICAL);
+    transform: translate(HORIZONTAL, VERTICAL);
+}
+
+/**
+ * Transition
+ * @param PROPERTY name of the CSS property affected
+ * @param DURATION time of the transition effect
+ * @param EFFECT speed curve of the transition effect
+ * @param DELAY time before the transition effect starts
+ */
+
+@defmixin transition(PROPERTY, DURATION) {
+    transition: PROPERTY DURATION;
+    -webkit-transition: PROPERTY DURATION;
+    -moz-transition: PROPERTY DURATION;
+    -o-transition: PROPERTY DURATION;
+}
+
+@defmixin transition_effect(PROPERTY, DURATION, EFFECT) {
+    transition: PROPERTY DURATION EFFECT;
+    -webkit-transition: PROPERTY DURATION EFFECT;
+    -moz-transition: PROPERTY DURATION EFFECT;
+    -o-transition: PROPERTY DURATION EFFECT;
+}
+
+@defmixin transition_delay(PROPERTY, DURATION, EFFECT, DELAY) {
+    transition: PROPERTY DURATION EFFECT DELAY;
+    -webkit-transition: PROPERTY DURATION EFFECT DELAY;
+    -moz-transition: PROPERTY DURATION EFFECT DELAY;
+    -o-transition: PROPERTY DURATION EFFECT DELAY;
 }

@@ -94,3 +94,14 @@
 .inactive {
     color: #ddd;
 }
+
+/* -> Messages view -- */
+
+.messages {
+    position: fixed;
+    top: 80px;
+    right: 10px;
+    width: 300px;
+    margin: 0 auto;
+    z-index: 1000;
+}

@@ -25,6 +25,8 @@ input:focus, textarea:focus, button:focus {
     height: 100%;
 }
 
+/* -> UI Toolbar Button */
+
 .toolbarButton {
     cursor: pointer;
 
@@ -34,7 +36,7 @@ input:focus, textarea:focus, button:focus {
     position: relative;
     background: #2d2d2d;
 
-    @mixin transition(all, .25s, ease);
+    @mixin transition_effect(all, .25s, ease);
 }
 
 .toolbarButton:hover {
@@ -43,7 +45,7 @@ input:focus, textarea:focus, button:focus {
     border-left: 2px solid C_PRIMARY;
     margin-left: 0;
 
-    @mixin transition(margin-left, 0, ease);
+    @mixin transition_effect(margin-left, 0, ease);
 }
 
 .toolbarButton:hover > div:first-child {
@@ -69,7 +71,28 @@ input:focus, textarea:focus, button:focus {
     color: white;
     border-color: transparent;
 
-    @mixin boxShadowNone();
+    @mixin boxshadow_none();
+}
+
+.toolbarButton .innerContainer {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    margin-top: -21px;
+    margin-left: 5px;
+}
+
+.toolbarButton .image img {
+    position: absolute;
+    top: 10px;
+    left: 14px;
+}
+
+.version {
+    position: fixed;
+    right: 5px;
+    bottom: 5px;
+    z-index: 1000;
 }
 
 .tabs {
@@ -105,7 +128,7 @@ input:focus, textarea:focus, button:focus {
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    @mixin transition(background-color, .25s, ease);
+    @mixin transition_effect(background-color, .25s, ease);
 }
 
 .kindListElement span {
@@ -122,7 +145,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .kindListElementSelected, .kindListElementSelectedHidden {
-    transition: background-color .25s ease .3s;
+    transition_effect: background-color .25s ease .3s;
 }
 
 .entityTypeSelector {
@@ -133,7 +156,7 @@ input:focus, textarea:focus, button:focus {
     width: 250px;
     height: 100%;
 
-    @mixin transition(margin-left, .5s, ease);
+    @mixin transition_effect(margin-left, .5s, ease);
 }
 
 .entityTypeSelector > div {
@@ -161,7 +184,7 @@ input:focus, textarea:focus, button:focus {
     zoom: 1;
     overflow-y: auto;
 
-    @mixin transition(left, .5s, ease);
+    @mixin transition_effect(left, .5s, ease);
 }
 
 .entityDetailPanel {
@@ -173,7 +196,7 @@ input:focus, textarea:focus, button:focus {
 
     border-left: 3px solid #25AEE1;
 
-    @mixin transition(left, .5s, ease);
+    @mixin transition_effect(left, .5s, ease);
 }
 
 .hiddenOverlay {
@@ -186,7 +209,7 @@ input:focus, textarea:focus, button:focus {
     padding-left: 8px;
     opacity: 1;
 
-    @mixin transition(all, .5s, ease);
+    @mixin transition_effect(all, .5s, ease);
 }
 
 .hiddenOverlay.revealOverlay > div:before {
@@ -282,7 +305,7 @@ input:focus, textarea:focus, button:focus {
     z-index: 110;
     position: relative;
 
-    @mixin boxShadow(0px, 1px, 16px, -2px, rgba(0, 0, 0, 0.35));
+    @mixin boxshadow(0px, 1px, 16px, -2px, rgba(0, 0, 0, 0.35));
 }
 
 .popupIcon {
@@ -329,34 +352,8 @@ input:focus, textarea:focus, button:focus {
     background: rgba(0, 0, 0, 0.4);
 }
 
-.authForm {
-    width: 345px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.authForm label {
-    width: 120px;
-    display: inline-block;
-}
-
-.authForm input {
-    width: 96%;
-    padding: 0 0 0 4% !important;
-    margin-bottom: 11px;
-    background-color: #FFFFFF !important;
-
-    box-shadow: inset 2px 2px 6px 1px rgba(0, 0, 0, 0.2);
-    border: none;
-}
-
-.authForm input:hover, .authForm input:focus {
-    outline: 2px solid C_PRIMARY;
-    outline-offset: -2px;
-}
-
 .button:hover:enabled, .button:active:enabled {
-    box-shadow: inset 2px 2px 6px 1px rgba(0, 0, 0, 0.4);
+    @mixin boxshadow_inset(2px, 2px, 6px, 1px, rgba(0, 0, 0, 0.4));
 }
 
 .button {
@@ -396,52 +393,6 @@ input:focus, textarea:focus, button:focus {
     border: none;
     background: #8d8d8d;
     text-shadow: none;
-}
-
-.authForm input, .authForm .button {
-    height: 37px;
-}
-
-.authForm .button {
-    margin-bottom: 20px;
-    text-transform: none;
-}
-
-.authForm input, .authForm .button, #loginForm #registerLink {
-    font-size: 1.5em;
-}
-
-#loginForm {
-    text-align: center;
-    position: relative;
-}
-
-#loginForm #forgotLink {
-    color: C_PRIMARY;
-    font-size: 1.2em;
-}
-
-#loginForm #registerLink {
-    margin-top: 60px;
-    display: block;
-
-    color: #353535;
-}
-
-#loginForm a {
-    cursor: pointer;
-}
-
-#loginForm a:active {
-    text-decoration: underline;
-}
-
-#loginForm #registerLink:hover, #loginForm #forgotLink:hover {
-    color: #0e76bc;
-}
-
-#loginForm #registerLink:active, #loginForm #forgotLink:active {
-    text-decoration: underline;
 }
 
 .loginAjaxLoader {
@@ -553,7 +504,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .flipped {
-    @mixin rotate180();
+    @mixin rotate_180();
 }
 
 .toggleKindsPanel {
@@ -591,7 +542,7 @@ input:focus, textarea:focus, button:focus {
 
     display: none;
 
-    @mixin transition(height, .5s, ease);
+    @mixin transition_effect(height, .5s, ease);
 }
 
 .statementDetails p {
@@ -638,7 +589,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .entityPanelTransitions {
-    @mixin transition(width, .5s, ease);
+    @mixin transition_effect(width, .5s, ease);
 }
 
 .power {
@@ -775,4 +726,14 @@ input:focus, textarea:focus, button:focus {
     width: editInputWidth;
     padding: 2px 4px;
     border: none;
+}
+
+/* -> License -- */
+
+.license {
+    margin-top: 100px;
+}
+
+.licenseButtonContainer {
+    position: relative;
 }

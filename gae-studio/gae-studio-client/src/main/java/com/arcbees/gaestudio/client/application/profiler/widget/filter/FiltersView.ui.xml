@@ -1,31 +1,14 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:dd='urn:import:com.arcbees.gaestudio.client.application.widget.dropdown'>
+
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
-    <ui:style>
-        .content {
-            position: absolute;
-            top: 46px;
-            width: 100%;
-            height: literal('calc(100% - 46px)');
-            overflow-y: auto;
-        }
+    <ui:with field="profilerRes" type="com.arcbees.gaestudio.client.resources.ProfilerResources"/>
 
-        .whiteLine {
-            width: 100%;
-            height: 1px;
-            background: white;
-            margin-bottom: 12px;
-        }
-
-        .main {
-            height: 100%;
-        }
-    </ui:style>
-    <g:HTMLPanel styleName="{style.main}}">
+    <g:HTMLPanel styleName="{profilerRes.styles.filter}}">
         <dd:Dropdown ui:field="dropdown"/>
-        <div class="{style.content}">
-            <div class="{style.whiteLine}"/>
+        <div class="{profilerRes.styles.content}">
+            <div class="{profilerRes.styles.whiteLine}"/>
             <g:SimplePanel ui:field="request"/>
             <g:SimplePanel ui:field="method" visible="false"/>
             <g:SimplePanel ui:field="type" visible="false"/>

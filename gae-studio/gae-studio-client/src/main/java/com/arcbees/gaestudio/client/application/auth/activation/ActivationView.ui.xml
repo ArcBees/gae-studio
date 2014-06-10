@@ -1,44 +1,26 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
     <ui:with field="nametokens" type="com.arcbees.gaestudio.client.place.NameTokens"/>
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <ui:with field="authRes" type="com.arcbees.gaestudio.client.resources.AuthResources"/>
 
-    <ui:style>
-        .wrapper {
-            font-size: 1.2em;
-            text-align: center;
-        }
+    <g:HTMLPanel styleName="{authRes.styles.root}">
+        <div class="{authRes.styles.wrap}">
+            <div class="{authRes.styles.main}">
+                <div class="{authRes.styles.topBlueBar}"/>
+                <div class="{authRes.styles.middleBlueBar}"/>
+                <div class="{authRes.styles.authForm}">
+                    <g:Image resource="{res.splashLogo}" addStyleNames="{authRes.styles.logo}"/>
+                    <div class="{authRes.styles.authForm}">
+                        <h3 class="{authRes.styles.formTitle}">Activate your account</h3>
 
-        .paragraph {
-            margin-bottom: 30px;
-        }
-
-        .loginLink, .loginLink:visited {
-            color: #25AAE1;
-            text-decoration: none;
-        }
-
-        .loginLink:hover {
-            color: #0e76bc;
-        }
-    </ui:style>
-
-    <g:HTMLPanel styleName="{res.authStyles.root}">
-        <div class="{res.authStyles.wrap}">
-            <div class="{res.authStyles.main}">
-                <div class="{res.authStyles.topBlueBar}"/>
-                <div class="{res.authStyles.middleBlueBar}"/>
-                <div class="{res.styles.authForm}">
-                    <g:Image resource="{res.splashLogo}" addStyleNames="{res.authStyles.logo}"/>
-                    <div class="{res.styles.authForm}">
-                        <h3 class="{res.authStyles.formTitle}">Activate your account</h3>
-
-                        <div class="{style.wrapper}">
-                            <p class="{style.paragraph}">
+                        <div class="{authRes.styles.wrapper}">
+                            <p class="{authRes.styles.paragraph}">
                                 A confirmation was sent to your e-mail address to activate your account
                             </p>
 
-                            <g:InlineHyperlink styleName="{style.loginLink}" targetHistoryToken="{nametokens.getAuth}">
+                            <g:InlineHyperlink styleName="{authRes.styles.loginLink}" targetHistoryToken="{nametokens.getAuth}">
                                 Go to the login page
                             </g:InlineHyperlink>
                         </div>
@@ -46,6 +28,6 @@
                 </div>
             </div>
         </div>
-        <div class="{res.authStyles.footer}"/>
+        <div class="{authRes.styles.footer}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

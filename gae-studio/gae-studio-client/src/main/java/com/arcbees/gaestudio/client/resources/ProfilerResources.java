@@ -12,25 +12,39 @@ package com.arcbees.gaestudio.client.resources;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.GssResource;
 
-public interface WidgetResources extends ClientBundle {
-    public interface Header extends GssResource {
-        String header();
+public interface ProfilerResources extends ClientBundle {
+    public interface Styles extends GssResource {
+        String root();
 
-        String logo();
+        String toolbar();
 
-        String rightContainer();
+        String splitLayoutPanel();
 
-        String cogplay();
+        String leftPanel();
 
-        String inactive();
+        String lightGrey();
 
-        String menu();
+        String mediumGrey();
 
-        String activeState();
+        String whitePanel();
 
-        String messages();
+        String buttons();
+
+        String panel();
+
+        String listGraph();
+
+        String statements();
+
+        String filter();
+
+        String content();
+
+        String whiteLine();
+
+        String ui();
     }
 
-    @Source({"css/colors.css", "css/widget/header.css"})
-    public Header header();
+    @Source({"css/colors.css", "css/mixins.css", "css/profiler/profiler.css"})
+    public Styles styles();
 }
