@@ -14,7 +14,6 @@ import com.google.gwt.resources.client.GssResource;
 
 public interface AuthResources extends ClientBundle {
     public interface Styles extends GssResource {
-
         String separator();
 
         String buttonContainer();
