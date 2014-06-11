@@ -10,10 +10,10 @@
             <g:west size="300">
                 <g:SplitLayoutPanel ui:field="leftPanel" styleName="{profilerRes.styles.leftPanel}">
                     <g:center>
-                        <g:SimplePanel ui:field="requestPanel" addStyleNames="{profilerRes.styles.lightGrey}"/>
+                        <g:SimpleLayoutPanel ui:field="requestPanel" addStyleNames="{profilerRes.styles.lightGrey}"/>
                     </g:center>
                     <g:south size="350">
-                        <g:SimplePanel ui:field="statisticsPanel" addStyleNames="{profilerRes.styles.mediumGrey}"/>
+                        <g:SimpleLayoutPanel ui:field="statisticsPanel" addStyleNames="{profilerRes.styles.mediumGrey}"/>
                     </g:south>
                 </g:SplitLayoutPanel>
             </g:west>
