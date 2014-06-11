@@ -13,6 +13,7 @@ import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.service.visualizer.ExportService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
+import com.google.appengine.labs.repackaged.org.json.JSONException;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -33,7 +34,7 @@ public class ExportCsvResource {
     }
 
     @GET
-    public Response exportKind(@QueryParam(UrlParameters.KIND) String kind) {
+    public Response exportKind(@QueryParam(UrlParameters.KIND) String kind) throws JSONException {
         String data = exportService.exportKindToCsv(kind);
 
         return Response.ok(data)
