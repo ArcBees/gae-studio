@@ -23,9 +23,9 @@
 }
 
 .success {
-    background-color: #20BE02;
+    background-color: C_ACTION_SUCCESS;
 }
 
 .error {
-    background-color: #DB0707;
+    background-color: C_ACTION_ERROR;
 }

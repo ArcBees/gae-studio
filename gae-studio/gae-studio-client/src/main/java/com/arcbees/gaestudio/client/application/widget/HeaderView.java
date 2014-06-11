@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.widget;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.client.resources.WidgetResources;
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.UListElement;
@@ -38,6 +39,8 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     }
 
     @UiField(provided = true)
+    WidgetResources widgetRes;
+    @UiField(provided = true)
     AppResources resources;
     @UiField
     DivElement cog;
@@ -45,8 +48,6 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     UListElement themes;
     @UiField
     Anchor logout;
-    @UiField
-    Styles style;
     @UiField
     DivElement menu;
     @UiField
@@ -68,12 +69,14 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
 
     @Inject
     HeaderView(Binder uiBinder,
+               WidgetResources widgetRes,
                AppResources resources) {
+        this.widgetRes = widgetRes;
         this.resources = resources;
 
         initWidget(uiBinder.createAndBindUi(this));
 
-        activeStyleName = style.activeState();
+        activeStyleName = widgetRes.header().activeState();
 
         asWidget().addAttachHandler(this);
 

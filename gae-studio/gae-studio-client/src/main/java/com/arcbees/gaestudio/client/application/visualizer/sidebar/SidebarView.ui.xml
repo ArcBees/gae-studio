@@ -1,30 +1,21 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:widget='urn:import:com.arcbees.gaestudio.client.ui'>
+
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <ui:with field="visualizer" type="com.arcbees.gaestudio.client.resources.VisualizerResources"/>
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
-    <ui:style>
-        .namespaces {
-            width: 232px;
-        }
 
-        .actionsPanel {
-            position: absolute;
-            right: 25px;
-            top: 5px;
-        }
-
-    </ui:style>
-    <g:HTMLPanel>
+    <g:HTMLPanel styleName="{visualizer.styles.sidebar}">
         <g:Frame ui:field="downloadFrame" width="0" height="0" visible="false"/>
         <span class='{res.styles.kindHeaderElement}'>Kinds
             <widget:PanelToggle ui:field="closeToggle" addStyleNames="{res.styles.toggleKindsPanel}"/>
-            <div class="{style.actionsPanel}">
+            <div class="{visualizer.styles.actionsPanel}">
                 <div ui:field="importKind" class="{res.styles.importBtn}"/>
                 <div ui:field="exportKind" class="{res.styles.exportBtn} {res.styles.exportBtnDisabled}"/>
             </div>
         </span>
-        <g:SimplePanel ui:field="namespaces" styleName="{style.namespaces}"/>
+        <g:SimplePanel ui:field="namespaces" styleName="{visualizer.styles.namespaces}"/>
         <g:HTML ui:field="emptyKinds"/>
         <g:HTMLPanel ui:field="kinds" debugId="{debugIds.getKinds}"/>
     </g:HTMLPanel>

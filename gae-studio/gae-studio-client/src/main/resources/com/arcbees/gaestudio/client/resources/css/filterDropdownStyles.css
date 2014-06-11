@@ -10,9 +10,7 @@
 .openedList {
     background: #f6f6f6;
 
-    -webkit-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
-    -moz-box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
-    box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.12);
+    @mixin boxShadow(4px, 4px, 5px, 0, rgba(0, 0, 0, 0.12));
 
     z-index: 10000;
 }

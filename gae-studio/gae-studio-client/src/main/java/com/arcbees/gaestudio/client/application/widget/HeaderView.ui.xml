@@ -1,124 +1,29 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <ui:with field="widgetRes" type="com.arcbees.gaestudio.client.resources.WidgetResources"/>
     <ui:with type="com.arcbees.gaestudio.client.place.NameTokens" field="nameTokens"/>
-    <ui:style field="style" type="com.arcbees.gaestudio.client.application.widget.HeaderView.Styles">
-        .header {
-            position: relative;
-        }
 
-        .menu {
-            float: right;
-
-            height: 100%;
-        }
-
-        .menu img, .menu a {
-            float: left;
-        }
-
-        .menu > a {
-            color: white;
-            font-size: 18px;
-            text-transform: uppercase;
-            text-decoration: none;
-            cursor: pointer;
-
-            padding: 0 15px;
-            display: block;
-            position: relative;
-
-            line-height: 30px;
-        }
-
-        /* .activeState is needed */
-        .menu a:hover, .activeState {
-            background: #25aae1;
-        }
-
-        .logo {
-            cursor: pointer;
-        }
-
-        .logo img {
-            margin-left: 6px;
-            margin-top: 9px;
-        }
-
-        .cogplay {
-            float: right;
-            position: relative;
-
-            padding: 4px;
-            margin: 0;
-            height: 22px;
-        }
-
-        .cogplay:hover {
-            cursor: pointer;
-
-            background: white;
-        }
-
-        .rightContainer {
-            display: inline-block;
-            position: absolute;
-            top: 36%;
-            right: 20px;
-            height: 30px;
-        }
-
-        .rightContainer ul {
-            position: absolute;
-            right: 0;
-
-            width: 250%;
-            margin: 0;
-            padding: 0;
-
-            list-style-type: none;
-
-            background: white;
-
-            font-size: 1.2em;
-
-            display: none;
-
-            z-index: 10000;
-        }
-
-        .rightContainer ul li {
-            padding: 4px 0 4px 9px;
-        }
-
-        .rightContainer ul li:hover {
-            background: #dfdfdf;
-            cursor: pointer;
-        }
-
-        .inactive {
-            color: #ddd;
-        }
-    </ui:style>
-    <g:HTMLPanel styleName="{style.header}">
-        <a href="" class="{style.logo}">
+    <g:HTMLPanel styleName="{widgetRes.header.header}">
+        <a href="" class="{widgetRes.header.logo}">
             <g:Image resource="{resources.logo}"/>
         </a>
-        <div class="{style.rightContainer}">
+        <div class="{widgetRes.header.rightContainer}">
             <g:Anchor ui:field="logout" styleName="{resources.styles.power}"/>
-            <div class="{style.cogplay}" ui:field="cog">
+            <div class="{widgetRes.header.cogplay}" ui:field="cog">
                 <g:Image resource="{resources.cogplay}"/>
                 <ul ui:field="themes">
                     <li>
                         Clear Theme
                     </li>
-                    <li class="{style.inactive}">
+                    <li class="{widgetRes.header.inactive}">
                         Dark Theme
                     </li>
                 </ul>
             </div>
-            <div ui:field="menu" class="{style.menu}">
-                <a href="#{nameTokens.getVisualizer}" class="{style.activeState}">
+            <div ui:field="menu" class="{widgetRes.header.menu}">
+                <a href="#{nameTokens.getVisualizer}" class="{widgetRes.header.activeState}">
                     Visualizer
                 </a>
                 <a ui:field="profilerAnchor" href="#{nameTokens.getProfiler}">

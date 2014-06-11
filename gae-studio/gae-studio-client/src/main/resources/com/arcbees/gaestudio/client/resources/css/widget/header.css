@@ -1,0 +1,107 @@
+.header {
+    position: relative;
+}
+
+.menu {
+    float: right;
+
+    height: 100%;
+}
+
+.menu img, .menu a {
+    float: left;
+}
+
+.menu > a {
+    color: white;
+    font-size: 18px;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+
+    padding: 0 15px;
+    display: block;
+    position: relative;
+
+    line-height: 30px;
+}
+
+/* .activeState is needed */
+.menu a:hover, .activeState {
+    background: #25aae1;
+}
+
+.logo {
+    cursor: pointer;
+}
+
+.logo img {
+    margin-left: 6px;
+    margin-top: 9px;
+}
+
+.cogplay {
+    float: right;
+    position: relative;
+
+    padding: 4px;
+    margin: 0;
+    height: 22px;
+}
+
+.cogplay:hover {
+    cursor: pointer;
+
+    background: white;
+}
+
+.rightContainer {
+    display: inline-block;
+    position: absolute;
+    top: 36%;
+    right: 20px;
+    height: 30px;
+}
+
+.rightContainer ul {
+    position: absolute;
+    right: 0;
+
+    width: 250%;
+    margin: 0;
+    padding: 0;
+
+    list-style-type: none;
+
+    background: white;
+
+    font-size: 1.2em;
+
+    display: none;
+
+    z-index: 10000;
+}
+
+.rightContainer ul li {
+    padding: 4px 0 4px 9px;
+}
+
+.rightContainer ul li:hover {
+    background: #dfdfdf;
+    cursor: pointer;
+}
+
+.inactive {
+    color: #ddd;
+}
+
+/* -> Messages view -- */
+
+.messages {
+    position: fixed;
+    top: 80px;
+    right: 10px;
+    width: 300px;
+    margin: 0 auto;
+    z-index: 1000;
+}

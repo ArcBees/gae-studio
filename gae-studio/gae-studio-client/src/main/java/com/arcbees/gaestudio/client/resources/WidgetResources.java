@@ -9,26 +9,28 @@
 
 package com.arcbees.gaestudio.client.resources;
 
+import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.GssResource;
 
-public interface AuthStyles extends GssResource {
-    String errorMessage();
+public interface WidgetResources extends ClientBundle {
+    public interface Header extends GssResource {
+        String header();
 
-    String logo();
+        String logo();
 
-    String formTitle();
+        String rightContainer();
 
-    String ajaxContainer();
+        String cogplay();
 
-    String root();
+        String inactive();
 
-    String wrap();
+        String menu();
 
-    String main();
+        String activeState();
 
-    String topBlueBar();
+        String messages();
+    }
 
-    String middleBlueBar();
-
-    String footer();
+    @Source({"css/colors.css", "css/widget/header.css"})
+    public Header header();
 }

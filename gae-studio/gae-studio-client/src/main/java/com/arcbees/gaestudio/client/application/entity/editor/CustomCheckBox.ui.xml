@@ -1,25 +1,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <ui:style>
-        @external checkbox;
 
-        .checkbox {
-            color: white;
-            text-align: center;
+    <ui:with field="entityRes" type="com.arcbees.gaestudio.client.resources.EntityResources"/>
 
-            width: 1em;
-            height: 1em;
-            margin-top: 5px;
-            margin-right: 10px;
-            border: 2px solid #25aae1;
-            line-height: 1em;
-
-            float: left;
-        }
-
-        .checkbox:hover {
-            cursor: pointer;
-        }
-    </ui:style>
-    <g:HTMLPanel styleName="{style.checkbox}"/>
+    <g:HTMLPanel styleName="{entityRes.editor.checkbox}"/>
 </ui:UiBinder>

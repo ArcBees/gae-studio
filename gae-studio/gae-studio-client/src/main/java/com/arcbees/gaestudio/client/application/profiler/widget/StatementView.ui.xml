@@ -1,16 +1,14 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:cellview="urn:import:com.google.gwt.user.cellview.client">
+
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
-    <ui:style>
-        .statements {
-            margin-left: 10px;
-        }
-    </ui:style>
+    <ui:with field="profilerRes" type="com.arcbees.gaestudio.client.resources.ProfilerResources"/>
+
     <g:HTMLPanel>
         <div class="{resources.styles.tabs}">
             <span>Statements</span>
         </div>
-        <cellview:CellList ui:field="statements" styleName="{resources.styles.list} {style.statements}"/>
+        <cellview:CellList ui:field="statements" styleName="{resources.styles.list} {profilerRes.styles.statements}"/>
     </g:HTMLPanel>
 </ui:UiBinder>
