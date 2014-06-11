@@ -5,7 +5,7 @@
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:with field="profilerRes" type="com.arcbees.gaestudio.client.resources.ProfilerResources"/>
 
-    <g:HTMLPanel styleName="{profilerRes.styles.filter}}">
+    <g:HTMLPanel styleName="{profilerRes.styles.filter}">
         <dd:Dropdown ui:field="dropdown"/>
         <div class="{profilerRes.styles.content}">
             <div class="{profilerRes.styles.whiteLine}"/>

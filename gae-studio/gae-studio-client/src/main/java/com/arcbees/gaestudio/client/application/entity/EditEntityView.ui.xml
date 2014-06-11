@@ -6,7 +6,7 @@
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
 
     <g:HTMLPanel styleName="{res.styles.entityDetailPanel} {entityRes.styles.edit}">
-        <g:HTMLPanel styleName="{entityRes.styles.root} {res.styles.secondTable}">
+        <div class="{entityRes.styles.root} {res.styles.secondTable}">
             <div class="{entityRes.styles.detailHeader}">
                 <div class="{res.styles.pencilSmall} {res.styles.popupIcon}"/>
                 <h3>Entity Details</h3>
@@ -23,6 +23,6 @@
                 <g:SimplePanel ui:field="editorPanel" styleName="{entityRes.styles.editorPanel}"
                                debugId="{debugIds.getEntityEditor}"/>
             </div>
-        </g:HTMLPanel>
+        </div>
     </g:HTMLPanel>
 </ui:UiBinder>
