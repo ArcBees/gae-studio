@@ -18,7 +18,7 @@
                 </g:SplitLayoutPanel>
             </g:west>
             <g:center>
-                <g:SimplePanel ui:field="statementPanel" addStyleNames="{profilerRes.styles.whitePanel}"/>
+                <g:SimpleLayoutPanel ui:field="statementPanel" addStyleNames="{profilerRes.styles.whitePanel}"/>
             </g:center>
         </g:SplitLayoutPanel>
     </g:HTMLPanel>
