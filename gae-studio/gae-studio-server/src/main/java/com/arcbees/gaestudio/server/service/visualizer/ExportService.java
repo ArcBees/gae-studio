@@ -11,4 +11,6 @@ package com.arcbees.gaestudio.server.service.visualizer;
 
 public interface ExportService {
     String exportKindToJson(String kind);
+
+    String exportKindToCsv(String kind);
 }

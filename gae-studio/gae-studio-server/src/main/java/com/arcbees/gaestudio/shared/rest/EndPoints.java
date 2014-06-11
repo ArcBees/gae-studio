@@ -27,7 +27,8 @@ public class EndPoints {
     public static final String CHECK = "check/";
     public static final String ARCBEES_LICENSE_SERVICE = "https://arcbees-license-service.appspot.com/key/";
     public static final String TOKEN = "token/";
-    public static final String EXPORT = REST_PATH + "export/";
+    public static final String EXPORT_JSON = REST_PATH + "exportjson/";
+    public static final String EXPORT_CSV = REST_PATH + "exportcsv/";
     public static final String IMPORT = REST_PATH + "import/";
     public static final String TASK = "task/";
     public static final String IMPORT_TASK = IMPORT + TASK;

@@ -15,7 +15,8 @@ import com.arcbees.gaestudio.server.api.profiler.RecordResource;
 import com.arcbees.gaestudio.server.api.visualizer.BlobsResource;
 import com.arcbees.gaestudio.server.api.visualizer.EntitiesResource;
 import com.arcbees.gaestudio.server.api.visualizer.EntityResource;
-import com.arcbees.gaestudio.server.api.visualizer.ExportResource;
+import com.arcbees.gaestudio.server.api.visualizer.ExportCsvResource;
+import com.arcbees.gaestudio.server.api.visualizer.ExportJsonResource;
 import com.arcbees.gaestudio.server.api.visualizer.ImportResource;
 import com.arcbees.gaestudio.server.api.visualizer.KindsResource;
 import com.arcbees.gaestudio.server.api.visualizer.NamespacesResource;
@@ -32,7 +33,8 @@ public class ApiModule extends AbstractModule {
         bind(RecordResource.class);
         bind(AuthResource.class);
         bind(EntityResource.class);
-        bind(ExportResource.class);
+        bind(ExportJsonResource.class);
         bind(ImportResource.class);
+        bind(ExportCsvResource.class);
     }
 }

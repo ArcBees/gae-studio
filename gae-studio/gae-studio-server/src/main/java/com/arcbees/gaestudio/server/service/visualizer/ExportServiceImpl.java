@@ -31,4 +31,16 @@ public class ExportServiceImpl implements ExportService {
 
         return gson.toJson(entities);
     }
+
+    @Override
+    public String exportKindToCsv(String kind) {
+        Iterable<Entity> entities = entitiesService.getEntities(kind, null, null);
+
+        return convertToCsv(entities);
+    }
+
+    private String convertToCsv(Iterable<Entity> entities) {
+        //TODO : Convert to CSV
+        return null;
+    }
 }

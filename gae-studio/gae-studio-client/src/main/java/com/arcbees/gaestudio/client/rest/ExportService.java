@@ -29,7 +29,7 @@ public class ExportService {
         return new UrlBuilder()
                 .setProtocol(Window.Location.getProtocol())
                 .setHost(Window.Location.getHost())
-                .setPath(restPath + "/" + EndPoints.EXPORT)
+                .setPath(restPath + "/" + EndPoints.EXPORT_JSON)
                 .setParameter(UrlParameters.KIND, kind)
                 .buildString();
     }
