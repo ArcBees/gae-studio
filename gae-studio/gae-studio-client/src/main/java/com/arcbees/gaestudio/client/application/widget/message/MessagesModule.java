@@ -11,7 +11,7 @@ package com.arcbees.gaestudio.client.application.widget.message;
 
 import javax.inject.Singleton;
 
-import com.arcbees.gaestudio.client.ui.MessageResources;
+import com.arcbees.gaestudio.client.resources.MessageResources;
 import com.arcbees.gaestudio.client.ui.MessageWidgetFactory;
 import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;

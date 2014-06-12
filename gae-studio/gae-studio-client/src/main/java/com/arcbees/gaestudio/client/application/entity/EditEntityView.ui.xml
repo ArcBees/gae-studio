@@ -1,80 +1,28 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <ui:with field="entityRes" type="com.arcbees.gaestudio.client.resources.EntityResources"/>
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
-    <ui:style>
-        .root {
-            width: 50%;
-            padding-left: 15px;
-            height: 100%;
-            overflow-x: hidden;
-        }
 
-        .detailHeader {
-            padding: 12px 0 12px 0;
-            border-bottom: 1px solid #a2a2a2;
-            text-transform: uppercase;
-            font-size: 1.2em;
-            position: relative;
-        }
-
-        .detailHeader h3 {
-            padding: 0;
-            margin: 0;
-            font-weight: normal;
-            display: inline-block;
-        }
-
-        .error {
-            margin: 10px;
-            padding: 10px;
-
-            border: solid 1px #b8a6a3;
-            color: #3a2a25;
-            background-color: #e4cfc8;
-
-            border-radius: 5px;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-        }
-
-        .mainContent {
-            padding-top: 10px;
-            height: literal('calc(100% - 68px)');
-            overflow-y: auto;
-        }
-
-        .buttonContainer {
-            width: 210px;
-
-            position: absolute;
-            top: 2px;
-            right: 0;
-        }
-
-        .editorPanel {
-            font-size: 16px;
-        }
-    </ui:style>
-
-    <g:HTMLPanel styleName="{res.styles.entityDetailPanel}">
-        <g:HTMLPanel styleName="{style.root} {res.styles.secondTable}">
-            <div class="{style.detailHeader}">
+    <g:HTMLPanel styleName="{res.styles.entityDetailPanel} {entityRes.styles.edit}">
+        <div class="{entityRes.styles.root} {res.styles.secondTable}">
+            <div class="{entityRes.styles.detailHeader}">
                 <div class="{res.styles.pencilSmall} {res.styles.popupIcon}"/>
                 <h3>Entity Details</h3>
-                <div class="{res.styles.buttonContainer} {style.buttonContainer}">
+                <div class="{res.styles.buttonContainer} {entityRes.styles.buttonContainer}">
                     <g:Button ui:field="cancel" styleName="{res.styles.button} {res.styles.gray}" text="Cancel"/>
                     <g:Button ui:field="save" styleName="{res.styles.button}" text="Save"
                               debugId="{debugIds.getSave}"/>
                 </div>
             </div>
 
-            <div class="{style.mainContent}">
-                <g:FlowPanel ui:field="errors" styleName="{style.error}"/>
+            <div class="{entityRes.styles.mainContent}">
+                <g:FlowPanel ui:field="errors" styleName="{entityRes.styles.error}"/>
 
-                <g:SimplePanel ui:field="editorPanel" styleName="{style.editorPanel}"
+                <g:SimplePanel ui:field="editorPanel" styleName="{entityRes.styles.editorPanel}"
                                debugId="{debugIds.getEntityEditor}"/>
             </div>
-        </g:HTMLPanel>
+        </div>
     </g:HTMLPanel>
 </ui:UiBinder>

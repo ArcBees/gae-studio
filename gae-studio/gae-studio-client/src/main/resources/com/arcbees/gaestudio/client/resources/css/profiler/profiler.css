@@ -1,0 +1,111 @@
+@def STATS_SPACE 15px;
+
+/* -> Main -- */
+
+.toolbar {
+    height: 100%;
+    float: left;
+}
+
+.whitePanel {
+    background-color: #fff;
+}
+
+.lightGrey {
+    background-color: C_SECONDARY_LIGHT;
+}
+
+.mediumGrey {
+    background-color: #e0e0e0;
+}
+
+.splitLayoutPanel {
+    height: 100%;
+    overflow: hidden;
+}
+
+.splitLayoutPanel > div:nth-child(2) {
+    padding-right: 4px;
+}
+
+.root {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.leftPanel > div:nth-child(4) {
+    margin-bottom: -10px;
+}
+
+.leftPanel > div:nth-child(3) {
+    overflow: visible !important;
+}
+
+/* -> UI Statement View -- */
+
+.ui {
+    margin-bottom: 10px;
+}
+
+/* -> Widget Toolbar View -- */
+
+.buttons {
+    background: #232323;
+
+    width: 130px;
+    overflow: hidden;
+
+    @mixin transition_effect(width, .25s, ease);
+}
+
+/* -> Widget Statistics View -- */
+
+.panel {
+    padding: STATS_SPACE;
+}
+
+.panel h3 {
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
+.panel p {
+    margin: 0 0 8px 0;
+    font-size: 1.1em;
+}
+
+.listGraph {
+    position: absolute;
+    top: STATS_SPACE;
+    right: STATS_SPACE;
+}
+
+/* -> Widget Statement View -- */
+
+.statements {
+    margin-left: 10px;
+}
+
+/* -> Widget Filter -- */
+
+.filter {
+    height: 100%;
+}
+
+.filter .content {
+    width: 100%;
+    height: literal('calc(100% - 46px)');
+    overflow-y: auto;
+
+    position: absolute;
+    top: 46px;
+}
+
+.filter .whiteLine {
+    background: #fff;
+
+    width: 100%;
+    height: 1px;
+    margin-bottom: 12px;
+}
