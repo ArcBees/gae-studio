@@ -13,7 +13,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.arcbees.chosen.client.ChosenOptions;
+import com.arcbees.chosen.client.gwt.ChosenListBox;
+import com.arcbees.gaestudio.client.resources.ChosenResources;
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.client.resources.VisualizerResources;
 import com.arcbees.gaestudio.client.ui.PanelToggle;
 import com.arcbees.gaestudio.client.ui.PanelToggleFactory;
 import com.google.common.base.Strings;
@@ -34,6 +38,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import static com.google.gwt.query.client.GQuery.$;
+import static com.google.gwt.query.client.GQuery.console;
 
 public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implements SidebarPresenter.MyView,
         PanelToggle.ToggleHandler {
@@ -61,17 +66,16 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     @UiField
     DivElement importKind;
     @UiField
-    DivElement importCsv;
-    @UiField
     DivElement exportKind;
     @UiField
-    DivElement exportCsv;
-    @UiField
     Frame downloadFrame;
+    @UiField(provided = true)
+    ChosenListBox chosenFormat;
 
     private final KindTemplate kindTemplate;
     private final EmptyKindsTemplate emptyKindsTemplate;
     private final AppResources appResources;
+    private final VisualizerResources visualizerResources;
     private final String emptyListTypeStyleName;
     private final String hiddenOverlayStyleName;
     private final String revealOverlayStyleName;
@@ -83,14 +87,24 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     @Inject
     SidebarView(Binder binder,
+                ChosenResources chosenResources,
                 KindTemplate kindTemplate,
                 EmptyKindsTemplate emptyKindsTemplate,
                 AppResources appResources,
+                VisualizerResources visualizerResources,
                 PanelToggleFactory panelToggleFactory) {
         this.kindTemplate = kindTemplate;
         this.emptyKindsTemplate = emptyKindsTemplate;
         this.appResources = appResources;
+        this.visualizerResources = visualizerResources;
         this.closeToggle = panelToggleFactory.create(this);
+
+        ChosenOptions chosenOptions = new ChosenOptions();
+        chosenOptions.setResources(chosenResources);
+        chosenFormat = new ChosenListBox(chosenOptions);
+
+        chosenFormat.addItem("CSV");
+        chosenFormat.addItem("JSON");
 
         initWidget(binder.createAndBindUi(this));
 
@@ -100,31 +114,26 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         revealUnderOverlayStyleName = appResources.styles().revealUnderOverlay();
         entityDetailPanelVisibilityStyleName = appResources.styles().entityDetailPanelVisibility();
 
+
         $(importKind).click(new Function() {
             @Override
             public void f() {
-                getUiHandlers().importKind();
-            }
-        });
-
-        $(importCsv).click(new Function() {
-            @Override
-            public void f() {
-                getUiHandlers().importCsv();
+                if (chosenFormat.getValue().equals("CSV")) {
+                    getUiHandlers().importCsv();
+                } else {
+                    getUiHandlers().importKind();
+                }
             }
         });
 
         $(exportKind).click(new Function() {
             @Override
             public void f() {
-                getUiHandlers().exportCurrentKind();
-            }
-        });
-
-        $(exportCsv).click(new Function() {
-            @Override
-            public void f() {
-                getUiHandlers().exportCsv();
+                if (chosenFormat.getValue().equals("CSV")) {
+                    getUiHandlers().exportCsv();
+                } else {
+                    getUiHandlers().exportCurrentKind();
+                }
             }
         });
     }
@@ -181,9 +190,9 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     private void setExportEnabled(boolean enabled) {
         if (enabled) {
-            exportKind.removeClassName(appResources.styles().exportBtnDisabled());
+            exportKind.removeClassName(visualizerResources.styles().exportBtnDisabled());
         } else {
-            exportKind.addClassName(appResources.styles().exportBtnDisabled());
+            exportKind.addClassName(visualizerResources.styles().exportBtnDisabled());
         }
     }
 

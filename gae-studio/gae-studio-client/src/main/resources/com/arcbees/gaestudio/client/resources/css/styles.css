@@ -118,7 +118,6 @@ input:focus, textarea:focus, button:focus {
 
     display: block;
     padding: 3px 16px;
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 
@@ -624,39 +623,6 @@ input:focus, textarea:focus, button:focus {
 .errorField {
     outline: #ff5400 solid 2px;
     outline-offset: -2px;
-}
-
-.importBtn {
-    gwt-sprite: "importBtn";
-}
-
-.exportBtn {
-    gwt-sprite: "exportBtn";
-}
-
-.exportBtn, .importBtn {
-    /*Do not optimize*/
-    background-color: #2d2d2d;
-    background-repeat: no-repeat;
-    background-position: center center;
-    cursor: pointer;
-
-    height: 23px;
-    width: 23px;
-    margin: 2px;
-
-    float: left;
-}
-
-.exportBtn:hover, .importBtn:hover {
-    background-color: C_PRIMARY;
-    cursor: pointer;
-}
-
-.exportBtnDisabled, .exportBtnDisabled:hover {
-    background-color: #B7B7B7;
-    pointer-events: none;
-    cursor: default;
 }
 
 .uploadLabel {

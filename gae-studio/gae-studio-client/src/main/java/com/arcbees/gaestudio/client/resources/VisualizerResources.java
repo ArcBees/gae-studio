@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.resources;
 
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.GssResource;
+import com.google.gwt.resources.client.ImageResource;
 
 public interface VisualizerResources extends ClientBundle {
     public interface Styles extends GssResource {
@@ -49,6 +50,14 @@ public interface VisualizerResources extends ClientBundle {
         String namespace();
 
         String delete();
+
+        String dropdown();
+
+        String importBtn();
+
+        String exportBtn();
+
+        String exportBtnDisabled();
     }
 
     public interface EntityList extends GssResource {
@@ -64,6 +73,12 @@ public interface VisualizerResources extends ClientBundle {
 
         String table();
     }
+
+    @Source("images/importBtn.png")
+    ImageResource importBtn();
+
+    @Source("images/exportBtn.png")
+    ImageResource exportBtn();
 
     @Source({"css/colors.css", "css/visualizer/visualizer.css"})
     public Styles styles();
