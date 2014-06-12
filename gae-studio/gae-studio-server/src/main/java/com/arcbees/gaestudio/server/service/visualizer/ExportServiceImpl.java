@@ -44,7 +44,7 @@ public class ExportServiceImpl implements ExportService {
     }
 
     private String convertToCsv(String jsonData) throws JSONException {
-        JSONObject output = new JSONObject(jsonData);
+        JSONObject output = new JSONObject("{\"infile\": " + jsonData + "}");
         JSONArray docs = output.getJSONArray("infile");
 
         return CDL.toString(docs);

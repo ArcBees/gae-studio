@@ -97,6 +97,11 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     }
 
     @Override
+    public void importCsv() {
+        //TODO : Import CSV
+    }
+
+    @Override
     public void displayEntitiesOfSelectedKind(String kind) {
         currentKind = kind;
 
@@ -119,6 +124,13 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         String exportKindUrl = exportService.getExportKindUrl(currentKind);
 
         getView().setDownloadUrl(exportKindUrl);
+    }
+
+    @Override
+    public void exportCsv() {
+        String exportCsvUrl = exportService.getExportCsv(currentKind);
+
+        getView().setDownloadUrl(exportCsvUrl);
     }
 
     @Override

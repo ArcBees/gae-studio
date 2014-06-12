@@ -61,7 +61,11 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     @UiField
     DivElement importKind;
     @UiField
+    DivElement importCsv;
+    @UiField
     DivElement exportKind;
+    @UiField
+    DivElement exportCsv;
     @UiField
     Frame downloadFrame;
 
@@ -103,10 +107,24 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
             }
         });
 
+        $(importCsv).click(new Function() {
+            @Override
+            public void f() {
+                getUiHandlers().importCsv();
+            }
+        });
+
         $(exportKind).click(new Function() {
             @Override
             public void f() {
                 getUiHandlers().exportCurrentKind();
+            }
+        });
+
+        $(exportCsv).click(new Function() {
+            @Override
+            public void f() {
+                getUiHandlers().exportCsv();
             }
         });
     }

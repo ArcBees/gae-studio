@@ -22,6 +22,8 @@
             <div class="{style.actionsPanel}">
                 <div ui:field="importKind" class="{res.styles.importBtn}"/>
                 <div ui:field="exportKind" class="{res.styles.exportBtn} {res.styles.exportBtnDisabled}"/>
+                <div ui:field="importCsv" class="{res.styles.importBtn}"/>
+                <div ui:field="exportCsv" class="{res.styles.exportBtn} {res.styles.exportBtnDisabled}"/>
             </div>
         </span>
         <g:SimplePanel ui:field="namespaces" styleName="{style.namespaces}"/>

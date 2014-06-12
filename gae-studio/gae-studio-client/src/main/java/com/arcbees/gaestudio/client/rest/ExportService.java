@@ -33,4 +33,13 @@ public class ExportService {
                 .setParameter(UrlParameters.KIND, kind)
                 .buildString();
     }
+
+    public String getExportCsv(String kind) {
+        return new UrlBuilder()
+                .setProtocol(Window.Location.getProtocol())
+                .setHost(Window.Location.getHost())
+                .setPath(restPath + "/" + EndPoints.EXPORT_CSV)
+                .setParameter(UrlParameters.KIND, kind)
+                .buildString();
+    }
 }
