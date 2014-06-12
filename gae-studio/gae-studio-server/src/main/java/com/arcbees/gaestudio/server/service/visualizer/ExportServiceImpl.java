@@ -11,11 +11,9 @@ package com.arcbees.gaestudio.server.service.visualizer;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.server.util.JsonToCsvConverter;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.labs.repackaged.org.json.CDL;
-import com.google.appengine.labs.repackaged.org.json.JSONArray;
 import com.google.appengine.labs.repackaged.org.json.JSONException;
-import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.google.gson.Gson;
 
 public class ExportServiceImpl implements ExportService {
@@ -40,13 +38,6 @@ public class ExportServiceImpl implements ExportService {
     public String exportKindToCsv(String kind) throws JSONException {
         String jsonData = exportKindToJson(kind);
 
-        return convertToCsv(jsonData);
-    }
-
-    private String convertToCsv(String jsonData) throws JSONException {
-        JSONObject output = new JSONObject("{\"infile\": " + jsonData + "}");
-        JSONArray docs = output.getJSONArray("infile");
-
-        return CDL.toString(docs);
+        return JsonToCsvConverter.convert(jsonData);
     }
 }
