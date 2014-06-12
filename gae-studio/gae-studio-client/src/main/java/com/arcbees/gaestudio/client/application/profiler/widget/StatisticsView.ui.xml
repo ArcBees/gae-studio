@@ -1,32 +1,12 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
-    <ui:style>
-        @def pad 15px;
+    <ui:with field="profilerRes" type="com.arcbees.gaestudio.client.resources.ProfilerResources"/>
 
-        .panel {
-            padding: pad;
-        }
-
-        .panel h3 {
-            text-transform: uppercase;
-            margin-bottom: 30px;
-        }
-
-        .panel p {
-            margin: 0 0 8px 0;
-            font-size: 1.1em;
-        }
-
-        .listGraph {
-            position: absolute;
-            top: pad;
-            right: pad;
-        }
-    </ui:style>
-    <g:HTMLPanel styleName="{style.panel}">
+    <g:HTMLPanel styleName="{profilerRes.styles.panel}">
         <h3>Global Statistics</h3>
-        <g:Image resource="{res.listGraph}" addStyleNames="{style.listGraph}"/>
+        <g:Image resource="{res.listGraph}" addStyleNames="{profilerRes.styles.listGraph}"/>
         <p>Total Requests:
             <g:InlineHTML ui:field="requestCount"/>
         </p>

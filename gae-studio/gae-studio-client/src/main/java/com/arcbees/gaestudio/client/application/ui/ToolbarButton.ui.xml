@@ -1,24 +1,11 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
-    <ui:style>
-        .image img {
-            position: absolute;
-            top: 10px;
-            left: 14px;
-        }
 
-        .innerContainer {
-            display: inline-block;
-            position: absolute;
-            top: 50%;
-            margin-top: -21px;
-            margin-left: 5px;
-        }
-    </ui:style>
+    <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+
     <g:HTMLPanel ui:field="button" styleName="{resources.styles.toolbarButton}">
         <div ui:field="icon"/>
-        <div class="{style.innerContainer}">
+        <div class="{resources.styles.innerContainer}">
             <p ui:field="text"/>
         </div>
     </g:HTMLPanel>

@@ -1,0 +1,8 @@
+@provide 'colors';
+
+@def C_PRIMARY           eval("com.arcbees.gaestudio.client.resources.Colors.C_PRIMARY");
+@def C_SECONDARY         eval("com.arcbees.gaestudio.client.resources.Colors.C_SECONDARY");
+@def C_SECONDARY_LIGHT   eval("com.arcbees.gaestudio.client.resources.Colors.C_SECONDARY_LIGHT");
+@def C_SECONDARY_DARK    eval("com.arcbees.gaestudio.client.resources.Colors.C_SECONDARY_DARK");
+@def C_ACTION_SUCCESS    eval("com.arcbees.gaestudio.client.resources.Colors.C_ACTION_SUCCESS");
+@def C_ACTION_ERROR      eval("com.arcbees.gaestudio.client.resources.Colors.C_ACTION_ERROR");

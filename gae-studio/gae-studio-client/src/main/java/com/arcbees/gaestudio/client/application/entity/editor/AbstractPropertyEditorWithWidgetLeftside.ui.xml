@@ -1,13 +1,11 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
         xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <ui:style>
-        .clear {
-            clear: both;
-        }
-    </ui:style>
+
+    <ui:with field="entityRes" type="com.arcbees.gaestudio.client.resources.EntityResources"/>
+
     <g:HTMLPanel>
         <g:SimplePanel ui:field="form"/>
         <g:Label ui:field="key"/>
-        <g:HTMLPanel ui:field="clear" styleName="{style.clear}"/>
+        <g:HTMLPanel ui:field="clear" styleName="{entityRes.editor.clear}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

@@ -19,37 +19,38 @@ public interface PagerResources extends SimplePager.Resources {
     }
 
     @Override
+    @Source("css/simplePagerStyle.css")
     PageStyles simplePagerStyle();
 
     @Override
-    @Source("next_up.png")
+    @Source("images/pager/next_up.png")
     ImageResource simplePagerPreviousPage();
 
     @Override
-    @Source("next_dis.png")
+    @Source("images/pager/next_dis.png")
     ImageResource simplePagerPreviousPageDisabled();
 
     @Override
-    @Source("next_dis.png")
+    @Source("images/pager/next_dis.png")
     ImageResource simplePagerNextPageDisabled();
 
     @Override
-    @Source("next_up.png")
+    @Source("images/pager/next_up.png")
     ImageResource simplePagerNextPage();
 
     @Override
-    @Source("end_dis.png")
+    @Source("images/pager/end_dis.png")
     ImageResource simplePagerLastPageDisabled();
 
     @Override
-    @Source("end_up.png")
+    @Source("images/pager/end_up.png")
     ImageResource simplePagerLastPage();
 
     @Override
-    @Source("end_dis.png")
+    @Source("images/pager/end_dis.png")
     ImageResource simplePagerFirstPageDisabled();
 
     @Override
-    @Source("end_up.png")
+    @Source("images/pager/end_up.png")
     ImageResource simplePagerFirstPage();
 }
