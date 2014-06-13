@@ -11,7 +11,12 @@
             <cellview:SimplePager ui:field="pager"/>
             <div ui:field="refresh" class="{visualizer.entityList.refresh} {resources.styles.refresh}"/>
             <div ui:field="deselect" class="{visualizer.entityList.deselect} {resources.styles.deselectDisabled}"/>
+            <div ui:field="byGql" class="{visualizer.entityList.byGql}"><span></span>By GQL</div>
             <g:SimplePanel ui:field="deleteByKind" styleName="{visualizer.entityList.deleteByKind}"/>
+            <div ui:field="formQuery" class="{visualizer.entityList.formQuery}">
+                <g:TextArea></g:TextArea>
+                <button>Run Query</button>
+            </div>
         </div>
         <div class="{visualizer.entityList.table}">
             <cellview:CellTable ui:field="entityTable" styleName="{resources.styles.firstTable}"
