@@ -25,9 +25,9 @@ public class JsonToCsvConverterTest {
     }
 
     private String getCsvData() {
-        return "model, manufacturer, carProperties\n" +
-                "Civic, Manufacturer(17), CarProperties(19)\n" +
-                "Accord, Manufacturer(17), CarProperties(20)\n";
+        return "id, model, manufacturer, carProperties\n" +
+                "23, Civic, Manufacturer(17), CarProperties(19)\n" +
+                "24, Accord, Manufacturer(17), CarProperties(20)\n";
     }
 
     private String getJsonData() {

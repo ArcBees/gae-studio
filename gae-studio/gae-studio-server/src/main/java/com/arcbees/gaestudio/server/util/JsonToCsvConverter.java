@@ -46,7 +46,7 @@ public class JsonToCsvConverter {
     }
 
     private static String buildColumnsLine(Set<String> columns) {
-        String columnsResult = "";
+        String columnsResult = "id, ";
         int counter = 1;
 
         for (String column : columns) {
@@ -66,12 +66,16 @@ public class JsonToCsvConverter {
     private static String buildDataLines(JSONArray dataArray, Set<String> allColumns) throws JSONException {
         JSONObject currentObject;
         String dataLines = "";
+        String currentId;
         JSONObject currentColumn;
         int counter;
 
         for (int i = 0; i < dataArray.length(); i++) {
+            currentId = dataArray.getJSONObject(i).getJSONObject("key").getString("id");
             currentObject = dataArray.getJSONObject(i).getJSONObject("propertyMap");
             counter = 1;
+
+            dataLines += currentId + ", ";
 
             for (String column : allColumns) {
                 if (currentObject.has(column)) {
