@@ -16,6 +16,7 @@ import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.PagerResources;
+import com.arcbees.gaestudio.client.resources.VisualizerResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.dom.client.BrowserEvents;
@@ -56,11 +57,16 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiField
     DivElement refresh;
     @UiField
+    DivElement byGql;
+    @UiField
+    DivElement formQuery;
+    @UiField
     SimplePanel deleteByKind;
     @UiField
     DivElement deselect;
 
     private final AppResources appResources;
+    private final VisualizerResources visualizerResources;
     private final String lockedRowStyleName;
     private final String pagerButtons;
     private final String firstTableRow;
@@ -73,9 +79,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                    CellTableResource cellTableResource,
                    PagerResources pagerResources,
                    AppResources appResources,
+                   VisualizerResources visualizerResources,
                    ParsedEntityColumnCreator columnCreator) {
         this.columnCreator = columnCreator;
         this.appResources = appResources;
+        this.visualizerResources = visualizerResources;
 
         pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
 
@@ -296,6 +304,15 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 unlockRows();
             }
         });
+
+        $(byGql).click(new Function() {
+            @Override
+            public void f() {
+                toggleGQL();
+            }
+        });
+
+        $(formQuery).slideUp(0);
     }
 
     private Function unlock = new Function() {
@@ -325,5 +342,16 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         ParsedEntity parsedEntity = getParsedEntityForRow(e);
         getUiHandlers().onEntitySelected(parsedEntity);
+    }
+
+    private void toggleGQL() {
+        VisualizerResources.EntityList styles = visualizerResources.entityList();
+        $(byGql).toggleClass(styles.open());
+
+        if ($(byGql).hasClass(styles.open())) {
+            $(formQuery).slideDown(100);
+        } else {
+            $(formQuery).slideUp(100);
+        }
     }
 }
