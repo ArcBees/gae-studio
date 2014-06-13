@@ -10,7 +10,7 @@
 package com.arcbees.gaestudio.client.resources;
 
 public class Colors {
-    public static String C_PRIMARY = "#25aae1";
+    public static String C_PRIMARY = "#42b9e8";
     public static String C_SECONDARY = "#7a7a7a";
     public static String C_SECONDARY_LIGHT = "#ececec";
     public static String C_SECONDARY_DARK = "#2b2b2b";
