@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.server.util;
 
 import com.google.appengine.labs.repackaged.org.json.JSONArray;
 import com.google.appengine.labs.repackaged.org.json.JSONException;
+import com.google.appengine.labs.repackaged.org.json.JSONObject;
 
 import java.util.*;
 
@@ -30,9 +31,10 @@ public class JsonToCsvConverter {
 
     private static Set<String> extractColumns(JSONArray array) throws JSONException {
         Set<String> columns = new HashSet<>();
+        Iterator currentObjectKeys;
 
         for (int i = 0; i < array.length(); i++) {
-            Iterator currentObjectKeys = array.getJSONObject(i).getJSONObject("propertyMap").keys();
+            currentObjectKeys = array.getJSONObject(i).getJSONObject("propertyMap").keys();
             while (currentObjectKeys.hasNext()) {
                 columns.add(currentObjectKeys.next().toString());
             }
@@ -59,8 +61,50 @@ public class JsonToCsvConverter {
         return columnsResult;
     }
 
-    private static String buildDataLines(JSONArray array, Set<String> columns) throws JSONException {
-        //TODO : Build data lines
-        return "";
+    private static String buildDataLines(JSONArray dataArray, Set<String> allColumns) throws JSONException {
+        JSONObject currentObject;
+        String dataLines = "";
+        JSONObject currentColumn;
+        int counter;
+
+        for (int i = 0; i < dataArray.length(); i++) {
+            currentObject = dataArray.getJSONObject(i).getJSONObject("propertyMap");
+            counter = 1;
+
+            for (String column : allColumns) {
+                if (currentObject.has(column)) {
+                    currentColumn = currentObject.getJSONObject(column);
+
+                    if (columnIsNotAKey(currentObject, column)) {
+                        dataLines += currentColumn.getString("value");
+                    } else {
+                        dataLines += writeKeyData(currentColumn.getJSONObject("value"));
+                    }
+                }
+
+                if (counter < allColumns.size()) {
+                    dataLines += ", ";
+                } else {
+                    dataLines += "\n";
+                }
+
+                counter++;
+            }
+        }
+
+        return dataLines;
+    }
+
+    private static String writeKeyData(JSONObject currentObjectValue) throws JSONException {
+        String currentKind = currentObjectValue.getString("kind");
+        String currentId = currentObjectValue.getString("id");
+
+        return currentKind + "(" + currentId + ")";
+    }
+
+    private static boolean columnIsNotAKey(JSONObject currentObject, String column) throws JSONException {
+        JSONObject currentColumn = currentObject.getJSONObject(column);
+
+        return !currentColumn.has("__gaePropertyType") || !currentColumn.getString("__gaePropertyType").equals("KEY");
     }
 }
