@@ -50,6 +50,14 @@ public interface VisualizerResources extends ClientBundle {
         String namespace();
 
         String delete();
+
+        String dropdown();
+
+        String importBtn();
+
+        String exportBtn();
+
+        String exportBtnDisabled();
     }
 
     public interface EntityList extends GssResource {
@@ -71,6 +79,12 @@ public interface VisualizerResources extends ClientBundle {
 
         String formQuery();
     }
+
+    @Source("images/importBtn.png")
+    ImageResource importBtn();
+
+    @Source("images/exportBtn.png")
+    ImageResource exportBtn();
 
     @Source("images/byGQLBtn.png")
     ImageResource byGQLBtn();

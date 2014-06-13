@@ -121,6 +121,12 @@
             <artifactId>gssresource</artifactId>
             <version>${gss.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.arcbees</groupId>
+            <artifactId>gwtchosen</artifactId>
+            <version>${gwtchosen.version}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

@@ -45,6 +45,8 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         void addEmptyEntityListStyle();
 
         void setDownloadUrl(String downloadUrl);
+
+        void setSelectedFormat();
     }
 
     public static final Object SLOT_NAMESPACES = new Object();
@@ -147,6 +149,8 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         super.onReveal();
 
         updateKinds();
+
+        getView().setSelectedFormat();
     }
 
     @Override

@@ -2,6 +2,7 @@
 <module rename-to='gaestudio'>
     <inherits name="com.google.gwt.user.Debug"/>
     <inherits name="com.arcbees.gaestudio.Common"/>
+    <inherits name="com.arcbees.chosen.Chosen"/>
 
     <set-configuration-property name="CssResource.style" value="pretty"/>
 </module>
