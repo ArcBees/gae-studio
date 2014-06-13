@@ -1,0 +1,2 @@
+id, mixedProperties[0], mixedProperties[1], mixedProperties[2].latitude, mixedProperties[2].longitude, geoPts[0].latitude, geoPts[0].longitude, geoPts[1].latitude, geoPts[1].longitude, geoPts[2].latitude, geoPts[2].longitude, wheels.size[0], wheels.size[1], wheels.size[2], booleans[0], booleans[1], booleans[2], make
+4785074604081152, 1, some string, 10.0, 10.0, 0.0, 0.0, 0.0, 0.0, 10.0, 10.0, 5.25, 10.0, 20.75, true, true, true
