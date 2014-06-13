@@ -14,10 +14,8 @@
             <div ui:field="byGql" class="{visualizer.entityList.byGql}"><span></span>By GQL</div>
             <g:SimplePanel ui:field="deleteByKind" styleName="{visualizer.entityList.deleteByKind}"/>
             <div ui:field="formQuery" class="{visualizer.entityList.formQuery}">
-                <form action="#" method="post">
-                    <textarea></textarea>
-                    <input type="submit" value="Run query" />
-                </form>
+                <g:TextArea></g:TextArea>
+                <button>Run Query</button>
             </div>
         </div>
         <div class="{visualizer.entityList.table}">

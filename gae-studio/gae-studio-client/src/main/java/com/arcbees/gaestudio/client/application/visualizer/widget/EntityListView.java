@@ -308,7 +308,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         $(byGql).click(new Function() {
             @Override
             public void f() {
-                toggleGSL();
+                toggleGQL();
             }
         });
 
@@ -344,11 +344,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         getUiHandlers().onEntitySelected(parsedEntity);
     }
 
-    private void toggleGSL() {
+    private void toggleGQL() {
         VisualizerResources.EntityList styles = visualizerResources.entityList();
-        $(byGql).toggleClass(styles.actif());
+        $(byGql).toggleClass(styles.open());
 
-        if ($(byGql).hasClass(styles.actif())) {
+        if ($(byGql).hasClass(styles.open())) {
             $(formQuery).slideDown(100);
         } else {
             $(formQuery).slideUp(100);

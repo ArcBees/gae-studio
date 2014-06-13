@@ -67,7 +67,7 @@
 }
 
 .byGql:hover,
-.byGql.actif {
+.byGql.open {
     color: C_PRIMARY;
 
     cursor: pointer;
@@ -92,7 +92,7 @@
     @mixin boxshadow_inset(2px, 2px, 5px, 0, rgba(0, 0, 0, 0.1));
 }
 
-.formQuery input {
+.formQuery button {
     color: #fff;
     background-color: C_PRIMARY;
     text-transform: uppercase;

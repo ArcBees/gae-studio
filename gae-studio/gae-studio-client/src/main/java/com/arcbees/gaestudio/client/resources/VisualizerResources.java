@@ -67,7 +67,7 @@ public interface VisualizerResources extends ClientBundle {
 
         String byGql();
 
-        String actif();
+        String open();
 
         String formQuery();
     }
