@@ -14,6 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.arcbees.chosen.client.ChosenOptions;
+import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.gwt.ChosenListBox;
 import com.arcbees.gaestudio.client.resources.ChosenResources;
 import com.arcbees.gaestudio.client.resources.AppResources;
@@ -38,7 +39,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import static com.google.gwt.query.client.GQuery.$;
-import static com.google.gwt.query.client.GQuery.console;
 
 public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implements SidebarPresenter.MyView,
         PanelToggle.ToggleHandler {
@@ -84,6 +84,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     private Widget selectedKind;
     private String currentKind;
+    private String currentFormat = "JSON";
 
     @Inject
     SidebarView(Binder binder,
@@ -105,6 +106,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
         chosenFormat.addItem("CSV");
         chosenFormat.addItem("JSON");
+        chosenFormat.update();
 
         initWidget(binder.createAndBindUi(this));
 
@@ -134,6 +136,13 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 } else {
                     getUiHandlers().exportCurrentKind();
                 }
+            }
+        });
+
+        chosenFormat.addChosenChangeHandler(new ChosenChangeEvent.ChosenChangeHandler() {
+            @Override
+            public void onChange(ChosenChangeEvent chosenChangeEvent) {
+                currentFormat = chosenChangeEvent.getValue();
             }
         });
     }
@@ -170,6 +179,11 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     @Override
     public void setDownloadUrl(String downloadUrl) {
         downloadFrame.setUrl(downloadUrl);
+    }
+
+    @Override
+    public void setSelectedFormat() {
+        chosenFormat.setSelectedValue(currentFormat);
     }
 
     @Override
