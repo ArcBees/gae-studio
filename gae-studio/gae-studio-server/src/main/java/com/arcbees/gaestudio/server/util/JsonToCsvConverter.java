@@ -13,9 +13,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import com.google.appengine.labs.repackaged.org.json.JSONArray;
-import com.google.appengine.labs.repackaged.org.json.JSONException;
-import com.google.appengine.labs.repackaged.org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class JsonToCsvConverter {
     public static String convert(String jsonData) throws JSONException {
@@ -51,11 +51,7 @@ public class JsonToCsvConverter {
 
         for (String column : columns) {
             columnsResult += column;
-            if (counter < columns.size()) {
-                columnsResult += ", ";
-            } else {
-                columnsResult += "\n";
-            }
+            columnsResult = addSeparator(columns, columnsResult, counter);
 
             counter++;
         }
@@ -63,36 +59,43 @@ public class JsonToCsvConverter {
         return columnsResult;
     }
 
+    private static String addSeparator(Set<String> columns, String columnsResult, int counter) {
+        if (counter < columns.size()) {
+            columnsResult += ", ";
+        } else {
+            columnsResult += "\n";
+        }
+        return columnsResult;
+    }
+
     private static String buildDataLines(JSONArray dataArray, Set<String> allColumns) throws JSONException {
+        JSONObject currentProperties;
+        JSONObject currentColumn;
         JSONObject currentObject;
         String dataLines = "";
         String currentId;
-        JSONObject currentColumn;
         int counter;
 
         for (int i = 0; i < dataArray.length(); i++) {
-            currentId = dataArray.getJSONObject(i).getJSONObject("key").getString("id");
-            currentObject = dataArray.getJSONObject(i).getJSONObject("propertyMap");
+            currentObject = dataArray.getJSONObject(i);
+            currentId = currentObject.getJSONObject("key").get("id").toString();
+            currentProperties = currentObject.getJSONObject("propertyMap");
             counter = 1;
 
             dataLines += currentId + ", ";
 
             for (String column : allColumns) {
-                if (currentObject.has(column)) {
-                    currentColumn = currentObject.getJSONObject(column);
+                if (currentProperties.has(column)) {
+                    currentColumn = currentProperties.getJSONObject(column);
 
-                    if (columnIsNotAKey(currentObject, column)) {
+                    if (columnIsNotAKey(currentProperties, column)) {
                         dataLines += currentColumn.getString("value");
                     } else {
                         dataLines += writeKeyData(currentColumn.getJSONObject("value"));
                     }
                 }
 
-                if (counter < allColumns.size()) {
-                    dataLines += ", ";
-                } else {
-                    dataLines += "\n";
-                }
+                dataLines = addSeparator(allColumns, dataLines, counter);
 
                 counter++;
             }
@@ -103,7 +106,7 @@ public class JsonToCsvConverter {
 
     private static String writeKeyData(JSONObject currentObjectValue) throws JSONException {
         String currentKind = currentObjectValue.getString("kind");
-        String currentId = currentObjectValue.getString("id");
+        String currentId = currentObjectValue.get("id").toString();
 
         return currentKind + "(" + currentId + ")";
     }

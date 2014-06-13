@@ -11,9 +11,10 @@ package com.arcbees.gaestudio.server.service.visualizer;
 
 import javax.inject.Inject;
 
+import org.json.JSONException;
+
 import com.arcbees.gaestudio.server.util.JsonToCsvConverter;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.gson.Gson;
 
 public class ExportServiceImpl implements ExportService {

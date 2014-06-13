@@ -38,6 +38,7 @@
         <arcbees.version>1.1.1</arcbees.version>
         <gwt-jackson.version>0.4.0</gwt-jackson.version>
         <gss.version>1.0-SNAPSHOT</gss.version>
+        <json.version>20140107</json.version>
 
         <!-- server -->
         <gae.version>1.9.0</gae.version>
