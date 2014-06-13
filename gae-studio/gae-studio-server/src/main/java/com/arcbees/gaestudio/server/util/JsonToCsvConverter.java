@@ -89,7 +89,7 @@ public class JsonToCsvConverter {
                     currentColumn = currentProperties.getJSONObject(column);
 
                     if (columnIsNotAKey(currentProperties, column)) {
-                        dataLines += currentColumn.getString("value");
+                        dataLines += currentColumn.get("value").toString();
                     } else {
                         dataLines += writeKeyData(currentColumn.getJSONObject("value"));
                     }
