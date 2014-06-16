@@ -9,8 +9,8 @@
 
 package com.arcbees.gaestudio.server.util;
 
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.json.JSONArray;
@@ -32,13 +32,15 @@ public class JsonToCsvConverter {
     }
 
     private static Set<String> extractColumns(JSONArray array) throws JSONException {
-        Set<String> columns = new HashSet<>();
+        Set<String> columns = new LinkedHashSet<>();
         Iterator currentObjectKeys;
+        JSONObject propertyMap;
 
         for (int i = 0; i < array.length(); i++) {
-            currentObjectKeys = array.getJSONObject(i).getJSONObject("propertyMap").keys();
+            propertyMap = array.getJSONObject(i).getJSONObject("propertyMap");
+            currentObjectKeys = propertyMap.keys();
             while (currentObjectKeys.hasNext()) {
-                columns.add(currentObjectKeys.next().toString());
+                columns.addAll(generateColumnNamesFromPropertyMap(String.valueOf(currentObjectKeys.next()), propertyMap));
             }
         }
 
@@ -115,5 +117,55 @@ public class JsonToCsvConverter {
         JSONObject currentColumn = currentObject.getJSONObject(column);
 
         return !currentColumn.has("__gaePropertyType") || !currentColumn.getString("__gaePropertyType").equals("KEY");
+    }
+
+    private static Set<String> generateColumnNamesFromPropertyMap(String propertyName, JSONObject propertyMap) {
+        JSONObject currentPropertyObject = propertyMap.getJSONObject(propertyName);
+
+        return generateColumnNamesFromPropertyType(propertyName, currentPropertyObject);
+    }
+
+    private static Set<String> generateColumnNamesFromPropertyType(String propertyName, JSONObject currentPropertyObject) {
+        Set<String> columns = new LinkedHashSet<>();
+
+        if (currentPropertyObject.has("__gaePropertyType")) {
+            switch (currentPropertyObject.getString("__gaePropertyType")) {
+                case "STRING":
+                case "KEY":
+                case "NUMERIC":
+                case "BOOLEAN":
+                case "FLOATING":
+                    columns.add(propertyName);
+                    break;
+                case "GEO_PT":
+                    columns.addAll(generateGeoPtColumnNames(propertyName));
+                    break;
+                case "COLLECTION":
+                    columns.addAll(generateArrayColumnNames(propertyName, currentPropertyObject.getJSONArray("value")));
+                    break;
+            }
+        }
+
+        return columns;
+    }
+
+    private static Set<String> generateArrayColumnNames(String propertyName, JSONArray array) {
+        Set<String> arrayColumns = new LinkedHashSet<>();
+
+        for (int i = 0; i < array.length(); i++) {
+            arrayColumns.addAll(generateColumnNamesFromPropertyType(propertyName + "[" + i + "]", array.getJSONObject(i)));
+        }
+
+        return arrayColumns;
+    }
+
+
+    private static Set<String> generateGeoPtColumnNames(String propertyName) {
+        Set<String> geoColumns = new LinkedHashSet<>();
+
+        geoColumns.add(propertyName + ".latitude");
+        geoColumns.add(propertyName + ".longitude");
+
+        return geoColumns;
     }
 }
