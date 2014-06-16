@@ -12,7 +12,7 @@
 .openedList {
     background: #fff;
 
-    @mixin boxShadow(4px, 4px, 5px, 0, rgba(0, 0, 0, 0.12));
+    @mixin boxshadow(4px, 4px, 5px, 0, rgba(0, 0, 0, 0.12));
 
     z-index: 10000;
 }
