@@ -734,16 +734,17 @@ input:focus, textarea:focus, button:focus {
 }
 
 .editorMain {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 .editorMain input[type=text] {
     font-size: 16px;
     color: black;
-    background-color: lightgray;
+    background-color: C_SECONDARY_LIGHT2;
 
-    width: editInputWidth;
+    width: 100%;
     padding: 2px 4px;
+    margin-bottom: 10px;
     border: none;
 }
 

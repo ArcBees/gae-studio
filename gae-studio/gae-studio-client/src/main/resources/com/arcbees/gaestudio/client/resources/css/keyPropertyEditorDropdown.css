@@ -1,26 +1,22 @@
-@def editInputWidth eval("com.arcbees.gaestudio.client.resources.CssConstants.editInputWidth");
-
 .ul {
-    background: lightgray;
+    background: C_SECONDARY_LIGHT2;
 
-    width: editInputWidth;
-    margin: 0;
+    width: 100%;
+    margin: 0 0 10px 0;
 
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
 
     -webkit-padding-start: 0px;
     list-style-type: none;
 }
 
 ul.openedList {
-    min-width: editInputWidth;
+    min-width: 100%;
     width: auto;
 }
 
 .openedList {
-    background: lightgray;
+    background: #fff;
 
     z-index: 10000;
 }
@@ -36,7 +32,7 @@ ul.openedList {
 
 .ul li {
     font-size: 16px;
-    background-color: lightgray;
+    background-color: C_SECONDARY_LIGHT2;
 
     height: 20px;
     line-height: 20px;
@@ -75,7 +71,7 @@ ul.openedList {
 
 .dropDownArrow, .dropDownArrow:hover {
     width: 100%;
-    background-position-x: literal('calc(100% - 12px)');
+    background-position-x: calc(100% - 12px);
     background-position-y: 50%;
 }
 
