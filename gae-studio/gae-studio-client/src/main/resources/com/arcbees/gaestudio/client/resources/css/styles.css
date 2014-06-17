@@ -362,17 +362,19 @@ input:focus, textarea:focus, button:focus {
 }
 
 .button:hover:enabled, .button:active:enabled {
-    @mixin boxshadow_inset(2px, 2px, 6px, 1px, rgba(0, 0, 0, 0.4));
+    @mixin boxshadow_inset(2px, 2px, 6px, 5px, rgba(0, 0, 0, 0.1));
 }
 
 .button {
-    width: 100%;
+    background-color: C_PRIMARY;
+    color: white;
     font-size: 18px;
     text-transform: uppercase;
 
+    width: 100%;
     border: none;
-    background-color: C_PRIMARY;
-    color: white;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
 .button:hover:enabled {
@@ -414,7 +416,7 @@ input:focus, textarea:focus, button:focus {
     background-color: #2d2d2d;
     width: 100%;
 
-    height: 110px;
+    height: 93px;
 
     position: absolute;
     top: 0;
@@ -424,7 +426,7 @@ input:focus, textarea:focus, button:focus {
     width: 100%;
 
     position: absolute;
-    top: 110px;
+    top: 93px;
     bottom: 0;
 }
 
@@ -523,7 +525,7 @@ input:focus, textarea:focus, button:focus {
 .toggleKindsPanel {
     position: absolute;
     right: 3px;
-    top: 13px;
+    top: 10px;
     padding: 4px;
 }
 

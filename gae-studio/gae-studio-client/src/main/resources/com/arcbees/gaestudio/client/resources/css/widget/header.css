@@ -36,8 +36,8 @@
 }
 
 .logo img {
-    margin-left: 6px;
-    margin-top: 9px;
+    margin-left: 18px;
+    margin-top: 12px;
 }
 
 .cogplay {
@@ -59,7 +59,7 @@
     display: inline-block;
     position: absolute;
     top: 36%;
-    right: 20px;
+    right: 8px;
     height: 30px;
 }
 
