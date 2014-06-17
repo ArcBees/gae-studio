@@ -11,18 +11,25 @@ package com.arcbees.gaestudio.server.util;
 
 import java.io.IOException;
 
+import com.google.inject.Inject;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
+import org.jukito.JukitoRunner;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(JukitoRunner.class)
 public class JsonToCsvConverterTest {
+    @Inject
+    JsonToCsvConverter jsonToCsvConverter;
+
     @Test
     public void convertEasyJsonToCsv() throws JSONException, IOException {
         String jsonData = getJsonData();
 
-        String result = JsonToCsvConverter.convert(jsonData);
+        String result = jsonToCsvConverter.convert(jsonData);
 
         assertEquals(getCsvData(), result);
     }
@@ -31,7 +38,7 @@ public class JsonToCsvConverterTest {
     public void convertCollectionsJsonToCsv() throws JSONException, IOException {
         String jsonData = getCollectionsJsonData();
 
-        String result = JsonToCsvConverter.convert(jsonData);
+        String result = jsonToCsvConverter.convert(jsonData);
 
         assertEquals(getCollectionsCsvData(), result);
     }
