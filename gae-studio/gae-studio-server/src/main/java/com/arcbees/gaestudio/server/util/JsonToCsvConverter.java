@@ -129,25 +129,32 @@ public class JsonToCsvConverter {
         Set<String> columns = new LinkedHashSet<>();
 
         if (currentPropertyObject.has("__gaePropertyType")) {
-            switch (currentPropertyObject.getString("__gaePropertyType")) {
-                case "STRING":
-                case "KEY":
-                case "NUMERIC":
-                case "BOOLEAN":
-                case "FLOATING":
-                    columns.add(propertyName);
-                    break;
-                case "GEO_PT":
-                    columns.addAll(generateGeoPtColumnNames(propertyName));
-                    break;
-                case "COLLECTION":
-                    columns.addAll(generateArrayColumnNames(propertyName, currentPropertyObject.getJSONArray("value")));
-                    break;
-            }
+            columns.addAll(generateColumns(propertyName, currentPropertyObject));
         } else {
             columns.add(propertyName);
         }
 
+        return columns;
+    }
+
+    private Set<String> generateColumns(String propertyName, JSONObject currentPropertyObject) {
+        Set<String> columns = new LinkedHashSet<>();
+
+        switch (currentPropertyObject.getString("__gaePropertyType")) {
+            case "STRING":
+            case "KEY":
+            case "NUMERIC":
+            case "BOOLEAN":
+            case "FLOATING":
+                columns.add(propertyName);
+                break;
+            case "GEO_PT":
+                columns.addAll(generateGeoPtColumnNames(propertyName));
+                break;
+            case "COLLECTION":
+                columns.addAll(generateArrayColumnNames(propertyName, currentPropertyObject.getJSONArray("value")));
+                break;
+        }
 
         return columns;
     }
@@ -218,27 +225,29 @@ public class JsonToCsvConverter {
         String propertyData = "";
 
         if (jsonObject.has("__gaePropertyType")) {
-            switch (jsonObject.getString("__gaePropertyType")) {
-                case "STRING":
-                case "NUMERIC":
-                case "BOOLEAN":
-                case "FLOATING":
-                    propertyData += String.valueOf(jsonObject.get("value"));
-                    break;
-                case "GEO_PT":
-                    propertyData += writeGeoData((JSONObject) jsonObject.get("value"));
-                    break;
-                case "COLLECTION":
-                    propertyData += writeArrayData((JSONArray) jsonObject.get("value"));
-                    break;
-                case "KEY":
-                    propertyData += writeKeyData((JSONObject) jsonObject.get("value"));
-                    break;
-            }
+            propertyData += writeData(jsonObject);
         } else {
             propertyData += String.valueOf(jsonObject.get("value"));
         }
 
         return propertyData;
+    }
+
+    private String writeData(JSONObject jsonObject){
+        switch (jsonObject.getString("__gaePropertyType")) {
+            case "STRING":
+            case "NUMERIC":
+            case "BOOLEAN":
+            case "FLOATING":
+                return String.valueOf(jsonObject.get("value"));
+            case "GEO_PT":
+                return writeGeoData((JSONObject) jsonObject.get("value"));
+            case "COLLECTION":
+                return writeArrayData((JSONArray) jsonObject.get("value"));
+            case "KEY":
+                return writeKeyData((JSONObject) jsonObject.get("value"));
+        }
+
+        return String.valueOf(jsonObject.get("value"));
     }
 }
