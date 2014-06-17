@@ -22,26 +22,49 @@ public class JsonToCsvConverter {
         Set<String> columns;
         JSONArray array = new JSONArray(jsonData);
 
-        columns = extractColumns(array);
+        JSONObject fullPropertyMap = extractFullPropertyMap(array);
+
+        columns = extractColumns(fullPropertyMap);
 
         String csvResult = buildColumnsLine(columns);
 
-        csvResult += buildDataLines(array, columns);
+        csvResult += buildDataLines(array, fullPropertyMap);
 
         return csvResult;
     }
 
-    private static Set<String> extractColumns(JSONArray array) throws JSONException {
-        Set<String> columns = new LinkedHashSet<>();
-        Iterator currentObjectKeys;
-        JSONObject propertyMap;
+    private static JSONObject extractFullPropertyMap(JSONArray array) {
+        JSONObject currentObjectPropertyMap;
+        JSONObject fullPropertyMap = new JSONObject();
 
         for (int i = 0; i < array.length(); i++) {
-            propertyMap = array.getJSONObject(i).getJSONObject("propertyMap");
-            currentObjectKeys = propertyMap.keys();
-            while (currentObjectKeys.hasNext()) {
-                columns.addAll(generateColumnNamesFromPropertyMap(String.valueOf(currentObjectKeys.next()), propertyMap));
+            currentObjectPropertyMap = array.getJSONObject(i).getJSONObject("propertyMap");
+            updateFullPropertyMap(currentObjectPropertyMap, fullPropertyMap);
+        }
+
+        return fullPropertyMap;
+    }
+
+    private static void updateFullPropertyMap(JSONObject currentObjectPropertyMap, JSONObject fullPropertyMap) {
+        Iterator currentObjectKeys = currentObjectPropertyMap.keys();
+
+        while (currentObjectKeys.hasNext()) {
+            String propertyName = String.valueOf(currentObjectKeys.next());
+            JSONObject currentObject = currentObjectPropertyMap.getJSONObject(propertyName);
+            if (!fullPropertyMap.has(propertyName)) {
+                fullPropertyMap.accumulate(propertyName, currentObject);
             }
+        }
+    }
+
+    private static Set<String> extractColumns(JSONObject fullPropertyMap) throws JSONException {
+        Set<String> columns = new LinkedHashSet<>();
+        Iterator currentObjectKeys;
+
+        currentObjectKeys = fullPropertyMap.keys();
+
+        while (currentObjectKeys.hasNext()) {
+            columns.addAll(generateColumnNamesFromPropertyMap(String.valueOf(currentObjectKeys.next()), fullPropertyMap));
         }
 
         return columns;
@@ -70,37 +93,20 @@ public class JsonToCsvConverter {
         return columnsResult;
     }
 
-    private static String buildDataLines(JSONArray dataArray, Set<String> allColumns) throws JSONException {
-        JSONObject currentProperties;
-        JSONObject currentColumn;
+    private static String buildDataLines(JSONArray dataArray, JSONObject fullPropertyMap) throws JSONException {
+        JSONObject propertyMap;
         JSONObject currentObject;
         String dataLines = "";
         String currentId;
-        int counter;
 
         for (int i = 0; i < dataArray.length(); i++) {
             currentObject = dataArray.getJSONObject(i);
             currentId = currentObject.getJSONObject("key").get("id").toString();
-            currentProperties = currentObject.getJSONObject("propertyMap");
-            counter = 1;
+            propertyMap = currentObject.getJSONObject("propertyMap");
 
-            dataLines += currentId + ", ";
+            dataLines += currentId;
 
-            for (String column : allColumns) {
-                if (currentProperties.has(column)) {
-                    currentColumn = currentProperties.getJSONObject(column);
-
-                    if (columnIsNotAKey(currentProperties, column)) {
-                        dataLines += currentColumn.get("value").toString();
-                    } else {
-                        dataLines += writeKeyData(currentColumn.getJSONObject("value"));
-                    }
-                }
-
-                dataLines = addSeparator(allColumns, dataLines, counter);
-
-                counter++;
-            }
+            dataLines += generateDataLineFromPropertyMap(propertyMap, fullPropertyMap);
         }
 
         return dataLines;
@@ -113,12 +119,6 @@ public class JsonToCsvConverter {
         return currentKind + "(" + currentId + ")";
     }
 
-    private static boolean columnIsNotAKey(JSONObject currentObject, String column) throws JSONException {
-        JSONObject currentColumn = currentObject.getJSONObject(column);
-
-        return !currentColumn.has("__gaePropertyType") || !currentColumn.getString("__gaePropertyType").equals("KEY");
-    }
-
     private static Set<String> generateColumnNamesFromPropertyMap(String propertyName, JSONObject propertyMap) {
         JSONObject currentPropertyObject = propertyMap.getJSONObject(propertyName);
 
@@ -128,22 +128,20 @@ public class JsonToCsvConverter {
     private static Set<String> generateColumnNamesFromPropertyType(String propertyName, JSONObject currentPropertyObject) {
         Set<String> columns = new LinkedHashSet<>();
 
-        if (currentPropertyObject.has("__gaePropertyType")) {
-            switch (currentPropertyObject.getString("__gaePropertyType")) {
-                case "STRING":
-                case "KEY":
-                case "NUMERIC":
-                case "BOOLEAN":
-                case "FLOATING":
-                    columns.add(propertyName);
-                    break;
-                case "GEO_PT":
-                    columns.addAll(generateGeoPtColumnNames(propertyName));
-                    break;
-                case "COLLECTION":
-                    columns.addAll(generateArrayColumnNames(propertyName, currentPropertyObject.getJSONArray("value")));
-                    break;
-            }
+        switch (currentPropertyObject.getString("__gaePropertyType")) {
+            case "STRING":
+            case "KEY":
+            case "NUMERIC":
+            case "BOOLEAN":
+            case "FLOATING":
+                columns.add(propertyName);
+                break;
+            case "GEO_PT":
+                columns.addAll(generateGeoPtColumnNames(propertyName));
+                break;
+            case "COLLECTION":
+                columns.addAll(generateArrayColumnNames(propertyName, currentPropertyObject.getJSONArray("value")));
+                break;
         }
 
         return columns;
@@ -167,5 +165,71 @@ public class JsonToCsvConverter {
         geoColumns.add(propertyName + ".longitude");
 
         return geoColumns;
+    }
+
+    private static String generateDataLineFromPropertyMap(JSONObject propertyMap, JSONObject fullPropertyMap) {
+        Iterator fullPropertyMapKeys = fullPropertyMap.keys();
+        String dataLine = "";
+
+        while (fullPropertyMapKeys.hasNext()) {
+            dataLine += ", ";
+            String propertyName = String.valueOf(fullPropertyMapKeys.next());
+            dataLine += writePropertyData(propertyName, propertyMap);
+        }
+
+        return dataLine + "\n";
+    }
+
+    private static String writePropertyData(String propertyName, JSONObject propertyMap) {
+        String propertyData = "";
+
+        if (propertyMap.has(propertyName)) {
+            JSONObject currentPropertyObject = propertyMap.getJSONObject(propertyName);
+
+            propertyData += writePropertyData(currentPropertyObject);
+        }
+
+        return propertyData;
+    }
+
+    private static String writeGeoData(JSONObject geoPt) {
+        return geoPt.get("latitude") + ", " + geoPt.get("longitude");
+    }
+
+    private static String writeArrayData(JSONArray array) {
+        String arrayData = "";
+
+        for (int i = 0; i < array.length(); i++) {
+            arrayData += writePropertyData(array.getJSONObject(i));
+            if(i < array.length() - 1) {
+                arrayData += ", ";
+            }
+        }
+
+        return arrayData;
+    }
+
+    private static String writePropertyData(JSONObject jsonObject) {
+        String propertyData = "";
+
+        switch (jsonObject.getString("__gaePropertyType")) {
+            case "STRING":
+            case "NUMERIC":
+            case "BOOLEAN":
+            case "FLOATING":
+                propertyData += String.valueOf(jsonObject.get("value"));
+                break;
+            case "GEO_PT":
+                propertyData += writeGeoData((JSONObject) jsonObject.get("value"));
+                break;
+            case "COLLECTION":
+                propertyData += writeArrayData((JSONArray) jsonObject.get("value"));
+                break;
+            case "KEY":
+                propertyData += writeKeyData((JSONObject) jsonObject.get("value"));
+                break;
+        }
+
+        return propertyData;
     }
 }
