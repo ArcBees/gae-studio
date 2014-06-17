@@ -11,8 +11,11 @@ package com.arcbees.gaestudio.server.guice;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +46,7 @@ public class RootServlet extends HttpServlet {
     private final static String MAVEN_URL = "http://search.maven.org/solrsearch/select?wt=json&q=gae-studio-webapp";
     private final static Pattern LATEST_VERSION_PATTERN = Pattern.compile("\"latestVersion\":\\s*\"([0-9](?:\\.[0-9])*)\"");
     private final static Pattern RESPONSE_CONTENT_PATTERN = Pattern.compile("^[^{]*(\\{.*\\})$");
+    private final static String COULD_NOT_RETRIEVE_LATEST_VERSION = "Could not retrieve latest version";
 
     protected final String restPath;
     private final VelocityWrapper velocityWrapper;
@@ -65,13 +69,13 @@ public class RootServlet extends HttpServlet {
         printWriter.append(generated);
     }
 
-    private void setParameters() throws IOException {
+    private void setParameters() {
         AppConfig config = buildAppConfig();
         String json = new Gson().toJson(config);
         velocityWrapper.put(AppConfig.OBJECT_KEY, "var " + AppConfig.OBJECT_KEY + " = " + json + ";");
     }
 
-    private AppConfig buildAppConfig() throws IOException {
+    private AppConfig buildAppConfig() {
         return AppConfig.with()
                 .restPath(restPath)
                 .clientId(UUID.randomUUID().toString())
@@ -80,14 +84,31 @@ public class RootServlet extends HttpServlet {
                 .build();
     }
 
-    private String retrieveLatestVersion() throws IOException {
-        URL maven = new URL(MAVEN_URL);
+    private String retrieveLatestVersion() {
+        URL maven;
+
+        try {
+            maven = new URL(MAVEN_URL);
+        } catch (MalformedURLException e) {
+            return COULD_NOT_RETRIEVE_LATEST_VERSION;
+        }
+
         URLFetchService urlFetchService = URLFetchServiceFactory.getURLFetchService();
 
         FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
 
         HTTPRequest request = new HTTPRequest(maven, HTTPMethod.GET, fetchOptions);
-        HTTPResponse httpResponse = urlFetchService.fetch(request);
+
+        Future future = urlFetchService.fetchAsync(request);
+
+        HTTPResponse httpResponse;
+        try {
+            httpResponse = (HTTPResponse) future.get();
+        } catch (InterruptedException e) {
+            return COULD_NOT_RETRIEVE_LATEST_VERSION;
+        } catch (ExecutionException e) {
+            return COULD_NOT_RETRIEVE_LATEST_VERSION;
+        }
 
         String json = extractResponseContent(new String(httpResponse.getContent()));
 
