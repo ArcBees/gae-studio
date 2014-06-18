@@ -17,6 +17,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.arcbees.gaestudio.shared.PropertyType;
+
+import static com.arcbees.gaestudio.shared.PropertyName.GAE_PROPERTY_TYPE;
+import static com.arcbees.gaestudio.shared.PropertyName.ID;
+import static com.arcbees.gaestudio.shared.PropertyName.KEY;
+import static com.arcbees.gaestudio.shared.PropertyName.KIND;
+import static com.arcbees.gaestudio.shared.PropertyName.LATITUDE;
+import static com.arcbees.gaestudio.shared.PropertyName.LONGITUDE;
+import static com.arcbees.gaestudio.shared.PropertyName.PROPERTY_MAP;
+import static com.arcbees.gaestudio.shared.PropertyName.VALUE;
+
 public class JsonToCsvConverter {
     public String convert(String jsonData) throws JSONException {
         Set<String> columns;
@@ -38,7 +49,7 @@ public class JsonToCsvConverter {
         JSONObject fullPropertyMap = new JSONObject();
 
         for (int i = 0; i < array.length(); i++) {
-            currentObjectPropertyMap = array.getJSONObject(i).getJSONObject("propertyMap");
+            currentObjectPropertyMap = array.getJSONObject(i).getJSONObject(PROPERTY_MAP);
             updateFullPropertyMap(currentObjectPropertyMap, fullPropertyMap);
         }
 
@@ -59,9 +70,7 @@ public class JsonToCsvConverter {
 
     private Set<String> extractColumns(JSONObject fullPropertyMap) throws JSONException {
         Set<String> columns = new LinkedHashSet<>();
-        Iterator currentObjectKeys;
-
-        currentObjectKeys = fullPropertyMap.keys();
+        Iterator currentObjectKeys = fullPropertyMap.keys();
 
         while (currentObjectKeys.hasNext()) {
             columns.addAll(generateColumnNamesFromPropertyMap(String.valueOf(currentObjectKeys.next()), fullPropertyMap));
@@ -71,7 +80,7 @@ public class JsonToCsvConverter {
     }
 
     private String buildColumnsLine(Set<String> columns) {
-        String columnsResult = "id, ";
+        String columnsResult = ID + ", ";
         int counter = 1;
 
         for (String column : columns) {
@@ -101,8 +110,8 @@ public class JsonToCsvConverter {
 
         for (int i = 0; i < dataArray.length(); i++) {
             currentObject = dataArray.getJSONObject(i);
-            currentId = currentObject.getJSONObject("key").get("id").toString();
-            propertyMap = currentObject.getJSONObject("propertyMap");
+            currentId = currentObject.getJSONObject(KEY).get(ID).toString();
+            propertyMap = currentObject.getJSONObject(PROPERTY_MAP);
 
             dataLines += currentId;
 
@@ -113,8 +122,8 @@ public class JsonToCsvConverter {
     }
 
     private String writeKeyData(JSONObject currentObjectValue) throws JSONException {
-        String currentKind = currentObjectValue.getString("kind");
-        String currentId = currentObjectValue.get("id").toString();
+        String currentKind = currentObjectValue.getString(KIND);
+        String currentId = currentObjectValue.get(ID).toString();
 
         return currentKind + "(" + currentId + ")";
     }
@@ -128,7 +137,7 @@ public class JsonToCsvConverter {
     private Set<String> generateColumnNamesFromPropertyType(String propertyName, JSONObject currentPropertyObject) {
         Set<String> columns = new LinkedHashSet<>();
 
-        if (currentPropertyObject.has("__gaePropertyType")) {
+        if (currentPropertyObject.has(GAE_PROPERTY_TYPE)) {
             columns.addAll(generateColumns(propertyName, currentPropertyObject));
         } else {
             columns.add(propertyName);
@@ -139,20 +148,21 @@ public class JsonToCsvConverter {
 
     private Set<String> generateColumns(String propertyName, JSONObject currentPropertyObject) {
         Set<String> columns = new LinkedHashSet<>();
+        PropertyType propertyType = PropertyType.valueOf(currentPropertyObject.getString(GAE_PROPERTY_TYPE));
 
-        switch (currentPropertyObject.getString("__gaePropertyType")) {
-            case "STRING":
-            case "KEY":
-            case "NUMERIC":
-            case "BOOLEAN":
-            case "FLOATING":
+        switch (propertyType) {
+            case STRING:
+            case KEY:
+            case NUMERIC:
+            case BOOLEAN:
+            case FLOATING:
                 columns.add(propertyName);
                 break;
-            case "GEO_PT":
+            case GEO_PT:
                 columns.addAll(generateGeoPtColumnNames(propertyName));
                 break;
-            case "COLLECTION":
-                columns.addAll(generateArrayColumnNames(propertyName, currentPropertyObject.getJSONArray("value")));
+            case COLLECTION:
+                columns.addAll(generateArrayColumnNames(propertyName, currentPropertyObject.getJSONArray(VALUE)));
                 break;
         }
 
@@ -173,8 +183,8 @@ public class JsonToCsvConverter {
     private Set<String> generateGeoPtColumnNames(String propertyName) {
         Set<String> geoColumns = new LinkedHashSet<>();
 
-        geoColumns.add(propertyName + ".latitude");
-        geoColumns.add(propertyName + ".longitude");
+        geoColumns.add(propertyName + "." + LATITUDE);
+        geoColumns.add(propertyName + "." + LONGITUDE);
 
         return geoColumns;
     }
@@ -205,7 +215,7 @@ public class JsonToCsvConverter {
     }
 
     private String writeGeoData(JSONObject geoPt) {
-        return geoPt.get("latitude") + ", " + geoPt.get("longitude");
+        return geoPt.get(LATITUDE) + ", " + geoPt.get(LONGITUDE);
     }
 
     private String writeArrayData(JSONArray array) {
@@ -213,41 +223,45 @@ public class JsonToCsvConverter {
 
         for (int i = 0; i < array.length(); i++) {
             arrayData += writePropertyData(array.getJSONObject(i));
-            if (i < array.length() - 1) {
-                arrayData += ", ";
-            }
+            arrayData += ", ";
         }
 
-        return arrayData;
+        return removeLastComma(arrayData);
+    }
+
+    private String removeLastComma(String arrayData) {
+        return new StringBuilder(arrayData).delete(arrayData.length() - 2, arrayData.length()).toString();
     }
 
     private String writePropertyData(JSONObject jsonObject) {
         String propertyData = "";
 
-        if (jsonObject.has("__gaePropertyType")) {
+        if (jsonObject.has(GAE_PROPERTY_TYPE)) {
             propertyData += writeData(jsonObject);
         } else {
-            propertyData += String.valueOf(jsonObject.get("value"));
+            propertyData += String.valueOf(jsonObject.get(VALUE));
         }
 
         return propertyData;
     }
 
-    private String writeData(JSONObject jsonObject){
-        switch (jsonObject.getString("__gaePropertyType")) {
-            case "STRING":
-            case "NUMERIC":
-            case "BOOLEAN":
-            case "FLOATING":
-                return String.valueOf(jsonObject.get("value"));
-            case "GEO_PT":
-                return writeGeoData((JSONObject) jsonObject.get("value"));
-            case "COLLECTION":
-                return writeArrayData((JSONArray) jsonObject.get("value"));
-            case "KEY":
-                return writeKeyData((JSONObject) jsonObject.get("value"));
+    private String writeData(JSONObject jsonObject) {
+        PropertyType propertyType = PropertyType.valueOf(jsonObject.getString(GAE_PROPERTY_TYPE));
+
+        switch (propertyType) {
+            case STRING:
+            case NUMERIC:
+            case BOOLEAN:
+            case FLOATING:
+                return String.valueOf(jsonObject.get(VALUE));
+            case GEO_PT:
+                return writeGeoData((JSONObject) jsonObject.get(VALUE));
+            case COLLECTION:
+                return writeArrayData((JSONArray) jsonObject.get(VALUE));
+            case KEY:
+                return writeKeyData((JSONObject) jsonObject.get(VALUE));
         }
 
-        return String.valueOf(jsonObject.get("value"));
+        return String.valueOf(jsonObject.get(VALUE));
     }
 }
