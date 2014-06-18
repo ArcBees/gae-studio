@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.visualizer;
 
+import java.util.Set;
+
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
@@ -19,6 +21,8 @@ import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntityEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EditEntitiesEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent;
@@ -62,8 +66,9 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler,
         RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler,
         KindPanelToggleEvent.KindPanelToggleHandler, FullScreenEvent.FullScreenEventHandler,
-        EntitySelectedEvent.EntitySelectedHandler, EntityPageLoadedEvent.EntityPageLoadedHandler,
-        SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler, ToolbarToggleEvent.ToolbarToggleHandler {
+        EntitySelectedEvent.EntitySelectedHandler, EntitiesSelectedEvent.EntitySelectedHandler,
+        EntityPageLoadedEvent.EntityPageLoadedHandler, SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler,
+        ToolbarToggleEvent.ToolbarToggleHandler {
     interface MyView extends View {
         void showEntityDetails();
 
@@ -85,10 +90,10 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
     @ContentSlot
     public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_ENTITIES = new GwtEvent.Type<>();
-    public static final Object SLOT_TOOLBAR = new Object();
-    public static final Object SLOT_KINDS = new Object();
     @ContentSlot
     public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_ENTITY_DETAILS = new GwtEvent.Type<>();
+    public static final Object SLOT_TOOLBAR = new Object();
+    public static final Object SLOT_KINDS = new Object();
 
     private final EntityListPresenter entityListPresenter;
     private final SidebarPresenter sidebarPresenter;
@@ -102,6 +107,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     private final UniversalAnalytics universalAnalytics;
 
     private ParsedEntity currentParsedEntity;
+    private Set<ParsedEntity> currentParsedEntities;
     private String currentKind = "";
 
     @Inject
@@ -207,6 +213,14 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     }
 
     @Override
+    public void onEntitiesSelected(EntitiesSelectedEvent event) {
+        currentParsedEntities = event.getParsedEntities();
+        currentParsedEntity = null;
+        getView().collapseEntityDetails();
+        enableContextualMenu();
+    }
+
+    @Override
     protected void onBind() {
         super.onBind();
 
@@ -226,6 +240,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         addRegisteredHandler(EntityPageLoadedEvent.getType(), this);
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(SetStateFromPlaceRequestEvent.getType(), this);
+        addRegisteredHandler(EntitiesSelectedEvent.getType(), this);
 
         addVisibleHandler(ToolbarToggleEvent.getType(), this);
     }
@@ -239,7 +254,8 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
                         universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Delete Entity");
                     }
-                }, DebugIds.DELETE_ENGAGE);
+                }, DebugIds.DELETE_ENGAGE
+        );
     }
 
     private void delete() {
@@ -257,7 +273,8 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
                         universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Edit Entity");
                     }
-                }, DebugIds.EDIT);
+                }, DebugIds.EDIT
+        );
     }
 
     private void edit() {
@@ -278,6 +295,8 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
             }
 
             placeManager.revealPlace(builder.build());
+        } else if (currentParsedEntities != null && !currentParsedEntities.isEmpty()) {
+            EditEntitiesEvent.fire(this, currentParsedEntities);
         }
     }
 
