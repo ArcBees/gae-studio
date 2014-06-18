@@ -21,7 +21,6 @@ import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.query.client.Function;
@@ -34,6 +33,8 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
+import com.google.gwt.view.client.CellPreviewEvent;
+import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.RowCountChangeEvent;
 import com.google.inject.Inject;
@@ -41,7 +42,8 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
+public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView,
+        CellPreviewEvent.Handler<ParsedEntity> {
     interface Binder extends UiBinder<Widget, EntityListView> {
     }
 
@@ -67,10 +69,15 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     private final AppResources appResources;
     private final VisualizerResources visualizerResources;
-    private final String lockedRowStyleName;
     private final String pagerButtons;
-    private final String firstTableRow;
     private final ParsedEntityColumnCreator columnCreator;
+    private final MultiSelectionModel<ParsedEntity> selectionModel;
+    private final Function unlock = new Function() {
+        @Override
+        public void f() {
+            unselectRows();
+        }
+    };
 
     private HandlerRegistration firstLoadHandlerRegistration;
 
@@ -87,17 +94,18 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
 
-        lockedRowStyleName = appResources.styles().lockedRow();
         pagerButtons = "." + appResources.styles().pager() + " tbody tr td img";
-        firstTableRow = "." + appResources.styles().firstTable() + " tbody";
 
-        entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
+        entityTable = new CellTable<>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
             @Override
             public void onAttachOrDetach(AttachEvent event) {
                 onEditTableAttachedOrDetached(event.isAttached());
             }
         });
+
+        selectionModel = new MultiSelectionModel<>();
+        entityTable.setSelectionModel(selectionModel, this);
 
         initWidget(uiBinder.createAndBindUi(this));
 
@@ -179,8 +187,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void unlockRows() {
-        $("." + lockedRowStyleName).removeClass(lockedRowStyleName);
+    public void unselectRows() {
+        selectionModel.clear();
 
         AppResources.Styles styles = appResources.styles();
         $(deselect).removeClass(styles.deselect());
@@ -211,12 +219,33 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         }
     }
 
+    @Override
+    public void onCellPreview(CellPreviewEvent<ParsedEntity> event) {
+        if (BrowserEvents.CLICK.equals(event.getNativeEvent().getType())) {
+            ParsedEntity parsedEntity = event.getValue();
+            if (event.getNativeEvent().getCtrlKey() || event.getNativeEvent().getShiftKey()) {
+                if (selectionModel.isSelected(parsedEntity)) {
+                    unselectRow(parsedEntity);
+                } else {
+                    selectRow(parsedEntity);
+                }
+            } else {
+                if (selectionModel.isSelected(parsedEntity)) {
+                    unselectRows();
+                } else {
+                    unselectRows();
+                    selectRow(parsedEntity);
+                }
+            }
+        }
+    }
+
     private void doSetRowSelected(String idString) {
         for (int i = 0; i < entityTable.getVisibleItems().size(); i++) {
             ParsedEntity parsedEntity = entityTable.getVisibleItem(i);
             KeyDto key = parsedEntity.getKey();
             if (isSameId(idString, key) || idString.equals(key.getName())) {
-                lockRow(entityTable.getRowElement(i));
+                selectRow(parsedEntity);
                 return;
             }
         }
@@ -229,7 +258,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         } catch (NumberFormatException e) {
             return false;
         }
-
     }
 
     private void removeLastColumn(CellTable<ParsedEntity> entityTable) {
@@ -277,31 +305,17 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private void onEditTableAttachedOrDetached(boolean attached) {
         if (attached) {
             bindGwtQuery();
-        } else {
-            $(firstTableRow).undelegate();
         }
     }
 
     private void bindGwtQuery() {
-        $(firstTableRow).delegate("tr", BrowserEvents.CLICK, new Function() {
-            @Override
-            public void f(Element e) {
-                if (!$(e).hasClass(lockedRowStyleName)) {
-                    unlockRows();
-                    lockRow(e);
-                } else {
-                    unlockRows();
-                }
-            }
-        });
-
         $(pagerButtons).click(unlock);
 
         $(refresh).click(new Function() {
             @Override
             public void f() {
                 getUiHandlers().refresh();
-                unlockRows();
+                unselectRows();
             }
         });
 
@@ -315,33 +329,27 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         $(formQuery).slideUp(0);
     }
 
-    private Function unlock = new Function() {
-        @Override
-        public void f() {
-            unlockRows();
+    private void selectRow(ParsedEntity parsedEntity) {
+        AppResources.Styles styles = appResources.styles();
+        if ($(deselect).hasClass(styles.deselectDisabled())) {
+            $(deselect).click(unlock);
+            $(deselect).addClass(styles.deselect());
+            $(deselect).removeClass(styles.deselectDisabled());
         }
-    };
 
-    private ParsedEntity getParsedEntityForRow(Element element) {
-        int absoluteRowIndex = Integer.valueOf($(element).attr("__gwt_row"));
-        int pageStartIndex = entityTable.getVisibleRange().getStart();
-        int relativeIndex = absoluteRowIndex - pageStartIndex;
+        selectionModel.setSelected(parsedEntity, true);
 
-        return entityTable.getVisibleItem(relativeIndex);
+        getUiHandlers().onEntitySelected(selectionModel.getSelectedSet());
     }
 
-    private void lockRow(Element e) {
-        $(e).addClass(lockedRowStyleName);
+    private void unselectRow(ParsedEntity parsedEntity) {
+        selectionModel.setSelected(parsedEntity, false);
 
-        AppResources.Styles styles = appResources.styles();
-        $(deselect).addClass(styles.deselect());
-        $(deselect).removeClass(styles.deselectDisabled());
-        $(deselect).click(unlock);
-
-        getUiHandlers().onRowLock();
-
-        ParsedEntity parsedEntity = getParsedEntityForRow(e);
-        getUiHandlers().onEntitySelected(parsedEntity);
+        if (selectionModel.getSelectedSet().isEmpty()) {
+            unselectRows();
+        } else {
+            getUiHandlers().onEntitySelected(selectionModel.getSelectedSet());
+        }
     }
 
     private void toggleGQL() {

@@ -9,35 +9,41 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.event;
 
+import java.util.Set;
+
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 
-public class EntitySelectedEvent extends GwtEvent<EntitySelectedEvent.EntitySelectedHandler> {
-    private ParsedEntity parsedEntity;
-
-    public EntitySelectedEvent(ParsedEntity parsedEntity) {
-        this.parsedEntity = parsedEntity;
-    }
-
-    public static void fire(HasHandlers source, ParsedEntity parsedEntity) {
-        EntitySelectedEvent eventInstance = new EntitySelectedEvent(parsedEntity);
-        source.fireEvent(eventInstance);
-    }
-
-    public static void fire(HasHandlers source, EntitySelectedEvent eventInstance) {
-        source.fireEvent(eventInstance);
-    }
-
+public class EditEntitiesEvent extends GwtEvent<EditEntitiesEvent.EntitySelectedHandler> {
     public interface EntitySelectedHandler extends EventHandler {
-        public void onEntitySelected(EntitySelectedEvent event);
+        public void onEditEntitiesSelected(EditEntitiesEvent event);
     }
 
-    private static final Type<EntitySelectedHandler> TYPE = new Type<EntitySelectedHandler>();
+    public static void fire(HasHandlers source, Set<ParsedEntity> parsedEntity) {
+        EditEntitiesEvent eventInstance = new EditEntitiesEvent(parsedEntity);
+        source.fireEvent(eventInstance);
+    }
+
+    public static void fire(HasHandlers source, EditEntitiesEvent eventInstance) {
+        source.fireEvent(eventInstance);
+    }
+
+    private static final Type<EntitySelectedHandler> TYPE = new Type<>();
 
     public static Type<EntitySelectedHandler> getType() {
         return TYPE;
+    }
+
+    private Set<ParsedEntity> parsedEntities;
+
+    public EditEntitiesEvent(Set<ParsedEntity> parsedEntities) {
+        this.parsedEntities = parsedEntities;
+    }
+
+    public Set<ParsedEntity> getParsedEntities() {
+        return parsedEntities;
     }
 
     @Override
@@ -47,10 +53,6 @@ public class EntitySelectedEvent extends GwtEvent<EntitySelectedEvent.EntitySele
 
     @Override
     protected void dispatch(EntitySelectedHandler handler) {
-        handler.onEntitySelected(this);
-    }
-
-    public ParsedEntity getParsedEntity() {
-        return parsedEntity;
+        handler.onEditEntitiesSelected(this);
     }
 }

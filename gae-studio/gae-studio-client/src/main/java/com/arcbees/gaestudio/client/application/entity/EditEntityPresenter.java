@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.entity;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.application.entity.editor.EntitiesEditorPresenter;
 import com.arcbees.gaestudio.client.application.entity.editor.EntityEditorFactory;
 import com.arcbees.gaestudio.client.application.entity.editor.EntityEditorPresenter;
 import com.arcbees.gaestudio.client.application.entity.editor.InvalidEntityFieldsException;
@@ -19,6 +20,7 @@ import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.event.EditEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
@@ -37,9 +39,11 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
@@ -51,7 +55,8 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
 import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
 public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, EditEntityPresenter.MyProxy>
-        implements EditEntityUiHandlers, PropertyEditorErrorEvent.PropertyEditorErrorHandler {
+        implements EditEntityUiHandlers, PropertyEditorErrorEvent.PropertyEditorErrorHandler,
+        EditEntitiesEvent.EntitySelectedHandler {
     interface MyView extends View, HasUiHandlers<EditEntityUiHandlers> {
         void showError(String message);
 
@@ -131,6 +136,16 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
     @Override
     public void onPropertyEditorError(PropertyEditorErrorEvent event) {
         getView().showError(event.getError());
+    }
+
+    @ProxyEvent
+    @Override
+    public void onEditEntitiesSelected(EditEntitiesEvent event) {
+        RevealContentEvent.fire(this, VisualizerPresenter.SLOT_ENTITY_DETAILS, this);
+        FullScreenEvent.fire(this, false);
+
+        EntitiesEditorPresenter editorPresenter = entityEditorFactory.create(event.getParsedEntities());
+        setInSlot(EDITOR_SLOT, editorPresenter);
     }
 
     @Override
@@ -214,6 +229,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
                     public void onSuccess(EntityDto result) {
                         onSaveEntitySucceeded(result);
                     }
-                });
+                }
+        );
     }
 }

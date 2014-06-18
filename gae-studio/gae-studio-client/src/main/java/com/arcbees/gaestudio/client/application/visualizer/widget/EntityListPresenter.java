@@ -18,6 +18,7 @@ import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
@@ -36,6 +37,7 @@ import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.common.base.Strings;
+import com.google.common.collect.Iterables;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -84,7 +86,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         void removeKindSpecificColumns();
 
-        void unlockRows();
+        void unselectRows();
 
         void setRowSelected(String idString);
     }
@@ -122,19 +124,19 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void onKindSelected(KindSelectedEvent event) {
-        getView().unlockRows();
+        getView().unselectRows();
     }
 
     @Override
-    public void onEntitySelected(ParsedEntity parsedEntity) {
-        getEventBus().fireEvent(new EntitySelectedEvent(parsedEntity));
-
-        revealEntityPlace(parsedEntity);
-    }
-
-    @Override
-    public void onRowLock() {
+    public void onEntitySelected(Set<ParsedEntity> selectedEntities) {
         RowLockedEvent.fire(this);
+        if (selectedEntities.size() == 1) {
+            ParsedEntity selectedEntity = Iterables.getOnlyElement(selectedEntities);
+            EntitySelectedEvent.fire(this, selectedEntity);
+            revealEntityPlace(selectedEntity);
+        } else {
+            EntitiesSelectedEvent.fire(this, selectedEntities);
+        }
     }
 
     @Override
@@ -237,7 +239,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         public void onSuccess(List<EntityDto> result) {
                             onLoadPageSuccess(result, display);
                         }
-                    });
+                    }
+            );
         }
         EntityPageLoadedEvent.fire(this);
     }

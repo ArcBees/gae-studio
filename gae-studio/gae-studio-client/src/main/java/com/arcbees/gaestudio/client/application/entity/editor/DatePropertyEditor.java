@@ -45,7 +45,13 @@ public class DatePropertyEditor extends AbstractPropertyEditor<Date> {
         dateBox.getDatePicker().getElement().getParentElement().getParentElement().getStyle().setZIndex(150);
 
         initFormWidget(dateBox);
-        setValue(parseDate(PropertyUtil.getPropertyValue(property).isString().stringValue()));
+
+        JSONValue propertyValue = PropertyUtil.getPropertyValue(property);
+        if (propertyValue == null || propertyValue.isNull() != null) {
+            setValue(null);
+        } else {
+            setValue(parseDate(propertyValue.isString().stringValue()));
+        }
     }
 
     @Override
