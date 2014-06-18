@@ -13,6 +13,7 @@ public class Colors {
     public static String C_PRIMARY = "#42b9e8";
     public static String C_SECONDARY = "#7a7a7a";
     public static String C_SECONDARY_LIGHT = "#ececec";
+    public static String C_SECONDARY_LIGHT2 = "#cecece";
     public static String C_SECONDARY_DARK = "#2b2b2b";
     public static String C_ACTION_SUCCESS = "#20BE02";
     public static String C_ACTION_ERROR = "#DB0707";
