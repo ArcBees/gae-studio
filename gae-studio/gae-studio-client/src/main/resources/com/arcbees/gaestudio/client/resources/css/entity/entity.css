@@ -1,7 +1,8 @@
 .root {
     overflow-x: auto;
-    width: 50%;
-    padding-left: 15px;
+    width: 46.5% !important;
+    padding-left: 0;
+    margin: 0 15px;
 }
 
 .root table {
@@ -20,10 +21,13 @@
 }
 
 .detailHeader {
-    padding: 12px 0 12px 0;
-    border-bottom: 1px solid #a2a2a2;
     text-transform: uppercase;
     font-size: 1.2em;
+
+    padding: 12px 0;
+    margin: 0 15px;
+    border-bottom: 1px solid #a2a2a2;
+
     position: relative;
 }
 
@@ -49,8 +53,10 @@
 
 .mainContent {
     padding-top: 10px;
-    height: literal('calc(100% - 68px)');
+    margin: 0 15px;
+    height: calc(100% - 68px);
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .buttonContainer {
