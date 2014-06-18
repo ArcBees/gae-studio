@@ -25,6 +25,9 @@ public class PropertyName {
     public static final String NAME = "name";
     public static final String APP_ID_NAMESPACE = "appIdNamespace";
     public static final String NAMESPACE = "namespace";
+    public static final String KEY = "key";
+    public static final String LATITUDE = "latitude";
+    public static final String LONGITUDE = "longitude";
 
     private PropertyName() {
     }

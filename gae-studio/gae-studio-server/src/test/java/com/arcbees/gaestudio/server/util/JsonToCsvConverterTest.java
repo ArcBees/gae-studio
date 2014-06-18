@@ -10,22 +10,37 @@
 package com.arcbees.gaestudio.server.util;
 
 import java.io.IOException;
-import java.io.InputStream;
 
+import com.google.inject.Inject;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
+import org.jukito.JukitoRunner;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(JukitoRunner.class)
 public class JsonToCsvConverterTest {
+    @Inject
+    JsonToCsvConverter jsonToCsvConverter;
+
     @Test
-    public void convertJsonToCsv() throws JSONException, IOException {
+    public void convertEasyJsonToCsv() throws JSONException, IOException {
         String jsonData = getJsonData();
 
-        String result = JsonToCsvConverter.convert(jsonData);
+        String result = jsonToCsvConverter.convert(jsonData);
 
         assertEquals(getCsvData(), result);
+    }
+
+    @Test
+    public void convertCollectionsJsonToCsv() throws JSONException, IOException {
+        String jsonData = getCollectionsJsonData();
+
+        String result = jsonToCsvConverter.convert(jsonData);
+
+        assertEquals(getCollectionsCsvData(), result);
     }
 
     private String getCsvData() {
@@ -35,8 +50,18 @@ public class JsonToCsvConverterTest {
     }
 
     private String getJsonData() throws IOException {
-        InputStream stream = getClass().getResourceAsStream("/EasyCars.json");
+        return getFileContent("/EasyCars.json");
+    }
 
-        return IOUtils.toString(stream);
+    private String getCollectionsCsvData() throws IOException {
+        return getFileContent("/Car.csv");
+    }
+
+    private String getCollectionsJsonData() throws IOException {
+        return getFileContent("/Car.json");
+    }
+
+    private String getFileContent(String path) throws IOException {
+        return IOUtils.toString(getClass().getResourceAsStream(path));
     }
 }

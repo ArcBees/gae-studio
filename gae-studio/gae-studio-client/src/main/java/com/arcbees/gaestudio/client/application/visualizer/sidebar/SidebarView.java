@@ -116,7 +116,6 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         revealUnderOverlayStyleName = appResources.styles().revealUnderOverlay();
         entityDetailPanelVisibilityStyleName = appResources.styles().entityDetailPanelVisibility();
 
-
         $(importKind).click(new Function() {
             @Override
             public void f() {
