@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.entity;
 
+import java.util.Set;
+
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.entity.editor.EntitiesEditorPresenter;
@@ -21,6 +23,7 @@ import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.event.EditEntitiesEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
@@ -57,6 +60,9 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, EditEntityPresenter.MyProxy>
         implements EditEntityUiHandlers, PropertyEditorErrorEvent.PropertyEditorErrorHandler,
         EditEntitiesEvent.EntitySelectedHandler {
+
+    private Set<ParsedEntity> currentEntities;
+
     interface MyView extends View, HasUiHandlers<EditEntityUiHandlers> {
         void showError(String message);
 
@@ -130,7 +136,11 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
 
     @Override
     public void cancel() {
-        revealDetailEntity();
+        if (currentEntity == null) {
+            EntitiesSelectedEvent.fire(this, currentEntities);
+        } else {
+            revealDetailEntity();
+        }
     }
 
     @Override
@@ -141,10 +151,13 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
     @ProxyEvent
     @Override
     public void onEditEntitiesSelected(EditEntitiesEvent event) {
+        currentEntity = null;
+        currentEntities = event.getParsedEntities();
+
         RevealContentEvent.fire(this, VisualizerPresenter.SLOT_ENTITY_DETAILS, this);
         FullScreenEvent.fire(this, false);
 
-        EntitiesEditorPresenter editorPresenter = entityEditorFactory.create(event.getParsedEntities());
+        EntitiesEditorPresenter editorPresenter = entityEditorFactory.create(currentEntities);
         setInSlot(EDITOR_SLOT, editorPresenter);
     }
 

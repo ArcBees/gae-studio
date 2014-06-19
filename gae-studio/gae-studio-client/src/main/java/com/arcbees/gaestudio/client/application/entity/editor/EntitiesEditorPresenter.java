@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.entity.editor;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.PropertyType;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gwt.json.client.JSONNull;
@@ -34,6 +36,7 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
     private final Set<ParsedEntity> parsedEntities;
     private final Map<String, PropertyType> allProperties;
     private final Map<String, JSONValue> commonValues;
+    private final List<PropertyEditor<?>> propertyEditors = Lists.newArrayList();
 
     @Inject
     EntitiesEditorPresenter(EventBus eventBus,
@@ -70,13 +73,20 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
         }
 
         for (Map.Entry<String, PropertyType> propertyEntry : allProperties.entrySet()) {
-            String key = propertyEntry.getKey();
-            JSONValue propertyValue = getPropertyValue(commonValues, valuesPrototypes, key);
-
-            PropertyEditor<?> propertyEditor
-                    = propertyEditorFactory.create(key, propertyEntry.getValue(), propertyValue);
-            getView().addPropertyEditor(propertyEditor);
+            addEditor(propertyEditorFactory, valuesPrototypes, propertyEntry);
         }
+    }
+
+    private void addEditor(PropertyEditorFactory propertyEditorFactory, Map<String, JSONValue> valuesPrototypes,
+                           Map.Entry<String, PropertyType> propertyEntry) {
+        String key = propertyEntry.getKey();
+        JSONValue propertyValue = getPropertyValue(commonValues, valuesPrototypes, key);
+
+        PropertyEditor<?> propertyEditor
+                = propertyEditorFactory.create(key, propertyEntry.getValue(), propertyValue);
+        getView().addPropertyEditor(propertyEditor);
+
+        propertyEditors.add(propertyEditor);
     }
 
     private JSONValue getPropertyValue(Map<String, JSONValue> commonValues,
