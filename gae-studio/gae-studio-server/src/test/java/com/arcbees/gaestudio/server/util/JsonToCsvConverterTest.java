@@ -11,12 +11,13 @@ package com.arcbees.gaestudio.server.util;
 
 import java.io.IOException;
 
-import com.google.inject.Inject;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import com.google.inject.Inject;
 
 import static org.junit.Assert.assertEquals;
 
@@ -62,6 +63,6 @@ public class JsonToCsvConverterTest {
     }
 
     private String getFileContent(String path) throws IOException {
-        return IOUtils.toString(getClass().getResourceAsStream(path));
+        return IOUtils.toString(getClass().getResourceAsStream(path)).replace("\r", "");
     }
 }
