@@ -9,6 +9,10 @@
 
 package com.arcbees.gaestudio.server.service.visualizer;
 
+import org.json.JSONException;
+
 public interface ExportService {
     String exportKindToJson(String kind);
+
+    String exportKindToCsv(String kind) throws JSONException;
 }

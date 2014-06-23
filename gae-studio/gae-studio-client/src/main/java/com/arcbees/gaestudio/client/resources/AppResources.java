@@ -133,12 +133,6 @@ public interface AppResources extends ClientBundle {
 
         String errorField();
 
-        String importBtn();
-
-        String exportBtn();
-
-        String exportBtnDisabled();
-
         String chooseFileButton();
 
         String gray();

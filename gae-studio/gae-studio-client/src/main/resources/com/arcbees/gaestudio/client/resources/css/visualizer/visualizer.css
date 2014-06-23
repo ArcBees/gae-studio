@@ -66,6 +66,44 @@
     top: 5px;
 }
 
+.sidebar .actionsPanel .dropdown {
+    width: 80px;
+}
+
+.sidebar .actionsPanel .importBtn {
+    gwt-sprite: "importBtn";
+}
+
+.sidebar .actionsPanel .exportBtn {
+    gwt-sprite: "exportBtn";
+}
+
+.sidebar .actionsPanel .exportBtn,
+.sidebar .actionsPanel .importBtn {
+    background-color: #2d2d2d;
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+
+    display: inline-block;
+    height: 23px;
+    width: 23px;
+    margin: 2px;
+}
+
+.sidebar .actionsPanel .exportBtn:hover,
+.sidebar .actionsPanel .importBtn:hover {
+    background-color: C_PRIMARY;
+    cursor: pointer;
+}
+
+.sidebar .actionsPanel .exportBtnDisabled,
+.sidebar .actionsPanel .exportBtnDisabled:hover {
+    background-color: #B7B7B7;
+    pointer-events: none;
+    cursor: default;
+}
+
 /* -> UI -- */
 
 .ui .content {

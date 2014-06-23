@@ -11,18 +11,24 @@ package com.arcbees.gaestudio.server.service.visualizer;
 
 import javax.inject.Inject;
 
+import org.json.JSONException;
+
+import com.arcbees.gaestudio.server.util.JsonToCsvConverter;
 import com.google.appengine.api.datastore.Entity;
 import com.google.gson.Gson;
 
 public class ExportServiceImpl implements ExportService {
     private final EntitiesService entitiesService;
     private final Gson gson;
+    private final JsonToCsvConverter jsonToCsvConverter;
 
     @Inject
     ExportServiceImpl(EntitiesService entitiesService,
-                      Gson gson) {
+                      Gson gson,
+                      JsonToCsvConverter jsonToCsvConverter) {
         this.entitiesService = entitiesService;
         this.gson = gson;
+        this.jsonToCsvConverter = jsonToCsvConverter;
     }
 
     @Override
@@ -30,5 +36,12 @@ public class ExportServiceImpl implements ExportService {
         Iterable<Entity> entities = entitiesService.getEntities(kind, null, null);
 
         return gson.toJson(entities);
+    }
+
+    @Override
+    public String exportKindToCsv(String kind) throws JSONException {
+        String jsonData = exportKindToJson(kind);
+
+        return jsonToCsvConverter.convert(jsonData);
     }
 }

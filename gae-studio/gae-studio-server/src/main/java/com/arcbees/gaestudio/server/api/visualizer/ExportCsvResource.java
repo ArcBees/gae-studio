@@ -23,25 +23,26 @@ import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.service.visualizer.ExportService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
+import com.google.appengine.labs.repackaged.org.json.JSONException;
 
-@Path(EndPoints.EXPORT)
-@Produces(MediaType.APPLICATION_JSON)
+@Path(EndPoints.EXPORT_CSV)
+@Produces(MediaType.TEXT_PLAIN)
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
-public class ExportResource {
+public class ExportCsvResource {
     private final ExportService exportService;
 
     @Inject
-    ExportResource(ExportService exportService) {
+    ExportCsvResource(ExportService exportService) {
         this.exportService = exportService;
     }
 
     @GET
-    public Response exportKind(@QueryParam(UrlParameters.KIND) String kind) {
-        String data = exportService.exportKindToJson(kind);
+    public Response exportKind(@QueryParam(UrlParameters.KIND) String kind) throws JSONException {
+        String data = exportService.exportKindToCsv(kind);
 
         return Response.ok(data)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + kind + ".json\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + kind + ".csv\"")
                 .build();
     }
 }

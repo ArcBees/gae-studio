@@ -45,6 +45,8 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         void addEmptyEntityListStyle();
 
         void setDownloadUrl(String downloadUrl);
+
+        void setSelectedFormat();
     }
 
     public static final Object SLOT_NAMESPACES = new Object();
@@ -97,6 +99,11 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     }
 
     @Override
+    public void importCsv() {
+        //TODO : Import CSV
+    }
+
+    @Override
     public void displayEntitiesOfSelectedKind(String kind) {
         currentKind = kind;
 
@@ -122,6 +129,13 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     }
 
     @Override
+    public void exportCsv() {
+        String exportCsvUrl = exportService.getExportCsv(currentKind);
+
+        getView().setDownloadUrl(exportCsvUrl);
+    }
+
+    @Override
     protected void onBind() {
         super.onBind();
 
@@ -135,6 +149,8 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         super.onReveal();
 
         updateKinds();
+
+        getView().setSelectedFormat();
     }
 
     @Override

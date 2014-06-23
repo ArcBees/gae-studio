@@ -13,7 +13,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.arcbees.chosen.client.ChosenOptions;
+import com.arcbees.chosen.client.event.ChosenChangeEvent;
+import com.arcbees.chosen.client.gwt.ChosenListBox;
+import com.arcbees.gaestudio.client.resources.ChosenResources;
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.client.resources.VisualizerResources;
 import com.arcbees.gaestudio.client.ui.PanelToggle;
 import com.arcbees.gaestudio.client.ui.PanelToggleFactory;
 import com.google.common.base.Strings;
@@ -64,10 +69,13 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     DivElement exportKind;
     @UiField
     Frame downloadFrame;
+    @UiField(provided = true)
+    ChosenListBox chosenFormat;
 
     private final KindTemplate kindTemplate;
     private final EmptyKindsTemplate emptyKindsTemplate;
     private final AppResources appResources;
+    private final VisualizerResources visualizerResources;
     private final String emptyListTypeStyleName;
     private final String hiddenOverlayStyleName;
     private final String revealOverlayStyleName;
@@ -76,17 +84,29 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     private Widget selectedKind;
     private String currentKind;
+    private String currentFormat = "JSON";
 
     @Inject
     SidebarView(Binder binder,
+                ChosenResources chosenResources,
                 KindTemplate kindTemplate,
                 EmptyKindsTemplate emptyKindsTemplate,
                 AppResources appResources,
+                VisualizerResources visualizerResources,
                 PanelToggleFactory panelToggleFactory) {
         this.kindTemplate = kindTemplate;
         this.emptyKindsTemplate = emptyKindsTemplate;
         this.appResources = appResources;
+        this.visualizerResources = visualizerResources;
         this.closeToggle = panelToggleFactory.create(this);
+
+        ChosenOptions chosenOptions = new ChosenOptions();
+        chosenOptions.setResources(chosenResources);
+        chosenFormat = new ChosenListBox(chosenOptions);
+
+        chosenFormat.addItem("CSV");
+        chosenFormat.addItem("JSON");
+        chosenFormat.update();
 
         initWidget(binder.createAndBindUi(this));
 
@@ -99,14 +119,29 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         $(importKind).click(new Function() {
             @Override
             public void f() {
-                getUiHandlers().importKind();
+                if (chosenFormat.getValue().equals("CSV")) {
+                    getUiHandlers().importCsv();
+                } else {
+                    getUiHandlers().importKind();
+                }
             }
         });
 
         $(exportKind).click(new Function() {
             @Override
             public void f() {
-                getUiHandlers().exportCurrentKind();
+                if (chosenFormat.getValue().equals("CSV")) {
+                    getUiHandlers().exportCsv();
+                } else {
+                    getUiHandlers().exportCurrentKind();
+                }
+            }
+        });
+
+        chosenFormat.addChosenChangeHandler(new ChosenChangeEvent.ChosenChangeHandler() {
+            @Override
+            public void onChange(ChosenChangeEvent chosenChangeEvent) {
+                currentFormat = chosenChangeEvent.getValue();
             }
         });
     }
@@ -146,6 +181,11 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     }
 
     @Override
+    public void setSelectedFormat() {
+        chosenFormat.setSelectedValue(currentFormat);
+    }
+
+    @Override
     public void onToggle() {
         boolean closing = closeToggle.isOpen();
         if (closing) {
@@ -163,9 +203,9 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     private void setExportEnabled(boolean enabled) {
         if (enabled) {
-            exportKind.removeClassName(appResources.styles().exportBtnDisabled());
+            exportKind.removeClassName(visualizerResources.styles().exportBtnDisabled());
         } else {
-            exportKind.addClassName(appResources.styles().exportBtnDisabled());
+            exportKind.addClassName(visualizerResources.styles().exportBtnDisabled());
         }
     }
 
