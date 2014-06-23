@@ -7,7 +7,7 @@
 </head>
 <body style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;margin: 0;padding: 0;font-family: 'Source Sans Pro', arial, sans-serif;color: #3f3f3f;width: 100%;">
 <center>
-    <table id="wrapper" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;width: 600px;background-color: #e6e6e6;bgcolor: #e6e6e6;border-top: 3px solid #25aae1;padding-top: 14px;">
+    <table id="wrapper" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;width: 600px;background-color: #e6e6e6;bgcolor: #e6e6e6;border-top: 3px solid #3ab9eb;padding-top: 14px;">
         <tr style="padding: 0;margin: 0;color: #3f3f3f;">
             <td style="padding: 0;margin: 0;color: #3f3f3f;">
                 <!-- Header -->
@@ -20,7 +20,7 @@
                                     <td width="600" height="54" style="padding: 0;margin: 0;color: #3f3f3f;"></td>
                                 </tr>
                                 <tr class="ribbon" style="padding: 0;margin: 0;color: #3f3f3f;">
-                                    <td width="600" height="37" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #25aae1;bgcolor: #25aae1;height: 37px;"></td>
+                                    <td width="600" height="37" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #3ab9eb;bgcolor: #3ab9eb;height: 37px;"></td>
                                 </tr>
                                 <tr style="padding: 0;margin: 0;color: #3f3f3f;">
                                     <td width="600" height="55" style="padding: 0;margin: 0;color: #3f3f3f;"></td>
@@ -45,7 +45,7 @@
                         <tr class="date" align="right" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #e6e6e6;bgcolor: #e6e6e6;">
                             <td width="488" height="20" style="padding: 0;margin: 0;color: #3f3f3f;"></td>
                             <td width="42" height="20" style="padding: 0;margin: 0;color: #3f3f3f;">
-                                <p style="padding: 0;margin: 0 13px;color: #25aae1;font-size: 10px;line-height: 20px;min-width: 200px;">${msgDate}</p>
+                                <p style="padding: 0;margin: 0 13px;color: #3ab9eb;font-size: 10px;line-height: 20px;min-width: 200px;">${msgDate}</p>
                             </td>
                         </tr>
                     </table>
@@ -79,7 +79,7 @@
                         <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
                     </tr>
                 </table>
-                <table id="footer" align="center" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #25aae1;bgcolor: #25aae1;font-size: 12px;">
+                <table id="footer" align="center" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;background-color: #3ab9eb;bgcolor: #3ab9eb;font-size: 12px;">
                     <tr height="11" cellpadding="0" cellspacing="0" style="padding: 0;margin: 0;color: #3f3f3f;">
                         <td style="padding: 0;margin: 0;color: #3f3f3f;"></td>
                     </tr>
