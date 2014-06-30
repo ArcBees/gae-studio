@@ -22,16 +22,21 @@ import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.Range;
@@ -59,11 +64,13 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiField
     DivElement byGql;
     @UiField
-    DivElement formQuery;
+    TextArea formQuery;
     @UiField
     SimplePanel deleteByKind;
     @UiField
     DivElement deselect;
+    @UiField
+    Button runQueryButton;
 
     private final AppResources appResources;
     private final VisualizerResources visualizerResources;
@@ -211,6 +218,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         }
     }
 
+    @UiHandler("runQueryButton")
+    public void runGqlQuery(ClickEvent event) {
+        runGqlQuery(formQuery.getText());
+    }
+
     private void doSetRowSelected(String idString) {
         for (int i = 0; i < entityTable.getVisibleItems().size(); i++) {
             ParsedEntity parsedEntity = entityTable.getVisibleItem(i);
@@ -353,5 +365,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         } else {
             $(formQuery).slideUp(100);
         }
+    }
+
+    private void runGqlQuery(String request) {
+        Window.alert(request);
     }
 }

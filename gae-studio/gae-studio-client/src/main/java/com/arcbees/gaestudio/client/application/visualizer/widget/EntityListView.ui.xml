@@ -13,10 +13,8 @@
             <div ui:field="deselect" class="{visualizer.entityList.deselect} {resources.styles.deselectDisabled}"/>
             <div ui:field="byGql" class="{visualizer.entityList.byGql}"><span></span>By GQL</div>
             <g:SimplePanel ui:field="deleteByKind" styleName="{visualizer.entityList.deleteByKind}"/>
-            <div ui:field="formQuery" class="{visualizer.entityList.formQuery}">
-                <g:TextArea></g:TextArea>
-                <button>Run Query</button>
-            </div>
+            <g:TextArea ui:field="formQuery" styleName="{visualizer.entityList.formQuery}"/>
+            <g:Button ui:field="runQueryButton">Run Query</g:Button>
         </div>
         <div class="{visualizer.entityList.table}">
             <cellview:CellTable ui:field="entityTable" styleName="{resources.styles.firstTable}"
