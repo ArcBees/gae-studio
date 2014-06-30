@@ -307,8 +307,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         if (attached && !gwtBound) {
             bindGwtQuery();
             gwtBound = true;
-        } else {
-            $(firstTableRow).undelegate();
         }
     }
 
