@@ -204,7 +204,13 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         restDispatch.execute(gqlService.executeGqlRequest(gqlRequest), new AsyncCallbackImpl<List<EntityDto>>() {
             @Override
             public void onSuccess(List<EntityDto> entities) {
-                Window.alert(entities.toString());
+                String text = "";
+                for(EntityDto entityDto : entities) {
+                    text += entityDto.getKey().getKind() + " ";
+                    text += entityDto.getKey().getId() + "\n";
+                }
+
+                Window.alert(text);
             }
         });
     }
