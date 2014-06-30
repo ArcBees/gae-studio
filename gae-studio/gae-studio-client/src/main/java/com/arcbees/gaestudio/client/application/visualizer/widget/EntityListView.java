@@ -73,7 +73,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final ParsedEntityColumnCreator columnCreator;
 
     private HandlerRegistration firstLoadHandlerRegistration;
-    private boolean gwtBinded = false;
+    private boolean gwtBound = false;
 
     @Inject
     EntityListView(Binder uiBinder,
@@ -276,9 +276,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     private void onEditTableAttachedOrDetached(boolean attached) {
-        if (attached && !gwtBinded) {
+        if (attached && !gwtBound) {
             bindGwtQuery();
-            gwtBinded = true;
+            gwtBound = true;
         } else {
             $(firstTableRow).undelegate();
         }
