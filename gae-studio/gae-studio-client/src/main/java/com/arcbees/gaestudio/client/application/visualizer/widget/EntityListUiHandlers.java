@@ -20,4 +20,6 @@ interface EntityListUiHandlers extends UiHandlers {
     void onRowUnlock();
 
     void refresh();
+
+    void runGqlQuery(String request);
 }

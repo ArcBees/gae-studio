@@ -30,12 +30,14 @@ import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.Name
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.place.ParameterTokens;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
+import com.arcbees.gaestudio.client.rest.GqlService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.common.base.Strings;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -96,6 +98,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private final PlaceManager placeManager;
     private final PropertyNamesAggregator propertyNamesAggregator;
     private final NamespacesListPresenter namespacesListPresenter;
+    private final GqlService gqlService;
 
     private String currentKind;
 
@@ -106,13 +109,15 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         RestDispatch restDispatch,
                         EntitiesService entitiesService,
                         PropertyNamesAggregator propertyNamesAggregator,
-                        NamespacesListPresenterFactory namespacesListPresenterFactory) {
+                        NamespacesListPresenterFactory namespacesListPresenterFactory,
+                        GqlService gqlService) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
         this.restDispatch = restDispatch;
         this.entitiesService = entitiesService;
         this.propertyNamesAggregator = propertyNamesAggregator;
+        this.gqlService = gqlService;
         this.namespacesListPresenter = namespacesListPresenterFactory.create(this);
 
         getView().setUiHandlers(this);
@@ -192,6 +197,16 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             getView().setRowSelected(idString);
             RowLockedEvent.fire(this);
         }
+    }
+
+    @Override
+    public void runGqlQuery(String gqlRequest) {
+        restDispatch.execute(gqlService.executeGqlRequest(gqlRequest), new AsyncCallbackImpl<List<EntityDto>>() {
+            @Override
+            public void onSuccess(List<EntityDto> entities) {
+                Window.alert(entities.toString());
+            }
+        });
     }
 
     @Override
