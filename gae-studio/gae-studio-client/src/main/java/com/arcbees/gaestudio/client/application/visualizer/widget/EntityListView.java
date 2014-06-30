@@ -73,6 +73,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final ParsedEntityColumnCreator columnCreator;
 
     private HandlerRegistration firstLoadHandlerRegistration;
+    private boolean gwtBound = false;
 
     @Inject
     EntityListView(Binder uiBinder,
@@ -91,7 +92,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         pagerButtons = "." + appResources.styles().pager() + " tbody tr td img";
         firstTableRow = "." + appResources.styles().firstTable() + " tbody";
 
-        entityTable = new CellTable<ParsedEntity>(PAGE_SIZE, cellTableResource);
+        entityTable = new CellTable<>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
             @Override
             public void onAttachOrDetach(AttachEvent event) {
@@ -265,7 +266,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private void insertNewEntityAtTheTopOfTheCurrentPage(EntityDto entityDTO) {
         ParsedEntity newParsedEntity = new ParsedEntity(entityDTO);
 
-        List<ParsedEntity> newParsedEntities = new ArrayList<ParsedEntity>();
+        List<ParsedEntity> newParsedEntities = new ArrayList<>();
         newParsedEntities.add(newParsedEntity);
         // getVisibleItems return an unmodifiable list
         newParsedEntities.addAll(entityTable.getVisibleItems());
@@ -275,8 +276,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     private void onEditTableAttachedOrDetached(boolean attached) {
-        if (attached) {
+        if (attached && !gwtBound) {
             bindGwtQuery();
+            gwtBound = true;
         } else {
             $(firstTableRow).undelegate();
         }
