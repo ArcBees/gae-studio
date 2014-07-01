@@ -42,7 +42,7 @@ public class ExportService {
     public String getExportSelectedEntities(String kind, Collection<String> entities) {
         return createBaseBuilder(kind)
                 .setPath(restPath + "/" + EndPoints.EXPORT_CSV)
-                .setParameter("entity", entities.toArray(new String[entities.size()]))
+                .setParameter(UrlParameters.ENTITY_ID, entities.toArray(new String[entities.size()]))
                 .buildString();
     }
 
