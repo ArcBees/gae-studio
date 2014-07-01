@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.rest;
 
+import java.util.Collection;
+
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.shared.rest.EndPoints;
@@ -26,20 +28,28 @@ public class ExportService {
     }
 
     public String getExportKindUrl(String kind) {
-        return new UrlBuilder()
-                .setProtocol(Window.Location.getProtocol())
-                .setHost(Window.Location.getHost())
+        return createBaseBuilder(kind)
                 .setPath(restPath + "/" + EndPoints.EXPORT_JSON)
-                .setParameter(UrlParameters.KIND, kind)
                 .buildString();
     }
 
     public String getExportCsv(String kind) {
+        return createBaseBuilder(kind)
+                .setPath(restPath + "/" + EndPoints.EXPORT_CSV)
+                .buildString();
+    }
+
+    public String getExportSelectedEntities(String kind, Collection<String> entities) {
+        return createBaseBuilder(kind)
+                .setPath(restPath + "/" + EndPoints.EXPORT_CSV)
+                .setParameter("entity", entities.toArray(new String[entities.size()]))
+                .buildString();
+    }
+
+    private UrlBuilder createBaseBuilder(String kind) {
         return new UrlBuilder()
                 .setProtocol(Window.Location.getProtocol())
                 .setHost(Window.Location.getHost())
-                .setPath(restPath + "/" + EndPoints.EXPORT_CSV)
-                .setParameter(UrlParameters.KIND, kind)
-                .buildString();
+                .setParameter(UrlParameters.KIND, kind);
     }
 }

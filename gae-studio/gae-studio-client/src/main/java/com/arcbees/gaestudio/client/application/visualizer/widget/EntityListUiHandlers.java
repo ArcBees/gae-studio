@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import java.util.Collection;
 import java.util.Set;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
@@ -20,4 +21,6 @@ interface EntityListUiHandlers extends UiHandlers {
     void onRowUnlock();
 
     void refresh();
+
+    void onExport(Collection<ParsedEntity> selectedEntities);
 }

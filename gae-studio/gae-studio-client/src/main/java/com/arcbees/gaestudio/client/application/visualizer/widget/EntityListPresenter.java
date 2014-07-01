@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -31,12 +32,15 @@ import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.Name
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.place.ParameterTokens;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
+import com.arcbees.gaestudio.client.rest.ExportService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.google.common.base.Function;
 import com.google.common.base.Strings;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
@@ -98,6 +102,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private final PlaceManager placeManager;
     private final PropertyNamesAggregator propertyNamesAggregator;
     private final NamespacesListPresenter namespacesListPresenter;
+    private final ExportService exportService;
 
     private String currentKind;
 
@@ -108,7 +113,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         RestDispatch restDispatch,
                         EntitiesService entitiesService,
                         PropertyNamesAggregator propertyNamesAggregator,
-                        NamespacesListPresenterFactory namespacesListPresenterFactory) {
+                        NamespacesListPresenterFactory namespacesListPresenterFactory,
+                        ExportService exportService) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
@@ -116,6 +122,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         this.entitiesService = entitiesService;
         this.propertyNamesAggregator = propertyNamesAggregator;
         this.namespacesListPresenter = namespacesListPresenterFactory.create(this);
+        this.exportService = exportService;
 
         getView().setUiHandlers(this);
 
@@ -147,6 +154,18 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Override
     public void refresh() {
         KindSelectedEvent.fire(this, currentKind);
+    }
+
+    @Override
+    public void onExport(Collection<ParsedEntity> selectedEntities) {
+        Collection<String> entitiesIds = Collections2.transform(selectedEntities, new Function<ParsedEntity, String>() {
+            @Override
+            public String apply(ParsedEntity parsedEntity) {
+                return parsedEntity.getKey().getId().toString();
+            }
+        });
+
+        String url = exportService.getExportSelectedEntities(currentKind, entitiesIds);
     }
 
     public void loadKind(String kind) {
