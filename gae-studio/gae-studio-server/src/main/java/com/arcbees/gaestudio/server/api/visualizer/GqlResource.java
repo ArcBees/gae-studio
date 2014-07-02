@@ -24,7 +24,7 @@ public class GqlResource {
     private final DatastoreHelper datastoreHelper;
 
     @Inject
-    public GqlResource(DatastoreHelper datastoreHelper) {
+    GqlResource(DatastoreHelper datastoreHelper) {
         this.datastoreHelper = datastoreHelper;
     }
 
