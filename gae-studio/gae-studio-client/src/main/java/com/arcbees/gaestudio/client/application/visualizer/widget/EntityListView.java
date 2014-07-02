@@ -220,7 +220,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @UiHandler("runQueryButton")
     public void runGqlQuery(ClickEvent event) {
-        runGqlQuery(formQuery.getText());
+        getUiHandlers().runGqlQuery(formQuery.getText());
     }
 
     private void doSetRowSelected(String idString) {
@@ -366,9 +366,5 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         } else {
             $(formQuery).slideUp(100);
         }
-    }
-
-    private void runGqlQuery(String request) {
-        getUiHandlers().runGqlQuery(request);
     }
 }
