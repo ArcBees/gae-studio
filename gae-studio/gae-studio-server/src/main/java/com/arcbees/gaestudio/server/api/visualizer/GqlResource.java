@@ -32,14 +32,23 @@ public class GqlResource {
 
     @GET
     public Response executeGqlRequest(@QueryParam(UrlParameters.QUERY) String gqlRequest) {
-        AppEngineHelper.disableApiHooks();
 
-        FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
+        if (isValidRequest(gqlRequest)) {
+            AppEngineHelper.disableApiHooks();
 
-        GqlQuery gql = new GqlQuery(gqlRequest);
+            FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
 
-        Iterable<Entity> result = datastoreHelper.queryOnAllNamespaces(gql.query(), fetchOptions);
+            GqlQuery gql = new GqlQuery(gqlRequest);
 
-        return Response.ok(result).build();
+            Iterable<Entity> result = datastoreHelper.queryOnAllNamespaces(gql.query(), fetchOptions);
+
+            return Response.ok(result).build();
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    private boolean isValidRequest(String gqlRequest) {
+        return gqlRequest.trim().startsWith("SELECT");
     }
 }
