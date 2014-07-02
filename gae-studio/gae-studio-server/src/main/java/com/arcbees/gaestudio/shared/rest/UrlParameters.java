@@ -20,7 +20,6 @@ public class UrlParameters {
     public static final String PARENT_ID = "parentid";
     public static final String PARENT_KIND = "parentkind";
     public static final String TYPE = "type";
-    public static final String ENTITY_ID = "entityid";
 
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";

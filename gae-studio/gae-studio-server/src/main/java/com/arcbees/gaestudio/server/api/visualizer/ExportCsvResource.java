@@ -39,7 +39,7 @@ public class ExportCsvResource {
 
     @GET
     public Response exportKind(@QueryParam(UrlParameters.KIND) String kind,
-                               @QueryParam(UrlParameters.ENTITY_ID) Long[] ids) throws JSONException {
+                               @QueryParam(UrlParameters.ID) Long[] ids) throws JSONException {
         String data = exportService.exportKindToCsv(kind);
 
         return Response.ok(data)
