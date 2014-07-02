@@ -4,16 +4,18 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
+import com.arcbees.gaestudio.server.util.GqlQuery;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.Query;
 import com.google.inject.Inject;
 
 @Path(EndPoints.GQL)
@@ -29,14 +31,14 @@ public class GqlResource {
     }
 
     @GET
-    public Response executeGqlRequest(String gqlRequest) {
+    public Response executeGqlRequest(@QueryParam(UrlParameters.QUERY) String gqlRequest) {
         AppEngineHelper.disableApiHooks();
 
         FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
 
-        Query query = new Query(gqlRequest);
+        GqlQuery gql = new GqlQuery(gqlRequest);
 
-        Iterable<Entity> result = datastoreHelper.queryOnAllNamespaces(query, fetchOptions);
+        Iterable<Entity> result = datastoreHelper.queryOnAllNamespaces(gql.query(), fetchOptions);
 
         return Response.ok(result).build();
     }
