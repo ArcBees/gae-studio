@@ -41,7 +41,6 @@ import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.common.base.Strings;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -211,13 +210,18 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         restDispatch.execute(gqlService.executeGqlRequest(gqlRequest), new AsyncCallbackImpl<List<EntityDto>>() {
             @Override
             public void onSuccess(List<EntityDto> entities) {
-                String text = "";
-                for (EntityDto entityDto : entities) {
-                    text += entityDto.getKey().getKind() + " ";
-                    text += entityDto.getKey().getId() + "\n";
-                }
+                if (entities.size() == 0) {
+                    DisplayMessageEvent.fire(this, new Message(appConstants.noEntitiesMatchRequest(), MessageStyle.ERROR));
+                } else {
+                    String text = "";
+                    for (EntityDto entityDto : entities) {
+                        text += entityDto.getKey().getKind() + " ";
+                        text += entityDto.getKey().getId() + "\n";
+                    }
 
-                Window.alert(text);
+                    DisplayMessageEvent.fire(this, new Message(String.valueOf(entities.size()) + " " +
+                            appConstants.entitiesMatchRequest(), MessageStyle.SUCCESS));
+                }
             }
 
             @Override

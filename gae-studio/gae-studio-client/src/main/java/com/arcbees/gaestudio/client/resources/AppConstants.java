@@ -117,4 +117,8 @@ public interface AppConstants extends Constants {
     String emailIsRequired();
 
     String wrongGqlRequest();
+
+    String noEntitiesMatchRequest();
+
+    String entitiesMatchRequest();
 }
