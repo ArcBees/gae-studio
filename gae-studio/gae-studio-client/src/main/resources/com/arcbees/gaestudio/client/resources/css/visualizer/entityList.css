@@ -95,6 +95,7 @@
 .formQuery button {
     color: #fff;
     background-color: C_PRIMARY;
+    background-image: none;
     text-transform: uppercase;
     font-size: 14px;
     cursor: pointer;
