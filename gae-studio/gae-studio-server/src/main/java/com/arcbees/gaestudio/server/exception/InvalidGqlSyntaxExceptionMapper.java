@@ -14,9 +14,9 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class IllegalArgumentExceptionMapper implements ExceptionMapper<IllegalArgumentException> {
+public class InvalidGqlSyntaxExceptionMapper implements ExceptionMapper<InvalidGqlSyntaxException> {
     @Override
-    public Response toResponse(IllegalArgumentException e) {
+    public Response toResponse(InvalidGqlSyntaxException e) {
         return Response.status(Response.Status.BAD_REQUEST).build();
     }
 }

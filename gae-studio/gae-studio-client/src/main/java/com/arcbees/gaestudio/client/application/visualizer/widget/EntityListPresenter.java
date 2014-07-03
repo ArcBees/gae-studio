@@ -37,11 +37,13 @@ import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.rest.GqlService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
+import com.arcbees.gaestudio.client.util.RestCallbackImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.common.base.Strings;
+import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
@@ -218,7 +220,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             return;
         }
 
-        restDispatch.execute(gqlService.executeGqlRequest(gqlRequest), new AsyncCallbackImpl<List<EntityDto>>() {
+        restDispatch.execute(gqlService.executeGqlRequest(gqlRequest), new RestCallbackImpl<List<EntityDto>>() {
             @Override
             public void onSuccess(List<EntityDto> entities) {
                 if (entities.isEmpty()) {
@@ -233,8 +235,14 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             }
 
             @Override
-            public void handleFailure(Throwable caught) {
-                DisplayMessageEvent.fire(this, new Message(appConstants.wrongGqlRequest(), MessageStyle.ERROR));
+            public void setResponse(Response response) {
+                int statusCode = response.getStatusCode();
+
+                if(statusCode == Response.SC_BAD_REQUEST) {
+                    DisplayMessageEvent.fire(this, new Message(appConstants.wrongGqlRequest(), MessageStyle.ERROR));
+                } else if(statusCode != Response.SC_OK) {
+                    DisplayMessageEvent.fire(this, new Message(appConstants.somethingWentWrong(), MessageStyle.ERROR));
+                }
             }
         });
     }
@@ -343,6 +351,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     private boolean requestHasNoSelect(String gqlRequest) {
-        return !gqlRequest.trim().startsWith("SELECT");
+        return !gqlRequest.trim().toUpperCase().startsWith("SELECT");
     }
 }

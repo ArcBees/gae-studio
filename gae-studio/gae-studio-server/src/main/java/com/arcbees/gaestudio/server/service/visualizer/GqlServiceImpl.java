@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.server.service.visualizer;
 
 import java.util.Collection;
 
+import com.arcbees.gaestudio.server.exception.InvalidGqlSyntaxException;
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.server.util.GqlQuery;
@@ -29,11 +30,15 @@ public class GqlServiceImpl implements GqlService {
     @Override
     public Collection<Entity> executeGqlRequest(String gqlRequest) {
         AppEngineHelper.disableApiHooks();
-
         FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
+        GqlQuery gql;
 
-        GqlQuery gql = new GqlQuery(gqlRequest);
+        try {
+            gql = new GqlQuery(gqlRequest);
 
-        return datastoreHelper.queryOnAllNamespaces(gql.query(), fetchOptions);
+            return datastoreHelper.queryOnAllNamespaces(gql.query(), fetchOptions);
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new InvalidGqlSyntaxException();
+        }
     }
 }

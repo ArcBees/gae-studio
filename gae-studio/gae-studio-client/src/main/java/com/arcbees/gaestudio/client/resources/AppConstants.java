@@ -121,4 +121,6 @@ public interface AppConstants extends Constants {
     String noEntitiesMatchRequest();
 
     String missingSelectInRequest();
+
+    String somethingWentWrong();
 }
