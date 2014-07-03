@@ -41,6 +41,7 @@ import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.common.base.Strings;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -213,11 +214,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                 if (entities.size() == 0) {
                     DisplayMessageEvent.fire(this, new Message(appConstants.noEntitiesMatchRequest(), MessageStyle.ERROR));
                 } else {
-                    String text = "";
-                    for (EntityDto entityDto : entities) {
-                        text += entityDto.getKey().getKind() + " ";
-                        text += entityDto.getKey().getId() + "\n";
-                    }
+                    showEntities(entities);
 
                     DisplayMessageEvent.fire(this, new Message(String.valueOf(entities.size()) + " " +
                             appConstants.entitiesMatchRequest(), MessageStyle.SUCCESS));
@@ -281,7 +278,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     private void onLoadPageSuccess(List<EntityDto> entities, HasData<ParsedEntity> display) {
-        List<ParsedEntity> parsedEntities = new ArrayList<ParsedEntity>();
+        List<ParsedEntity> parsedEntities = new ArrayList<>();
 
         for (EntityDto entityDto : entities) {
             ParsedEntity parsedEntity = new ParsedEntity(entityDto);
@@ -322,5 +319,15 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         }
 
         placeManager.revealPlace(builder.build());
+    }
+
+    private void showEntities(List<EntityDto> entities) {
+        String text = "";
+        for (EntityDto entityDto : entities) {
+            text += entityDto.getKey().getKind() + " ";
+            text += entityDto.getKey().getId() + "\n";
+        }
+
+        Window.alert(text);
     }
 }

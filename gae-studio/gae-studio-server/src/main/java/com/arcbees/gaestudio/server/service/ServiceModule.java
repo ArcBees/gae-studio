@@ -25,6 +25,8 @@ import com.arcbees.gaestudio.server.service.visualizer.EntityService;
 import com.arcbees.gaestudio.server.service.visualizer.EntityServiceImpl;
 import com.arcbees.gaestudio.server.service.visualizer.ExportService;
 import com.arcbees.gaestudio.server.service.visualizer.ExportServiceImpl;
+import com.arcbees.gaestudio.server.service.visualizer.GqlService;
+import com.arcbees.gaestudio.server.service.visualizer.GqlServiceImpl;
 import com.arcbees.gaestudio.server.service.visualizer.ImportService;
 import com.arcbees.gaestudio.server.service.visualizer.ImportServiceImpl;
 import com.arcbees.gaestudio.server.service.visualizer.KindsService;
@@ -46,5 +48,6 @@ public class ServiceModule extends AbstractModule {
         bind(ImportService.class).to(ImportServiceImpl.class).in(Singleton.class);
         bind(ExportService.class).to(ExportServiceImpl.class).in(Singleton.class);
         bind(MessageService.class).to(MessageServiceImpl.class).in(Singleton.class);
+        bind(GqlService.class).to(GqlServiceImpl.class).in(Singleton.class);
     }
 }
