@@ -212,6 +212,12 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void runGqlQuery(String gqlRequest) {
+        if (requestHasNoSelect(gqlRequest)) {
+            DisplayMessageEvent.fire(this, new Message(appConstants.missingSelectInRequest(), MessageStyle.ERROR));
+
+            return;
+        }
+
         restDispatch.execute(gqlService.executeGqlRequest(gqlRequest), new AsyncCallbackImpl<List<EntityDto>>() {
             @Override
             public void onSuccess(List<EntityDto> entities) {
@@ -334,5 +340,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         }
 
         Window.alert(text);
+    }
+
+    private boolean requestHasNoSelect(String gqlRequest) {
+        return !gqlRequest.trim().startsWith("SELECT");
     }
 }

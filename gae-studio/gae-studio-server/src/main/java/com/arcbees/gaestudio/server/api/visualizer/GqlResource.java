@@ -38,16 +38,8 @@ public class GqlResource {
 
     @GET
     public Response executeGqlRequest(@QueryParam(UrlParameters.QUERY) String gqlRequest) {
-        if (isValidRequest(gqlRequest)) {
-            Iterable<Entity> result = gqlService.executeGqlRequest(gqlRequest);
+        Iterable<Entity> result = gqlService.executeGqlRequest(gqlRequest);
 
-            return Response.ok(result).build();
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-    }
-
-    private boolean isValidRequest(String gqlRequest) {
-        return gqlRequest.trim().startsWith("SELECT");
+        return Response.ok(result).build();
     }
 }
