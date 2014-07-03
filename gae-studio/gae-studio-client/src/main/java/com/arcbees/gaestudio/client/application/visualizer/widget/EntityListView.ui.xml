@@ -14,7 +14,7 @@
             <div ui:field="byGql" class="{visualizer.entityList.byGql}"><span></span>By GQL</div>
             <g:SimplePanel ui:field="deleteByKind" styleName="{visualizer.entityList.deleteByKind}"/>
             <div ui:field="formQueryHolder" class="{visualizer.entityList.formQuery}">
-                <g:TextArea ui:field="formQuery">Allo</g:TextArea>
+                <g:TextArea ui:field="formQuery"></g:TextArea>
                 <g:Button ui:field="runQueryButton">Run Query</g:Button>
             </div>
         </div>
