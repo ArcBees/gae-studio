@@ -33,6 +33,7 @@ import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.place.ParameterTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.rest.GqlService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
@@ -104,6 +105,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private final NamespacesListPresenter namespacesListPresenter;
     private final GqlService gqlService;
     private final AppConstants appConstants;
+    private final AppMessages appMessages;
 
     private String currentKind;
 
@@ -116,7 +118,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         PropertyNamesAggregator propertyNamesAggregator,
                         NamespacesListPresenterFactory namespacesListPresenterFactory,
                         GqlService gqlService,
-                        AppConstants appConstants) {
+                        AppConstants appConstants,
+                        AppMessages appMessages) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
@@ -125,6 +128,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         this.propertyNamesAggregator = propertyNamesAggregator;
         this.gqlService = gqlService;
         this.appConstants = appConstants;
+        this.appMessages = appMessages;
         this.namespacesListPresenter = namespacesListPresenterFactory.create(this);
 
         getView().setUiHandlers(this);
@@ -211,13 +215,14 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         restDispatch.execute(gqlService.executeGqlRequest(gqlRequest), new AsyncCallbackImpl<List<EntityDto>>() {
             @Override
             public void onSuccess(List<EntityDto> entities) {
-                if (entities.size() == 0) {
-                    DisplayMessageEvent.fire(this, new Message(appConstants.noEntitiesMatchRequest(), MessageStyle.ERROR));
+                if (entities.isEmpty()) {
+                    DisplayMessageEvent.fire(this, new Message(appConstants.noEntitiesMatchRequest(),
+                            MessageStyle.ERROR));
                 } else {
                     showEntities(entities);
 
-                    DisplayMessageEvent.fire(this, new Message(String.valueOf(entities.size()) + " " +
-                            appConstants.entitiesMatchRequest(), MessageStyle.SUCCESS));
+                    DisplayMessageEvent.fire(this, new Message(appMessages.entitiesMatchRequest(entities.size()),
+                            MessageStyle.SUCCESS));
                 }
             }
 

@@ -22,6 +22,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.inject.Inject;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(JukitoRunner.class)
 public class GqlServiceImplTest extends GaeTestBase {
@@ -59,7 +60,7 @@ public class GqlServiceImplTest extends GaeTestBase {
 
         Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Car WHERE make = 'Italy'");
 
-        assertEquals(0, result.size());
+        assertTrue(result.isEmpty());
     }
 
     @Test
@@ -68,7 +69,7 @@ public class GqlServiceImplTest extends GaeTestBase {
 
         Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Autos WHERE make = 'Canada'");
 
-        assertEquals(0, result.size());
+        assertTrue(result.isEmpty());
     }
 
     private void createCars() {

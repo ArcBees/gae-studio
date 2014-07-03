@@ -119,6 +119,4 @@ public interface AppConstants extends Constants {
     String wrongGqlRequest();
 
     String noEntitiesMatchRequest();
-
-    String entitiesMatchRequest();
 }

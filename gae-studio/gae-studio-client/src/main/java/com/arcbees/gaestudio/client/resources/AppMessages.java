@@ -34,4 +34,6 @@ public interface AppMessages extends Messages {
     String invalidKey(String error);
 
     String callLocationDetails(String className, String methodNam, String fileName, String lineNumber);
+
+    String entitiesMatchRequest(int number);
 }
