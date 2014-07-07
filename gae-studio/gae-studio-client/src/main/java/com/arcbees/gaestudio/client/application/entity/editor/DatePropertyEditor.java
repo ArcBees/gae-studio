@@ -17,6 +17,7 @@ import com.arcbees.gaestudio.shared.Constants;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.common.base.Strings;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.json.client.JSONNull;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.datepicker.client.DateBox;
@@ -56,7 +57,8 @@ public class DatePropertyEditor extends AbstractPropertyEditor<Date> {
 
     @Override
     public JSONValue getJsonValue() {
-        JSONString value = new JSONString(getFormattedDate());
+        String formattedDate = getFormattedDate();
+        JSONValue value = Strings.isNullOrEmpty(formattedDate) ? JSONNull.getInstance() : new JSONString(formattedDate);
         return parseJsonValueWithMetadata(value, PropertyType.DATE, PropertyUtil.isPropertyIndexed(property));
     }
 

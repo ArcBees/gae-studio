@@ -16,8 +16,8 @@ import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 
-public class EditEntitiesEvent extends GwtEvent<EditEntitiesEvent.EntitySelectedHandler> {
-    public interface EntitySelectedHandler extends EventHandler {
+public class EditEntitiesEvent extends GwtEvent<EditEntitiesEvent.EntitiesSelectedHandler> {
+    public interface EntitiesSelectedHandler extends EventHandler {
         public void onEditEntitiesSelected(EditEntitiesEvent event);
     }
 
@@ -30,9 +30,9 @@ public class EditEntitiesEvent extends GwtEvent<EditEntitiesEvent.EntitySelected
         source.fireEvent(eventInstance);
     }
 
-    private static final Type<EntitySelectedHandler> TYPE = new Type<>();
+    private static final Type<EntitiesSelectedHandler> TYPE = new Type<>();
 
-    public static Type<EntitySelectedHandler> getType() {
+    public static Type<EntitiesSelectedHandler> getType() {
         return TYPE;
     }
 
@@ -47,12 +47,12 @@ public class EditEntitiesEvent extends GwtEvent<EditEntitiesEvent.EntitySelected
     }
 
     @Override
-    public Type<EntitySelectedHandler> getAssociatedType() {
+    public Type<EntitiesSelectedHandler> getAssociatedType() {
         return TYPE;
     }
 
     @Override
-    protected void dispatch(EntitySelectedHandler handler) {
+    protected void dispatch(EntitiesSelectedHandler handler) {
         handler.onEditEntitiesSelected(this);
     }
 }

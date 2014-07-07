@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.entity;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -23,6 +24,7 @@ import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.event.EditEntitiesEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
@@ -30,6 +32,7 @@ import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.rest.EntityService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -59,10 +62,7 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
 public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, EditEntityPresenter.MyProxy>
         implements EditEntityUiHandlers, PropertyEditorErrorEvent.PropertyEditorErrorHandler,
-        EditEntitiesEvent.EntitySelectedHandler {
-
-    private Set<ParsedEntity> currentEntities;
-
+        EditEntitiesEvent.EntitiesSelectedHandler {
     interface MyView extends View, HasUiHandlers<EditEntityUiHandlers> {
         void showError(String message);
 
@@ -79,6 +79,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
     public static final Object EDITOR_SLOT = new Object();
 
     private final RestDispatch restDispatch;
+    private final EntitiesService entitiesService;
     private final EntityService entityService;
     private final EntityEditorFactory entityEditorFactory;
     private final AppConstants appConstants;
@@ -86,6 +87,8 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
 
     private ParsedEntity currentEntity;
     private EntityEditorPresenter entityEditor;
+    private Set<ParsedEntity> currentEntities;
+    private EntitiesEditorPresenter entitiesEditor;
 
     @Inject
     EditEntityPresenter(EventBus eventBus,
@@ -93,12 +96,14 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
                         MyProxy proxy,
                         RestDispatch restDispatch,
                         PlaceManager placeManager,
+                        EntitiesService entitiesService,
                         EntityService entityService,
                         EntityEditorFactory entityEditorFactory,
                         AppConstants appConstants) {
         super(eventBus, view, proxy, VisualizerPresenter.SLOT_ENTITY_DETAILS);
 
         this.restDispatch = restDispatch;
+        this.entitiesService = entitiesService;
         this.entityService = entityService;
         this.placeManager = placeManager;
         this.entityEditorFactory = entityEditorFactory;
@@ -127,10 +132,10 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
     public void save() {
         getView().clearErrors();
 
-        try {
-            updateEntity();
-        } catch (InvalidEntityFieldsException e) {
-            getView().showErrorsTitle(appConstants.invalidFields());
+        if (currentEntities == null) {
+            saveEntity();
+        } else {
+            saveEntities();
         }
     }
 
@@ -157,8 +162,8 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
         RevealContentEvent.fire(this, VisualizerPresenter.SLOT_ENTITY_DETAILS, this);
         FullScreenEvent.fire(this, false);
 
-        EntitiesEditorPresenter editorPresenter = entityEditorFactory.create(currentEntities);
-        setInSlot(EDITOR_SLOT, editorPresenter);
+        entitiesEditor = entityEditorFactory.create(currentEntities);
+        setInSlot(EDITOR_SLOT, entitiesEditor);
     }
 
     @Override
@@ -166,6 +171,22 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
         super.onBind();
 
         addRegisteredHandler(PropertyEditorErrorEvent.getType(), this);
+    }
+
+    private void saveEntity() {
+        try {
+            updateEntity();
+        } catch (InvalidEntityFieldsException e) {
+            getView().showErrorsTitle(appConstants.invalidFields());
+        }
+    }
+
+    private void saveEntities() {
+        try {
+            updateEntities();
+        } catch (InvalidEntityFieldsException e) {
+            getView().showErrorsTitle(appConstants.invalidFields());
+        }
     }
 
     private void onSaveEntityFailed(Throwable caught) {
@@ -208,6 +229,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
             @Override
             public void onSuccess(EntityDto result) {
                 currentEntity = new ParsedEntity(result);
+                currentEntities = null;
                 entityEditor = entityEditorFactory.create(currentEntity);
 
                 setInSlot(EDITOR_SLOT, entityEditor);
@@ -228,6 +250,12 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
         revealDetailEntity();
     }
 
+    private void onSaveEntitiesSucceeded() {
+        Message message = new Message("Entities saved.", MessageStyle.SUCCESS);
+        DisplayMessageEvent.fire(this, message);
+        EntitiesSavedEvent.fire(this);
+    }
+
     private void updateEntity() throws InvalidEntityFieldsException {
         EntityDto entityDto = entityEditor.flush().getEntityDto();
 
@@ -241,6 +269,24 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
                     @Override
                     public void onSuccess(EntityDto result) {
                         onSaveEntitySucceeded(result);
+                    }
+                }
+        );
+    }
+
+    private void updateEntities() {
+        List<EntityDto> entities = entitiesEditor.flush();
+
+        restDispatch.execute(entitiesService.updateEntities(entities),
+                new AsyncCallbackImpl<Void>() {
+                    @Override
+                    public void handleFailure(Throwable caught) {
+                        onSaveEntityFailed(caught);
+                    }
+
+                    @Override
+                    public void onSuccess(Void result) {
+                        onSaveEntitiesSucceeded();
                     }
                 }
         );

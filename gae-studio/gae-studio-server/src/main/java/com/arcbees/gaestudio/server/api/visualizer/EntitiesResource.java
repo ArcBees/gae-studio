@@ -16,6 +16,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -33,6 +34,9 @@ import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.api.client.repackaged.com.google.common.base.Strings;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 
 @Path(EndPoints.ENTITIES)
 @Produces(MediaType.APPLICATION_JSON)
@@ -119,6 +123,21 @@ public class EntitiesResource {
         }
 
         return responseBuilder.build();
+    }
+
+    @PUT
+    public Response updateEntities(List<EntityDto> entitiesDto) throws EntityNotFoundException {
+        List<Entity> entities = FluentIterable.from(entitiesDto)
+                .transform(new Function<EntityDto, Entity>() {
+                    @Override
+                    public Entity apply(EntityDto input) {
+                        return entityMapper.mapDtoToEntity(input);
+                    }
+                }).toList();
+
+        entitiesService.put(entities);
+
+        return Response.ok().build();
     }
 
     private boolean isValidDeleteRequest(String kind, String namespace, DeleteEntities deleteType) {

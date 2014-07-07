@@ -18,7 +18,9 @@ import javax.inject.Inject;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.PropertyType;
-import com.google.common.collect.Lists;
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gwt.json.client.JSONNull;
@@ -36,7 +38,8 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
     private final Set<ParsedEntity> parsedEntities;
     private final Map<String, PropertyType> allProperties;
     private final Map<String, JSONValue> commonValues;
-    private final List<PropertyEditor<?>> propertyEditors = Lists.newArrayList();
+    private final Map<String, PropertyEditor<?>> propertyEditors = Maps.newLinkedHashMap();
+    private final Map<String, JSONValue> valuesPrototypes;
 
     @Inject
     EntitiesEditorPresenter(EventBus eventBus,
@@ -48,16 +51,17 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
         this.parsedEntities = parsedEntities;
 
         allProperties = Maps.newLinkedHashMap();
-        Set<String> propertiesToIgnore = Sets.newHashSet();
         commonValues = Maps.newHashMap();
-        Map<String, JSONValue> valuesPrototypes = Maps.newHashMap();
+        valuesPrototypes = Maps.newHashMap();
+        Set<String> propertiesToIgnore = Sets.newHashSet();
+
         for (ParsedEntity parsedEntity : parsedEntities) {
             for (String propertyKey : parsedEntity.propertyKeys()) {
                 PropertyType propertyType = PropertyUtil.getPropertyType(parsedEntity.getProperty(propertyKey));
                 if (!PropertyType.KEY.equals(propertyType)) {
                     allProperties.put(propertyKey, propertyType);
                     JSONValue propertyValue = parsedEntity.getProperty(propertyKey);
-                    createPrototypeValue(valuesPrototypes, propertyKey, propertyValue, allProperties.get(propertyKey));
+                    createPrototypeValue(propertyKey, propertyValue, allProperties.get(propertyKey));
 
                     if (!propertiesToIgnore.contains(propertyKey) && commonValues.containsKey(propertyKey)) {
                         JSONValue currentValue = commonValues.get(propertyKey);
@@ -77,7 +81,41 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
         }
     }
 
-    private void addEditor(PropertyEditorFactory propertyEditorFactory, Map<String, JSONValue> valuesPrototypes,
+    public List<EntityDto> flush() throws InvalidEntityFieldsException {
+        for (Map.Entry<String, PropertyEditor<?>> editorEntry : propertyEditors.entrySet()) {
+            String propertyKey = editorEntry.getKey();
+            JSONValue value = editorEntry.getValue().getJsonValue();
+
+            if (commonValueWasModified(propertyKey, value) || otherPropertyWasModified(propertyKey, value)) {
+                for (ParsedEntity entity : parsedEntities) {
+                    JSONObject propertyMap = entity.getPropertyMap();
+                    propertyMap.put(propertyKey, value);
+                    entity.getEntityDto().setJson(entity.getJson());
+                }
+            }
+        }
+
+        return FluentIterable.from(parsedEntities)
+                .transform(new Function<ParsedEntity, EntityDto>() {
+                    @Override
+                    public EntityDto apply(ParsedEntity input) {
+                        return input.getEntityDto();
+                    }
+                }).toList();
+    }
+
+    private boolean otherPropertyWasModified(String propertyKey, JSONValue value) {
+        return !commonValues.containsKey(propertyKey) && !String.valueOf(value).equals(String.valueOf(
+                valuesPrototypes.get(propertyKey)));
+    }
+
+    private boolean commonValueWasModified(String propertyKey, JSONValue value) {
+        return commonValues.containsKey(propertyKey)
+                && !String.valueOf(value).equals(String.valueOf(commonValues.get(propertyKey)));
+    }
+
+    private void addEditor(PropertyEditorFactory propertyEditorFactory,
+                           Map<String, JSONValue> valuesPrototypes,
                            Map.Entry<String, PropertyType> propertyEntry) {
         String key = propertyEntry.getKey();
         JSONValue propertyValue = getPropertyValue(commonValues, valuesPrototypes, key);
@@ -86,7 +124,7 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
                 = propertyEditorFactory.create(key, propertyEntry.getValue(), propertyValue);
         getView().addPropertyEditor(propertyEditor);
 
-        propertyEditors.add(propertyEditor);
+        propertyEditors.put(key, propertyEditor);
     }
 
     private JSONValue getPropertyValue(Map<String, JSONValue> commonValues,
@@ -102,11 +140,10 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
         return propertyValue;
     }
 
-    private void createPrototypeValue(Map<String, JSONValue> valuesPrototypes,
-                                      String property,
+    private void createPrototypeValue(String property,
                                       JSONValue propertyValue,
                                       PropertyType propertyType) {
-        if (!valuesPrototypes.containsKey(property)) {
+        if (!valuesPrototypes.containsKey(property) || propertyType != null) {
             JSONObject prototype = JSONParser.parseStrict(propertyValue.toString()).isObject();
             prototype.put(PropertyName.VALUE, getDefaultPropertyValue(propertyType));
             valuesPrototypes.put(property, prototype);
@@ -120,9 +157,5 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
             default:
                 return JSONNull.getInstance();
         }
-    }
-
-    public ParsedEntity flush() throws InvalidEntityFieldsException {
-        return null;
     }
 }
