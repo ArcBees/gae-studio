@@ -21,6 +21,7 @@ import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
@@ -77,7 +78,7 @@ import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
         implements EntityListUiHandlers, EntitySavedHandler, EntityDeletedHandler, EntitiesDeletedHandler,
         DeleteFromNamespaceHandler, SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler,
-        KindSelectedEvent.KindSelectedHandler {
+        KindSelectedEvent.KindSelectedHandler, EntitiesSavedEvent.EntitiesSavedHandler {
     interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
 
@@ -196,6 +197,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
+    public void onEntitiesSaved(EntitiesSavedEvent event) {
+        refresh();
+    }
+
+    @Override
     public void onEntityDeleted(EntityDeletedEvent event) {
         getView().removeEntity(event.getEntityDTO());
     }
@@ -276,6 +282,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         super.onBind();
 
         addRegisteredHandler(EntitySavedEvent.getType(), this);
+        addRegisteredHandler(EntitiesSavedEvent.getType(), this);
         addRegisteredHandler(EntityDeletedEvent.getType(), this);
         addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
         addRegisteredHandler(SetStateFromPlaceRequestEvent.getType(), this);

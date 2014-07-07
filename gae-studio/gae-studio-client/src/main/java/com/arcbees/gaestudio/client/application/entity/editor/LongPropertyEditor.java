@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.client.application.entity.editor;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.shared.PropertyType;
+import com.google.gwt.json.client.JSONNull;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.LongBox;
@@ -32,12 +33,15 @@ public class LongPropertyEditor extends AbstractPropertyEditor<Long> {
         longBox = new LongBox();
 
         initFormWidget(longBox);
-        setValue((long) PropertyUtil.getPropertyValue(property).isNumber().doubleValue());
+
+        JSONNumber numberValue = PropertyUtil.getPropertyValue(property).isNumber();
+        setValue(numberValue == null ? null : (long) numberValue.doubleValue());
     }
 
     @Override
     public JSONValue getJsonValue() {
-        JSONValue value = new JSONNumber(getValue());
+        Long longValue = getValue();
+        JSONValue value = longValue == null ? JSONNull.getInstance() : new JSONNumber(longValue);
         Boolean isIndexed = PropertyUtil.isPropertyIndexed(property);
         PropertyType propertyType = PropertyUtil.getPropertyType(property);
 
