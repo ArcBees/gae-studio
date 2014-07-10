@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
@@ -27,16 +28,22 @@ import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPla
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.DeleteFromNamespaceHandler;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
+import com.arcbees.gaestudio.client.application.widget.message.Message;
+import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.place.ParameterTokens;
+import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.rest.GqlService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
+import com.arcbees.gaestudio.client.util.RestCallbackImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.common.base.Strings;
+import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
@@ -99,6 +106,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private final PropertyNamesAggregator propertyNamesAggregator;
     private final NamespacesListPresenter namespacesListPresenter;
     private final GqlService gqlService;
+    private final AppConstants appConstants;
+    private final AppMessages appMessages;
 
     private String currentKind;
 
@@ -110,7 +119,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         EntitiesService entitiesService,
                         PropertyNamesAggregator propertyNamesAggregator,
                         NamespacesListPresenterFactory namespacesListPresenterFactory,
-                        GqlService gqlService) {
+                        GqlService gqlService,
+                        AppConstants appConstants,
+                        AppMessages appMessages) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
@@ -118,6 +129,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         this.entitiesService = entitiesService;
         this.propertyNamesAggregator = propertyNamesAggregator;
         this.gqlService = gqlService;
+        this.appConstants = appConstants;
+        this.appMessages = appMessages;
         this.namespacesListPresenter = namespacesListPresenterFactory.create(this);
 
         getView().setUiHandlers(this);
@@ -201,16 +214,35 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void runGqlQuery(String gqlRequest) {
-        restDispatch.execute(gqlService.executeGqlRequest(gqlRequest), new AsyncCallbackImpl<List<EntityDto>>() {
+        if (requestHasNoSelect(gqlRequest)) {
+            DisplayMessageEvent.fire(this, new Message(appConstants.missingSelectInRequest(), MessageStyle.ERROR));
+
+            return;
+        }
+
+        restDispatch.execute(gqlService.executeGqlRequest(gqlRequest), new RestCallbackImpl<List<EntityDto>>() {
             @Override
             public void onSuccess(List<EntityDto> entities) {
-                String text = "";
-                for(EntityDto entityDto : entities) {
-                    text += entityDto.getKey().getKind() + " ";
-                    text += entityDto.getKey().getId() + "\n";
-                }
+                if (entities.isEmpty()) {
+                    DisplayMessageEvent.fire(this, new Message(appConstants.noEntitiesMatchRequest(),
+                            MessageStyle.ERROR));
+                } else {
+                    showEntities(entities);
 
-                Window.alert(text);
+                    DisplayMessageEvent.fire(this, new Message(appMessages.entitiesMatchRequest(entities.size()),
+                            MessageStyle.SUCCESS));
+                }
+            }
+
+            @Override
+            public void setResponse(Response response) {
+                int statusCode = response.getStatusCode();
+
+                if(statusCode == Response.SC_BAD_REQUEST) {
+                    DisplayMessageEvent.fire(this, new Message(appConstants.wrongGqlRequest(), MessageStyle.ERROR));
+                } else if(statusCode != Response.SC_OK) {
+                    DisplayMessageEvent.fire(this, new Message(appConstants.somethingWentWrong(), MessageStyle.ERROR));
+                }
             }
         });
     }
@@ -258,13 +290,14 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         public void onSuccess(List<EntityDto> result) {
                             onLoadPageSuccess(result, display);
                         }
-                    });
+                    }
+            );
         }
         EntityPageLoadedEvent.fire(this);
     }
 
     private void onLoadPageSuccess(List<EntityDto> entities, HasData<ParsedEntity> display) {
-        List<ParsedEntity> parsedEntities = new ArrayList<ParsedEntity>();
+        List<ParsedEntity> parsedEntities = new ArrayList<>();
 
         for (EntityDto entityDto : entities) {
             ParsedEntity parsedEntity = new ParsedEntity(entityDto);
@@ -305,5 +338,19 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         }
 
         placeManager.revealPlace(builder.build());
+    }
+
+    private void showEntities(List<EntityDto> entities) {
+        String text = "";
+        for (EntityDto entityDto : entities) {
+            text += entityDto.getKey().getKind() + " ";
+            text += entityDto.getKey().getId() + "\n";
+        }
+
+        Window.alert(text);
+    }
+
+    private boolean requestHasNoSelect(String gqlRequest) {
+        return !gqlRequest.trim().toUpperCase().startsWith("SELECT");
     }
 }
