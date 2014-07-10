@@ -115,4 +115,12 @@ public interface AppConstants extends Constants {
     String invalidEmail();
 
     String emailIsRequired();
+
+    String wrongGqlRequest();
+
+    String noEntitiesMatchRequest();
+
+    String missingSelectInRequest();
+
+    String somethingWentWrong();
 }

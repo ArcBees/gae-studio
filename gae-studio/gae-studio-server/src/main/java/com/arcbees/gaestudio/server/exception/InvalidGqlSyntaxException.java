@@ -7,19 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.arcbees.gaestudio.server.exception;
 
-import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.gwtplatform.mvp.client.UiHandlers;
-
-interface EntityListUiHandlers extends UiHandlers {
-    void onEntitySelected(ParsedEntity parsedEntity);
-
-    void onRowLock();
-
-    void onRowUnlock();
-
-    void refresh();
-
-    void runGqlQuery(String request);
+public class InvalidGqlSyntaxException extends RuntimeException {
 }

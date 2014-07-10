@@ -21,5 +21,6 @@ public class ExceptionModule extends AbstractModule {
         bind(InstantiationExceptionMapper.class).in(Singleton.class);
         bind(ResponseExceptionMapper.class).in(Singleton.class);
         bind(UserNotLoggedInExceptionMapper.class).in(Singleton.class);
+        bind(InvalidGqlSyntaxExceptionMapper.class).in(Singleton.class);
     }
 }

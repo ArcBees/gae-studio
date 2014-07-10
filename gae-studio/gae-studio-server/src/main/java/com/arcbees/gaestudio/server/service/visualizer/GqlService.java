@@ -7,19 +7,12 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.arcbees.gaestudio.server.service.visualizer;
 
-import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.gwtplatform.mvp.client.UiHandlers;
+import java.util.Collection;
 
-interface EntityListUiHandlers extends UiHandlers {
-    void onEntitySelected(ParsedEntity parsedEntity);
+import com.google.appengine.api.datastore.Entity;
 
-    void onRowLock();
-
-    void onRowUnlock();
-
-    void refresh();
-
-    void runGqlQuery(String request);
+public interface GqlService {
+    Collection<Entity> executeGqlRequest(String request);
 }
