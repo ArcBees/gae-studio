@@ -30,6 +30,7 @@ public class EndPoints {
     public static final String EXPORT_JSON = REST_PATH + "exportjson/";
     public static final String EXPORT_CSV = REST_PATH + "exportcsv/";
     public static final String IMPORT = REST_PATH + "import/";
+    public static final String GQL = REST_PATH + "gql/";
     public static final String TASK = "task/";
     public static final String IMPORT_TASK = IMPORT + TASK;
     public static final String ARCBEES_MAIL_SERVICE = "https://arcbees-mail-service.appspot.com/mail";
