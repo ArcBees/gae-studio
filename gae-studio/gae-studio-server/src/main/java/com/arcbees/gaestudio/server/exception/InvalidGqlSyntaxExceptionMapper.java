@@ -7,19 +7,16 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget;
+package com.arcbees.gaestudio.server.exception;
 
-import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.gwtplatform.mvp.client.UiHandlers;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
-interface EntityListUiHandlers extends UiHandlers {
-    void onEntitySelected(ParsedEntity parsedEntity);
-
-    void onRowLock();
-
-    void onRowUnlock();
-
-    void refresh();
-
-    void runGqlQuery(String request);
+@Provider
+public class InvalidGqlSyntaxExceptionMapper implements ExceptionMapper<InvalidGqlSyntaxException> {
+    @Override
+    public Response toResponse(InvalidGqlSyntaxException e) {
+        return Response.status(Response.Status.BAD_REQUEST).build();
+    }
 }

@@ -16,6 +16,7 @@ import com.arcbees.gaestudio.server.api.visualizer.EntitiesResource;
 import com.arcbees.gaestudio.server.api.visualizer.EntityResource;
 import com.arcbees.gaestudio.server.api.visualizer.ExportCsvResource;
 import com.arcbees.gaestudio.server.api.visualizer.ExportJsonResource;
+import com.arcbees.gaestudio.server.api.visualizer.GqlResource;
 import com.arcbees.gaestudio.server.api.visualizer.ImportResource;
 import com.arcbees.gaestudio.server.api.visualizer.KindsResource;
 import com.arcbees.gaestudio.server.api.visualizer.NamespacesResource;
@@ -34,5 +35,6 @@ public class ApiModule extends AbstractModule {
         bind(ExportJsonResource.class);
         bind(ImportResource.class);
         bind(ExportCsvResource.class);
+        bind(GqlResource.class);
     }
 }
