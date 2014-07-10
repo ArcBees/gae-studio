@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
+ * This source code, and resulting software, is the confidential and proprietary information
+ * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
+ * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
+ * shall use it only in accordance with the terms and conditions of any and all license
+ * agreements you have entered into with The Company.
+ */
+
 package com.arcbees.gaestudio.server.api.visualizer;
 
 import javax.ws.rs.Consumes;
@@ -9,13 +18,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
-import com.arcbees.gaestudio.server.util.AppEngineHelper;
-import com.arcbees.gaestudio.server.util.DatastoreHelper;
-import com.arcbees.gaestudio.server.util.GqlQuery;
+import com.arcbees.gaestudio.server.service.visualizer.GqlService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.FetchOptions;
 import com.google.inject.Inject;
 
 @Path(EndPoints.GQL)
@@ -23,32 +29,17 @@ import com.google.inject.Inject;
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
 public class GqlResource {
-    private final DatastoreHelper datastoreHelper;
+    private final GqlService gqlService;
 
     @Inject
-    GqlResource(DatastoreHelper datastoreHelper) {
-        this.datastoreHelper = datastoreHelper;
+    GqlResource(GqlService gqlService) {
+        this.gqlService = gqlService;
     }
 
     @GET
     public Response executeGqlRequest(@QueryParam(UrlParameters.QUERY) String gqlRequest) {
+        Iterable<Entity> result = gqlService.executeGqlRequest(gqlRequest);
 
-        if (isValidRequest(gqlRequest)) {
-            AppEngineHelper.disableApiHooks();
-
-            FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
-
-            GqlQuery gql = new GqlQuery(gqlRequest);
-
-            Iterable<Entity> result = datastoreHelper.queryOnAllNamespaces(gql.query(), fetchOptions);
-
-            return Response.ok(result).build();
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-    }
-
-    private boolean isValidRequest(String gqlRequest) {
-        return gqlRequest.trim().startsWith("SELECT");
+        return Response.ok(result).build();
     }
 }

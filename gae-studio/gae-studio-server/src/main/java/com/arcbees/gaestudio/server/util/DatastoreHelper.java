@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.util;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.arcbees.gaestudio.server.GaeStudioConstants;
@@ -107,7 +108,7 @@ public class DatastoreHelper {
         return queryOnAllNamespaces(query, FetchOptions.Builder.withDefaults());
     }
 
-    public Iterable<Entity> queryOnAllNamespaces(final Query query, final FetchOptions fetchOptions) {
+    public Collection<Entity> queryOnAllNamespaces(final Query query, final FetchOptions fetchOptions) {
         String defaultNamespace = NamespaceManager.get();
 
         Iterable<Entity> namespaces = getAllNamespaces();

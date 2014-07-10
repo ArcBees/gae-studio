@@ -65,6 +65,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiField
     TextArea formQuery;
     @UiField
+    DivElement formQueryHolder;
+    @UiField
     SimplePanel deleteByKind;
     @UiField
     DivElement deselect;
@@ -325,7 +327,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             }
         });
 
-        $(formQuery).slideUp(0);
+        $(formQueryHolder).slideUp(0);
     }
 
     private Function unlock = new Function() {
@@ -362,9 +364,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         $(byGql).toggleClass(styles.open());
 
         if ($(byGql).hasClass(styles.open())) {
-            $(formQuery).slideDown(100);
+            $(formQueryHolder).slideDown(100);
         } else {
-            $(formQuery).slideUp(100);
+            $(formQueryHolder).slideUp(100);
         }
     }
 }
