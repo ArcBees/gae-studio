@@ -26,9 +26,6 @@
                 <a href="#{nameTokens.getVisualizer}" class="{widgetRes.header.activeState}">
                     Visualizer
                 </a>
-                <a ui:field="profilerAnchor" href="#{nameTokens.getProfiler}">
-                    Profiler
-                </a>
             </div>
         </div>
         <div class="{resources.styles.clear}"/>

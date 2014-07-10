@@ -17,7 +17,6 @@ public class GaeStudioModule extends ServletModule {
     protected void configureServlets() {
         install(new EmbeddedPathModule());
         install(new CommonModule(getServletContext()));
-        install(new SecureLicenseModule());
         install(new SecureAuthModule());
     }
 }

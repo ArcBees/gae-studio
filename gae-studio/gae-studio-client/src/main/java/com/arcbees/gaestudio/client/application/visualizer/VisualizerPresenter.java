@@ -42,6 +42,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.NoGatekeeper;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
@@ -78,6 +79,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
     @ProxyCodeSplit
     @NameToken(NameTokens.visualizer)
+    @NoGatekeeper
     interface MyProxy extends ProxyPlace<VisualizerPresenter> {
     }
 
