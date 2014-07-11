@@ -19,7 +19,6 @@ public class TestModule extends ServletModule {
     protected void configureServlets() {
         install(new EmbeddedPathModule());
         install(new CommonModule(getServletContext()));
-        install(new UnsecureLicenseModule());
         install(new UnsecureAuthModule());
     }
 }

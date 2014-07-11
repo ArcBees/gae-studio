@@ -50,8 +50,6 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     Anchor logout;
     @UiField
     DivElement menu;
-    @UiField
-    AnchorElement profilerAnchor;
 
     private final String activeStyleName;
     private final Function showThemes = new Function() {
@@ -92,7 +90,6 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     @Override
     public void setProfilerActive() {
         $("." + activeStyleName).removeClass(activeStyleName);
-        $(profilerAnchor).addClass(activeStyleName);
     }
 
     @Override

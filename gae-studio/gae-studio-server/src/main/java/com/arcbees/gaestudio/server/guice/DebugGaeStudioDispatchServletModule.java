@@ -28,8 +28,6 @@ public class DebugGaeStudioDispatchServletModule extends ServletModule {
     @Override
     public void configureServlets() {
         install(new CommonModule(restPath));
-        install(new SecureLicenseModule());
-        install(new SecureAuthModule());
 
         serve(GAE_STUDIO_HTML).with(RootServlet.class);
     }
