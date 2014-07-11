@@ -38,7 +38,7 @@ public class EntitiesSelectedEvent extends GwtEvent<EntitiesSelectedEvent.Entity
 
     private Set<ParsedEntity> parsedEntities;
 
-    public EntitiesSelectedEvent(Set<ParsedEntity> parsedEntities) {
+    private EntitiesSelectedEvent(Set<ParsedEntity> parsedEntities) {
         this.parsedEntities = parsedEntities;
     }
 

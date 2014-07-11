@@ -1,6 +1,7 @@
 package com.arcbees.gaestudio.client.application.entity.editor;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -11,10 +12,16 @@ import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.BlobInfoDto;
+import com.google.common.collect.Maps;
 import com.google.gwt.json.client.JSONValue;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 
 public class PropertyEditorFactoryImpl implements PropertyEditorFactory {
+    private static interface EditorFactory {
+        PropertyEditor create(String key,
+                              JSONValue property);
+    }
+
     private final FetchBlobKeysRunner fetchBlobKeysRunner = new FetchBlobKeysRunner() {
         @Override
         public void fetch(final FetchBlobKeysCallback callback) {
@@ -56,6 +63,7 @@ public class PropertyEditorFactoryImpl implements PropertyEditorFactory {
     private final BlobsService blobsService;
     private final KindsService kindsService;
     private final NamespacesService namespacesService;
+    private final Map<PropertyType, EditorFactory> propertyEditorsFactoryMap = Maps.newHashMap();
 
     @Inject
     PropertyEditorFactoryImpl(PropertyEditorsFactory propertyEditorsFactory,
@@ -68,61 +76,142 @@ public class PropertyEditorFactoryImpl implements PropertyEditorFactory {
         this.blobsService = blobsService;
         this.kindsService = kindsService;
         this.namespacesService = namespacesService;
+
+        createFactoriesMap(propertyEditorsFactory);
     }
 
     @Override
     public PropertyEditor create(String key,
                                  PropertyType propertyType,
                                  JSONValue property) {
-        PropertyEditor<?> propertyEditor;
-
-        if (propertyType == PropertyType.STRING) {
-            propertyEditor = propertyEditorsFactory.createStringEditor(key, property);
-        } else if (propertyType == PropertyType.NUMERIC) {
-            propertyEditor = propertyEditorsFactory.createNumericEditor(key, property);
-        } else if (propertyType == PropertyType.FLOATING) {
-            propertyEditor = propertyEditorsFactory.createFloatingEditor(key, property);
-        } else if (propertyType == PropertyType.DATE) {
-            propertyEditor = propertyEditorsFactory.createDateEditor(key, property);
-        } else if (propertyType == PropertyType.BOOLEAN) {
-            propertyEditor = propertyEditorsFactory.createBooleanEditor(key, property);
-        } else if (propertyType == PropertyType.POSTAL_ADDRESS) {
-            propertyEditor = propertyEditorsFactory.createPostalAddressEditor(key, property);
-        } else if (propertyType == PropertyType.CATEGORY) {
-            propertyEditor = propertyEditorsFactory.createCategoryEditor(key, property);
-        } else if (propertyType == PropertyType.LINK) {
-            propertyEditor = propertyEditorsFactory.createLinkEditor(key, property);
-        } else if (propertyType == PropertyType.EMAIL) {
-            propertyEditor = propertyEditorsFactory.createEmailEditor(key, property);
-        } else if (propertyType == PropertyType.PHONE_NUMBER) {
-            propertyEditor = propertyEditorsFactory.createPhoneNumberEditor(key, property);
-        } else if (propertyType == PropertyType.BLOB_KEY) {
-            return propertyEditorsFactory.createBlobKeyEditor(key, property, fetchBlobKeysRunner);
-        } else if (propertyType == PropertyType.RATING) {
-            propertyEditor = propertyEditorsFactory.createRatingEditor(key, property);
-        } else if (propertyType == PropertyType.GEO_PT) {
-            propertyEditor = propertyEditorsFactory.createGeoPointEditor(key, property);
-        } else if (propertyType == PropertyType.IM_HANDLE) {
-            propertyEditor = propertyEditorsFactory.createIMHandleEditor(key, property);
-        } else if (propertyType == PropertyType.USER) {
-            propertyEditor = propertyEditorsFactory.createUserEditor(key, property);
-        } else if (propertyType == PropertyType.EMBEDDED) {
-            propertyEditor = propertyEditorsFactory.createEmbeddedEntityEditor(key, property);
-        } else if (propertyType == PropertyType.KEY) {
-            propertyEditor =
-                    propertyEditorsFactory.createKeyEditor(key, property, fetchKindsRunner, fetchNamespacesRunner);
-        } else if (propertyType == PropertyType.BLOB || propertyType == PropertyType.SHORT_BLOB) {
-            propertyEditor = propertyEditorsFactory.createBytesEditor(key, property);
-        } else if (propertyType == PropertyType.COLLECTION) {
-            propertyEditor = propertyEditorsFactory.createCollectionEditor(key, property);
+        if (propertyEditorsFactoryMap.containsKey(propertyType)) {
+            return propertyEditorsFactoryMap.get(propertyType).create(key, property);
         } else {
-            propertyEditor = propertyEditorsFactory.createRawEditor(key, property);
+            return propertyEditorsFactory.createRawEditor(key, property);
         }
-
-        return propertyEditor;
     }
 
     private RestDispatch getRestDispatch() {
         return restDispatch;
+    }
+
+    private void createFactoriesMap(final PropertyEditorsFactory propertyEditorsFactory) {
+        propertyEditorsFactoryMap.put(PropertyType.STRING, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createStringEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.NUMERIC, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createNumericEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.FLOATING, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createFloatingEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.DATE, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createDateEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.BOOLEAN, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createBooleanEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.POSTAL_ADDRESS, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createPostalAddressEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.CATEGORY, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createCategoryEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.LINK, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createLinkEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.EMAIL, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createEmailEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.PHONE_NUMBER, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createPhoneNumberEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.BLOB_KEY, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createBlobKeyEditor(key, property, fetchBlobKeysRunner);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.RATING, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createRatingEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.GEO_PT, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createGeoPointEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.IM_HANDLE, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createIMHandleEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.USER, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createUserEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.EMBEDDED, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createEmbeddedEntityEditor(key, property);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.KEY, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createKeyEditor(key, property, fetchKindsRunner, fetchNamespacesRunner);
+            }
+        });
+        propertyEditorsFactoryMap.put(PropertyType.COLLECTION, new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createCollectionEditor(key, property);
+            }
+        });
+
+        EditorFactory bytesEditorFactory = new EditorFactory() {
+            @Override
+            public PropertyEditor create(String key, JSONValue property) {
+                return propertyEditorsFactory.createBytesEditor(key, property);
+            }
+        };
+        propertyEditorsFactoryMap.put(PropertyType.BLOB, bytesEditorFactory);
+        propertyEditorsFactoryMap.put(PropertyType.SHORT_BLOB, bytesEditorFactory);
     }
 }
