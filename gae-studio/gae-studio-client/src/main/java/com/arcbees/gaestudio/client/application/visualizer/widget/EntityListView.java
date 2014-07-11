@@ -347,9 +347,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private void selectRow(ParsedEntity parsedEntity) {
         AppResources.Styles styles = appResources.styles();
         if ($(deselect).hasClass(styles.deselectDisabled())) {
-            $(deselect).click(unlock);
-            $(deselect).addClass(styles.deselect());
-            $(deselect).removeClass(styles.deselectDisabled());
+            $(deselect).click(unlock)
+                    .addClass(styles.deselect())
+                    .removeClass(styles.deselectDisabled());
         }
 
         selectionModel.setSelected(parsedEntity, true);
