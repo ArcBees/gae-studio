@@ -381,9 +381,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                             universalAnalytics.sendEvent(UI_ELEMENTS, "click")
                                     .eventLabel("Visualizer -> List View -> Deselect Entity");
                         }
-                    });
-            $(deselect).addClass(styles.deselect());
-            $(deselect).removeClass(styles.deselectDisabled());
+                    }).addClass(styles.deselect())
+            .removeClass(styles.deselectDisabled());
         }
 
         selectionModel.setSelected(parsedEntity, true);
