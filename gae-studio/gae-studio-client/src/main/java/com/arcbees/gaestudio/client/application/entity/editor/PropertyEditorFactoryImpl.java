@@ -18,8 +18,7 @@ import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 
 public class PropertyEditorFactoryImpl implements PropertyEditorFactory {
     private static interface EditorFactory {
-        PropertyEditor create(String key,
-                              JSONValue property);
+        PropertyEditor create(String key, JSONValue property);
     }
 
     private final FetchBlobKeysRunner fetchBlobKeysRunner = new FetchBlobKeysRunner() {
