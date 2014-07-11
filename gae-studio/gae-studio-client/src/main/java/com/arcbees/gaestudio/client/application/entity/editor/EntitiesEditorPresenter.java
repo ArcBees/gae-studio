@@ -38,7 +38,7 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
     private final Set<ParsedEntity> parsedEntities;
     private final Map<String, PropertyType> allProperties;
     private final Map<String, JSONValue> commonValues;
-    private final Map<String, PropertyEditor<?>> propertyEditors = Maps.newLinkedHashMap();
+    private final Map<String, PropertyEditor<?>> propertyEditors;
     private final Map<String, JSONValue> valuesPrototypes;
 
     @Inject
@@ -52,6 +52,7 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
 
         allProperties = Maps.newLinkedHashMap();
         commonValues = Maps.newHashMap();
+        propertyEditors = Maps.newLinkedHashMap();
         valuesPrototypes = Maps.newHashMap();
         Set<String> propertiesToIgnore = Sets.newHashSet();
 

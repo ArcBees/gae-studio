@@ -22,13 +22,13 @@ public class EntitiesSavedEvent extends GwtEvent<EntitiesSavedEvent.EntitiesSave
         source.fireEvent(new EntitiesSavedEvent());
     }
 
-    private EntitiesSavedEvent() {
+    public static Type<EntitiesSavedHandler> getType() {
+        return TYPE;
     }
 
     private static final Type<EntitiesSavedHandler> TYPE = new Type<>();
 
-    public static Type<EntitiesSavedHandler> getType() {
-        return TYPE;
+    private EntitiesSavedEvent() {
     }
 
     @Override

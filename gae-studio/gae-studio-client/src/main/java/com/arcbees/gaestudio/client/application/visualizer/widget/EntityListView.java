@@ -200,9 +200,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         selectionModel.clear();
 
         AppResources.Styles styles = appResources.styles();
-        $(deselect).removeClass(styles.deselect());
-        $(deselect).addClass(styles.deselectDisabled());
-        $(deselect).unbind(BrowserEvents.CLICK, unlock);
+        $(deselect).removeClass(styles.deselect())
+                .addClass(styles.deselectDisabled())
+                .unbind(BrowserEvents.CLICK, unlock);
 
         getUiHandlers().onRowUnlock();
     }

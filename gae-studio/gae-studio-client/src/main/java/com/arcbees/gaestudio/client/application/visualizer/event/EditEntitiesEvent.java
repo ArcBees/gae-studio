@@ -38,7 +38,7 @@ public class EditEntitiesEvent extends GwtEvent<EditEntitiesEvent.EntitiesSelect
 
     private Set<ParsedEntity> parsedEntities;
 
-    public EditEntitiesEvent(Set<ParsedEntity> parsedEntities) {
+    private EditEntitiesEvent(Set<ParsedEntity> parsedEntities) {
         this.parsedEntities = parsedEntities;
     }
 
