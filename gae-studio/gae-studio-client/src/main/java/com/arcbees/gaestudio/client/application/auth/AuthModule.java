@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.auth;
 
+import com.arcbees.analytics.client.universalanalytics.UniversalAnalyticsModule;
 import com.arcbees.gaestudio.client.application.auth.activation.ActivationModule;
 import com.arcbees.gaestudio.client.application.auth.forgot.ForgotPasswordModule;
 import com.arcbees.gaestudio.client.application.auth.register.RegisterModule;
@@ -20,6 +21,8 @@ public class AuthModule extends AbstractPresenterModule {
         install(new ForgotPasswordModule());
         install(new RegisterModule());
         install(new ActivationModule());
+
+        install(new UniversalAnalyticsModule.Builder("UA-41550930-10").autoCreate(false).build());
 
         bindPresenter(AuthPresenter.class, AuthPresenter.MyView.class, AuthView.class,
                 AuthPresenter.MyProxy.class);

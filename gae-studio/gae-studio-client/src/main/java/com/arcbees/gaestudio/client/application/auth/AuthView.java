@@ -11,16 +11,20 @@ package com.arcbees.gaestudio.client.application.auth;
 
 import javax.inject.Inject;
 
+import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.application.ui.AjaxLoader;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.query.client.GQuery;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
@@ -35,9 +39,12 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
     SimplePanel loginForm;
     @UiField
     DivElement errorMessage;
+    @UiField
+    Button lol;
 
     private final LoginFormHelper loginFormHelper;
     private final AjaxLoader ajaxLoader;
+    private final UniversalAnalytics universalAnalytics;
     private final Function loginOnEnter = new Function() {
         @Override
         public boolean f(Event event) {
@@ -51,11 +58,13 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
 
     @Inject
     AuthView(Binder uiBinder,
-             AppResources appResources,
-             LoginFormHelper loginFormHelper,
-             AjaxLoader ajaxLoader) {
+            AppResources appResources,
+            LoginFormHelper loginFormHelper,
+            AjaxLoader ajaxLoader,
+            UniversalAnalytics universalAnalytics) {
         this.ajaxLoader = ajaxLoader;
         this.loginFormHelper = loginFormHelper;
+        this.universalAnalytics = universalAnalytics;
 
         initWidget(uiBinder.createAndBindUi(this));
         injectLoginFunction();
@@ -101,6 +110,13 @@ public class AuthView extends ViewWithUiHandlers<AuthUiHandlers> implements Auth
         ajaxLoader.hide();
         setLoginButtonEnabled(true);
         loginFormHelper.getPasswordElement().setValue("");
+    }
+
+    @UiHandler("lol")
+    void handleClick(ClickEvent event) {
+//        universalAnalytics.create().cookieDomain("none");
+        universalAnalytics.create();
+        universalAnalytics.sendPageView();
     }
 
     private void setLoginButtonEnabled(boolean enabled) {

@@ -12,6 +12,7 @@
                 <div class="{authRes.styles.authForm}">
                     <g:Image resource="{res.splashLogo}" addStyleNames="{authRes.styles.logo}"/>
                     <div ui:field="errorMessage" class="{authRes.styles.errorMessage}"/>
+                    <g:Button ui:field="lol">LOL</g:Button>
                     <g:SimplePanel ui:field="loginForm"/>
                 </div>
             </div>
