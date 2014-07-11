@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 import javax.inject.Singleton;
 
+import com.arcbees.gaestudio.client.application.analytics.AnalyticsModule;
 import com.arcbees.gaestudio.client.application.entity.EntityModule;
 import com.arcbees.gaestudio.client.application.profiler.ProfilerModule;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
@@ -33,6 +34,7 @@ public class ApplicationModule extends AbstractPresenterModule {
         install(new VisualizerModule());
         install(new MessagesModule());
         install(new EntityModule());
+        install(new AnalyticsModule());
         install(new GinFactoryModuleBuilder().build(UiFactory.class));
 
         bindPresenter(ApplicationPresenter.class, ApplicationPresenter.MyView.class, ApplicationView.class,
