@@ -130,7 +130,7 @@
         <dependency>
             <groupId>com.arcbees.analytics</groupId>
             <artifactId>analytics-client</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${analytics.version}</version>
         </dependency>
     </dependencies>
 
