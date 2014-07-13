@@ -127,6 +127,11 @@
             <version>${gwtchosen.version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.arcbees.analytics</groupId>
+            <artifactId>analytics-client</artifactId>
+            <version>${analytics.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

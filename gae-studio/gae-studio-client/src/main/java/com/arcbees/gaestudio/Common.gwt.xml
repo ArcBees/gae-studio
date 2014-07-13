@@ -19,6 +19,7 @@
     <inherits name="com.google.gwt.validation.Validation"/>
     <inherits name="org.hibernate.validator.HibernateValidator"/>
     <inherits name="com.arcbees.chosen.Chosen"/>
+    <inherits name="com.arcbees.analytics.analytics"/>
 
     <!-- Specify the paths for translatable code -->
     <source path='client'/>

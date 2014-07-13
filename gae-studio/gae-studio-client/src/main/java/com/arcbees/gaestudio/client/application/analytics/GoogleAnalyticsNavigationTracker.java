@@ -7,31 +7,35 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.gin;
+package com.arcbees.gaestudio.client.application.analytics;
 
 import javax.inject.Inject;
 
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
-import com.arcbees.gaestudio.client.place.NameTokens;
-import com.gwtplatform.mvp.client.Bootstrapper;
+import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.mvp.client.proxy.NavigationEvent;
+import com.gwtplatform.mvp.client.proxy.NavigationHandler;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
-import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
-public class BootstrapperImpl implements Bootstrapper {
+public class GoogleAnalyticsNavigationTracker implements NavigationHandler {
     private final PlaceManager placeManager;
-    private final UniversalAnalytics universalAnalytics;
+    private final UniversalAnalytics analytics;
 
     @Inject
-    BootstrapperImpl(
+    GoogleAnalyticsNavigationTracker(
             PlaceManager placeManager,
-            UniversalAnalytics universalAnalytics) {
+            EventBus eventBus,
+            UniversalAnalytics analytics) {
         this.placeManager = placeManager;
-        this.universalAnalytics = universalAnalytics;
+        this.analytics = analytics;
+
+        eventBus.addHandler(NavigationEvent.getType(), this);
     }
 
     @Override
-    public void onBootstrap() {
-        universalAnalytics.create();
-        placeManager.revealPlace(new PlaceRequest.Builder().nameToken(NameTokens.visualizer).build());
+    public void onNavigation(NavigationEvent navigationEvent) {
+        String historyToken = placeManager.buildHistoryToken(navigationEvent.getRequest());
+
+        analytics.sendPageView().documentPath("#" + historyToken);
     }
 }
