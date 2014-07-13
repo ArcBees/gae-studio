@@ -80,7 +80,7 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
 
         list = widget.getElement();
 
-        valuesIndex = new HashMap<Element, T>();
+        valuesIndex = new HashMap<>();
     }
 
     public void clear() {
