@@ -56,8 +56,7 @@ public class JsonUtils {
                 for (p in y) {
                     if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
                         return false;
-                    }
-                    else if (typeof y[p] !== typeof x[p]) {
+                    } else if (typeof y[p] !== typeof x[p]) {
                         return false;
                     }
                 }
@@ -65,15 +64,13 @@ public class JsonUtils {
                 for (p in x) {
                     if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
                         return false;
-                    }
-                    else if (typeof y[p] !== typeof x[p]) {
+                    } else if (typeof y[p] !== typeof x[p]) {
                         return false;
                     }
 
                     switch (typeof (x[p])) {
                         case 'object':
                         case 'function':
-
                             leftChain.push(x);
                             rightChain.push(y);
 
@@ -84,7 +81,6 @@ public class JsonUtils {
                             leftChain.pop();
                             rightChain.pop();
                             break;
-
                         default:
                             if (x[p] !== y[p]) {
                                 return false;
