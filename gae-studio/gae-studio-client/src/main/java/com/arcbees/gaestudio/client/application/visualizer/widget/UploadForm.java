@@ -69,9 +69,9 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
 
     @Inject
     UploadForm(AppResources resources,
-            UniversalAnalytics universalAnalytics,
-            @Assisted String uploadUrl,
-            @Assisted Handler handler) {
+               UniversalAnalytics universalAnalytics,
+               @Assisted String uploadUrl,
+               @Assisted Handler handler) {
         this.handler = handler;
         this.resources = resources;
         this.universalAnalytics = universalAnalytics;

@@ -106,16 +106,16 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
     @Inject
     VisualizerPresenter(EventBus eventBus,
-            MyView view,
-            MyProxy proxy,
-            EntityListPresenter entityListPresenter,
-            SidebarPresenter sidebarPresenter,
-            UiFactory uiFactory,
-            AppResources resources,
-            AppConstants appConstants,
-            PlaceManager placeManager,
-            ToolbarPresenter toolbarPresenter,
-            UniversalAnalytics universalAnalytics) {
+                        MyView view,
+                        MyProxy proxy,
+                        EntityListPresenter entityListPresenter,
+                        SidebarPresenter sidebarPresenter,
+                        UiFactory uiFactory,
+                        AppResources resources,
+                        AppConstants appConstants,
+                        PlaceManager placeManager,
+                        ToolbarPresenter toolbarPresenter,
+                        UniversalAnalytics universalAnalytics) {
         super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
         this.uiFactory = uiFactory;
@@ -162,9 +162,9 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         getView().updatePanelsWidth();
 
         if (event.isOpen()) {
-           universalAnalytics.sendEvent(UI_ELEMENTS, "close").eventLabel("Visualizer -> Actions Sidebar");
+            universalAnalytics.sendEvent(UI_ELEMENTS, "close").eventLabel("Visualizer -> Actions Sidebar");
         } else {
-           universalAnalytics.sendEvent(UI_ELEMENTS, "open").eventLabel("Visualizer -> Actions Sidebar");
+            universalAnalytics.sendEvent(UI_ELEMENTS, "open").eventLabel("Visualizer -> Actions Sidebar");
         }
     }
 

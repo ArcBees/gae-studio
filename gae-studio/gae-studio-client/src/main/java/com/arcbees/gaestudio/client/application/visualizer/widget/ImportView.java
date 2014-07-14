@@ -47,9 +47,9 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
 
     @Inject
     ImportView(Binder uiBinder,
-            EventBus eventBus,
-            AjaxLoader ajaxLoader,
-            UniversalAnalytics universalAnalytics) {
+               EventBus eventBus,
+               AjaxLoader ajaxLoader,
+               UniversalAnalytics universalAnalytics) {
         super(eventBus);
 
         this.ajaxLoader = ajaxLoader;

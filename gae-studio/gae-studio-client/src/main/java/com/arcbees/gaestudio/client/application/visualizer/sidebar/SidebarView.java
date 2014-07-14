@@ -91,13 +91,13 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     @Inject
     SidebarView(Binder binder,
-            ChosenResources chosenResources,
-            KindTemplate kindTemplate,
-            EmptyKindsTemplate emptyKindsTemplate,
-            AppResources appResources,
-            VisualizerResources visualizerResources,
-            PanelToggleFactory panelToggleFactory,
-            final UniversalAnalytics universalAnalytics) {
+                ChosenResources chosenResources,
+                KindTemplate kindTemplate,
+                EmptyKindsTemplate emptyKindsTemplate,
+                AppResources appResources,
+                VisualizerResources visualizerResources,
+                PanelToggleFactory panelToggleFactory,
+                final UniversalAnalytics universalAnalytics) {
         this.kindTemplate = kindTemplate;
         this.emptyKindsTemplate = emptyKindsTemplate;
         this.appResources = appResources;

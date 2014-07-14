@@ -45,9 +45,9 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
 
     @Inject
     EntityDeletionView(Binder uiBinder,
-            EventBus eventBus,
-            AppMessages messages,
-            UniversalAnalytics universalAnalytics) {
+                       EventBus eventBus,
+                       AppMessages messages,
+                       UniversalAnalytics universalAnalytics) {
         super(eventBus);
 
         this.messages = messages;

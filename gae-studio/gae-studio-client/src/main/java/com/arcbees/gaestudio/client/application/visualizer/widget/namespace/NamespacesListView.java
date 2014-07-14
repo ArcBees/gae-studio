@@ -40,11 +40,11 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
 
     @Inject
     NamespacesListView(Binder uiBinder,
-            EventBus eventBus,
-            DropdownFactory dropdownFactory,
-            NamespaceDropdownResources dropdownResources,
-            AppIdNamespaceRenderer appIdNamespaceRenderer,
-            final UniversalAnalytics universalAnalytics) {
+                       EventBus eventBus,
+                       DropdownFactory dropdownFactory,
+                       NamespaceDropdownResources dropdownResources,
+                       AppIdNamespaceRenderer appIdNamespaceRenderer,
+                       final UniversalAnalytics universalAnalytics) {
         super(eventBus);
 
         this.dropdown = dropdownFactory.create(appIdNamespaceRenderer, dropdownResources);
