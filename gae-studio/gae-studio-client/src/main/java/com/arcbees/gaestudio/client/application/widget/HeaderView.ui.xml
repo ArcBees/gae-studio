@@ -9,6 +9,7 @@
         <a ui:field="logoAnchor" href="" class="{widgetRes.header.logo}">
             <g:Image resource="{resources.logo}"/>
         </a>
+        <g:Button ui:field="report">Report Issue</g:Button>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 </ui:UiBinder>
