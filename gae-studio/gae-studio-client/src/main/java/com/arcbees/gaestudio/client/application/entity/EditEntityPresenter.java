@@ -245,14 +245,12 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
 
     private void onSaveEntitySucceeded(EntityDto newEntityDto) {
         EntitySavedEvent.fire(this, newEntityDto);
-        Message message = new Message("Entity saved.", MessageStyle.SUCCESS);
-        DisplayMessageEvent.fire(this, message);
+        DisplayMessageEvent.fire(this, new Message(appConstants.entitySaved(), MessageStyle.SUCCESS));
         revealDetailEntity();
     }
 
     private void onSaveEntitiesSucceeded() {
-        Message message = new Message("Entities saved.", MessageStyle.SUCCESS);
-        DisplayMessageEvent.fire(this, message);
+        DisplayMessageEvent.fire(this, new Message(appConstants.entitiesSaved(), MessageStyle.SUCCESS));
         EntitiesSavedEvent.fire(this);
     }
 

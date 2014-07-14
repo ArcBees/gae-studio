@@ -71,7 +71,7 @@ public class PropertyEditorFactoryImpl implements PropertyEditorFactory {
     private final BlobsService blobsService;
     private final KindsService kindsService;
     private final NamespacesService namespacesService;
-    private final Map<PropertyType, EditorFactory> propertyEditorsFactoryMap = Maps.newHashMap();
+    private final Map<PropertyType, EditorFactory> propertyEditorsFactoryMap;
 
     @Inject
     PropertyEditorFactoryImpl(PropertyEditorsFactory propertyEditorsFactory,
@@ -84,6 +84,7 @@ public class PropertyEditorFactoryImpl implements PropertyEditorFactory {
         this.blobsService = blobsService;
         this.kindsService = kindsService;
         this.namespacesService = namespacesService;
+        propertyEditorsFactoryMap = Maps.newHashMap();
 
         createFactoriesMap(propertyEditorsFactory);
     }

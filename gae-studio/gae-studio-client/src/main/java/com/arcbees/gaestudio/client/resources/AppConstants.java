@@ -123,4 +123,8 @@ public interface AppConstants extends Constants {
     String missingSelectInRequest();
 
     String somethingWentWrong();
+
+    String entitySaved();
+
+    String entitiesSaved();
 }
