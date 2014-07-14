@@ -98,8 +98,8 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
         getUiHandlers().deleteEntity();
         asPopupPanel().hide();
 
-        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Delete Confirmation Popup -> " +
-                "Delete");
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                .eventLabel("Visualizer -> Delete Confirmation Popup -> Delete");
     }
 
     @UiHandler({"cancel", "close"})
@@ -107,7 +107,7 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
         getUiHandlers().reset();
         asPopupPanel().hide();
 
-        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Delete Confirmation Popup -> " +
-                "Cancel or Close");
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                .eventLabel("Visualizer -> Delete Confirmation Popup -> Cancel or Close");
     }
 }

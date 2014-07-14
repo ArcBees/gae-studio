@@ -90,8 +90,8 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
     void onCancelClicked(ClickEvent event) {
         asPopupPanel().hide();
 
-        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Import Popup -> Cancel or " +
-                "Close");
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                .eventLabel("Visualizer -> Import Popup -> Cancel or Close");
     }
 
     private void setUploadButtonEnabled(boolean enabled) {

@@ -130,8 +130,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                     getUiHandlers().importKind();
                 }
 
-                universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Kinds Sidebar -> Import " +
-                        "Button");
+                universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                        .eventLabel("Visualizer -> Kinds Sidebar -> Import Button");
             }
         });
 
@@ -144,8 +144,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                     getUiHandlers().exportCurrentKind();
                 }
 
-                universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Kinds Sidebar -> Export " +
-                        "Button");
+                universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                        .eventLabel("Visualizer -> Kinds Sidebar -> Export Button");
             }
         });
 
@@ -153,8 +153,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
             @Override
             public void onChange(ChosenChangeEvent chosenChangeEvent) {
                 currentFormat = chosenChangeEvent.getValue();
-                universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel
-                        ("Visualizer -> Kinds Sidebar -> Chosen format: " + currentFormat);
+                universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                        .eventLabel("Visualizer -> Kinds Sidebar -> Chosen format: " + currentFormat);
             }
         });
     }
