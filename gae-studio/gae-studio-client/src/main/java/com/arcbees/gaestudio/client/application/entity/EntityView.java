@@ -88,8 +88,8 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
     @Override
     public void resetFullScreen() {
         isFullscreen = false;
-        $(fullscreen).addClass(appResources.styles().expand());
-        $(fullscreen).removeClass(appResources.styles().collapse());
+        $(fullscreen).addClass(appResources.styles().expand())
+                .removeClass(appResources.styles().collapse());
     }
 
     private void toggleFullScreenMode() {
@@ -127,7 +127,7 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
             }
         };
 
-        table = new CellTable<KeyValuePair>(pageSize, cellTableResource);
+        table = new CellTable<>(pageSize, cellTableResource);
 
         table.addColumn(keyColumn, "Key");
         table.addColumn(valueColumn, "Value");

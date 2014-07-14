@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.client.application.visualizer;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.query.client.Function;
+import com.google.gwt.query.client.GQuery;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -36,9 +37,7 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     SimplePanel entityDetailsPanel;
 
     private final String secondTableStyleName;
-    private final String toolbarStyleName;
 
-    private double kindPanelMargin = 0;
     private boolean isFullscreen = false;
     private boolean entityDetailsVisible;
 
@@ -48,7 +47,6 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
         initWidget(uiBinder.createAndBindUi(this));
 
         secondTableStyleName = "." + appResources.styles().secondTable();
-        toolbarStyleName = "." + appResources.styles().toolbar();
     }
 
     @Override
@@ -114,7 +112,7 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
 
     private void waitForWidgets(final Function callback) {
         if (widgetsAreNotReady()) {
-            $(asWidget()).delay(1, new Function() {
+            $(asWidget()).delay(10, new Function() {
                 @Override
                 public void f() {
                     waitForWidgets(callback);
@@ -130,7 +128,7 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     }
 
     private boolean entityDetailsNotAttached() {
-        return (entityDetailsVisible && $(secondTableStyleName).widget() == null);
+        return (entityDetailsVisible && getEntityDetailContent() == null);
     }
 
     private boolean toolbarAndSidebarAreAttached() {
@@ -138,29 +136,21 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     }
 
     private void setSidebarMarginLeft(double marginLeft) {
-        kindPanelMargin = marginLeft;
         entityTypesSidebar.getElement().getStyle().setMarginLeft(marginLeft, Style.Unit.PX);
     }
 
     private void setPanelsWidthPercentages(final int leftPercentage, final int rightPercentage) {
-        setWidth(getPercentage(leftPercentage), entityListPanel);
-        setWidth(getPercentage(rightPercentage), entityDetailsPanel);
+        setWidth(getPercentage(leftPercentage), $(entityListPanel));
+        setWidth(getPercentage(rightPercentage), $(entityDetailsPanel));
         waitForWidgets(new Function() {
             @Override
             public void f() {
-                int divisor = rightPercentage == 100 ? 1 : 2;
-                setWidth(getWidthString(rightPercentage, getKindBarAndToolBarWidth(divisor)), $(secondTableStyleName).widget());
+                setWidth(getWidthString(rightPercentage, 45), getEntityDetailContent());
             }
         });
     }
 
-    private int getKindBarAndToolBarWidth(int divisor) {
-        int leftWidth = $(entityTypesSidebar).outerWidth() + $(toolbarStyleName).outerWidth() + (int) kindPanelMargin;
-
-        return leftWidth / divisor + 30;
-    }
-
-    private void setWidth(String width, IsWidget widget) {
+    private void setWidth(String width, GQuery widget) {
         $(widget).css("width", width);
     }
 
@@ -170,5 +160,9 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
 
     private String getPercentage(int percentage) {
         return percentage + "%";
+    }
+
+    private GQuery getEntityDetailContent() {
+        return $(secondTableStyleName);
     }
 }
