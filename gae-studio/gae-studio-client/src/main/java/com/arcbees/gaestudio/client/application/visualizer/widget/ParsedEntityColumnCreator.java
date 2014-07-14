@@ -27,7 +27,6 @@ public class ParsedEntityColumnCreator {
         DEFAULT_COLUMN_COUNT = defaultColumnCount;
     }
 
-    public static final String IS_UNDEFINED = "";
     private static final String IS_NULL = "<null>";
     private static int DEFAULT_COLUMN_COUNT;
 
