@@ -47,6 +47,7 @@ public class SupportView extends PopupViewWithUiHandlers<SupportUiHandlers>
                 Binder binder,
                 Driver driver) {
         super(eventBus);
+
         this.driver = driver;
 
         initWidget(binder.createAndBindUi(this));

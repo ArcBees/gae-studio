@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.support;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.HttpHeaders;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -17,7 +18,6 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.http.client.URL;
-import com.google.gwt.query.client.GQuery;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PopupView;
@@ -55,11 +55,10 @@ public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> i
     public void send(SupportMessage supportMessage) {
         RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.POST, URL.encode(MAIL_URL));
 
-        requestBuilder.setHeader("Content-Type", "application/json");
-        requestBuilder.setHeader("Authorization", API_KEY);
+        requestBuilder.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+        requestBuilder.setHeader(HttpHeaders.AUTHORIZATION, API_KEY);
 
         String requestData = messageRequestMapper.write(MessageRequest.fromSupportMessage(supportMessage));
-        GQuery.console.info(requestData);
 
         try {
             requestBuilder.sendRequest(requestData, new RequestCallback() {
