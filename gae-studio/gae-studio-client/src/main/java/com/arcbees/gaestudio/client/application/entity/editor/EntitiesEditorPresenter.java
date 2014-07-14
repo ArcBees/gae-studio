@@ -16,6 +16,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.util.JsonUtils;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
@@ -35,18 +36,22 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import static com.arcbees.gaestudio.client.application.entity.editor.EntityEditorPresenter.MyView;
 
 public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
+    private final JsonUtils jsonUtils;
     private final Set<ParsedEntity> parsedEntities;
     private final Map<String, PropertyType> allProperties;
     private final Map<String, JSONValue> commonValues;
     private final Map<String, PropertyEditor<?>> propertyEditors;
     private final Map<String, JSONValue> valuesPrototypes;
+    private final Set<String> propertiesToIgnore;
 
     @Inject
     EntitiesEditorPresenter(EventBus eventBus,
                             MyView view,
                             PropertyEditorFactory propertyEditorFactory,
+                            JsonUtils jsonUtils,
                             @Assisted Set<ParsedEntity> parsedEntities) {
         super(eventBus, view);
+        this.jsonUtils = jsonUtils;
 
         this.parsedEntities = parsedEntities;
 
@@ -54,32 +59,11 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
         commonValues = Maps.newHashMap();
         propertyEditors = Maps.newLinkedHashMap();
         valuesPrototypes = Maps.newHashMap();
-        Set<String> propertiesToIgnore = Sets.newHashSet();
+        propertiesToIgnore = Sets.newHashSet();
 
-        for (ParsedEntity parsedEntity : parsedEntities) {
-            for (String propertyKey : parsedEntity.propertyKeys()) {
-                PropertyType propertyType = PropertyUtil.getPropertyType(parsedEntity.getProperty(propertyKey));
-                if (!PropertyType.KEY.equals(propertyType)) {
-                    allProperties.put(propertyKey, propertyType);
-                    JSONValue propertyValue = parsedEntity.getProperty(propertyKey);
-                    createPrototypeValue(propertyKey, propertyValue, allProperties.get(propertyKey));
+        parseProperties(jsonUtils, parsedEntities);
 
-                    if (!propertiesToIgnore.contains(propertyKey) && commonValues.containsKey(propertyKey)) {
-                        JSONValue currentValue = commonValues.get(propertyKey);
-                        if (!String.valueOf(currentValue).equals(String.valueOf(propertyValue))) {
-                            propertiesToIgnore.add(propertyKey);
-                            commonValues.remove(propertyKey);
-                        }
-                    } else if (!propertiesToIgnore.contains(propertyKey)) {
-                        commonValues.put(propertyKey, propertyValue);
-                    }
-                }
-            }
-        }
-
-        for (Map.Entry<String, PropertyType> propertyEntry : allProperties.entrySet()) {
-            addEditor(propertyEditorFactory, valuesPrototypes, propertyEntry);
-        }
+        addEditors(propertyEditorFactory);
     }
 
     public List<EntityDto> flush() throws InvalidEntityFieldsException {
@@ -105,14 +89,48 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
                 }).toList();
     }
 
+    private void parseProperties(JsonUtils jsonUtils, Set<ParsedEntity> parsedEntities) {
+        for (ParsedEntity parsedEntity : parsedEntities) {
+            for (String propertyKey : parsedEntity.propertyKeys()) {
+                PropertyType propertyType = PropertyUtil.getPropertyType(parsedEntity.getProperty(propertyKey));
+                if (!PropertyType.KEY.equals(propertyType)) {
+                    allProperties.put(propertyKey, propertyType);
+                    JSONValue propertyValue = parsedEntity.getProperty(propertyKey);
+
+                    createPrototypeValue(propertyKey, propertyValue, allProperties.get(propertyKey));
+
+                    checkIfCommonValue(jsonUtils, propertyKey, propertyValue);
+                }
+            }
+        }
+    }
+
+    private void checkIfCommonValue(JsonUtils jsonUtils, String propertyKey, JSONValue propertyValue) {
+        if (!propertiesToIgnore.contains(propertyKey) && commonValues.containsKey(propertyKey)) {
+            JSONValue currentValue = commonValues.get(propertyKey);
+            if (!jsonUtils.compareObjects(currentValue, propertyValue)) {
+                propertiesToIgnore.add(propertyKey);
+                commonValues.remove(propertyKey);
+            }
+        } else if (!propertiesToIgnore.contains(propertyKey)) {
+            commonValues.put(propertyKey, propertyValue);
+        }
+    }
+
+    private void addEditors(PropertyEditorFactory propertyEditorFactory) {
+        for (Map.Entry<String, PropertyType> propertyEntry : allProperties.entrySet()) {
+            addEditor(propertyEditorFactory, valuesPrototypes, propertyEntry);
+        }
+    }
+
     private boolean otherPropertyWasModified(String propertyKey, JSONValue value) {
-        return !commonValues.containsKey(propertyKey) && !String.valueOf(value).equals(String.valueOf(
-                valuesPrototypes.get(propertyKey)));
+        return !commonValues.containsKey(propertyKey) &&
+                !jsonUtils.compareObjects(value, valuesPrototypes.get(propertyKey));
     }
 
     private boolean commonValueWasModified(String propertyKey, JSONValue value) {
         return commonValues.containsKey(propertyKey)
-                && !String.valueOf(value).equals(String.valueOf(commonValues.get(propertyKey)));
+                && !jsonUtils.compareObjects(value, commonValues.get(propertyKey));
     }
 
     private void addEditor(PropertyEditorFactory propertyEditorFactory,
