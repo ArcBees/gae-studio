@@ -11,21 +11,21 @@ package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 
 import java.util.List;
 
-import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.application.widget.dropdown.Dropdown;
 import com.arcbees.gaestudio.client.application.widget.dropdown.DropdownFactory;
 import com.arcbees.gaestudio.client.resources.NamespaceDropdownResources;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
-import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUiHandlers>
@@ -43,8 +43,7 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
                        EventBus eventBus,
                        DropdownFactory dropdownFactory,
                        NamespaceDropdownResources dropdownResources,
-                       AppIdNamespaceRenderer appIdNamespaceRenderer,
-                       final UniversalAnalytics universalAnalytics) {
+                       AppIdNamespaceRenderer appIdNamespaceRenderer) {
         super(eventBus);
 
         this.dropdown = dropdownFactory.create(appIdNamespaceRenderer, dropdownResources);
@@ -55,9 +54,6 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
             @Override
             public void f() {
                 getUiHandlers().deleteAllFromNamespace(dropdown.getValue());
-
-                universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Kinds Sidebar -> Delete " +
-                        "All Entities Button");
             }
         });
     }
@@ -71,5 +67,10 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
         for (AppIdNamespaceDto namespace : namespaces) {
             dropdown.addValue(namespace);
         }
+    }
+
+    @UiHandler("dropdown")
+    void onDropdown(ValueChangeEvent<AppIdNamespaceDto> event) {
+        getUiHandlers().dropdownValueChanged(event);
     }
 }
