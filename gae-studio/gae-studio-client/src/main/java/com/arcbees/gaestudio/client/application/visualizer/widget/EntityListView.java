@@ -371,6 +371,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         ParsedEntity parsedEntity = getParsedEntityForRow(e);
         getUiHandlers().onEntitySelected(parsedEntity);
+
+        universalAnalytics.sendEvent(UI_ELEMENTS, "select").eventLabel("Visualizer -> List View -> Entity Row");
     }
 
     private void toggleGQL() {
