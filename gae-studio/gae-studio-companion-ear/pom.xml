@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>gae-studio</artifactId>
+        <groupId>com.arcbees.gaestudio</groupId>
+        <version>0.9-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>gae-studio-companion-ear</artifactId>
+    <packaging>ear</packaging>
+
+    <properties>
+        <gaestudio.version>0.9-SNAPSHOT</gaestudio.version>
+        <rest-assured.version>1.8.1</rest-assured.version>
+        <maven-gae-plugin.version>0.9.6</maven-gae-plugin.version>
+        <maven-war-plugin.version>2.3</maven-war-plugin.version>
+        <cucumber.version>1.1.5</cucumber.version>
+        <googleappengine.id>gaestudio-testing</googleappengine.id>
+    </properties>
+
+    <dependencies>
+        <!-- GAE Studio -->
+        <dependency>
+            <groupId>com.arcbees.gaestudio</groupId>
+            <artifactId>gae-studio-webapp</artifactId>
+            <version>${gaestudio.version}</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>com.arcbees.gaestudio</groupId>
+            <artifactId>gae-studio-companion</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.google.appengine</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>${gae.version}</version>
+                <configuration>
+                    <enableJarSplitting>true</enableJarSplitting>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <!-- here the phase you need -->
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/${project.build.finalName}/META-INF</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/META-INF</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>**/*.xml</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <version>5</version>
+                    <generateApplicationXml>false</generateApplicationXml>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <unpackTypes>war</unpackTypes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

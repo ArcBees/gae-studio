@@ -22,6 +22,7 @@
         <gae.version>1.9.0</gae.version>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <webXmlPath>src/main/webapp/WEB-INF/web.xml</webXmlPath>
+        <googleappengine.id>gaestudio-testing</googleappengine.id>
     </properties>
 
     <dependencies>

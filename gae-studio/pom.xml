@@ -15,6 +15,7 @@
         <module>gae-studio-client</module>
         <module>gae-studio-webapp</module>
         <module>gae-studio-companion</module>
+        <module>gae-studio-companion-ear</module>
     </modules>
 
     <scm>
@@ -42,7 +43,7 @@
         <json.version>20140107</json.version>
 
         <!-- server -->
-        <gae.version>1.9.0</gae.version>
+        <gae.version>1.9.6</gae.version>
         <servlet-api.version>2.5</servlet-api.version>
         <guava.version>16.0.1</guava.version>
         <gson.version>2.2.4</gson.version>
@@ -85,7 +86,6 @@
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <gaes.buildtime>${maven.build.timestamp}</gaes.buildtime>
         <repackage>com.arcbees.gaestudio.repackaged</repackage>
-        <googleappengine.id>gaestudio-staging</googleappengine.id>
     </properties>
 
     <build>

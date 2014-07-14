@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
-    <application>${googleappengine.id}</application>
-    <module>default</module>
-    <version>staging</version>
+    <application>gaestudio</application>
+    <module>gaestudio</module>
+    <version>1</version>
 
     <threadsafe>true</threadsafe>
 
     <sessions-enabled>true</sessions-enabled>
+
+    <inbound-services>
+        <service>channel_presence</service>
+    </inbound-services>
 </appengine-web-app>

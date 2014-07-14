@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/application_5.xsd"
+        version="5">
+
+    <description>GAE-Studio Companion</description>
+    <display-name>GAEStudio-Companion</display-name>
+
+    <module>
+        <web>
+            <web-uri>gae-studio-companion-${project.version}.war</web-uri>
+            <context-root>/</context-root>
+        </web>
+    </module>
+    <module>
+        <web>
+            <web-uri>gae-studio-webapp-${project.version}.war</web-uri>
+            <context-root>/gaestudio</context-root>
+        </web>
+    </module>
+    <library-directory>lib</library-directory>
+</application>

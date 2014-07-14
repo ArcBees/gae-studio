@@ -4,14 +4,10 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
 
-    <display-name>Companion project</display-name>
-
-    <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
-    </welcome-file-list>
+    <display-name>GAE Studio</display-name>
 
     <listener>
-        <listener-class>com.arcbees.gaestudio.companion.guice.GuiceServletConfig</listener-class>
+        <listener-class>com.arcbees.gaestudio.server.guice.GaeStudioServletConfig</listener-class>
     </listener>
 
     <context-param>
