@@ -102,10 +102,9 @@ public class ToolbarButton implements AttachEvent.Handler, IsWidget {
 
     public void setEnabled(Boolean enabled) {
         $(button).toggleClass(resources.styles().toolbarButtonDisabled(), !enabled);
+        $(button).unbind(BrowserEvents.CLICK, buttonClickFunction);
         if (enabled) {
             $(button).click(buttonClickFunction);
-        } else {
-            $(button).unbind(BrowserEvents.CLICK, buttonClickFunction);
         }
     }
 

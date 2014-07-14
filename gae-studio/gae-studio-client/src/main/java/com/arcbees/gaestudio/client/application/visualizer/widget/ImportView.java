@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.application.ui.AjaxLoader;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -22,6 +23,7 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PopupViewImpl;
 
+import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class ImportView extends PopupViewImpl implements ImportPresenter.MyView {
@@ -39,15 +41,19 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
     @UiField
     AppResources res;
 
+    private final UniversalAnalytics universalAnalytics;
+
     private UploadForm uploadForm;
 
     @Inject
     ImportView(Binder uiBinder,
                EventBus eventBus,
-               AjaxLoader ajaxLoader) {
+               AjaxLoader ajaxLoader,
+               UniversalAnalytics universalAnalytics) {
         super(eventBus);
 
         this.ajaxLoader = ajaxLoader;
+        this.universalAnalytics = universalAnalytics;
 
         initWidget(uiBinder.createAndBindUi(this));
 
@@ -76,11 +82,16 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
     void onUploadClicked(ClickEvent event) {
         uploadForm.submit();
         ajaxLoader.show();
+
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Import Popup -> Upload");
     }
 
     @UiHandler({"cancel", "close"})
     void onCancelClicked(ClickEvent event) {
         asPopupPanel().hide();
+
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                .eventLabel("Visualizer -> Import Popup -> Cancel or Close");
     }
 
     private void setUploadButtonEnabled(boolean enabled) {
