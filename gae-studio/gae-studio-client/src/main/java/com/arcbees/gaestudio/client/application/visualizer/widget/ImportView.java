@@ -41,9 +41,9 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
     @UiField
     AppResources res;
 
-    private UploadForm uploadForm;
-
     private final UniversalAnalytics universalAnalytics;
+
+    private UploadForm uploadForm;
 
     @Inject
     ImportView(Binder uiBinder,

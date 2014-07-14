@@ -379,13 +379,13 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         if ($(byGql).hasClass(styles.open())) {
             $(formQueryHolder).slideDown(100);
-            universalAnalytics.sendEvent(UI_ELEMENTS, "open").eventLabel("Visualizer -> List View -> GQL Query " +
-                    "Textarea");
+            universalAnalytics.sendEvent(UI_ELEMENTS, "open")
+                    .eventLabel("Visualizer -> List View -> GQL Query Textarea");
         } else {
             $(formQueryHolder).slideUp(100);
 
-            universalAnalytics.sendEvent(UI_ELEMENTS, "close").eventLabel("Visualizer -> List View -> GQL Query " +
-                    "Textarea");
+            universalAnalytics.sendEvent(UI_ELEMENTS, "close")
+                    .eventLabel("Visualizer -> List View -> GQL Query Textarea");
         }
     }
 }
