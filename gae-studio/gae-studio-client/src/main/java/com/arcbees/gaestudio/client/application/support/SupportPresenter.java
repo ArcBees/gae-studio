@@ -12,6 +12,10 @@ package com.arcbees.gaestudio.client.application.support;
 import javax.inject.Inject;
 import javax.ws.rs.core.HttpHeaders;
 
+import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
+import com.arcbees.gaestudio.client.application.widget.message.Message;
+import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
+import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -32,14 +36,17 @@ public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> i
     private static final String API_KEY = "apikey";
 
     private final MessageRequestMapper messageRequestMapper;
+    private final AppConstants appConstants;
 
     @Inject
     SupportPresenter(EventBus eventBus,
                      MyView view,
-                     MessageRequestMapper messageRequestMapper) {
+                     MessageRequestMapper messageRequestMapper,
+                     AppConstants appConstants) {
         super(eventBus, view);
 
         this.messageRequestMapper = messageRequestMapper;
+        this.appConstants = appConstants;
 
         getView().setUiHandlers(this);
     }
@@ -64,16 +71,33 @@ public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> i
             requestBuilder.sendRequest(requestData, new RequestCallback() {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
-                    // todo: response
+                    Message message;
+
+                    if (response.getStatusCode() == Response.SC_NO_CONTENT) {
+                        message = new Message(appConstants.thankYou(), MessageStyle.SUCCESS);
+                    } else {
+                        message = new Message(appConstants.oops(), MessageStyle.ERROR);
+                    }
+
+                    displayMessage(message);
                 }
 
                 @Override
                 public void onError(Request request, Throwable exception) {
-                    // todo: log error
+                    Message message = new Message(appConstants.oops(), MessageStyle.ERROR);
+
+                    displayMessage(message);
                 }
             });
         } catch (RequestException e) {
-            // todo: log error
+            Message message = new Message(appConstants.oops(), MessageStyle.ERROR);
+
+            displayMessage(message);
         }
+    }
+
+    private void displayMessage(Message message) {
+        DisplayMessageEvent.fire(SupportPresenter.this, message);
+        getView().hide();
     }
 }
