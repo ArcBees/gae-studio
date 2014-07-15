@@ -1,0 +1,25 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+        xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{res.styles.glassPanel}" modal="true"
+            styleName="{res.styles.popup}" autoHideEnabled="true">
+        <g:HTMLPanel>
+            <div>Name
+                <g:TextBox ui:field="name"/>
+            </div>
+            <div>Email
+                <g:TextBox ui:field="email"/>
+            </div>
+            <div>Subject
+                <g:TextBox ui:field="subject"/>
+            </div>
+            <div>Message
+                <g:TextArea ui:field="body"/>
+            </div>
+            <div class="{res.styles.buttonContainer}">
+                <g:Button ui:field="cancel" text="Cancel" styleName="{res.styles.button} {res.styles.gray}"/>
+                <g:Button ui:field="send" text="Send" styleName="{res.styles.button}"/>
+            </div>
+        </g:HTMLPanel>
+    </g:PopupPanel>
+</ui:UiBinder>
