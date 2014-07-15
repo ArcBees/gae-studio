@@ -14,7 +14,7 @@
             <div class="{visualizer.styles.actionsPanel}">
                 <chzn:ChosenListBox ui:field="chosenFormat" styleName="{visualizer.styles.dropdown}" />
                 <div ui:field="importKind" class="{visualizer.styles.importBtn}"/>
-                <div ui:field="exportKind" class="{visualizer.styles.exportBtn} {visualizer.styles.exportBtnDisabled}"/>
+                <div ui:field="exportKind" class="{visualizer.styles.exportBtn} {visualizer.styles.btnDisabled}"/>
             </div>
         </span>
         <g:SimplePanel ui:field="namespaces" styleName="{visualizer.styles.namespaces}"/>

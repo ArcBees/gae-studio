@@ -142,6 +142,12 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
             @Override
             public void onChange(ChosenChangeEvent chosenChangeEvent) {
                 currentFormat = chosenChangeEvent.getValue();
+
+                if(currentFormat.equals("CSV")) {
+                    setImportEnabled(false);
+                } else {
+                    setImportEnabled(true);
+                }
             }
         });
     }
@@ -203,9 +209,17 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     private void setExportEnabled(boolean enabled) {
         if (enabled) {
-            exportKind.removeClassName(visualizerResources.styles().exportBtnDisabled());
+            exportKind.removeClassName(visualizerResources.styles().btnDisabled());
         } else {
-            exportKind.addClassName(visualizerResources.styles().exportBtnDisabled());
+            exportKind.addClassName(visualizerResources.styles().btnDisabled());
+        }
+    }
+
+    private void setImportEnabled(boolean enabled) {
+        if (enabled) {
+            importKind.removeClassName(visualizerResources.styles().btnDisabled());
+        } else {
+            importKind.addClassName(visualizerResources.styles().btnDisabled());
         }
     }
 
