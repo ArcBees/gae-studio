@@ -100,6 +100,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void unlockRows();
 
         void setRowSelected(String idString);
+
+        void setData(List<ParsedEntity> parsedEntities);
     }
 
     public static final Object SLOT_NAMESPACES = new Object();
@@ -368,7 +370,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             parsedEntities.add(parsedEntity);
         }
 
-        getView().setData(new Range(0, 25), parsedEntities);
+        getView().setData(parsedEntities);
         getView().setRowCount(parsedEntities.size());
     }
 
