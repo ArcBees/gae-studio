@@ -1,0 +1,106 @@
+@def SUPPORT_CLOSE resourceUrl("supportClose");
+
+.support {
+    min-width: 400px;
+}
+
+.support .buttonCancel {
+    background: transparent SUPPORT_CLOSE no-repeat;
+    text-indent: -9999px;
+
+    display: block;
+    width: 11px;
+    height: 11px;
+    border: 0;
+    padding: 0;
+
+    position: absolute;
+    top: 26px;
+    right: 20px;
+
+    cursor: pointer;
+}
+
+.support h1 {
+    color: #2d2d2d;
+    font-size: 16px;
+    font-weight: normal;
+
+    border-bottom: 2px solid #fff;
+    margin: 0 0 15px;
+    padding-bottom: 5px;
+}
+
+.support label {
+    color: C_PRIMARY;
+    text-transform: uppercase;
+
+    display: block;
+    margin-bottom: 6px;
+
+    position: relative;
+}
+
+.support label sup {
+    color: C_ACTION_ERROR;
+    font-size: 15px;
+
+    vertical-align: middle;
+}
+
+.support label::after {
+    content: '';
+    background-color: C_PRIMARY;
+
+    display: block;
+    width: 6px;
+    height: 2px;
+
+    position: absolute;
+    bottom: -4px;
+    left: 1px;
+}
+
+.support input {
+    background-color: C_SECONDARY_LIGHT;
+    font-size: 14px;
+
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid #d9d9d9;
+    margin-bottom: 12px;
+}
+
+.support textarea {
+    background-color: #d9d9d9;
+    font-size: 14px;
+
+    width: 100%;
+    min-height: 100px;
+    margin-bottom: 15px;
+    border: 0;
+}
+
+.support .buttonContainer {
+    text-align: right;
+}
+
+.support .buttonContainer .button {
+    background-color: #2d2d2d;
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+
+    border: 0;
+    padding: 5px 15px;
+    width: auto;
+    margin-right: -4px;
+
+    cursor: pointer;
+
+    @mixin transition(all, 0.2s);
+}
+
+.support .buttonContainer .button:hover {
+    background-color: C_PRIMARY;
+}
