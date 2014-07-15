@@ -119,6 +119,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         pager.setDisplay(entityTable);
 
         columnCreator.initializeTable(entityTable);
+
+        formQuery.getElement().setPropertyString("placeholder", "(e.g. SELECT * FROM Car WHERE make = 'Honda')");
     }
 
     @Override

@@ -48,7 +48,6 @@ import com.google.common.base.Strings;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -231,6 +230,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             return;
         }
 
+        gqlRequest = replaceQuotes(gqlRequest);
+
         restDispatch.execute(gqlService.executeGqlRequest(gqlRequest), new RestCallbackImpl<List<EntityDto>>() {
             @Override
             public void onSuccess(List<EntityDto> entities) {
@@ -360,16 +361,22 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     private void showEntities(List<EntityDto> entities) {
-        String text = "";
+        List<ParsedEntity> parsedEntities = new ArrayList<>();
+
         for (EntityDto entityDto : entities) {
-            text += entityDto.getKey().getKind() + " ";
-            text += entityDto.getKey().getId() + "\n";
+            ParsedEntity parsedEntity = new ParsedEntity(entityDto);
+            parsedEntities.add(parsedEntity);
         }
 
-        Window.alert(text);
+        getView().setData(new Range(0, 25), parsedEntities);
+        getView().setRowCount(parsedEntities.size());
     }
 
     private boolean requestHasNoSelect(String gqlRequest) {
         return !gqlRequest.trim().toUpperCase().startsWith("SELECT");
+    }
+
+    private String replaceQuotes(String gqlRequest) {
+        return gqlRequest.replace("\"", "'");
     }
 }
