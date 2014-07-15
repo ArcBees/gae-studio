@@ -119,6 +119,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         pager.setDisplay(entityTable);
 
         columnCreator.initializeTable(entityTable);
+
+        formQuery.getElement().setPropertyString("placeholder", "(e.g. SELECT * FROM Car WHERE model = 'Honda')");
     }
 
     @Override
@@ -145,6 +147,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @Override
     public void setData(Range range, List<ParsedEntity> parsedEntities) {
         entityTable.setRowData(range.getStart(), parsedEntities);
+    }
+
+    @Override
+    public void setData(List<ParsedEntity> parsedEntities) {
+        setData(DEFAULT_RANGE, parsedEntities);
     }
 
     @Override
