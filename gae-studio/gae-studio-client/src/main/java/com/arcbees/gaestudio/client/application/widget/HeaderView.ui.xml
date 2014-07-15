@@ -5,7 +5,17 @@
     <ui:with field="widgetRes" type="com.arcbees.gaestudio.client.resources.WidgetResources"/>
     <ui:with type="com.arcbees.gaestudio.client.place.NameTokens" field="nameTokens"/>
 
+    <ui:style>
+        .ajax {
+            background-color: greenyellow;
+            height: 20px;
+
+            visibility: hidden;
+        }
+    </ui:style>
+
     <g:HTMLPanel styleName="{widgetRes.header.header}">
+        <div class="{style.ajax}" ui:field="ajaxLoader"/>
         <a ui:field="logoAnchor" href="" class="{widgetRes.header.logo}">
             <g:Image resource="{resources.logo}"/>
         </a>

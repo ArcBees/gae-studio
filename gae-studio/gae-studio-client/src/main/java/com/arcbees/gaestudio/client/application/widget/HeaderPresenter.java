@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.widget;
 
 import com.arcbees.gaestudio.client.application.support.SupportPresenter;
+import com.arcbees.gaestudio.client.application.widget.ajax.LoadingEvent;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -19,13 +20,22 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
-public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> implements HeaderUiHandlers {
+import static com.arcbees.gaestudio.client.application.widget.ajax.LoadingEvent.Action.BEGIN;
+import static com.arcbees.gaestudio.client.application.widget.ajax.LoadingEvent.Action.END;
+
+public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView>
+        implements HeaderUiHandlers, LoadingEvent.LoadingEventHandler {
     interface MyView extends View, HasUiHandlers<HeaderUiHandlers> {
         void setProfilerActive();
+
+        void hideLoadingBar();
+
+        void displayLoadingBar();
     }
 
     private final PlaceManager placeManager;
     private final SupportPresenter supportPresenter;
+    private int loadingEventsAccumulator;
 
     @Inject
     HeaderPresenter(EventBus eventBus,
@@ -46,10 +56,36 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
     }
 
     @Override
+    public void onLoadingEvent(LoadingEvent event) {
+        if (BEGIN.equals(event.getAction())) {
+            loadingEventsAccumulator++;
+        } else if (END.equals(event.getAction())) {
+            loadingEventsAccumulator--;
+        }
+
+        adjustLoadingBar();
+    }
+
+    @Override
+    protected void onBind() {
+        super.onBind();
+
+        addRegisteredHandler(LoadingEvent.getType(), this);
+    }
+
+    @Override
     protected void onReveal() {
         super.onReset();
 
         activateCurrentLinks();
+    }
+
+    private void adjustLoadingBar() {
+        if (loadingEventsAccumulator > 0) {
+            getView().displayLoadingBar();
+        } else {
+            getView().hideLoadingBar();
+        }
     }
 
     private void activateCurrentLinks() {

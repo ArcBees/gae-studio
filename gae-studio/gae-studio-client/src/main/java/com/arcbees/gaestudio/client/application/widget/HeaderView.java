@@ -13,6 +13,8 @@ import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.WidgetResources;
 import com.google.gwt.dom.client.AnchorElement;
+import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -38,6 +40,8 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     AnchorElement logoAnchor;
     @UiField
     Button report;
+    @UiField
+    DivElement ajaxLoader;
 
     private final String activeStyleName;
 
@@ -64,6 +68,16 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     @Override
     public void setProfilerActive() {
         $("." + activeStyleName).removeClass(activeStyleName);
+    }
+
+    @Override
+    public void hideLoadingBar() {
+        ajaxLoader.getStyle().setVisibility(Style.Visibility.HIDDEN);
+    }
+
+    @Override
+    public void displayLoadingBar() {
+        ajaxLoader.getStyle().setVisibility(Style.Visibility.VISIBLE);
     }
 
     @UiHandler("report")

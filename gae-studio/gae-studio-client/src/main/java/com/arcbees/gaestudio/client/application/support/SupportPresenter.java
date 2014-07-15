@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.ws.rs.core.HttpHeaders;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
+import com.arcbees.gaestudio.client.application.widget.ajax.LoadingEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;
@@ -26,6 +27,9 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PopupView;
 import com.gwtplatform.mvp.client.PresenterWidget;
+
+import static com.arcbees.gaestudio.client.application.widget.ajax.LoadingEvent.Action.BEGIN;
+import static com.arcbees.gaestudio.client.application.widget.ajax.LoadingEvent.Action.END;
 
 public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> implements SupportUiHandlers {
     interface MyView extends PopupView, HasUiHandlers<SupportUiHandlers> {
@@ -68,9 +72,11 @@ public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> i
         String requestData = messageRequestMapper.write(MessageRequest.fromSupportMessage(supportMessage));
 
         try {
+            LoadingEvent.fire(this, BEGIN);
             requestBuilder.sendRequest(requestData, new RequestCallback() {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
+                    LoadingEvent.fire(SupportPresenter.this, END);
                     Message message;
 
                     if (response.getStatusCode() == Response.SC_NO_CONTENT) {
@@ -84,12 +90,14 @@ public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> i
 
                 @Override
                 public void onError(Request request, Throwable exception) {
+                    LoadingEvent.fire(SupportPresenter.this, END);
                     Message message = new Message(appConstants.oops(), MessageStyle.ERROR);
 
                     displayMessage(message);
                 }
             });
         } catch (RequestException e) {
+            LoadingEvent.fire(SupportPresenter.this, END);
             Message message = new Message(appConstants.oops(), MessageStyle.ERROR);
 
             displayMessage(message);
