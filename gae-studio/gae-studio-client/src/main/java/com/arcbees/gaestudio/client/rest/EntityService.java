@@ -24,19 +24,11 @@ import com.gwtplatform.dispatch.rest.shared.RestService;
 @Path(EndPoints.ENTITY)
 public interface EntityService extends RestService {
     @GET
-    RestAction<EntityDto> getEntity(@QueryParam(UrlParameters.KIND) String kind,
-                                    @QueryParam(UrlParameters.APPID) String appId,
-                                    @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                                    @QueryParam(UrlParameters.PARENT_ID) String parentId,
-                                    @QueryParam(UrlParameters.PARENT_KIND) String parentKind,
-                                    @QueryParam(UrlParameters.NAME) String entityName,
-                                    @QueryParam(UrlParameters.ID) Long entityId);
+    RestAction<EntityDto> getEntity(@QueryParam(UrlParameters.KEY) String encodedKey);
 
     @PUT
     RestAction<EntityDto> updateEntity(EntityDto entityDto);
 
     @DELETE
-    RestAction<Void> deleteEntity(@QueryParam(UrlParameters.KIND) String kind,
-                                  @QueryParam(UrlParameters.NAME) String entityName,
-                                  @QueryParam(UrlParameters.ID) Long entityId);
+    RestAction<Void> deleteEntity(@QueryParam(UrlParameters.KEY) String encodedKey);
 }

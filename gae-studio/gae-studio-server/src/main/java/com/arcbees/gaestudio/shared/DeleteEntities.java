@@ -17,5 +17,5 @@ public enum DeleteEntities implements Serializable, IsSerializable {
     KIND_NAMESPACE,
     KIND,
     NAMESPACE,
-    ALL
+    SET, ALL
 }

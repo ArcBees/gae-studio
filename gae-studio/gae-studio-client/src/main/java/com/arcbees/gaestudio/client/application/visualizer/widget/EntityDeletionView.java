@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import java.util.Set;
+
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppMessages;
@@ -64,7 +66,10 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
     }
 
     @Override
-    public void displayEntitiesDeletion(DeleteEntities deleteType, String kind, String namespace) {
+    public void displayEntitiesDeletion(DeleteEntities deleteType,
+                                        String kind,
+                                        String namespace,
+                                        Set<ParsedEntity> entities) {
         SafeHtml message = null;
         switch (deleteType) {
             case KIND:
@@ -83,6 +88,9 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
                 } else {
                     message = messages.deleteEntitiesOfKindOfNamespace(kind, namespace);
                 }
+                break;
+            case SET:
+                message = messages.deleteSelectedEntities(entities.size());
                 break;
             case ALL:
                 message = messages.deleteAllEntities();

@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.rest;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,6 +19,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
+import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
@@ -38,7 +40,8 @@ public interface EntitiesService extends RestService {
     @DELETE
     RestAction<Void> deleteAll(@QueryParam(UrlParameters.KIND) String kind,
                                @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                               @QueryParam(UrlParameters.TYPE) DeleteEntities deleteEntities);
+                               @QueryParam(UrlParameters.TYPE) DeleteEntities deleteEntities,
+                               @QueryParam(UrlParameters.KEY) Set<String> encodedKeys);
 
     @GET
     @Path(EndPoints.COUNT)

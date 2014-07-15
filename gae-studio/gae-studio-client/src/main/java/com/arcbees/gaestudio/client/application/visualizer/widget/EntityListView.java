@@ -232,19 +232,19 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void setRowSelected(final String idString) {
+    public void setRowSelected(final String encodedKey) {
         if (!entityTable.getLoadingIndicator().isVisible()) {
             $(entityTable).delay(1, new Function() {
                 @Override
                 public void f() {
-                    doSetRowSelected(idString);
+                    doSetRowSelected(encodedKey);
                 }
             });
         } else {
             final RowCountChangeEvent.Handler handler = new RowCountChangeEvent.Handler() {
                 @Override
                 public void onRowCountChange(RowCountChangeEvent event) {
-                    doSetRowSelected(idString);
+                    doSetRowSelected(encodedKey);
                     firstLoadHandlerRegistration.removeHandler();
                 }
             };
@@ -280,23 +280,14 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         }
     }
 
-    private void doSetRowSelected(String idString) {
+    private void doSetRowSelected(String encodedKey) {
         for (int i = 0; i < entityTable.getVisibleItems().size(); i++) {
             ParsedEntity parsedEntity = entityTable.getVisibleItem(i);
             KeyDto key = parsedEntity.getKey();
-            if (isSameId(idString, key) || idString.equals(key.getName())) {
+            if (key.getEncodedKey().equals(encodedKey)) {
                 selectRow(parsedEntity);
                 return;
             }
-        }
-    }
-
-    private boolean isSameId(String idString, KeyDto key) {
-        try {
-            Long id = Long.valueOf(idString);
-            return key.getId() != 0 && id.equals(key.getId());
-        } catch (NumberFormatException e) {
-            return false;
         }
     }
 

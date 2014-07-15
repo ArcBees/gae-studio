@@ -36,4 +36,6 @@ public interface AppMessages extends Messages {
     String callLocationDetails(String className, String methodNam, String fileName, String lineNumber);
 
     String entitiesMatchRequest(int number);
+
+    SafeHtml deleteSelectedEntities(int count);
 }

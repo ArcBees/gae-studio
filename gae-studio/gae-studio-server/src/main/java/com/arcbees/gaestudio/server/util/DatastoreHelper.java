@@ -43,33 +43,44 @@ public class DatastoreHelper {
 
         String defaultNamespace = NamespaceManager.get();
         NamespaceManager.set(namespaceDto.getNamespace());
+        try {
+            Key key;
+            if (idIsNumeric(keyDto)) {
+                if (parentKeyDto != null) {
+                    Key parentKey = KeyFactory.createKey(parentKeyDto.getKind(), parentKeyDto.getId());
 
-        Key key;
-
-        if (idIsNumeric(keyDto)) {
-            if (parentKeyDto != null) {
-                Key parentKey = KeyFactory.createKey(parentKeyDto.getKind(), parentKeyDto.getId());
-
-                key = KeyFactory.createKey(parentKey, keyDto.getKind(), keyDto.getId());
+                    key = KeyFactory.createKey(parentKey, keyDto.getKind(), keyDto.getId());
+                } else {
+                    key = KeyFactory.createKey(keyDto.getKind(), keyDto.getId());
+                }
             } else {
-                key = KeyFactory.createKey(keyDto.getKind(), keyDto.getId());
-            }
-        } else {
-            if (parentKeyDto != null) {
-                Key parentKey = KeyFactory.createKey(parentKeyDto.getKind(), parentKeyDto.getName());
+                if (parentKeyDto != null) {
+                    Key parentKey = KeyFactory.createKey(parentKeyDto.getKind(), parentKeyDto.getName());
 
-                key = KeyFactory.createKey(parentKey, keyDto.getKind(), keyDto.getName());
-            } else {
-                key = KeyFactory.createKey(keyDto.getKind(), keyDto.getName());
+                    key = KeyFactory.createKey(parentKey, keyDto.getKind(), keyDto.getName());
+                } else {
+                    key = KeyFactory.createKey(keyDto.getKind(), keyDto.getName());
+                }
             }
+
+            DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+
+            return datastoreService.get(key);
+        } finally {
+            NamespaceManager.set(defaultNamespace);
         }
+    }
 
-        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-        Entity entity = datastoreService.get(key);
+    public Entity get(Key key) throws EntityNotFoundException {
+        String defaultNamespace = NamespaceManager.get();
+        NamespaceManager.set(key.getNamespace());
+        try {
+            DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
 
-        NamespaceManager.set(defaultNamespace);
-
-        return entity;
+            return datastoreService.get(key);
+        } finally {
+            NamespaceManager.set(defaultNamespace);
+        }
     }
 
     public void delete(Key key, String namespace) {
