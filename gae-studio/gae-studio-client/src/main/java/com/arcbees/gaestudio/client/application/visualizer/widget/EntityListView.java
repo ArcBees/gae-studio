@@ -157,11 +157,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void addOrReplaceEntity(EntityDto entityDTO) {
-        int rowIndex = getRowIndex(entityDTO);
+    public void addOrReplaceEntity(EntityDto entityDto) {
+        int rowIndex = getRowIndex(entityDto);
 
         if (rowIndex == -1) {
-            insertNewEntityAtTheTopOfTheCurrentPage(entityDTO);
+            insertNewEntityAtTheTopOfTheCurrentPage(entityDto);
         } else {
             redrawTable();
         }
