@@ -120,7 +120,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         columnCreator.initializeTable(entityTable);
 
-        formQuery.getElement().setPropertyString("placeholder", "(e.g. SELECT * FROM Car WHERE make = 'Honda')");
+        formQuery.getElement().setPropertyString("placeholder", "(e.g. SELECT * FROM Car WHERE model = 'Honda')");
     }
 
     @Override
