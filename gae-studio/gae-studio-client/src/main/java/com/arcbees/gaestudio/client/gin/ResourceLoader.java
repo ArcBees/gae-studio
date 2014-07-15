@@ -9,7 +9,16 @@
 
 package com.arcbees.gaestudio.client.gin;
 
-import com.arcbees.gaestudio.client.resources.*;
+import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.client.resources.CellTableResource;
+import com.arcbees.gaestudio.client.resources.PagerResources;
+import com.arcbees.gaestudio.client.resources.AuthResources;
+import com.arcbees.gaestudio.client.resources.EntityResources;
+import com.arcbees.gaestudio.client.resources.ProfilerResources;
+import com.arcbees.gaestudio.client.resources.SupportResources;
+import com.arcbees.gaestudio.client.resources.VisualizerResources;
+import com.arcbees.gaestudio.client.resources.MessageResources;
+import com.arcbees.gaestudio.client.resources.WidgetResources;
 import com.google.inject.Inject;
 
 public class ResourceLoader {
