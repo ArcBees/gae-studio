@@ -16,7 +16,6 @@ import javax.validation.ConstraintViolation;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.query.client.GQuery;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.HTML;
@@ -47,10 +46,6 @@ public class ViolationsPanel implements IsWidget, HasVisibility {
         for (ConstraintViolation<?> violation : violations) {
             String message = violation.getMessage();
             messages.add(message);
-
-            GQuery.console.info(violation.getInvalidValue());
-            GQuery.console.info(violation.getPropertyPath());
-            GQuery.console.info(violation.getMessageTemplate());
         }
 
         String html = "<p>" + Joiner.on("</p><p>").join(messages) + "</p>";

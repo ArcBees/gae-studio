@@ -26,8 +26,6 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.http.client.URL;
-import com.google.gwt.query.client.GQuery;
-import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PopupView;
@@ -74,7 +72,6 @@ public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> i
 
     @Override
     public void send(SupportMessage supportMessage) {
-        GQuery.console.info(supportMessage);
         Set<ConstraintViolation<SupportMessage>> constraintViolations = validator.validate(supportMessage);
 
         if (constraintViolations.isEmpty()) {
