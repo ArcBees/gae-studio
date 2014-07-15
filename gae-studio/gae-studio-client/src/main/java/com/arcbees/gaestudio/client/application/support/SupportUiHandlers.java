@@ -7,14 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
+package com.arcbees.gaestudio.client.application.support;
 
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.gwtplatform.mvp.client.UiHandlers;
 
-interface NamespacesListUiHandlers extends UiHandlers {
-    void deleteAllFromNamespace(AppIdNamespaceDto namespaceDto);
-
-    void dropdownValueChanged(ValueChangeEvent<AppIdNamespaceDto> event);
+public interface SupportUiHandlers extends UiHandlers {
+    void send(SupportMessage supportMessage);
 }

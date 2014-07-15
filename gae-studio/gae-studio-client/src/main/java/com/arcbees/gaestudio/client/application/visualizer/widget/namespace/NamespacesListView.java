@@ -16,9 +16,11 @@ import com.arcbees.gaestudio.client.application.widget.dropdown.DropdownFactory;
 import com.arcbees.gaestudio.client.resources.NamespaceDropdownResources;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -65,5 +67,10 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
         for (AppIdNamespaceDto namespace : namespaces) {
             dropdown.addValue(namespace);
         }
+    }
+
+    @UiHandler("dropdown")
+    void onDropdown(ValueChangeEvent<AppIdNamespaceDto> event) {
+        getUiHandlers().dropdownValueChanged(event);
     }
 }

@@ -13,11 +13,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.chosen.client.ChosenOptions;
 import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.gwt.ChosenListBox;
-import com.arcbees.gaestudio.client.resources.ChosenResources;
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.client.resources.ChosenResources;
 import com.arcbees.gaestudio.client.resources.VisualizerResources;
 import com.arcbees.gaestudio.client.ui.PanelToggle;
 import com.arcbees.gaestudio.client.ui.PanelToggleFactory;
@@ -38,6 +39,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
+import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implements SidebarPresenter.MyView,
@@ -81,6 +83,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private final String revealOverlayStyleName;
     private final String revealUnderOverlayStyleName;
     private final String entityDetailPanelVisibilityStyleName;
+    private final UniversalAnalytics universalAnalytics;
 
     private Widget selectedKind;
     private String currentKind;
@@ -93,11 +96,13 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 EmptyKindsTemplate emptyKindsTemplate,
                 AppResources appResources,
                 VisualizerResources visualizerResources,
-                PanelToggleFactory panelToggleFactory) {
+                PanelToggleFactory panelToggleFactory,
+                final UniversalAnalytics universalAnalytics) {
         this.kindTemplate = kindTemplate;
         this.emptyKindsTemplate = emptyKindsTemplate;
         this.appResources = appResources;
         this.visualizerResources = visualizerResources;
+        this.universalAnalytics = universalAnalytics;
         this.closeToggle = panelToggleFactory.create(this);
 
         ChosenOptions chosenOptions = new ChosenOptions();
@@ -124,6 +129,9 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 } else {
                     getUiHandlers().importKind();
                 }
+
+                universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                        .eventLabel("Visualizer -> Kinds Sidebar -> Import Button");
             }
         });
 
@@ -135,6 +143,9 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 } else {
                     getUiHandlers().exportCurrentKind();
                 }
+
+                universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                        .eventLabel("Visualizer -> Kinds Sidebar -> Export Button");
             }
         });
 
@@ -148,6 +159,9 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 } else {
                     setImportEnabled(true);
                 }
+
+                universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                        .eventLabel("Visualizer -> Kinds Sidebar -> Chosen format: " + currentFormat);
             }
         });
     }
@@ -196,7 +210,11 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         boolean closing = closeToggle.isOpen();
         if (closing) {
             selectedKind = $("." + appResources.styles().kindListElementSelected()).widget();
+            universalAnalytics.sendEvent(UI_ELEMENTS, "close").eventLabel("Visualizer -> Kinds Sidebar");
+        } else {
+            universalAnalytics.sendEvent(UI_ELEMENTS, "open").eventLabel("Visualizer -> Kinds Sidebar");
         }
+
         $(selectedKind).toggleClass(appResources.styles().kindListElementSelected(), !closing);
         $(selectedKind).toggleClass(appResources.styles().kindListElementSelectedHidden(), closing);
 
@@ -234,6 +252,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
             @Override
             public void f(Element e) {
                 onKindSelected(e);
+
+                universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Sidebar -> Kind Name");
             }
         });
 

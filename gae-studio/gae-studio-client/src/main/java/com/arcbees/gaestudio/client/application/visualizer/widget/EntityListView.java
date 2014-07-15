@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
@@ -19,7 +20,6 @@ import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.client.resources.VisualizerResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -43,6 +43,8 @@ import com.google.gwt.view.client.RowCountChangeEvent;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
+import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
+import static com.google.gwt.dom.client.BrowserEvents.CLICK;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
@@ -79,6 +81,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     private final String pagerButtons;
     private final String firstTableRow;
     private final ParsedEntityColumnCreator columnCreator;
+    private final UniversalAnalytics universalAnalytics;
 
     private HandlerRegistration firstLoadHandlerRegistration;
     private boolean gwtBound = false;
@@ -89,10 +92,12 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                    PagerResources pagerResources,
                    AppResources appResources,
                    VisualizerResources visualizerResources,
-                   ParsedEntityColumnCreator columnCreator) {
+                   ParsedEntityColumnCreator columnCreator,
+                   UniversalAnalytics universalAnalytics) {
         this.columnCreator = columnCreator;
         this.appResources = appResources;
         this.visualizerResources = visualizerResources;
+        this.universalAnalytics = universalAnalytics;
 
         pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
 
@@ -114,6 +119,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         pager.setDisplay(entityTable);
 
         columnCreator.initializeTable(entityTable);
+
+        formQuery.getElement().setPropertyString("placeholder", "(e.g. SELECT * FROM Car WHERE model = 'Honda')");
     }
 
     @Override
@@ -142,6 +149,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         List<ParsedEntity> prettyEntities = prettifyEntities(parsedEntities);
 
         entityTable.setRowData(range.getStart(), prettyEntities);
+    }
+
+    @Override
+    public void setData(List<ParsedEntity> parsedEntities) {
+        setData(DEFAULT_RANGE, parsedEntities);
     }
 
     @Override
@@ -196,7 +208,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         AppResources.Styles styles = appResources.styles();
         $(deselect).removeClass(styles.deselect());
         $(deselect).addClass(styles.deselectDisabled());
-        $(deselect).unbind(BrowserEvents.CLICK, unlock);
 
         getUiHandlers().onRowUnlock();
     }
@@ -225,6 +236,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiHandler("runQueryButton")
     public void runGqlQuery(ClickEvent event) {
         getUiHandlers().runGqlQuery(formQuery.getText());
+
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> List View -> Run GQL Query");
     }
 
     private void doSetRowSelected(String idString) {
@@ -300,7 +313,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     private void bindGwtQuery() {
-        $(firstTableRow).delegate("tr", BrowserEvents.CLICK, new Function() {
+        $(firstTableRow).delegate("tr", CLICK, new Function() {
             @Override
             public void f(Element e) {
                 if (!$(e).hasClass(lockedRowStyleName)) {
@@ -319,6 +332,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             public void f() {
                 getUiHandlers().refresh();
                 unlockRows();
+                universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> List View -> Refresh");
             }
         });
 
@@ -353,12 +367,21 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         AppResources.Styles styles = appResources.styles();
         $(deselect).addClass(styles.deselect());
         $(deselect).removeClass(styles.deselectDisabled());
-        $(deselect).click(unlock);
+        $(deselect).unbind(CLICK);
+        $(deselect).click(unlock, new Function() {
+            @Override
+            public void f() {
+                universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                        .eventLabel("Visualizer -> List View -> Deselect Entity");
+            }
+        });
 
         getUiHandlers().onRowLock();
 
         ParsedEntity parsedEntity = getParsedEntityForRow(e);
         getUiHandlers().onEntitySelected(parsedEntity);
+
+        universalAnalytics.sendEvent(UI_ELEMENTS, "select").eventLabel("Visualizer -> List View -> Entity Row");
     }
 
     private void toggleGQL() {
@@ -367,8 +390,13 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         if ($(byGql).hasClass(styles.open())) {
             $(formQueryHolder).slideDown(100);
+            universalAnalytics.sendEvent(UI_ELEMENTS, "open")
+                    .eventLabel("Visualizer -> List View -> GQL Query Textarea");
         } else {
             $(formQueryHolder).slideUp(100);
+
+            universalAnalytics.sendEvent(UI_ELEMENTS, "close")
+                    .eventLabel("Visualizer -> List View -> GQL Query Textarea");
         }
     }
 
