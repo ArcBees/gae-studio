@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.util;
 
 import javax.validation.Validator;
 
+import com.arcbees.gaestudio.client.application.support.SupportMessage;
 import com.arcbees.gaestudio.shared.auth.User;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.validation.client.AbstractGwtValidatorFactory;
@@ -18,7 +19,7 @@ import com.google.gwt.validation.client.GwtValidation;
 import com.google.gwt.validation.client.impl.AbstractGwtValidator;
 
 public final class ValidatorFactory extends AbstractGwtValidatorFactory {
-    @GwtValidation({User.class})
+    @GwtValidation({User.class, SupportMessage.class})
     public interface GwtValidator extends Validator {
     }
 
