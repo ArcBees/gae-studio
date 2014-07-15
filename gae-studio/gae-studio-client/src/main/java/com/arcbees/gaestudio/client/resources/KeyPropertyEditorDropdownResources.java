@@ -25,6 +25,6 @@ public interface KeyPropertyEditorDropdownResources extends Dropdown.Resources {
     ImageResource dropDownArrowUp();
 
     @Override
-    @Source({"css/colors.css", "css/keyPropertyEditorDropdown.css"})
+    @Source({"css/colors.gss", "css/keyPropertyEditorDropdown.css"})
     MyDropdownStyle styles();
 }

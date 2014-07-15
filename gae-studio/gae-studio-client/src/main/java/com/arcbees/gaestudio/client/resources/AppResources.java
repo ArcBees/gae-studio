@@ -162,7 +162,7 @@ public interface AppResources extends ClientBundle {
         String version();
     }
 
-    @Source({"css/colors.css", "css/mixins.css", "css/styles.css"})
+    @Source({"css/colors.gss", "css/mixins.gss", "css/styles.gss"})
     public Styles styles();
 
     @Source("images/create.png")
