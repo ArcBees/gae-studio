@@ -139,7 +139,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @Override
     public void setData(Range range, List<ParsedEntity> parsedEntities) {
-        entityTable.setRowData(range.getStart(), parsedEntities);
+        List<ParsedEntity> prettyEntities = prettifyEntities(parsedEntities);
+
+        entityTable.setRowData(range.getStart(), prettyEntities);
     }
 
     @Override
@@ -368,5 +370,16 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         } else {
             $(formQueryHolder).slideUp(100);
         }
+    }
+
+    private List<ParsedEntity> prettifyEntities(List<ParsedEntity> parsedEntities) {
+        List<ParsedEntity> prettyEntities = parsedEntities;
+
+        for(ParsedEntity parsedEntity : parsedEntities) {
+            String entityJson = parsedEntity.getPropertyMap().toString();
+            System.out.println(entityJson);
+        }
+
+        return prettyEntities;
     }
 }
