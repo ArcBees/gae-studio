@@ -401,6 +401,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     private List<ParsedEntity> prettifyEntities(List<ParsedEntity> parsedEntities) {
+        //TODO : Make entities look good (pretty keys and show unindexed entities)
         List<ParsedEntity> prettyEntities = parsedEntities;
 
         for(ParsedEntity parsedEntity : parsedEntities) {
