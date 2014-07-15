@@ -35,6 +35,7 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView>
 
     private final PlaceManager placeManager;
     private final SupportPresenter supportPresenter;
+
     private int loadingEventsAccumulator;
 
     @Inject
