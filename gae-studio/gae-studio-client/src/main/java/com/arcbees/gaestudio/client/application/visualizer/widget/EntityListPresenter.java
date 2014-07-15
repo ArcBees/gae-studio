@@ -158,14 +158,14 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void onExport(Collection<ParsedEntity> selectedEntities) {
-        Collection<String> entitiesIds = Collections2.transform(selectedEntities, new Function<ParsedEntity, String>() {
+        Collection<String> entitiesEncodedKeys = Collections2.transform(selectedEntities, new Function<ParsedEntity, String>() {
             @Override
             public String apply(ParsedEntity parsedEntity) {
-                return parsedEntity.getKey().getId().toString();
+                return parsedEntity.getKey().getEncodedString();
             }
         });
 
-        String url = exportService.getExportSelectedEntities(currentKind, entitiesIds);
+        String url = exportService.getExportSelectedEntities(currentKind, entitiesEncodedKeys);
     }
 
     public void loadKind(String kind) {

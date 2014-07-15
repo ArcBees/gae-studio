@@ -39,8 +39,9 @@ public class ExportCsvResource {
 
     @GET
     public Response exportKind(@QueryParam(UrlParameters.KIND) String kind,
-                               @QueryParam(UrlParameters.ID) Long[] ids) throws JSONException {
+                               @QueryParam(UrlParameters.KEY) String[] encodedKeys) throws JSONException {
         String data = exportService.exportKindToCsv(kind);
+        String data2 = exportService.exportEncodedKeysToCsv(encodedKeys);
 
         return Response.ok(data)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + kind + ".csv\"")

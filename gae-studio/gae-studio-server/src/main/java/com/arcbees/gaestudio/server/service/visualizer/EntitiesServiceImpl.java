@@ -55,6 +55,7 @@ public class EntitiesServiceImpl implements EntitiesService {
         }
 
         Query query = new Query(kind);
+        new Query().setFilter(new Query.FilterPredicate("Car", Query.FilterOperator.EQUAL, 1l));
 
         return datastoreHelper.queryOnAllNamespaces(query, fetchOptions);
     }

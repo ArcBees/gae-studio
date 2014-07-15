@@ -15,9 +15,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class KeyDto extends ParentKeyDto {
     private ParentKeyDto parentKey;
     private AppIdNamespaceDto appIdNamespace;
+    private final String encodedString;
 
     @SuppressWarnings("unused")
     protected KeyDto() {
+        encodedString = "";
     }
 
     @JsonCreator
@@ -25,11 +27,13 @@ public class KeyDto extends ParentKeyDto {
                   @JsonProperty("id") Long id,
                   @JsonProperty("name") String name,
                   @JsonProperty("parentKey") ParentKeyDto parentKey,
-                  @JsonProperty("appIdNamespace") AppIdNamespaceDto appIdNamespace) {
+                  @JsonProperty("appIdNamespace") AppIdNamespaceDto appIdNamespace,
+                  @JsonProperty("encodedString") String encodedString) {
         super(kind, id, name);
 
         this.parentKey = parentKey;
         this.appIdNamespace = appIdNamespace;
+        this.encodedString = encodedString;
     }
 
     public KeyDto(String kind,
@@ -40,6 +44,7 @@ public class KeyDto extends ParentKeyDto {
 
         this.parentKey = parentKey;
         this.appIdNamespace = appIdNamespace;
+        this.encodedString = "";
     }
 
     public KeyDto(String kind,
@@ -50,6 +55,7 @@ public class KeyDto extends ParentKeyDto {
 
         this.parentKey = parentKey;
         this.appIdNamespace = appIdNamespace;
+        this.encodedString = "";
     }
 
     public ParentKeyDto getParentKey() {
@@ -66,5 +72,9 @@ public class KeyDto extends ParentKeyDto {
 
     public void setAppIdNamespace(AppIdNamespaceDto appIdNamespace) {
         this.appIdNamespace = appIdNamespace;
+    }
+
+    public String getEncodedString() {
+        return encodedString;
     }
 }

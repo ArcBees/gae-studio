@@ -44,4 +44,9 @@ public class ExportServiceImpl implements ExportService {
 
         return jsonToCsvConverter.convert(jsonData);
     }
+
+    @Override
+    public String exportEncodedKeysToCsv(String[] encodedKeys) {
+        return null;
+    }
 }

@@ -29,6 +29,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.api.datastore.IMHandle;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Link;
 import com.google.appengine.api.datastore.PhoneNumber;
 import com.google.appengine.api.datastore.PostalAddress;
@@ -118,7 +119,12 @@ public class EntityMapper {
     }
 
     public KeyDto mapKeyToKeyDto(Key dbKey) {
-        return new KeyDto(dbKey.getKind(), dbKey.getId(), dbKey.getName(), mapParentKey(dbKey.getParent()), mapNamespace(dbKey));
+        return new KeyDto(dbKey.getKind(),
+                dbKey.getId(),
+                dbKey.getName(),
+                mapParentKey(dbKey.getParent()),
+                mapNamespace(dbKey),
+                KeyFactory.keyToString(dbKey));
     }
 
     private ParentKeyDto mapParentKey(Key dbParentKey) {

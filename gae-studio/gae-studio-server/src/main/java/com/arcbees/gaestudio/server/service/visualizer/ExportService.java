@@ -15,4 +15,6 @@ public interface ExportService {
     String exportKindToJson(String kind);
 
     String exportKindToCsv(String kind) throws JSONException;
+
+    String exportEncodedKeysToCsv(String[] encodedKeys);
 }
