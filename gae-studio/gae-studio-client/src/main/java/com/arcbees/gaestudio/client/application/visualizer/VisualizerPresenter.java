@@ -19,6 +19,7 @@ import com.arcbees.gaestudio.client.application.profiler.widget.ToolbarPresenter
 import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
+import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntityEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EditEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSelectedEvent;
@@ -32,11 +33,12 @@ import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarPresen
 import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListPresenter;
 import com.arcbees.gaestudio.client.debug.DebugIds;
 import com.arcbees.gaestudio.client.place.NameTokens;
-import com.arcbees.gaestudio.client.place.ParameterTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.shared.GwtEvent;
@@ -51,14 +53,6 @@ import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
-
-import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.NAME;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
 public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler,
@@ -139,7 +133,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     public void setStateFromPlaceRequest(SetStateFromPlaceRequestEvent event) {
         PlaceRequest placeRequest = event.getPlaceRequest();
 
-        String kindFromPlaceRequest = placeRequest.getParameter(ParameterTokens.KIND, "");
+        String kindFromPlaceRequest = placeRequest.getParameter(UrlParameters.KIND, "");
         if (!kindFromPlaceRequest.equals(currentKind)) {
             currentKind = kindFromPlaceRequest;
             updateEntityListPresenter();
@@ -248,6 +242,8 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     private void delete() {
         if (currentParsedEntity != null) {
             DeleteEntityEvent.fire(this, currentParsedEntity);
+        } else if (!currentParsedEntities.isEmpty()) {
+            DeleteEntitiesEvent.fire(this, DeleteEntities.SET, currentParsedEntities);
         }
     }
 
@@ -268,16 +264,8 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
             KeyDto keyDto = entityDto.getKey();
 
             PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.editEntity)
-                    .with(KIND, keyDto.getKind())
-                    .with(ID, Long.toString(keyDto.getId()))
-                    .with(NAME, keyDto.getName())
-                    .with(NAMESPACE, keyDto.getAppIdNamespace().getNamespace())
-                    .with(APP_ID, keyDto.getAppIdNamespace().getAppId());
-
-            if (keyDto.getParentKey() != null) {
-                builder = builder.with(PARENT_KIND, keyDto.getParentKey().getKind())
-                        .with(PARENT_ID, Long.toString(keyDto.getParentKey().getId()));
-            }
+                    .with(UrlParameters.KIND, keyDto.getKind())
+                    .with(UrlParameters.KEY, keyDto.getEncodedKey());
 
             placeManager.revealPlace(builder.build());
         } else if (currentParsedEntities != null && !currentParsedEntities.isEmpty()) {

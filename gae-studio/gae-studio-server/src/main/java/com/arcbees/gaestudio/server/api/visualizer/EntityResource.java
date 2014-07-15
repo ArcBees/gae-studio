@@ -49,26 +49,13 @@ public class EntityResource {
     }
 
     @GET
-    public Response getEntity(@QueryParam(UrlParameters.NAMESPACE) String namespace,
-                              @QueryParam(UrlParameters.APPID) String appId,
-                              @QueryParam(UrlParameters.KIND) String kind,
-                              @QueryParam(UrlParameters.PARENT_ID) String parentId,
-                              @QueryParam(UrlParameters.PARENT_KIND) String parentKind,
-                              @QueryParam(UrlParameters.NAME) String entityName,
-                              @QueryParam(UrlParameters.ID) Long entityId)
-            throws EntityNotFoundException {
+    public Response getEntity(@QueryParam(UrlParameters.KEY) String encodedKey) throws EntityNotFoundException {
         ResponseBuilder responseBuilder;
 
-        if (isBadRequest(kind, entityName, entityId)) {
+        if (isBadRequest(encodedKey)) {
             responseBuilder = Response.status(Status.BAD_REQUEST);
         } else {
-            Entity entity;
-
-            if (entityId != null && entityId != 0) {
-                entity = entityService.getEntity(entityId, namespace, appId, kind, parentId, parentKind);
-            } else {
-                entity = entityService.getEntity(entityName, namespace, appId, kind, parentId, parentKind);
-            }
+            Entity entity = entityService.getEntity(encodedKey);
 
             responseBuilder = buildResponseFromEntity(entity);
         }
@@ -93,21 +80,15 @@ public class EntityResource {
     }
 
     @DELETE
-    public Response deleteEntity(@QueryParam(UrlParameters.KIND) String kind,
-                                 @QueryParam(UrlParameters.NAME) String entityName,
-                                 @QueryParam(UrlParameters.ID) Long entityId) {
+    public Response deleteEntity(@QueryParam(UrlParameters.KEY) String encodedKey) {
         AppEngineHelper.disableApiHooks();
         ResponseBuilder responseBuilder = Response.noContent();
         Key key;
 
-        if (isBadRequest(kind, entityName, entityId)) {
+        if (isBadRequest(encodedKey)) {
             responseBuilder = Response.status(Status.BAD_REQUEST);
         } else {
-            if (entityId != null) {
-                key = KeyFactory.createKey(kind, entityId);
-            } else {
-                key = KeyFactory.createKey(kind, entityName);
-            }
+            key = KeyFactory.stringToKey(encodedKey);
 
             entityService.deleteEntity(key);
         }
@@ -128,15 +109,7 @@ public class EntityResource {
         return responseBuilder;
     }
 
-    private boolean isBadRequest(String kind, String entityName, Long entityId) {
-        return kind == null || nameParameterIsPresent(entityName) && idParameterIsPresent(entityId);
-    }
-
-    private boolean nameParameterIsPresent(String entityName) {
-        return !Strings.isNullOrEmpty(entityName);
-    }
-
-    private boolean idParameterIsPresent(Long entityId) {
-        return entityId != null && entityId != 0;
+    private boolean isBadRequest(String encodedKey) {
+        return Strings.isNullOrEmpty(encodedKey);
     }
 }

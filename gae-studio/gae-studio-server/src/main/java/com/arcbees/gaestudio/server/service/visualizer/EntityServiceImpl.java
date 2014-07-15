@@ -21,6 +21,7 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.common.base.Strings;
 
 public class EntityServiceImpl implements EntityService {
@@ -32,49 +33,12 @@ public class EntityServiceImpl implements EntityService {
     }
 
     @Override
-    public Entity getEntity(Long entityId,
-                            String namespace,
-                            String appId,
-                            String kind,
-                            String parentId,
-                            String parentKind) throws EntityNotFoundException {
+    public Entity getEntity(String encodedKey) throws EntityNotFoundException {
         AppEngineHelper.disableApiHooks();
 
-        Entity entity;
-        ParentKeyDto parentKeyDto = null;
+        Key key = KeyFactory.stringToKey(encodedKey);
 
-        if (!Strings.isNullOrEmpty(parentId) && !Strings.isNullOrEmpty(parentKind)) {
-            parentKeyDto = new ParentKeyDto(parentKind, Long.valueOf(parentId));
-        }
-
-        KeyDto keyDto = new KeyDto(kind, entityId, parentKeyDto, new AppIdNamespaceDto(appId, namespace));
-
-        entity = datastoreHelper.get(keyDto);
-
-        return entity;
-    }
-
-    @Override
-    public Entity getEntity(String entityName,
-                            String namespace,
-                            String appId,
-                            String kind,
-                            String parentId,
-                            String parentKind) throws EntityNotFoundException {
-        AppEngineHelper.disableApiHooks();
-
-        Entity entity;
-        ParentKeyDto parentKeyDto = null;
-
-        if (!Strings.isNullOrEmpty(parentId) && !Strings.isNullOrEmpty(parentKind)) {
-            parentKeyDto = new ParentKeyDto(parentKind, parentId);
-        }
-
-        KeyDto keyDto = new KeyDto(kind, entityName, parentKeyDto, new AppIdNamespaceDto(appId, namespace));
-
-        entity = datastoreHelper.get(keyDto);
-
-        return entity;
+        return datastoreHelper.get(key);
     }
 
     @Override
