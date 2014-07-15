@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
@@ -30,6 +31,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.Range;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
+import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements EntityPresenter.MyView {
@@ -47,6 +49,7 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
     private final KeyValuePairBuilder keyValuePairBuilder;
     private final int pageSize = 15;
     private final CellTableResource cellTableResource;
+    private final UniversalAnalytics universalAnalytics;
 
     private CellTable<KeyValuePair> table;
     private boolean isFullscreen;
@@ -55,10 +58,12 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
     EntityView(Binder binder,
                AppResources appResources,
                KeyValuePairBuilder keyValuePairBuilder,
-               CellTableResource cellTableResource) {
+               CellTableResource cellTableResource,
+               UniversalAnalytics universalAnalytics) {
         this.appResources = appResources;
         this.keyValuePairBuilder = keyValuePairBuilder;
         this.cellTableResource = cellTableResource;
+        this.universalAnalytics = universalAnalytics;
 
         initWidget(binder.createAndBindUi(this));
 
@@ -103,6 +108,8 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
     private void deactivateFullScreenMode() {
         getUiHandlers().deactivateFullScreen();
         resetFullScreen();
+
+        universalAnalytics.sendEvent(UI_ELEMENTS, "close").eventLabel("Visualizer -> Entity Details -> Fullscreen");
     }
 
     private void activateFullScreenMode() {
@@ -110,6 +117,8 @@ public class EntityView extends ViewWithUiHandlers<EntityUiHandlers> implements 
         isFullscreen = true;
         $(fullscreen).removeClass(appResources.styles().expand());
         $(fullscreen).addClass(appResources.styles().collapse());
+
+        universalAnalytics.sendEvent(UI_ELEMENTS, "open").eventLabel("Visualizer -> Entity Details -> Fullscreen");
     }
 
     private void initTable() {

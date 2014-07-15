@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
+ * This source code, and resulting software, is the confidential and proprietary information
+ * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
+ * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
+ * shall use it only in accordance with the terms and conditions of any and all license
+ * agreements you have entered into with The Company.
+ */
+
 // $ANTLR 3.4 GQL.g 2014-07-02 15:17:15
 
   package com.arcbees.gaestudio.server.util;
@@ -356,8 +365,8 @@ public TreeAdaptor getTreeAdaptor() {
             root_0 = (Object)adaptor.nil();
 
 
-            SELECT7=(Token)match(input,SELECT,FOLLOW_SELECT_in_select_clause122); 
-            SELECT7_tree = 
+            SELECT7=(Token)match(input,SELECT,FOLLOW_SELECT_in_select_clause122);
+            SELECT7_tree =
             (Object)adaptor.create(SELECT7)
             ;
             adaptor.addChild(root_0, SELECT7_tree);
@@ -393,8 +402,8 @@ public TreeAdaptor getTreeAdaptor() {
                 case 1 :
                     // GQL.g:47:4: '*'
                     {
-                    char_literal8=(Token)match(input,58,FOLLOW_58_in_select_clause127); 
-                    char_literal8_tree = 
+                    char_literal8=(Token)match(input,58,FOLLOW_58_in_select_clause127);
+                    char_literal8_tree =
                     (Object)adaptor.create(char_literal8)
                     ;
                     adaptor.addChild(root_0, char_literal8_tree);
@@ -407,8 +416,8 @@ public TreeAdaptor getTreeAdaptor() {
                 case 2 :
                     // GQL.g:48:5: '__key__'
                     {
-                    string_literal9=(Token)match(input,66,FOLLOW_66_in_select_clause135); 
-                    string_literal9_tree = 
+                    string_literal9=(Token)match(input,66,FOLLOW_66_in_select_clause135);
+                    string_literal9_tree =
                     (Object)adaptor.create(string_literal9)
                     ;
                     adaptor.addChild(root_0, string_literal9_tree);
@@ -424,8 +433,8 @@ public TreeAdaptor getTreeAdaptor() {
                     // GQL.g:49:5: (i1= IDENTITY )
                     // GQL.g:49:6: i1= IDENTITY
                     {
-                    i1=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_select_clause146); 
-                    i1_tree = 
+                    i1=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_select_clause146);
+                    i1_tree =
                     (Object)adaptor.create(i1)
                     ;
                     adaptor.addChild(root_0, i1_tree);
@@ -451,15 +460,15 @@ public TreeAdaptor getTreeAdaptor() {
                     	case 1 :
                     	    // GQL.g:49:76: ',' i2= IDENTITY
                     	    {
-                    	    char_literal10=(Token)match(input,59,FOLLOW_59_in_select_clause152); 
-                    	    char_literal10_tree = 
+                    	    char_literal10=(Token)match(input,59,FOLLOW_59_in_select_clause152);
+                    	    char_literal10_tree =
                     	    (Object)adaptor.create(char_literal10)
                     	    ;
                     	    adaptor.addChild(root_0, char_literal10_tree);
 
 
-                    	    i2=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_select_clause156); 
-                    	    i2_tree = 
+                    	    i2=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_select_clause156);
+                    	    i2_tree =
                     	    (Object)adaptor.create(i2)
                     	    ;
                     	    adaptor.addChild(root_0, i2_tree);
@@ -535,15 +544,15 @@ public TreeAdaptor getTreeAdaptor() {
             root_0 = (Object)adaptor.nil();
 
 
-            FROM11=(Token)match(input,FROM,FOLLOW_FROM_in_from_clause178); 
-            FROM11_tree = 
+            FROM11=(Token)match(input,FROM,FOLLOW_FROM_in_from_clause178);
+            FROM11_tree =
             (Object)adaptor.create(FROM11)
             ;
             adaptor.addChild(root_0, FROM11_tree);
 
 
-            IDENTITY12=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_from_clause180); 
-            IDENTITY12_tree = 
+            IDENTITY12=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_from_clause180);
+            IDENTITY12_tree =
             (Object)adaptor.create(IDENTITY12)
             ;
             adaptor.addChild(root_0, IDENTITY12_tree);
@@ -614,8 +623,8 @@ public TreeAdaptor getTreeAdaptor() {
 
             retval.r = new Where();
 
-            WHERE13=(Token)match(input,WHERE,FOLLOW_WHERE_in_where_clause201); 
-            WHERE13_tree = 
+            WHERE13=(Token)match(input,WHERE,FOLLOW_WHERE_in_where_clause201);
+            WHERE13_tree =
             (Object)adaptor.create(WHERE13)
             ;
             adaptor.addChild(root_0, WHERE13_tree);
@@ -686,8 +695,8 @@ public TreeAdaptor getTreeAdaptor() {
             	case 1 :
             	    // GQL.g:63:6: AND (c2= condition |a2= ancestorCondition )
             	    {
-            	    AND14=(Token)match(input,AND,FOLLOW_AND_in_where_clause224); 
-            	    AND14_tree = 
+            	    AND14=(Token)match(input,AND,FOLLOW_AND_in_where_clause224);
+            	    AND14_tree =
             	    (Object)adaptor.create(AND14)
             	    ;
             	    adaptor.addChild(root_0, AND14_tree);
@@ -821,22 +830,22 @@ public TreeAdaptor getTreeAdaptor() {
 
             retval.r = new OrderBy();
 
-            ORDER15=(Token)match(input,ORDER,FOLLOW_ORDER_in_orderby_clause263); 
-            ORDER15_tree = 
+            ORDER15=(Token)match(input,ORDER,FOLLOW_ORDER_in_orderby_clause263);
+            ORDER15_tree =
             (Object)adaptor.create(ORDER15)
             ;
             adaptor.addChild(root_0, ORDER15_tree);
 
 
-            BY16=(Token)match(input,BY,FOLLOW_BY_in_orderby_clause265); 
-            BY16_tree = 
+            BY16=(Token)match(input,BY,FOLLOW_BY_in_orderby_clause265);
+            BY16_tree =
             (Object)adaptor.create(BY16)
             ;
             adaptor.addChild(root_0, BY16_tree);
 
 
-            i1=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_orderby_clause269); 
-            i1_tree = 
+            i1=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_orderby_clause269);
+            i1_tree =
             (Object)adaptor.create(i1)
             ;
             adaptor.addChild(root_0, i1_tree);
@@ -858,8 +867,8 @@ public TreeAdaptor getTreeAdaptor() {
                 case 1 :
                     // GQL.g:69:72: ASC
                     {
-                    ASC17=(Token)match(input,ASC,FOLLOW_ASC_in_orderby_clause275); 
-                    ASC17_tree = 
+                    ASC17=(Token)match(input,ASC,FOLLOW_ASC_in_orderby_clause275);
+                    ASC17_tree =
                     (Object)adaptor.create(ASC17)
                     ;
                     adaptor.addChild(root_0, ASC17_tree);
@@ -870,8 +879,8 @@ public TreeAdaptor getTreeAdaptor() {
                 case 2 :
                     // GQL.g:69:78: d1= DESC
                     {
-                    d1=(Token)match(input,DESC,FOLLOW_DESC_in_orderby_clause281); 
-                    d1_tree = 
+                    d1=(Token)match(input,DESC,FOLLOW_DESC_in_orderby_clause281);
+                    d1_tree =
                     (Object)adaptor.create(d1)
                     ;
                     adaptor.addChild(root_0, d1_tree);
@@ -902,15 +911,15 @@ public TreeAdaptor getTreeAdaptor() {
             	case 1 :
             	    // GQL.g:70:4: ',' i2= IDENTITY ( ASC |d2= DESC )?
             	    {
-            	    char_literal18=(Token)match(input,59,FOLLOW_59_in_orderby_clause293); 
-            	    char_literal18_tree = 
+            	    char_literal18=(Token)match(input,59,FOLLOW_59_in_orderby_clause293);
+            	    char_literal18_tree =
             	    (Object)adaptor.create(char_literal18)
             	    ;
             	    adaptor.addChild(root_0, char_literal18_tree);
 
 
-            	    i2=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_orderby_clause297); 
-            	    i2_tree = 
+            	    i2=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_orderby_clause297);
+            	    i2_tree =
             	    (Object)adaptor.create(i2)
             	    ;
             	    adaptor.addChild(root_0, i2_tree);
@@ -932,8 +941,8 @@ public TreeAdaptor getTreeAdaptor() {
             	        case 1 :
             	            // GQL.g:70:68: ASC
             	            {
-            	            ASC19=(Token)match(input,ASC,FOLLOW_ASC_in_orderby_clause302); 
-            	            ASC19_tree = 
+            	            ASC19=(Token)match(input,ASC,FOLLOW_ASC_in_orderby_clause302);
+            	            ASC19_tree =
             	            (Object)adaptor.create(ASC19)
             	            ;
             	            adaptor.addChild(root_0, ASC19_tree);
@@ -944,8 +953,8 @@ public TreeAdaptor getTreeAdaptor() {
             	        case 2 :
             	            // GQL.g:70:74: d2= DESC
             	            {
-            	            d2=(Token)match(input,DESC,FOLLOW_DESC_in_orderby_clause308); 
-            	            d2_tree = 
+            	            d2=(Token)match(input,DESC,FOLLOW_DESC_in_orderby_clause308);
+            	            d2_tree =
             	            (Object)adaptor.create(d2)
             	            ;
             	            adaptor.addChild(root_0, d2_tree);
@@ -1023,15 +1032,15 @@ public TreeAdaptor getTreeAdaptor() {
             root_0 = (Object)adaptor.nil();
 
 
-            LIMIT20=(Token)match(input,LIMIT,FOLLOW_LIMIT_in_limit_clause333); 
-            LIMIT20_tree = 
+            LIMIT20=(Token)match(input,LIMIT,FOLLOW_LIMIT_in_limit_clause333);
+            LIMIT20_tree =
             (Object)adaptor.create(LIMIT20)
             ;
             adaptor.addChild(root_0, LIMIT20_tree);
 
 
-            DECIMAL21=(Token)match(input,DECIMAL,FOLLOW_DECIMAL_in_limit_clause335); 
-            DECIMAL21_tree = 
+            DECIMAL21=(Token)match(input,DECIMAL,FOLLOW_DECIMAL_in_limit_clause335);
+            DECIMAL21_tree =
             (Object)adaptor.create(DECIMAL21)
             ;
             adaptor.addChild(root_0, DECIMAL21_tree);
@@ -1092,15 +1101,15 @@ public TreeAdaptor getTreeAdaptor() {
             root_0 = (Object)adaptor.nil();
 
 
-            OFFSET22=(Token)match(input,OFFSET,FOLLOW_OFFSET_in_offset_clause352); 
-            OFFSET22_tree = 
+            OFFSET22=(Token)match(input,OFFSET,FOLLOW_OFFSET_in_offset_clause352);
+            OFFSET22_tree =
             (Object)adaptor.create(OFFSET22)
             ;
             adaptor.addChild(root_0, OFFSET22_tree);
 
 
-            DECIMAL23=(Token)match(input,DECIMAL,FOLLOW_DECIMAL_in_offset_clause354); 
-            DECIMAL23_tree = 
+            DECIMAL23=(Token)match(input,DECIMAL,FOLLOW_DECIMAL_in_offset_clause354);
+            DECIMAL23_tree =
             (Object)adaptor.create(DECIMAL23)
             ;
             adaptor.addChild(root_0, DECIMAL23_tree);
@@ -1264,15 +1273,15 @@ public TreeAdaptor getTreeAdaptor() {
                         case 1 :
                             // GQL.g:85:4: i= IDENTITY '<' v= value
                             {
-                            i=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_condition377); 
-                            i_tree = 
+                            i=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_condition377);
+                            i_tree =
                             (Object)adaptor.create(i)
                             ;
                             adaptor.addChild(root_0, i_tree);
 
 
-                            char_literal24=(Token)match(input,61,FOLLOW_61_in_condition379); 
-                            char_literal24_tree = 
+                            char_literal24=(Token)match(input,61,FOLLOW_61_in_condition379);
+                            char_literal24_tree =
                             (Object)adaptor.create(char_literal24)
                             ;
                             adaptor.addChild(root_0, char_literal24_tree);
@@ -1292,15 +1301,15 @@ public TreeAdaptor getTreeAdaptor() {
                         case 2 :
                             // GQL.g:86:4: i= IDENTITY '<=' v= value
                             {
-                            i=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_condition395); 
-                            i_tree = 
+                            i=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_condition395);
+                            i_tree =
                             (Object)adaptor.create(i)
                             ;
                             adaptor.addChild(root_0, i_tree);
 
 
-                            string_literal25=(Token)match(input,62,FOLLOW_62_in_condition397); 
-                            string_literal25_tree = 
+                            string_literal25=(Token)match(input,62,FOLLOW_62_in_condition397);
+                            string_literal25_tree =
                             (Object)adaptor.create(string_literal25)
                             ;
                             adaptor.addChild(root_0, string_literal25_tree);
@@ -1320,15 +1329,15 @@ public TreeAdaptor getTreeAdaptor() {
                         case 3 :
                             // GQL.g:87:4: i= IDENTITY '>' v= value
                             {
-                            i=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_condition411); 
-                            i_tree = 
+                            i=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_condition411);
+                            i_tree =
                             (Object)adaptor.create(i)
                             ;
                             adaptor.addChild(root_0, i_tree);
 
 
-                            char_literal26=(Token)match(input,64,FOLLOW_64_in_condition413); 
-                            char_literal26_tree = 
+                            char_literal26=(Token)match(input,64,FOLLOW_64_in_condition413);
+                            char_literal26_tree =
                             (Object)adaptor.create(char_literal26)
                             ;
                             adaptor.addChild(root_0, char_literal26_tree);
@@ -1348,15 +1357,15 @@ public TreeAdaptor getTreeAdaptor() {
                         case 4 :
                             // GQL.g:88:4: i= IDENTITY '>=' v= value
                             {
-                            i=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_condition428); 
-                            i_tree = 
+                            i=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_condition428);
+                            i_tree =
                             (Object)adaptor.create(i)
                             ;
                             adaptor.addChild(root_0, i_tree);
 
 
-                            string_literal27=(Token)match(input,65,FOLLOW_65_in_condition430); 
-                            string_literal27_tree = 
+                            string_literal27=(Token)match(input,65,FOLLOW_65_in_condition430);
+                            string_literal27_tree =
                             (Object)adaptor.create(string_literal27)
                             ;
                             adaptor.addChild(root_0, string_literal27_tree);
@@ -1376,15 +1385,15 @@ public TreeAdaptor getTreeAdaptor() {
                         case 5 :
                             // GQL.g:89:4: i= IDENTITY '=' v= value
                             {
-                            i=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_condition444); 
-                            i_tree = 
+                            i=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_condition444);
+                            i_tree =
                             (Object)adaptor.create(i)
                             ;
                             adaptor.addChild(root_0, i_tree);
 
 
-                            char_literal28=(Token)match(input,63,FOLLOW_63_in_condition446); 
-                            char_literal28_tree = 
+                            char_literal28=(Token)match(input,63,FOLLOW_63_in_condition446);
+                            char_literal28_tree =
                             (Object)adaptor.create(char_literal28)
                             ;
                             adaptor.addChild(root_0, char_literal28_tree);
@@ -1404,15 +1413,15 @@ public TreeAdaptor getTreeAdaptor() {
                         case 6 :
                             // GQL.g:90:4: i= IDENTITY '!=' v= value
                             {
-                            i=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_condition461); 
-                            i_tree = 
+                            i=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_condition461);
+                            i_tree =
                             (Object)adaptor.create(i)
                             ;
                             adaptor.addChild(root_0, i_tree);
 
 
-                            string_literal29=(Token)match(input,55,FOLLOW_55_in_condition463); 
-                            string_literal29_tree = 
+                            string_literal29=(Token)match(input,55,FOLLOW_55_in_condition463);
+                            string_literal29_tree =
                             (Object)adaptor.create(string_literal29)
                             ;
                             adaptor.addChild(root_0, string_literal29_tree);
@@ -1444,15 +1453,15 @@ public TreeAdaptor getTreeAdaptor() {
                     // GQL.g:93:3: ( IDENTITY IN list )
                     // GQL.g:93:5: IDENTITY IN list
                     {
-                    IDENTITY30=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_condition485); 
-                    IDENTITY30_tree = 
+                    IDENTITY30=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_condition485);
+                    IDENTITY30_tree =
                     (Object)adaptor.create(IDENTITY30)
                     ;
                     adaptor.addChild(root_0, IDENTITY30_tree);
 
 
-                    IN31=(Token)match(input,IN,FOLLOW_IN_in_condition487); 
-                    IN31_tree = 
+                    IN31=(Token)match(input,IN,FOLLOW_IN_in_condition487);
+                    IN31_tree =
                     (Object)adaptor.create(IN31)
                     ;
                     adaptor.addChild(root_0, IN31_tree);
@@ -1527,15 +1536,15 @@ public TreeAdaptor getTreeAdaptor() {
             root_0 = (Object)adaptor.nil();
 
 
-            ANCESTOR33=(Token)match(input,ANCESTOR,FOLLOW_ANCESTOR_in_ancestorCondition509); 
-            ANCESTOR33_tree = 
+            ANCESTOR33=(Token)match(input,ANCESTOR,FOLLOW_ANCESTOR_in_ancestorCondition509);
+            ANCESTOR33_tree =
             (Object)adaptor.create(ANCESTOR33)
             ;
             adaptor.addChild(root_0, ANCESTOR33_tree);
 
 
-            IS34=(Token)match(input,IS,FOLLOW_IS_in_ancestorCondition511); 
-            IS34_tree = 
+            IS34=(Token)match(input,IS,FOLLOW_IS_in_ancestorCondition511);
+            IS34_tree =
             (Object)adaptor.create(IS34)
             ;
             adaptor.addChild(root_0, IS34_tree);
@@ -1673,8 +1682,8 @@ public TreeAdaptor getTreeAdaptor() {
                     root_0 = (Object)adaptor.nil();
 
 
-                    NULL36=(Token)match(input,NULL,FOLLOW_NULL_in_value530); 
-                    NULL36_tree = 
+                    NULL36=(Token)match(input,NULL,FOLLOW_NULL_in_value530);
+                    NULL36_tree =
                     (Object)adaptor.create(NULL36)
                     ;
                     adaptor.addChild(root_0, NULL36_tree);
@@ -1690,8 +1699,8 @@ public TreeAdaptor getTreeAdaptor() {
                     root_0 = (Object)adaptor.nil();
 
 
-                    d=(Token)match(input,DECIMAL,FOLLOW_DECIMAL_in_value541); 
-                    d_tree = 
+                    d=(Token)match(input,DECIMAL,FOLLOW_DECIMAL_in_value541);
+                    d_tree =
                     (Object)adaptor.create(d)
                     ;
                     adaptor.addChild(root_0, d_tree);
@@ -1707,8 +1716,8 @@ public TreeAdaptor getTreeAdaptor() {
                     root_0 = (Object)adaptor.nil();
 
 
-                    STRING_LITERAL37=(Token)match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_value549); 
-                    STRING_LITERAL37_tree = 
+                    STRING_LITERAL37=(Token)match(input,STRING_LITERAL,FOLLOW_STRING_LITERAL_in_value549);
+                    STRING_LITERAL37_tree =
                     (Object)adaptor.create(STRING_LITERAL37)
                     ;
                     adaptor.addChild(root_0, STRING_LITERAL37_tree);
@@ -1724,8 +1733,8 @@ public TreeAdaptor getTreeAdaptor() {
                     root_0 = (Object)adaptor.nil();
 
 
-                    BOOLEAN38=(Token)match(input,BOOLEAN,FOLLOW_BOOLEAN_in_value557); 
-                    BOOLEAN38_tree = 
+                    BOOLEAN38=(Token)match(input,BOOLEAN,FOLLOW_BOOLEAN_in_value557);
+                    BOOLEAN38_tree =
                     (Object)adaptor.create(BOOLEAN38)
                     ;
                     adaptor.addChild(root_0, BOOLEAN38_tree);
@@ -1741,15 +1750,15 @@ public TreeAdaptor getTreeAdaptor() {
                     root_0 = (Object)adaptor.nil();
 
 
-                    char_literal39=(Token)match(input,60,FOLLOW_60_in_value565); 
-                    char_literal39_tree = 
+                    char_literal39=(Token)match(input,60,FOLLOW_60_in_value565);
+                    char_literal39_tree =
                     (Object)adaptor.create(char_literal39)
                     ;
                     adaptor.addChild(root_0, char_literal39_tree);
 
 
-                    IDENTITY40=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_value567); 
-                    IDENTITY40_tree = 
+                    IDENTITY40=(Token)match(input,IDENTITY,FOLLOW_IDENTITY_in_value567);
+                    IDENTITY40_tree =
                     (Object)adaptor.create(IDENTITY40)
                     ;
                     adaptor.addChild(root_0, IDENTITY40_tree);
@@ -1765,15 +1774,15 @@ public TreeAdaptor getTreeAdaptor() {
                     root_0 = (Object)adaptor.nil();
 
 
-                    char_literal41=(Token)match(input,60,FOLLOW_60_in_value575); 
-                    char_literal41_tree = 
+                    char_literal41=(Token)match(input,60,FOLLOW_60_in_value575);
+                    char_literal41_tree =
                     (Object)adaptor.create(char_literal41)
                     ;
                     adaptor.addChild(root_0, char_literal41_tree);
 
 
-                    d=(Token)match(input,DECIMAL,FOLLOW_DECIMAL_in_value579); 
-                    d_tree = 
+                    d=(Token)match(input,DECIMAL,FOLLOW_DECIMAL_in_value579);
+                    d_tree =
                     (Object)adaptor.create(d)
                     ;
                     adaptor.addChild(root_0, d_tree);
@@ -1789,8 +1798,8 @@ public TreeAdaptor getTreeAdaptor() {
                     root_0 = (Object)adaptor.nil();
 
 
-                    FUNCTION42=(Token)match(input,FUNCTION,FOLLOW_FUNCTION_in_value587); 
-                    FUNCTION42_tree = 
+                    FUNCTION42=(Token)match(input,FUNCTION,FOLLOW_FUNCTION_in_value587);
+                    FUNCTION42_tree =
                     (Object)adaptor.create(FUNCTION42)
                     ;
                     adaptor.addChild(root_0, FUNCTION42_tree);
@@ -1868,8 +1877,8 @@ public TreeAdaptor getTreeAdaptor() {
 
             retval.r = new LinkedList<Evaluator>();
 
-            char_literal44=(Token)match(input,56,FOLLOW_56_in_list611); 
-            char_literal44_tree = 
+            char_literal44=(Token)match(input,56,FOLLOW_56_in_list611);
+            char_literal44_tree =
             (Object)adaptor.create(char_literal44)
             ;
             adaptor.addChild(root_0, char_literal44_tree);
@@ -1899,8 +1908,8 @@ public TreeAdaptor getTreeAdaptor() {
             	case 1 :
             	    // GQL.g:114:34: ',' v2= value
             	    {
-            	    char_literal45=(Token)match(input,59,FOLLOW_59_in_list620); 
-            	    char_literal45_tree = 
+            	    char_literal45=(Token)match(input,59,FOLLOW_59_in_list620);
+            	    char_literal45_tree =
             	    (Object)adaptor.create(char_literal45)
             	    ;
             	    adaptor.addChild(root_0, char_literal45_tree);
@@ -1924,8 +1933,8 @@ public TreeAdaptor getTreeAdaptor() {
             } while (true);
 
 
-            char_literal46=(Token)match(input,57,FOLLOW_57_in_list631); 
-            char_literal46_tree = 
+            char_literal46=(Token)match(input,57,FOLLOW_57_in_list631);
+            char_literal46_tree =
             (Object)adaptor.create(char_literal46)
             ;
             adaptor.addChild(root_0, char_literal46_tree);
@@ -1957,7 +1966,7 @@ public TreeAdaptor getTreeAdaptor() {
     // Delegated rules
 
 
- 
+
 
     public static final BitSet FOLLOW_select_clause_in_query57 = new BitSet(new long[]{0x000400C100100002L});
     public static final BitSet FOLLOW_from_clause_in_query64 = new BitSet(new long[]{0x000400C100000002L});

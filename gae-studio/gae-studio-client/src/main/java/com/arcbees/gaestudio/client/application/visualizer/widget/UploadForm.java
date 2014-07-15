@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import javax.inject.Inject;
 
+import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.common.base.Strings;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -32,6 +33,7 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.assistedinject.Assisted;
 
+import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
@@ -63,13 +65,16 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
     private final Handler handler;
     private final Label selectedFile;
     private final AppResources resources;
+    private final UniversalAnalytics universalAnalytics;
 
     @Inject
     UploadForm(AppResources resources,
+               UniversalAnalytics universalAnalytics,
                @Assisted String uploadUrl,
                @Assisted Handler handler) {
         this.handler = handler;
         this.resources = resources;
+        this.universalAnalytics = universalAnalytics;
 
         formPanel = new FormPanel();
         selectedFile = new Label("...");
@@ -125,6 +130,8 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
             public void onClick(ClickEvent event) {
                 registerFileChangedHandler();
                 $(fileUpload).click();
+                universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                        .eventLabel("Visualizer -> Upload Form -> Choose File");
             }
         });
         button.setStyleName(resources.styles().button());

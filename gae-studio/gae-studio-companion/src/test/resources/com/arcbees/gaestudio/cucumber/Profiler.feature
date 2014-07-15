@@ -1,3 +1,4 @@
+@Ignore
 Feature: Profiler
   Scenario: Interact with the datastore
     Given I start recording

@@ -7,10 +7,13 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.auth.forgot;
+package com.arcbees.gaestudio.client.application.support;
 
-import com.gwtplatform.mvp.client.UiHandlers;
+import com.google.gwt.inject.client.AbstractGinModule;
 
-public interface ForgotPasswordUiHandlers extends UiHandlers {
-    void forgotPassword(String email);
+public class SupportModule extends AbstractGinModule {
+    @Override
+    protected void configure() {
+        bind(SupportPresenter.MyView.class).to(SupportView.class);
+    }
 }
