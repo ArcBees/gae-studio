@@ -9,7 +9,11 @@
 
 package com.arcbees.gaestudio.client.application.support;
 
+import java.util.Set;
+
 import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
@@ -27,6 +31,10 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> implements SupportUiHandlers {
     interface MyView extends PopupView, HasUiHandlers<SupportUiHandlers> {
         void edit(SupportMessage supportMessage);
+
+        void showViolations(Set<ConstraintViolation<SupportMessage>> constraintViolations);
+
+        void hideViolations();
     }
 
     private static final String API_KEY = "apikey";
@@ -34,18 +42,21 @@ public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> i
     private final AppConstants appConstants;
     private final RestDispatch dispatch;
     private final MailService mailService;
+    private final Validator validator;
 
     @Inject
     SupportPresenter(EventBus eventBus,
                      MyView view,
                      AppConstants appConstants,
                      RestDispatch dispatch,
-                     MailService mailService) {
+                     MailService mailService,
+                     Validator validator) {
         super(eventBus, view);
 
         this.appConstants = appConstants;
         this.dispatch = dispatch;
         this.mailService = mailService;
+        this.validator = validator;
 
         getView().setUiHandlers(this);
     }
@@ -55,10 +66,22 @@ public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> i
         super.onReveal();
 
         getView().edit(new SupportMessage());
+        getView().hideViolations();
     }
 
     @Override
     public void send(SupportMessage supportMessage) {
+        Set<ConstraintViolation<SupportMessage>> constraintViolations = validator.validate(supportMessage);
+
+        if (constraintViolations.isEmpty()) {
+            getView().hideViolations();
+            sendMessage(supportMessage);
+        } else {
+            getView().showViolations(constraintViolations);
+        }
+    }
+
+    private void sendMessage(SupportMessage supportMessage) {
         RestAction<Void> action = mailService.sendMessage(MessageRequest.fromSupportMessage(supportMessage), API_KEY);
 
         dispatch.execute(action, new AsyncCallbackImpl<Void>() {

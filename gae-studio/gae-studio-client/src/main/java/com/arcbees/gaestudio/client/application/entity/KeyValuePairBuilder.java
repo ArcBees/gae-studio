@@ -19,7 +19,7 @@ import com.google.common.collect.Lists;
 
 public class KeyValuePairBuilder {
     public List<KeyValuePair> fromParsedEntity(ParsedEntity parsedEntity) {
-        List<KeyValuePair> keyValuePairs = new ArrayList<KeyValuePair>();
+        List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
         Set<String> properties = parsedEntity.propertyKeys();
         List<String> propertiesList = Lists.newArrayList(properties);

@@ -9,8 +9,12 @@
 
 package com.arcbees.gaestudio.client.application.support;
 
-import javax.inject.Inject;
+import java.util.Set;
 
+import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+
+import com.arcbees.gaestudio.client.validation.ViolationsPanel;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -36,9 +40,13 @@ public class SupportView extends PopupViewWithUiHandlers<SupportUiHandlers>
     @UiField
     TextBox email;
     @UiField
+    TextBox companyName;
+    @UiField
     TextBox subject;
     @UiField
     TextArea body;
+    @UiField
+    ViolationsPanel violations;
 
     private final Driver driver;
 
@@ -58,6 +66,17 @@ public class SupportView extends PopupViewWithUiHandlers<SupportUiHandlers>
     @Override
     public void edit(SupportMessage supportMessage) {
         driver.edit(supportMessage);
+    }
+
+    @Override
+    public void showViolations(Set<ConstraintViolation<SupportMessage>> constraintViolations) {
+        violations.setViolations(constraintViolations);
+        violations.setVisible(true);
+    }
+
+    @Override
+    public void hideViolations() {
+        violations.setVisible(false);
     }
 
     @UiHandler("cancel")

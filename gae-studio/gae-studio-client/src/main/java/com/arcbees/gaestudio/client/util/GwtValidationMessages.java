@@ -15,4 +15,6 @@ import com.google.gwt.i18n.client.ConstantsWithLookup;
 public interface GwtValidationMessages extends ConstantsWithLookup {
     @Key(Validation.REQUIRED_KEY)
     String required();
+
+    String email();
 }
