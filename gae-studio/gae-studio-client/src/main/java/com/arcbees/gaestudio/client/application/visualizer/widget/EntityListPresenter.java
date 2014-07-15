@@ -370,6 +370,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             parsedEntities.add(parsedEntity);
         }
 
+        adjustColumns(parsedEntities);
         getView().setData(parsedEntities);
         getView().setRowCount(parsedEntities.size());
     }

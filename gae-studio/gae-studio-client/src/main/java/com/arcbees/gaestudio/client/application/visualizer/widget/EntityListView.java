@@ -146,7 +146,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     @Override
     public void setData(Range range, List<ParsedEntity> parsedEntities) {
-        entityTable.setRowData(range.getStart(), parsedEntities);
+        List<ParsedEntity> prettyEntities = prettifyEntities(parsedEntities);
+
+        entityTable.setRowData(range.getStart(), prettyEntities);
     }
 
     @Override
@@ -155,11 +157,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void addOrReplaceEntity(EntityDto entityDTO) {
-        int rowIndex = getRowIndex(entityDTO);
+    public void addOrReplaceEntity(EntityDto entityDto) {
+        int rowIndex = getRowIndex(entityDto);
 
         if (rowIndex == -1) {
-            insertNewEntityAtTheTopOfTheCurrentPage(entityDTO);
+            insertNewEntityAtTheTopOfTheCurrentPage(entityDto);
         } else {
             redrawTable();
         }
@@ -396,5 +398,17 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
             universalAnalytics.sendEvent(UI_ELEMENTS, "close")
                     .eventLabel("Visualizer -> List View -> GQL Query Textarea");
         }
+    }
+
+    private List<ParsedEntity> prettifyEntities(List<ParsedEntity> parsedEntities) {
+        //TODO : Make entities look good (pretty keys and show unindexed entities)
+        List<ParsedEntity> prettyEntities = parsedEntities;
+
+        for(ParsedEntity parsedEntity : parsedEntities) {
+            String entityJson = parsedEntity.getPropertyMap().toString();
+            System.out.println(entityJson);
+        }
+
+        return prettyEntities;
     }
 }
