@@ -17,6 +17,6 @@ public interface CellTableResource extends CellTable.Resources {
     }
 
     @Override
-    @Source({CellTable.Style.DEFAULT_CSS, "css/mixins.gss", "css/colors.gss", "css/cellTableStyles.css"})
+    @Source({CellTable.Style.DEFAULT_CSS, "css/mixins.gss", "css/colors.gss", "css/cellTableStyles.gss"})
     TableStyle cellTableStyle();
 }
