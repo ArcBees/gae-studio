@@ -382,7 +382,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                                     .eventLabel("Visualizer -> List View -> Deselect Entity");
                         }
                     }).addClass(styles.deselect())
-            .removeClass(styles.deselectDisabled());
+                    .removeClass(styles.deselectDisabled());
         }
 
         selectionModel.setSelected(parsedEntity, true);
