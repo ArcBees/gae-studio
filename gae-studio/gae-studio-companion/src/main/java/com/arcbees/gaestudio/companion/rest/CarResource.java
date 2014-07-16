@@ -138,7 +138,6 @@ public class CarResource {
 
     private void setVehicleParent(Car car) {
         Vehicle vehicle = new Vehicle();
-
         vehicleDao.put(vehicle);
 
         car.setVehicleKey(Key.create(Vehicle.class, vehicle.getId()));
