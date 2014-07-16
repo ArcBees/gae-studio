@@ -21,5 +21,6 @@ public class DaoModule extends AbstractModule {
         bind(VehicleDao.class).in(Singleton.class);
         bind(BusinessDao.class).in(Singleton.class);
         bind(ManufacturerDao.class).in(Singleton.class);
+        bind(ConceptDao.class).in(Singleton.class);
     }
 }
