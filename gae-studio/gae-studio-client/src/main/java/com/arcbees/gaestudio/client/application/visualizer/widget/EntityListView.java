@@ -348,11 +348,12 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         if ($(deselect).hasClass(styles.deselectDisabled())) {
             $(deselect).unbind(BrowserEvents.CLICK)
                     .click(unlock, new Function() {
-                                @Override
-                                public void f() {
-                                    universalAnalytics.sendEvent(UI_ELEMENTS, "click")
-                                            .eventLabel("Visualizer -> List View -> Deselect Entity");
-                                }})
+                        @Override
+                        public void f() {
+                            universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                                    .eventLabel("Visualizer -> List View -> Deselect Entity");
+                        }
+                    })
                     .addClass(styles.deselect())
                     .removeClass(styles.deselectDisabled());
         }
@@ -360,7 +361,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         selectionModel.setSelected(parsedEntity, true);
 
         getUiHandlers().onEntitySelected(selectionModel.getSelectedSet());
-        
+
         universalAnalytics.sendEvent(UI_ELEMENTS, "select").eventLabel("Visualizer -> List View -> Entity Row");
     }
 
