@@ -20,7 +20,7 @@ import com.gwtplatform.dispatch.rest.client.gin.RestDispatchAsyncModule;
 public class RestModule extends AbstractGinModule {
     @Override
     protected void configure() {
-        install(new RestDispatchAsyncModule());
+        install(new RestDispatchAsyncModule.Builder().dispatchHooks(DispatchHooksImpl.class).build());
     }
 
     @Provides

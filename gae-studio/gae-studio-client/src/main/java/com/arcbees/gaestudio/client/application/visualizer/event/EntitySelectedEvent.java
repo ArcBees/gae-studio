@@ -34,7 +34,7 @@ public class EntitySelectedEvent extends GwtEvent<EntitySelectedEvent.EntitySele
         public void onEntitySelected(EntitySelectedEvent event);
     }
 
-    private static final Type<EntitySelectedHandler> TYPE = new Type<EntitySelectedHandler>();
+    private static final Type<EntitySelectedHandler> TYPE = new Type<>();
 
     public static Type<EntitySelectedHandler> getType() {
         return TYPE;
