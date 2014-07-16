@@ -14,6 +14,7 @@ import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.client.resources.AuthResources;
 import com.arcbees.gaestudio.client.resources.EntityResources;
+import com.arcbees.gaestudio.client.resources.FontsResources;
 import com.arcbees.gaestudio.client.resources.ProfilerResources;
 import com.arcbees.gaestudio.client.resources.SupportResources;
 import com.arcbees.gaestudio.client.resources.VisualizerResources;
@@ -32,7 +33,8 @@ public class ResourceLoader {
                           ProfilerResources profilerResources,
                           VisualizerResources visualizerResources,
                           WidgetResources widgetResources,
-                          SupportResources supportResources) {
+                          SupportResources supportResources,
+                          FontsResources fontsResources) {
         resources.styles().ensureInjected();
         cellTableResource.cellTableStyle().ensureInjected();
         messageResources.styles().ensureInjected();
@@ -44,5 +46,6 @@ public class ResourceLoader {
         visualizerResources.entityList().ensureInjected();
         widgetResources.header().ensureInjected();
         supportResources.styles().ensureInjected();
+        fontsResources.icons().ensureInjected();
     }
 }

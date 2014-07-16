@@ -258,12 +258,6 @@ public interface AppResources extends ClientBundle {
     @Source("images/power.png")
     ImageResource power();
 
-    @Source("images/importBtn.png")
-    ImageResource importBtn();
-
-    @Source("images/exportBtn.png")
-    ImageResource exportBtn();
-
     @Source("images/dropdown/dropDownArrowUp.png")
     ImageResource dropDownArrowUp();
 

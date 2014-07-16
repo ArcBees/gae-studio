@@ -1,3 +1,6 @@
+@require "colors";
+@require "mixins";
+
 .entityPanel {
     width: 0;
     float: right;
@@ -70,25 +73,23 @@
     width: 80px;
 }
 
-.sidebar .actionsPanel .importBtn {
-    gwt-sprite: "importBtn";
-}
-
-.sidebar .actionsPanel .exportBtn {
-    gwt-sprite: "exportBtn";
-}
-
 .sidebar .actionsPanel .exportBtn,
 .sidebar .actionsPanel .importBtn {
     background-color: #2d2d2d;
     background-repeat: no-repeat;
     background-position: center center;
+    color: #fff;
     cursor: pointer;
+    font-size: 1.1em;
+    text-align: center;
 
+    overflow: hidden;
     display: inline-block;
     height: 23px;
     width: 23px;
     margin: 2px;
+
+    @mixin transition(all, 0.3s);
 }
 
 .sidebar .actionsPanel .exportBtn:hover,
@@ -97,11 +98,32 @@
     cursor: pointer;
 }
 
+.sidebar .actionsPanel .exportBtn i,
+.sidebar .actionsPanel .importBtn i {
+    position: relative;
+    top: -3px;
+}
+
+.sidebar .actionsPanel .exportBtn i::before,
+.sidebar .actionsPanel .importBtn i::before {
+    @mixin scale(1, 1);
+}
+
 .sidebar .actionsPanel .btnDisabled,
 .sidebar .actionsPanel .btnDisabled:hover {
     background-color: #B7B7B7;
     pointer-events: none;
     cursor: default;
+}
+
+.sidebar .actionsPanel .exportBtn:hover i::before,
+.sidebar .actionsPanel .importBtn:hover i::before {
+    @mixin scale(1.1, 1.1);
+}
+
+.sidebar .actionsPanel .exportBtn:active i::before,
+.sidebar .actionsPanel .importBtn:active i::before {
+    @mixin scale(0.9, 0.9);
 }
 
 /* -> UI -- */

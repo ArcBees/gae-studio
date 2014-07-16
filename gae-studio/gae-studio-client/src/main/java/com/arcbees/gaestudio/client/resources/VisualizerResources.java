@@ -80,16 +80,10 @@ public interface VisualizerResources extends ClientBundle {
         String formQuery();
     }
 
-    @Source("images/importBtn.png")
-    ImageResource importBtn();
-
-    @Source("images/exportBtn.png")
-    ImageResource exportBtn();
-
     @Source("images/byGQLBtn.png")
     ImageResource byGQLBtn();
 
-    @Source({"css/colors.gss", "css/visualizer/visualizer.gss"})
+    @Source({"css/colors.gss", "css/mixins.gss", "css/visualizer/visualizer.gss"})
     public Styles styles();
 
     @Source({"css/colors.gss", "css/mixins.gss", "css/visualizer/entityList.gss"})
