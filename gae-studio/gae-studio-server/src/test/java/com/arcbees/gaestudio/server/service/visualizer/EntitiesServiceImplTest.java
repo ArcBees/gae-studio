@@ -19,8 +19,6 @@ import org.jukito.TestSingleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.arcbees.gaestudio.server.service.visualizer.EntitiesService;
-import com.arcbees.gaestudio.server.service.visualizer.EntitiesServiceImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
 import com.google.appengine.api.datastore.DatastoreService;
@@ -113,7 +111,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
         //when
-        entitiesService.deleteEntities(KIND_NAME, null, DeleteEntities.KIND);
+        entitiesService.deleteEntities(KIND_NAME, null, DeleteEntities.KIND, null);
 
         //then
         assertEquals(0l, (long) entitiesService.getCount(KIND_NAME));
@@ -126,7 +124,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
         createEntityInNamespace(A_NAMESPACE, KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
         //when
-        entitiesService.deleteEntities(null, "", DeleteEntities.NAMESPACE);
+        entitiesService.deleteEntities(null, "", DeleteEntities.NAMESPACE, null);
 
         //then
         assertEquals(1l, (long) entitiesService.getCount(KIND_NAME));

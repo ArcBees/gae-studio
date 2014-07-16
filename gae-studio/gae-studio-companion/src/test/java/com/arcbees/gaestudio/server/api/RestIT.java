@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.server.api;
 
 import java.util.Set;
 
+import org.junit.After;
 import org.junit.Before;
 
 import com.arcbees.gaestudio.companion.domain.Car;
@@ -18,6 +19,8 @@ import com.arcbees.gaestudio.companion.domain.StringIdEntity;
 import com.arcbees.gaestudio.companion.rest.TestEndPoints;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
+import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -36,6 +39,10 @@ public class RestIT {
     protected static final String STRING_ENTITY_KIND = "StringIdEntity";
     protected static final String AN_ENTITY_NAME = "An entity name";
 
+    private static final LocalServiceTestHelper helper =
+            new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig())
+                    .setEnvAppId("gaestudio-staging");
+
     static {
         RestAssured.defaultParser = Parser.JSON;
         RestAssured.requestContentType(ContentType.JSON);
@@ -47,7 +54,14 @@ public class RestIT {
 
     @Before
     public void setUp() {
+        helper.setUp();
+
         clearDatabase();
+    }
+
+    @After
+    public void tearDown() {
+        helper.tearDown();
     }
 
     public void clearDatabase() {

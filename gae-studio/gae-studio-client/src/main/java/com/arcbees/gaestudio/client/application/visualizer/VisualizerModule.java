@@ -10,15 +10,12 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarModule;
-import com.arcbees.gaestudio.client.application.visualizer.ui.VisualizerUiFactory;
 import com.arcbees.gaestudio.client.application.visualizer.widget.VisualizerWidgetModule;
-import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class VisualizerModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
-        install(new GinFactoryModuleBuilder().build(VisualizerUiFactory.class));
         install(new SidebarModule());
         install(new VisualizerWidgetModule());
 
