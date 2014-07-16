@@ -10,9 +10,11 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
@@ -35,11 +37,12 @@ public class ParsedEntityColumnCreator {
         Column<ParsedEntity, ?> column = new TextColumn<ParsedEntity>() {
             @Override
             public String getValue(ParsedEntity parsedEntity) {
-                JSONValue value = parsedEntity.getProperty(propertyName);
+                JSONValue jsonProperty = parsedEntity.getProperty(propertyName);
 
                 String stringValue = "";
-                if (value != null) {
+                if (jsonProperty != null) {
                     stringValue = parsedEntity.getCleanedUpProperty(propertyName).toString();
+                    stringValue = addUnindexedIfNeeded(jsonProperty, stringValue);
                 }
 
                 return stringValue;
@@ -123,5 +126,23 @@ public class ParsedEntityColumnCreator {
                 return idName;
             }
         };
+    }
+
+    private String addUnindexedIfNeeded(JSONValue value, String stringValue) {
+        JSONObject jsonObject = value.isObject();
+
+        if(jsonObject != null) {
+            JSONValue indexedProperty = jsonObject.get(PropertyName.INDEXED);
+
+            if(indexedProperty != null) {
+                boolean isEntityIndexed = indexedProperty.isBoolean().booleanValue();
+
+                if(!isEntityIndexed) {
+                    stringValue += " (unindexed)";
+                }
+            }
+        }
+
+        return stringValue;
     }
 }

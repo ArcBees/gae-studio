@@ -15,10 +15,10 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 
 public class EntityDeletedEvent extends GwtEvent<EntityDeletedEvent.EntityDeletedHandler> {
-    private EntityDto entityDTO;
+    private EntityDto entityDto;
 
-    public EntityDeletedEvent(EntityDto entityDTO) {
-        this.entityDTO = entityDTO;
+    public EntityDeletedEvent(EntityDto entityDto) {
+        this.entityDto = entityDto;
     }
 
     public static void fire(HasHandlers source, EntityDto entityDTO) {
@@ -34,7 +34,7 @@ public class EntityDeletedEvent extends GwtEvent<EntityDeletedEvent.EntityDelete
         public void onEntityDeleted(EntityDeletedEvent event);
     }
 
-    private static final Type<EntityDeletedHandler> TYPE = new Type<EntityDeletedHandler>();
+    private static final Type<EntityDeletedHandler> TYPE = new Type<>();
 
     public static Type<EntityDeletedHandler> getType() {
         return TYPE;
@@ -50,7 +50,7 @@ public class EntityDeletedEvent extends GwtEvent<EntityDeletedEvent.EntityDelete
         handler.onEntityDeleted(this);
     }
 
-    public EntityDto getEntityDTO() {
-        return entityDTO;
+    public EntityDto getEntityDto() {
+        return entityDto;
     }
 }
