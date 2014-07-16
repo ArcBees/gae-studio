@@ -31,6 +31,6 @@ public interface WidgetResources extends ClientBundle {
         String messages();
     }
 
-    @Source({"css/colors.css", "css/widget/header.css"})
+    @Source({"css/colors.gss", "css/widget/header.gss"})
     public Header header();
 }

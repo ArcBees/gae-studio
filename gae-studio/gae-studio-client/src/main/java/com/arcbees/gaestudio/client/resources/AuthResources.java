@@ -47,6 +47,6 @@ public interface AuthResources extends ClientBundle {
         String authForm();
     }
 
-    @Source({"css/colors.css", "css/mixins.css", "css/auth/auth.css"})
+    @Source({"css/colors.gss", "css/mixins.gss", "css/auth/auth.gss"})
     public Styles styles();
 }
