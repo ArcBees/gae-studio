@@ -191,7 +191,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void onEntityDeleted(EntityDeletedEvent event) {
-        getView().removeEntity(event.getEntityDTO());
+        getView().removeEntity(event.getEntityDto());
     }
 
     @Override

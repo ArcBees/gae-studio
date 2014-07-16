@@ -34,7 +34,7 @@ public class EntityDeletedEvent extends GwtEvent<EntityDeletedEvent.EntityDelete
         public void onEntityDeleted(EntityDeletedEvent event);
     }
 
-    private static final Type<EntityDeletedHandler> TYPE = new Type<EntityDeletedHandler>();
+    private static final Type<EntityDeletedHandler> TYPE = new Type<>();
 
     public static Type<EntityDeletedHandler> getType() {
         return TYPE;
@@ -50,7 +50,7 @@ public class EntityDeletedEvent extends GwtEvent<EntityDeletedEvent.EntityDelete
         handler.onEntityDeleted(this);
     }
 
-    public EntityDto getEntityDTO() {
+    public EntityDto getEntityDto() {
         return entityDTO;
     }
 }

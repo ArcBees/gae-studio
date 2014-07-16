@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
@@ -18,6 +19,7 @@ import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.client.resources.VisualizerResources;
+import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.dom.client.DivElement;
@@ -25,6 +27,10 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -402,11 +408,42 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     private List<ParsedEntity> prettifyEntities(List<ParsedEntity> parsedEntities) {
         //TODO : Make entities look good (pretty keys and show unindexed entities)
-        List<ParsedEntity> prettyEntities = parsedEntities;
+        List<ParsedEntity> prettyEntities = new ArrayList<>();
 
-        for(ParsedEntity parsedEntity : parsedEntities) {
-            String entityJson = parsedEntity.getPropertyMap().toString();
-            System.out.println(entityJson);
+        for (ParsedEntity parsedEntity : parsedEntities) {
+            EntityDto entityDto = parsedEntity.getEntityDto();
+            String entityJson = entityDto.getJson();
+
+            JSONValue jsonValue = JSONParser.parseStrict(entityJson);
+            JSONObject jsonObject = jsonValue.isObject();
+
+            JSONObject propertyMap = jsonObject.get("propertyMap").isObject();
+
+            Set<String> objectKeys = propertyMap.keySet();
+
+            for(String key : objectKeys) {
+                JSONValue currentKeyValue = propertyMap.get(key);
+
+                if(currentKeyValue != null) {
+                    JSONObject currentKeyObject = currentKeyValue.isObject();
+
+                    if (currentKeyObject != null) {
+                        if (currentKeyObject.get(PropertyName.INDEXED) != null) {
+                            boolean isEntityIndexed = currentKeyObject.get(PropertyName.INDEXED).isBoolean().booleanValue();
+
+                            if (!isEntityIndexed) {
+                                currentKeyObject.put("value",
+                                        new JSONString(currentKeyObject.get("value").isString().stringValue() + " (unindexed)"));
+                                propertyMap.put(key, currentKeyObject);
+                                jsonObject.put("propertyMap", propertyMap);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            prettyEntities.add(new ParsedEntity(new EntityDto(entityDto.getKey(), jsonObject.toString())));
         }
 
         return prettyEntities;
