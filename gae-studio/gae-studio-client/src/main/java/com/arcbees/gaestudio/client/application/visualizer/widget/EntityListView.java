@@ -22,7 +22,6 @@ import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -47,7 +46,6 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
-import static com.google.gwt.dom.client.BrowserEvents.CLICK;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView,
@@ -347,8 +345,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         if (attached && !gwtBound) {
             bindGwtQuery();
             gwtBound = true;
-        } else {
-            $(firstTableRow).undelegate();
         }
     }
 
@@ -379,12 +375,12 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         if ($(deselect).hasClass(styles.deselectDisabled())) {
             $(deselect).unbind(BrowserEvents.CLICK)
                     .click(unlock, new Function() {
-                @Override
-                public void f() {
-                    universalAnalytics.sendEvent(UI_ELEMENTS, "click")
-                            .eventLabel("Visualizer -> List View -> Deselect Entity");
-                }
-            });
+                        @Override
+                        public void f() {
+                            universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                                    .eventLabel("Visualizer -> List View -> Deselect Entity");
+                        }
+                    });
             $(deselect).addClass(styles.deselect());
             $(deselect).removeClass(styles.deselectDisabled());
         }
@@ -426,7 +422,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         //TODO : Make entities look good (pretty keys and show unindexed entities)
         List<ParsedEntity> prettyEntities = parsedEntities;
 
-        for(ParsedEntity parsedEntity : parsedEntities) {
+        for (ParsedEntity parsedEntity : parsedEntities) {
             String entityJson = parsedEntity.getPropertyMap().toString();
             System.out.println(entityJson);
         }
