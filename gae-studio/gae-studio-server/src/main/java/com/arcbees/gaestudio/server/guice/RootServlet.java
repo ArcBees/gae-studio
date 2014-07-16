@@ -44,7 +44,8 @@ public class RootServlet extends HttpServlet {
     private final static String templateLocation =
             "com/arcbees/gaestudio/server/velocitytemplates/gae-studio.vm";
     private final static String MAVEN_URL = "http://search.maven.org/solrsearch/select?wt=json&q=gae-studio-webapp";
-    private final static Pattern LATEST_VERSION_PATTERN = Pattern.compile("\"latestVersion\":\\s*\"([0-9](?:\\.[0-9])*)\"");
+    private final static Pattern LATEST_VERSION_PATTERN =
+            Pattern.compile("\"latestVersion\":\\s*\"([0-9](?:\\.[0-9])*)\"");
     private final static Pattern RESPONSE_CONTENT_PATTERN = Pattern.compile("^[^{]*(\\{.*\\})$");
     private final static String COULD_NOT_RETRIEVE_LATEST_VERSION = "Could not retrieve latest version";
 
@@ -53,7 +54,7 @@ public class RootServlet extends HttpServlet {
 
     @Inject
     RootServlet(VelocityWrapperFactory velocityWrapperFactory,
-                @BaseRestPath String restPath) {
+            @BaseRestPath String restPath) {
         this.restPath = restPath;
         this.velocityWrapper = velocityWrapperFactory.create(templateLocation);
     }

@@ -6,8 +6,8 @@
                       http://java.sun.com/xml/ns/javaee/application_5.xsd"
         version="5">
 
-    <description>GAE-Studio Companion</description>
-    <display-name>GAEStudio-Companion</display-name>
+    <description>GAE Studio Companion</description>
+    <display-name>GAE Studio Companion</display-name>
 
     <module>
         <web>
@@ -17,7 +17,7 @@
     </module>
     <module>
         <web>
-            <web-uri>gae-studio-webapp-${project.version}.war</web-uri>
+            <web-uri>gae-studio-webapp-${project.version}-module.war</web-uri>
             <context-root>/gaestudio</context-root>
         </web>
     </module>

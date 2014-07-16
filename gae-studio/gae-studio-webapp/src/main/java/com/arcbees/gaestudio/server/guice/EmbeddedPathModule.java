@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.guice;
 
+import com.arcbees.gaestudio.server.EmbeddedStaticResourcesServlet;
 import com.google.inject.servlet.ServletModule;
 
 public class EmbeddedPathModule extends ServletModule {
@@ -18,7 +19,7 @@ public class EmbeddedPathModule extends ServletModule {
     @Override
     protected void configureServlets() {
         serve("/", "/" + GAE_STUDIO_HTML).with(RootServlet.class);
-//        serve("/" + EMBEDDED_PATH + "/", "/" + EMBEDDED_PATH + GAE_STUDIO_HTML).with(RootServlet.class);
-//        serve("/" + EMBEDDED_PATH + "/*").with(EmbeddedStaticResourcesServlet.class);
+        serve("/" + EMBEDDED_PATH + "/", "/" + EMBEDDED_PATH + GAE_STUDIO_HTML).with(RootServlet.class);
+        serve("/" + EMBEDDED_PATH + "/*").with(EmbeddedStaticResourcesServlet.class);
     }
 }
