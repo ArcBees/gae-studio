@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.shared.PropertyName;
+import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
@@ -42,6 +43,7 @@ public class ParsedEntityColumnCreator {
                 String stringValue = "";
                 if (jsonProperty != null) {
                     stringValue = parsedEntity.getCleanedUpProperty(propertyName).toString();
+                    stringValue = prettifyKey(jsonProperty, stringValue);
                     stringValue = addUnindexedIfNeeded(jsonProperty, stringValue);
                 }
 
@@ -131,18 +133,41 @@ public class ParsedEntityColumnCreator {
     private String addUnindexedIfNeeded(JSONValue value, String stringValue) {
         JSONObject jsonObject = value.isObject();
 
-        if(jsonObject != null) {
+        if (jsonObject != null) {
             JSONValue indexedProperty = jsonObject.get(PropertyName.INDEXED);
 
-            if(indexedProperty != null) {
+            if (indexedProperty != null) {
                 boolean isEntityIndexed = indexedProperty.isBoolean().booleanValue();
 
-                if(!isEntityIndexed) {
+                if (!isEntityIndexed) {
                     stringValue += " (unindexed)";
                 }
             }
         }
 
         return stringValue;
+    }
+
+    private String prettifyKey(JSONValue jsonProperty, String stringValue) {
+        JSONObject jsonObject = jsonProperty.isObject();
+        String value = stringValue;
+
+        if (jsonObject != null) {
+            JSONValue jsonPropertyType = jsonObject.get(PropertyName.GAE_PROPERTY_TYPE);
+
+            if (jsonPropertyType != null) {
+                PropertyType propertyType = PropertyType.valueOf(jsonPropertyType.isString().stringValue());
+
+                if (propertyType == PropertyType.KEY) {
+                    JSONObject propertyValue = jsonObject.get(PropertyName.VALUE).isObject();
+                    String kind = propertyValue.get(PropertyName.KIND).isString().stringValue();
+                    String id = String.valueOf(propertyValue.get(PropertyName.ID));
+
+                    value = kind + " (" + id + ")";
+                }
+            }
+        }
+
+        return value;
     }
 }
