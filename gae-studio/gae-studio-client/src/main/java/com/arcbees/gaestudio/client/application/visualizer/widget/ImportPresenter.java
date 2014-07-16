@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.gaestudio.client.application.channel.ChannelHandler;
+import com.arcbees.gaestudio.client.application.widget.ajax.LoadingEvent;
 import com.arcbees.gaestudio.client.rest.ImportService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.ObjectWrapper;
@@ -55,6 +56,11 @@ public class ImportPresenter extends PresenterWidget<ImportPresenter.MyView> imp
     @Override
     public void onUploadSuccess() {
         getView().hide();
+    }
+
+    @Override
+    public void onSubmit() {
+        LoadingEvent.fire(this, LoadingEvent.Action.BEGIN);
     }
 
     @Override

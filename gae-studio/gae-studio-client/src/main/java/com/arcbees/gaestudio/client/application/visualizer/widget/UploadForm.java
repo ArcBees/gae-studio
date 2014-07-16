@@ -46,6 +46,8 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
         void onUploadFailure(String errorMessage);
 
         void onUploadSuccess();
+
+        void onSubmit();
     }
 
     private static class UploadResponse extends JavaScriptObject {
@@ -114,6 +116,7 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
     public void submit() {
         if (hasFileToUpload()) {
             formPanel.submit();
+            handler.onSubmit();
         }
     }
 
