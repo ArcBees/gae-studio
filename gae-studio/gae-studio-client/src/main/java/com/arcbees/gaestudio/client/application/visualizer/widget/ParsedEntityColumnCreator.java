@@ -170,14 +170,33 @@ public class ParsedEntityColumnCreator {
 
                 if (propertyType == PropertyType.KEY) {
                     JSONObject propertyValue = jsonObject.get(PropertyName.VALUE).isObject();
+
+                    String parentValue = writeParentKeys(propertyValue);
+
                     String kind = propertyValue.get(PropertyName.KIND).isString().stringValue();
                     String id = String.valueOf(propertyValue.get(PropertyName.ID));
 
-                    value = kind + " (" + id + ")";
+                    value = parentValue + kind + " (" + id + ")";
                 }
             }
         }
 
         return value;
+    }
+
+    private String writeParentKeys(JSONObject propertyValue) {
+        String returnValue = "";
+
+        JSONValue parentKeyJson = propertyValue.get(PropertyName.PARENT_KEY);
+        JSONObject jsonObject = parentKeyJson.isObject();
+
+        if (jsonObject != null) {
+            String kind = jsonObject.get(PropertyName.KIND).isString().stringValue();
+            String id = String.valueOf(jsonObject.get(PropertyName.ID));
+
+            returnValue += writeParentKeys(jsonObject) + kind + " (" + id + ") > ";
+        }
+
+        return returnValue;
     }
 }

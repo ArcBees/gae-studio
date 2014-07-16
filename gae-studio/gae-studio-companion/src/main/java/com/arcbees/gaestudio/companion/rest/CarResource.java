@@ -69,6 +69,20 @@ public class CarResource {
             convertGeoPts(car);
         }
 
+        carDao.put(car);
+
+        return Response.ok(car.getId()).build();
+    }
+
+    @Path(TestEndPoints.HIERARCHY)
+    @POST
+    public Response createCarWithHierarchy(Car car) {
+        car.setId(null);
+
+        if (car.getMixedProperties() != null) {
+            convertGeoPts(car);
+        }
+
         setVehicleParent(car);
         setManufacturerRef(car);
 
@@ -137,16 +151,20 @@ public class CarResource {
 
         Business business = new Business();
 
-        business.setConceptKey(Key.create(Concept.class, concept.getId()));
+        Key<Concept> conceptKey = Key.create(Concept.class, concept.getId());
+
+        business.setConceptKey(conceptKey);
 
         businessDao.put(business);
 
         Manufacturer manufacturer = new Manufacturer();
 
-        manufacturer.setBusinessKey(Key.create(Business.class, business.getId()));
+        Key<Business> businessKey = Key.create(conceptKey, Business.class, business.getId());
+
+        manufacturer.setBusinessKey(businessKey);
 
         manufacturerDao.put(manufacturer);
 
-        car.setManufacturerRef(Ref.create(Key.create(Manufacturer.class, manufacturer.getId())));
+        car.setManufacturerRef(Ref.create(Key.create(businessKey, Manufacturer.class, manufacturer.getId())));
     }
 }
