@@ -92,9 +92,11 @@ input:focus, textarea:focus, button:focus {
 }
 
 .version {
+    color: #888;
+
     position: fixed;
-    right: 5px;
-    bottom: 5px;
+    right: 20px;
+    top: 12px;
     z-index: 1000;
 }
 
