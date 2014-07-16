@@ -54,7 +54,7 @@ public class RootServlet extends HttpServlet {
 
     @Inject
     RootServlet(VelocityWrapperFactory velocityWrapperFactory,
-            @BaseRestPath String restPath) {
+                @BaseRestPath String restPath) {
         this.restPath = restPath;
         this.velocityWrapper = velocityWrapperFactory.create(templateLocation);
     }
