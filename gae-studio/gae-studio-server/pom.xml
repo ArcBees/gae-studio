@@ -13,13 +13,6 @@
     <name>GAE-Studio Server</name>
 
     <dependencies>
-        <!-- GWTP dependencies -->
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-common-shared</artifactId>
-            <version>${gwtp.version}</version>
-        </dependency>
-
         <!-- Persistence dependencies -->
         <dependency>
             <groupId>com.google.appengine</groupId>
