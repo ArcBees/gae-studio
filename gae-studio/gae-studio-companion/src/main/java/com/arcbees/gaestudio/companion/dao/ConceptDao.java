@@ -9,17 +9,17 @@
 
 package com.arcbees.gaestudio.companion.dao;
 
-import javax.inject.Singleton;
+import com.arcbees.gaestudio.companion.domain.Concept;
 
-import com.google.inject.AbstractModule;
+import static com.arcbees.gaestudio.companion.dao.OfyService.ofy;
 
-public class DaoModule extends AbstractModule {
+public class ConceptDao extends BaseDao<Concept> {
+    ConceptDao() {
+        super(Concept.class);
+    }
+
     @Override
-    protected void configure() {
-        bind(CarDao.class).in(Singleton.class);
-        bind(StringIdEntityDao.class).in(Singleton.class);
-        bind(VehicleDao.class).in(Singleton.class);
-        bind(BusinessDao.class).in(Singleton.class);
-        bind(ManufacturerDao.class).in(Singleton.class);
+    public Concept get(Long id) {
+        return ofy().load().type(clazz).id(id).now();
     }
 }
