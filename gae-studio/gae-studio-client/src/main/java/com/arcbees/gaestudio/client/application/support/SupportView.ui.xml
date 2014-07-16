@@ -21,7 +21,7 @@
                     <g:TextBox ui:field="email"/>
                 </div>
                 <div>
-                    <label>Company</label>
+                    <label>Business name</label>
                     <g:TextBox ui:field="companyName"/>
                 </div>
                 <div>
