@@ -26,7 +26,7 @@ public class FullScreenEvent extends GwtEvent<FullScreenEvent.FullScreenEventHan
         return TYPE;
     }
 
-    private static final Type<FullScreenEventHandler> TYPE = new Type<FullScreenEventHandler>();
+    private static final Type<FullScreenEventHandler> TYPE = new Type<>();
 
     private final boolean activate;
 

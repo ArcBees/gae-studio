@@ -69,8 +69,6 @@ public interface AppResources extends ClientBundle {
 
         String glassPanel();
 
-        String lockedRow();
-
         String embeddedEntityProperties();
 
         String button();

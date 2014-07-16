@@ -9,13 +9,13 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import java.util.Set;
+
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.gwtplatform.mvp.client.UiHandlers;
 
 interface EntityListUiHandlers extends UiHandlers {
-    void onEntitySelected(ParsedEntity parsedEntity);
-
-    void onRowLock();
+    void onEntitySelected(Set<ParsedEntity> selectedEntities);
 
     void onRowUnlock();
 

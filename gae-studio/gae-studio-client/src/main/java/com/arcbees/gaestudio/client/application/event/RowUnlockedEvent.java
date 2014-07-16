@@ -26,7 +26,7 @@ public class RowUnlockedEvent extends GwtEvent<RowUnlockedEvent.RowUnlockedHandl
         return TYPE;
     }
 
-    private static final Type<RowUnlockedHandler> TYPE = new Type<RowUnlockedHandler>();
+    private static final Type<RowUnlockedHandler> TYPE = new Type<>();
 
     private RowUnlockedEvent() {
     }

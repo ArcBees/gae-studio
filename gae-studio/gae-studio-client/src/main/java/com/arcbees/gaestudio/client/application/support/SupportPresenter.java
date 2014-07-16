@@ -14,19 +14,16 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import javax.ws.rs.core.HttpHeaders;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.google.gwt.http.client.Request;
-import com.google.gwt.http.client.RequestBuilder;
-import com.google.gwt.http.client.RequestCallback;
-import com.google.gwt.http.client.RequestException;
-import com.google.gwt.http.client.Response;
-import com.google.gwt.http.client.URL;
+import com.arcbees.gaestudio.client.rest.MailService;
+import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestAction;
+import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PopupView;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -40,23 +37,25 @@ public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> i
         void hideViolations();
     }
 
-    private static final String MAIL_URL = "https://mail.arcbees.com/mail";
     private static final String API_KEY = "apikey";
 
-    private final MessageRequestMapper messageRequestMapper;
     private final AppConstants appConstants;
+    private final RestDispatch dispatch;
+    private final MailService mailService;
     private final Validator validator;
 
     @Inject
     SupportPresenter(EventBus eventBus,
                      MyView view,
-                     MessageRequestMapper messageRequestMapper,
                      AppConstants appConstants,
+                     RestDispatch dispatch,
+                     MailService mailService,
                      Validator validator) {
         super(eventBus, view);
 
-        this.messageRequestMapper = messageRequestMapper;
         this.appConstants = appConstants;
+        this.dispatch = dispatch;
+        this.mailService = mailService;
         this.validator = validator;
 
         getView().setUiHandlers(this);
@@ -83,40 +82,15 @@ public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> i
     }
 
     private void sendMessage(SupportMessage supportMessage) {
-        RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.POST, URL.encode(MAIL_URL));
+        RestAction<Void> action = mailService.sendMessage(MessageRequest.fromSupportMessage(supportMessage), API_KEY);
 
-        requestBuilder.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-        requestBuilder.setHeader(HttpHeaders.AUTHORIZATION, API_KEY);
-
-        String requestData = messageRequestMapper.write(MessageRequest.fromSupportMessage(supportMessage));
-
-        try {
-            requestBuilder.sendRequest(requestData, new RequestCallback() {
-                @Override
-                public void onResponseReceived(Request request, Response response) {
-                    Message message;
-
-                    if (response.getStatusCode() == Response.SC_NO_CONTENT) {
-                        message = new Message(appConstants.thankYou(), MessageStyle.SUCCESS);
-                    } else {
-                        message = new Message(appConstants.oops(), MessageStyle.ERROR);
-                    }
-
-                    displayMessage(message);
-                }
-
-                @Override
-                public void onError(Request request, Throwable exception) {
-                    Message message = new Message(appConstants.oops(), MessageStyle.ERROR);
-
-                    displayMessage(message);
-                }
-            });
-        } catch (RequestException e) {
-            Message message = new Message(appConstants.oops(), MessageStyle.ERROR);
-
-            displayMessage(message);
-        }
+        dispatch.execute(action, new AsyncCallbackImpl<Void>() {
+            @Override
+            public void onSuccess(Void result) {
+                Message message = new Message(appConstants.thankYou(), MessageStyle.SUCCESS);
+                displayMessage(message);
+            }
+        });
     }
 
     private void displayMessage(Message message) {

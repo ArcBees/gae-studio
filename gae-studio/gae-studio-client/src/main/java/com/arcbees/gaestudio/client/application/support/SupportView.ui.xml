@@ -10,7 +10,9 @@
         <g:HTMLPanel styleName="{supportRes.styles.support}">
             <g:Button ui:field="cancel" text="Cancel" styleName="{supportRes.styles.buttonCancel}"/>
             <h1>Submit an issue</h1>
-            <validation:ViolationsPanel ui:field="violations" visible="false"/>
+            <div class="{supportRes.styles.violationsHolder}">
+                <validation:ViolationsPanel ui:field="violations" visible="false"/>
+            </div>
             <form>
                 <div>
                     <label>Name</label>
@@ -29,7 +31,7 @@
                     <g:TextBox ui:field="subject"/>
                 </div>
                 <div>
-                    <label>Message<sup>*</sup></label>
+                    <label>Message</label>
                     <g:TextArea ui:field="body"/>
                 </div>
                 <div class="{supportRes.styles.buttonContainer}">

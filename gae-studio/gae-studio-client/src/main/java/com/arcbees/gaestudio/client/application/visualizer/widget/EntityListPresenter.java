@@ -21,6 +21,8 @@ import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSavedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
@@ -33,7 +35,6 @@ import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.Name
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
-import com.arcbees.gaestudio.client.place.ParameterTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
@@ -44,7 +45,9 @@ import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.common.base.Strings;
+import com.google.common.collect.Iterables;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.http.client.Response;
@@ -64,18 +67,11 @@ import static com.arcbees.gaestudio.client.application.analytics.EventCategories
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent.EntitiesDeletedHandler;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent.EntityDeletedHandler;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent.EntitySavedHandler;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.NAME;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
         implements EntityListUiHandlers, EntitySavedHandler, EntityDeletedHandler, EntitiesDeletedHandler,
         DeleteFromNamespaceHandler, SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler,
-        KindSelectedEvent.KindSelectedHandler {
+        KindSelectedEvent.KindSelectedHandler, EntitiesSavedEvent.EntitiesSavedHandler {
     interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
 
@@ -97,9 +93,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         void removeKindSpecificColumns();
 
-        void unlockRows();
+        void unselectRows();
 
-        void setRowSelected(String idString);
+        void setRowSelected(String encodedKey);
 
         void setData(List<ParsedEntity> parsedEntities);
 
@@ -153,19 +149,19 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void onKindSelected(KindSelectedEvent event) {
-        getView().unlockRows();
+        getView().unselectRows();
     }
 
     @Override
-    public void onEntitySelected(ParsedEntity parsedEntity) {
-        getEventBus().fireEvent(new EntitySelectedEvent(parsedEntity));
-
-        revealEntityPlace(parsedEntity);
-    }
-
-    @Override
-    public void onRowLock() {
+    public void onEntitySelected(Set<ParsedEntity> selectedEntities) {
         RowLockedEvent.fire(this);
+        if (selectedEntities.size() == 1) {
+            ParsedEntity selectedEntity = Iterables.getOnlyElement(selectedEntities);
+            EntitySelectedEvent.fire(this, selectedEntity);
+            revealEntityPlace(selectedEntity);
+        } else {
+            EntitiesSelectedEvent.fire(this, selectedEntities);
+        }
     }
 
     @Override
@@ -191,6 +187,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Override
     public void onEntitySaved(EntitySavedEvent event) {
         getView().addOrReplaceEntity(event.getEntityDto());
+    }
+
+    @Override
+    public void onEntitiesSaved(EntitiesSavedEvent event) {
+        refresh();
     }
 
     @Override
@@ -220,10 +221,10 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Override
     public void setStateFromPlaceRequest(SetStateFromPlaceRequestEvent event) {
         PlaceRequest placeRequest = event.getPlaceRequest();
-        String idString = placeRequest.getParameter(ParameterTokens.ID, "");
+        String encodedKey = placeRequest.getParameter(UrlParameters.KEY, "");
 
-        if (!Strings.isNullOrEmpty(idString)) {
-            getView().setRowSelected(idString);
+        if (!Strings.isNullOrEmpty(encodedKey)) {
+            getView().setRowSelected(encodedKey);
             RowLockedEvent.fire(this);
         }
     }
@@ -262,7 +263,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
                 if (statusCode == Response.SC_BAD_REQUEST) {
                     DisplayMessageEvent.fire(this, new Message(appConstants.wrongGqlRequest(), MessageStyle.ERROR));
-                } else if(statusCode != Response.SC_OK) {
+                } else if (statusCode != Response.SC_OK) {
                     DisplayMessageEvent.fire(this, new Message(appConstants.somethingWentWrong(), MessageStyle.ERROR));
                 }
             }
@@ -274,6 +275,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         super.onBind();
 
         addRegisteredHandler(EntitySavedEvent.getType(), this);
+        addRegisteredHandler(EntitiesSavedEvent.getType(), this);
         addRegisteredHandler(EntityDeletedEvent.getType(), this);
         addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
         addRegisteredHandler(SetStateFromPlaceRequestEvent.getType(), this);
@@ -356,16 +358,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         KeyDto keyDto = entityDto.getKey();
 
         PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.entity)
-                .with(KIND, keyDto.getKind())
-                .with(ID, Long.toString(keyDto.getId()))
-                .with(NAME, keyDto.getName())
-                .with(NAMESPACE, keyDto.getAppIdNamespace().getNamespace())
-                .with(APP_ID, keyDto.getAppIdNamespace().getAppId());
-
-        if (keyDto.getParentKey() != null) {
-            builder = builder.with(PARENT_KIND, keyDto.getParentKey().getKind())
-                    .with(PARENT_ID, Long.toString(keyDto.getParentKey().getId()));
-        }
+                .with(UrlParameters.KIND, keyDto.getKind())
+                .with(UrlParameters.KEY, keyDto.getEncodedKey());
 
         placeManager.revealPlace(builder.build());
     }

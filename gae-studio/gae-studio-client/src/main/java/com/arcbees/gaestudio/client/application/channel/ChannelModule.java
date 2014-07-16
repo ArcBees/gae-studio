@@ -7,14 +7,15 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.place;
+package com.arcbees.gaestudio.client.application.channel;
 
-public class ParameterTokens {
-    public static final String KIND = "kind";
-    public static final String ID = "id";
-    public static final String NAME = "name";
-    public static final String PARENT_KIND = "parentKind";
-    public static final String PARENT_ID = "parentId";
-    public static final String NAMESPACE = "namespace";
-    public static final String APP_ID = "appId";
+import javax.inject.Singleton;
+
+import com.google.gwt.inject.client.AbstractGinModule;
+
+public class ChannelModule extends AbstractGinModule {
+    @Override
+    protected void configure() {
+        bind(ChannelHandler.class).in(Singleton.class);
+    }
 }

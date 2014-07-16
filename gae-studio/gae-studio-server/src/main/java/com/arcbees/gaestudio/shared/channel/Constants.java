@@ -7,10 +7,8 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.ui;
+package com.arcbees.gaestudio.shared.channel;
 
-public interface VisualizerUiFactory {
-    PropertyColumn createPropertyColumn(String property);
-
-    JsonContainer createJsonContainer(String jsonContent);
+public class Constants {
+    public static final String CLIENT_ID = "clientId";
 }

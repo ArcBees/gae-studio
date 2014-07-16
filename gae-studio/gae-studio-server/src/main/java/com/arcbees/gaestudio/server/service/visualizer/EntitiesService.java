@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.server.service.visualizer;
 
+import java.util.Set;
+
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.google.appengine.api.datastore.Entity;
 
@@ -17,7 +19,7 @@ public interface EntitiesService {
 
     Entity createEmptyEntity(String kind);
 
-    void deleteEntities(String kind, String namespace, DeleteEntities deleteType);
+    void deleteEntities(String kind, String namespace, DeleteEntities deleteType, String encodedKeys);
 
     Integer getCount(String kind);
 

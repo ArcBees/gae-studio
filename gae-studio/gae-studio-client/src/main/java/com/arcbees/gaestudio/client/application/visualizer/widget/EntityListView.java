@@ -20,8 +20,8 @@ import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.client.resources.VisualizerResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -38,16 +38,18 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
+import com.google.gwt.view.client.CellPreviewEvent;
+import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.RowCountChangeEvent;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
-import static com.google.gwt.dom.client.BrowserEvents.CLICK;
 import static com.google.gwt.query.client.GQuery.$;
 
-public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView {
+public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView,
+        CellPreviewEvent.Handler<ParsedEntity> {
     interface Binder extends UiBinder<Widget, EntityListView> {
     }
 
@@ -77,10 +79,15 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
     private final AppResources appResources;
     private final VisualizerResources visualizerResources;
-    private final String lockedRowStyleName;
     private final String pagerButtons;
-    private final String firstTableRow;
     private final ParsedEntityColumnCreator columnCreator;
+    private final MultiSelectionModel<ParsedEntity> selectionModel;
+    private final Function unlock = new Function() {
+        @Override
+        public void f() {
+            unselectRows();
+        }
+    };
     private final UniversalAnalytics universalAnalytics;
 
     private HandlerRegistration firstLoadHandlerRegistration;
@@ -101,9 +108,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
         pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
 
-        lockedRowStyleName = appResources.styles().lockedRow();
         pagerButtons = "." + appResources.styles().pager() + " tbody tr td img";
-        firstTableRow = "." + appResources.styles().firstTable() + " tbody";
 
         entityTable = new CellTable<>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
@@ -112,6 +117,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                 onEditTableAttachedOrDetached(event.isAttached());
             }
         });
+
+        selectionModel = new MultiSelectionModel<>();
+        entityTable.setSelectionModel(selectionModel, this);
 
         initWidget(uiBinder.createAndBindUi(this));
 
@@ -212,30 +220,31 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void unlockRows() {
-        $("." + lockedRowStyleName).removeClass(lockedRowStyleName);
+    public void unselectRows() {
+        selectionModel.clear();
 
         AppResources.Styles styles = appResources.styles();
-        $(deselect).removeClass(styles.deselect());
-        $(deselect).addClass(styles.deselectDisabled());
+        $(deselect).removeClass(styles.deselect())
+                .addClass(styles.deselectDisabled())
+                .unbind(BrowserEvents.CLICK);
 
         getUiHandlers().onRowUnlock();
     }
 
     @Override
-    public void setRowSelected(final String idString) {
+    public void setRowSelected(final String encodedKey) {
         if (!entityTable.getLoadingIndicator().isVisible()) {
             $(entityTable).delay(1, new Function() {
                 @Override
                 public void f() {
-                    doSetRowSelected(idString);
+                    doSetRowSelected(encodedKey);
                 }
             });
         } else {
             final RowCountChangeEvent.Handler handler = new RowCountChangeEvent.Handler() {
                 @Override
                 public void onRowCountChange(RowCountChangeEvent event) {
-                    doSetRowSelected(idString);
+                    doSetRowSelected(encodedKey);
                     firstLoadHandlerRegistration.removeHandler();
                 }
             };
@@ -250,25 +259,36 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> List View -> Run GQL Query");
     }
 
-    private void doSetRowSelected(String idString) {
-        for (int i = 0; i < entityTable.getVisibleItems().size(); i++) {
-            ParsedEntity parsedEntity = entityTable.getVisibleItem(i);
-            KeyDto key = parsedEntity.getKey();
-            if (isSameId(idString, key) || idString.equals(key.getName())) {
-                lockRow(entityTable.getRowElement(i));
-                return;
+    @Override
+    public void onCellPreview(CellPreviewEvent<ParsedEntity> event) {
+        if (BrowserEvents.CLICK.equals(event.getNativeEvent().getType())) {
+            ParsedEntity parsedEntity = event.getValue();
+            if (event.getNativeEvent().getCtrlKey() || event.getNativeEvent().getShiftKey()) {
+                if (selectionModel.isSelected(parsedEntity)) {
+                    unselectRow(parsedEntity);
+                } else {
+                    selectRow(parsedEntity);
+                }
+            } else {
+                if (selectionModel.isSelected(parsedEntity)) {
+                    unselectRows();
+                } else {
+                    unselectRows();
+                    selectRow(parsedEntity);
+                }
             }
         }
     }
 
-    private boolean isSameId(String idString, KeyDto key) {
-        try {
-            Long id = Long.valueOf(idString);
-            return key.getId() != 0 && id.equals(key.getId());
-        } catch (NumberFormatException e) {
-            return false;
+    private void doSetRowSelected(String encodedKey) {
+        for (int i = 0; i < entityTable.getVisibleItems().size(); i++) {
+            ParsedEntity parsedEntity = entityTable.getVisibleItem(i);
+            KeyDto key = parsedEntity.getKey();
+            if (key.getEncodedKey().equals(encodedKey)) {
+                selectRow(parsedEntity);
+                return;
+            }
         }
-
     }
 
     private void removeLastColumn(CellTable<ParsedEntity> entityTable) {
@@ -317,31 +337,17 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         if (attached && !gwtBound) {
             bindGwtQuery();
             gwtBound = true;
-        } else {
-            $(firstTableRow).undelegate();
         }
     }
 
     private void bindGwtQuery() {
-        $(firstTableRow).delegate("tr", CLICK, new Function() {
-            @Override
-            public void f(Element e) {
-                if (!$(e).hasClass(lockedRowStyleName)) {
-                    unlockRows();
-                    lockRow(e);
-                } else {
-                    unlockRows();
-                }
-            }
-        });
-
         $(pagerButtons).click(unlock);
 
         $(refresh).click(new Function() {
             @Override
             public void f() {
                 getUiHandlers().refresh();
-                unlockRows();
+                unselectRows();
                 universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> List View -> Refresh");
             }
         });
@@ -356,42 +362,35 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         $(formQueryHolder).slideUp(0);
     }
 
-    private Function unlock = new Function() {
-        @Override
-        public void f() {
-            unlockRows();
-        }
-    };
-
-    private ParsedEntity getParsedEntityForRow(Element element) {
-        int absoluteRowIndex = Integer.valueOf($(element).attr("__gwt_row"));
-        int pageStartIndex = entityTable.getVisibleRange().getStart();
-        int relativeIndex = absoluteRowIndex - pageStartIndex;
-
-        return entityTable.getVisibleItem(relativeIndex);
-    }
-
-    private void lockRow(Element e) {
-        $(e).addClass(lockedRowStyleName);
-
+    private void selectRow(ParsedEntity parsedEntity) {
         AppResources.Styles styles = appResources.styles();
-        $(deselect).addClass(styles.deselect());
-        $(deselect).removeClass(styles.deselectDisabled());
-        $(deselect).unbind(CLICK);
-        $(deselect).click(unlock, new Function() {
-            @Override
-            public void f() {
-                universalAnalytics.sendEvent(UI_ELEMENTS, "click")
-                        .eventLabel("Visualizer -> List View -> Deselect Entity");
-            }
-        });
+        if ($(deselect).hasClass(styles.deselectDisabled())) {
+            $(deselect).unbind(BrowserEvents.CLICK)
+                    .click(unlock, new Function() {
+                        @Override
+                        public void f() {
+                            universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                                    .eventLabel("Visualizer -> List View -> Deselect Entity");
+                        }
+                    }).addClass(styles.deselect())
+                    .removeClass(styles.deselectDisabled());
+        }
 
-        getUiHandlers().onRowLock();
+        selectionModel.setSelected(parsedEntity, true);
 
-        ParsedEntity parsedEntity = getParsedEntityForRow(e);
-        getUiHandlers().onEntitySelected(parsedEntity);
+        getUiHandlers().onEntitySelected(selectionModel.getSelectedSet());
 
         universalAnalytics.sendEvent(UI_ELEMENTS, "select").eventLabel("Visualizer -> List View -> Entity Row");
+    }
+
+    private void unselectRow(ParsedEntity parsedEntity) {
+        selectionModel.setSelected(parsedEntity, false);
+
+        if (selectionModel.getSelectedSet().isEmpty()) {
+            unselectRows();
+        } else {
+            getUiHandlers().onEntitySelected(selectionModel.getSelectedSet());
+        }
     }
 
     private void toggleGQL() {
@@ -414,7 +413,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
         //TODO : Make entities look good (pretty keys and show unindexed entities)
         List<ParsedEntity> prettyEntities = parsedEntities;
 
-        for(ParsedEntity parsedEntity : parsedEntities) {
+        for (ParsedEntity parsedEntity : parsedEntities) {
             String entityJson = parsedEntity.getPropertyMap().toString();
             System.out.println(entityJson);
         }

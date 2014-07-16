@@ -9,8 +9,12 @@
 
 package com.arcbees.gaestudio.client.application.entity.editor;
 
+import java.util.Set;
+
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 
 public interface EntityEditorFactory {
     EntityEditorPresenter create(ParsedEntity entity);
+
+    EntitiesEditorPresenter create(Set<ParsedEntity> entities);
 }

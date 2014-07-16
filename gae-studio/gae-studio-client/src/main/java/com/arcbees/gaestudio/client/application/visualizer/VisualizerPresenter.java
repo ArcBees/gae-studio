@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.visualizer;
 
+import java.util.Set;
+
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
@@ -18,7 +20,10 @@ import com.arcbees.gaestudio.client.application.profiler.widget.ToolbarPresenter
 import com.arcbees.gaestudio.client.application.ui.ToolbarButton;
 import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
+import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntityEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EditEntitiesEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent;
@@ -29,11 +34,12 @@ import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarPresen
 import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListPresenter;
 import com.arcbees.gaestudio.client.debug.DebugIds;
 import com.arcbees.gaestudio.client.place.NameTokens;
-import com.arcbees.gaestudio.client.place.ParameterTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.shared.GwtEvent;
@@ -50,20 +56,14 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.NAME;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
 public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler,
         RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler,
         KindPanelToggleEvent.KindPanelToggleHandler, FullScreenEvent.FullScreenEventHandler,
-        EntitySelectedEvent.EntitySelectedHandler, EntityPageLoadedEvent.EntityPageLoadedHandler,
-        SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler, ToolbarToggleEvent.ToolbarToggleHandler {
+        EntitySelectedEvent.EntitySelectedHandler, EntitiesSelectedEvent.EntitySelectedHandler,
+        EntityPageLoadedEvent.EntityPageLoadedHandler, SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler,
+        ToolbarToggleEvent.ToolbarToggleHandler {
     interface MyView extends View {
         void showEntityDetails();
 
@@ -85,10 +85,10 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
     @ContentSlot
     public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_ENTITIES = new GwtEvent.Type<>();
-    public static final Object SLOT_TOOLBAR = new Object();
-    public static final Object SLOT_KINDS = new Object();
     @ContentSlot
     public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_ENTITY_DETAILS = new GwtEvent.Type<>();
+    public static final Object SLOT_TOOLBAR = new Object();
+    public static final Object SLOT_KINDS = new Object();
 
     private final EntityListPresenter entityListPresenter;
     private final SidebarPresenter sidebarPresenter;
@@ -102,6 +102,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     private final UniversalAnalytics universalAnalytics;
 
     private ParsedEntity currentParsedEntity;
+    private Set<ParsedEntity> currentParsedEntities;
     private String currentKind = "";
 
     @Inject
@@ -138,7 +139,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     public void setStateFromPlaceRequest(SetStateFromPlaceRequestEvent event) {
         PlaceRequest placeRequest = event.getPlaceRequest();
 
-        String kindFromPlaceRequest = placeRequest.getParameter(ParameterTokens.KIND, "");
+        String kindFromPlaceRequest = placeRequest.getParameter(UrlParameters.KIND, "");
         if (!kindFromPlaceRequest.equals(currentKind)) {
             currentKind = kindFromPlaceRequest;
             updateEntityListPresenter();
@@ -207,6 +208,14 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     }
 
     @Override
+    public void onEntitiesSelected(EntitiesSelectedEvent event) {
+        currentParsedEntities = event.getParsedEntities();
+        currentParsedEntity = null;
+        getView().collapseEntityDetails();
+        enableContextualMenu();
+    }
+
+    @Override
     protected void onBind() {
         super.onBind();
 
@@ -226,6 +235,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         addRegisteredHandler(EntityPageLoadedEvent.getType(), this);
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(SetStateFromPlaceRequestEvent.getType(), this);
+        addRegisteredHandler(EntitiesSelectedEvent.getType(), this);
 
         addVisibleHandler(ToolbarToggleEvent.getType(), this);
     }
@@ -239,12 +249,15 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
                         universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Delete Entity");
                     }
-                }, DebugIds.DELETE_ENGAGE);
+                }, DebugIds.DELETE_ENGAGE
+        );
     }
 
     private void delete() {
         if (currentParsedEntity != null) {
             DeleteEntityEvent.fire(this, currentParsedEntity);
+        } else if (!currentParsedEntities.isEmpty()) {
+            DeleteEntitiesEvent.fire(this, DeleteEntities.SET, currentParsedEntities);
         }
     }
 
@@ -257,7 +270,8 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
                         universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Edit Entity");
                     }
-                }, DebugIds.EDIT);
+                }, DebugIds.EDIT
+        );
     }
 
     private void edit() {
@@ -266,18 +280,12 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
             KeyDto keyDto = entityDto.getKey();
 
             PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.editEntity)
-                    .with(KIND, keyDto.getKind())
-                    .with(ID, Long.toString(keyDto.getId()))
-                    .with(NAME, keyDto.getName())
-                    .with(NAMESPACE, keyDto.getAppIdNamespace().getNamespace())
-                    .with(APP_ID, keyDto.getAppIdNamespace().getAppId());
-
-            if (keyDto.getParentKey() != null) {
-                builder = builder.with(PARENT_KIND, keyDto.getParentKey().getKind())
-                        .with(PARENT_ID, Long.toString(keyDto.getParentKey().getId()));
-            }
+                    .with(UrlParameters.KIND, keyDto.getKind())
+                    .with(UrlParameters.KEY, keyDto.getEncodedKey());
 
             placeManager.revealPlace(builder.build());
+        } else if (currentParsedEntities != null && !currentParsedEntities.isEmpty()) {
+            EditEntitiesEvent.fire(this, currentParsedEntities);
         }
     }
 

@@ -34,7 +34,7 @@ public class EntitySelectedEvent extends GwtEvent<EntitySelectedEvent.EntitySele
         public void onEntitySelected(EntitySelectedEvent event);
     }
 
-    private static final Type<EntitySelectedHandler> TYPE = new Type<EntitySelectedHandler>();
+    private static final Type<EntitySelectedHandler> TYPE = new Type<>();
 
     public static Type<EntitySelectedHandler> getType() {
         return TYPE;
@@ -50,7 +50,7 @@ public class EntitySelectedEvent extends GwtEvent<EntitySelectedEvent.EntitySele
         handler.onEntitySelected(this);
     }
 
-    public com.arcbees.gaestudio.client.application.visualizer.ParsedEntity getParsedEntity() {
+    public ParsedEntity getParsedEntity() {
         return parsedEntity;
     }
 }

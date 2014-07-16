@@ -7,9 +7,13 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.support;
+package com.arcbees.gaestudio.client.application.channel;
 
-import com.github.nmorel.gwtjackson.client.ObjectMapper;
+import com.arcbees.gaestudio.shared.channel.Topic;
+import com.google.gwt.json.client.JSONValue;
 
-public interface MessageRequestMapper extends ObjectMapper<MessageRequest> {
+public interface MessageHandler {
+    void handleMessage(JSONValue payload);
+
+    Topic getTopic();
 }

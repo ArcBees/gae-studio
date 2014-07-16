@@ -27,7 +27,7 @@ public class ClientService {
         Object object = memcacheService.get(GaeStudioConstants.GAESTUDIO_OPERATIONS_CLIENT_IDS);
 
         if (object == null) {
-            return new HashSet<String>();
+            return new HashSet<>();
         } else {
             return (Set<String>) object;
         }

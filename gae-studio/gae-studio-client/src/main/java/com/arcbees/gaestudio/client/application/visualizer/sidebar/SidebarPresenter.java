@@ -16,6 +16,7 @@ import javax.inject.Provider;
 
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.application.analytics.EventCategories;
+import com.arcbees.gaestudio.client.application.event.ImportCompletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent;
@@ -43,7 +44,7 @@ import static com.arcbees.gaestudio.client.application.visualizer.event.KindPane
 import static com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent.Action.OPEN;
 
 public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> implements SidebarUiHandlers,
-        DeleteFromNamespaceHandler, EntitiesDeletedHandler {
+        DeleteFromNamespaceHandler, EntitiesDeletedHandler, ImportCompletedEvent.ImportCompletedHandler {
     interface MyView extends View, HasUiHandlers<SidebarUiHandlers> {
         void updateKinds(List<String> kinds);
 
@@ -147,10 +148,16 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     }
 
     @Override
+    public void onImportComplete(ImportCompletedEvent event) {
+        updateKinds();
+    }
+
+    @Override
     protected void onBind() {
         super.onBind();
 
         addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
+        addRegisteredHandler(ImportCompletedEvent.getType(), this);
         namespacesListPresenter.addValueChangeHandler(new ValueChangeHandler<AppIdNamespaceDto>() {
             @Override
             public void onValueChange(ValueChangeEvent<AppIdNamespaceDto> event) {

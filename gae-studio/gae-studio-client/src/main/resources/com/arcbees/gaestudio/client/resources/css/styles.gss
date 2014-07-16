@@ -237,11 +237,6 @@ input:focus, textarea:focus, button:focus {
     overflow: visible;
 }
 
-.firstTable .lockedRow td {
-    background-color: C_PRIMARY;
-    color: #fff;
-}
-
 .firstTable, .secondTable {
     width: 100%;
 }
