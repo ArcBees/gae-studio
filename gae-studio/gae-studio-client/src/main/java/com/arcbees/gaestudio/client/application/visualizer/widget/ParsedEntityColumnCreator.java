@@ -39,7 +39,7 @@ public class ParsedEntityColumnCreator {
     private final AppConstants appConstants;
 
     @Inject
-    public ParsedEntityColumnCreator(AppConstants appConstants) {
+    ParsedEntityColumnCreator(AppConstants appConstants) {
         this.appConstants = appConstants;
     }
 
