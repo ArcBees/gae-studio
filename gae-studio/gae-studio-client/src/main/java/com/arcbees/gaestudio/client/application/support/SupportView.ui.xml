@@ -1,14 +1,20 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-        xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+        xmlns:g='urn:import:com.google.gwt.user.client.ui'
+        xmlns:validation="urn:import:com.arcbees.gaestudio.client.validation">
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{res.styles.glassPanel}" modal="true"
             styleName="{res.styles.popup}" autoHideEnabled="true">
         <g:HTMLPanel>
+            Submit an issue
+            <validation:ViolationsPanel ui:field="violations" visible="false"/>
             <div>Name
                 <g:TextBox ui:field="name"/>
             </div>
             <div>Email
                 <g:TextBox ui:field="email"/>
+            </div>
+            <div>Email
+                <g:TextBox ui:field="companyName"/>
             </div>
             <div>Subject
                 <g:TextBox ui:field="subject"/>

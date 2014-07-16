@@ -57,7 +57,7 @@ public interface VisualizerResources extends ClientBundle {
 
         String exportBtn();
 
-        String exportBtnDisabled();
+        String btnDisabled();
     }
 
     public interface EntityList extends GssResource {

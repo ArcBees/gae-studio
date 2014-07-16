@@ -9,11 +9,23 @@
 
 package com.arcbees.gaestudio.client.application.support;
 
+import com.google.common.base.Objects;
+
 public class SupportMessage {
     private String name;
+    @Email(message = "{email}")
     private String email;
     private String subject;
     private String body;
+    private String companyName;
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public String getBody() {
         return body;
@@ -45,5 +57,16 @@ public class SupportMessage {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("name", name)
+                .add("email", email)
+                .add("subject", subject)
+                .add("body", body)
+                .add("companyName", companyName)
+                .toString();
     }
 }

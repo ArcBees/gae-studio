@@ -102,6 +102,10 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void setRowSelected(String idString);
 
         void setData(List<ParsedEntity> parsedEntities);
+
+        void blockSendingNewRequests();
+
+        void allowSendingNewRequests();
     }
 
     public static final Object SLOT_NAMESPACES = new Object();
@@ -232,6 +236,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             return;
         }
 
+        getView().blockSendingNewRequests();
+
         gqlRequest = replaceQuotes(gqlRequest);
 
         restDispatch.execute(gqlService.executeGqlRequest(gqlRequest), new RestCallbackImpl<List<EntityDto>>() {
@@ -250,9 +256,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
             @Override
             public void setResponse(Response response) {
+                getView().allowSendingNewRequests();
+
                 int statusCode = response.getStatusCode();
 
-                if(statusCode == Response.SC_BAD_REQUEST) {
+                if (statusCode == Response.SC_BAD_REQUEST) {
                     DisplayMessageEvent.fire(this, new Message(appConstants.wrongGqlRequest(), MessageStyle.ERROR));
                 } else if(statusCode != Response.SC_OK) {
                     DisplayMessageEvent.fire(this, new Message(appConstants.somethingWentWrong(), MessageStyle.ERROR));
@@ -370,6 +378,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             parsedEntities.add(parsedEntity);
         }
 
+        adjustColumns(parsedEntities);
         getView().setData(parsedEntities);
         getView().setRowCount(parsedEntities.size());
     }
