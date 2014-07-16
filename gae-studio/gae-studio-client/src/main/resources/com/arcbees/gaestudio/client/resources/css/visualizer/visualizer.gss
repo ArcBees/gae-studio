@@ -97,8 +97,8 @@
     cursor: pointer;
 }
 
-.sidebar .actionsPanel .exportBtnDisabled,
-.sidebar .actionsPanel .exportBtnDisabled:hover {
+.sidebar .actionsPanel .btnDisabled,
+.sidebar .actionsPanel .btnDisabled:hover {
     background-color: #B7B7B7;
     pointer-events: none;
     cursor: default;

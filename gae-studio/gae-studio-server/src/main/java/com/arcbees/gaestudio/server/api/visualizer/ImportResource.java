@@ -96,7 +96,7 @@ public class ImportResource extends HttpServlet {
     public Response getUploadUrl() {
         String blobUploadUrl = blobstoreService.createUploadUrl(uploadUrl);
 
-        return Response.ok(new ObjectWrapper<String>(blobUploadUrl)).build();
+        return Response.ok(new ObjectWrapper<>(blobUploadUrl)).build();
     }
 
     @POST

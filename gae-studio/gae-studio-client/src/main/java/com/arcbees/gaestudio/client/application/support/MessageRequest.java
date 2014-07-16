@@ -13,7 +13,8 @@ public class MessageRequest {
     public static MessageRequest fromSupportMessage(SupportMessage supportMessage) {
         MessageRequest messageRequest = new MessageRequest();
 
-        messageRequest.setBody(supportMessage.getEmail() + " - " + supportMessage.getBody());
+        messageRequest.setBody(supportMessage.getEmail() + " (" + supportMessage.getCompanyName() + ") - " +
+                supportMessage.getBody());
         messageRequest.setTo("queenbee@arcbees.com");
         messageRequest.setPersonal("GAE Studio - Support Form");
         messageRequest.setSubject(supportMessage.getSubject());

@@ -10,6 +10,8 @@
 package com.arcbees.gaestudio.client.gin;
 
 import javax.inject.Singleton;
+import javax.validation.Validation;
+import javax.validation.Validator;
 
 import com.arcbees.gaestudio.client.application.ApplicationModule;
 import com.arcbees.gaestudio.client.application.version.VersionModule;
@@ -24,6 +26,7 @@ import com.arcbees.gaestudio.client.rest.RestModule;
 import com.arcbees.gaestudio.client.ui.UiModule;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.CurrentUser;
+import com.google.inject.Provides;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.ErrorPlace;
 import com.gwtplatform.mvp.client.annotations.GaAccount;
@@ -62,5 +65,10 @@ public class CommonModule extends AbstractPresenterModule {
         bind(GoogleAnalyticsNavigationTracker.class).asEagerSingleton();
 
         requestStaticInjection(AsyncCallbackImpl.class);
+    }
+
+    @Provides
+    Validator getValidator() {
+        return Validation.buildDefaultValidatorFactory().getValidator();
     }
 }

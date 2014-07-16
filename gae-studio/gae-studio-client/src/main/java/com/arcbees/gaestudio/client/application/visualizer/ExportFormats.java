@@ -7,22 +7,9 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.resources;
+package com.arcbees.gaestudio.client.application.visualizer;
 
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.GssResource;
-
-public interface MessageResources extends ClientBundle {
-    interface Styles extends GssResource {
-        String success();
-
-        String error();
-
-        String message();
-
-        String close();
-    }
-
-    @Source({"css/colors.gss", "css/messagestyles.gss"})
-    Styles styles();
+public class ExportFormats {
+    public static final String CSV = "CSV";
+    public static final String JSON = "JSON";
 }

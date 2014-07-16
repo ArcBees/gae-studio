@@ -27,8 +27,6 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 
-import static com.google.gwt.query.client.GQuery.$;
-
 public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditorCollectionWidgetFactory {
     private final FetchBlobKeysRunner fetchBlobKeysRunner = new FetchBlobKeysRunner() {
         @Override

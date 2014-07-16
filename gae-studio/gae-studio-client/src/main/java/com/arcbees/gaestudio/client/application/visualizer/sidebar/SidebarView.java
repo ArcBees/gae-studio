@@ -17,6 +17,7 @@ import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.chosen.client.ChosenOptions;
 import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.gwt.ChosenListBox;
+import com.arcbees.gaestudio.client.application.visualizer.ExportFormats;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.ChosenResources;
 import com.arcbees.gaestudio.client.resources.VisualizerResources;
@@ -87,7 +88,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     private Widget selectedKind;
     private String currentKind;
-    private String currentFormat = "JSON";
+    private String currentFormat = ExportFormats.JSON;
 
     @Inject
     SidebarView(Binder binder,
@@ -109,8 +110,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         chosenOptions.setResources(chosenResources);
         chosenFormat = new ChosenListBox(chosenOptions);
 
-        chosenFormat.addItem("CSV");
-        chosenFormat.addItem("JSON");
+        chosenFormat.addItem(ExportFormats.CSV);
+        chosenFormat.addItem(ExportFormats.JSON);
         chosenFormat.update();
 
         initWidget(binder.createAndBindUi(this));
@@ -124,7 +125,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         $(importKind).click(new Function() {
             @Override
             public void f() {
-                if (chosenFormat.getValue().equals("CSV")) {
+                if (chosenFormat.getValue().equals(ExportFormats.CSV)) {
                     getUiHandlers().importCsv();
                 } else {
                     getUiHandlers().importKind();
@@ -138,7 +139,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         $(exportKind).click(new Function() {
             @Override
             public void f() {
-                if (chosenFormat.getValue().equals("CSV")) {
+                if (chosenFormat.getValue().equals(ExportFormats.CSV)) {
                     getUiHandlers().exportCsv();
                 } else {
                     getUiHandlers().exportCurrentKind();
@@ -153,6 +154,13 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
             @Override
             public void onChange(ChosenChangeEvent chosenChangeEvent) {
                 currentFormat = chosenChangeEvent.getValue();
+
+                if (currentFormat.equals(ExportFormats.CSV)) {
+                    setImportEnabled(false);
+                } else {
+                    setImportEnabled(true);
+                }
+
                 universalAnalytics.sendEvent(UI_ELEMENTS, "click")
                         .eventLabel("Visualizer -> Kinds Sidebar -> Chosen format: " + currentFormat);
             }
@@ -220,9 +228,17 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     private void setExportEnabled(boolean enabled) {
         if (enabled) {
-            exportKind.removeClassName(visualizerResources.styles().exportBtnDisabled());
+            exportKind.removeClassName(visualizerResources.styles().btnDisabled());
         } else {
-            exportKind.addClassName(visualizerResources.styles().exportBtnDisabled());
+            exportKind.addClassName(visualizerResources.styles().btnDisabled());
+        }
+    }
+
+    private void setImportEnabled(boolean enabled) {
+        if (enabled) {
+            importKind.removeClassName(visualizerResources.styles().btnDisabled());
+        } else {
+            importKind.addClassName(visualizerResources.styles().btnDisabled());
         }
     }
 

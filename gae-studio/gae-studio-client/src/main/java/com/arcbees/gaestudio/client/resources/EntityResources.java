@@ -39,9 +39,9 @@ public interface EntityResources extends ClientBundle {
         String dropdown();
     }
 
-    @Source({"css/colors.css", "css/mixins.css", "css/entity/entity.css"})
+    @Source({"css/colors.gss", "css/mixins.gss", "css/entity/entity.gss"})
     public Styles styles();
 
-    @Source({"css/colors.css", "css/mixins.css", "css/entity/editor.css"})
+    @Source({"css/colors.gss", "css/mixins.gss", "css/entity/editor.gss"})
     public Editor editor();
 }

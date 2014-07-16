@@ -1,6 +1,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-        xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-
+        xmlns:g='urn:import:com.google.gwt.user.client.ui'
+        xmlns:validation="urn:import:com.arcbees.gaestudio.client.validation">
+    
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:with field="supportRes" type="com.arcbees.gaestudio.client.resources.SupportResources"/>
 
@@ -9,6 +10,7 @@
         <g:HTMLPanel styleName="{supportRes.styles.support}">
             <g:Button ui:field="cancel" text="Cancel" styleName="{supportRes.styles.buttonCancel}"/>
             <h1>Submit an issue</h1>
+            <validation:ViolationsPanel ui:field="violations" visible="false"/>
             <form>
                 <div>
                     <label>Name</label>
@@ -17,6 +19,10 @@
                 <div>
                     <label>Email<sup>*</sup></label>
                     <g:TextBox ui:field="email"/>
+                </div>
+                <div>
+                    <label>Company</label>
+                    <g:TextBox ui:field="companyName"/>
                 </div>
                 <div>
                     <label>Subject</label>
