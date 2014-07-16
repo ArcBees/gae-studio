@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ParentKeyDto {
+    private String encodedKey;
     private String kind;
     private Long id;
     private String name;
@@ -22,26 +23,36 @@ public class ParentKeyDto {
     }
 
     @JsonCreator
-    public ParentKeyDto(@JsonProperty("kind") String kind,
+    public ParentKeyDto(@JsonProperty("encodedKey") String encodedKey,
+                        @JsonProperty("kind") String kind,
                         @JsonProperty("id") Long id,
                         @JsonProperty("name") String name) {
+        this.encodedKey = encodedKey;
         this.kind = kind;
         this.id = id;
         this.name = name;
     }
 
-    public ParentKeyDto(String kind,
+    public ParentKeyDto(String encodedKey,
+                        String kind,
                         Long id) {
+        this.encodedKey = encodedKey;
         this.kind = kind;
         this.id = id;
         this.name = "";
     }
 
-    public ParentKeyDto(String kind,
+    public ParentKeyDto(String encodedKey,
+                        String kind,
                         String name) {
+        this.encodedKey = encodedKey;
         this.kind = kind;
         this.id = 0l;
         this.name = name;
+    }
+
+    public String getEncodedKey() {
+        return encodedKey;
     }
 
     public String getKind() {

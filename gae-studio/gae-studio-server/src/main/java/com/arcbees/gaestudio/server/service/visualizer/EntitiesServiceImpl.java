@@ -27,7 +27,9 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
+import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.storage.onestore.v3.OnestoreEntity.EntityProto;
 
 public class EntitiesServiceImpl implements EntitiesService {
@@ -83,7 +85,7 @@ public class EntitiesServiceImpl implements EntitiesService {
     }
 
     @Override
-    public void deleteEntities(String kind, String namespace, DeleteEntities deleteType) {
+    public void deleteEntities(String kind, String namespace, DeleteEntities deleteType, String encodedKeys) {
         AppEngineHelper.disableApiHooks();
 
         switch (deleteType) {
@@ -98,6 +100,9 @@ public class EntitiesServiceImpl implements EntitiesService {
                 break;
             case ALL:
                 deleteAll();
+                break;
+            case SET:
+                deleteSet(encodedKeys);
                 break;
         }
     }
@@ -160,6 +165,17 @@ public class EntitiesServiceImpl implements EntitiesService {
         return defaultValueGenerator.generate(property);
     }
 
+    private void deleteSet(String encodedKeys) {
+        Iterable<String> stringKeys = Splitter.on(",").split(encodedKeys);
+
+        List<Key> keys = Lists.newArrayList();
+        for (String key : stringKeys) {
+            keys.add(KeyFactory.stringToKey(key));
+        }
+
+        deleteKeys(keys);
+    }
+
     private void deleteByNamespace(String namespace) {
         String defaultNamespace = NamespaceManager.get();
         NamespaceManager.set(namespace);
@@ -211,6 +227,12 @@ public class EntitiesServiceImpl implements EntitiesService {
         for (Entity entity : entities) {
             datastore.delete(entity.getKey());
         }
+    }
+
+    private void deleteKeys(List<Key> keys) {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+        datastore.delete(keys);
     }
 
     private Iterable<Entity> getAllEntitiesOfAllNamespaces() {

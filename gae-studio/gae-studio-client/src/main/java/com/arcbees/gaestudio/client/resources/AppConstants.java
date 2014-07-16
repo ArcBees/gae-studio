@@ -126,5 +126,9 @@ public interface AppConstants extends Constants {
 
     String thankYou();
 
+    String entitySaved();
+
+    String entitiesSaved();
+
     String importSuccess();
 }

@@ -1,6 +1,5 @@
 .root {
     overflow-x: auto;
-    width: 46.5% !important;
     padding-left: 0;
     margin: 0 15px;
 }
