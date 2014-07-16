@@ -18,17 +18,17 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gwt.json.client.JSONValue;
 
 public class MessageHandlers {
-    private final Map<Topic, MessageHandler> HANDLER_MAP;
+    private final Map<Topic, MessageHandler> handlerMap;
 
     @Inject
     MessageHandlers(ImportCompletedMessageHandler importCompletedMessageHandler) {
-        HANDLER_MAP = ImmutableMap.<Topic, MessageHandler>builder()
+        handlerMap = ImmutableMap.<Topic, MessageHandler>builder()
                 .put(importCompletedMessageHandler.getTopic(), importCompletedMessageHandler)
                 .build();
     }
 
     public void handle(Topic topic, JSONValue payload) {
-        MessageHandler messageHandler = HANDLER_MAP.get(topic);
+        MessageHandler messageHandler = handlerMap.get(topic);
         messageHandler.handleMessage(payload);
     }
 }
