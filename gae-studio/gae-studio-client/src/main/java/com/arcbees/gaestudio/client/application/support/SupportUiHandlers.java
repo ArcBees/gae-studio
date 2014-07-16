@@ -7,13 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.license;
+package com.arcbees.gaestudio.client.application.support;
 
-import com.google.inject.AbstractModule;
+import com.gwtplatform.mvp.client.UiHandlers;
 
-public class LicenseModule extends AbstractModule {
-    @Override
-    protected void configure() {
-        bind(LicenseChecker.class).to(LicenseCheckerImpl.class);
-    }
+public interface SupportUiHandlers extends UiHandlers {
+    void send(SupportMessage supportMessage);
 }

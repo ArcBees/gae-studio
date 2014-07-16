@@ -11,6 +11,6 @@ package com.arcbees.gaestudio.client.application.widget;
 
 import com.gwtplatform.mvp.client.UiHandlers;
 
-interface HeaderUiHandlers extends UiHandlers {
-    void logout();
+public interface HeaderUiHandlers extends UiHandlers {
+    void supportClicked();
 }

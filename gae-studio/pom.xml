@@ -59,6 +59,7 @@
         <hibernate.version>4.1.0.Final</hibernate.version>
         <hibernate-source.version>4.1.0.Final</hibernate-source.version>
         <javax.validation.version>1.0.0.GA</javax.validation.version>
+        <analytics.version>1.0-SNAPSHOT</analytics.version>
 
         <!-- test -->
         <junit.version>4.11</junit.version>

@@ -7,8 +7,9 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.license;
+package com.arcbees.gaestudio.client.application.support;
 
-public interface LicenseChecker {
-    Boolean isLicenseValid();
+import com.github.nmorel.gwtjackson.client.ObjectMapper;
+
+public interface MessageRequestMapper extends ObjectMapper<MessageRequest> {
 }

@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
+import com.arcbees.gaestudio.client.application.analytics.EventCategories;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
@@ -46,6 +48,8 @@ import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.view.client.AsyncDataProvider;
@@ -60,6 +64,7 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
+import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent.EntitiesDeletedHandler;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent.EntityDeletedHandler;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent.EntitySavedHandler;
@@ -104,6 +109,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private final GqlService gqlService;
     private final AppConstants appConstants;
     private final AppMessages appMessages;
+    private final UniversalAnalytics universalAnalytics;
 
     private String currentKind;
 
@@ -117,7 +123,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         NamespacesListPresenterFactory namespacesListPresenterFactory,
                         GqlService gqlService,
                         AppConstants appConstants,
-                        AppMessages appMessages) {
+                        AppMessages appMessages,
+                        UniversalAnalytics universalAnalytics) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
@@ -127,6 +134,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         this.gqlService = gqlService;
         this.appConstants = appConstants;
         this.appMessages = appMessages;
+        this.universalAnalytics = universalAnalytics;
         this.namespacesListPresenter = namespacesListPresenterFactory.create(this);
 
         getView().setUiHandlers(this);
@@ -200,6 +208,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                 DeleteEntitiesEvent.fire(this, DeleteEntities.KIND_NAMESPACE, currentKind, namespaceDto.getNamespace());
             }
         }
+
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                .eventLabel("Visualizer -> List View -> Delete All Entities Button");
     }
 
     @Override
@@ -258,6 +269,14 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
         addRegisteredHandler(SetStateFromPlaceRequestEvent.getType(), this);
         addRegisteredHandler(KindSelectedEvent.getType(), this);
+
+        namespacesListPresenter.addValueChangeHandler(new ValueChangeHandler<AppIdNamespaceDto>() {
+            @Override
+            public void onValueChange(ValueChangeEvent<AppIdNamespaceDto> event) {
+                universalAnalytics.sendEvent(EventCategories.UI_ELEMENTS, "value changed")
+                        .eventLabel("Visualizer -> List View -> Kinds");
+            }
+        });
 
         setInSlot(SLOT_NAMESPACES, namespacesListPresenter);
     }

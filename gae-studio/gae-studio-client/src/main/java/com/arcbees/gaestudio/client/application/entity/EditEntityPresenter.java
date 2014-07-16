@@ -122,6 +122,11 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
     }
 
     @Override
+    public boolean useManualReveal() {
+        return true;
+    }
+
+    @Override
     public void save() {
         getView().clearErrors();
 
@@ -157,6 +162,13 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
 
         entitiesEditor = entityEditorFactory.create(currentEntities);
         setInSlot(EDITOR_SLOT, entitiesEditor);
+    }
+
+    @Override
+    protected void onReveal() {
+        super.onReveal();
+
+        FullScreenEvent.fire(EditEntityPresenter.this, false);
     }
 
     @Override
@@ -212,7 +224,15 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
                 entityEditor = entityEditorFactory.create(currentEntity);
 
                 setInSlot(EDITOR_SLOT, entityEditor);
-                FullScreenEvent.fire(this, false);
+
+                getProxy().manualReveal(EditEntityPresenter.this);
+            }
+
+            @Override
+            public void handleFailure(Throwable caught) {
+                super.handleFailure(caught);
+
+                getProxy().manualRevealFailed();
             }
         };
 

@@ -7,14 +7,8 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.companion.guice;
+package com.arcbees.gaestudio.client.application.analytics;
 
-import com.arcbees.gaestudio.server.license.LicenseModule;
-import com.google.inject.AbstractModule;
-
-public class UnsecureLicenseModule extends AbstractModule {
-    @Override
-    protected void configure() {
-        install(new LicenseModule());
-    }
+public class EventCategories {
+    public static final String UI_ELEMENTS = "UI elements";
 }

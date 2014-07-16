@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer;
 
 import java.util.Set;
 
+import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
@@ -54,6 +55,8 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
+import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
+
 public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler,
         RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler,
@@ -82,10 +85,10 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
     @ContentSlot
     public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_ENTITIES = new GwtEvent.Type<>();
-    @ContentSlot
-    public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_ENTITY_DETAILS = new GwtEvent.Type<>();
     public static final Object SLOT_TOOLBAR = new Object();
     public static final Object SLOT_KINDS = new Object();
+    @ContentSlot
+    public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_ENTITY_DETAILS = new GwtEvent.Type<>();
 
     private final EntityListPresenter entityListPresenter;
     private final SidebarPresenter sidebarPresenter;
@@ -96,6 +99,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     private final AppResources resources;
     private final AppConstants myConstants;
     private final ToolbarPresenter toolbarPresenter;
+    private final UniversalAnalytics universalAnalytics;
 
     private ParsedEntity currentParsedEntity;
     private Set<ParsedEntity> currentParsedEntities;
@@ -111,7 +115,8 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
                         AppResources resources,
                         AppConstants appConstants,
                         PlaceManager placeManager,
-                        ToolbarPresenter toolbarPresenter) {
+                        ToolbarPresenter toolbarPresenter,
+                        UniversalAnalytics universalAnalytics) {
         super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
         this.uiFactory = uiFactory;
@@ -121,6 +126,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         this.resources = resources;
         this.myConstants = appConstants;
         this.toolbarPresenter = toolbarPresenter;
+        this.universalAnalytics = universalAnalytics;
 
         edit = createEditButton();
         delete = createDeleteButton();
@@ -155,6 +161,12 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     @Override
     public void onToolbarToggle(ToolbarToggleEvent event) {
         getView().updatePanelsWidth();
+
+        if (event.isOpen()) {
+            universalAnalytics.sendEvent(UI_ELEMENTS, "close").eventLabel("Visualizer -> Actions Sidebar");
+        } else {
+            universalAnalytics.sendEvent(UI_ELEMENTS, "open").eventLabel("Visualizer -> Actions Sidebar");
+        }
     }
 
     @Override
@@ -234,6 +246,8 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
                     @Override
                     public void onClicked() {
                         delete();
+
+                        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Delete Entity");
                     }
                 }, DebugIds.DELETE_ENGAGE
         );
@@ -253,6 +267,8 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
                     @Override
                     public void onClicked() {
                         edit();
+
+                        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Edit Entity");
                     }
                 }, DebugIds.EDIT
         );

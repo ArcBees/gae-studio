@@ -15,6 +15,8 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeleted
 import com.arcbees.gaestudio.client.rest.NamespacesService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.web.bindery.event.shared.EventBus;
@@ -53,6 +55,15 @@ public class NamespacesListPresenter extends PresenterWidget<NamespacesListPrese
     @Override
     public void deleteAllFromNamespace(AppIdNamespaceDto namespaceDto) {
         deleteHandler.onDeleteAllFromNamespace(namespaceDto);
+    }
+
+    @Override
+    public void dropdownValueChanged(ValueChangeEvent<AppIdNamespaceDto> event) {
+        fireEvent(event);
+    }
+
+    public void addValueChangeHandler(ValueChangeHandler<AppIdNamespaceDto> handler) {
+        addRegisteredHandler(ValueChangeEvent.getType(), handler);
     }
 
     @Override

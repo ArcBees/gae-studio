@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import java.util.Set;
 
+import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.shared.DeleteEntities;
@@ -27,6 +28,8 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
+import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
+
 public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUiHandlers>
         implements EntityDeletionPresenter.MyView {
     interface Binder extends UiBinder<Widget, EntityDeletionView> {
@@ -40,14 +43,17 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
     HTML message;
 
     private final AppMessages messages;
+    private final UniversalAnalytics universalAnalytics;
 
     @Inject
     EntityDeletionView(Binder uiBinder,
                        EventBus eventBus,
-                       AppMessages messages) {
+                       AppMessages messages,
+                       UniversalAnalytics universalAnalytics) {
         super(eventBus);
 
         this.messages = messages;
+        this.universalAnalytics = universalAnalytics;
 
         initWidget(uiBinder.createAndBindUi(this));
     }
@@ -99,11 +105,17 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
     void onDeletionClicked(ClickEvent event) {
         getUiHandlers().deleteEntity();
         asPopupPanel().hide();
+
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                .eventLabel("Visualizer -> Delete Confirmation Popup -> Delete");
     }
 
     @UiHandler({"cancel", "close"})
     void onCancelClicked(ClickEvent event) {
         getUiHandlers().reset();
         asPopupPanel().hide();
+
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                .eventLabel("Visualizer -> Delete Confirmation Popup -> Cancel or Close");
     }
 }
