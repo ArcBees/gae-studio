@@ -19,7 +19,6 @@ import com.arcbees.gaestudio.shared.channel.Topic;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.query.client.GQuery;
 import com.google.web.bindery.event.shared.EventBus;
 
 public class ImportCompletedMessageHandler implements MessageHandler, HasHandlers {
@@ -35,7 +34,6 @@ public class ImportCompletedMessageHandler implements MessageHandler, HasHandler
 
     @Override
     public void handleMessage(JSONValue payload) {
-        GQuery.console.info(payload.toString());
         Message displayMessage = new Message(appConstants.importSuccess(), MessageStyle.SUCCESS);
         DisplayMessageEvent.fire(this, displayMessage);
     }
