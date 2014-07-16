@@ -24,11 +24,11 @@ import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;
 
-@Path(EndPoints.OPERATIONS)
+@Path(EndPoints.CHANNEL)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
-public class OperationsResource {
+public class ChannelResource {
     @Path(EndPoints.TOKEN)
     @GET
     public Response createToken(@QueryParam(Constants.CLIENT_ID) String cliendId) {

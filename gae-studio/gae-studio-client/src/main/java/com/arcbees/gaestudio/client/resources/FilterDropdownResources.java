@@ -25,6 +25,6 @@ public interface FilterDropdownResources extends Dropdown.Resources {
     ImageResource dropDownArrowUp();
 
     @Override
-    @Source({"css/filterDropdownStyles.css", "css/mixins.css", "css/colors.css"})
+    @Source({"css/filterDropdownStyles.css", "css/mixins.gss", "css/colors.gss"})
     MyDropdownStyle styles();
 }

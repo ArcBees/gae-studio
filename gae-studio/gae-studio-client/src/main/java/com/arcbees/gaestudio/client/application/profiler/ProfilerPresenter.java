@@ -26,7 +26,7 @@ import com.arcbees.gaestudio.client.debug.DebugLogMessages;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppResources;
-import com.arcbees.gaestudio.client.rest.OperationsService;
+import com.arcbees.gaestudio.client.rest.ChannelService;
 import com.arcbees.gaestudio.client.rest.RecordService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.channel.Token;
@@ -69,7 +69,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     public static final Object SLOT_TOOLBAR = new Object();
 
     private final RestDispatch restDispatch;
-    private final OperationsService operationsService;
+    private final ChannelService channelService;
     private final FiltersPresenter filterPresenter;
     private final StatisticsPresenter statisticsPresenter;
     private final StatementPresenter statementPresenter;
@@ -94,7 +94,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                       MyView view,
                       MyProxy proxy,
                       RestDispatch restDispatch,
-                      OperationsService operationsService,
+                      ChannelService channelService,
                       FiltersPresenter filterPresenter,
                       StatisticsPresenter statisticsPresenter,
                       StatementPresenter statementPresenter,
@@ -110,7 +110,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         super(eventBus, view, proxy);
 
         this.restDispatch = restDispatch;
-        this.operationsService = operationsService;
+        this.channelService = channelService;
         this.filterPresenter = filterPresenter;
         this.statisticsPresenter = statisticsPresenter;
         this.statementPresenter = statementPresenter;
@@ -264,7 +264,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     private void openChannel() {
-        restDispatch.execute(operationsService.getToken(clientId), new AsyncCallbackImpl<Token>() {
+        restDispatch.execute(channelService.getToken(clientId), new AsyncCallbackImpl<Token>() {
             @Override
             public void onSuccess(Token token) {
                 openChannel(token);

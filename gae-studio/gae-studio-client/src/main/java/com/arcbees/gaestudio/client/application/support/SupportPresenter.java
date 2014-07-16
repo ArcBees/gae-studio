@@ -9,7 +9,11 @@
 
 package com.arcbees.gaestudio.client.application.support;
 
+import java.util.Set;
+
 import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import javax.ws.rs.core.HttpHeaders;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
@@ -30,6 +34,10 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> implements SupportUiHandlers {
     interface MyView extends PopupView, HasUiHandlers<SupportUiHandlers> {
         void edit(SupportMessage supportMessage);
+
+        void showViolations(Set<ConstraintViolation<SupportMessage>> constraintViolations);
+
+        void hideViolations();
     }
 
     private static final String MAIL_URL = "https://mail.arcbees.com/mail";
@@ -37,16 +45,19 @@ public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> i
 
     private final MessageRequestMapper messageRequestMapper;
     private final AppConstants appConstants;
+    private final Validator validator;
 
     @Inject
     SupportPresenter(EventBus eventBus,
                      MyView view,
                      MessageRequestMapper messageRequestMapper,
-                     AppConstants appConstants) {
+                     AppConstants appConstants,
+                     Validator validator) {
         super(eventBus, view);
 
         this.messageRequestMapper = messageRequestMapper;
         this.appConstants = appConstants;
+        this.validator = validator;
 
         getView().setUiHandlers(this);
     }
@@ -56,10 +67,22 @@ public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> i
         super.onReveal();
 
         getView().edit(new SupportMessage());
+        getView().hideViolations();
     }
 
     @Override
     public void send(SupportMessage supportMessage) {
+        Set<ConstraintViolation<SupportMessage>> constraintViolations = validator.validate(supportMessage);
+
+        if (constraintViolations.isEmpty()) {
+            getView().hideViolations();
+            sendMessage(supportMessage);
+        } else {
+            getView().showViolations(constraintViolations);
+        }
+    }
+
+    private void sendMessage(SupportMessage supportMessage) {
         RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.POST, URL.encode(MAIL_URL));
 
         requestBuilder.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");

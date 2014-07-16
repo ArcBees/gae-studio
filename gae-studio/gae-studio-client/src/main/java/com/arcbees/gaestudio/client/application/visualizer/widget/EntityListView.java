@@ -163,6 +163,16 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
+    public void blockSendingNewRequests() {
+        runQueryButton.setEnabled(false);
+    }
+
+    @Override
+    public void allowSendingNewRequests() {
+        runQueryButton.setEnabled(true);
+    }
+
+    @Override
     public void addOrReplaceEntity(EntityDto entityDto) {
         int rowIndex = getRowIndex(entityDto);
 

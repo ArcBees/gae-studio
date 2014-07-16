@@ -23,6 +23,6 @@ public interface MessageResources extends ClientBundle {
         String close();
     }
 
-    @Source({"css/colors.css", "css/messagestyles.css"})
+    @Source({"css/colors.gss", "css/messagestyles.gss"})
     Styles styles();
 }

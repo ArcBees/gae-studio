@@ -19,8 +19,8 @@ import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
 import com.gwtplatform.dispatch.rest.shared.RestService;
 
-@Path(EndPoints.OPERATIONS)
-public interface OperationsService extends RestService {
+@Path(EndPoints.CHANNEL)
+public interface ChannelService extends RestService {
     @Path(EndPoints.TOKEN)
     @GET
     RestAction<Token> getToken(@QueryParam(Constants.CLIENT_ID) String clientId);

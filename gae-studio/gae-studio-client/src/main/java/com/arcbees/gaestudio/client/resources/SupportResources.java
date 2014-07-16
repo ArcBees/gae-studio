@@ -11,40 +11,22 @@ package com.arcbees.gaestudio.client.resources;
 
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.GssResource;
+import com.google.gwt.resources.client.ImageResource;
 
-public interface ProfilerResources extends ClientBundle {
+public interface SupportResources extends ClientBundle {
     public interface Styles extends GssResource {
-        String root();
+        String support();
 
-        String toolbar();
+        String buttonCancel();
 
-        String splitLayoutPanel();
+        String buttonContainer();
 
-        String leftPanel();
-
-        String lightGrey();
-
-        String mediumGrey();
-
-        String whitePanel();
-
-        String buttons();
-
-        String panel();
-
-        String listGraph();
-
-        String statements();
-
-        String filter();
-
-        String content();
-
-        String whiteLine();
-
-        String ui();
+        String button();
     }
 
-    @Source({"css/colors.gss", "css/mixins.gss", "css/profiler/profiler.gss"})
-    public Styles styles();
+    @Source("images/supportClose.png")
+    ImageResource supportClose();
+
+    @Source({"css/colors.gss", "css/mixins.gss", "css/support.gss"})
+    Styles styles();
 }
