@@ -15,10 +15,10 @@ import com.arcbees.gaestudio.companion.domain.Car;
 import com.arcbees.gaestudio.companion.rest.TestEndPoints;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.jayway.restassured.response.Response;
 
 import static com.jayway.restassured.RestAssured.given;
-import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 import static javax.ws.rs.core.Response.Status.OK;
@@ -43,7 +43,7 @@ public class EntityResourceIT extends RestIT {
     }
 
     @Test
-    public void getEntity_createStringIdEntity_shouldReturnEntity() {
+    public void getEntity_createStringIdEntity_shouldReturnEntity() throws InterruptedException {
         //given
         createStringIdEntity(AN_ENTITY_NAME);
 
@@ -55,18 +55,6 @@ public class EntityResourceIT extends RestIT {
         assertEquals(OK.getStatusCode(), response.getStatusCode());
         assertEquals(STRING_ENTITY_KIND, entityDto.getKey().getKind());
         assertEquals(AN_ENTITY_NAME, entityDto.getKey().getName());
-    }
-
-    @Test
-    public void getEntityWithIdAndName_createStringIdEntity_shouldReturnBadRequest() {
-        //given
-        Long carId = createRemoteCar();
-
-        //when
-        Response response = getEntityWithIdAndNameResponse(AN_ENTITY_NAME, carId);
-
-        //then
-        assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
     }
 
     @Test
@@ -117,9 +105,16 @@ public class EntityResourceIT extends RestIT {
 
     private Response deleteEntityResponse(Long carId) {
         return given()
-                .queryParam(TestEndPoints.PARAM_KIND, CAR_KIND)
-                .queryParam(TestEndPoints.PARAM_ID, carId)
+                .queryParam(TestEndPoints.PARAM_KEY, getEncodedCarKey(carId))
                 .delete(getAbsoluteUri(EndPoints.ENTITY));
+    }
+
+    private String getEncodedCarKey(Long carId) {
+        return KeyFactory.createKeyString(CAR_KIND, carId);
+    }
+
+    private String getEncodedStringIdKey(String name) {
+        return KeyFactory.createKeyString(STRING_ENTITY_KIND, name);
     }
 
     private EntityDto responseToEntityDto(Response response) {
@@ -128,23 +123,13 @@ public class EntityResourceIT extends RestIT {
 
     private Response getCarEntityResponse(Long carId) {
         return given()
-                .queryParam(TestEndPoints.PARAM_KIND, CAR_KIND)
-                .queryParam(TestEndPoints.PARAM_ID, carId)
+                .queryParam(TestEndPoints.PARAM_KEY, getEncodedCarKey(carId))
                 .get(getAbsoluteUri(EndPoints.ENTITY));
     }
 
     private Response getStringIdEntityResponse(String name) {
         return given()
-                .queryParam(TestEndPoints.PARAM_KIND, STRING_ENTITY_KIND)
-                .queryParam(TestEndPoints.PARAM_NAME, name)
-                .get(getAbsoluteUri(EndPoints.ENTITY));
-    }
-
-    private Response getEntityWithIdAndNameResponse(String name, Long id) {
-        return given()
-                .queryParam(TestEndPoints.PARAM_KIND, CAR_KIND)
-                .queryParam(TestEndPoints.PARAM_ID, id)
-                .queryParam(TestEndPoints.PARAM_NAME, name)
+                .queryParam(TestEndPoints.PARAM_KEY, getEncodedStringIdKey(name))
                 .get(getAbsoluteUri(EndPoints.ENTITY));
     }
 }

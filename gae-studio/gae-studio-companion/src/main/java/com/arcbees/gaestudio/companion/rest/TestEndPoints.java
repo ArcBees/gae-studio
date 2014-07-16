@@ -15,7 +15,7 @@ public class TestEndPoints {
     public static final String PARAM_KIND = "kind";
     public static final String PARAM_TYPE = "type";
     public static final String PARAM_ID = "id";
-    public static final String PARAM_NAME = "name";
+    public static final String PARAM_KEY = "key";
 
     public static final String CAR = "car/";
     public static final String STRING_ID_ENTITY = "string_id_entity/";
