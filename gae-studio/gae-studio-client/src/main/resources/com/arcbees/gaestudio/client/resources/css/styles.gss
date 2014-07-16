@@ -454,30 +454,37 @@ input:focus, textarea:focus, button:focus {
     gwt-sprite: "pencil_rl";
 }
 
-.refresh {
-    gwt-sprite: "refresh_up";
-    cursor: pointer;
+.refresh,
+.deselect,
+.deselectDisabled {
+    font-size: 1.3em;
+
     display: inline-block;
+
+    cursor: pointer;
+
+    @mixin transition(background-color, 0.3s);
 }
 
-.refresh:hover {
-    gwt-sprite: "refresh_rl";
+.refresh i,
+.deselect i {
+    display: inline-block;
+
+    @mixin transition(all, 0.1s);
 }
 
-.deselect {
-    gwt-sprite: "deselect_up";
-    cursor: pointer;
-    display: inline-block;
+.refresh:hover,
+.deselect:hover {
+    color: C_PRIMARY;
+}
+
+.refresh:hover i {
+    -webkit-transform: translate(0px, 0.5px) rotate(-40deg);
+    transform: translate(0px, 1px) rotate(180deg);
 }
 
 .deselectDisabled {
-    gwt-sprite: "deselect_dis";
-    cursor: default;
-    display: inline-block;
-}
-
-.deselect:hover {
-    gwt-sprite: "deselect_rl";
+    color: C_SECONDARY_LIGHT;
 }
 
 .toolbarButton:hover .delete {

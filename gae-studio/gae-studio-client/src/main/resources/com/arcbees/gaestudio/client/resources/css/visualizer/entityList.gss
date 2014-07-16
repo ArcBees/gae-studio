@@ -36,7 +36,7 @@
 
 .refresh {
     display: inline-block;
-    margin: 17px 0 0 20px;
+    margin: 14px 0 0 20px;
     border-right: 2px solid C_SECONDARY_LIGHT;
     padding-right: 6px;
 }
