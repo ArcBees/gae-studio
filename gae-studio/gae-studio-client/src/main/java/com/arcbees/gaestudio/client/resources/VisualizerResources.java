@@ -57,7 +57,7 @@ public interface VisualizerResources extends ClientBundle {
 
         String exportBtn();
 
-        String exportBtnDisabled();
+        String btnDisabled();
     }
 
     public interface EntityList extends GssResource {
@@ -89,9 +89,9 @@ public interface VisualizerResources extends ClientBundle {
     @Source("images/byGQLBtn.png")
     ImageResource byGQLBtn();
 
-    @Source({"css/colors.css", "css/visualizer/visualizer.css"})
+    @Source({"css/colors.gss", "css/visualizer/visualizer.gss"})
     public Styles styles();
 
-    @Source({"css/colors.css", "css/mixins.css", "css/visualizer/entityList.css"})
+    @Source({"css/colors.gss", "css/mixins.gss", "css/visualizer/entityList.gss"})
     public EntityList entityList();
 }

@@ -45,6 +45,6 @@ public interface ProfilerResources extends ClientBundle {
         String ui();
     }
 
-    @Source({"css/colors.css", "css/mixins.css", "css/profiler/profiler.css"})
+    @Source({"css/colors.gss", "css/mixins.gss", "css/profiler/profiler.gss"})
     public Styles styles();
 }

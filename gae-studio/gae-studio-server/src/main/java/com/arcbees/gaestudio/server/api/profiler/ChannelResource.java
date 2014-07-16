@@ -18,17 +18,17 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
-import com.arcbees.gaestudio.shared.Constants;
+import com.arcbees.gaestudio.shared.channel.Constants;
 import com.arcbees.gaestudio.shared.channel.Token;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;
 
-@Path(EndPoints.OPERATIONS)
+@Path(EndPoints.CHANNEL)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
-public class OperationsResource {
+public class ChannelResource {
     @Path(EndPoints.TOKEN)
     @GET
     public Response createToken(@QueryParam(Constants.CLIENT_ID) String cliendId) {

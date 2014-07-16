@@ -16,6 +16,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -33,6 +34,9 @@ import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.api.client.repackaged.com.google.common.base.Strings;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 
 @Path(EndPoints.ENTITIES)
 @Produces(MediaType.APPLICATION_JSON)
@@ -93,11 +97,12 @@ public class EntitiesResource {
     @DELETE
     public Response deleteEntities(@QueryParam(UrlParameters.KIND) String kind,
                                    @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                                   @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType) {
+                                   @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType,
+                                   @QueryParam(UrlParameters.KEY) String encodedKeys) {
         ResponseBuilder responseBuilder;
 
-        if (isValidDeleteRequest(kind, namespace, deleteType)) {
-            entitiesService.deleteEntities(kind, namespace, deleteType);
+        if (isValidDeleteRequest(kind, namespace, deleteType, encodedKeys)) {
+            entitiesService.deleteEntities(kind, namespace, deleteType, encodedKeys);
             responseBuilder = Response.noContent();
         } else {
             responseBuilder = Response.status(Status.BAD_REQUEST);
@@ -121,11 +126,32 @@ public class EntitiesResource {
         return responseBuilder.build();
     }
 
-    private boolean isValidDeleteRequest(String kind, String namespace, DeleteEntities deleteType) {
+    @PUT
+    public Response updateEntities(List<EntityDto> entitiesDto) throws EntityNotFoundException {
+        List<Entity> entities = FluentIterable.from(entitiesDto)
+                .transform(new Function<EntityDto, Entity>() {
+                    @Override
+                    public Entity apply(EntityDto input) {
+                        return entityMapper.mapDtoToEntity(input);
+                    }
+                }).toList();
+
+        entitiesService.put(entities);
+
+        return Response.ok().build();
+    }
+
+    private boolean isValidDeleteRequest(String kind,
+                                         String namespace,
+                                         DeleteEntities deleteType,
+                                         String encodedKeys) {
         boolean isValid = false;
 
         if (deleteType != null) {
             switch (deleteType) {
+                case ALL:
+                    isValid = true;
+                    break;
                 case KIND:
                     isValid = kind != null;
                     break;
@@ -135,8 +161,8 @@ public class EntitiesResource {
                 case KIND_NAMESPACE:
                     isValid = namespace != null && kind != null;
                     break;
-                case ALL:
-                    isValid = true;
+                case SET:
+                    isValid = !Strings.isNullOrEmpty(encodedKeys);
                     break;
                 default:
                     isValid = false;

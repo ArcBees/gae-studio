@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import com.arcbees.gaestudio.client.application.channel.ChannelHandler;
 import com.arcbees.gaestudio.client.rest.ImportService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.ObjectWrapper;
@@ -32,18 +33,21 @@ public class ImportPresenter extends PresenterWidget<ImportPresenter.MyView> imp
     private final RestDispatchAsync restDispatch;
     private final ImportService importService;
     private final UploadFormFactory uploadFormFactory;
+    private final ChannelHandler channelHandler;
 
     @Inject
     ImportPresenter(EventBus eventBus,
                     MyView view,
                     RestDispatchAsync restDispatch,
                     ImportService importService,
-                    UploadFormFactory uploadFormFactory) {
+                    UploadFormFactory uploadFormFactory,
+                    ChannelHandler channelHandler) {
         super(eventBus, view);
 
         this.restDispatch = restDispatch;
         this.importService = importService;
         this.uploadFormFactory = uploadFormFactory;
+        this.channelHandler = channelHandler;
 
         getUploadUrl();
     }
@@ -54,8 +58,13 @@ public class ImportPresenter extends PresenterWidget<ImportPresenter.MyView> imp
     }
 
     @Override
-    public void onFileChosen(String chosenFileName) {
-        getView().onFileChosen(chosenFileName);
+    public void onFileChosen(final String chosenFileName) {
+        channelHandler.openChannel(new ChannelHandler.ChannelOpenCallback() {
+            @Override
+            public void onChannelOpen() {
+                getView().onFileChosen(chosenFileName);
+            }
+        });
     }
 
     @Override

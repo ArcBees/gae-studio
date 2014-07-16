@@ -7,10 +7,13 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.ui;
+package com.arcbees.gaestudio.client.application.channel;
 
-public interface VisualizerUiFactory {
-    PropertyColumn createPropertyColumn(String property);
+import com.arcbees.gaestudio.shared.channel.Topic;
+import com.google.gwt.json.client.JSONValue;
 
-    JsonContainer createJsonContainer(String jsonContent);
+public interface MessageHandler {
+    void handleMessage(JSONValue payload);
+
+    Topic getTopic();
 }

@@ -17,12 +17,11 @@ import org.jukito.TestSingleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.arcbees.gaestudio.server.service.visualizer.EntityService;
-import com.arcbees.gaestudio.server.service.visualizer.EntityServiceImpl;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 import static org.junit.Assert.assertEquals;
 
@@ -87,6 +86,8 @@ public class EntityServiceImplTest extends GaeTestBase {
     }
 
     private Entity getEntityFromEntityResource(Long id) throws EntityNotFoundException {
-        return entityService.getEntity(id, null, null, KIND_NAME, null, null);
+        Key key = KeyFactory.createKey(KIND_NAME, id);
+
+        return entityService.getEntity(KeyFactory.keyToString(key));
     }
 }

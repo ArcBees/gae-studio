@@ -29,8 +29,10 @@ public interface WidgetResources extends ClientBundle {
         String activeState();
 
         String messages();
+
+        String issueBtn();
     }
 
-    @Source({"css/colors.css", "css/widget/header.css"})
+    @Source({"css/colors.gss", "css/mixins.gss", "css/widget/header.gss"})
     public Header header();
 }

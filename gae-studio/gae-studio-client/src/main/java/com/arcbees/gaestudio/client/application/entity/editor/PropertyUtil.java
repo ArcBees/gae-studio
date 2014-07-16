@@ -63,21 +63,21 @@ public class PropertyUtil {
     public static JSONValue parseJsonValueWithMetadata(JSONValue value, PropertyType type, Boolean indexed) {
         JSONObject wrapper = null;
 
-        if (!indexed) {
+        if (!indexed || type != PropertyType.NULL) {
             wrapper = new JSONObject();
-            wrapper.put(INDEXED, JSONBoolean.getInstance(false));
-        }
-
-        if (type != PropertyType.NULL) {
-            if (wrapper == null) {
-                wrapper = new JSONObject();
-            }
-
-            wrapper.put(GAE_PROPERTY_TYPE, new JSONString(type.name()));
         }
 
         if (wrapper != null) {
             wrapper.put(VALUE, value);
+
+            if (type != PropertyType.NULL) {
+                wrapper.put(GAE_PROPERTY_TYPE, new JSONString(type.name()));
+            }
+
+            if (!indexed) {
+                wrapper.put(INDEXED, JSONBoolean.getInstance(false));
+            }
+
             return wrapper;
         }
 

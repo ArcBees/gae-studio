@@ -235,11 +235,6 @@ input:focus, textarea:focus, button:focus {
     overflow: visible;
 }
 
-.firstTable .lockedRow td {
-    background-color: C_PRIMARY;
-    color: #fff;
-}
-
 .firstTable, .secondTable {
     width: 100%;
 }
@@ -306,7 +301,7 @@ input:focus, textarea:focus, button:focus {
     background-color: C_SECONDARY_LIGHT;
     color: #2d2d2d;
 
-    padding: 20px 20px 20px 20px;
+    padding: 20px;
 
     z-index: 110;
     position: relative;

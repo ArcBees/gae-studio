@@ -2,6 +2,59 @@
     position: relative;
 }
 
+.issueBtn {
+    color: #fff;
+    font-size: 16px;
+    background-image: none;
+    background-color: transparent;
+
+    border: 0;
+    padding: 0 0 5px;
+
+    position: absolute;
+    top: 32px;
+    right: 20px;
+
+    cursor: pointer;
+
+    @mixin opacity(0.5);
+    @mixin boxshadow_none();
+    @mixin transition(opacity, 0.2s);
+}
+
+.issueBtn::after {
+    content: '';
+    background: #fff;
+
+    width: 100%;
+    height: 1px;
+
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    -webkit-transform: translateY(-10px);
+    -moz-transform: translateY(-10px);
+    transform: translateY(-10px);
+
+    @mixin opacity(0);
+    @mixin transition(all, 0.2s);
+}
+
+.issueBtn:hover::after {
+    height: 3px;
+
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    transform: translateY(0px);
+
+    @mixin opacity(0.8);
+}
+
+.issueBtn:active {
+    @mixin opacity(1);
+}
+
 .menu {
     float: right;
 

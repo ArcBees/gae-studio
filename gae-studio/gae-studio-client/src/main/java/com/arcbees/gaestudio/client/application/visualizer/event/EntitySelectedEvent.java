@@ -50,7 +50,7 @@ public class EntitySelectedEvent extends GwtEvent<EntitySelectedEvent.EntitySele
         handler.onEntitySelected(this);
     }
 
-    public com.arcbees.gaestudio.client.application.visualizer.ParsedEntity getParsedEntity() {
+    public ParsedEntity getParsedEntity() {
         return parsedEntity;
     }
 }
