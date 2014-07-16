@@ -22,6 +22,8 @@ public interface SupportResources extends ClientBundle {
         String buttonContainer();
 
         String button();
+
+        String violationsHolder();
     }
 
     @Source("images/supportClose.png")
