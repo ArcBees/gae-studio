@@ -431,31 +431,36 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
 
             Set<String> objectKeys = propertyMap.keySet();
 
-            for(String key : objectKeys) {
+            for (String key : objectKeys) {
                 JSONValue currentKeyValue = propertyMap.get(key);
 
-                if(currentKeyValue != null) {
+                if (currentKeyValue != null) {
                     JSONObject currentKeyObject = currentKeyValue.isObject();
 
                     if (currentKeyObject != null) {
-                        if (currentKeyObject.get(PropertyName.INDEXED) != null) {
-                            boolean isEntityIndexed = currentKeyObject.get(PropertyName.INDEXED).isBoolean().booleanValue();
-
-                            if (!isEntityIndexed) {
-                                currentKeyObject.put("value",
-                                        new JSONString(currentKeyObject.get("value").isString().stringValue() + " (unindexed)"));
-                                propertyMap.put(key, currentKeyObject);
-                                jsonObject.put("propertyMap", propertyMap);
-                            }
-                        }
+                        addUnindexedIfNeeded(jsonObject, propertyMap, key, currentKeyObject);
                     }
                 }
-
             }
 
             prettyEntities.add(new ParsedEntity(new EntityDto(entityDto.getKey(), jsonObject.toString())));
         }
 
         return prettyEntities;
+    }
+
+    private void addUnindexedIfNeeded(JSONObject jsonObject, JSONObject propertyMap, String key, JSONObject currentKeyObject) {
+        JSONValue indexedProperty = currentKeyObject.get(PropertyName.INDEXED);
+
+        if (indexedProperty != null) {
+            boolean isEntityIndexed = indexedProperty.isBoolean().booleanValue();
+
+            if (!isEntityIndexed) {
+                currentKeyObject.put("value",
+                        new JSONString(currentKeyObject.get("value").isString().stringValue() + " (unindexed)"));
+                propertyMap.put(key, currentKeyObject);
+                jsonObject.put("propertyMap", propertyMap);
+            }
+        }
     }
 }
