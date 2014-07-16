@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.client.application.channel;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
+import com.arcbees.gaestudio.client.application.event.ImportCompletedEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.resources.AppConstants;
@@ -36,6 +37,7 @@ public class ImportCompletedMessageHandler implements MessageHandler, HasHandler
     public void handleMessage(JSONValue payload) {
         Message displayMessage = new Message(appConstants.importSuccess(), MessageStyle.SUCCESS);
         DisplayMessageEvent.fire(this, displayMessage);
+        ImportCompletedEvent.fire(this);
     }
 
     @Override
