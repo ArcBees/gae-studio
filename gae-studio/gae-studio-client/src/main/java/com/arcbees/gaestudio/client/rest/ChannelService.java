@@ -13,7 +13,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
-import com.arcbees.gaestudio.shared.Constants;
+import com.arcbees.gaestudio.shared.channel.Constants;
 import com.arcbees.gaestudio.shared.channel.Token;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.gwtplatform.dispatch.rest.shared.RestAction;

@@ -20,6 +20,7 @@ import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.rest.EntityService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
+import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.gwt.core.client.Scheduler;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
@@ -31,14 +32,6 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
-
-import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.NAME;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
 public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPresenter.MyProxy>
         implements EntityUiHandlers, KindSelectedEvent.KindSelectedHandler {
@@ -116,13 +109,7 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     }
 
     private void displayEntityFromPlaceRequest(PlaceRequest request) {
-        String kind = request.getParameter(KIND, null);
-        String id = request.getParameter(ID, "-1");
-        String name = request.getParameter(NAME, null);
-        String parentKind = request.getParameter(PARENT_KIND, "");
-        String parentId = request.getParameter(PARENT_ID, "");
-        String namespace = request.getParameter(NAMESPACE, null);
-        String appId = request.getParameter(APP_ID, null);
+        String key = request.getParameter(UrlParameters.KEY, null);
 
         String failureMessage = appConstants.failedGettingEntity();
 
@@ -133,8 +120,7 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
             }
         };
 
-        RestAction<EntityDto> getEntityAction =
-                entityService.getEntity(kind, appId, namespace, parentId, parentKind, name, Long.valueOf(id));
+        RestAction<EntityDto> getEntityAction = entityService.getEntity(key);
 
         restDispatch.execute(getEntityAction, callback);
     }

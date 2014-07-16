@@ -7,10 +7,15 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.visualizer.ui;
+package com.arcbees.gaestudio.client.application.channel;
 
-public interface VisualizerUiFactory {
-    PropertyColumn createPropertyColumn(String property);
+import javax.inject.Singleton;
 
-    JsonContainer createJsonContainer(String jsonContent);
+import com.google.gwt.inject.client.AbstractGinModule;
+
+public class ChannelModule extends AbstractGinModule {
+    @Override
+    protected void configure() {
+        bind(ChannelHandler.class).in(Singleton.class);
+    }
 }

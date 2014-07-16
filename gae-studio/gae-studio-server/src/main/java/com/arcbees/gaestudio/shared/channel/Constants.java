@@ -7,14 +7,8 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.entity.editor;
+package com.arcbees.gaestudio.shared.channel;
 
-import java.util.Set;
-
-import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-
-public interface EntityEditorFactory {
-    EntityEditorPresenter create(ParsedEntity entity);
-
-    EntitiesEditorPresenter create(Set<ParsedEntity> entities);
+public class Constants {
+    public static final String CLIENT_ID = "clientId";
 }

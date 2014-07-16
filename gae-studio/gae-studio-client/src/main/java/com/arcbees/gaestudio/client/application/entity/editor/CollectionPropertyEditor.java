@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.inject.assistedinject.Assisted;
@@ -70,7 +71,8 @@ public class CollectionPropertyEditor extends AbstractPropertyEditor<Collection<
     public JSONValue getJsonValue() {
         Map<String, ?> propertyEditors = widget.getValue();
 
-        JSONArray array = extractArray(property);
+        JSONObject copy = JSONParser.parseStrict(property.toString()).isObject();
+        JSONArray array = extractArray(copy);
 
         for (String property : propertyEditors.keySet()) {
             PropertyEditor<?> editor = (PropertyEditor<?>) propertyEditors.get(property);
@@ -78,7 +80,7 @@ public class CollectionPropertyEditor extends AbstractPropertyEditor<Collection<
             array.set(Integer.valueOf(property), jsonValue);
         }
 
-        return property;
+        return copy;
     }
 
     private JSONArray extractArray(JSONValue property) {

@@ -18,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
-import com.arcbees.gaestudio.shared.Constants;
+import com.arcbees.gaestudio.shared.channel.Constants;
 import com.arcbees.gaestudio.shared.channel.Token;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.appengine.api.channel.ChannelService;

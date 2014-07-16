@@ -29,11 +29,17 @@ import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.service.visualizer.BlobsService;
 import com.arcbees.gaestudio.server.service.visualizer.ImportService;
 import com.arcbees.gaestudio.shared.BaseRestPath;
+import com.arcbees.gaestudio.shared.channel.Constants;
+import com.arcbees.gaestudio.shared.channel.Message;
+import com.arcbees.gaestudio.shared.channel.Topic;
 import com.arcbees.gaestudio.shared.dto.ObjectWrapper;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.channel.ChannelMessage;
+import com.google.appengine.api.channel.ChannelService;
+import com.google.appengine.api.channel.ChannelServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.TaskOptions;
@@ -110,7 +116,9 @@ public class ImportResource extends HttpServlet {
             uploadResponse.setMessage("Upload failed");
         } else {
             Queue queue = queueProvider.get();
-            queue.add(TaskOptions.Builder.withUrl(taskUrl).param(UrlParameters.KEY, blobKey.getKeyString()));
+            String clientId = request.getParameter(Constants.CLIENT_ID);
+            queue.add(TaskOptions.Builder.withUrl(taskUrl).param(UrlParameters.KEY,
+                    blobKey.getKeyString()).param(Constants.CLIENT_ID, clientId));
 
             uploadResponse = new UploadResponse(true);
         }
@@ -122,6 +130,7 @@ public class ImportResource extends HttpServlet {
     @Path(EndPoints.TASK)
     public void importDataTask(@Context HttpServletRequest request) throws IOException {
         String blobKeyString = request.getParameter(UrlParameters.KEY);
+        String clientId = request.getParameter(Constants.CLIENT_ID);
 
         if (!Strings.isNullOrEmpty(blobKeyString)) {
             BlobKey blobKey = new BlobKey(blobKeyString);
@@ -134,6 +143,17 @@ public class ImportResource extends HttpServlet {
                 blobstoreService.delete(blobKey);
             }
         }
+
+        sendImportCompletedMessage(clientId);
+    }
+
+    private void sendImportCompletedMessage(String clientId) {
+        Message message = new Message(Topic.IMPORT_COMPLETED);
+        String json = gson.toJson(message);
+
+        ChannelService channelService = ChannelServiceFactory.getChannelService();
+        ChannelMessage channelMessage = new ChannelMessage(clientId, json);
+        channelService.sendMessage(channelMessage);
     }
 
     private BlobKey extractBlobKey(HttpServletRequest request) {
