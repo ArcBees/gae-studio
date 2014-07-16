@@ -9,7 +9,11 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.event;
 
+import java.util.Set;
+
+import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.shared.DeleteEntities;
+import com.google.common.collect.Sets;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
@@ -22,6 +26,7 @@ public class DeleteEntitiesEvent extends GwtEvent<DeleteEntitiesEvent.DeleteEnti
     private static final Type<DeleteEntitiesHandler> TYPE = new Type<DeleteEntitiesHandler>();
 
     private DeleteEntities deleteEntities;
+    private Set<ParsedEntity> entities;
     private String kind;
     private String namespace;
 
@@ -29,6 +34,12 @@ public class DeleteEntitiesEvent extends GwtEvent<DeleteEntitiesEvent.DeleteEnti
         this.deleteEntities = deleteEntities;
         this.kind = kind;
         this.namespace = namespace;
+        this.entities = Sets.newHashSet();
+    }
+
+    DeleteEntitiesEvent(DeleteEntities deleteEntities, Set<ParsedEntity> entities) {
+        this.deleteEntities = deleteEntities;
+        this.entities = entities;
     }
 
     public DeleteEntities getDeleteEntities() {
@@ -41,6 +52,10 @@ public class DeleteEntitiesEvent extends GwtEvent<DeleteEntitiesEvent.DeleteEnti
 
     public String getNamespace() {
         return namespace;
+    }
+
+    public Set<ParsedEntity> getEntities() {
+        return entities;
     }
 
     @Override
@@ -67,5 +82,9 @@ public class DeleteEntitiesEvent extends GwtEvent<DeleteEntitiesEvent.DeleteEnti
 
     public static void fire(HasHandlers source, DeleteEntities deleteEntities, String kind) {
         source.fireEvent(new DeleteEntitiesEvent(deleteEntities, kind, null));
+    }
+
+    public static void fire(HasHandlers source, DeleteEntities deleteEntities, Set<ParsedEntity> entities) {
+        source.fireEvent(new DeleteEntitiesEvent(deleteEntities, entities));
     }
 }

@@ -97,11 +97,12 @@ public class EntitiesResource {
     @DELETE
     public Response deleteEntities(@QueryParam(UrlParameters.KIND) String kind,
                                    @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                                   @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType) {
+                                   @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType,
+                                   @QueryParam(UrlParameters.KEY) String encodedKeys) {
         ResponseBuilder responseBuilder;
 
-        if (isValidDeleteRequest(kind, namespace, deleteType)) {
-            entitiesService.deleteEntities(kind, namespace, deleteType);
+        if (isValidDeleteRequest(kind, namespace, deleteType, encodedKeys)) {
+            entitiesService.deleteEntities(kind, namespace, deleteType, encodedKeys);
             responseBuilder = Response.noContent();
         } else {
             responseBuilder = Response.status(Status.BAD_REQUEST);
@@ -140,11 +141,17 @@ public class EntitiesResource {
         return Response.ok().build();
     }
 
-    private boolean isValidDeleteRequest(String kind, String namespace, DeleteEntities deleteType) {
+    private boolean isValidDeleteRequest(String kind,
+                                         String namespace,
+                                         DeleteEntities deleteType,
+                                         String encodedKeys) {
         boolean isValid = false;
 
         if (deleteType != null) {
             switch (deleteType) {
+                case ALL:
+                    isValid = true;
+                    break;
                 case KIND:
                     isValid = kind != null;
                     break;
@@ -154,8 +161,8 @@ public class EntitiesResource {
                 case KIND_NAMESPACE:
                     isValid = namespace != null && kind != null;
                     break;
-                case ALL:
-                    isValid = true;
+                case SET:
+                    isValid = !Strings.isNullOrEmpty(encodedKeys);
                     break;
                 default:
                     isValid = false;

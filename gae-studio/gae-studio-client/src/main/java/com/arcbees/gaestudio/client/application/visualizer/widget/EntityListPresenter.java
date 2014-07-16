@@ -33,7 +33,6 @@ import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.Name
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
-import com.arcbees.gaestudio.client.place.ParameterTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
@@ -44,6 +43,7 @@ import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.google.gwt.http.client.Response;
@@ -63,13 +63,6 @@ import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent.EntitiesDeletedHandler;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent.EntityDeletedHandler;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent.EntitySavedHandler;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.APP_ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.KIND;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.NAME;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.NAMESPACE;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_ID;
-import static com.arcbees.gaestudio.client.place.ParameterTokens.PARENT_KIND;
 
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
         implements EntityListUiHandlers, EntitySavedHandler, EntityDeletedHandler, EntitiesDeletedHandler,
@@ -98,7 +91,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         void unselectRows();
 
-        void setRowSelected(String idString);
+        void setRowSelected(String encodedKey);
     }
 
     public static final Object SLOT_NAMESPACES = new Object();
@@ -212,10 +205,10 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Override
     public void setStateFromPlaceRequest(SetStateFromPlaceRequestEvent event) {
         PlaceRequest placeRequest = event.getPlaceRequest();
-        String idString = placeRequest.getParameter(ParameterTokens.ID, "");
+        String encodedKey = placeRequest.getParameter(UrlParameters.KEY, "");
 
-        if (!Strings.isNullOrEmpty(idString)) {
-            getView().setRowSelected(idString);
+        if (!Strings.isNullOrEmpty(encodedKey)) {
+            getView().setRowSelected(encodedKey);
             RowLockedEvent.fire(this);
         }
     }
@@ -246,9 +239,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             public void setResponse(Response response) {
                 int statusCode = response.getStatusCode();
 
-                if(statusCode == Response.SC_BAD_REQUEST) {
+                if (statusCode == Response.SC_BAD_REQUEST) {
                     DisplayMessageEvent.fire(this, new Message(appConstants.wrongGqlRequest(), MessageStyle.ERROR));
-                } else if(statusCode != Response.SC_OK) {
+                } else if (statusCode != Response.SC_OK) {
                     DisplayMessageEvent.fire(this, new Message(appConstants.somethingWentWrong(), MessageStyle.ERROR));
                 }
             }
@@ -335,16 +328,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         KeyDto keyDto = entityDto.getKey();
 
         PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.entity)
-                .with(KIND, keyDto.getKind())
-                .with(ID, Long.toString(keyDto.getId()))
-                .with(NAME, keyDto.getName())
-                .with(NAMESPACE, keyDto.getAppIdNamespace().getNamespace())
-                .with(APP_ID, keyDto.getAppIdNamespace().getAppId());
-
-        if (keyDto.getParentKey() != null) {
-            builder = builder.with(PARENT_KIND, keyDto.getParentKey().getKind())
-                    .with(PARENT_ID, Long.toString(keyDto.getParentKey().getId()));
-        }
+                .with(UrlParameters.KIND, keyDto.getKind())
+                .with(UrlParameters.KEY, keyDto.getEncodedKey());
 
         placeManager.revealPlace(builder.build());
     }
