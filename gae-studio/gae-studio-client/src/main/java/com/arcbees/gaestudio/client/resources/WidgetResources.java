@@ -33,6 +33,6 @@ public interface WidgetResources extends ClientBundle {
         String issueBtn();
     }
 
-    @Source({"css/colors.gss", "css/widget/header.gss"})
+    @Source({"css/colors.gss", "css/mixins.gss", "css/widget/header.gss"})
     public Header header();
 }

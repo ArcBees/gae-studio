@@ -27,6 +27,6 @@ public interface SupportResources extends ClientBundle {
     @Source("images/supportClose.png")
     ImageResource supportClose();
 
-    @Source({"css/colors.css", "css/mixins.css", "css/support.gss"})
+    @Source({"css/colors.gss", "css/mixins.gss", "css/support.gss"})
     Styles styles();
 }
