@@ -146,23 +146,16 @@ public class CarResource {
 
     private void setManufacturerRef(Car car) {
         Concept concept = new Concept();
-
         conceptDao.put(concept);
 
         Business business = new Business();
-
         Key<Concept> conceptKey = Key.create(Concept.class, concept.getId());
-
         business.setConceptKey(conceptKey);
-
         businessDao.put(business);
 
         Manufacturer manufacturer = new Manufacturer();
-
         Key<Business> businessKey = Key.create(conceptKey, Business.class, business.getId());
-
         manufacturer.setBusinessKey(businessKey);
-
         manufacturerDao.put(manufacturer);
 
         car.setManufacturerRef(Ref.create(Key.create(businessKey, Manufacturer.class, manufacturer.getId())));
