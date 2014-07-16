@@ -119,7 +119,7 @@ public class EntityMapper {
     }
 
     public KeyDto mapKeyToKeyDto(Key dbKey) {
-        return new KeyDto(KeyFactory.keyToString(dbKey), dbKey.getKind(), dbKey.getId(), dbKey.getName(),
+        return new KeyDto(getEncodedKey(dbKey), dbKey.getKind(), dbKey.getId(), dbKey.getName(),
                 mapParentKey(dbKey.getParent()), mapNamespace(dbKey));
     }
 
@@ -127,7 +127,15 @@ public class EntityMapper {
         if (dbParentKey == null) {
             return null;
         }
-        return new ParentKeyDto(KeyFactory.keyToString(dbParentKey), dbParentKey.getKind(), dbParentKey.getId(), null);
+        return new ParentKeyDto(getEncodedKey(dbParentKey), dbParentKey.getKind(), dbParentKey.getId(), null);
+    }
+
+    private String getEncodedKey(Key key) {
+        if (key.isComplete()) {
+            return KeyFactory.keyToString(key);
+        } else {
+            return null;
+        }
     }
 
     private AppIdNamespaceDto mapNamespace(Key dbNamespaceKey) {
