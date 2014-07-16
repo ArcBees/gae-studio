@@ -51,8 +51,8 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
                             JsonUtils jsonUtils,
                             @Assisted Set<ParsedEntity> parsedEntities) {
         super(eventBus, view);
-        this.jsonUtils = jsonUtils;
 
+        this.jsonUtils = jsonUtils;
         this.parsedEntities = parsedEntities;
 
         allProperties = Maps.newLinkedHashMap();
