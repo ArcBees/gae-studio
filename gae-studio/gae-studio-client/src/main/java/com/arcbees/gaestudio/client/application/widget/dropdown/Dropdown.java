@@ -114,7 +114,7 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
 
     public void setValue(T value) {
         for (Map.Entry<Element, T> valueEntry : valuesIndex.entrySet()) {
-            if (valueEntry.getValue() == value) {
+            if (valueEntry.getValue().equals(value)) {
                 makeSelected($(valueEntry.getKey()));
                 return;
             }
@@ -203,6 +203,9 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
     }
 
     private void makeSelected(GQuery selectedLi) {
+        $("." + resources.styles().selectedLi(), widget)
+                .removeClass(resources.styles().selectedLi(), resources.styles().dropDownArrow())
+                .addClass(resources.styles().hiddenLi());
         $(selectedLi).removeClass(resources.styles().hiddenLi());
         $(selectedLi).addClass(resources.styles().selectedLi(), resources.styles().dropDownArrow());
 
