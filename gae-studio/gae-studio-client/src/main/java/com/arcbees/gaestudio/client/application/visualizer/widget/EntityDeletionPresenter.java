@@ -9,6 +9,8 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import java.util.Set;
+
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
@@ -24,6 +26,8 @@ import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
@@ -40,7 +44,8 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
     interface MyView extends View, HasUiHandlers<EntityDeletionUiHandlers> {
         void displayEntityDeletion(ParsedEntity parsedEntity);
 
-        void displayEntitiesDeletion(DeleteEntities deleteType, String kind, String namespace);
+        void displayEntitiesDeletion(DeleteEntities deleteType, String kind, String namespace,
+                                     Set<ParsedEntity> entities);
 
         void hide();
     }
@@ -88,7 +93,7 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
         deleteEntitiesEvent = event;
 
         getView().displayEntitiesDeletion(deleteEntitiesEvent.getDeleteEntities(),
-                deleteEntitiesEvent.getKind(), deleteEntitiesEvent.getNamespace());
+                deleteEntitiesEvent.getKind(), deleteEntitiesEvent.getNamespace(), deleteEntitiesEvent.getEntities());
 
         lastEvent = BATCH;
     }
@@ -118,9 +123,18 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
     }
 
     private void deleteEntities() {
+        Set<String> encodedKeys = FluentIterable.from(deleteEntitiesEvent.getEntities())
+                .transform(new Function<ParsedEntity, String>() {
+                    @Override
+                    public String apply(ParsedEntity input) {
+                        return input.getKey().getEncodedKey();
+                    }
+                }).toSet();
+
         restDispatch.execute(entitiesService.deleteAll(deleteEntitiesEvent.getKind(),
-                deleteEntitiesEvent.getNamespace(),
-                deleteEntitiesEvent.getDeleteEntities()),
+                        deleteEntitiesEvent.getNamespace(),
+                        deleteEntitiesEvent.getDeleteEntities(),
+                        encodedKeys),
                 new AsyncCallbackImpl<Void>(myConstants.errorEntityDelete()) {
                     @Override
                     public void onSuccess(Void result) {
@@ -134,7 +148,7 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
             final EntityDto entityDto = currentParsedEntity.getEntityDto();
             KeyDto key = entityDto.getKey();
 
-            restDispatch.execute(entityService.deleteEntity(key.getKind(), key.getName(), key.getId()),
+            restDispatch.execute(entityService.deleteEntity(key.getEncodedKey()),
                     new AsyncCallbackImpl<Void>(myConstants.errorEntityDelete()) {
                         @Override
                         public void onSuccess(Void result) {

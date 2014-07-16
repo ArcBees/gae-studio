@@ -59,7 +59,7 @@ public class EntityWidgetModule extends AbstractPresenterModule {
                 .implement(new TypeLiteral<PropertyEditor<?>>() {}, RawPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<Key>>() {}, KeyPropertyEditor.class)
                 .implement(new TypeLiteral<PropertyEditor<Collection<?>>>() {}, CollectionPropertyEditor.class)
-                .build(PropertyEditorFactory.class));
+                .build(PropertyEditorsFactory.class));
 
         bind(GeoPointPropertyEditor.Binder.class).in(Singleton.class);
 
@@ -68,6 +68,10 @@ public class EntityWidgetModule extends AbstractPresenterModule {
         bind(PropertyEditorCollectionWidgetFactory.class)
                 .to(PropertyEditorCollectionWidgetFactoryImpl.class)
                 .in(Singleton.class);
+        bind(PropertyEditorFactory.class)
+                .to(PropertyEditorFactoryImpl.class)
+                .in(Singleton.class);
+
         bindSharedView(MyView.class, EntityEditorView.class);
     }
 }

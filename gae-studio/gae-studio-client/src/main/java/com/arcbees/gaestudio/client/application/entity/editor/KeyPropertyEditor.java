@@ -73,7 +73,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
                       AppIdNamespaceRenderer appIdNamespaceRenderer,
                       AppIdRenderer appIdRenderer,
                       AppConstants appConstants,
-                      PropertyEditorFactory propertyEditorFactory,
+                      PropertyEditorsFactory propertyEditorsFactory,
                       NameSpaceValueSetter nameSpaceValueSetter,
                       DropdownFactory dropdownFactory,
                       KeyPropertyEditorDropdownResources dropdownResources,
@@ -87,7 +87,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
         this.property = property;
         this.nameSpaceValueSetter = nameSpaceValueSetter;
 
-        parentKey = (RawPropertyEditor) propertyEditorFactory
+        parentKey = (RawPropertyEditor) propertyEditorsFactory
                 .createRawEditor(PropertyName.PARENT_KEY, property.isObject().get(PropertyName.PARENT_KEY));
 
         appIdNamespace = dropdownFactory.create(appIdRenderer, dropdownResources);

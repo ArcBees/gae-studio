@@ -70,7 +70,7 @@ public class EditEntityView extends ViewWithUiHandlers<EditEntityUiHandlers> imp
     }
 
     @UiHandler("save")
-    void onEditClicked(ClickEvent event) {
+    void onSaveClicked(ClickEvent event) {
         getUiHandlers().save();
     }
 

@@ -45,3 +45,8 @@
 .cellTableFirstColumn {
     padding-left: 5px;
 }
+
+.cellTableSelectedRowCell {
+    background-color: C_PRIMARY;
+    color: #fff;
+}
