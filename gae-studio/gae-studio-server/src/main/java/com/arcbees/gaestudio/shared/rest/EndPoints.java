@@ -18,7 +18,7 @@ public class EndPoints {
     public static final String NAMESPACES = REST_PATH + "namespaces/";
     public static final String KINDS = REST_PATH + "kinds/";
     public static final String RECORD = REST_PATH + "record/";
-    public static final String OPERATIONS = REST_PATH + "operations/";
+    public static final String CHANNEL = REST_PATH + "channel/";
     public static final String COUNT = "count/";
     public static final String AUTH = REST_PATH + "auth/";
     public static final String REGISTER = "register/";
