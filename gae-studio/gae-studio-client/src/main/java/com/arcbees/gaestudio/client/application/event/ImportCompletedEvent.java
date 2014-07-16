@@ -13,31 +13,31 @@ import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 
-public class RowUnlockedEvent extends GwtEvent<RowUnlockedEvent.RowUnlockedHandler> {
-    public interface RowUnlockedHandler extends EventHandler {
-        void onRowUnlocked(RowUnlockedEvent rowLockedEvent);
+public class ImportCompletedEvent extends GwtEvent<ImportCompletedEvent.ImportCompletedHandler> {
+    public interface ImportCompletedHandler extends EventHandler {
+        void onImportComplete(ImportCompletedEvent event);
     }
 
-    public static void fire(HasHandlers source) {
-        source.fireEvent(new RowUnlockedEvent());
+    public static void fire(HasHandlers hasHandlers) {
+        hasHandlers.fireEvent(new ImportCompletedEvent());
     }
 
-    public static Type<RowUnlockedHandler> getType() {
+    public static Type<ImportCompletedHandler> getType() {
         return TYPE;
     }
 
-    private static final Type<RowUnlockedHandler> TYPE = new Type<>();
+    private static final Type<ImportCompletedHandler> TYPE = new Type<>();
 
-    private RowUnlockedEvent() {
+    private ImportCompletedEvent() {
     }
 
     @Override
-    public Type<RowUnlockedHandler> getAssociatedType() {
+    public Type<ImportCompletedHandler> getAssociatedType() {
         return TYPE;
     }
 
     @Override
-    protected void dispatch(RowUnlockedHandler handler) {
-        handler.onRowUnlocked(this);
+    protected void dispatch(ImportCompletedHandler handler) {
+        handler.onImportComplete(this);
     }
 }
