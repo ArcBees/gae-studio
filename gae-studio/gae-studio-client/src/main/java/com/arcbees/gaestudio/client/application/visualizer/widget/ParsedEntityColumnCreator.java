@@ -9,7 +9,10 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import javax.inject.Inject;
+
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
@@ -32,6 +35,13 @@ public class ParsedEntityColumnCreator {
 
     private static final String IS_NULL = "<null>";
     private static int DEFAULT_COLUMN_COUNT;
+
+    private final AppConstants appConstants;
+
+    @Inject
+    public ParsedEntityColumnCreator(AppConstants appConstants) {
+        this.appConstants = appConstants;
+    }
 
     public void addPropertyColumn(CellTable<ParsedEntity> cellTable,
                                   final String propertyName) {
@@ -140,7 +150,7 @@ public class ParsedEntityColumnCreator {
                 boolean isEntityIndexed = indexedProperty.isBoolean().booleanValue();
 
                 if (!isEntityIndexed) {
-                    stringValue += " (unindexed)";
+                    stringValue += " " + appConstants.unindexed();
                 }
             }
         }
