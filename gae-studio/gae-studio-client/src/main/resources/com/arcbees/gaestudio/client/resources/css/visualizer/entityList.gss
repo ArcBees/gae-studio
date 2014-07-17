@@ -36,7 +36,7 @@
 
 .refresh {
     display: inline-block;
-    margin: 17px 0 0 20px;
+    margin: 14px 0 0 20px;
     border-right: 2px solid C_SECONDARY_LIGHT;
     padding-right: 6px;
 }
@@ -57,8 +57,6 @@
 }
 
 .byGql span {
-    background: BYGQL no-repeat center top;
-
     display: inline-block;
     width: 14px;
     height: 14px;
@@ -75,6 +73,21 @@
 
 .byGql.actif span {
     background-position: center bottom;
+}
+
+.byGqlLink,
+.byGqlLink:visited {
+    color: C_PRIMARY;
+    font-size: 0.8em;
+    text-decoration: none;
+
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: super;
+}
+
+.byGqlLink:hover {
+    color: #000;
 }
 
 .formQuery {

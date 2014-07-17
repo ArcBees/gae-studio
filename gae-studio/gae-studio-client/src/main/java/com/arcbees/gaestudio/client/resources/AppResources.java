@@ -169,15 +169,6 @@ public interface AppResources extends ClientBundle {
     @Source("images/delete.png")
     ImageResource delete();
 
-    @Source("images/deselect_up.png")
-    ImageResource deselect_up();
-
-    @Source("images/deselect_rl.png")
-    ImageResource deselect_rl();
-
-    @Source("images/deselect_dis.png")
-    ImageResource deselect_dis();
-
     @Source("images/logo.png")
     ImageResource logo();
 
@@ -192,12 +183,6 @@ public interface AppResources extends ClientBundle {
 
     @Source("images/record.png")
     ImageResource record();
-
-    @Source("images/refresh_up.png")
-    ImageResource refresh_up();
-
-    @Source("images/refresh_rl.png")
-    ImageResource refresh_rl();
 
     @Source("images/stop.png")
     ImageResource stop();
@@ -255,12 +240,6 @@ public interface AppResources extends ClientBundle {
 
     @Source("images/power.png")
     ImageResource power();
-
-    @Source("images/importBtn.png")
-    ImageResource importBtn();
-
-    @Source("images/exportBtn.png")
-    ImageResource exportBtn();
 
     @Source("images/dropdown/dropDownArrowUp.png")
     ImageResource dropDownArrowUp();
