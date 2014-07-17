@@ -71,8 +71,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiField
     DivElement formQueryHolder;
     @UiField
-    SimplePanel deleteByKind;
-    @UiField
     DivElement deselect;
     @UiField
     Button runQueryButton;
@@ -207,13 +205,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     public void removeKindSpecificColumns() {
         while (entityTable.getColumnCount() > ParsedEntityColumnCreator.getDefaultColumnCount()) {
             removeLastColumn(entityTable);
-        }
-    }
-
-    @Override
-    public void setInSlot(Object slot, IsWidget content) {
-        if (EntityListPresenter.SLOT_NAMESPACES == slot) {
-            deleteByKind.setWidget(content);
         }
     }
 
