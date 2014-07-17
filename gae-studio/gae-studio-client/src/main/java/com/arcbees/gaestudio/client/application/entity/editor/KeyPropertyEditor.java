@@ -17,7 +17,6 @@ import com.arcbees.gaestudio.client.application.widget.dropdown.Dropdown;
 import com.arcbees.gaestudio.client.application.widget.dropdown.DropdownFactory;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.KeyPropertyEditorDropdownResources;
-import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.common.base.Strings;
@@ -59,8 +58,6 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     Dropdown<String> kind;
     @UiField
     TextBox name;
-    @UiField(provided = true)
-    RawPropertyEditor parentKey;
 
     private final AppConstants appConstants;
     private final JSONValue property;
@@ -73,7 +70,6 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
                       AppIdNamespaceRenderer appIdNamespaceRenderer,
                       AppIdRenderer appIdRenderer,
                       AppConstants appConstants,
-                      PropertyEditorsFactory propertyEditorsFactory,
                       NameSpaceValueSetter nameSpaceValueSetter,
                       DropdownFactory dropdownFactory,
                       KeyPropertyEditorDropdownResources dropdownResources,
@@ -86,9 +82,6 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
         this.appConstants = appConstants;
         this.property = property;
         this.nameSpaceValueSetter = nameSpaceValueSetter;
-
-        parentKey = (RawPropertyEditor) propertyEditorsFactory
-                .createRawEditor(PropertyName.PARENT_KEY, property.isObject().get(PropertyName.PARENT_KEY));
 
         appIdNamespace = dropdownFactory.create(appIdRenderer, dropdownResources);
         namespace = dropdownFactory.create(appIdNamespaceRenderer, dropdownResources);
@@ -137,16 +130,10 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     }
 
     private Key getValue() {
-        Key parentKey = null;
-        JSONValue parentKeyObject = this.parentKey.getJsonValue();
-        if (parentKeyObject != null && parentKeyObject.isObject() != null) {
-            parentKey = Key.fromJsonObject(parentKeyObject.isObject());
-        }
-
         return new Key(kind.getValue(), Strings.emptyToNull(name.getText()),
                 Strings.emptyToNull(appId.getText()), id.getValue(),
                 new AppIdNamespaceDto(appIdNamespace.getValue().getAppId(), namespace.getValue().getNamespace()),
-                parentKey);
+                key.getParentKey());
     }
 
     private void setValue(Key key) {

@@ -10,6 +10,7 @@
 package com.arcbees.gaestudio.client.application.entity.editor;
 
 import com.arcbees.gaestudio.shared.PropertyType;
+import com.google.common.base.Strings;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
@@ -113,6 +114,10 @@ public class PropertyUtil {
         }
 
         return "";
+    }
+
+    public static String getPropertyAsStringOrNull(JSONObject object, String propertyName) {
+        return Strings.emptyToNull(getPropertyAsString(object, propertyName));
     }
 
     public static JSONNumber getPropertyAsNumber(JSONObject object, String propertyName) {

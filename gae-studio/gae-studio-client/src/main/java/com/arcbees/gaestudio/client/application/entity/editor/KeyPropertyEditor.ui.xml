@@ -1,6 +1,5 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
-             xmlns:prop='urn:import:com.arcbees.gaestudio.client.application.entity.editor'
              xmlns:dd='urn:import:com.arcbees.gaestudio.client.application.widget.dropdown'>
 
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
@@ -30,7 +29,5 @@
         <div class="{entityRes.editor.dropdown}">
             <dd:Dropdown ui:field="appIdNamespace"/>
         </div>
-
-        <prop:RawPropertyEditor ui:field="parentKey" styleName="{res.styles.embeddedEntityProperties}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

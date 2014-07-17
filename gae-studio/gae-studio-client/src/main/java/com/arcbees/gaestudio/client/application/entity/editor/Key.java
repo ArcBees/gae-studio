@@ -19,6 +19,7 @@ import com.google.gwt.json.client.JSONValue;
 import static com.arcbees.gaestudio.client.application.entity.editor.PropertyUtil.getPropertyAsNumber;
 import static com.arcbees.gaestudio.client.application.entity.editor.PropertyUtil.getPropertyAsObject;
 import static com.arcbees.gaestudio.client.application.entity.editor.PropertyUtil.getPropertyAsString;
+import static com.arcbees.gaestudio.client.application.entity.editor.PropertyUtil.getPropertyAsStringOrNull;
 import static com.arcbees.gaestudio.shared.PropertyName.APP_ID;
 import static com.arcbees.gaestudio.shared.PropertyName.APP_ID_NAMESPACE;
 import static com.arcbees.gaestudio.shared.PropertyName.ID;
@@ -51,14 +52,14 @@ public class Key {
 
     public static Key fromJsonObject(JSONObject jsonObject) {
         String kind = getPropertyAsString(jsonObject, KIND);
-        String name = getPropertyAsString(jsonObject, NAME);
+        String name = getPropertyAsStringOrNull(jsonObject, NAME);
         String appId = getPropertyAsString(jsonObject, APP_ID);
         JSONNumber idAsNumber = getPropertyAsNumber(jsonObject, ID);
         Long id = idAsNumber == null ? null : (long) idAsNumber.doubleValue();
 
         JSONObject parentKeyObject = getPropertyAsObject(jsonObject, PARENT_KEY);
         Key parentKey = null;
-        if (parentKeyObject != null && parentKeyObject.isNull() != null) {
+        if (parentKeyObject != null && parentKeyObject.isNull() == null) {
             parentKey = fromJsonObject(parentKeyObject);
         }
 
@@ -70,14 +71,18 @@ public class Key {
     }
 
     public JSONObject asJsonObject() {
-        JSONObject key = createJsonKey(this);
+        return asJsonObject(this);
+    }
 
-        if (parentKey != null) {
-            JSONObject parentKeyObject = createJsonKey(parentKey);
-            key.put(PARENT_KEY, parentKeyObject);
+    public JSONObject asJsonObject(Key key) {
+        JSONObject jsonKey = createJsonKey(key);
+
+        if (key.parentKey != null) {
+            JSONObject parentKeyObject = asJsonObject(key.parentKey);
+            jsonKey.put(PARENT_KEY, parentKeyObject);
         }
 
-        return key;
+        return jsonKey;
     }
 
     public String getKind() {
