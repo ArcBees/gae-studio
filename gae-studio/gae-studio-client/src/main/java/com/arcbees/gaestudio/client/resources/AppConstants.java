@@ -131,4 +131,6 @@ public interface AppConstants extends Constants {
     String entitiesSaved();
 
     String importSuccess();
+
+    String unindexed();
 }

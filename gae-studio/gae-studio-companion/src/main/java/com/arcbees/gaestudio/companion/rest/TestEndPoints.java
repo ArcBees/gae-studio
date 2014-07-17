@@ -21,4 +21,6 @@ public class TestEndPoints {
     public static final String STRING_ID_ENTITY = "string_id_entity/";
 
     public static final String CLEAR = "clear/";
+
+    public static final String HIERARCHY = "hierarchy/";
 }
