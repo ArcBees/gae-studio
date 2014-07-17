@@ -97,26 +97,12 @@
 
                 <configuration>
                     <classifier>${war.classifier}</classifier>
-                    <!-- Keeps only the static files at the root, the GWT compiled output, the shaded and the GAE jars -->
-                    <packagingIncludes>
-                        *,gaestudio/**,WEB-INF/*,WEB-INF/lib/${project.build.finalName}.jar,WEB-INF/lib/appengine-api-*.jar
-                    </packagingIncludes>
-
-                    <webResources>
-                        <resource>
-                            <directory>${project.build.directory}</directory>
-                            <targetPath>WEB-INF/lib</targetPath>
-                            <includes>
-                                <include>${project.build.finalName}.jar</include>
-                            </includes>
-                        </resource>
-                    </webResources>
                 </configuration>
 
                 <executions>
                     <execution>
                         <id>build-war</id>
-                        <phase>verify</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>war</goal>
                         </goals>
