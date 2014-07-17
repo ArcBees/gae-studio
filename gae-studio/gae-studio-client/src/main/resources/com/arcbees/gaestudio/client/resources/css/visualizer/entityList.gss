@@ -4,7 +4,7 @@
 @def BYGQL resourceUrl("byGQLBtn");
 
 .heading {
-    padding: 0 24px 0 15px;
+    padding: 0 24px 0 2px;
 }
 
 .deleteByKind {
@@ -39,10 +39,10 @@
     margin: 14px 0 0 20px;
     border-right: 2px solid C_SECONDARY_LIGHT;
     padding-right: 6px;
+    padding-bottom: 11px;
 }
 
 .deselect {
-    display: inline-block;
     margin-left: 2px;
 }
 
