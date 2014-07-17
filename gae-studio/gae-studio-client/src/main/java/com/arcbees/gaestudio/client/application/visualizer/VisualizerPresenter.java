@@ -299,14 +299,14 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
                     @Override
                     public void onClicked() {
                         deselect();
-
-                        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Deselect Entity");
                     }
                 }, DebugIds.EDIT
         );
     }
 
     private void deselect() {
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Deselect Entity");
+
         DeselectEvent.fire(this);
     }
 
