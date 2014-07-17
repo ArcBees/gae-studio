@@ -89,6 +89,8 @@
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <gaes.buildtime>${maven.build.timestamp}</gaes.buildtime>
         <repackage>com.arcbees.gaestudio.repackaged</repackage>
+        <gaes.analytics.trackingid.server>UA-41550930-5</gaes.analytics.trackingid.server>
+        <gaes.analytics.trackingid.client>UA-41550930-10</gaes.analytics.trackingid.client>
     </properties>
 
     <build>
@@ -143,6 +145,13 @@
             <id>demo</id>
             <properties>
                 <googleappengine.id>gaestudio-demo</googleappengine.id>
+            </properties>
+        </profile>
+        <profile>
+            <id>production-analytics</id>
+            <properties>
+                <gaes.analytics.trackingid.server>UA-41550930-4</gaes.analytics.trackingid.server>
+                <gaes.analytics.trackingid.client>UA-41550930-6</gaes.analytics.trackingid.client>
             </properties>
         </profile>
     </profiles>
