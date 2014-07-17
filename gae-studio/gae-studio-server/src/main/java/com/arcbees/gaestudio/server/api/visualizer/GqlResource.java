@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.server.api.visualizer;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -26,7 +27,6 @@ import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.appengine.api.datastore.Entity;
-import com.google.inject.Inject;
 
 @Path(EndPoints.GQL)
 @Produces(MediaType.APPLICATION_JSON)
@@ -44,11 +44,23 @@ public class GqlResource {
     }
 
     @GET
-    public Response executeGqlRequest(@QueryParam(UrlParameters.QUERY) String gqlRequest) {
-        Iterable<Entity> result = gqlService.executeGqlRequest(gqlRequest);
+    public Response executeGqlRequest(@QueryParam(UrlParameters.QUERY) String gqlRequest,
+                                      @QueryParam(UrlParameters.OFFSET) Integer offset,
+                                      @QueryParam(UrlParameters.LIMIT) Integer limit) {
+        Iterable<Entity> result = gqlService.executeGqlRequest(gqlRequest, offset, limit);
 
         List<EntityDto> entitiesDtos = entityMapper.mapEntitiesToDtos(result);
 
         return Response.ok(entitiesDtos).build();
+    }
+
+    @Path(EndPoints.COUNT)
+    @GET
+    public Response getRequestCount(@QueryParam(UrlParameters.QUERY) String gqlRequest) {
+        Iterable<Entity> result = gqlService.executeGqlRequest(gqlRequest, null, null);
+
+        List<EntityDto> entitiesDtos = entityMapper.mapEntitiesToDtos(result);
+
+        return Response.ok(entitiesDtos.size()).build();
     }
 }

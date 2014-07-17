@@ -14,5 +14,5 @@ import java.util.Collection;
 import com.google.appengine.api.datastore.Entity;
 
 public interface GqlService {
-    Collection<Entity> executeGqlRequest(String request);
+    Collection<Entity> executeGqlRequest(String request, Integer offset, Integer limit);
 }
