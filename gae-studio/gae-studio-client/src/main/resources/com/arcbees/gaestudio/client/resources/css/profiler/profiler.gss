@@ -51,7 +51,7 @@
 /* -> Widget Toolbar View -- */
 
 .buttons {
-    background: #232323;
+    background: C_SECONDARY_DARK;
 
     width: 130px;
     overflow: hidden;

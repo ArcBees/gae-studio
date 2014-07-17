@@ -35,11 +35,13 @@
             <groupId>com.arcbees.gaestudio</groupId>
             <artifactId>gae-studio-server</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.arcbees.gaestudio</groupId>
             <artifactId>gae-studio-client</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>javax.ws.rs</groupId>
@@ -47,30 +49,95 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!-- Client dependencies -->
         <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-api-1.0-sdk</artifactId>
-            <version>${gae.version}</version>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-mvp-client</artifactId>
+            <version>${gwtp.version}</version>
+            <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-dispatch-rest</artifactId>
+            <version>${gwtp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwt.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.arcbees.gquery</groupId>
+            <artifactId>tooltip</artifactId>
+            <version>${gquery-plugins.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.gwtquery</groupId>
+            <artifactId>gwtquery</artifactId>
+            <version>${gwtquery.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.arcbees</groupId>
+            <artifactId>gwtchosen</artifactId>
+            <version>${gwtchosen.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.arcbees.analytics</groupId>
+            <artifactId>analytics-client</artifactId>
+            <version>${analytics.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jdramaix</groupId>
+            <artifactId>gssresource</artifactId>
+            <version>${gss.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.nmorel.gwtjackson</groupId>
+            <artifactId>gwt-jackson</artifactId>
+            <version>${gwt-jackson.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt.inject</groupId>
+            <artifactId>gin</artifactId>
+            <version>${gin.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-gwt</artifactId>
+            <version>${guava.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Validation, used only by the client side for now. Annotations are in shared -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${javax.validation.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-source.version}</version>
+            <classifier>sources</classifier>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Server dependencies -->
         <dependency>
             <groupId>com.googlecode.objectify</groupId>
             <artifactId>objectify</artifactId>
             <version>${objectify.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-servlet</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-assistedinject</artifactId>
-            <version>${guice.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -78,6 +145,8 @@
             <version>${servlet-api.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Test dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -157,6 +226,17 @@
 
         <plugins>
             <plugin>
+                <groupId>com.google.appengine</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>${gae.version}</version>
+                <configuration>
+                    <enableJarSplitting>true</enableJarSplitting>
+                    <port>8888</port>
+                </configuration>
+            </plugin>
+
+            <!-- kindleit plugin used for integration tests -->
+            <plugin>
                 <groupId>net.kindleit</groupId>
                 <artifactId>maven-gae-plugin</artifactId>
                 <version>0.9.6</version>
@@ -192,15 +272,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.google.appengine</groupId>
-                <artifactId>appengine-maven-plugin</artifactId>
-                <version>${gae.version}</version>
-                <configuration>
-                    <enableJarSplitting>true</enableJarSplitting>
-                    <port>8888</port>
-                </configuration>
             </plugin>
 
             <plugin>
@@ -247,7 +318,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.4</version>
+                <version>${maven-war-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>compile</phase>

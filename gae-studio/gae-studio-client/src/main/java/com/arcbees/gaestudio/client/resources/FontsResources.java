@@ -46,6 +46,8 @@ public interface FontsResources extends ClientBundle {
         String icon_save();
 
         String icon_submit();
+
+        String icon_menu();
     }
 
     @Source("fonts/icons.ttf")

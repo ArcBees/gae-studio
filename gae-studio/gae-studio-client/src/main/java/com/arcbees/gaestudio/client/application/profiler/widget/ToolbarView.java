@@ -73,11 +73,11 @@ public class ToolbarView extends ViewWithUiHandlers<ToolbarUiHandlers>
     public void setButtons(List<ToolbarButton> buttonsToSet) {
         buttons.clear();
 
+        this.buttons.add(toggle);
+
         for (ToolbarButton button : buttonsToSet) {
             buttons.add(button);
         }
-
-        this.buttons.add(toggle);
     }
 
     @Override
