@@ -13,12 +13,9 @@
             <div ui:field="refresh" class="{visualizer.entityList.refresh} {resources.styles.refresh}">
                 <i class="{fonts.icons.icon_refresh}"></i>
             </div>
-            <div ui:field="deselect" class="{visualizer.entityList.deselect} {resources.styles.deselectDisabled}">
-                <i class="{fonts.icons.icon_deselect}"></i>
-            </div>
             <div ui:field="byGql" class="{visualizer.entityList.byGql}"><span></span>By GQL</div>
             <a href="https://developers.google.com/appengine/docs/python/datastore/gqlreference" target="_blank" class="{visualizer.entityList.byGqlLink}">(GQL Syntax)</a>
-            <g:SimplePanel ui:field="deleteByKind" styleName="{visualizer.entityList.deleteByKind}"/>
+
             <div ui:field="formQueryHolder" class="{visualizer.entityList.formQuery}">
                 <g:TextArea ui:field="formQuery"></g:TextArea>
                 <g:Button ui:field="runQueryButton">Run Query</g:Button>
