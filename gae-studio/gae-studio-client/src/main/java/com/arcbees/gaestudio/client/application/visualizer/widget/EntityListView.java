@@ -158,11 +158,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void setData(List<ParsedEntity> parsedEntities) {
-        setData(DEFAULT_RANGE, parsedEntities);
-    }
-
-    @Override
     public void blockSendingNewRequests() {
         runQueryButton.setEnabled(false);
     }
