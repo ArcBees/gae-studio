@@ -11,7 +11,6 @@ package com.arcbees.gaestudio.client.application.ui;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.dom.client.BrowserEvents;
-import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.ParagraphElement;
 import com.google.gwt.event.logical.shared.AttachEvent;

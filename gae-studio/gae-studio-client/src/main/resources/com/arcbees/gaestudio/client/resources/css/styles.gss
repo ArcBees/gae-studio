@@ -93,7 +93,7 @@ input:focus, textarea:focus, button:focus {
     display: inline-block;
     height: 46px;
     width: 40px;
-    padding: 11px 0 0 5px;
+    padding: 11px 0 0 3px;
 
     @mixin transition_effect(all, 0.3s, ease);
 }
