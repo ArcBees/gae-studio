@@ -1,19 +1,19 @@
 @url CHOSEN_SPRITE_URL chosenArrow;
 
 .chzn-container-single .chzn-single {
-    background-color: #2b2b2b;
+    background-color: #fff;
     background-image: none;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
-    border: 1px solid #2b2b2b;
+    border: 1px solid #fff;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    color: #fff;
-    height: 21px;
+    color: #222;
+    height: 23px;
     top: -2px;
-    right: 2px;
+    right: 0;
 }
 
 .chzn-container-single .chzn-search {
@@ -22,7 +22,8 @@
 
 .chzn-container .chzn-drop {
     margin-top: -1px;
-    margin-left: -2px;
+    margin-left: 0;
+    border-color: #fff;
 }
 
 .chzn-container .chzn-results {
@@ -31,10 +32,10 @@
 }
 
 .chzn-container-single .chzn-single div b {
-    background: CHOSEN_SPRITE_URL no-repeat 2px 7px;
+    background: CHOSEN_SPRITE_URL no-repeat 2px 9px;
 }
 
 .chzn-container .chzn-results .highlighted {
-    background-color: #7a7a7a;
+    background-color: #42b9e8;
     background-image: none;
 }

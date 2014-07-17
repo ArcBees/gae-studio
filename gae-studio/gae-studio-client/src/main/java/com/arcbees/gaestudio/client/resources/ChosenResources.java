@@ -17,7 +17,7 @@ public interface ChosenResources extends Resources {
     public interface CustomChosenCss extends ChozenCss {
     }
 
-    @Source("images/dropdown/dropDownArrowRl.png")
+    @Source("images/dropdown/dropDownArrowUp.png")
     ImageResource chosenArrow();
 
     @Override
