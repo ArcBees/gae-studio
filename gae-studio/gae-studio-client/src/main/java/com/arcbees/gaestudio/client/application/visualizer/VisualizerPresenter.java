@@ -22,6 +22,7 @@ import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntityEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.DeselectEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EditEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
@@ -306,7 +307,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     }
 
     private void deselect() {
-        // TODO: Hellooooooo, deselect me please, would you?
+        DeselectEvent.fire(this);
     }
 
     private void updateEntityListPresenter() {

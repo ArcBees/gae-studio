@@ -20,6 +20,7 @@ import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.DeselectEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSelectedEvent;
@@ -71,7 +72,7 @@ import static com.arcbees.gaestudio.client.application.visualizer.event.EntitySa
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
         implements EntityListUiHandlers, EntitySavedHandler, EntityDeletedHandler, EntitiesDeletedHandler,
         DeleteFromNamespaceHandler, SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler,
-        KindSelectedEvent.KindSelectedHandler, EntitiesSavedEvent.EntitiesSavedHandler {
+        KindSelectedEvent.KindSelectedHandler, EntitiesSavedEvent.EntitiesSavedHandler, DeselectEvent.DeselectHandler {
     interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
 
@@ -231,6 +232,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
+    public void onDeselectEntities(DeselectEvent event) {
+        getView().unselectRows();
+    }
+
+    @Override
     public void runGqlQuery(String gqlRequest) {
         if (requestHasNoSelect(gqlRequest)) {
             DisplayMessageEvent.fire(this, new Message(appConstants.missingSelectInRequest(), MessageStyle.ERROR));
@@ -281,6 +287,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
         addRegisteredHandler(SetStateFromPlaceRequestEvent.getType(), this);
         addRegisteredHandler(KindSelectedEvent.getType(), this);
+        addRegisteredHandler(DeselectEvent.getType(), this);
 
         namespacesListPresenter.addValueChangeHandler(new ValueChangeHandler<AppIdNamespaceDto>() {
             @Override
