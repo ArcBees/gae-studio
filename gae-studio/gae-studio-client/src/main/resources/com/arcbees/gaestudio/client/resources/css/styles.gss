@@ -93,7 +93,7 @@ input:focus, textarea:focus, button:focus {
     display: inline-block;
     height: 46px;
     width: 40px;
-    padding: 11px 0 0 6px;
+    padding: 11px 0 0 5px;
 
     @mixin transition_effect(all, 0.3s, ease);
 }
@@ -136,6 +136,23 @@ input:focus, textarea:focus, button:focus {
     height: 46px;
     width: 46px;
     display: inline-block;
+}
+
+.profilerToggle {
+    float: right;
+
+    margin-top: 2px;
+    padding: 12px 17px;
+
+    @mixin rotate(-90deg);
+    @mixin transition(all, 0.4s);
+}
+
+.profilerToggle.flipped {
+}
+
+.flipped {
+    @mixin rotate(0deg);
 }
 
 /* -> Version -- */
@@ -531,20 +548,6 @@ input:focus, textarea:focus, button:focus {
 .refresh:hover i {
     -webkit-transform: translate(0px, 0.5px) rotate(-40deg);
     transform: translate(0px, 1px) rotate(180deg);
-}
-
-.profilerToggle {
-    float: right;
-
-    margin-top: 6px;
-    padding: 4px 8px;
-}
-
-.profilerToggle.flipped {
-}
-
-.flipped {
-    @mixin flip_horizontal();
 }
 
 .toggleKindsPanel {
