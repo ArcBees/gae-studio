@@ -127,4 +127,13 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <profiles>
+        <profile>
+            <id>demo</id>
+            <properties>
+                <googleappengine.id>gaestudio-demo</googleappengine.id>
+            </properties>
+        </profile>
+    </profiles>
 </project>
