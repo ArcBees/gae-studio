@@ -28,10 +28,17 @@ public class GqlServiceImpl implements GqlService {
     }
 
     @Override
-    public Collection<Entity> executeGqlRequest(String gqlRequest) {
+    public Collection<Entity> executeGqlRequest(String gqlRequest, Integer offset, Integer limit) {
         AppEngineHelper.disableApiHooks();
         FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
         GqlQuery gql;
+
+        if (offset != null) {
+            fetchOptions.offset(offset);
+        }
+        if (limit != null) {
+            fetchOptions.limit(limit);
+        }
 
         try {
             gql = new GqlQuery(gqlRequest);

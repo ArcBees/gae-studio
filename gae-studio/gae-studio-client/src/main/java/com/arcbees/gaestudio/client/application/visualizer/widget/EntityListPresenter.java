@@ -97,8 +97,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         void setRowSelected(String encodedKey);
 
-        void setData(List<ParsedEntity> parsedEntities);
-
         void blockSendingNewRequests();
 
         void allowSendingNewRequests();
@@ -117,6 +115,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private final UniversalAnalytics universalAnalytics;
 
     private String currentKind;
+    private String currentGqlRequest;
+    private Integer currentGqlNumberOfEntities = 0;
 
     @Inject
     EntityListPresenter(EventBus eventBus,
@@ -150,6 +150,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Override
     public void onKindSelected(KindSelectedEvent event) {
         getView().unselectRows();
+        currentGqlRequest = "";
     }
 
     @Override
@@ -239,19 +240,19 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         getView().blockSendingNewRequests();
 
-        gqlRequest = replaceQuotes(gqlRequest);
+        currentGqlRequest = replaceQuotes(gqlRequest);
 
-        restDispatch.execute(gqlService.executeGqlRequest(gqlRequest), new RestCallbackImpl<List<EntityDto>>() {
+        restDispatch.execute(gqlService.getRequestCount(currentGqlRequest), new RestCallbackImpl<Integer>() {
             @Override
-            public void onSuccess(List<EntityDto> entities) {
-                if (entities.isEmpty()) {
+            public void onSuccess(Integer number) {
+                if (number == 0) {
                     DisplayMessageEvent.fire(this, new Message(appConstants.noEntitiesMatchRequest(),
                             MessageStyle.ERROR));
                 } else {
-                    showEntities(entities);
-
-                    DisplayMessageEvent.fire(this, new Message(appMessages.entitiesMatchRequest(entities.size()),
+                    DisplayMessageEvent.fire(this, new Message(appMessages.entitiesMatchRequest(number),
                             MessageStyle.SUCCESS));
+                    retrieveEntities(new Range(0, 25), number);
+                    currentGqlNumberOfEntities = number;
                 }
             }
 
@@ -316,14 +317,19 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             display.setRowCount(0);
         } else {
             Range range = display.getVisibleRange();
-            restDispatch.execute(entitiesService.getByKind(currentKind, range.getStart(), range.getLength()),
-                    new AsyncCallbackImpl<List<EntityDto>>() {
-                        @Override
-                        public void onSuccess(List<EntityDto> result) {
-                            onLoadPageSuccess(result, display);
+
+            if (Strings.isNullOrEmpty(currentGqlRequest)) {
+                restDispatch.execute(entitiesService.getByKind(currentKind, range.getStart(), range.getLength()),
+                        new AsyncCallbackImpl<List<EntityDto>>() {
+                            @Override
+                            public void onSuccess(List<EntityDto> result) {
+                                onLoadPageSuccess(result, display);
+                            }
                         }
-                    }
-            );
+                );
+            } else {
+                retrieveEntities(range, currentGqlNumberOfEntities);
+            }
         }
         EntityPageLoadedEvent.fire(this);
     }
@@ -364,7 +370,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         placeManager.revealPlace(builder.build());
     }
 
-    private void showEntities(List<EntityDto> entities) {
+    private void showEntities(List<EntityDto> entities, Range range, Integer numberOfEntities) {
         List<ParsedEntity> parsedEntities = new ArrayList<>();
 
         for (EntityDto entityDto : entities) {
@@ -373,8 +379,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         }
 
         adjustColumns(parsedEntities);
-        getView().setData(parsedEntities);
-        getView().setRowCount(parsedEntities.size());
+        getView().setData(range, parsedEntities);
+
+        getView().setRowCount(numberOfEntities);
     }
 
     private boolean requestHasNoSelect(String gqlRequest) {
@@ -383,5 +390,17 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     private String replaceQuotes(String gqlRequest) {
         return gqlRequest.replace("\"", "'");
+    }
+
+    private void retrieveEntities(final Range range, final Integer numberOfEntities) {
+        restDispatch.execute(gqlService.executeGqlRequest(currentGqlRequest,
+                        range.getStart(), range.getLength()),
+                new AsyncCallbackImpl<List<EntityDto>>() {
+                    @Override
+                    public void onSuccess(List<EntityDto> result) {
+                        showEntities(result, range, numberOfEntities);
+                    }
+                }
+        );
     }
 }

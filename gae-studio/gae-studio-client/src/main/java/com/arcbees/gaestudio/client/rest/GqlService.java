@@ -24,5 +24,11 @@ import com.gwtplatform.dispatch.rest.shared.RestService;
 @Path(EndPoints.GQL)
 public interface GqlService extends RestService {
     @GET
-    RestAction<List<EntityDto>> executeGqlRequest(@QueryParam(UrlParameters.QUERY) String request);
+    RestAction<List<EntityDto>> executeGqlRequest(@QueryParam(UrlParameters.QUERY) String request,
+                                                  @QueryParam(UrlParameters.OFFSET) Integer offset,
+                                                  @QueryParam(UrlParameters.LIMIT) Integer limit);
+
+    @Path(EndPoints.COUNT)
+    @GET
+    RestAction<Integer> getRequestCount(@QueryParam(UrlParameters.QUERY) String gqlRequest);
 }

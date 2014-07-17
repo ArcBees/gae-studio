@@ -7,12 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.service.visualizer;
+package com.arcbees.gaestudio.server;
 
-import java.util.Collection;
-
-import com.google.appengine.api.datastore.Entity;
-
-public interface GqlService {
-    Collection<Entity> executeGqlRequest(String request, Integer offset, Integer limit);
+public class AnalyticsTrackingIds {
+    // will be replaced by maven
+    public static final String SERVER_TRACKING_ID  = "${gaes.analytics.trackingid.server}";
+    public static final String CLIENT_TRACKING_ID  = "${gaes.analytics.trackingid.client}";
 }
