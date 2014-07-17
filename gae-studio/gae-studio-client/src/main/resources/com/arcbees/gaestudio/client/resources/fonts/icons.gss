@@ -61,3 +61,5 @@
 .icon_save:before { content: '\e80e'; } /* '' */
 
 .icon_submit:before { content: '\e80f'; } /* '' */
+
+.icon_menu:before { content: '\e810'; } /* '' */

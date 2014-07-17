@@ -4,7 +4,7 @@
     <ui:with field="resources" type="com.arcbees.gaestudio.client.resources.AppResources"/>
 
     <g:HTMLPanel ui:field="button" styleName="{resources.styles.toolbarButton}">
-        <div ui:field="icon"/>
+        <i ui:field="icon"></i>
         <div class="{resources.styles.innerContainer}">
             <p ui:field="text"/>
         </div>

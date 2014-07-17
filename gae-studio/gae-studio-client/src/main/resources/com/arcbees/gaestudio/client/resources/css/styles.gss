@@ -28,13 +28,15 @@ input:focus, textarea:focus, button:focus {
 /* -> UI Toolbar Button */
 
 .toolbarButton {
+    background: C_SECONDARY_DARK;
     cursor: pointer;
 
     width: 100%;
     height: 46px;
-    float: left;
+    border-left: 2px solid transparent;
+
     position: relative;
-    background: #2d2d2d;
+    float: left;
 
     @mixin transition_effect(all, .25s, ease);
 }
@@ -43,24 +45,12 @@ input:focus, textarea:focus, button:focus {
     background: white;
     color: black;
 
-    border-left: 2px solid C_PRIMARY;
+    border-left-color: C_PRIMARY;
     margin-left: 0;
-
-    @mixin transition_effect(margin-left, 0, ease);
-}
-
-.toolbarButton:hover > div:first-child {
-    margin-left: -2px;
 }
 
 .toolbarButton:active {
-    background: rgba(46, 46, 46, 0.5);
-
-    border: 1px solid rgba(37, 37, 37, 0.7);
-
-    -webkit-box-shadow: inset 0 0 5px -1px rgba(0, 0, 0, 0.35), 0 1px 5px 1px rgba(192, 192, 192, 0.06);
-    -moz-box-shadow: inset 0 0 5px -1px rgba(0, 0, 0, 0.35), 0 1px 5px 1px rgba(192, 192, 192, 0.06);
-    box-shadow: inset 0 0 5px -1px rgba(0, 0, 0, 0.35), 0 1px 5px 1px rgba(192, 192, 192, 0.06);
+    border-left-width: 10px;
 }
 
 .toolbarButtonDisabled {
@@ -71,9 +61,13 @@ input:focus, textarea:focus, button:focus {
 .toolbarButtonDisabled:hover {
     background: none;
     color: white;
-    border-color: transparent;
+    border-left-color: transparent;
 
     @mixin boxshadow_none();
+}
+
+.toolbarButtonDisabled:hover:active {
+    border-left-width: 2px;
 }
 
 .toolbarButton .innerContainer {
@@ -91,6 +85,78 @@ input:focus, textarea:focus, button:focus {
     left: 14px;
 }
 
+.toolbarButton i {
+    font-size: 19px;
+    color: #fff;
+    text-align: center;
+
+    display: inline-block;
+    height: 46px;
+    width: 40px;
+    padding: 11px 0 0 3px;
+
+    @mixin transition_effect(all, 0.3s, ease);
+}
+
+.toolbarButton:hover i {
+    color: #000;
+
+    -webkit-transform: translate(0px, 1px) scale(1.3, 1.3);
+    transform: translate(0px, 1px) scale(1.3, 1.3);
+}
+
+.toolbarButtonDisabled:hover i,
+.toolbarButtonDisabled:hover:active i{
+    color: #fff;
+
+    @mixin scale(1, 1);
+}
+
+.toolbarButton:hover .delete {
+    gwt-sprite: "deleteRl";
+}
+
+.toolbarButton:hover .stop {
+    gwt-sprite: "stopRl";
+}
+
+.stop, .toolbarButtonDisabled:hover .stop {
+    gwt-sprite: "stop";
+}
+
+.delete,
+.toolbarButton:hover .delete,
+.stop,
+.toolbarButton:hover .stop,
+.toolbarButtonDisabled:hover .stop,
+.record {
+    background-position-x: 50%;
+    background-position-y: 50%;
+
+    height: 46px;
+    width: 46px;
+    display: inline-block;
+}
+
+.profilerToggle {
+    float: right;
+
+    margin-top: 2px;
+    padding: 12px 17px;
+
+    @mixin rotate(-90deg);
+    @mixin transition(all, 0.4s);
+}
+
+.profilerToggle.flipped {
+}
+
+.flipped {
+    @mixin rotate(0deg);
+}
+
+/* -> Version -- */
+
 .version {
     color: #888;
 
@@ -99,6 +165,8 @@ input:focus, textarea:focus, button:focus {
     top: 12px;
     z-index: 1000;
 }
+
+/* -> Tabs -- */
 
 .tabs {
     font-size: 1.2em;
@@ -447,9 +515,7 @@ input:focus, textarea:focus, button:focus {
     gwt-sprite: "pencil_up";
 }
 
-.toolbarButton:hover .pencil {
-    gwt-sprite: "pencil_rl";
-}
+/* -> Buttons in visualizer top toolbar */
 
 .refresh,
 .deselect,
@@ -461,6 +527,10 @@ input:focus, textarea:focus, button:focus {
     cursor: pointer;
 
     @mixin transition(background-color, 0.3s);
+}
+
+.deselectDisabled {
+    color: C_SECONDARY_LIGHT;
 }
 
 .refresh i,
@@ -478,52 +548,6 @@ input:focus, textarea:focus, button:focus {
 .refresh:hover i {
     -webkit-transform: translate(0px, 0.5px) rotate(-40deg);
     transform: translate(0px, 1px) rotate(180deg);
-}
-
-.deselectDisabled {
-    color: C_SECONDARY_LIGHT;
-}
-
-.toolbarButton:hover .delete {
-    gwt-sprite: "deleteRl";
-}
-
-.toolbarButton:hover .stop {
-    gwt-sprite: "stopRl";
-}
-
-.stop, .toolbarButtonDisabled:hover .stop {
-    gwt-sprite: "stop";
-}
-
-.delete,
-.toolbarButton:hover .delete,
-.stop,
-.toolbarButton:hover .stop,
-.toolbarButtonDisabled:hover .stop,
-.record,
-.toolbarButton .pencil,
-.toolbarButton:hover .pencil {
-    background-position-x: 50%;
-    background-position-y: 50%;
-
-    height: 46px;
-    width: 46px;
-    display: inline-block;
-}
-
-.profilerToggle {
-    float: right;
-
-    margin-top: 6px;
-    padding: 4px 8px;
-}
-
-.profilerToggle.flipped {
-}
-
-.flipped {
-    @mixin flip_horizontal();
 }
 
 .toggleKindsPanel {

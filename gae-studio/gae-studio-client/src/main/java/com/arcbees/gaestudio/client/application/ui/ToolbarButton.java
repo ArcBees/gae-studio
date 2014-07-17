@@ -11,7 +11,7 @@ package com.arcbees.gaestudio.client.application.ui;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.dom.client.BrowserEvents;
-import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.ParagraphElement;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.query.client.Function;
@@ -38,7 +38,7 @@ public class ToolbarButton implements AttachEvent.Handler, IsWidget {
     @UiField
     ParagraphElement text;
     @UiField
-    DivElement icon;
+    Element icon;
 
     private final ToolbarButtonCallback callback;
     private final Widget widget;
