@@ -20,19 +20,7 @@
             <version>${gwtp.version}</version>
         </dependency>
 
-        <!-- Google Web Toolkit dependencies -->
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-servlet</artifactId>
-            <version>${gwt.version}</version>
-        </dependency>
-
         <!-- Persistence dependencies -->
-        <dependency>
-            <groupId>com.googlecode.objectify</groupId>
-            <artifactId>objectify</artifactId>
-            <version>${objectify.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-api-1.0-sdk</artifactId>

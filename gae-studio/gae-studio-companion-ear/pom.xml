@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>gae-studio</artifactId>
+        <groupId>com.arcbees.gaestudio</groupId>
+        <version>0.9-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>gae-studio-companion-ear</artifactId>
+    <packaging>ear</packaging>
+
+    <properties>
+        <rest-assured.version>1.8.1</rest-assured.version>
+        <googleappengine.id>gaestudio-testing</googleappengine.id>
+    </properties>
+
+    <dependencies>
+        <!-- GAE Studio -->
+        <dependency>
+            <groupId>com.arcbees.gaestudio</groupId>
+            <artifactId>gae-studio-webapp</artifactId>
+            <version>${project.version}</version>
+            <classifier>module</classifier>
+            <type>war</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.arcbees.gaestudio</groupId>
+            <artifactId>gae-studio-companion</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/META-INF</directory>
+                <targetPath>${webappDirectory}/META-INF</targetPath>
+                <filtering>true</filtering>
+
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>com.google.appengine</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>${gae.version}</version>
+
+                <configuration>
+                    <enableJarSplitting>true</enableJarSplitting>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>${maven-ear-plugin.version}</version>
+
+                <configuration>
+                    <version>5</version>
+                    <generateApplicationXml>false</generateApplicationXml>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <unpackTypes>war</unpackTypes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
