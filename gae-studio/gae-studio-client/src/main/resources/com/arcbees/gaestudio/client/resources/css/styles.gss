@@ -358,23 +358,25 @@ input:focus, textarea:focus, button:focus {
     background: rgba(0, 0, 0, 0.4);
 }
 
-.button:hover:enabled, .button:active:enabled {
-    @mixin boxshadow_inset(2px, 2px, 6px, 5px, rgba(0, 0, 0, 0.1));
-}
+/* -> Buttons -- */
 
 .button {
-    background-color: C_PRIMARY;
+    background-color: C_SECONDARY_DARK;
     color: white;
     font-size: 18px;
     text-transform: uppercase;
 
     width: 100%;
     border: none;
-    padding: 10px;
+    padding: 5px;
     margin-bottom: 20px;
+
+    @mixin transition(all, 0.3s);
 }
 
 .button:hover:enabled {
+    background-color: C_PRIMARY;
+
     cursor: pointer;
 }
 
@@ -383,24 +385,26 @@ input:focus, textarea:focus, button:focus {
 }
 
 .button.gray {
-    border: none;
-
     background: #b7b7b7;
     color: #2d2d2d;
     text-shadow: none;
+
+    border: none;
 }
 
 .button.gray:hover:enabled {
-    background: #b7b7b7;
-    color: #2d2d2d;
-    border: none;
+    background: C_SECONDARY_DARK;
+    color: #fff;
     text-shadow: none;
+
+    border: none;
 }
 
 .button.gray:active:enabled {
-    border: none;
     background: #8d8d8d;
     text-shadow: none;
+
+    border: none;
 }
 
 .loginAjaxLoader {
@@ -652,9 +656,10 @@ input:focus, textarea:focus, button:focus {
 }
 
 .buttonContainer {
+    text-align: right;
+
     padding-top: 5px;
     margin: 0;
-    text-align: center;
     width: 100%;
 }
 
@@ -662,7 +667,12 @@ input:focus, textarea:focus, button:focus {
     margin: 0;
     text-align: center;
     width: calc(50% - 5px);
-    padding: 5px;
+    padding: 2px 6px;
+}
+
+.buttonContainer button {
+    display: inline-block;
+    width: auto;
 }
 
 .buttonContainer > :first-child {
@@ -710,12 +720,25 @@ input:focus, textarea:focus, button:focus {
 .editorMain input[type=text] {
     font-size: 16px;
     color: black;
-    background-color: C_SECONDARY_LIGHT2;
+    background-color: C_SECONDARY_LIGHT;
 
     width: 100%;
     padding: 2px 4px;
     margin-bottom: 10px;
-    border: none;
+    border: 0;
+    border-bottom: 2px solid C_SECONDARY_LIGHT2;
+}
+
+.editorMain input[type=text]:focus {
+    border-bottom-color: C_PRIMARY;
+}
+
+.editorMain ul {
+    background-color: C_SECONDARY_LIGHT;
+}
+
+.editorMain li {
+    background-color: C_SECONDARY_LIGHT
 }
 
 /* -> License -- */

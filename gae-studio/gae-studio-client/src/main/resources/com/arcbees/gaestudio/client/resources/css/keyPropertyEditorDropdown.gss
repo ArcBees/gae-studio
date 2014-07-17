@@ -1,8 +1,9 @@
 .ul {
-    background: C_SECONDARY_LIGHT2;
+    background: C_SECONDARY_LIGHT;
 
     width: 100%;
     margin: 0 0 10px 0;
+    border-bottom: 2px solid C_SECONDARY_LIGHT2;
 
     position: relative;
 
@@ -11,8 +12,11 @@
 }
 
 ul.openedList {
+    background: C_SECONDARY_LIGHT2;
+
     min-width: 100%;
     width: auto;
+    border-bottom: 0;
 }
 
 .openedList {
@@ -32,7 +36,7 @@ ul.openedList {
 
 .ul li {
     font-size: 16px;
-    background-color: C_SECONDARY_LIGHT2;
+    background-color: C_SECONDARY_LIGHT;
 
     height: 20px;
     line-height: 20px;
@@ -49,6 +53,10 @@ ul.openedList {
 
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.ul.openedList li {
+    background-color: #fff;
 }
 
 .ul.openedList li span {
