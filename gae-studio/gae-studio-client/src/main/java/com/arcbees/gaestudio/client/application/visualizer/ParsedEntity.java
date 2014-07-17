@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.client.application.visualizer;
 import java.util.Set;
 
 import com.arcbees.gaestudio.client.application.entity.editor.PropertyUtil;
+import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.json.client.JSONObject;
@@ -36,6 +37,11 @@ public class ParsedEntity {
 
     public Boolean hasProperty(String key) {
         return getPropertyMap().containsKey(key);
+    }
+
+    public PropertyType getPropertyType(String key) {
+        JSONValue jsonValue = getProperty(key);
+        return PropertyUtil.getPropertyType(jsonValue);
     }
 
     public JSONValue getProperty(String key) {
