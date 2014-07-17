@@ -14,11 +14,12 @@ import java.util.UUID;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.arcbees.gaestudio.server.AnalyticsTrackingIds;
+
 /**
  * This tests must be run while having an internet connexion as it will try to contact GoogleAnalytic
  */
 public class GoogleAnalyticTest {
-    private static final String GA_TEST_TRACKING_ID = "UA-41550930-5";
     private static final String APP_NAME = "GAE-Studio";
     private static final String APP_VERSION = "1.0";
     private static final String AN_EVENT_CATEGORY = "test";
@@ -29,7 +30,8 @@ public class GoogleAnalyticTest {
     public void trackEvent_willBeSuccessful() {
         // Given
         String uuid = UUID.randomUUID().toString();
-        GoogleAnalytic googleAnalytic = GoogleAnalytic.build(uuid, GA_TEST_TRACKING_ID, APP_NAME, APP_VERSION);
+        GoogleAnalytic googleAnalytic = GoogleAnalytic.build(uuid, AnalyticsTrackingIds.SERVER_TRACKING_ID,
+                APP_NAME, APP_VERSION);
 
         // When
         boolean success = googleAnalytic.trackEvent(AN_EVENT_CATEGORY, AN_EVENT_ACTION);
@@ -44,7 +46,8 @@ public class GoogleAnalyticTest {
     public void trackEventWithLabel_willBeSuccessful() {
         // Given
         String uuid = UUID.randomUUID().toString();
-        GoogleAnalytic googleAnalytic = GoogleAnalytic.build(uuid, GA_TEST_TRACKING_ID, APP_NAME, APP_VERSION);
+        GoogleAnalytic googleAnalytic = GoogleAnalytic.build(uuid, AnalyticsTrackingIds.SERVER_TRACKING_ID,
+                APP_NAME, APP_VERSION);
 
         // When
         boolean success = googleAnalytic.trackEvent(AN_EVENT_CATEGORY, AN_EVENT_ACTION, A_LABEL);
