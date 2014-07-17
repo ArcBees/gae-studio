@@ -86,7 +86,9 @@ public class GqlServiceImplTest extends GaeTestBase {
         createCars();
         createCars();
 
-        Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Car", 0, 4);
+        Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Car", 2, 4);
+
+        assertEquals(4, result.size());
     }
 
     private void createCars() {
