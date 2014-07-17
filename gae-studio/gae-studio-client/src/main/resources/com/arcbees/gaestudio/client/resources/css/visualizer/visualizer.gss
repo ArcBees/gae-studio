@@ -69,12 +69,12 @@
     top: 5px;
 }
 
-.sidebar .actionsPanel .dropdown {
+.sidebar .dropdown {
     width: 80px;
 }
 
-.sidebar .actionsPanel .exportBtn,
-.sidebar .actionsPanel .importBtn {
+.sidebar .exportBtn,
+.sidebar .importBtn {
     background-color: #2d2d2d;
     background-repeat: no-repeat;
     background-position: center center;
@@ -92,37 +92,37 @@
     @mixin transition(all, 0.3s);
 }
 
-.sidebar .actionsPanel .exportBtn:hover,
-.sidebar .actionsPanel .importBtn:hover {
+.sidebar .exportBtn:hover,
+.sidebar .importBtn:hover {
     background-color: C_PRIMARY;
     cursor: pointer;
 }
 
-.sidebar .actionsPanel .exportBtn i,
-.sidebar .actionsPanel .importBtn i {
+.sidebar .exportBtn i,
+.sidebar .importBtn i {
     position: relative;
     top: -3px;
 }
 
-.sidebar .actionsPanel .exportBtn i::before,
-.sidebar .actionsPanel .importBtn i::before {
+.sidebar .exportBtn i::before,
+.sidebar .importBtn i::before {
     @mixin scale(1, 1);
 }
 
-.sidebar .actionsPanel .btnDisabled,
-.sidebar .actionsPanel .btnDisabled:hover {
+.sidebar .btnDisabled,
+.sidebar .btnDisabled:hover {
     background-color: #B7B7B7;
     pointer-events: none;
     cursor: default;
 }
 
-.sidebar .actionsPanel .exportBtn:hover i::before,
-.sidebar .actionsPanel .importBtn:hover i::before {
+.sidebar .exportBtn:hover i::before,
+.sidebar .importBtn:hover i::before {
     @mixin scale(1.1, 1.1);
 }
 
-.sidebar .actionsPanel .exportBtn:active i::before,
-.sidebar .actionsPanel .importBtn:active i::before {
+.sidebar .exportBtn:active i::before,
+.sidebar .importBtn:active i::before {
     @mixin scale(0.9, 0.9);
 }
 
