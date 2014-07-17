@@ -9,10 +9,16 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import javax.inject.Inject;
+
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.shared.PropertyName;
+import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
@@ -30,16 +36,25 @@ public class ParsedEntityColumnCreator {
     private static final String IS_NULL = "<null>";
     private static int DEFAULT_COLUMN_COUNT;
 
+    private final AppConstants appConstants;
+
+    @Inject
+    ParsedEntityColumnCreator(AppConstants appConstants) {
+        this.appConstants = appConstants;
+    }
+
     public void addPropertyColumn(CellTable<ParsedEntity> cellTable,
                                   final String propertyName) {
         Column<ParsedEntity, ?> column = new TextColumn<ParsedEntity>() {
             @Override
             public String getValue(ParsedEntity parsedEntity) {
-                JSONValue value = parsedEntity.getProperty(propertyName);
+                JSONValue jsonProperty = parsedEntity.getProperty(propertyName);
 
                 String stringValue = "";
-                if (value != null) {
+                if (jsonProperty != null) {
                     stringValue = parsedEntity.getCleanedUpProperty(propertyName).toString();
+                    stringValue = prettifyKey(jsonProperty, stringValue);
+                    stringValue = addUnindexedIfNeeded(jsonProperty, stringValue);
                 }
 
                 return stringValue;
@@ -123,5 +138,65 @@ public class ParsedEntityColumnCreator {
                 return idName;
             }
         };
+    }
+
+    private String addUnindexedIfNeeded(JSONValue value, String stringValue) {
+        JSONObject jsonObject = value.isObject();
+
+        if (jsonObject != null) {
+            JSONValue indexedProperty = jsonObject.get(PropertyName.INDEXED);
+
+            if (indexedProperty != null) {
+                boolean isEntityIndexed = indexedProperty.isBoolean().booleanValue();
+
+                if (!isEntityIndexed) {
+                    stringValue += " " + appConstants.unindexed();
+                }
+            }
+        }
+
+        return stringValue;
+    }
+
+    private String prettifyKey(JSONValue jsonProperty, String stringValue) {
+        JSONObject jsonObject = jsonProperty.isObject();
+        String value = stringValue;
+
+        if (jsonObject != null) {
+            JSONValue jsonPropertyType = jsonObject.get(PropertyName.GAE_PROPERTY_TYPE);
+
+            if (jsonPropertyType != null) {
+                PropertyType propertyType = PropertyType.valueOf(jsonPropertyType.isString().stringValue());
+
+                if (propertyType == PropertyType.KEY) {
+                    JSONObject propertyValue = jsonObject.get(PropertyName.VALUE).isObject();
+
+                    String parentValue = writeParentKeys(propertyValue);
+
+                    String kind = propertyValue.get(PropertyName.KIND).isString().stringValue();
+                    String id = String.valueOf(propertyValue.get(PropertyName.ID));
+
+                    value = parentValue + kind + " (" + id + ")";
+                }
+            }
+        }
+
+        return value;
+    }
+
+    private String writeParentKeys(JSONObject propertyValue) {
+        String returnValue = "";
+
+        JSONValue parentKeyJson = propertyValue.get(PropertyName.PARENT_KEY);
+        JSONObject jsonObject = parentKeyJson.isObject();
+
+        if (jsonObject != null) {
+            String kind = jsonObject.get(PropertyName.KIND).isString().stringValue();
+            String id = String.valueOf(jsonObject.get(PropertyName.ID));
+
+            returnValue += writeParentKeys(jsonObject) + kind + " (" + id + ") > ";
+        }
+
+        return returnValue;
     }
 }

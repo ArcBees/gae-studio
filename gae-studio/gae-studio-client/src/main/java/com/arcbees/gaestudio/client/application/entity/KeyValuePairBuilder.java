@@ -16,11 +16,14 @@ import java.util.Set;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.shared.PropertyName;
+import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.common.collect.Lists;
 import com.google.gwt.json.client.JSONException;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
+
+import static com.google.gwt.query.client.GQuery.console;
 
 public class KeyValuePairBuilder {
     public List<KeyValuePair> fromParsedEntity(ParsedEntity parsedEntity) {
@@ -32,8 +35,11 @@ public class KeyValuePairBuilder {
 
         for (String prop : propertiesList) {
             String val = parsedEntity.getCleanedUpProperty(prop).toString();
+            PropertyType type = parsedEntity.getPropertyType(prop);
 
-            val = prettifyKeys(val);
+            if (type == PropertyType.KEY) {
+                val = prettifyKeys(val);
+            }
 
             KeyValuePair keyValuePair = new KeyValuePair(prop, val);
             keyValuePairs.add(keyValuePair);
@@ -46,19 +52,15 @@ public class KeyValuePairBuilder {
         String prettyValue = val;
         try {
             JSONValue jsonValue = JSONParser.parseStrict(val);
-
             JSONObject jsonObject = jsonValue.isObject();
+            JSONValue kind = jsonObject.get(PropertyName.KIND);
+            JSONValue id = jsonObject.get(PropertyName.ID);
 
-            if (jsonObject != null) {
-                JSONValue kind = jsonObject.get(PropertyName.KIND);
-                JSONValue id = jsonObject.get(PropertyName.ID);
+            String stringKind = kind.toString();
 
-                String stringKind = kind.toString();
-
-                prettyValue = stringKind.substring(1, stringKind.length() - 1) + " (" + id + ")";
-            }
+            prettyValue = stringKind.substring(1, stringKind.length() - 1) + " (" + id + ")";
         } catch (JSONException e) {
-            e.printStackTrace();
+            console.log(e);
         }
 
         return prettyValue;

@@ -13,9 +13,12 @@ import java.util.List;
 
 import com.arcbees.gaestudio.companion.dao.HasId;
 import com.google.appengine.api.datastore.GeoPt;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Parent;
 
 @Entity
 public class Car implements HasId {
@@ -27,6 +30,9 @@ public class Car implements HasId {
     private List<GeoPt> geoPts;
     private List<Wheel> wheels;
     private List<Object> mixedProperties;
+    @Parent
+    private Key<Vehicle> vehicleKey;
+    private Ref<Manufacturer> manufacturerRef;
 
     public List<Object> getMixedProperties() {
         return mixedProperties;
@@ -76,5 +82,21 @@ public class Car implements HasId {
     @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Key<Vehicle> getVehicleKey() {
+        return vehicleKey;
+    }
+
+    public void setVehicleKey(Key<Vehicle> vehicleKey) {
+        this.vehicleKey = vehicleKey;
+    }
+
+    public Ref<Manufacturer> getManufacturerRef() {
+        return manufacturerRef;
+    }
+
+    public void setManufacturerRef(Ref<Manufacturer> manufacturerRef) {
+        this.manufacturerRef = manufacturerRef;
     }
 }
