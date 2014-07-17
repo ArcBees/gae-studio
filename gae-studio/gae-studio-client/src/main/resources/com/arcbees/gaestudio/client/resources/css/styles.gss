@@ -28,12 +28,13 @@ input:focus, textarea:focus, button:focus {
 /* -> UI Toolbar Button */
 
 .toolbarButton {
-    background: C_SECONDARY_DARK;
+    background: #3d3c3c;
     cursor: pointer;
 
     width: 100%;
     height: 46px;
     border-left: 2px solid transparent;
+    margin-bottom: 2px;
 
     position: relative;
     float: left;
@@ -50,10 +51,12 @@ input:focus, textarea:focus, button:focus {
 }
 
 .toolbarButton:active {
-    border-left-width: 10px;
+    border-left-width: 6px;
 }
 
 .toolbarButtonDisabled {
+    background-color: C_SECONDARY_DARK;
+
     cursor: default;
     opacity: .4;
 }
