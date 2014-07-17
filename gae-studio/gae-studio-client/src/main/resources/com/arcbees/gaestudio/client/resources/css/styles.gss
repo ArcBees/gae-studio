@@ -360,10 +360,34 @@ input:focus, textarea:focus, button:focus {
 
 /* -> Buttons -- */
 
+.buttonContainer {
+    text-align: right;
+
+    padding-top: 5px;
+    margin: 0;
+    width: 100%;
+}
+
+.buttonContainer button, .chooseFileButton {
+    margin: 0;
+    text-align: center;
+    width: calc(50% - 5px);
+    padding: 2px 6px;
+}
+
+.buttonContainer button {
+    display: inline-block;
+    width: auto;
+}
+
+.buttonContainer > :first-child {
+    margin-right: 6px;
+}
+
 .button {
     background-color: C_SECONDARY_DARK;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     text-transform: uppercase;
 
     width: 100%;
@@ -655,30 +679,6 @@ input:focus, textarea:focus, button:focus {
     line-height: 19px;
 }
 
-.buttonContainer {
-    text-align: right;
-
-    padding-top: 5px;
-    margin: 0;
-    width: 100%;
-}
-
-.buttonContainer button, .chooseFileButton {
-    margin: 0;
-    text-align: center;
-    width: calc(50% - 5px);
-    padding: 2px 6px;
-}
-
-.buttonContainer button {
-    display: inline-block;
-    width: auto;
-}
-
-.buttonContainer > :first-child {
-    margin-right: 6px;
-}
-
 .embeddedEntityProperties .editorLabelSeparator {
     display: none;
 }
@@ -707,6 +707,10 @@ input:focus, textarea:focus, button:focus {
     font-weight: bold;
     color: C_PRIMARY;
     text-transform: uppercase;
+}
+
+.embeddedEntityProperties {
+    padding-left: 15px;
 }
 
 .embeddedEntityProperties .editorMain {
