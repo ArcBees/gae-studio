@@ -31,6 +31,8 @@ public interface WidgetResources extends ClientBundle {
         String messages();
 
         String issueBtn();
+
+        String ajax();
     }
 
     @Source({"css/colors.gss", "css/mixins.gss", "css/widget/header.gss"})
