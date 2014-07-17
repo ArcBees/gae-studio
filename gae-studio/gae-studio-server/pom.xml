@@ -13,13 +13,6 @@
     <name>GAE-Studio Server</name>
 
     <dependencies>
-        <!-- GWTP dependencies -->
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-dispatch-common-shared</artifactId>
-            <version>${gwtp.version}</version>
-        </dependency>
-
         <!-- Persistence dependencies -->
         <dependency>
             <groupId>com.google.appengine</groupId>
@@ -72,12 +65,6 @@
             <artifactId>guicy-resteasy</artifactId>
             <version>${arcbees.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.jayway.restassured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>${rest-assured.version}</version>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>com.arcbees.oauth</groupId>
@@ -125,6 +112,21 @@
             <artifactId>json</artifactId>
             <version>${json.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson-annotations.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-datastore-protobuf</artifactId>
+            <version>${datastore-protobuf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr-runtime</artifactId>
+            <version>${antlr-runtime.version}</version>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>
@@ -145,24 +147,12 @@
             <version>${jukito.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson-annotations.version}</version>
+            <groupId>com.jayway.restassured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+            <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.google.apis</groupId>
-            <artifactId>google-api-services-datastore-protobuf</artifactId>
-            <version>v1beta2-rev1-2.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.antlr</groupId>
-            <artifactId>antlr-runtime</artifactId>
-            <version>3.4</version>
-        </dependency>
-
     </dependencies>
 
     <dependencyManagement>
