@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>gae-studio-webapp</artifactId>
-    <packaging>jar</packaging>
 
     <properties>
         <client.module>com.arcbees.gaestudio.Production</client.module>
@@ -18,7 +17,9 @@
     </properties>
 
     <dependencies>
-        <!-- GAE-Studio dependencies -->
+        <!--
+         GAE-Studio dependencies
+         -->
         <dependency>
             <groupId>com.arcbees.gaestudio</groupId>
             <artifactId>gae-studio-client</artifactId>
@@ -31,28 +32,107 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!--
+         Client dependencies
+          -->
         <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>${guice.version}</version>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-mvp-client</artifactId>
+            <version>${gwtp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-dispatch-rest</artifactId>
+            <version>${gwtp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwt.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.arcbees.gquery</groupId>
+            <artifactId>tooltip</artifactId>
+            <version>${gquery-plugins.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.gwtquery</groupId>
+            <artifactId>gwtquery</artifactId>
+            <version>${gwtquery.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.arcbees</groupId>
+            <artifactId>gwtchosen</artifactId>
+            <version>${gwtchosen.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.arcbees.analytics</groupId>
+            <artifactId>analytics-client</artifactId>
+            <version>${analytics.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jdramaix</groupId>
+            <artifactId>gssresource</artifactId>
+            <version>${gss.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.nmorel.gwtjackson</groupId>
+            <artifactId>gwt-jackson</artifactId>
+            <version>${gwt-jackson.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt.inject</groupId>
+            <artifactId>gin</artifactId>
+            <version>${gin.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-gwt</artifactId>
+            <version>${guava.version}</version>
+            <scope>provided</scope>
         </dependency>
 
+        <!--
+         Validation, used only by the client side for now. Annotations are in shared
+         -->
         <dependency>
-            <groupId>com.google.appengine</groupId>
-            <artifactId>appengine-api-1.0-sdk</artifactId>
-            <version>${gae.version}</version>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${javax.validation.version}</version>
+            <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-source.version}</version>
+            <classifier>sources</classifier>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--
+         Transitive dependencies we don't want to package here
+         -->
         <dependency>
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-api-stubs</artifactId>
             <version>${gae.version}</version>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-testing</artifactId>
             <version>${gae.version}</version>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -97,12 +177,27 @@
 
                 <configuration>
                     <classifier>${war.classifier}</classifier>
+                    <!-- Keeps only the static files at the root, the GWT compiled output, the shaded and the GAE jars -->
+                    <packagingIncludes>
+                        *,gaestudio/**,WEB-INF/*,WEB-INF/lib/${project.build.finalName}.jar,WEB-INF/lib/appengine-api-*.jar
+                    </packagingIncludes>
+
+                    <webResources>
+                        <resource>
+                            <directory>${project.build.directory}</directory>
+                            <targetPath>WEB-INF/lib</targetPath>
+
+                            <includes>
+                                <include>${project.build.finalName}.jar</include>
+                            </includes>
+                        </resource>
+                    </webResources>
                 </configuration>
 
                 <executions>
                     <execution>
                         <id>build-war</id>
-                        <phase>package</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>war</goal>
                         </goals>
