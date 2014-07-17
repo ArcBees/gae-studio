@@ -18,6 +18,5 @@ public class ServerModule extends AbstractModule {
     protected void configure() {
         install(new RestModule());
         install(new DaoModule());
-        install(new DispatchServletModule());
     }
 }

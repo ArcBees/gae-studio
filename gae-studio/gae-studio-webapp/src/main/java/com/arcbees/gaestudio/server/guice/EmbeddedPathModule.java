@@ -18,6 +18,7 @@ public class EmbeddedPathModule extends ServletModule {
 
     @Override
     protected void configureServlets() {
+        serve("/", "/" + GAE_STUDIO_HTML).with(RootServlet.class);
         serve("/" + EMBEDDED_PATH + "/", "/" + EMBEDDED_PATH + GAE_STUDIO_HTML).with(RootServlet.class);
         serve("/" + EMBEDDED_PATH + "/*").with(EmbeddedStaticResourcesServlet.class);
     }
