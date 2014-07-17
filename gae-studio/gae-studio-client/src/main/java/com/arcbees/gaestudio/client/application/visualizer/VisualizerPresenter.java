@@ -35,7 +35,7 @@ import com.arcbees.gaestudio.client.application.visualizer.widget.EntityListPres
 import com.arcbees.gaestudio.client.debug.DebugIds;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
-import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.client.resources.FontsResources;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
@@ -96,7 +96,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     private final ToolbarButton delete;
     private final UiFactory uiFactory;
     private final PlaceManager placeManager;
-    private final AppResources resources;
+    private final FontsResources fontsResources;
     private final AppConstants myConstants;
     private final ToolbarPresenter toolbarPresenter;
     private final UniversalAnalytics universalAnalytics;
@@ -112,7 +112,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
                         EntityListPresenter entityListPresenter,
                         SidebarPresenter sidebarPresenter,
                         UiFactory uiFactory,
-                        AppResources resources,
+                        FontsResources fontsResources,
                         AppConstants appConstants,
                         PlaceManager placeManager,
                         ToolbarPresenter toolbarPresenter,
@@ -123,7 +123,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         this.placeManager = placeManager;
         this.entityListPresenter = entityListPresenter;
         this.sidebarPresenter = sidebarPresenter;
-        this.resources = resources;
+        this.fontsResources = fontsResources;
         this.myConstants = appConstants;
         this.toolbarPresenter = toolbarPresenter;
         this.universalAnalytics = universalAnalytics;
@@ -241,7 +241,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     }
 
     private ToolbarButton createDeleteButton() {
-        return uiFactory.createToolbarButton(myConstants.delete(), resources.styles().delete(),
+        return uiFactory.createToolbarButton(myConstants.delete(), fontsResources.icons().icon_delete(),
                 new ToolbarButtonCallback() {
                     @Override
                     public void onClicked() {
@@ -262,7 +262,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     }
 
     private ToolbarButton createEditButton() {
-        return uiFactory.createToolbarButton(myConstants.edit(), resources.styles().pencil(),
+        return uiFactory.createToolbarButton(myConstants.edit(), fontsResources.icons().icon_edit(),
                 new ToolbarButtonCallback() {
                     @Override
                     public void onClicked() {
