@@ -14,6 +14,8 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 
+import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
+import com.arcbees.gaestudio.client.application.analytics.EventCategories;
 import com.arcbees.gaestudio.client.validation.ViolationsPanel;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
@@ -26,6 +28,8 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
+
+import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 
 public class SupportView extends PopupViewWithUiHandlers<SupportUiHandlers>
         implements SupportPresenter.MyView, Editor<SupportMessage> {
@@ -49,14 +53,17 @@ public class SupportView extends PopupViewWithUiHandlers<SupportUiHandlers>
     ViolationsPanel violations;
 
     private final Driver driver;
+    private final UniversalAnalytics universalAnalytics;
 
     @Inject
     SupportView(EventBus eventBus,
                 Binder binder,
-                Driver driver) {
+                Driver driver,
+                UniversalAnalytics universalAnalytics) {
         super(eventBus);
 
         this.driver = driver;
+        this.universalAnalytics = universalAnalytics;
 
         initWidget(binder.createAndBindUi(this));
 
@@ -82,10 +89,14 @@ public class SupportView extends PopupViewWithUiHandlers<SupportUiHandlers>
     @UiHandler("cancel")
     void onCancel(ClickEvent event) {
         hide();
+
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Submit Issue Popup -> Close");
     }
 
     @UiHandler("send")
     void onSend(ClickEvent event) {
         getUiHandlers().send(driver.flush());
+
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Submit Issue Popup -> Submit");
     }
 }
