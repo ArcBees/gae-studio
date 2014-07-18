@@ -760,7 +760,13 @@ input:focus, textarea:focus, button:focus {
     border-bottom: 2px solid C_SECONDARY_LIGHT2;
 }
 
+.editorMain input[type=text]:hover {
+    background-color: #f4f4f4;
+}
+
 .editorMain input[type=text]:focus {
+    background-color: #f4f4f4;
+
     border-bottom-color: C_PRIMARY;
 }
 
