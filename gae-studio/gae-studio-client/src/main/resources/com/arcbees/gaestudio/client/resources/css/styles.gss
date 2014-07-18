@@ -607,7 +607,7 @@ input:focus, textarea:focus, button:focus {
 
 .refresh:hover i {
     -webkit-transform: translate(0px, 0.5px) rotate(-40deg);
-    transform: translate(0px, 1px) rotate(180deg);
+    transform: translate(0px, 0.5px) rotate(-40deg);
 }
 
 .toggleKindsPanel {

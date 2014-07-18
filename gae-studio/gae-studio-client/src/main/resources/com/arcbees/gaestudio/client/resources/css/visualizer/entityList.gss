@@ -38,30 +38,29 @@
     display: inline-block;
     margin: 14px 0 0 20px;
     border-right: 2px solid C_SECONDARY_LIGHT;
-    padding-right: 6px;
-    padding-bottom: 11px;
+    padding: 4px 6px 7px 0;
 }
 
 .deselect {
     margin-left: 2px;
 }
 
+/* -> By GQL -- */
+
 .byGql {
     text-transform: uppercase;
 
     display: inline-block;
-    margin-left: 15px;
+    margin-left: 2px;
 
     position: relative;
-    top: -3px;
 }
 
-.byGql span {
+.byGql i {
+    font-size: 17px;
     display: inline-block;
-    width: 14px;
-    height: 14px;
-    margin-right: 4px;
-    vertical-align: sub;
+
+    @mixin transition(transform, 0.3s);
 }
 
 .byGql:hover,
@@ -71,8 +70,8 @@
     cursor: pointer;
 }
 
-.byGql.actif span {
-    background-position: center bottom;
+.byGql.open i {
+    @mixin rotate(90deg);
 }
 
 .byGqlLink,
@@ -82,7 +81,7 @@
     text-decoration: none;
 
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 4px;
     vertical-align: super;
 }
 
@@ -93,6 +92,9 @@
 .formQuery {
     width: 100%;
     overflow: hidden;
+    padding-left: 14px;
+
+    @mixin boxsizing();
 }
 
 .formQuery textarea {
@@ -107,7 +109,7 @@
 
 .formQuery button {
     color: #fff;
-    background-color: C_PRIMARY;
+    background-color: C_SECONDARY_DARK;
     background-image: none;
     text-transform: uppercase;
     font-size: 14px;
@@ -116,4 +118,16 @@
     margin: 0 0 15px 0;
     border: 0;
     padding: 5px 10px;
+
+    @mixin transition(background-color, 0.1s);
+}
+
+.formQuery button:hover {
+    background-color: C_PRIMARY;
+
+    border: 0;
+}
+
+.formQuery button:active {
+    border: 0;
 }
