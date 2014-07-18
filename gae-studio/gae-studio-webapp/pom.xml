@@ -119,9 +119,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--
-         Transitive dependencies we don't want to package here
-         -->
+        <!-- Transitive dependencies we don't want to package here -->
         <dependency>
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-api-stubs</artifactId>
