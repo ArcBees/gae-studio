@@ -322,9 +322,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
         $(refresh).click(new Function() {
             @Override
             public void f() {
-                getUiHandlers().refresh();
-                unselectRows();
-                universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> List View -> Refresh");
+                refresh();
             }
         });
 
@@ -336,6 +334,15 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
         });
 
         $(formQueryHolder).slideUp(0);
+    }
+
+    private void refresh() {
+        getUiHandlers().refresh();
+        unselectRows();
+
+        entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
+
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> List View -> Refresh");
     }
 
     private void selectRows(List<ParsedEntity> parsedEntities) {
