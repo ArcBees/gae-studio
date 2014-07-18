@@ -21,6 +21,7 @@ import com.arcbees.gaestudio.client.rest.EntityService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
+import com.google.common.base.Strings;
 import com.google.gwt.core.client.Scheduler;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
@@ -111,18 +112,20 @@ public class EntityPresenter extends Presenter<EntityPresenter.MyView, EntityPre
     private void displayEntityFromPlaceRequest(PlaceRequest request) {
         String key = request.getParameter(UrlParameters.KEY, null);
 
-        String failureMessage = appConstants.failedGettingEntity();
+        if (!Strings.isNullOrEmpty(key) && key.split(",").length == 1) {
+            String failureMessage = appConstants.failedGettingEntity();
 
-        AsyncCallbackImpl<EntityDto> callback = new AsyncCallbackImpl<EntityDto>(failureMessage) {
-            @Override
-            public void onSuccess(EntityDto result) {
-                displayEntityDto(result);
-            }
-        };
+            AsyncCallbackImpl<EntityDto> callback = new AsyncCallbackImpl<EntityDto>(failureMessage) {
+                @Override
+                public void onSuccess(EntityDto result) {
+                    displayEntityDto(result);
+                }
+            };
 
-        RestAction<EntityDto> getEntityAction = entityService.getEntity(key);
+            RestAction<EntityDto> getEntityAction = entityService.getEntity(key);
 
-        restDispatch.execute(getEntityAction, callback);
+            restDispatch.execute(getEntityAction, callback);
+        }
     }
 
     private void displayEntityDto(EntityDto entityDto) {

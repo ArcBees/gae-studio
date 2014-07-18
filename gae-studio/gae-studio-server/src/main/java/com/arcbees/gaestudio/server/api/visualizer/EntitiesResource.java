@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.api.visualizer;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,6 +36,7 @@ import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.api.client.repackaged.com.google.common.base.Strings;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.Key;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 
@@ -128,7 +130,7 @@ public class EntitiesResource {
 
     @PUT
     public Response updateEntities(List<EntityDto> entitiesDto) throws EntityNotFoundException {
-        List<Entity> entities = FluentIterable.from(entitiesDto)
+        Collection<Entity> entities = FluentIterable.from(entitiesDto)
                 .transform(new Function<EntityDto, Entity>() {
                     @Override
                     public Entity apply(EntityDto input) {
@@ -136,9 +138,10 @@ public class EntitiesResource {
                     }
                 }).toList();
 
-        entitiesService.put(entities);
+        List<Key> keys = entitiesService.put(entities);
+        entities = entitiesService.getEntities(keys);
 
-        return Response.ok().build();
+        return Response.ok(entityMapper.mapEntitiesToDtos(entities)).build();
     }
 
     private boolean isValidDeleteRequest(String kind,

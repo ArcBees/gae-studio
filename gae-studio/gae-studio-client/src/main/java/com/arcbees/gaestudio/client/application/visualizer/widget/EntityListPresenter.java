@@ -29,7 +29,6 @@ import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEve
 import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
-import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
@@ -37,10 +36,15 @@ import com.arcbees.gaestudio.client.rest.GqlService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.RestCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
@@ -71,8 +75,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         void setData(Range range, List<ParsedEntity> parsedEntities);
 
-        void addOrReplaceEntity(EntityDto parsedEntity);
-
         void hideList();
 
         void removeEntity(EntityDto entityDTO);
@@ -90,6 +92,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void blockSendingNewRequests();
 
         void allowSendingNewRequests();
+
+        void addOrReplaceEntities(List<EntityDto> entities);
     }
 
     private final RestDispatch restDispatch;
@@ -137,14 +141,14 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void onEntitySelected(Set<ParsedEntity> selectedEntities) {
-        RowLockedEvent.fire(this);
         if (selectedEntities.size() == 1) {
+            RowLockedEvent.fire(this);
             ParsedEntity selectedEntity = Iterables.getOnlyElement(selectedEntities);
             EntitySelectedEvent.fire(this, selectedEntity);
-            revealEntityPlace(selectedEntity);
         } else {
             EntitiesSelectedEvent.fire(this, selectedEntities);
         }
+        revealEntityPlace(selectedEntities);
     }
 
     @Override
@@ -169,12 +173,12 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void onEntitySaved(EntitySavedEvent event) {
-        getView().addOrReplaceEntity(event.getEntityDto());
+        getView().addOrReplaceEntities(Lists.newArrayList(event.getEntityDto()));
     }
 
     @Override
     public void onEntitiesSaved(EntitiesSavedEvent event) {
-        refresh();
+        getView().addOrReplaceEntities(event.getEntities());
     }
 
     @Override
@@ -189,18 +193,17 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void setStateFromPlaceRequest(SetStateFromPlaceRequestEvent event) {
-        PlaceRequest placeRequest = event.getPlaceRequest();
-        String encodedKey = placeRequest.getParameter(UrlParameters.KEY, "");
-
-        if (!Strings.isNullOrEmpty(encodedKey)) {
-            getView().setRowSelected(encodedKey);
-            RowLockedEvent.fire(this);
-        }
+        setRowsSelectedFromPlaceRequest(event);
     }
 
     @Override
     public void onDeselectEntities(DeselectEvent event) {
         getView().unselectRows();
+
+        PlaceRequest placeRequest = new PlaceRequest.Builder(placeManager.getCurrentPlaceRequest())
+                .without(UrlParameters.KEY)
+                .build();
+        placeManager.revealPlace(placeRequest);
     }
 
     @Override
@@ -280,6 +283,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         if (currentKind == null) {
             display.setRowCount(0);
         } else {
+            revealEntityPlace(Sets.<ParsedEntity>newHashSet());
+
             Range range = display.getVisibleRange();
 
             if (Strings.isNullOrEmpty(currentGqlRequest)) {
@@ -323,13 +328,23 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         getView().redraw();
     }
 
-    private void revealEntityPlace(ParsedEntity parsedEntity) {
-        EntityDto entityDto = parsedEntity.getEntityDto();
-        KeyDto keyDto = entityDto.getKey();
+    private void revealEntityPlace(Set<ParsedEntity> parsedEntity) {
+        List<String> keys = FluentIterable.from(parsedEntity)
+                .transform(new Function<ParsedEntity, String>() {
+                    @Override
+                    public String apply(ParsedEntity input) {
+                        return input.getKey().getEncodedKey();
+                    }
+                }).toList();
 
-        PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.entity)
-                .with(UrlParameters.KIND, keyDto.getKind())
-                .with(UrlParameters.KEY, keyDto.getEncodedKey());
+        String keysParam = Joiner.on(",").join(keys);
+        PlaceRequest.Builder builder = new PlaceRequest.Builder(placeManager.getCurrentPlaceRequest());
+
+        if (keys.isEmpty()) {
+            builder.without(UrlParameters.KEY);
+        } else {
+            builder.with(UrlParameters.KEY, keysParam);
+        }
 
         placeManager.revealPlace(builder.build());
     }
@@ -366,5 +381,22 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                     }
                 }
         );
+    }
+
+    private void setRowsSelectedFromPlaceRequest(SetStateFromPlaceRequestEvent event) {
+        PlaceRequest placeRequest = event.getPlaceRequest();
+        String encodedKeysParam = placeRequest.getParameter(UrlParameters.KEY, "");
+
+        if (!Strings.isNullOrEmpty(encodedKeysParam)) {
+            List<String> encodedKeys = Splitter.on(",").splitToList(encodedKeysParam);
+
+            if (encodedKeys.size() == 1) {
+                RowLockedEvent.fire(this);
+            }
+
+            for (String encodedKey : encodedKeys) {
+                getView().setRowSelected(encodedKey);
+            }
+        }
     }
 }

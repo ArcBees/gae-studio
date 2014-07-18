@@ -41,8 +41,10 @@ public class CollectionPropertyEditor extends AbstractPropertyEditor<Collection<
         JSONArray array = extractArray(property);
         JSONObject object = new JSONObject();
 
-        for (int i = 0; i < array.size(); i++) {
-            object.put(Integer.toString(i), array.get(i));
+        if (array != null) {
+            for (int i = 0; i < array.size(); i++) {
+                object.put(Integer.toString(i), array.get(i));
+            }
         }
 
         widget = factory.create(object);

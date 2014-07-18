@@ -9,7 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
@@ -20,6 +19,8 @@ import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.client.resources.VisualizerResources;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.google.common.collect.Lists;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -154,14 +155,32 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
     }
 
     @Override
-    public void addOrReplaceEntity(EntityDto entityDto) {
-        int rowIndex = getRowIndex(entityDto);
+    public void addOrReplaceEntities(List<EntityDto> entities) {
+        final List<ParsedEntity> selectedEntities = Lists.newArrayList();
+        List<ParsedEntity> newParsedEntities = Lists.newArrayList(entityTable.getVisibleItems());
 
-        if (rowIndex == -1) {
-            insertNewEntityAtTheTopOfTheCurrentPage(entityDto);
-        } else {
-            redrawTable();
+        for (EntityDto entity : entities) {
+            int rowIndex = getRowIndex(entity);
+
+            ParsedEntity parsedEntity = new ParsedEntity(entity);
+            if (rowIndex == -1) {
+                newParsedEntities.add(0, parsedEntity);
+            } else {
+                newParsedEntities.set(rowIndex, parsedEntity);
+            }
+
+            selectedEntities.add(parsedEntity);
         }
+
+        Range range = entityTable.getVisibleRange();
+        entityTable.setRowData(range.getStart(), newParsedEntities);
+
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+            @Override
+            public void execute() {
+                selectRows(selectedEntities);
+            }
+        });
     }
 
     @Override
@@ -264,10 +283,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
         entityTable.removeColumn(lastColumnIndex);
     }
 
-    private void redrawTable() {
-        entityTable.redraw();
-    }
-
     private int getRowIndex(EntityDto entityDTO) {
         List<ParsedEntity> visibleParsedEntities = entityTable.getVisibleItems();
         int rowIndex = -1;
@@ -276,7 +291,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
         int i = 0;
         while (!isReplace && i < visibleParsedEntities.size()) {
             ParsedEntity parsedEntity = visibleParsedEntities.get(i);
-            if (parsedEntity.getKey().getId().equals(entityDTO.getKey().getId())) {
+            if (parsedEntity.getKey().getEncodedKey().equals(entityDTO.getKey().getEncodedKey())) {
                 isReplace = true;
                 rowIndex = i;
                 parsedEntity.setEntityDto(entityDTO);
@@ -286,18 +301,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
         }
 
         return rowIndex;
-    }
-
-    private void insertNewEntityAtTheTopOfTheCurrentPage(EntityDto entityDTO) {
-        ParsedEntity newParsedEntity = new ParsedEntity(entityDTO);
-
-        List<ParsedEntity> newParsedEntities = new ArrayList<>();
-        newParsedEntities.add(newParsedEntity);
-        // getVisibleItems return an unmodifiable list
-        newParsedEntities.addAll(entityTable.getVisibleItems());
-        Range range = entityTable.getVisibleRange();
-
-        entityTable.setRowData(range.getStart(), newParsedEntities);
     }
 
     private void onEditTableAttachedOrDetached(boolean attached) {
@@ -332,6 +335,16 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
         });
 
         $(formQueryHolder).slideUp(0);
+    }
+
+    private void selectRows(List<ParsedEntity> parsedEntities) {
+        selectionModel.clear();
+
+        for (ParsedEntity parsedEntity : parsedEntities) {
+            selectionModel.setSelected(parsedEntity, true);
+        }
+
+        getUiHandlers().onEntitySelected(selectionModel.getSelectedSet());
     }
 
     private void selectRow(ParsedEntity parsedEntity) {
