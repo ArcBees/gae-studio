@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.arcbees.gaestudio.server.BuildConstants;
+import com.arcbees.gaestudio.server.analytic.UseCookieDomainNone;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapper;
 import com.arcbees.gaestudio.server.velocity.VelocityWrapperFactory;
 import com.arcbees.gaestudio.shared.BaseRestPath;
@@ -51,11 +52,14 @@ public class RootServlet extends HttpServlet {
 
     protected final String restPath;
     private final VelocityWrapper velocityWrapper;
+    private final boolean useCookieDomainNone;
 
     @Inject
     RootServlet(VelocityWrapperFactory velocityWrapperFactory,
-                @BaseRestPath String restPath) {
+                @BaseRestPath String restPath,
+                @UseCookieDomainNone boolean useCookieDomainNone) {
         this.restPath = restPath;
+        this.useCookieDomainNone = useCookieDomainNone;
         this.velocityWrapper = velocityWrapperFactory.create(templateLocation);
     }
 
@@ -82,6 +86,7 @@ public class RootServlet extends HttpServlet {
                 .clientId(UUID.randomUUID().toString())
                 .version(BuildConstants.VERSION)
                 .latestVersion(retrieveLatestVersion())
+                .useCookieDomainNone(useCookieDomainNone)
                 .build();
     }
 

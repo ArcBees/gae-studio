@@ -18,6 +18,7 @@ public class AppConfig {
         private String clientId;
         private String version;
         private String latestVersion;
+        private boolean useCookieDomainNone;
 
         private Builder() {
         }
@@ -42,8 +43,13 @@ public class AppConfig {
             return this;
         }
 
+        public Builder useCookieDomainNone(boolean useCookieDomainNone) {
+            this.useCookieDomainNone = useCookieDomainNone;
+            return this;
+        }
+
         public AppConfig build() {
-            return new AppConfig(restPath, clientId, version, latestVersion);
+            return new AppConfig(restPath, clientId, version, latestVersion, useCookieDomainNone);
         }
     }
 
@@ -57,16 +63,19 @@ public class AppConfig {
     private final String restPath;
     private final String version;
     private final String latestVersion;
+    private final boolean useCookieDomainNone;
 
     @JsonCreator
     private AppConfig(@JsonProperty("restPath") String restPath,
                       @JsonProperty("clientId") String clientId,
                       @JsonProperty("version") String version,
-                      @JsonProperty("latestVersion") String latestVersion) {
+                      @JsonProperty("latestVersion") String latestVersion,
+                      @JsonProperty("useCookieDomainNone") boolean useCookieDomainNone) {
         this.restPath = restPath;
         this.clientId = clientId;
         this.version = version;
         this.latestVersion = latestVersion;
+        this.useCookieDomainNone = useCookieDomainNone;
     }
 
     public String getVersion() {
@@ -83,5 +92,9 @@ public class AppConfig {
 
     public String getLatestVersion() {
         return latestVersion;
+    }
+
+    public boolean isUseCookieDomainNone() {
+        return useCookieDomainNone;
     }
 }

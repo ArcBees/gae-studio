@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.place.NameTokens;
+import com.arcbees.gaestudio.shared.config.AppConfig;
 import com.gwtplatform.mvp.client.Bootstrapper;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
@@ -20,18 +21,26 @@ import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 public class BootstrapperImpl implements Bootstrapper {
     private final PlaceManager placeManager;
     private final UniversalAnalytics universalAnalytics;
+    private final AppConfig appConfig;
 
     @Inject
     BootstrapperImpl(
             PlaceManager placeManager,
-            UniversalAnalytics universalAnalytics) {
+            UniversalAnalytics universalAnalytics,
+            AppConfig appConfig) {
         this.placeManager = placeManager;
         this.universalAnalytics = universalAnalytics;
+        this.appConfig = appConfig;
     }
 
     @Override
     public void onBootstrap() {
-        universalAnalytics.create();
+        if (appConfig.isUseCookieDomainNone()) {
+            universalAnalytics.create().cookieDomain("none");
+        } else {
+            universalAnalytics.create();
+        }
+
         placeManager.revealPlace(new PlaceRequest.Builder().nameToken(NameTokens.visualizer).build());
     }
 }
