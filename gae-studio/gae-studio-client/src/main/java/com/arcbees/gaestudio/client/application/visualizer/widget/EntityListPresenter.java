@@ -29,6 +29,7 @@ import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEve
 import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
+import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.client.rest.EntitiesService;
@@ -201,6 +202,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         getView().unselectRows();
 
         PlaceRequest placeRequest = new PlaceRequest.Builder(placeManager.getCurrentPlaceRequest())
+                .nameToken(NameTokens.entity)
                 .without(UrlParameters.KEY)
                 .build();
         placeManager.revealPlace(placeRequest);
