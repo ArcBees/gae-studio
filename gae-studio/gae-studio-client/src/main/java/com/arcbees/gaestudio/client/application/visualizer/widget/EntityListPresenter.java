@@ -158,7 +158,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void refresh() {
-        KindSelectedEvent.fire(this, currentKind);
+        revealEntityPlace(Sets.<ParsedEntity>newHashSet());
     }
 
     public void loadKind(String kind) {
@@ -341,6 +341,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         PlaceRequest.Builder builder = new PlaceRequest.Builder(placeManager.getCurrentPlaceRequest());
 
         if (keys.isEmpty()) {
+            RowUnlockedEvent.fire(this);
             builder.without(UrlParameters.KEY);
         } else {
             builder.with(UrlParameters.KEY, keysParam);
