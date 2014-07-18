@@ -13,13 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
-import com.arcbees.gaestudio.client.application.analytics.EventCategories;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeselectEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSavedEvent;
@@ -30,9 +27,6 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEven
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
-import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.DeleteFromNamespaceHandler;
-import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
-import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
@@ -42,15 +36,11 @@ import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.rest.GqlService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.RestCallbackImpl;
-import com.arcbees.gaestudio.shared.DeleteEntities;
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
@@ -64,15 +54,14 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
-import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent.EntitiesDeletedHandler;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent.EntityDeletedHandler;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent.EntitySavedHandler;
 
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
         implements EntityListUiHandlers, EntitySavedHandler, EntityDeletedHandler, EntitiesDeletedHandler,
-        DeleteFromNamespaceHandler, SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler,
-        KindSelectedEvent.KindSelectedHandler, EntitiesSavedEvent.EntitiesSavedHandler, DeselectEvent.DeselectHandler {
+        SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler, KindSelectedEvent.KindSelectedHandler,
+        EntitiesSavedEvent.EntitiesSavedHandler, DeselectEvent.DeselectHandler {
     interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
 
@@ -103,17 +92,13 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void allowSendingNewRequests();
     }
 
-    public static final Object SLOT_NAMESPACES = new Object();
-
     private final RestDispatch restDispatch;
     private final EntitiesService entitiesService;
     private final PlaceManager placeManager;
     private final PropertyNamesAggregator propertyNamesAggregator;
-    private final NamespacesListPresenter namespacesListPresenter;
     private final GqlService gqlService;
     private final AppConstants appConstants;
     private final AppMessages appMessages;
-    private final UniversalAnalytics universalAnalytics;
 
     private String currentKind;
     private String currentGqlRequest;
@@ -126,11 +111,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         RestDispatch restDispatch,
                         EntitiesService entitiesService,
                         PropertyNamesAggregator propertyNamesAggregator,
-                        NamespacesListPresenterFactory namespacesListPresenterFactory,
                         GqlService gqlService,
                         AppConstants appConstants,
-                        AppMessages appMessages,
-                        UniversalAnalytics universalAnalytics) {
+                        AppMessages appMessages) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
@@ -140,8 +123,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         this.gqlService = gqlService;
         this.appConstants = appConstants;
         this.appMessages = appMessages;
-        this.universalAnalytics = universalAnalytics;
-        this.namespacesListPresenter = namespacesListPresenterFactory.create(this);
 
         getView().setUiHandlers(this);
 
@@ -204,20 +185,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Override
     public void onEntitiesDeleted(EntitiesDeletedEvent event) {
         loadKind(this.currentKind);
-    }
-
-    @Override
-    public void onDeleteAllFromNamespace(AppIdNamespaceDto namespaceDto) {
-        if (!Strings.isNullOrEmpty(currentKind)) {
-            if (namespaceDto == null) {
-                DeleteEntitiesEvent.fire(this, DeleteEntities.KIND, currentKind);
-            } else {
-                DeleteEntitiesEvent.fire(this, DeleteEntities.KIND_NAMESPACE, currentKind, namespaceDto.getNamespace());
-            }
-        }
-
-        universalAnalytics.sendEvent(UI_ELEMENTS, "click")
-                .eventLabel("Visualizer -> List View -> Delete All Entities Button");
     }
 
     @Override
@@ -288,16 +255,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         addRegisteredHandler(SetStateFromPlaceRequestEvent.getType(), this);
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(DeselectEvent.getType(), this);
-
-        namespacesListPresenter.addValueChangeHandler(new ValueChangeHandler<AppIdNamespaceDto>() {
-            @Override
-            public void onValueChange(ValueChangeEvent<AppIdNamespaceDto> event) {
-                universalAnalytics.sendEvent(EventCategories.UI_ELEMENTS, "value changed")
-                        .eventLabel("Visualizer -> List View -> Kinds");
-            }
-        });
-
-        setInSlot(SLOT_NAMESPACES, namespacesListPresenter);
     }
 
     private void setTableDataProvider() {

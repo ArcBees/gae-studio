@@ -23,4 +23,6 @@ interface SidebarUiHandlers extends UiHandlers {
     void exportCsv();
 
     void importCsv();
+
+    void deleteAllOfKind();
 }
