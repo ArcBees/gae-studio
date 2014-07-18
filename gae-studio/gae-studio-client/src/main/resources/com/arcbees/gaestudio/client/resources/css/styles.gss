@@ -196,6 +196,7 @@ input:focus, textarea:focus, button:focus {
     text-overflow: ellipsis;
     border-bottom: 2px solid #fff;
     white-space: nowrap;
+    height: 33px;
 
     position: relative;
 }
