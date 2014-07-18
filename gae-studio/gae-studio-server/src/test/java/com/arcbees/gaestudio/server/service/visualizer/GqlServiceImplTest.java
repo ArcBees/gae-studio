@@ -40,7 +40,7 @@ public class GqlServiceImplTest extends GaeTestBase {
     public void executeSelectReturnAllEntities() {
         createCars();
 
-        Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Car");
+        Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Car", null, null);
 
         assertEquals(3, result.size());
     }
@@ -49,7 +49,7 @@ public class GqlServiceImplTest extends GaeTestBase {
     public void executeWhereReturnOneRelevantEntity() {
         createCars();
 
-        Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Car WHERE make = 'Canada'");
+        Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Car WHERE make = 'Canada'", null, null);
 
         assertEquals(1, result.size());
     }
@@ -58,7 +58,7 @@ public class GqlServiceImplTest extends GaeTestBase {
     public void executeWhereReturnZeroMatchedEntity() {
         createCars();
 
-        Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Car WHERE make = 'Italy'");
+        Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Car WHERE make = 'Italy'", null, null);
 
         assertTrue(result.isEmpty());
     }
@@ -67,9 +67,28 @@ public class GqlServiceImplTest extends GaeTestBase {
     public void executeFromUnknowEntityZeroMatchedEntity() {
         createCars();
 
-        Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Autos WHERE make = 'Canada'");
+        Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Autos WHERE make = 'Canada'", null, null);
 
         assertTrue(result.isEmpty());
+    }
+
+    @Test
+    public void executeRequestWithLimit() {
+        createCars();
+
+        Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Car", 0, 2);
+
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    public void executeRequestWithDownLimit() {
+        createCars();
+        createCars();
+
+        Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Car", 2, 4);
+
+        assertEquals(4, result.size());
     }
 
     private void createCars() {

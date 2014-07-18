@@ -29,11 +29,9 @@ import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.google.inject.Provides;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.ErrorPlace;
-import com.gwtplatform.mvp.client.annotations.GaAccount;
 import com.gwtplatform.mvp.client.annotations.UnauthorizedPlace;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import com.gwtplatform.mvp.client.gin.DefaultModule;
-import com.gwtplatform.mvp.client.googleanalytics.GoogleAnalyticsNavigationTracker;
 import com.gwtplatform.mvp.client.proxy.DefaultPlaceManager;
 
 public class CommonModule extends AbstractPresenterModule {
@@ -60,9 +58,6 @@ public class CommonModule extends AbstractPresenterModule {
         bind(CellTableResource.class).in(Singleton.class);
 
         bind(ResourceLoader.class).asEagerSingleton();
-
-        bindConstant().annotatedWith(GaAccount.class).to("UA-41550930-6");
-        bind(GoogleAnalyticsNavigationTracker.class).asEagerSingleton();
 
         requestStaticInjection(AsyncCallbackImpl.class);
     }

@@ -116,6 +116,11 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     }
 
     @Override
+    public void deleteAllOfKind() {
+        DeleteEntitiesEvent.fire(this, DeleteEntities.KIND, currentKind);
+    }
+
+    @Override
     public void displayEntitiesOfSelectedKind(String kind) {
         currentKind = kind;
 

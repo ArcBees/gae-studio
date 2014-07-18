@@ -15,6 +15,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 
+import com.arcbees.gaestudio.server.AnalyticsTrackingIds;
 import com.arcbees.gaestudio.server.BuildConstants;
 import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.inject.AbstractModule;
@@ -23,7 +24,6 @@ import com.google.inject.matcher.Matcher;
 import com.google.inject.matcher.Matchers;
 
 public class AnalyticModule extends AbstractModule {
-    private static final String TRACKING_CODE = "UA-41550930-4";
     private static final String APPLICATION_NAME = "GAE-Studio";
     private static final String APPLICATION_VERSION = BuildConstants.VERSION;
 
@@ -44,7 +44,8 @@ public class AnalyticModule extends AbstractModule {
     @Singleton
     GoogleAnalytic createGoogleAnalytic(GoogleAnalyticClientIdProvider clientIdProvider) {
         GoogleAnalytic googleAnalytic
-                = GoogleAnalytic.build(clientIdProvider.get(), TRACKING_CODE, APPLICATION_NAME, APPLICATION_VERSION);
+                = GoogleAnalytic.build(clientIdProvider.get(), AnalyticsTrackingIds.SERVER_TRACKING_ID,
+                APPLICATION_NAME, APPLICATION_VERSION);
 
         googleAnalytic.trackEvent(GoogleAnalyticConstants.CAT_INITIALIZATION,
                 GoogleAnalyticConstants.APPLICATION_LOADED);

@@ -33,8 +33,6 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
@@ -48,8 +46,8 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 import static com.google.gwt.query.client.GQuery.$;
 
-public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> implements EntityListPresenter.MyView,
-        CellPreviewEvent.Handler<ParsedEntity> {
+public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
+        implements EntityListPresenter.MyView, CellPreviewEvent.Handler<ParsedEntity> {
     interface Binder extends UiBinder<Widget, EntityListView> {
     }
 
@@ -71,23 +69,12 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     @UiField
     DivElement formQueryHolder;
     @UiField
-    SimplePanel deleteByKind;
-    @UiField
-    DivElement deselect;
-    @UiField
     Button runQueryButton;
 
-    private final AppResources appResources;
     private final VisualizerResources visualizerResources;
     private final String pagerButtons;
     private final ParsedEntityColumnCreator columnCreator;
     private final MultiSelectionModel<ParsedEntity> selectionModel;
-    private final Function unlock = new Function() {
-        @Override
-        public void f() {
-            unselectRows();
-        }
-    };
     private final UniversalAnalytics universalAnalytics;
 
     private HandlerRegistration firstLoadHandlerRegistration;
@@ -102,7 +89,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
                    ParsedEntityColumnCreator columnCreator,
                    UniversalAnalytics universalAnalytics) {
         this.columnCreator = columnCreator;
-        this.appResources = appResources;
         this.visualizerResources = visualizerResources;
         this.universalAnalytics = universalAnalytics;
 
@@ -158,11 +144,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void setData(List<ParsedEntity> parsedEntities) {
-        setData(DEFAULT_RANGE, parsedEntities);
-    }
-
-    @Override
     public void blockSendingNewRequests() {
         runQueryButton.setEnabled(false);
     }
@@ -211,20 +192,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     @Override
-    public void setInSlot(Object slot, IsWidget content) {
-        if (EntityListPresenter.SLOT_NAMESPACES == slot) {
-            deleteByKind.setWidget(content);
-        }
-    }
-
-    @Override
     public void unselectRows() {
         selectionModel.clear();
-
-        AppResources.Styles styles = appResources.styles();
-        $(deselect).removeClass(styles.deselect())
-                .addClass(styles.deselectDisabled())
-                .unbind(BrowserEvents.CLICK);
 
         getUiHandlers().onRowUnlock();
     }
@@ -339,7 +308,12 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     private void bindGwtQuery() {
-        $(pagerButtons).click(unlock);
+        $(pagerButtons).click(new Function() {
+            @Override
+            public void f() {
+                unselectRows();
+            }
+        });
 
         $(refresh).click(new Function() {
             @Override
@@ -361,19 +335,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers> imp
     }
 
     private void selectRow(ParsedEntity parsedEntity) {
-        AppResources.Styles styles = appResources.styles();
-        if ($(deselect).hasClass(styles.deselectDisabled())) {
-            $(deselect).unbind(BrowserEvents.CLICK)
-                    .click(unlock, new Function() {
-                        @Override
-                        public void f() {
-                            universalAnalytics.sendEvent(UI_ELEMENTS, "click")
-                                    .eventLabel("Visualizer -> List View -> Deselect Entity");
-                        }
-                    }).addClass(styles.deselect())
-                    .removeClass(styles.deselectDisabled());
-        }
-
         selectionModel.setSelected(parsedEntity, true);
 
         getUiHandlers().onEntitySelected(selectionModel.getSelectedSet());

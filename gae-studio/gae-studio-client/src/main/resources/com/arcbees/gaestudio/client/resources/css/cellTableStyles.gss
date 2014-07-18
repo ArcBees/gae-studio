@@ -39,7 +39,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     border: none;
-    border-top: 1px solid #a2a2a2;
+    border-top: 2px solid C_SECONDARY_LIGHT;
 }
 
 .cellTableFirstColumn {

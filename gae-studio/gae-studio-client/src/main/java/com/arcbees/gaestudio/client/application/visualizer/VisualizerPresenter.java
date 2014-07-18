@@ -22,6 +22,7 @@ import com.arcbees.gaestudio.client.application.ui.ToolbarButtonCallback;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntityEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.DeselectEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EditEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoadedEvent;
@@ -94,6 +95,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     private final SidebarPresenter sidebarPresenter;
     private final ToolbarButton edit;
     private final ToolbarButton delete;
+    private final ToolbarButton deselect;
     private final UiFactory uiFactory;
     private final PlaceManager placeManager;
     private final FontsResources fontsResources;
@@ -130,9 +132,11 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
         edit = createEditButton();
         delete = createDeleteButton();
+        deselect = createDeselectButton();
 
         edit.setEnabled(false);
         delete.setEnabled(false);
+        deselect.setEnabled(false);
     }
 
     @Override
@@ -223,7 +227,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         setInSlot(SLOT_TOOLBAR, toolbarPresenter);
         setInSlot(SLOT_KINDS, sidebarPresenter);
 
-        toolbarPresenter.setButtons(Lists.newArrayList(edit, delete));
+        toolbarPresenter.setButtons(Lists.newArrayList(edit, deselect, delete));
         toolbarPresenter.setVisible(false);
 
         addRegisteredHandler(KindSelectedEvent.getType(), this);
@@ -289,6 +293,23 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         }
     }
 
+    private ToolbarButton createDeselectButton() {
+        return uiFactory.createToolbarButton(myConstants.deselect(), fontsResources.icons().icon_deselect(),
+                new ToolbarButtonCallback() {
+                    @Override
+                    public void onClicked() {
+                        deselect();
+                    }
+                }, DebugIds.EDIT
+        );
+    }
+
+    private void deselect() {
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Deselect Entity");
+
+        DeselectEvent.fire(this);
+    }
+
     private void updateEntityListPresenter() {
         setInSlot(SLOT_ENTITIES, entityListPresenter);
 
@@ -309,10 +330,12 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     private void enableContextualMenu() {
         edit.setEnabled(true);
         delete.setEnabled(true);
+        deselect.setEnabled(true);
     }
 
     private void disableContextualMenu() {
         edit.setEnabled(false);
         delete.setEnabled(false);
+        deselect.setEnabled(false);
     }
 }

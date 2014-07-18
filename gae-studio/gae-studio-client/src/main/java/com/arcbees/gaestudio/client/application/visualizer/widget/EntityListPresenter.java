@@ -13,13 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
-import com.arcbees.gaestudio.client.application.analytics.EventCategories;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.DeselectEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSelectedEvent;
@@ -29,9 +27,6 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEven
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
-import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.DeleteFromNamespaceHandler;
-import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
-import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
@@ -41,15 +36,11 @@ import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.rest.GqlService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.RestCallbackImpl;
-import com.arcbees.gaestudio.shared.DeleteEntities;
-import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
@@ -63,15 +54,14 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
-import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent.EntitiesDeletedHandler;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntityDeletedEvent.EntityDeletedHandler;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent.EntitySavedHandler;
 
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
         implements EntityListUiHandlers, EntitySavedHandler, EntityDeletedHandler, EntitiesDeletedHandler,
-        DeleteFromNamespaceHandler, SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler,
-        KindSelectedEvent.KindSelectedHandler, EntitiesSavedEvent.EntitiesSavedHandler {
+        SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler, KindSelectedEvent.KindSelectedHandler,
+        EntitiesSavedEvent.EntitiesSavedHandler, DeselectEvent.DeselectHandler {
     interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
 
@@ -97,26 +87,22 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         void setRowSelected(String encodedKey);
 
-        void setData(List<ParsedEntity> parsedEntities);
-
         void blockSendingNewRequests();
 
         void allowSendingNewRequests();
     }
 
-    public static final Object SLOT_NAMESPACES = new Object();
-
     private final RestDispatch restDispatch;
     private final EntitiesService entitiesService;
     private final PlaceManager placeManager;
     private final PropertyNamesAggregator propertyNamesAggregator;
-    private final NamespacesListPresenter namespacesListPresenter;
     private final GqlService gqlService;
     private final AppConstants appConstants;
     private final AppMessages appMessages;
-    private final UniversalAnalytics universalAnalytics;
 
     private String currentKind;
+    private String currentGqlRequest;
+    private Integer currentGqlNumberOfEntities = 0;
 
     @Inject
     EntityListPresenter(EventBus eventBus,
@@ -125,11 +111,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         RestDispatch restDispatch,
                         EntitiesService entitiesService,
                         PropertyNamesAggregator propertyNamesAggregator,
-                        NamespacesListPresenterFactory namespacesListPresenterFactory,
                         GqlService gqlService,
                         AppConstants appConstants,
-                        AppMessages appMessages,
-                        UniversalAnalytics universalAnalytics) {
+                        AppMessages appMessages) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
@@ -139,8 +123,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         this.gqlService = gqlService;
         this.appConstants = appConstants;
         this.appMessages = appMessages;
-        this.universalAnalytics = universalAnalytics;
-        this.namespacesListPresenter = namespacesListPresenterFactory.create(this);
 
         getView().setUiHandlers(this);
 
@@ -150,6 +132,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Override
     public void onKindSelected(KindSelectedEvent event) {
         getView().unselectRows();
+        currentGqlRequest = "";
     }
 
     @Override
@@ -205,20 +188,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
-    public void onDeleteAllFromNamespace(AppIdNamespaceDto namespaceDto) {
-        if (!Strings.isNullOrEmpty(currentKind)) {
-            if (namespaceDto == null) {
-                DeleteEntitiesEvent.fire(this, DeleteEntities.KIND, currentKind);
-            } else {
-                DeleteEntitiesEvent.fire(this, DeleteEntities.KIND_NAMESPACE, currentKind, namespaceDto.getNamespace());
-            }
-        }
-
-        universalAnalytics.sendEvent(UI_ELEMENTS, "click")
-                .eventLabel("Visualizer -> List View -> Delete All Entities Button");
-    }
-
-    @Override
     public void setStateFromPlaceRequest(SetStateFromPlaceRequestEvent event) {
         PlaceRequest placeRequest = event.getPlaceRequest();
         String encodedKey = placeRequest.getParameter(UrlParameters.KEY, "");
@@ -227,6 +196,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             getView().setRowSelected(encodedKey);
             RowLockedEvent.fire(this);
         }
+    }
+
+    @Override
+    public void onDeselectEntities(DeselectEvent event) {
+        getView().unselectRows();
     }
 
     @Override
@@ -239,19 +213,19 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         getView().blockSendingNewRequests();
 
-        gqlRequest = replaceQuotes(gqlRequest);
+        currentGqlRequest = replaceQuotes(gqlRequest);
 
-        restDispatch.execute(gqlService.executeGqlRequest(gqlRequest), new RestCallbackImpl<List<EntityDto>>() {
+        restDispatch.execute(gqlService.getRequestCount(currentGqlRequest), new RestCallbackImpl<Integer>() {
             @Override
-            public void onSuccess(List<EntityDto> entities) {
-                if (entities.isEmpty()) {
+            public void onSuccess(Integer number) {
+                if (number == 0) {
                     DisplayMessageEvent.fire(this, new Message(appConstants.noEntitiesMatchRequest(),
                             MessageStyle.ERROR));
                 } else {
-                    showEntities(entities);
-
-                    DisplayMessageEvent.fire(this, new Message(appMessages.entitiesMatchRequest(entities.size()),
+                    DisplayMessageEvent.fire(this, new Message(appMessages.entitiesMatchRequest(number),
                             MessageStyle.SUCCESS));
+                    retrieveEntities(new Range(0, 25), number);
+                    currentGqlNumberOfEntities = number;
                 }
             }
 
@@ -280,16 +254,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
         addRegisteredHandler(SetStateFromPlaceRequestEvent.getType(), this);
         addRegisteredHandler(KindSelectedEvent.getType(), this);
-
-        namespacesListPresenter.addValueChangeHandler(new ValueChangeHandler<AppIdNamespaceDto>() {
-            @Override
-            public void onValueChange(ValueChangeEvent<AppIdNamespaceDto> event) {
-                universalAnalytics.sendEvent(EventCategories.UI_ELEMENTS, "value changed")
-                        .eventLabel("Visualizer -> List View -> Kinds");
-            }
-        });
-
-        setInSlot(SLOT_NAMESPACES, namespacesListPresenter);
+        addRegisteredHandler(DeselectEvent.getType(), this);
     }
 
     private void setTableDataProvider() {
@@ -316,14 +281,19 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             display.setRowCount(0);
         } else {
             Range range = display.getVisibleRange();
-            restDispatch.execute(entitiesService.getByKind(currentKind, range.getStart(), range.getLength()),
-                    new AsyncCallbackImpl<List<EntityDto>>() {
-                        @Override
-                        public void onSuccess(List<EntityDto> result) {
-                            onLoadPageSuccess(result, display);
+
+            if (Strings.isNullOrEmpty(currentGqlRequest)) {
+                restDispatch.execute(entitiesService.getByKind(currentKind, range.getStart(), range.getLength()),
+                        new AsyncCallbackImpl<List<EntityDto>>() {
+                            @Override
+                            public void onSuccess(List<EntityDto> result) {
+                                onLoadPageSuccess(result, display);
+                            }
                         }
-                    }
-            );
+                );
+            } else {
+                retrieveEntities(range, currentGqlNumberOfEntities);
+            }
         }
         EntityPageLoadedEvent.fire(this);
     }
@@ -364,7 +334,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         placeManager.revealPlace(builder.build());
     }
 
-    private void showEntities(List<EntityDto> entities) {
+    private void showEntities(List<EntityDto> entities, Range range, Integer numberOfEntities) {
         List<ParsedEntity> parsedEntities = new ArrayList<>();
 
         for (EntityDto entityDto : entities) {
@@ -373,8 +343,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         }
 
         adjustColumns(parsedEntities);
-        getView().setData(parsedEntities);
-        getView().setRowCount(parsedEntities.size());
+        getView().setData(range, parsedEntities);
+
+        getView().setRowCount(numberOfEntities);
     }
 
     private boolean requestHasNoSelect(String gqlRequest) {
@@ -383,5 +354,17 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     private String replaceQuotes(String gqlRequest) {
         return gqlRequest.replace("\"", "'");
+    }
+
+    private void retrieveEntities(final Range range, final Integer numberOfEntities) {
+        restDispatch.execute(gqlService.executeGqlRequest(currentGqlRequest,
+                        range.getStart(), range.getLength()),
+                new AsyncCallbackImpl<List<EntityDto>>() {
+                    @Override
+                    public void onSuccess(List<EntityDto> result) {
+                        showEntities(result, range, numberOfEntities);
+                    }
+                }
+        );
     }
 }

@@ -28,12 +28,13 @@ input:focus, textarea:focus, button:focus {
 /* -> UI Toolbar Button */
 
 .toolbarButton {
-    background: C_SECONDARY_DARK;
+    background: #3d3c3c;
     cursor: pointer;
 
     width: 100%;
     height: 46px;
     border-left: 2px solid transparent;
+    margin-bottom: 2px;
 
     position: relative;
     float: left;
@@ -50,10 +51,12 @@ input:focus, textarea:focus, button:focus {
 }
 
 .toolbarButton:active {
-    border-left-width: 10px;
+    border-left-width: 6px;
 }
 
 .toolbarButtonDisabled {
+    background-color: C_SECONDARY_DARK;
+
     cursor: default;
     opacity: .4;
 }
@@ -159,6 +162,7 @@ input:focus, textarea:focus, button:focus {
 
 .version {
     color: #888;
+    font-size: 12px;
 
     position: fixed;
     right: 20px;
@@ -182,13 +186,15 @@ input:focus, textarea:focus, button:focus {
 }
 
 .kindHeaderElement {
-    line-height: 30px;
+    line-height: 33px;
     font-size: 15px;
     font-weight: bold;
 
     display: block;
-    padding: 3px 16px;
+    padding: 3px 0;
+    margin: 0 28px 0 14px;
     text-overflow: ellipsis;
+    border-bottom: 2px solid #fff;
     white-space: nowrap;
 
     position: relative;
@@ -296,9 +302,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .pager table {
-    margin-right: 5px;
-
-    float: left;
+    float: right;
 }
 
 .firstTable, .secondTable, .pager {
@@ -524,7 +528,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .panelToggle {
-    transition: webkitTransform 0.5s;
+    @mixin transition(all, .5s);
 }
 
 .panelToggle:hover {
@@ -579,14 +583,16 @@ input:focus, textarea:focus, button:focus {
 }
 
 .toggleKindsPanel {
-    position: absolute;
-    right: 3px;
-    top: 10px;
     padding: 4px;
+
+    position: absolute;
+    right: -25px;
+    top: 10px;
 }
 
 .toggleKindsPanel.flipped {
-    right: 1px;
+    -webkit-transform: rotate(-90deg) translate(0px, 4px);
+    transform: rotate(-90deg) translate(0px, 4px);
 }
 
 .gwt-SplitLayoutPanel-HDragger, .gwt-SplitLayoutPanel-VDragger {
