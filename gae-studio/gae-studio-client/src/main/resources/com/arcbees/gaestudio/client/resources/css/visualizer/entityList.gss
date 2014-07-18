@@ -39,7 +39,7 @@
     display: inline-block;
     margin: 14px 0 0 20px;
     border-right: 2px solid C_SECONDARY_LIGHT;
-    padding: 4px 6px 7px 0;
+    padding: 0 6px 11px 0;
 }
 
 .deselect {

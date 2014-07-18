@@ -191,12 +191,12 @@ input:focus, textarea:focus, button:focus {
     font-weight: bold;
 
     display: block;
-    padding: 3px 0;
-    margin: 0 28px 0 14px;
+    padding: 0;
+    margin: 5px 28px 0 14px;
     text-overflow: ellipsis;
     border-bottom: 2px solid #fff;
     white-space: nowrap;
-    height: 33px;
+    height: 42px;
 
     position: relative;
 }
@@ -557,6 +557,8 @@ input:focus, textarea:focus, button:focus {
 }
 
 .panelToggle {
+    margin: 7px 0;
+
     @mixin transition(all, .5s);
 }
 
@@ -616,7 +618,7 @@ input:focus, textarea:focus, button:focus {
 
     position: absolute;
     right: -25px;
-    top: 10px;
+    top: 3px;
 }
 
 .toggleKindsPanel.flipped {
