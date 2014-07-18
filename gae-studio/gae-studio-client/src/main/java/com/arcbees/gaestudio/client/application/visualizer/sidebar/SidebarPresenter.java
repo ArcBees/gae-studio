@@ -131,12 +131,12 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     public void displayEntitiesOfSelectedKind(String kind) {
         currentKind = kind;
 
-        KindSelectedEvent.fire(this, kind);
-
         PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.entity)
                 .with(UrlParameters.KIND, currentKind)
                 .build();
         placeManager.revealPlace(placeRequest);
+
+        KindSelectedEvent.fire(this, kind);
     }
 
     @Override
