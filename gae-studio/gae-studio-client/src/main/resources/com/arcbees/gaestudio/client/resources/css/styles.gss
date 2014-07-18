@@ -435,16 +435,17 @@ input:focus, textarea:focus, button:focus {
 .buttonContainer {
     text-align: right;
 
-    padding-top: 5px;
+    padding-top: 9px;
     margin: 0;
     width: 100%;
 }
 
-.buttonContainer button, .chooseFileButton {
+.buttonContainer button,
+.chooseFileButton {
     margin: 0;
     text-align: center;
     width: calc(50% - 5px);
-    padding: 2px 6px;
+    padding: 3px 10px;
 }
 
 .buttonContainer button {
@@ -453,13 +454,13 @@ input:focus, textarea:focus, button:focus {
 }
 
 .buttonContainer > :first-child {
-    margin-right: 6px;
+    margin-right: 4px;
 }
 
 .button {
     background-color: C_SECONDARY_DARK;
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     text-transform: uppercase;
 
     width: 100%;
@@ -737,10 +738,6 @@ input:focus, textarea:focus, button:focus {
     font-weight: bold;
     color: C_PRIMARY;
     text-transform: uppercase;
-}
-
-.embeddedEntityProperties {
-    padding-left: 15px;
 }
 
 .embeddedEntityProperties .editorMain {
