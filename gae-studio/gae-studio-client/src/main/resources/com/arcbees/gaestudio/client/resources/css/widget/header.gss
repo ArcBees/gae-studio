@@ -152,7 +152,7 @@
 
 .messages {
     position: fixed;
-    top: 80px;
+    top: 4px;
     right: 10px;
     width: 300px;
     margin: 0 auto;

@@ -70,7 +70,7 @@
 }
 
 .sidebar .dropdown {
-    width: 105px;
+    width: 152px;
 }
 
 .sidebar .exportBtn,

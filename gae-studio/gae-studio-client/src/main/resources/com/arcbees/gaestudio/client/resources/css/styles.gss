@@ -147,15 +147,15 @@ input:focus, textarea:focus, button:focus {
     margin-top: 2px;
     padding: 12px 17px;
 
-    @mixin rotate(-90deg);
-    @mixin transition(all, 0.4s);
+    @mixin rotate(0deg);
+    @mixin transition(all, 0.25s);
 }
 
 .profilerToggle.flipped {
 }
 
 .flipped {
-    @mixin rotate(0deg);
+    @mixin rotate(-90deg);
 }
 
 /* -> Version -- */
@@ -196,6 +196,7 @@ input:focus, textarea:focus, button:focus {
     text-overflow: ellipsis;
     border-bottom: 2px solid #fff;
     white-space: nowrap;
+    height: 33px;
 
     position: relative;
 }
@@ -207,7 +208,9 @@ input:focus, textarea:focus, button:focus {
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    @mixin transition_effect(background-color, .25s, ease);
+    position: relative;
+
+    @mixin transition_effect(all, .25s, ease);
 }
 
 .kindListElement span {
@@ -217,14 +220,39 @@ input:focus, textarea:focus, button:focus {
     padding: 3px 16px;
 }
 
-.kindListElement:hover, .kindListElementSelected {
+.kindListElement i {
+    font-size: 16px;
+
+    position: absolute;
+    top: 3px;
+    right: 28px;
+
+    @mixin transition_effect(all, .25s, ease);
+    @mixin opacity(0);
+}
+
+.kindListElementSelected .kindListElement i {
+    @mixin opacity(1);
+}
+
+.kindListElementSelected .kindListElement i:hover {
+    @mixin scale(1.1, 1.1);
+}
+
+.kindListElementSelected .kindListElement i:hover:active {
+    @mixin scale(0.9, 0.9);
+}
+
+.kindListElement:hover,
+.kindListElementSelected {
     background-color: C_PRIMARY;
     color: #f6f6f6;
 
     cursor: pointer;
 }
 
-.kindListElementSelected, .kindListElementSelectedHidden {
+.kindListElementSelected,
+.kindListElementSelectedHidden {
     transition_effect: background-color .25s ease .3s;
 }
 
@@ -580,7 +608,7 @@ input:focus, textarea:focus, button:focus {
 
 .refresh:hover i {
     -webkit-transform: translate(0px, 0.5px) rotate(-40deg);
-    transform: translate(0px, 1px) rotate(180deg);
+    transform: translate(0px, 0.5px) rotate(-40deg);
 }
 
 .toggleKindsPanel {
@@ -717,10 +745,10 @@ input:focus, textarea:focus, button:focus {
 .editorLabelSeparator {
     background-color: C_PRIMARY;
 
-    width: 12px;
+    width: 5px;
     height: 2px;
-    margin-top: 3px;
-    margin-bottom: 1px;
+    margin-top: 5px;
+    margin-bottom: 4px;
 }
 
 .embeddedEntityProperties > .editorLabel {
@@ -760,7 +788,12 @@ input:focus, textarea:focus, button:focus {
     border-bottom: 2px solid C_SECONDARY_LIGHT2;
 }
 
+.editorMain input[type=text]:hover {
+    background-color: #f4f4f4;
+}
+
 .editorMain input[type=text]:focus {
+    background-color: #f4f4f4;
     border-bottom-color: C_PRIMARY;
 }
 

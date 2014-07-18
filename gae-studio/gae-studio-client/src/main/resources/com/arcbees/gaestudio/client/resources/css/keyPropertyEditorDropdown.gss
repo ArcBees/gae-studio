@@ -49,7 +49,6 @@ ul.openedList {
 
     display: inline-block;
     overflow: hidden;
-    margin-left: 4px;
 
     text-overflow: ellipsis;
     white-space: nowrap;
