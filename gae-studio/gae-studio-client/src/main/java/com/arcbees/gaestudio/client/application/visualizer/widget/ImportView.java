@@ -10,7 +10,6 @@
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
-import com.arcbees.gaestudio.client.application.ui.AjaxLoader;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -36,8 +35,6 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
     Button upload;
     @UiField
     SimplePanel uploadFormContainer;
-    @UiField(provided = true)
-    AjaxLoader ajaxLoader;
     @UiField
     AppResources res;
 
@@ -48,16 +45,12 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
     @Inject
     ImportView(Binder uiBinder,
                EventBus eventBus,
-               AjaxLoader ajaxLoader,
                UniversalAnalytics universalAnalytics) {
         super(eventBus);
 
-        this.ajaxLoader = ajaxLoader;
         this.universalAnalytics = universalAnalytics;
 
         initWidget(uiBinder.createAndBindUi(this));
-
-        ajaxLoader.show();
     }
 
     @Override
@@ -72,8 +65,6 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
 
     @Override
     public void setUploadWidget(UploadForm uploadForm) {
-        ajaxLoader.hide();
-
         this.uploadForm = uploadForm;
         uploadFormContainer.setWidget(uploadForm);
     }
@@ -81,7 +72,6 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
     @UiHandler("upload")
     void onUploadClicked(ClickEvent event) {
         uploadForm.submit();
-        ajaxLoader.show();
 
         universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Import Popup -> Upload");
     }

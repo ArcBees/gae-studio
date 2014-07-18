@@ -23,6 +23,7 @@
 .table {
     overflow-x: auto;
     width: 100%;
+    height: calc(100% - 48px);
 }
 
 .table table {
