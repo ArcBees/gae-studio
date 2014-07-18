@@ -44,6 +44,7 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     DivElement ajaxLoader;
 
     private final String activeStyleName;
+    private final UniversalAnalytics universalAnalytics;
 
     @Inject
     HeaderView(Binder uiBinder,
@@ -52,6 +53,7 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
                final UniversalAnalytics universalAnalytics) {
         this.widgetRes = widgetRes;
         this.resources = resources;
+        this.universalAnalytics = universalAnalytics;
 
         initWidget(uiBinder.createAndBindUi(this));
 
@@ -83,5 +85,7 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     @UiHandler("report")
     void handleClick(ClickEvent event) {
         getUiHandlers().supportClicked();
+
+        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Header -> Submit Issue");
     }
 }
