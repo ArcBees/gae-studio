@@ -18,10 +18,13 @@ import javax.ws.rs.PUT;
 import com.arcbees.gaestudio.server.AnalyticsTrackingIds;
 import com.arcbees.gaestudio.server.BuildConstants;
 import com.arcbees.googleanalytic.GoogleAnalytic;
+import com.google.appengine.api.utils.SystemProperty;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.matcher.Matcher;
 import com.google.inject.matcher.Matchers;
+
+import static com.google.appengine.api.utils.SystemProperty.Environment.Value.Development;
 
 public class AnalyticModule extends AbstractModule {
     private static final String APPLICATION_NAME = "GAE-Studio";
@@ -38,6 +41,9 @@ public class AnalyticModule extends AbstractModule {
         bindInterceptor(packageMatcher, Matchers.annotatedWith(POST.class), apiMethodInterceptor);
         bindInterceptor(packageMatcher, Matchers.annotatedWith(PUT.class), apiMethodInterceptor);
         bindInterceptor(packageMatcher, Matchers.annotatedWith(DELETE.class), apiMethodInterceptor);
+
+        boolean isDevelopmentEnvironment = SystemProperty.environment.value().equals(Development);
+        bindConstant().annotatedWith(UseCookieDomainNone.class).to(isDevelopmentEnvironment);
     }
 
     @Provides
