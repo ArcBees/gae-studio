@@ -25,11 +25,13 @@ import com.arcbees.gaestudio.client.application.visualizer.widget.ImportPresente
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.DeleteFromNamespaceHandler;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenterFactory;
+import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.rest.ExportService;
 import com.arcbees.gaestudio.client.rest.KindsService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
+import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.web.bindery.event.shared.EventBus;
@@ -37,6 +39,8 @@ import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 import static com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent.EntitiesDeletedHandler;
@@ -57,6 +61,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
 
     public static final Object SLOT_NAMESPACES = new Object();
 
+    private final PlaceManager placeManager;
     private final RestDispatch restDispatch;
     private final KindsService kindsService;
     private final ExportService exportService;
@@ -70,6 +75,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     @Inject
     SidebarPresenter(EventBus eventBus,
                      MyView view,
+                     PlaceManager placeManager,
                      RestDispatch restDispatch,
                      KindsService kindsService,
                      ExportService exportService,
@@ -78,6 +84,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
                      UniversalAnalytics universalAnalytics) {
         super(eventBus, view);
 
+        this.placeManager = placeManager;
         this.restDispatch = restDispatch;
         this.kindsService = kindsService;
         this.exportService = exportService;
@@ -125,6 +132,11 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         currentKind = kind;
 
         KindSelectedEvent.fire(this, kind);
+
+        PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.entity)
+                .with(UrlParameters.KIND, currentKind)
+                .build();
+        placeManager.revealPlace(placeRequest);
     }
 
     @Override

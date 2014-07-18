@@ -90,6 +90,7 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
     }
 
     private void parseProperties(JsonUtils jsonUtils, Set<ParsedEntity> parsedEntities) {
+        Map<String, Integer> commonValuesCount = Maps.newHashMap();
         for (ParsedEntity parsedEntity : parsedEntities) {
             for (String propertyKey : parsedEntity.propertyKeys()) {
                 PropertyType propertyType = PropertyUtil.getPropertyType(parsedEntity.getProperty(propertyKey));
@@ -99,21 +100,37 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
 
                     createPrototypeValue(propertyKey, propertyValue, allProperties.get(propertyKey));
 
-                    checkIfCommonValue(jsonUtils, propertyKey, propertyValue);
+                    checkIfCommonValue(jsonUtils, propertyKey, propertyValue, commonValuesCount);
                 }
+            }
+        }
+
+        cleanSingleValues(commonValuesCount);
+    }
+
+    private void cleanSingleValues(Map<String, Integer> commonValuesCount) {
+        for (Map.Entry<String, Integer> commonValue : commonValuesCount.entrySet()) {
+            if (commonValue.getValue() == 1) {
+                commonValues.remove(commonValue.getKey());
             }
         }
     }
 
-    private void checkIfCommonValue(JsonUtils jsonUtils, String propertyKey, JSONValue propertyValue) {
+    private void checkIfCommonValue(JsonUtils jsonUtils,
+                                    String propertyKey,
+                                    JSONValue propertyValue,
+                                    Map<String, Integer> commonValuesCount) {
         if (!propertiesToIgnore.contains(propertyKey) && commonValues.containsKey(propertyKey)) {
             JSONValue currentValue = commonValues.get(propertyKey);
             if (!jsonUtils.compareObjects(currentValue, propertyValue)) {
                 propertiesToIgnore.add(propertyKey);
                 commonValues.remove(propertyKey);
+            } else {
+                commonValuesCount.put(propertyKey, commonValuesCount.get(propertyKey) + 1);
             }
         } else if (!propertiesToIgnore.contains(propertyKey)) {
             commonValues.put(propertyKey, propertyValue);
+            commonValuesCount.put(propertyKey, 1);
         }
     }
 

@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.service.visualizer;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +60,15 @@ public class EntitiesServiceImpl implements EntitiesService {
         Query query = new Query(kind);
 
         return datastoreHelper.queryOnAllNamespaces(query, fetchOptions);
+    }
+
+    @Override
+    public Collection<Entity> getEntities(List<Key> keys) {
+        AppEngineHelper.disableApiHooks();
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+        return datastore.get(keys).values();
     }
 
     @Override
@@ -117,12 +127,12 @@ public class EntitiesServiceImpl implements EntitiesService {
     }
 
     @Override
-    public void put(Iterable<Entity> entities) {
+    public List<Key> put(Iterable<Entity> entities) {
         AppEngineHelper.disableApiHooks();
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-        datastore.put(entities);
+        return datastore.put(entities);
     }
 
     private Entity createEmptyEntityFromTemplate(Entity template) {

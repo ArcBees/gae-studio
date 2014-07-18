@@ -9,11 +9,16 @@
 
 package com.arcbees.gaestudio.server.service.visualizer;
 
+import java.util.List;
+
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Key;
 
 public interface EntitiesService {
     Iterable<Entity> getEntities(String kind, Integer offset, Integer limit);
+
+    java.util.Collection<Entity> getEntities(List<Key> keys);
 
     Entity createEmptyEntity(String kind);
 
@@ -21,5 +26,5 @@ public interface EntitiesService {
 
     Integer getCount(String kind);
 
-    void put(Iterable<Entity> entities);
+    java.util.List<com.google.appengine.api.datastore.Key> put(Iterable<Entity> entities);
 }

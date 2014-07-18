@@ -14,25 +14,24 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 
 public class KindSelectedEvent extends GwtEvent<KindSelectedEvent.KindSelectedHandler> {
-    private String kind;
-
-    public KindSelectedEvent(String kind) {
-        this.kind = kind;
-    }
-
-    public static void fire(HasHandlers source, String kind) {
-        KindSelectedEvent eventInstance = new KindSelectedEvent(kind);
-        source.fireEvent(eventInstance);
-    }
-
     public interface KindSelectedHandler extends EventHandler {
         public void onKindSelected(KindSelectedEvent event);
     }
 
-    private static final Type<KindSelectedHandler> TYPE = new Type<KindSelectedHandler>();
+    public static void fire(HasHandlers source, String kind) {
+        source.fireEvent(new KindSelectedEvent(kind));
+    }
 
     public static Type<KindSelectedHandler> getType() {
         return TYPE;
+    }
+
+    private static final Type<KindSelectedHandler> TYPE = new Type<>();
+
+    private String kind;
+
+    public KindSelectedEvent(String kind) {
+        this.kind = kind;
     }
 
     @Override

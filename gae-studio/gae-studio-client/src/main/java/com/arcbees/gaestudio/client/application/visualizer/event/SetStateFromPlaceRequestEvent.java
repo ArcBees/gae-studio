@@ -14,9 +14,16 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
-public class SetStateFromPlaceRequestEvent extends GwtEvent<SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler> {
+public class SetStateFromPlaceRequestEvent
+        extends GwtEvent<SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler> {
     public interface SetStateFromPlaceRequestHandler extends EventHandler {
         public void setStateFromPlaceRequest(SetStateFromPlaceRequestEvent event);
+    }
+
+    private static final Type<SetStateFromPlaceRequestHandler> TYPE = new Type<>();
+
+    public static void fire(HasHandlers source, PlaceRequest placeRequest) {
+        source.fireEvent(new SetStateFromPlaceRequestEvent(placeRequest));
     }
 
     private final PlaceRequest placeRequest;
@@ -24,16 +31,6 @@ public class SetStateFromPlaceRequestEvent extends GwtEvent<SetStateFromPlaceReq
     private SetStateFromPlaceRequestEvent(PlaceRequest placeRequest) {
         this.placeRequest = placeRequest;
     }
-
-    public static void fire(HasHandlers source, PlaceRequest placeRequest) {
-        fire(source, new SetStateFromPlaceRequestEvent(placeRequest));
-    }
-
-    public static void fire(HasHandlers source, SetStateFromPlaceRequestEvent eventInstance) {
-        source.fireEvent(eventInstance);
-    }
-
-    private static final Type<SetStateFromPlaceRequestHandler> TYPE = new Type<SetStateFromPlaceRequestHandler>();
 
     public static Type<SetStateFromPlaceRequestHandler> getType() {
         return TYPE;

@@ -9,6 +9,9 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.event;
 
+import java.util.List;
+
+import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
@@ -18,8 +21,8 @@ public class EntitiesSavedEvent extends GwtEvent<EntitiesSavedEvent.EntitiesSave
         public void onEntitiesSaved(EntitiesSavedEvent event);
     }
 
-    public static void fire(HasHandlers source) {
-        source.fireEvent(new EntitiesSavedEvent());
+    public static void fire(HasHandlers source, List<EntityDto> entities) {
+        source.fireEvent(new EntitiesSavedEvent(entities));
     }
 
     public static Type<EntitiesSavedHandler> getType() {
@@ -28,7 +31,14 @@ public class EntitiesSavedEvent extends GwtEvent<EntitiesSavedEvent.EntitiesSave
 
     private static final Type<EntitiesSavedHandler> TYPE = new Type<>();
 
-    private EntitiesSavedEvent() {
+    private final List<EntityDto> entities;
+
+    private EntitiesSavedEvent(List<EntityDto> entities) {
+        this.entities = entities;
+    }
+
+    public List<EntityDto> getEntities() {
+        return entities;
     }
 
     @Override

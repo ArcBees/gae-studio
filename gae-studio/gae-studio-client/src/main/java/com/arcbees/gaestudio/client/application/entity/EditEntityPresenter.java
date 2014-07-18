@@ -247,9 +247,9 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
         revealDetailEntity();
     }
 
-    private void onSaveEntitiesSucceeded() {
+    private void onSaveEntitiesSucceeded(List<EntityDto> entities) {
         DisplayMessageEvent.fire(this, new Message(appConstants.entitiesSaved(), MessageStyle.SUCCESS));
-        EntitiesSavedEvent.fire(this);
+        EntitiesSavedEvent.fire(this, entities);
     }
 
     private void updateEntity() throws InvalidEntityFieldsException {
@@ -274,15 +274,15 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
         List<EntityDto> entities = entitiesEditor.flush();
 
         restDispatch.execute(entitiesService.updateEntities(entities),
-                new AsyncCallbackImpl<Void>() {
+                new AsyncCallbackImpl<List<EntityDto>>() {
                     @Override
                     public void handleFailure(Throwable caught) {
                         onSaveEntityFailed(caught);
                     }
 
                     @Override
-                    public void onSuccess(Void result) {
-                        onSaveEntitiesSucceeded();
+                    public void onSuccess(List<EntityDto> entities) {
+                        onSaveEntitiesSucceeded(entities);
                     }
                 }
         );

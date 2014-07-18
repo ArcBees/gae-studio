@@ -48,5 +48,5 @@ public interface EntitiesService extends RestService {
     RestAction<Integer> getCountByKind(@QueryParam(UrlParameters.KIND) String kind);
 
     @PUT
-    RestAction<Void> updateEntities(List<EntityDto> entities);
+    RestAction<List<EntityDto>> updateEntities(List<EntityDto> entities);
 }
