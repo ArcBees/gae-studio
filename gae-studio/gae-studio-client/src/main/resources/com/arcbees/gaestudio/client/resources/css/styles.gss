@@ -147,15 +147,15 @@ input:focus, textarea:focus, button:focus {
     margin-top: 2px;
     padding: 12px 17px;
 
-    @mixin rotate(-90deg);
-    @mixin transition(all, 0.4s);
+    @mixin rotate(0deg);
+    @mixin transition(all, 0.25s);
 }
 
 .profilerToggle.flipped {
 }
 
 .flipped {
-    @mixin rotate(0deg);
+    @mixin rotate(-90deg);
 }
 
 /* -> Version -- */
