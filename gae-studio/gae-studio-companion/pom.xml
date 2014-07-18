@@ -7,14 +7,14 @@
     <parent>
         <artifactId>gae-studio</artifactId>
         <groupId>com.arcbees.gaestudio</groupId>
-        <version>0.9-SNAPSHOT</version>
+        <version>1.0-RC1</version>
     </parent>
 
     <artifactId>gae-studio-companion</artifactId>
     <packaging>war</packaging>
 
     <properties>
-        <gaestudio.version>0.9-SNAPSHOT</gaestudio.version>
+        <gaestudio.version>1.0-RC1</gaestudio.version>
         <rest-assured.version>1.8.1</rest-assured.version>
         <maven-gae-plugin.version>0.9.6</maven-gae-plugin.version>
         <maven-war-plugin.version>2.3</maven-war-plugin.version>
