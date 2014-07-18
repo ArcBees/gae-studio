@@ -20,11 +20,13 @@ import com.arcbees.chosen.client.gwt.ChosenListBox;
 import com.arcbees.gaestudio.client.application.visualizer.ExportFormats;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.ChosenResources;
+import com.arcbees.gaestudio.client.resources.FontsResources;
 import com.arcbees.gaestudio.client.resources.VisualizerResources;
 import com.arcbees.gaestudio.client.ui.PanelToggle;
 import com.arcbees.gaestudio.client.ui.PanelToggleFactory;
 import com.google.common.base.Strings;
 import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.query.client.Function;
@@ -46,8 +48,8 @@ import static com.google.gwt.query.client.GQuery.$;
 public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implements SidebarPresenter.MyView,
         PanelToggle.ToggleHandler {
     interface KindTemplate extends SafeHtmlTemplates {
-        @SafeHtmlTemplates.Template("<div class=\"{1}\"><span>{0}</span></div>")
-        SafeHtml create(String kindName, String cssClass);
+        @SafeHtmlTemplates.Template("<div class=\"{1}\"><span>{0}</span><i class=\"{2}\"></i></div>")
+        SafeHtml create(String kindName, String cssClass, String deleteClass);
     }
 
     interface EmptyKindsTemplate extends SafeHtmlTemplates {
@@ -77,6 +79,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     private final KindTemplate kindTemplate;
     private final EmptyKindsTemplate emptyKindsTemplate;
+    private final FontsResources fontsResources;
     private final AppResources appResources;
     private final VisualizerResources visualizerResources;
     private final String emptyListTypeStyleName;
@@ -95,12 +98,14 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 ChosenResources chosenResources,
                 KindTemplate kindTemplate,
                 EmptyKindsTemplate emptyKindsTemplate,
+                FontsResources fontsResources,
                 AppResources appResources,
                 VisualizerResources visualizerResources,
                 PanelToggleFactory panelToggleFactory,
                 final UniversalAnalytics universalAnalytics) {
         this.kindTemplate = kindTemplate;
         this.emptyKindsTemplate = emptyKindsTemplate;
+        this.fontsResources = fontsResources;
         this.appResources = appResources;
         this.visualizerResources = visualizerResources;
         this.universalAnalytics = universalAnalytics;
@@ -244,7 +249,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
     private void addKind(String kind) {
         String cssClass = appResources.styles().kindListElement();
-        SafeHtml html = kindTemplate.create(kind, cssClass);
+        String deleteClass = fontsResources.icons().icon_delete();
+        SafeHtml html = kindTemplate.create(kind, cssClass, deleteClass);
 
         final HTML kindWidget = new HTML(html);
         kinds.add(kindWidget);
@@ -271,6 +277,9 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     }
 
     private void onKindSelected(Element e) {
+        String iconDelete = "." + fontsResources.icons().icon_delete();
+        $("." + appResources.styles().kindListElementSelected() + " " + iconDelete).unbind(BrowserEvents.CLICK);
+
         setActive(e);
 
         currentKind = $("span", e).html();
@@ -288,7 +297,19 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
             @Override
             public void execute() {
-                $(e).addClass(activeClass);
+                doSelectKind(e, activeClass);
+            }
+        });
+    }
+
+    private void doSelectKind(Element e, String activeClass) {
+        $(e).addClass(activeClass);
+
+        String iconDelete = "." + fontsResources.icons().icon_delete();
+        $("." + appResources.styles().kindListElementSelected() + " " + iconDelete).click(new Function() {
+            @Override
+            public void f() {
+                getUiHandlers().deleteAllOfKind();
             }
         });
     }
