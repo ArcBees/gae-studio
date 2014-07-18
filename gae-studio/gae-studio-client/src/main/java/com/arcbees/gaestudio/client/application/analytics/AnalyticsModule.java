@@ -16,7 +16,7 @@ import com.google.gwt.inject.client.AbstractGinModule;
 public class AnalyticsModule extends AbstractGinModule {
     @Override
     protected void configure() {
-        install(new UniversalAnalyticsModule.Builder("hello")
+        install(new UniversalAnalyticsModule.Builder(AnalyticsTrackingIds.CLIENT_TRACKING_ID)
                 .autoCreate(false).build());
         bind(GoogleAnalyticsNavigationTracker.class).asEagerSingleton();
     }
