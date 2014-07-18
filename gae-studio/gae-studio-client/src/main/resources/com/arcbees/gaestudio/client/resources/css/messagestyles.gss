@@ -5,7 +5,7 @@
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-    border: solid 1px;
+    border: 0;
 }
 
 .close {
@@ -19,7 +19,6 @@
 
 .success, .error {
     color: #F6F3F3;
-    border-color: #a2b89e;
 }
 
 .success {
