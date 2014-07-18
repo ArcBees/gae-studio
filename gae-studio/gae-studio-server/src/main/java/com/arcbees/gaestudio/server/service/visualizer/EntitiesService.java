@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.server.service.visualizer;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.arcbees.gaestudio.shared.DeleteEntities;
@@ -18,7 +19,7 @@ import com.google.appengine.api.datastore.Key;
 public interface EntitiesService {
     Iterable<Entity> getEntities(String kind, Integer offset, Integer limit);
 
-    java.util.Collection<Entity> getEntities(List<Key> keys);
+    Collection<Entity> getEntities(List<Key> keys);
 
     Entity createEmptyEntity(String kind);
 
@@ -26,5 +27,5 @@ public interface EntitiesService {
 
     Integer getCount(String kind);
 
-    java.util.List<com.google.appengine.api.datastore.Key> put(Iterable<Entity> entities);
+    List<Key> put(Iterable<Entity> entities);
 }
