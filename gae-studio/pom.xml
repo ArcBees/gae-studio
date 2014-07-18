@@ -91,6 +91,7 @@
         <repackage>com.arcbees.gaestudio.repackaged</repackage>
         <gaes.analytics.trackingid.server>UA-41550930-5</gaes.analytics.trackingid.server>
         <gaes.analytics.trackingid.client>UA-41550930-10</gaes.analytics.trackingid.client>
+        <gaes.analytics.cookiedomain.usenone>false</gaes.analytics.cookiedomain.usenone>
     </properties>
 
     <build>
@@ -152,6 +153,15 @@
             <properties>
                 <gaes.analytics.trackingid.server>UA-41550930-4</gaes.analytics.trackingid.server>
                 <gaes.analytics.trackingid.client>UA-41550930-6</gaes.analytics.trackingid.client>
+            </properties>
+        </profile>
+        <profile>
+            <!-- This profile controls whether or not Google Analytics will work on localhost -->
+            <!-- Only activate this profile if you run the application on localhost, for Analytics debugging purposes -->
+            <!-- See: https://developers.google.com/analytics/devguides/collection/analyticsjs/domains#localhost -->
+            <id>localhost-analytics</id>
+            <properties>
+                <gaes.analytics.cookiedomain.usenone>true</gaes.analytics.cookiedomain.usenone>
             </properties>
         </profile>
     </profiles>

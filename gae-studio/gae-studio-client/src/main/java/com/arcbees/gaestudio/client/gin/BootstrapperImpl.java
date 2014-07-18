@@ -12,6 +12,7 @@ package com.arcbees.gaestudio.client.gin;
 import javax.inject.Inject;
 
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
+import com.arcbees.gaestudio.client.AnalyticsConfiguration;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.gwtplatform.mvp.client.Bootstrapper;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
@@ -31,7 +32,12 @@ public class BootstrapperImpl implements Bootstrapper {
 
     @Override
     public void onBootstrap() {
-        universalAnalytics.create();
+        if (AnalyticsConfiguration.USE_COOKIE_DOMAIN_NONE) {
+            universalAnalytics.create().cookieDomain("none");
+        } else {
+            universalAnalytics.create();
+        }
+
         placeManager.revealPlace(new PlaceRequest.Builder().nameToken(NameTokens.visualizer).build());
     }
 }
