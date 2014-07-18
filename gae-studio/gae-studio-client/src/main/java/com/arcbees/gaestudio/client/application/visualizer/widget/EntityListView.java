@@ -107,6 +107,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
 
         selectionModel = new MultiSelectionModel<>();
         entityTable.setSelectionModel(selectionModel, this);
+        entityTable.setLoadingIndicator(null);
 
         initWidget(uiBinder.createAndBindUi(this));
 
