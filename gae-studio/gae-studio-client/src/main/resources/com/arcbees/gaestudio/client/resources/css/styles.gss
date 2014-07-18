@@ -186,13 +186,15 @@ input:focus, textarea:focus, button:focus {
 }
 
 .kindHeaderElement {
-    line-height: 30px;
+    line-height: 33px;
     font-size: 15px;
     font-weight: bold;
 
     display: block;
-    padding: 3px 16px;
+    padding: 3px 0;
+    margin: 0 28px 0 14px;
     text-overflow: ellipsis;
+    border-bottom: 2px solid #fff;
     white-space: nowrap;
 
     position: relative;
@@ -498,7 +500,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .panelToggle {
-    transition: webkitTransform 0.5s;
+    @mixin transition(all, .5s);
 }
 
 .panelToggle:hover {
@@ -553,14 +555,16 @@ input:focus, textarea:focus, button:focus {
 }
 
 .toggleKindsPanel {
-    position: absolute;
-    right: 3px;
-    top: 10px;
     padding: 4px;
+
+    position: absolute;
+    right: -25px;
+    top: 10px;
 }
 
 .toggleKindsPanel.flipped {
-    right: 1px;
+    -webkit-transform: rotate(-90deg) translate(0px, 4px);
+    transform: rotate(-90deg) translate(0px, 4px);
 }
 
 .gwt-SplitLayoutPanel-HDragger, .gwt-SplitLayoutPanel-VDragger {

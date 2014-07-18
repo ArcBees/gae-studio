@@ -65,12 +65,12 @@
 
 .sidebar .actionsPanel {
     position: absolute;
-    right: 25px;
+    right: 0;
     top: 5px;
 }
 
 .sidebar .dropdown {
-    width: 80px;
+    width: 105px;
 }
 
 .sidebar .exportBtn,
@@ -85,9 +85,9 @@
 
     overflow: hidden;
     display: inline-block;
-    height: 23px;
-    width: 23px;
-    margin: 2px;
+    height: 25px;
+    width: 25px;
+    margin: 2px 0;
 
     @mixin transition(all, 0.3s);
 }
