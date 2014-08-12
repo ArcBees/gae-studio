@@ -136,7 +136,8 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     public void displayEntitiesOfSelectedKind(String kind) {
         currentKind = kind;
 
-        PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.entity)
+        PlaceRequest placeRequest = new PlaceRequest.Builder()
+                .nameToken(NameTokens.visualizer)
                 .with(UrlParameters.KIND, currentKind)
                 .build();
         placeManager.revealPlace(placeRequest);

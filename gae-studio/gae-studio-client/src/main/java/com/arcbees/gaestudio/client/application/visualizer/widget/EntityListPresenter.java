@@ -206,7 +206,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         getView().unselectRows();
 
         PlaceRequest placeRequest = new PlaceRequest.Builder(placeManager.getCurrentPlaceRequest())
-                .nameToken(NameTokens.entity)
+                .nameToken(NameTokens.visualizer)
                 .without(UrlParameters.KEY)
                 .build();
         placeManager.revealPlace(placeRequest);
@@ -365,7 +365,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                 }).toList();
 
         String keysParam = Joiner.on(",").join(keys);
-        PlaceRequest.Builder builder = new PlaceRequest.Builder(placeManager.getCurrentPlaceRequest());
+        PlaceRequest.Builder builder = new PlaceRequest.Builder(placeManager.getCurrentPlaceRequest())
+                .nameToken(NameTokens.visualizer);
 
         if (keys.isEmpty()) {
             RowUnlockedEvent.fire(this);
