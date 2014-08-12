@@ -10,7 +10,6 @@
 package com.arcbees.gaestudio.client.application.visualizer;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
-import com.arcbees.gaestudio.client.util.Console;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.query.client.GQuery;
@@ -73,7 +72,6 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     @Override
     public void collapseEntityDetails() {
         if (getRightPanelPercentage() > 0) {
-            Console.log("Collapse");
             entityDetailsVisible = false;
             setPanelsWidthPercentages(100, 0);
         }
