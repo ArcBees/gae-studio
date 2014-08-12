@@ -98,12 +98,6 @@
             <version>${gss.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.github.nmorel.gwtjackson</groupId>-->
-            <!--<artifactId>gwt-jackson</artifactId>-->
-            <!--<version>${gwt-jackson.version}</version>-->
-            <!--<scope>provided</scope>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.google.gwt.inject</groupId>
             <artifactId>gin</artifactId>

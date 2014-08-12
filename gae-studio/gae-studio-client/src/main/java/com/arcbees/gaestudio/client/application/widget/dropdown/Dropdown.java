@@ -12,9 +12,6 @@ package com.arcbees.gaestudio.client.application.widget.dropdown;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
-import org.apache.commons.lang3.ObjectUtils;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;

@@ -26,7 +26,6 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(JukitoRunner.class)
 public class KindsServiceImplTest extends GaeTestBase {
-
     public static class KindsServiceModule extends JukitoModule {
         @Override
         protected void configureTest() {
