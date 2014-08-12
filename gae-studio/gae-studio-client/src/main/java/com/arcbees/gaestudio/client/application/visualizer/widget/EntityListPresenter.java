@@ -158,6 +158,12 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Override
     public void onRowUnlock() {
+        PlaceRequest placeRequest = new PlaceRequest.Builder(placeManager.getCurrentPlaceRequest())
+                .nameToken(NameTokens.visualizer)
+                .without(UrlParameters.KEY)
+                .build();
+        placeManager.revealPlace(placeRequest);
+        
         RowUnlockedEvent.fire(this);
     }
 
@@ -204,12 +210,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Override
     public void onDeselectEntities(DeselectEvent event) {
         getView().unselectRows();
-
-        PlaceRequest placeRequest = new PlaceRequest.Builder(placeManager.getCurrentPlaceRequest())
-                .nameToken(NameTokens.visualizer)
-                .without(UrlParameters.KEY)
-                .build();
-        placeManager.revealPlace(placeRequest);
     }
 
     @Override
