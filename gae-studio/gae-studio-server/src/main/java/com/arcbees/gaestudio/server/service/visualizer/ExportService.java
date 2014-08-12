@@ -12,7 +12,7 @@ package com.arcbees.gaestudio.server.service.visualizer;
 import org.json.JSONException;
 
 public interface ExportService {
-    String exportKindToJson(String kind);
+    String exportKindToJson(String kind, String namespace);
 
-    String exportKindToCsv(String kind) throws JSONException;
+    String exportKindToCsv(String kind, String namespace) throws JSONException;
 }

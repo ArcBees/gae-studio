@@ -40,6 +40,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
         }
     }
 
+    private static final String ALL_NAMESPACES = null;
     private static final String KIND_NAME = "FakeEntity";
     private static final String GAE_KIND_NAME = "__FakeEntity";
     private static final String PROPERTY_NAME = "property-name";
@@ -47,6 +48,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
     private static final String A_NAME = "a-name";
     private static final String ANOTHER_NAME = "another-name";
     private static final String A_NAMESPACE = "a-namespace";
+    private static final String DEFAULT_NAMESPACE = "";
 
     @Inject
     EntitiesService entitiesService;
@@ -58,7 +60,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
         //when
-        Iterable<Entity> entities = entitiesService.getEntities(KIND_NAME, null, null);
+        Iterable<Entity> entities = entitiesService.getEntities(KIND_NAME, ALL_NAMESPACES, null, null);
 
         //then
         Iterator<Entity> it = entities.iterator();
@@ -114,7 +116,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
         entitiesService.deleteEntities(KIND_NAME, null, DeleteEntities.KIND, null);
 
         //then
-        assertEquals(0l, (long) entitiesService.getCount(KIND_NAME));
+        assertEquals(0l, (long) entitiesService.getCount(KIND_NAME, ALL_NAMESPACES));
     }
 
     @Test
@@ -127,7 +129,33 @@ public class EntitiesServiceImplTest extends GaeTestBase {
         entitiesService.deleteEntities(null, "", DeleteEntities.NAMESPACE, null);
 
         //then
-        assertEquals(1l, (long) entitiesService.getCount(KIND_NAME));
+        assertEquals(1l, (long) entitiesService.getCount(KIND_NAME, ALL_NAMESPACES));
+    }
+
+    @Test
+    public void getCount_withNamespace_shouldReturnOneEntity() {
+        //given
+        createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
+        createEntityInNamespace(A_NAMESPACE, KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
+
+        //when
+        Integer entityCount = entitiesService.getCount(KIND_NAME, A_NAMESPACE);
+
+        //then
+        assertEquals(1l, (long) entityCount);
+    }
+
+    @Test
+    public void getCount_withDefaultNamespace_shouldReturnOneEntity() {
+        //given
+        createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
+        createEntityInNamespace(A_NAMESPACE, KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
+
+        //when
+        Integer entityCount = entitiesService.getCount(KIND_NAME, DEFAULT_NAMESPACE);
+
+        //then
+        assertEquals(1l, (long) entityCount);
     }
 
     @Test
@@ -137,7 +165,7 @@ public class EntitiesServiceImplTest extends GaeTestBase {
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
         //when
-        Integer entityCount = entitiesService.getCount(KIND_NAME);
+        Integer entityCount = entitiesService.getCount(KIND_NAME, ALL_NAMESPACES);
 
         //then
         assertEquals(2l, (long) entityCount);

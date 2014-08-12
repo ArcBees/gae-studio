@@ -19,8 +19,6 @@ import org.jukito.TestSingleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.arcbees.gaestudio.server.service.visualizer.KindsService;
-import com.arcbees.gaestudio.server.service.visualizer.KindsServiceImpl;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
 
 import static org.junit.Assert.assertEquals;
@@ -28,6 +26,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(JukitoRunner.class)
 public class KindsServiceImplTest extends GaeTestBase {
+
     public static class KindsServiceModule extends JukitoModule {
         @Override
         protected void configureTest() {
@@ -41,6 +40,7 @@ public class KindsServiceImplTest extends GaeTestBase {
     private static final String PROPERTY_NAME = "property-name";
     private static final String A_NAME = "a-name";
     private static final String ANOTHER_NAME = "another-name";
+    private static final String SOME_NAMESPACE = "SOME_NAMESPACE";
 
     @Inject
     KindsService kindsService;
@@ -52,12 +52,40 @@ public class KindsServiceImplTest extends GaeTestBase {
         createEntityInDatastore(ANOTHER_KIND, PROPERTY_NAME, ANOTHER_NAME);
 
         //when
-        List<String> kindsList = kindsService.getKinds();
+        List<String> kindsList = kindsService.getKinds(null);
 
         //then
         assertEquals(2, kindsList.size());
         assertTrue(kindsList.contains(KIND_NAME));
         assertTrue(kindsList.contains(ANOTHER_KIND));
+    }
+
+    @Test
+    public void getKinds_withNamespace_shouldReturnOnlyOneKind() {
+        //given
+        createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
+        createEntityInNamespace(SOME_NAMESPACE, ANOTHER_KIND, PROPERTY_NAME, ANOTHER_NAME);
+
+        //when
+        List<String> kindsList = kindsService.getKinds(SOME_NAMESPACE);
+
+        //then
+        assertEquals(1, kindsList.size());
+        assertTrue(kindsList.contains(ANOTHER_KIND));
+    }
+
+    @Test
+    public void getKinds_withDefaultNamespace_shouldReturnOnlyOneKind() {
+        //given
+        createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
+        createEntityInNamespace(SOME_NAMESPACE, ANOTHER_KIND, PROPERTY_NAME, ANOTHER_NAME);
+
+        //when
+        List<String> kindsList = kindsService.getKinds("");
+
+        //then
+        assertEquals(1, kindsList.size());
+        assertTrue(kindsList.contains(KIND_NAME));
     }
 
     @Test
@@ -68,7 +96,7 @@ public class KindsServiceImplTest extends GaeTestBase {
         createEntityInDatastore(GAE_KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
         //when
-        List<String> kindsList = kindsService.getKinds();
+        List<String> kindsList = kindsService.getKinds(null);
 
         //then
         assertEquals(2, kindsList.size());

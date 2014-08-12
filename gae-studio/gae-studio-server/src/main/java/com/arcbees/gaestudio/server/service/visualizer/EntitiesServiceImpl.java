@@ -45,7 +45,7 @@ public class EntitiesServiceImpl implements EntitiesService {
     }
 
     @Override
-    public Iterable<Entity> getEntities(String kind, Integer offset, Integer limit) {
+    public Iterable<Entity> getEntities(String kind, String namespace, Integer offset, Integer limit) {
         AppEngineHelper.disableApiHooks();
 
         FetchOptions fetchOptions = FetchOptions.Builder.withDefaults();
@@ -59,7 +59,7 @@ public class EntitiesServiceImpl implements EntitiesService {
 
         Query query = new Query(kind);
 
-        return datastoreHelper.queryOnAllNamespaces(query, fetchOptions);
+        return datastoreHelper.queryOnNamespace(namespace, query, fetchOptions);
     }
 
     @Override
@@ -118,12 +118,12 @@ public class EntitiesServiceImpl implements EntitiesService {
     }
 
     @Override
-    public Integer getCount(String kind) {
+    public Integer getCount(String kind, String namespace) {
         AppEngineHelper.disableApiHooks();
 
         Query query = new Query(kind).setKeysOnly();
 
-        return Iterables.size(datastoreHelper.queryOnAllNamespaces(query));
+        return Iterables.size(datastoreHelper.queryOnNamespace(namespace, query));
     }
 
     @Override

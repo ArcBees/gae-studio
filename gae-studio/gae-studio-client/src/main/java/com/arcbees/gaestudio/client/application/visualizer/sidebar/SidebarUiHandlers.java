@@ -18,7 +18,7 @@ interface SidebarUiHandlers extends UiHandlers {
 
     void importKind();
 
-    void exportCurrentKind();
+    void exportJson();
 
     void exportCsv();
 

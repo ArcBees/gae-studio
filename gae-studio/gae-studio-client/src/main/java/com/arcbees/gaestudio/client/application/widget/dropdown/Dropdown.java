@@ -12,6 +12,9 @@ package com.arcbees.gaestudio.client.application.widget.dropdown;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
+import org.apache.commons.lang3.ObjectUtils;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -113,9 +116,14 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
     }
 
     public void setValue(T value) {
+        setValue(value, true);
+    }
+
+    public void setValue(T value, boolean fireEvent) {
         for (Map.Entry<Element, T> valueEntry : valuesIndex.entrySet()) {
-            if (valueEntry.getValue().equals(value)) {
-                makeSelected($(valueEntry.getKey()));
+            T entryValue = valueEntry.getValue();
+            if (entryValue == null && value == null || entryValue != null && entryValue.equals(value)) {
+                makeSelected($(valueEntry.getKey()), fireEvent);
                 return;
             }
         }
@@ -129,13 +137,13 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
             if (li.hasClass(resources.styles().selectedLi())) {
                 if (opened) {
                     close();
-                    makeSelected(li);
+                    makeSelected(li, true);
                 } else {
                     open();
                 }
             } else {
                 close();
-                makeSelected(li);
+                makeSelected(li, true);
             }
 
             return true;
@@ -177,7 +185,7 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
             public boolean f(Event e) {
                 GQuery selected = $("li." + resources.styles().selectedLi());
                 close();
-                makeSelected(selected);
+                makeSelected(selected, false);
 
                 return true;
             }
@@ -202,7 +210,7 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
         opened = false;
     }
 
-    private void makeSelected(GQuery selectedLi) {
+    private void makeSelected(GQuery selectedLi, boolean fireEvent) {
         $("." + resources.styles().selectedLi(), widget)
                 .removeClass(resources.styles().selectedLi(), resources.styles().dropDownArrow())
                 .addClass(resources.styles().hiddenLi());
@@ -212,7 +220,9 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
         Element element = $(selectedLi).get(0);
         T value = valuesIndex.get(element);
 
-        ValueChangeEvent.fire(this, value);
+        if (fireEvent) {
+            ValueChangeEvent.fire(this, value);
+        }
     }
 
     private void open() {

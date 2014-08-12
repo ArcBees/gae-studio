@@ -25,21 +25,25 @@ public class ExportService {
         this.restPath = restPath;
     }
 
-    public String getExportKindUrl(String kind) {
-        return new UrlBuilder()
-                .setProtocol(Window.Location.getProtocol())
-                .setHost(Window.Location.getHost())
-                .setPath(restPath + "/" + EndPoints.EXPORT_JSON)
-                .setParameter(UrlParameters.KIND, kind)
-                .buildString();
+    public String getExportJson(String kind, String namespace) {
+        return getExportPath(EndPoints.EXPORT_JSON, kind, namespace);
     }
 
-    public String getExportCsv(String kind) {
-        return new UrlBuilder()
+    public String getExportCsv(String kind, String namespace) {
+        return getExportPath(EndPoints.EXPORT_CSV, kind, namespace);
+    }
+
+    private String getExportPath(String endpoint, String kind, String namespace) {
+        UrlBuilder urlBuilder = new UrlBuilder()
                 .setProtocol(Window.Location.getProtocol())
                 .setHost(Window.Location.getHost())
-                .setPath(restPath + "/" + EndPoints.EXPORT_CSV)
-                .setParameter(UrlParameters.KIND, kind)
-                .buildString();
+                .setPath(restPath + "/" + endpoint)
+                .setParameter(UrlParameters.KIND, kind);
+
+        if (namespace != null) {
+            urlBuilder.setParameter(UrlParameters.NAMESPACE, namespace);
+        }
+
+        return urlBuilder.toString();
     }
 }

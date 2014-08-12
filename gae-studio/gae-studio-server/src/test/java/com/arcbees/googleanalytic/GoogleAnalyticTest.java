@@ -14,7 +14,7 @@ import java.util.UUID;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.arcbees.gaestudio.server.AnalyticsTrackingIds;
+import com.arcbees.gaestudio.shared.AnalyticsTrackingIds;
 
 /**
  * This tests must be run while having an internet connexion as it will try to contact GoogleAnalytic
