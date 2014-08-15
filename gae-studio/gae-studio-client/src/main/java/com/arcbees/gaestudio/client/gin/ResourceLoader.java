@@ -42,6 +42,7 @@ public class ResourceLoader {
         visualizerResources.styles().ensureInjected();
         authResources.styles().ensureInjected();
         entityResources.styles().ensureInjected();
+        entityResources.editor().ensureInjected();
         profilerResources.styles().ensureInjected();
         visualizerResources.entityList().ensureInjected();
         widgetResources.header().ensureInjected();
