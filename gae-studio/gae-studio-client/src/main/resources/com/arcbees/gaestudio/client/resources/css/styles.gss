@@ -82,7 +82,7 @@ input:focus, textarea:focus, button:focus {
     top: 50%;
 }
 
-.toolbarButton .image img {
+.toolbarButton img {
     position: absolute;
     top: 10px;
     left: 14px;
