@@ -9,12 +9,20 @@
 
 package com.arcbees.gaestudio.server.service.visualizer;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.json.JSONException;
 
 import com.arcbees.gaestudio.server.util.JsonToCsvConverter;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.common.base.Function;
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 
 public class ExportServiceImpl implements ExportService {
@@ -32,15 +40,28 @@ public class ExportServiceImpl implements ExportService {
     }
 
     @Override
-    public String exportKindToJson(String kind, String namespace) {
-        Iterable<Entity> entities = entitiesService.getEntities(kind, namespace, null, null);
+    public String exportToJson(String kind, String namespace, String encodedKeys) {
+        Iterable<Entity> entities;
+        if (Strings.isNullOrEmpty(encodedKeys)) {
+            entities = entitiesService.getEntities(kind, namespace, null, null);
+        } else {
+            List<String> encodedKeysList = Splitter.on(",").splitToList(encodedKeys);
+            List<Key> keys = Lists.transform(encodedKeysList, new Function<String, Key>() {
+                @Override
+                public Key apply(String input) {
+                    return KeyFactory.stringToKey(input);
+                }
+            });
+
+            entities = entitiesService.getEntities(keys);
+        }
 
         return gson.toJson(entities);
     }
 
     @Override
-    public String exportKindToCsv(String kind, String namespace) throws JSONException {
-        String jsonData = exportKindToJson(kind, namespace);
+    public String exportToCsv(String kind, String namespace, String encodedKeys) throws JSONException {
+        String jsonData = exportToJson(kind, namespace, encodedKeys);
 
         return jsonToCsvConverter.convert(jsonData);
     }

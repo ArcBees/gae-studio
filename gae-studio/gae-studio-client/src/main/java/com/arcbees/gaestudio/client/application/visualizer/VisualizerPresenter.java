@@ -13,7 +13,6 @@ import java.util.Set;
 
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
-import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.profiler.widget.ToolbarPresenter;
@@ -59,10 +58,9 @@ import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 
-public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
-        VisualizerPresenter.MyProxy> implements KindSelectedEvent.KindSelectedHandler,
-        RowLockedEvent.RowLockedHandler, RowUnlockedEvent.RowUnlockedHandler,
-        KindPanelToggleEvent.KindPanelToggleHandler, FullScreenEvent.FullScreenEventHandler,
+public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, VisualizerPresenter.MyProxy>
+        implements KindSelectedEvent.KindSelectedHandler, RowLockedEvent.RowLockedHandler,
+        RowUnlockedEvent.RowUnlockedHandler, KindPanelToggleEvent.KindPanelToggleHandler,
         EntitySelectedEvent.EntitySelectedHandler, EntitiesSelectedEvent.EntitySelectedHandler,
         EntityPageLoadedEvent.EntityPageLoadedHandler, SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler,
         ToolbarToggleEvent.ToolbarToggleHandler {
@@ -74,8 +72,6 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         void closeKindPanel();
 
         void openKindPanel();
-
-        void activateFullScreen();
 
         void updatePanelsWidth();
     }
@@ -141,6 +137,13 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     }
 
     @Override
+    public void prepareFromRequest(PlaceRequest request) {
+        super.prepareFromRequest(request);
+
+        getView().collapseEntityDetails();
+    }
+
+    @Override
     public void setStateFromPlaceRequest(SetStateFromPlaceRequestEvent event) {
         PlaceRequest placeRequest = event.getPlaceRequest();
 
@@ -153,7 +156,6 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
 
     @Override
     public void onRowLocked(RowLockedEvent rowLockedEvent) {
-        getView().showEntityDetails();
         enableContextualMenu();
     }
 
@@ -171,15 +173,6 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
             universalAnalytics.sendEvent(UI_ELEMENTS, "close").eventLabel("Visualizer -> Actions Sidebar");
         } else {
             universalAnalytics.sendEvent(UI_ELEMENTS, "open").eventLabel("Visualizer -> Actions Sidebar");
-        }
-    }
-
-    @Override
-    public void onFullScreen(FullScreenEvent event) {
-        if (event.isActivate()) {
-            getView().activateFullScreen();
-        } else {
-            getView().showEntityDetails();
         }
     }
 
@@ -216,8 +209,16 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     public void onEntitiesSelected(EntitiesSelectedEvent event) {
         currentParsedEntities = event.getParsedEntities();
         currentParsedEntity = null;
-        getView().collapseEntityDetails();
         enableContextualMenu();
+    }
+
+    @Override
+    protected void onReset() {
+        super.onReset();
+
+        if (placeManager.getCurrentPlaceRequest().matchesNameToken(NameTokens.editEntity)) {
+            getView().showEntityDetails();
+        }
     }
 
     @Override
@@ -235,7 +236,6 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
         addRegisteredHandler(RowLockedEvent.getType(), this);
         addRegisteredHandler(RowUnlockedEvent.getType(), this);
         addRegisteredHandler(KindPanelToggleEvent.getType(), this);
-        addRegisteredHandler(FullScreenEvent.getType(), this);
         addRegisteredHandler(EntitySelectedEvent.getType(), this);
         addRegisteredHandler(EntityPageLoadedEvent.getType(), this);
         addRegisteredHandler(KindSelectedEvent.getType(), this);

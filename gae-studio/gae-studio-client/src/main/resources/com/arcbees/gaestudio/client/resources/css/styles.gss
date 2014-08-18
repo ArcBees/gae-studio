@@ -290,8 +290,6 @@ input:focus, textarea:focus, button:focus {
 
     zoom: 1;
     overflow-y: auto;
-
-    @mixin transition_effect(left, .5s, ease);
 }
 
 .entityDetailPanel {
@@ -303,8 +301,6 @@ input:focus, textarea:focus, button:focus {
 
     position: absolute;
     top: 0;
-
-    @mixin transition_effect(left, .5s, ease);
 }
 
 .hiddenOverlay {
@@ -699,7 +695,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .entityPanelTransitions {
-    @mixin transition_effect(width, .5s, ease);
+    @mixin transition_effect(width, .75s, ease);
 }
 
 .power {

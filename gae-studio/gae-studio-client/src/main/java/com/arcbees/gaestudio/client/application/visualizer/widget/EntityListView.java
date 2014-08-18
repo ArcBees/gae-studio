@@ -220,7 +220,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
 
     @Override
     public void setRowSelected(final String encodedKey) {
-        if (!entityTable.getLoadingIndicator().isVisible()) {
+        if (!$(entityTable.getTableLoadingSection()).isVisible()) {
             $(entityTable).delay(1, new Function() {
                 @Override
                 public void f() {

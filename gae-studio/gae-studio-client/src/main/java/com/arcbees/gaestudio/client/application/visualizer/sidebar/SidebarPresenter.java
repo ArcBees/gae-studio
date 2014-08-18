@@ -136,7 +136,8 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     public void displayEntitiesOfSelectedKind(String kind) {
         currentKind = kind;
 
-        PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.entity)
+        PlaceRequest placeRequest = new PlaceRequest.Builder()
+                .nameToken(NameTokens.visualizer)
                 .with(UrlParameters.KIND, currentKind)
                 .build();
         placeManager.revealPlace(placeRequest);
@@ -157,14 +158,14 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
 
     @Override
     public void exportJson() {
-        String exportKindUrl = exportService.getExportJson(currentKind, currentNamespace);
+        String exportKindUrl = exportService.getExportJson(currentKind, currentNamespace, extractKeysFromPlace());
 
         getView().setDownloadUrl(exportKindUrl);
     }
 
     @Override
     public void exportCsv() {
-        String exportCsvUrl = exportService.getExportCsv(currentKind, currentNamespace);
+        String exportCsvUrl = exportService.getExportCsv(currentKind, currentNamespace, extractKeysFromPlace());
 
         getView().setDownloadUrl(exportCsvUrl);
     }
@@ -224,6 +225,12 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         super.onHide();
 
         getView().setDownloadUrl("");
+    }
+
+    private String extractKeysFromPlace() {
+        PlaceRequest currentPlaceRequest = placeManager.getCurrentPlaceRequest();
+
+        return currentPlaceRequest.getParameter(UrlParameters.KEY, null);
     }
 
     private void updateKinds() {

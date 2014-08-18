@@ -20,14 +20,12 @@ import com.arcbees.gaestudio.client.application.entity.editor.EntityEditorPresen
 import com.arcbees.gaestudio.client.application.entity.editor.InvalidEntityFieldsException;
 import com.arcbees.gaestudio.client.application.entity.editor.PropertyEditorErrorEvent;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
-import com.arcbees.gaestudio.client.application.event.FullScreenEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.VisualizerPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.event.EditEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
-import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
 import com.arcbees.gaestudio.client.place.NameTokens;
@@ -36,9 +34,7 @@ import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.rest.EntityService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
-import com.google.gwt.core.client.Scheduler;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
@@ -109,15 +105,6 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
     public void prepareFromRequest(final PlaceRequest request) {
         super.prepareFromRequest(request);
 
-        if (!isVisible()) {
-            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                @Override
-                public void execute() {
-                    SetStateFromPlaceRequestEvent.fire(EditEntityPresenter.this, request);
-                }
-            });
-        }
-
         editEntity(request);
     }
 
@@ -142,7 +129,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
         if (currentEntity == null) {
             EntitiesSelectedEvent.fire(this, currentEntities);
         } else {
-            revealDetailEntity();
+            revealEntitiesList();
         }
     }
 
@@ -157,18 +144,10 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
         currentEntity = null;
         currentEntities = event.getParsedEntities();
 
-        RevealContentEvent.fire(this, VisualizerPresenter.SLOT_ENTITY_DETAILS, this);
-        FullScreenEvent.fire(this, false);
-
         entitiesEditor = entityEditorFactory.create(currentEntities);
         setInSlot(EDITOR_SLOT, entitiesEditor);
-    }
 
-    @Override
-    protected void onReveal() {
-        super.onReveal();
-
-        FullScreenEvent.fire(EditEntityPresenter.this, false);
+        RevealContentEvent.fire(this, VisualizerPresenter.SLOT_ENTITY_DETAILS, this);
     }
 
     @Override
@@ -202,12 +181,10 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
         getView().showError(message);
     }
 
-    private void revealDetailEntity() {
-        KeyDto keyDto = currentEntity.getKey();
-
-        PlaceRequest.Builder builder = new PlaceRequest.Builder().nameToken(NameTokens.entity)
-                .with(UrlParameters.KIND, keyDto.getKind())
-                .with(UrlParameters.KEY, keyDto.getEncodedKey());
+    private void revealEntitiesList() {
+        PlaceRequest.Builder builder = new PlaceRequest.Builder(placeManager.getCurrentPlaceRequest())
+                .nameToken(NameTokens.visualizer)
+                .without(UrlParameters.KEY);
 
         placeManager.revealPlace(builder.build());
     }
@@ -244,7 +221,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
     private void onSaveEntitySucceeded(EntityDto newEntityDto) {
         EntitySavedEvent.fire(this, newEntityDto);
         DisplayMessageEvent.fire(this, new Message(appConstants.entitySaved(), MessageStyle.SUCCESS));
-        revealDetailEntity();
+        revealEntitiesList();
     }
 
     private void onSaveEntitiesSucceeded(List<EntityDto> entities) {

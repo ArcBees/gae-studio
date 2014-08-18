@@ -12,7 +12,6 @@ package com.arcbees.gaestudio.client.place;
 public class NameTokens {
     public static final String visualizer = "visualizer";
     public static final String profiler = "profiler";
-    public static final String entity = "entity";
     public static final String editEntity = "editEntity";
     public static final String license = "license";
     public static final String auth = "auth";
@@ -38,10 +37,6 @@ public class NameTokens {
 
     public static String getProfiler() {
         return profiler;
-    }
-
-    public static String getEntity() {
-        return entity;
     }
 
     public static String getEditEntity() {

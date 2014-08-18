@@ -169,7 +169,7 @@ public class DatastoreHelper {
 
                 Query namespaceAwareQuery = copyQuery(query);
 
-                return datastoreService.prepare(namespaceAwareQuery).asIterable(fetchOptions);
+                return toSerializableIterable(datastoreService.prepare(namespaceAwareQuery).asIterable(fetchOptions));
             } finally {
                 NamespaceManager.set(oldNamespace);
             }
@@ -240,6 +240,10 @@ public class DatastoreHelper {
         }
 
         return newQuery;
+    }
+
+    private Iterable<Entity> toSerializableIterable(Iterable<Entity> entities) {
+        return Lists.newArrayList(entities);
     }
 
     private String extractNamespace(Entity namespace) {
