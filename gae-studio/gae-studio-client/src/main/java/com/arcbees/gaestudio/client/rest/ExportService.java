@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
+import com.google.common.base.Strings;
 import com.google.gwt.http.client.UrlBuilder;
 import com.google.gwt.user.client.Window;
 import com.gwtplatform.dispatch.rest.client.RestApplicationPath;
@@ -25,25 +26,29 @@ public class ExportService {
         this.restPath = restPath;
     }
 
-    public String getExportJson(String kind, String namespace) {
-        return getExportPath(EndPoints.EXPORT_JSON, kind, namespace);
+    public String getExportJson(String kind, String namespace, String encodedKeys) {
+        return getExportPath(EndPoints.EXPORT_JSON, kind, namespace, encodedKeys);
     }
 
-    public String getExportCsv(String kind, String namespace) {
-        return getExportPath(EndPoints.EXPORT_CSV, kind, namespace);
+    public String getExportCsv(String kind, String namespace, String encodedKeys) {
+        return getExportPath(EndPoints.EXPORT_CSV, kind, namespace, encodedKeys);
     }
 
-    private String getExportPath(String endpoint, String kind, String namespace) {
+    private String getExportPath(String endpoint, String kind, String namespace, String encodedKeys) {
         UrlBuilder urlBuilder = new UrlBuilder()
                 .setProtocol(Window.Location.getProtocol())
                 .setHost(Window.Location.getHost())
-                .setPath(restPath + "/" + endpoint)
-                .setParameter(UrlParameters.KIND, kind);
+                .setPath(restPath + "/" + endpoint);
 
-        if (namespace != null) {
-            urlBuilder.setParameter(UrlParameters.NAMESPACE, namespace);
+        if (Strings.isNullOrEmpty(encodedKeys)) {
+            urlBuilder.setParameter(UrlParameters.KIND, kind);
+            if (namespace != null) {
+                urlBuilder.setParameter(UrlParameters.NAMESPACE, namespace);
+            }
+        } else {
+            urlBuilder.setParameter(UrlParameters.KEY, encodedKeys);
         }
 
-        return urlBuilder.toString();
+        return urlBuilder.buildString();
     }
 }
