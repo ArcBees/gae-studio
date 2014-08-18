@@ -147,7 +147,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 if (chosenFormat.getValue().equals(ExportFormats.CSV)) {
                     getUiHandlers().exportCsv();
                 } else {
-                    getUiHandlers().exportCurrentKind();
+                    getUiHandlers().exportJson();
                 }
 
                 universalAnalytics.sendEvent(UI_ELEMENTS, "click")

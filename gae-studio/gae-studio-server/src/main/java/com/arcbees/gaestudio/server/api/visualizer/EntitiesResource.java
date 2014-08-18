@@ -57,6 +57,7 @@ public class EntitiesResource {
 
     @GET
     public Response getEntities(@QueryParam(UrlParameters.KIND) String kind,
+                                @QueryParam(UrlParameters.NAMESPACE) String namespace,
                                 @QueryParam(UrlParameters.OFFSET) Integer offset,
                                 @QueryParam(UrlParameters.LIMIT) Integer limit) {
         ResponseBuilder responseBuilder;
@@ -64,7 +65,7 @@ public class EntitiesResource {
         if (kind == null) {
             responseBuilder = Response.status(Status.BAD_REQUEST);
         } else {
-            Iterable<Entity> entities = entitiesService.getEntities(kind, offset, limit);
+            Iterable<Entity> entities = entitiesService.getEntities(kind, namespace, offset, limit);
             List<EntityDto> entitiesDtos = entityMapper.mapEntitiesToDtos(entities);
 
             responseBuilder = Response.ok(entitiesDtos);
@@ -115,13 +116,14 @@ public class EntitiesResource {
 
     @GET
     @Path(EndPoints.COUNT)
-    public Response getCount(@QueryParam(UrlParameters.KIND) String kind) {
+    public Response getCount(@QueryParam(UrlParameters.KIND) String kind,
+                             @QueryParam(UrlParameters.NAMESPACE) String namespace) {
         ResponseBuilder responseBuilder;
 
         if (Strings.isNullOrEmpty(kind)) {
             responseBuilder = Response.status(Status.BAD_REQUEST);
         } else {
-            Integer count = entitiesService.getCount(kind);
+            Integer count = entitiesService.getCount(kind, namespace);
             responseBuilder = Response.ok(count);
         }
 

@@ -10,7 +10,7 @@
 package com.arcbees.gaestudio.client.application.analytics;
 
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalyticsModule;
-import com.arcbees.gaestudio.server.AnalyticsTrackingIds;
+import com.arcbees.gaestudio.shared.AnalyticsTrackingIds;
 import com.google.gwt.inject.client.AbstractGinModule;
 
 public class AnalyticsModule extends AbstractGinModule {

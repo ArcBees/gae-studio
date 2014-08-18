@@ -26,6 +26,7 @@ import com.arcbees.gaestudio.client.application.visualizer.event.EntityPageLoade
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySavedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitySelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.NamespaceSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.SetStateFromPlaceRequestEvent;
 import com.arcbees.gaestudio.client.application.widget.message.Message;
 import com.arcbees.gaestudio.client.application.widget.message.MessageStyle;
@@ -52,6 +53,7 @@ import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestAction;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -66,7 +68,8 @@ import static com.arcbees.gaestudio.client.application.visualizer.event.EntitySa
 public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyView>
         implements EntityListUiHandlers, EntitySavedHandler, EntityDeletedHandler, EntitiesDeletedHandler,
         SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler, KindSelectedEvent.KindSelectedHandler,
-        EntitiesSavedEvent.EntitiesSavedHandler, DeselectEvent.DeselectHandler {
+        EntitiesSavedEvent.EntitiesSavedHandler, DeselectEvent.DeselectHandler,
+        NamespaceSelectedEvent.NamespaceSelectedHandler {
     interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
 
@@ -106,6 +109,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private final AppMessages appMessages;
 
     private String currentKind;
+    private String currentNamespace;
     private String currentGqlRequest;
     private Integer currentGqlNumberOfEntities = 0;
 
@@ -250,6 +254,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
+    public void onNamespaceSelected(NamespaceSelectedEvent event) {
+        currentNamespace = event.getNamespace();
+    }
+
+    @Override
     protected void onBind() {
         super.onBind();
 
@@ -260,6 +269,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         addRegisteredHandler(SetStateFromPlaceRequestEvent.getType(), this);
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(DeselectEvent.getType(), this);
+        addRegisteredHandler(NamespaceSelectedEvent.getType(), this);
     }
 
     private void setTableDataProvider() {
@@ -273,12 +283,20 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     private void setTotalCount() {
-        restDispatch.execute(entitiesService.getCountByKind(currentKind), new AsyncCallbackImpl<Integer>() {
+        restDispatch.execute(getCountByKindAction(), new AsyncCallbackImpl<Integer>() {
             @Override
             public void onSuccess(Integer result) {
                 getView().setRowCount(result);
             }
         });
+    }
+
+    private RestAction<Integer> getCountByKindAction() {
+        if (currentNamespace == null) {
+            return entitiesService.getCountByKind(currentKind);
+        } else {
+            return entitiesService.getCountByKind(currentKind, currentNamespace);
+        }
     }
 
     private void loadPage(final HasData<ParsedEntity> display) {
@@ -290,8 +308,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             Range range = display.getVisibleRange();
 
             if (Strings.isNullOrEmpty(currentGqlRequest)) {
-                restDispatch.execute(entitiesService.getByKind(currentKind, range.getStart(), range.getLength()),
-                        new AsyncCallbackImpl<List<EntityDto>>() {
+                restDispatch.execute(getByKindAction(range), new AsyncCallbackImpl<List<EntityDto>>() {
                             @Override
                             public void onSuccess(List<EntityDto> result) {
                                 onLoadPageSuccess(result, display);
@@ -303,6 +320,14 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             }
         }
         EntityPageLoadedEvent.fire(this);
+    }
+
+    private RestAction<List<EntityDto>> getByKindAction(Range range) {
+        if (currentNamespace == null) {
+            return entitiesService.getByKind(currentKind, range.getStart(), range.getLength());
+        } else {
+            return entitiesService.getByKind(currentKind, currentNamespace, range.getStart(), range.getLength());
+        }
     }
 
     private void onLoadPageSuccess(List<EntityDto> entities, HasData<ParsedEntity> display) {

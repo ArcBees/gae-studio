@@ -19,7 +19,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
-import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
@@ -29,6 +28,12 @@ import com.gwtplatform.dispatch.rest.shared.RestService;
 
 @Path(EndPoints.ENTITIES)
 public interface EntitiesService extends RestService {
+    @GET
+    RestAction<List<EntityDto>> getByKind(@QueryParam(UrlParameters.KIND) String kind,
+                                          @QueryParam(UrlParameters.NAMESPACE) String currentNamespace,
+                                          @QueryParam(UrlParameters.OFFSET) Integer offset,
+                                          @QueryParam(UrlParameters.LIMIT) Integer limit);
+
     @GET
     RestAction<List<EntityDto>> getByKind(@QueryParam(UrlParameters.KIND) String kind,
                                           @QueryParam(UrlParameters.OFFSET) Integer offset,
@@ -42,6 +47,11 @@ public interface EntitiesService extends RestService {
                                @QueryParam(UrlParameters.NAMESPACE) String namespace,
                                @QueryParam(UrlParameters.TYPE) DeleteEntities deleteEntities,
                                @QueryParam(UrlParameters.KEY) Set<String> encodedKeys);
+
+    @GET
+    @Path(EndPoints.COUNT)
+    RestAction<Integer> getCountByKind(@QueryParam(UrlParameters.KIND) String kind,
+                                       @QueryParam(UrlParameters.NAMESPACE) String currentNamespace);
 
     @GET
     @Path(EndPoints.COUNT)

@@ -41,6 +41,7 @@ import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.shared.GwtEvent;
@@ -313,16 +314,17 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView,
     private void updateEntityListPresenter() {
         setInSlot(SLOT_ENTITIES, entityListPresenter);
 
-        if (currentKind.isEmpty()) {
-            entityListPresenter.hideList();
-        } else {
+        final boolean hasKind = !Strings.isNullOrEmpty(currentKind);
+        if (hasKind) {
             entityListPresenter.loadKind(currentKind);
+        } else {
+            entityListPresenter.hideList();
         }
 
         Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
             @Override
             public void execute() {
-                toolbarPresenter.setVisible(!currentKind.isEmpty());
+                toolbarPresenter.setVisible(hasKind);
             }
         });
     }

@@ -32,15 +32,15 @@ public class ExportServiceImpl implements ExportService {
     }
 
     @Override
-    public String exportKindToJson(String kind) {
-        Iterable<Entity> entities = entitiesService.getEntities(kind, null, null);
+    public String exportKindToJson(String kind, String namespace) {
+        Iterable<Entity> entities = entitiesService.getEntities(kind, namespace, null, null);
 
         return gson.toJson(entities);
     }
 
     @Override
-    public String exportKindToCsv(String kind) throws JSONException {
-        String jsonData = exportKindToJson(kind);
+    public String exportKindToCsv(String kind, String namespace) throws JSONException {
+        String jsonData = exportKindToJson(kind, namespace);
 
         return jsonToCsvConverter.convert(jsonData);
     }
