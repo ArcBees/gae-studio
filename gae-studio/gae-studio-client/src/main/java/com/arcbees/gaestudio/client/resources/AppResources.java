@@ -248,4 +248,7 @@ public interface AppResources extends ClientBundle {
 
     @Source("images/dropdown/dropDownArrowRl.png")
     ImageResource dropDownArrowRl();
+
+    @Source("images/logoNoKind.png")
+    ImageResource logoNoKind();
 }

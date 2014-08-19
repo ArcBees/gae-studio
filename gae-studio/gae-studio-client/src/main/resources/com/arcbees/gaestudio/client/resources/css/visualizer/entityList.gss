@@ -9,6 +9,7 @@
 
 .deleteByKind {
     width: 242px;
+
     float: right;
 }
 
@@ -31,8 +32,11 @@
 }
 
 .main {
-    position: relative;
+    background: #fff;
+
     height: 100%;
+
+    position: relative;
 }
 
 .refresh {
@@ -59,6 +63,7 @@
 
 .byGql i {
     font-size: 17px;
+
     display: inline-block;
 
     @mixin transition(transform, 0.3s);
@@ -83,6 +88,7 @@
 
     display: inline-block;
     margin-left: 4px;
+
     vertical-align: super;
 }
 
@@ -115,11 +121,12 @@
     background-image: none;
     text-transform: uppercase;
     font-size: 14px;
-    cursor: pointer;
 
     margin: 0 0 15px 0;
     border: 0;
     padding: 5px 10px;
+
+    cursor: pointer;
 
     @mixin transition(background-color, 0.1s);
 }

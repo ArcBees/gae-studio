@@ -1,5 +1,7 @@
 @external gwt-SplitLayoutPanel-HDragger gwt-SplitLayoutPanel-VDragger;
 
+@def LOGO_NO_KIND resourceUrl("logoNoKind");
+
 body, * {
     font-family: Source Sans Pro, Verdana, sans-serif;
 }
@@ -21,7 +23,8 @@ input:focus, textarea:focus, button:focus {
 }
 
 .toolbar {
-    color: white;
+    color: #fff;
+
     height: 100%;
 }
 
@@ -29,7 +32,6 @@ input:focus, textarea:focus, button:focus {
 
 .toolbarButton {
     background: #3d3c3c;
-    cursor: pointer;
 
     width: 100%;
     height: 46px;
@@ -39,12 +41,14 @@ input:focus, textarea:focus, button:focus {
     position: relative;
     float: left;
 
+    cursor: pointer;
+
     @mixin transition_effect(all, .25s, ease);
 }
 
 .toolbarButton:hover {
-    background: white;
-    color: black;
+    background: #fff;
+    color: #000;
 
     border-left-color: C_PRIMARY;
     margin-left: 0;
@@ -59,11 +63,13 @@ input:focus, textarea:focus, button:focus {
 
     cursor: default;
     opacity: .4;
+    filter: alpha(opacity=40);
 }
 
 .toolbarButtonDisabled:hover {
     background: none;
     color: white;
+
     border-left-color: transparent;
 
     @mixin boxshadow_none();
@@ -266,9 +272,10 @@ input:focus, textarea:focus, button:focus {
     background: C_SECONDARY_LIGHT;
     color: #2d2d2d;
 
-    float: left;
     width: 250px;
     height: 100%;
+
+    float: left;
 
     @mixin transition_effect(margin-left, .5s, ease);
 }
@@ -289,13 +296,18 @@ input:focus, textarea:focus, button:focus {
 }
 
 .entityListPanel {
+    background-image: LOGO_NO_KIND;
+    background-repeat: no-repeat;
+    background-position: 50%;
+
     width: 100%;
     height: 100%;
-    float: left;
     padding-left: 5px;
+    overflow-y: auto;
+
+    float: left;
 
     zoom: 1;
-    overflow-y: auto;
 }
 
 .entityDetailPanel {
@@ -346,6 +358,7 @@ input:focus, textarea:focus, button:focus {
 .firstTable {
     margin-right: -1px;
     padding: 0 15px;
+
     clear: both;
 }
 
@@ -430,11 +443,11 @@ input:focus, textarea:focus, button:focus {
 }
 
 .close {
-    color: #000000;
+    color: #000;
     font-size: 20px;
     font-weight: bold;
     line-height: 20px;
-    text-shadow: 0 1px 0 #ffffff;
+    text-shadow: 0 1px 0 #fff;
 
     position: absolute;
     right: 6px;
@@ -446,18 +459,19 @@ input:focus, textarea:focus, button:focus {
 }
 
 .close:hover {
-    color: #000000;
+    color: #000;
     text-decoration: none;
-    cursor: pointer;
 
+    cursor: pointer;
     opacity: 0.4;
     filter: alpha(opacity=40);
 }
 
 .glassPanel {
+    background: rgba(0, 0, 0, 0.4);
+
     position: relative;
     z-index: 100;
-    background: rgba(0, 0, 0, 0.4);
 }
 
 /* -> Buttons -- */
@@ -472,8 +486,9 @@ input:focus, textarea:focus, button:focus {
 
 .buttonContainer button,
 .chooseFileButton {
-    margin: 0;
     text-align: center;
+
+    margin: 0;
     width: calc(50% - 5px);
     padding: 3px 10px;
 }
@@ -489,7 +504,7 @@ input:focus, textarea:focus, button:focus {
 
 .button {
     background-color: C_SECONDARY_DARK;
-    color: white;
+    color: #fff;
     font-size: 14px;
     text-transform: uppercase;
 
@@ -542,8 +557,8 @@ input:focus, textarea:focus, button:focus {
 
 .northSection {
     background-color: #2d2d2d;
-    width: 100%;
 
+    width: 100%;
     height: 93px;
 
     position: absolute;
@@ -636,12 +651,14 @@ input:focus, textarea:focus, button:focus {
 
     width: 100%;
     height: 100%;
+
     z-index: 10;
 }
 
 .gwt-SplitLayoutPanel-VDragger {
-    padding-bottom: 7px;
     background-position-y: 7px;
+
+    padding-bottom: 7px;
 }
 
 .statementDetails {
@@ -658,18 +675,21 @@ input:focus, textarea:focus, button:focus {
 
 .statementDetails p {
     color: C_SECONDARY;
-    margin: 0;
     text-transform: uppercase;
+
+    margin: 0;
 }
 
 .statementImage {
     gwt-sprite: "listDot";
+
     margin-right: 5px;
     display: inline-block;
 }
 
 .statementImageRl, .statementImageDn {
     gwt-sprite: "listDotRl";
+
     cursor: pointer;
 }
 
@@ -680,7 +700,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .filterText:hover {
-    color: white;
+    color: #fff;
 }
 
 .className {
@@ -695,9 +715,10 @@ input:focus, textarea:focus, button:focus {
 }
 
 .methodName:hover {
-    cursor: pointer;
     background-color: C_PRIMARY;
-    color: white;
+    color: #fff;
+
+    cursor: pointer;
 }
 
 .entityPanelTransitions {
@@ -706,11 +727,12 @@ input:focus, textarea:focus, button:focus {
 
 .power {
     gwt-sprite: "power";
-
-    float: right;
     background-position-y: 40%;
+
     height: 100%;
     margin: 0 10px;
+
+    float: right;
 }
 
 .power:hover {
@@ -737,9 +759,11 @@ input:focus, textarea:focus, button:focus {
 }
 
 .booleanKey {
-    float: left;
-    margin: 5px 0 5px 0;
     line-height: 19px;
+
+    margin: 5px 0;
+
+    float: left;
 }
 
 .embeddedEntityProperties .editorLabelSeparator {
@@ -756,8 +780,9 @@ input:focus, textarea:focus, button:focus {
 }
 
 .embeddedEntityProperties > .editorLabel {
-    display: block;
     color: #848484;
+
+    display: block;
 }
 
 .embeddedEntityProperties.collectionEditor > .editorMain > .editorLabel {
