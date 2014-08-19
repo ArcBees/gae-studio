@@ -3,12 +3,14 @@
 
 .entityPanel {
     width: 0;
+
     float: right;
 }
 
 .toolbar {
-    float: left;
     height: 100%;
+
+    float: left;
 }
 
 .root {
@@ -79,7 +81,6 @@
     background-repeat: no-repeat;
     background-position: center center;
     color: #fff;
-    cursor: pointer;
     font-size: 1.1em;
     text-align: center;
 
@@ -89,12 +90,15 @@
     width: 25px;
     margin: 2px 0;
 
+    cursor: pointer;
+
     @mixin transition(all, 0.3s);
 }
 
 .sidebar .exportBtn:hover,
 .sidebar .importBtn:hover {
     background-color: C_PRIMARY;
+
     cursor: pointer;
 }
 
@@ -112,6 +116,7 @@
 .sidebar .btnDisabled,
 .sidebar .btnDisabled:hover {
     background-color: #B7B7B7;
+
     pointer-events: none;
     cursor: default;
 }
@@ -129,27 +134,32 @@
 /* -> UI -- */
 
 .ui .content {
-    max-height: 255px;
     text-align: left;
+
+    max-height: 255px;
     overflow: hidden;
 }
 
 .ui .dots {
     text-align: left;
+
     display: block;
 }
 
 /* -> Namespace -- */
 
 .namespace.root {
-    position: relative;
     height: 46px;
+
+    position: relative;
 }
 
 .namespace .delete {
+    margin: 10px 10px 10px 15px;
+
     position: absolute;
     right: 5px;
     top: 7px;
+
     cursor: pointer;
-    margin: 10px 10px 10px 15px;
 }
