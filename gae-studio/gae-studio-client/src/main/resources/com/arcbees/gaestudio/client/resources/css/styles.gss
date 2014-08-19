@@ -204,7 +204,7 @@ input:focus, textarea:focus, button:focus {
 .kindsList {
     height: calc(100% - 95px);
 
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .kindListElement {
