@@ -158,6 +158,8 @@ public interface AppResources extends ClientBundle {
         String innerContainer();
 
         String version();
+
+        String kindsList();
     }
 
     @Source({"css/colors.gss", "css/mixins.gss", "css/styles.gss"})
