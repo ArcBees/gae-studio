@@ -755,7 +755,7 @@ input:focus, textarea:focus, button:focus {
 .booleanKey {
     line-height: 19px;
 
-    margin: 5px 0 5px 0;
+    margin: 5px 0;
 
     float: left;
 }
