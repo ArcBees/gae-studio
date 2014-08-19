@@ -81,15 +81,15 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
             NameSpaceValueSetter nameSpaceValueSetter,
             DropdownFactory dropdownFactory,
             KeyPropertyEditorDropdownResources dropdownResources,
+            ChosenResources chosenResources,
             @Assisted String key,
             @Assisted JSONValue property,
             @Assisted FetchKindsRunner fetchKindsRunner,
-            @Assisted FetchNamespacesRunner fetchNamespacesRunner,
-            ChosenResources chosenResources) {
+            @Assisted FetchNamespacesRunner fetchNamespacesRunner) {
         super(key);
+
         this.namespaceRenderer = namespaceRenderer;
         this.appIdRenderer = appIdRenderer;
-
         this.appConstants = appConstants;
         this.property = property;
         this.nameSpaceValueSetter = nameSpaceValueSetter;
@@ -97,17 +97,16 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
         parentKey = (RawPropertyEditor) propertyEditorsFactory
                 .createRawEditor(PropertyName.PARENT_KEY, property.isObject().get(PropertyName.PARENT_KEY));
 
-        kind = dropdownFactory.create(new StringRenderer(), dropdownResources);
-
-        fetchNamespaces(fetchNamespacesRunner);
-        fetchKinds(fetchKindsRunner);
-
         ChosenOptions options = new ChosenOptions();
         options.setDisableSearchThreshold(10);
         options.setResources(chosenResources);
 
         appIdNamespace = new ChosenListBox(options);
         namespace = new ChosenListBox(options);
+        kind = dropdownFactory.create(new StringRenderer(), dropdownResources);
+
+        fetchNamespaces(fetchNamespacesRunner);
+        fetchKinds(fetchKindsRunner);
 
         initFormWidget(uiBinder.createAndBindUi(this));
 
