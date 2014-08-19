@@ -15,8 +15,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 
-import com.arcbees.gaestudio.server.AnalyticsTrackingIds;
 import com.arcbees.gaestudio.server.BuildConstants;
+import com.arcbees.gaestudio.shared.AnalyticsTrackingIds;
 import com.arcbees.googleanalytic.GoogleAnalytic;
 import com.google.appengine.api.utils.SystemProperty;
 import com.google.inject.AbstractModule;

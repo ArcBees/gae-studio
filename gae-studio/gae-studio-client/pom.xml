@@ -110,11 +110,6 @@
             <systemPath>${project.basedir}/lib/gwt-gae-channel-2.0.0.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.github.nmorel.gwtjackson</groupId>
-            <artifactId>gwt-jackson</artifactId>
-            <version>${gwt-jackson.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.github.jdramaix</groupId>
             <artifactId>gssresource</artifactId>
             <version>${gss.version}</version>

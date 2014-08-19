@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server;
+package com.arcbees.gaestudio.shared;
 
 public class AnalyticsTrackingIds {
     // will be replaced by maven

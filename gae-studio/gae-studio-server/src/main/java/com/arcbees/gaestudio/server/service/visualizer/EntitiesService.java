@@ -17,7 +17,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 
 public interface EntitiesService {
-    Iterable<Entity> getEntities(String kind, Integer offset, Integer limit);
+    Iterable<Entity> getEntities(String kind, String namespace, Integer offset, Integer limit);
 
     Collection<Entity> getEntities(List<Key> keys);
 
@@ -25,7 +25,7 @@ public interface EntitiesService {
 
     void deleteEntities(String kind, String namespace, DeleteEntities deleteType, String encodedKeys);
 
-    Integer getCount(String kind);
+    Integer getCount(String kind, String namespace);
 
     List<Key> put(Iterable<Entity> entities);
 }

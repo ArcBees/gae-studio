@@ -60,6 +60,8 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
 
     @Override
     public void displayNamespaces(List<AppIdNamespaceDto> namespaces) {
+        AppIdNamespaceDto oldValue = dropdown.getValue();
+
         dropdown.clear();
 
         dropdown.addValue(null);
@@ -67,6 +69,8 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
         for (AppIdNamespaceDto namespace : namespaces) {
             dropdown.addValue(namespace);
         }
+
+        dropdown.setValue(oldValue, false);
     }
 
     @UiHandler("dropdown")

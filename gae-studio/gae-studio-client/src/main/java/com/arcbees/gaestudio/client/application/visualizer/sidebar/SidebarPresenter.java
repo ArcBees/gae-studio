@@ -21,6 +21,7 @@ import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesE
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.KindSelectedEvent;
+import com.arcbees.gaestudio.client.application.visualizer.event.NamespaceSelectedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.widget.ImportPresenter;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.DeleteFromNamespaceHandler;
 import com.arcbees.gaestudio.client.application.visualizer.widget.namespace.NamespacesListPresenter;
@@ -35,6 +36,7 @@ import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.shared.RestAction;
 import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -48,7 +50,8 @@ import static com.arcbees.gaestudio.client.application.visualizer.event.KindPane
 import static com.arcbees.gaestudio.client.application.visualizer.event.KindPanelToggleEvent.Action.OPEN;
 
 public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> implements SidebarUiHandlers,
-        DeleteFromNamespaceHandler, EntitiesDeletedHandler, ImportCompletedEvent.ImportCompletedHandler {
+        DeleteFromNamespaceHandler, EntitiesDeletedHandler, ImportCompletedEvent.ImportCompletedHandler,
+        ValueChangeHandler<AppIdNamespaceDto> {
     interface MyView extends View, HasUiHandlers<SidebarUiHandlers> {
         void updateKinds(List<String> kinds);
 
@@ -71,6 +74,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
 
     private KindPanelToggleEvent.Action action = CLOSE;
     private String currentKind;
+    private String currentNamespace;
 
     @Inject
     SidebarPresenter(EventBus eventBus,
@@ -91,6 +95,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         this.importPresenterProvider = importPresenterProvider;
         this.universalAnalytics = universalAnalytics;
         namespacesListPresenter = namespacesListPresenterFactory.create(this);
+        namespacesListPresenter.addValueChangeHandler(this);
 
         getView().setUiHandlers(this);
     }
@@ -131,7 +136,8 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     public void displayEntitiesOfSelectedKind(String kind) {
         currentKind = kind;
 
-        PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(NameTokens.entity)
+        PlaceRequest placeRequest = new PlaceRequest.Builder()
+                .nameToken(NameTokens.visualizer)
                 .with(UrlParameters.KIND, currentKind)
                 .build();
         placeManager.revealPlace(placeRequest);
@@ -151,15 +157,15 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     }
 
     @Override
-    public void exportCurrentKind() {
-        String exportKindUrl = exportService.getExportKindUrl(currentKind);
+    public void exportJson() {
+        String exportKindUrl = exportService.getExportJson(currentKind, currentNamespace, extractKeysFromPlace());
 
         getView().setDownloadUrl(exportKindUrl);
     }
 
     @Override
     public void exportCsv() {
-        String exportCsvUrl = exportService.getExportCsv(currentKind);
+        String exportCsvUrl = exportService.getExportCsv(currentKind, currentNamespace, extractKeysFromPlace());
 
         getView().setDownloadUrl(exportCsvUrl);
     }
@@ -170,18 +176,37 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     }
 
     @Override
+    public void onValueChange(ValueChangeEvent<AppIdNamespaceDto> event) {
+        AppIdNamespaceDto appIdNamespace = event.getValue();
+
+        RestAction<List<String>> getKindsAction;
+        if (appIdNamespace == null) {
+            currentNamespace = null;
+            getKindsAction = kindsService.getKinds();
+        } else {
+            currentNamespace = appIdNamespace.getNamespace();
+            getKindsAction = kindsService.getKinds(currentNamespace);
+        }
+
+        NamespaceSelectedEvent.fire(this, currentNamespace);
+
+        restDispatch.execute(getKindsAction, new AsyncCallbackImpl<List<String>>() {
+            @Override
+            public void onSuccess(List<String> result) {
+                onKindsUpdated(result);
+            }
+        });
+
+        universalAnalytics.sendEvent(EventCategories.UI_ELEMENTS, "value changed")
+                .eventLabel("Visualizer -> Kinds Sidebar -> Kinds");
+    }
+
+    @Override
     protected void onBind() {
         super.onBind();
 
         addRegisteredHandler(EntitiesDeletedEvent.getType(), this);
         addRegisteredHandler(ImportCompletedEvent.getType(), this);
-        namespacesListPresenter.addValueChangeHandler(new ValueChangeHandler<AppIdNamespaceDto>() {
-            @Override
-            public void onValueChange(ValueChangeEvent<AppIdNamespaceDto> event) {
-                universalAnalytics.sendEvent(EventCategories.UI_ELEMENTS, "value changed")
-                        .eventLabel("Visualizer -> Kinds Sidebar -> Kinds");
-            }
-        });
 
         setInSlot(SLOT_NAMESPACES, namespacesListPresenter);
     }
@@ -202,6 +227,12 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         getView().setDownloadUrl("");
     }
 
+    private String extractKeysFromPlace() {
+        PlaceRequest currentPlaceRequest = placeManager.getCurrentPlaceRequest();
+
+        return currentPlaceRequest.getParameter(UrlParameters.KEY, null);
+    }
+
     private void updateKinds() {
         restDispatch.execute(kindsService.getKinds(),
                 new AsyncCallbackImpl<List<String>>("Failed getting Entity Kinds: ") {
@@ -214,5 +245,10 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
 
     private void onKindsUpdated(List<String> kinds) {
         getView().updateKinds(kinds);
+        if (!kinds.contains(currentKind)) {
+            placeManager.revealPlace(new PlaceRequest.Builder().nameToken(NameTokens.visualizer).build());
+            currentKind = null;
+            KindSelectedEvent.fire(this, null);
+        }
     }
 }

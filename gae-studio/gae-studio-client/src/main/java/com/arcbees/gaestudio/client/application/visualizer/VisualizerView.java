@@ -64,15 +64,17 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
 
     @Override
     public void showEntityDetails() {
-        isFullscreen = false;
+        isFullscreen = true;
         entityDetailsVisible = true;
-        setPanelsWidthPercentages(50, 50);
+        setPanelsWidthPercentages(50, 100);
     }
 
     @Override
     public void collapseEntityDetails() {
-        entityDetailsVisible = false;
-        setPanelsWidthPercentages(100, 0);
+        if (getRightPanelPercentage() > 0) {
+            entityDetailsVisible = false;
+            setPanelsWidthPercentages(100, 0);
+        }
     }
 
     @Override
@@ -85,12 +87,6 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     public void openKindPanel() {
         setSidebarMarginLeft(0d);
         updatePanelsWidth();
-    }
-
-    @Override
-    public void activateFullScreen() {
-        isFullscreen = true;
-        setPanelsWidthPercentages(50, 100);
     }
 
     @Override
@@ -112,7 +108,7 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
 
     private void waitForWidgets(final Function callback) {
         if (widgetsAreNotReady()) {
-            $(asWidget()).delay(10, new Function() {
+            $(entityDetailsPanel).delay(100, new Function() {
                 @Override
                 public void f() {
                     waitForWidgets(callback);
@@ -128,7 +124,7 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     }
 
     private boolean entityDetailsNotAttached() {
-        return (entityDetailsVisible && getEntityDetailContent() == null);
+        return (entityDetailsVisible && getEntityDetailContent().isEmpty());
     }
 
     private boolean toolbarAndSidebarAreAttached() {

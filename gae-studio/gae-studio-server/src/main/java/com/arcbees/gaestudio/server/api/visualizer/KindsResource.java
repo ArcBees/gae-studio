@@ -13,15 +13,18 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.service.visualizer.KindsService;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
+import com.arcbees.gaestudio.shared.rest.UrlParameters;
 
 @Path(EndPoints.KINDS)
 @Produces(MediaType.APPLICATION_JSON)
@@ -36,8 +39,8 @@ public class KindsResource {
     }
 
     @GET
-    public Response getKinds() {
-        List<String> kinds = kindsService.getKinds();
+    public Response getKinds(@QueryParam(UrlParameters.NAMESPACE) String namespace) {
+        List<String> kinds = kindsService.getKinds(namespace);
 
         return Response.ok(kinds).build();
     }

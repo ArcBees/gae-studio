@@ -12,5 +12,5 @@ package com.arcbees.gaestudio.server.service.visualizer;
 import java.util.List;
 
 public interface KindsService {
-    List<String> getKinds();
+    List<String> getKinds(String namespace);
 }
