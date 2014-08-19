@@ -24,6 +24,6 @@
         </span>
         <g:SimplePanel ui:field="namespaces" styleName="{visualizer.styles.namespaces}"/>
         <g:HTML ui:field="emptyKinds"/>
-        <g:HTMLPanel ui:field="kinds" debugId="{debugIds.getKinds}"/>
+        <g:HTMLPanel ui:field="kinds" debugId="{debugIds.getKinds}" styleName="{res.styles.kindsList}"/>
     </g:HTMLPanel>
 </ui:UiBinder>
