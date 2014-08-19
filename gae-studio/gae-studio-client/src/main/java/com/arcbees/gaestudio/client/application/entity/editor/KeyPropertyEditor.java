@@ -56,7 +56,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     @UiField(provided = true)
     ChosenListBox appIdNamespace;
     @UiField(provided = true)
-    Dropdown<AppIdNamespaceDto> namespace;
+    ChosenListBox namespace;
     @UiField(provided = true)
     Dropdown<String> kind;
     @UiField
@@ -64,7 +64,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     @UiField(provided = true)
     RawPropertyEditor parentKey;
 
-    private final AppIdNamespaceRenderer appIdNamespaceRenderer;
+    private final NamespaceRenderer namespaceRenderer;
     private final AppIdRenderer appIdRenderer;
     private final AppConstants appConstants;
     private final JSONValue property;
@@ -74,7 +74,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
 
     @Inject
     KeyPropertyEditor(Binder uiBinder,
-            AppIdNamespaceRenderer appIdNamespaceRenderer,
+            NamespaceRenderer namespaceRenderer,
             AppIdRenderer appIdRenderer,
             AppConstants appConstants,
             PropertyEditorsFactory propertyEditorsFactory,
@@ -87,7 +87,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
             @Assisted FetchNamespacesRunner fetchNamespacesRunner,
             ChosenResources chosenResources) {
         super(key);
-        this.appIdNamespaceRenderer = appIdNamespaceRenderer;
+        this.namespaceRenderer = namespaceRenderer;
         this.appIdRenderer = appIdRenderer;
 
         this.appConstants = appConstants;
@@ -97,17 +97,17 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
         parentKey = (RawPropertyEditor) propertyEditorsFactory
                 .createRawEditor(PropertyName.PARENT_KEY, property.isObject().get(PropertyName.PARENT_KEY));
 
-        namespace = dropdownFactory.create(appIdNamespaceRenderer, dropdownResources);
         kind = dropdownFactory.create(new StringRenderer(), dropdownResources);
 
         fetchNamespaces(fetchNamespacesRunner);
         fetchKinds(fetchKindsRunner);
 
         ChosenOptions options = new ChosenOptions();
-        options.setMaxSelectedOptions(10);
+        options.setDisableSearchThreshold(10);
         options.setResources(chosenResources);
 
         appIdNamespace = new ChosenListBox(options);
+        namespace = new ChosenListBox(options);
 
         initFormWidget(uiBinder.createAndBindUi(this));
 
@@ -144,14 +144,8 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     }
 
     private void setNamespaces(List<AppIdNamespaceDto> namespaces) {
-        namespace.addValues(namespaces);
-        namespace.setValue(key.getAppIdNamespace());
-
-        for (AppIdNamespaceDto dto : namespaces) {
-            appIdNamespace.addItem(appIdRenderer.render(dto));
-        }
-
-        appIdNamespace.setSelectedValue(appIdRenderer.render(key.getAppIdNamespace()));
+        nameSpaceValueSetter.setNamespace(namespaces, key.getAppIdNamespace(), namespace, namespaceRenderer);
+        nameSpaceValueSetter.setNamespace(namespaces, key.getAppIdNamespace(), appIdNamespace, appIdRenderer);
     }
 
     private Key getValue() {
@@ -163,7 +157,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
 
         return new Key(kind.getValue(), Strings.emptyToNull(name.getText()),
                 Strings.emptyToNull(appId.getText()), id.getValue(),
-                new AppIdNamespaceDto(appId.getValue(), namespace.getValue().getNamespace()),
+                new AppIdNamespaceDto(appId.getValue(), namespace.getValue()),
                 parentKey);
     }
 
@@ -182,9 +176,6 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     }
 
     private void fetchNamespaces(FetchNamespacesRunner fetchNamespacesRunner) {
-        AppIdNamespaceDto loading = new AppIdNamespaceDto("", "Loading namespaces...");
-        namespace.setValue(loading);
-        // TODO: Change app id value for loading
         fetchNamespacesRunner.fetch(this);
     }
 

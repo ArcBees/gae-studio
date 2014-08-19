@@ -11,16 +11,17 @@ package com.arcbees.gaestudio.client.application.entity.editor;
 
 import java.util.List;
 
-import com.arcbees.gaestudio.client.application.widget.dropdown.Dropdown;
+import com.arcbees.chosen.client.gwt.ChosenListBox;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
-import com.google.gwt.user.client.ui.HasConstrainedValue;
+import com.google.gwt.text.shared.AbstractRenderer;
 
 public class NameSpaceValueSetter {
     public void setNamespace(List<AppIdNamespaceDto> namespaces, AppIdNamespaceDto appIdNamespaceDto,
-                             List<Dropdown<AppIdNamespaceDto>> listboxes) {
-        for (Dropdown<AppIdNamespaceDto> listBox : listboxes) {
-            listBox.addValues(namespaces);
-            listBox.setValue(appIdNamespaceDto);
+            ChosenListBox dropdown, AbstractRenderer<AppIdNamespaceDto> renderer) {
+        for (AppIdNamespaceDto dto : namespaces) {
+            dropdown.addItem(renderer.render(dto));
         }
+
+        dropdown.setSelectedValue(renderer.render(appIdNamespaceDto));
     }
 }

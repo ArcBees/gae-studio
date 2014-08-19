@@ -24,12 +24,12 @@
 
         <g:Label styleName="{res.styles.editorLabel}">Namespace</g:Label>
         <div class="{entityRes.editor.dropdown}">
-            <dd:Dropdown ui:field="namespace"/>
+            <chzn:ChosenListBox ui:field="namespace" width="400px"/>
         </div>
 
         <g:Label styleName="{res.styles.editorLabel}">Namespace's App Id</g:Label>
         <div class="{entityRes.editor.dropdown}">
-            <chzn:ChosenListBox ui:field="appIdNamespace" width="400px" disableSearchThreshold="10"/>
+            <chzn:ChosenListBox ui:field="appIdNamespace" width="400px"/>
             <!--TODO : Change styling-->
         </div>
 
