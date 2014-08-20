@@ -2,10 +2,12 @@
 }
 
 .cellListEvenItem, .cellListOddItem {
-    cursor: pointer;
     line-height: 35px;
-    padding-left: 15px;
     font-size: 1.2em;
+
+    padding-left: 15px;
+
+    cursor: pointer;
 }
 
 .cellListKeyboardSelectedItem {
@@ -15,5 +17,6 @@
 .cellListSelectedItem {
     background-color: #25aae1;
     color: #ececec;
+
     overflow: visible;
 }
