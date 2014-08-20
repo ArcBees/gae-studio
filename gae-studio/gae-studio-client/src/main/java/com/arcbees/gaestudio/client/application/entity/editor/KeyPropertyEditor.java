@@ -74,18 +74,18 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
 
     @Inject
     KeyPropertyEditor(Binder uiBinder,
-            NamespaceRenderer namespaceRenderer,
-            AppIdRenderer appIdRenderer,
-            AppConstants appConstants,
-            PropertyEditorsFactory propertyEditorsFactory,
-            NameSpaceValueSetter nameSpaceValueSetter,
-            DropdownFactory dropdownFactory,
-            KeyPropertyEditorDropdownResources dropdownResources,
-            ChosenResources chosenResources,
-            @Assisted String key,
-            @Assisted JSONValue property,
-            @Assisted FetchKindsRunner fetchKindsRunner,
-            @Assisted FetchNamespacesRunner fetchNamespacesRunner) {
+                      NamespaceRenderer namespaceRenderer,
+                      AppIdRenderer appIdRenderer,
+                      AppConstants appConstants,
+                      PropertyEditorsFactory propertyEditorsFactory,
+                      NameSpaceValueSetter nameSpaceValueSetter,
+                      DropdownFactory dropdownFactory,
+                      KeyPropertyEditorDropdownResources dropdownResources,
+                      ChosenResources chosenResources,
+                      @Assisted String key,
+                      @Assisted JSONValue property,
+                      @Assisted FetchKindsRunner fetchKindsRunner,
+                      @Assisted FetchNamespacesRunner fetchNamespacesRunner) {
         super(key);
 
         this.namespaceRenderer = namespaceRenderer;
