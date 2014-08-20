@@ -24,6 +24,7 @@
     margin-top: -1px;
     margin-left: 0;
     border-color: #fff;
+    width: 100% !important; /* to overwrite the javascript */
 }
 
 .chzn-container .chzn-results {

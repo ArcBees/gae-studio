@@ -314,5 +314,11 @@
                 <client.module>com.arcbees.gaestudio.IntegrationTests</client.module>
             </properties>
         </profile>
+        <profile>
+            <id>sdm</id>
+            <properties>
+                <client.module>com.arcbees.gaestudio.SuperDevMode</client.module>
+            </properties>
+        </profile>
     </profiles>
 </project>

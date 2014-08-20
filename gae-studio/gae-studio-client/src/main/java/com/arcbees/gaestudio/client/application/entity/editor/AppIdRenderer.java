@@ -9,19 +9,10 @@
 
 package com.arcbees.gaestudio.client.application.entity.editor;
 
-import javax.inject.Inject;
-
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.gwt.text.shared.AbstractRenderer;
 
 class AppIdRenderer extends AbstractRenderer<AppIdNamespaceDto> {
-    private final NamespaceTemplate template;
-
-    @Inject
-    AppIdRenderer(NamespaceTemplate template) {
-        this.template = template;
-    }
-
     @Override
     public String render(AppIdNamespaceDto object) {
         String value;
@@ -31,6 +22,6 @@ class AppIdRenderer extends AbstractRenderer<AppIdNamespaceDto> {
             value = object.getAppId();
         }
 
-        return template.namespaceTemplate(value).asString();
+        return value;
     }
 }

@@ -1,7 +1,8 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              xmlns:prop='urn:import:com.arcbees.gaestudio.client.application.entity.editor'
-             xmlns:dd='urn:import:com.arcbees.gaestudio.client.application.widget.dropdown'>
+             xmlns:dd='urn:import:com.arcbees.gaestudio.client.application.widget.dropdown'
+             xmlns:chzn='urn:import:com.arcbees.chosen.client.gwt'>
 
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:with field="entityRes" type="com.arcbees.gaestudio.client.resources.EntityResources"/>
@@ -23,12 +24,13 @@
 
         <g:Label styleName="{res.styles.editorLabel}">Namespace</g:Label>
         <div class="{entityRes.editor.dropdown}">
-            <dd:Dropdown ui:field="namespace"/>
+            <chzn:ChosenListBox ui:field="namespace" width="400px"/>
         </div>
 
         <g:Label styleName="{res.styles.editorLabel}">Namespace's App Id</g:Label>
         <div class="{entityRes.editor.dropdown}">
-            <dd:Dropdown ui:field="appIdNamespace"/>
+            <chzn:ChosenListBox ui:field="appIdNamespace" width="400px"/>
+            <!--TODO : Change styling-->
         </div>
 
         <prop:RawPropertyEditor ui:field="parentKey" styleName="{res.styles.embeddedEntityProperties}"/>

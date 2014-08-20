@@ -13,15 +13,17 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.arcbees.chosen.client.ChosenOptions;
+import com.arcbees.chosen.client.gwt.ChosenListBox;
 import com.arcbees.gaestudio.client.application.widget.dropdown.Dropdown;
 import com.arcbees.gaestudio.client.application.widget.dropdown.DropdownFactory;
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.resources.ChosenResources;
 import com.arcbees.gaestudio.client.resources.KeyPropertyEditorDropdownResources;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.text.shared.AbstractRenderer;
@@ -52,9 +54,9 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     @UiField
     TextBox appId;
     @UiField(provided = true)
-    Dropdown<AppIdNamespaceDto> appIdNamespace;
+    ChosenListBox appIdNamespace;
     @UiField(provided = true)
-    Dropdown<AppIdNamespaceDto> namespace;
+    ChosenListBox namespace;
     @UiField(provided = true)
     Dropdown<String> kind;
     @UiField
@@ -62,6 +64,8 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     @UiField(provided = true)
     RawPropertyEditor parentKey;
 
+    private final NamespaceRenderer namespaceRenderer;
+    private final AppIdRenderer appIdRenderer;
     private final AppConstants appConstants;
     private final JSONValue property;
     private final NameSpaceValueSetter nameSpaceValueSetter;
@@ -70,19 +74,22 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
 
     @Inject
     KeyPropertyEditor(Binder uiBinder,
-                      AppIdNamespaceRenderer appIdNamespaceRenderer,
+                      NamespaceRenderer namespaceRenderer,
                       AppIdRenderer appIdRenderer,
                       AppConstants appConstants,
                       PropertyEditorsFactory propertyEditorsFactory,
                       NameSpaceValueSetter nameSpaceValueSetter,
                       DropdownFactory dropdownFactory,
                       KeyPropertyEditorDropdownResources dropdownResources,
+                      ChosenResources chosenResources,
                       @Assisted String key,
                       @Assisted JSONValue property,
                       @Assisted FetchKindsRunner fetchKindsRunner,
                       @Assisted FetchNamespacesRunner fetchNamespacesRunner) {
         super(key);
 
+        this.namespaceRenderer = namespaceRenderer;
+        this.appIdRenderer = appIdRenderer;
         this.appConstants = appConstants;
         this.property = property;
         this.nameSpaceValueSetter = nameSpaceValueSetter;
@@ -90,14 +97,19 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
         parentKey = (RawPropertyEditor) propertyEditorsFactory
                 .createRawEditor(PropertyName.PARENT_KEY, property.isObject().get(PropertyName.PARENT_KEY));
 
-        appIdNamespace = dropdownFactory.create(appIdRenderer, dropdownResources);
-        namespace = dropdownFactory.create(appIdNamespaceRenderer, dropdownResources);
+        ChosenOptions options = new ChosenOptions();
+        options.setDisableSearchThreshold(10);
+        options.setResources(chosenResources);
+
+        appIdNamespace = new ChosenListBox(options);
+        namespace = new ChosenListBox(options);
         kind = dropdownFactory.create(new StringRenderer(), dropdownResources);
 
         fetchNamespaces(fetchNamespacesRunner);
         fetchKinds(fetchKindsRunner);
 
         initFormWidget(uiBinder.createAndBindUi(this));
+
         setInitialValue();
     }
 
@@ -131,9 +143,8 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     }
 
     private void setNamespaces(List<AppIdNamespaceDto> namespaces) {
-        List<Dropdown<AppIdNamespaceDto>> listboxes = Lists.newArrayList(namespace, appIdNamespace);
-
-        nameSpaceValueSetter.setNamespace(namespaces, key.getAppIdNamespace(), listboxes);
+        nameSpaceValueSetter.setNamespace(namespaces, key.getAppIdNamespace(), namespace, namespaceRenderer);
+        nameSpaceValueSetter.setNamespace(namespaces, key.getAppIdNamespace(), appIdNamespace, appIdRenderer);
     }
 
     private Key getValue() {
@@ -145,7 +156,7 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
 
         return new Key(kind.getValue(), Strings.emptyToNull(name.getText()),
                 Strings.emptyToNull(appId.getText()), id.getValue(),
-                new AppIdNamespaceDto(appIdNamespace.getValue().getAppId(), namespace.getValue().getNamespace()),
+                new AppIdNamespaceDto(appId.getValue(), namespace.getValue()),
                 parentKey);
     }
 
@@ -164,10 +175,6 @@ public class KeyPropertyEditor extends AbstractPropertyEditor<Key>
     }
 
     private void fetchNamespaces(FetchNamespacesRunner fetchNamespacesRunner) {
-        AppIdNamespaceDto loading = new AppIdNamespaceDto("", "Loading namespaces...");
-        namespace.setValue(loading);
-        appIdNamespace.setValue(loading);
-
         fetchNamespacesRunner.fetch(this);
     }
 
