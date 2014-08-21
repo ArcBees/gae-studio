@@ -61,8 +61,12 @@ If you want to contribute to this project, here's a short description of the mod
 
 # Launch configurations
 Here's an example of launch configuration to use with IntelliJ
-Server : ![server configuration](https://drive.google.com/a/arcbees.com/file/d/0B8nEpoIyH0cWMUtrdk52LVBrSEE/edit?usp=sharing)
-SDM : ![super dev mode](https://drive.google.com/a/arcbees.com/file/d/0B8nEpoIyH0cWRVVmWm1IMnNpTkU/edit?usp=sharing)
+
+Server : 
+![server configuration](https://drive.google.com/a/arcbees.com/file/d/0B8nEpoIyH0cWMUtrdk52LVBrSEE/edit?usp=sharing)
+
+SDM : 
+![super dev mode](https://drive.google.com/a/arcbees.com/file/d/0B8nEpoIyH0cWRVVmWm1IMnNpTkU/edit?usp=sharing)
 
 If you want to use super dev mode, you can use the "sdm" profile in maven (`mvn clean install -Psdm`)
 
