@@ -63,10 +63,10 @@ If you want to contribute to this project, here's a short description of the mod
 Here's an example of launch configuration to use with IntelliJ
 
 Server : 
-![server configuration](https://drive.google.com/a/arcbees.com/file/d/0B8nEpoIyH0cWMUtrdk52LVBrSEE/preview)
+![Server configuration](https://bitbucket.org/repo/XeqrMK/images/353606297-Selection_033.png)
 
 SDM : 
-![super dev mode](https://drive.google.com/a/arcbees.com/file/d/0B8nEpoIyH0cWRVVmWm1IMnNpTkU/preview)
+![super dev mode](https://bitbucket.org/repo/XeqrMK/images/2262573358-Selection_034.png)
 
 If you want to use super dev mode, you can use the "sdm" profile in maven (`mvn clean install -Psdm`)
 
