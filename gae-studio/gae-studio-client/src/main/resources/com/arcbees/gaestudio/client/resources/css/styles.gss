@@ -749,6 +749,14 @@ input:focus, textarea:focus, button:focus {
     margin-bottom: 4px;
 }
 
+.embeddedEntityProperties {
+    padding-left: 40px;
+}
+
+.embeddedEntityProperties.collectionEditor {
+    padding-left: 0;
+}
+
 .embeddedEntityProperties > .editorLabel {
     display: block;
     color: #848484;
@@ -760,7 +768,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .editorLabel {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
     color: C_PRIMARY;
     text-transform: uppercase;
