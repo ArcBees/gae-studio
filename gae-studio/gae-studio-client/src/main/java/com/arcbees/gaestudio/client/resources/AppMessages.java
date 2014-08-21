@@ -38,4 +38,6 @@ public interface AppMessages extends Messages {
     String entitiesMatchRequest(int number);
 
     SafeHtml deleteSelectedEntities(int count);
+
+    String importTooLarge(int entitiesCount);
 }

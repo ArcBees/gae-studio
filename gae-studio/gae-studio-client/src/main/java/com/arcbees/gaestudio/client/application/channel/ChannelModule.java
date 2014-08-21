@@ -12,10 +12,15 @@ package com.arcbees.gaestudio.client.application.channel;
 import javax.inject.Singleton;
 
 import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.gwt.inject.client.multibindings.GinMultibinder;
 
 public class ChannelModule extends AbstractGinModule {
     @Override
     protected void configure() {
         bind(ChannelHandler.class).in(Singleton.class);
+
+        GinMultibinder<MessageHandler> multibinder = GinMultibinder.newSetBinder(binder(), MessageHandler.class);
+        multibinder.addBinding().to(TooLargeMessageHandler.class);
+        multibinder.addBinding().to(ImportCompletedMessageHandler.class);
     }
 }

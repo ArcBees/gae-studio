@@ -12,4 +12,5 @@ package com.arcbees.gaestudio.shared;
 public class Constants {
     public static final String JSON_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.S";
     public static final String CLIENT_ID = "clientId";
+    public static final int FREE_IMPORT_QUOTA = 1_000;
 }

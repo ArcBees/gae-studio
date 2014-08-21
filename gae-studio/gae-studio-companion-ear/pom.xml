@@ -82,5 +82,11 @@
                 <googleappengine.id>gaestudio-demo</googleappengine.id>
             </properties>
         </profile>
+        <profile>
+            <id>testing</id>
+            <properties>
+                <googleappengine.id>gaestudio-testing</googleappengine.id>
+            </properties>
+        </profile>
     </profiles>
 </project>

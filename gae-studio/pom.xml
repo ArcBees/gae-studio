@@ -149,6 +149,12 @@
             </properties>
         </profile>
         <profile>
+            <id>testing</id>
+            <properties>
+                <googleappengine.id>gaestudio-testing</googleappengine.id>
+            </properties>
+        </profile>
+        <profile>
             <id>production-analytics</id>
             <properties>
                 <gaes.analytics.trackingid.server>UA-41550930-4</gaes.analytics.trackingid.server>
