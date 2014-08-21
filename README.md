@@ -53,12 +53,11 @@ public class ServerModule extends HandlerModule {
 ##Contributing
 If you want to contribute to this project, here's a short description of the modules:
 
-- gae-studio-client : client code
-- gae-studio-companion : since gae-studio is plugged into another project, this is a sample server-side project with
-gae-studio integrated to it.
-- gae-studio-companion-ear : this is needed for deployment
-- gae-studio-server : server code for gae-studio
-- gae-studio-webapp : the web app
+* gae-studio-client : client code
+* gae-studio-companion : since gae-studio is plugged into another project, this is a sample server-side project with gae-studio integrated to it.
+* gae-studio-companion-ear : this is needed for deployment
+* gae-studio-server : server code for gae-studio
+* gae-studio-webapp : the web app
 
 # Launch configurations
 Here's an example of launch configuration to use with IntelliJ
