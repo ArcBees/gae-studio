@@ -52,6 +52,7 @@ public class ServerModule extends HandlerModule {
 
 ##Contributing
 If you want to contribute to this project, here's a short description of the modules:
+
 - gae-studio-client : client code
 - gae-studio-companion : since gae-studio is plugged into another project, this is a sample server-side project with
 gae-studio integrated to it.
