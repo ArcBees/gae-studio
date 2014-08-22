@@ -204,7 +204,6 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
     private void revealEntitiesList() {
         resetEditedEntities();
 
-
         PlaceRequest.Builder builder = new PlaceRequest.Builder(placeManager.getCurrentPlaceRequest())
                 .nameToken(NameTokens.visualizer)
                 .without(UrlParameters.KEY);
