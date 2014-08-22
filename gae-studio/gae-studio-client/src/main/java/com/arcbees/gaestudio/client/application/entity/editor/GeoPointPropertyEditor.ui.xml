@@ -2,27 +2,14 @@
         xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
-    <ui:style>
-        .geopts {
-            display: table;
-            width: 100%;
-        }
-
-        .geopts > * {
-            display: table-cell;
-        }
-
-        .geopts > label {
-            width: 100px;
-        }
-    </ui:style>
+    <ui:with field="ent" type="com.arcbees.gaestudio.client.resources.EntityResources"/>
 
     <g:HTMLPanel styleName="{res.styles.embeddedEntityProperties}">
-        <div class="{style.geopts}">
+        <div class="{ent.styles.geopts}">
             <Label class="{res.styles.editorLabel}">Latitude</Label>
             <g:DoubleBox ui:field="latitude"/>
         </div>
-        <div class="{style.geopts}">
+        <div class="{ent.styles.geopts}">
             <Label class="{res.styles.editorLabel}">Longitude</Label>
             <g:DoubleBox ui:field="longitude"/>
         </div>

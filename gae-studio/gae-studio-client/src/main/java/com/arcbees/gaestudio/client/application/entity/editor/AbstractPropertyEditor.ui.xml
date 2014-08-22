@@ -2,17 +2,11 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
-
-    <ui:style>
-        .form {
-            display: table;
-            width: 100%;
-        }
-    </ui:style>
+    <ui:with field="ent" type="com.arcbees.gaestudio.client.resources.EntityResources"/>
 
     <g:HTMLPanel styleName="{res.styles.editorMain}">
         <g:Label ui:field="key" styleName="{res.styles.editorLabel}"/>
         <div class="{res.styles.editorLabelSeparator}"/>
-        <g:SimplePanel ui:field="form" styleName="{style.form}"/>
+        <g:SimplePanel ui:field="form" styleName="{ent.styles.form}"/>
     </g:HTMLPanel>
 </ui:UiBinder>
