@@ -3,9 +3,16 @@
 
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
 
+    <ui:style>
+        .form {
+            display: table;
+            width: 100%;
+        }
+    </ui:style>
+
     <g:HTMLPanel styleName="{res.styles.editorMain}">
         <g:Label ui:field="key" styleName="{res.styles.editorLabel}"/>
         <div class="{res.styles.editorLabelSeparator}"/>
-        <g:SimplePanel ui:field="form"/>
+        <g:SimplePanel ui:field="form" styleName="{style.form}"/>
     </g:HTMLPanel>
 </ui:UiBinder>
