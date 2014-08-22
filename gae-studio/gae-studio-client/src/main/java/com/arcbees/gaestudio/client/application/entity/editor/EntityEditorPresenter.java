@@ -22,6 +22,8 @@ import com.gwtplatform.mvp.client.View;
 public class EntityEditorPresenter extends PresenterWidget<MyView> {
     public interface MyView extends View {
         void addPropertyEditor(IsWidget widget);
+
+        void setHeader(ParsedEntity dto);
     }
 
     private final ParsedEntity entity;
@@ -36,8 +38,6 @@ public class EntityEditorPresenter extends PresenterWidget<MyView> {
 
         this.entity = entity;
         propertyEditorsWidget = propertyEditorCollectionWidgetFactory.create(entity.getPropertyMap());
-
-        getView().addPropertyEditor(propertyEditorsWidget);
     }
 
     public ParsedEntity flush() throws InvalidEntityFieldsException {
@@ -46,5 +46,13 @@ public class EntityEditorPresenter extends PresenterWidget<MyView> {
         entity.getEntityDto().setJson(entity.getJson());
 
         return entity;
+    }
+
+    @Override
+    protected void onBind() {
+        super.onBind();
+
+        getView().setHeader(entity);
+        getView().addPropertyEditor(propertyEditorsWidget);
     }
 }
