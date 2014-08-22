@@ -29,6 +29,7 @@
 /* -> Key Property Editor view -- */
 
 .dropdown {
-    position: relative;
     height: 24px;
+
+    position: relative;
 }

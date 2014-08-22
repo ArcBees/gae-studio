@@ -1,23 +1,23 @@
 .cellTableEvenRow, .cellTableOddRow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
     border: none;
     background-color: transparent;
     line-height: 20px;
-
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 
     @mixin transition_effect(all, .25s, ease);
 }
 
 .cellTableCell {
-    border: none;
-    padding: 2px 20px 2px 0;
-
+    font-size: 15px;
     text-overflow: ellipsis;
     white-space: nowrap;
     word-break: break-word;
-    font-size: 15px;
+
+    border: none;
+    padding: 2px 20px 2px 0;
 
     @mixin transition_effect(all, .25s, ease);
 }
@@ -32,12 +32,11 @@
     line-height: 30px;
     text-transform: uppercase;
     text-shadow: none;
-
-    padding: 3px 15px 3px 0;
-
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    padding: 3px 15px 3px 0;
+    overflow: hidden;
     border: none;
     border-top: 2px solid C_SECONDARY_LIGHT;
 }

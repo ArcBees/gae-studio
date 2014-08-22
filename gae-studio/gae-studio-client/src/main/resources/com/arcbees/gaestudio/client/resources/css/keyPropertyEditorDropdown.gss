@@ -31,6 +31,7 @@ ul.openedList {
 
 .dropDownArrow:hover {
     gwt-sprite: "dropDownArrowRl";
+
     height: 20px;
 }
 
@@ -46,12 +47,11 @@ ul.openedList {
 
 .ul li span {
     color: black;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     display: inline-block;
     overflow: hidden;
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .ul.openedList li {
@@ -65,6 +65,7 @@ ul.openedList {
 .ul li:hover {
     background-color: #25aae1;
     color: #fff;
+
     cursor: pointer;
 }
 
@@ -77,9 +78,10 @@ ul.openedList {
 }
 
 .dropDownArrow, .dropDownArrow:hover {
-    width: 100%;
     background-position-x: calc(100% - 12px);
     background-position-y: 50%;
+
+    width: 100%;
 }
 
 .hiddenLi {
