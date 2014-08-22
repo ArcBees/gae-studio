@@ -47,7 +47,7 @@
         <guava.version>18.0-rc1</guava.version>
         <gson.version>2.2.4</gson.version>
         <guice.version>3.0</guice.version>
-        <objectify.version>4.0rc1</objectify.version>
+        <objectify.version>5.0.3</objectify.version>
         <persistence-api.version>1.0.2</persistence-api.version>
         <google-http-client-appengine.version>1.15.0-rc</google-http-client-appengine.version>
         <resteasy.version>3.0.8.Final</resteasy.version>
