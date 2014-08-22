@@ -56,9 +56,9 @@
 }
 
 .menu {
-    float: right;
-
     height: 100%;
+
+    float: right;
 }
 
 .menu img, .menu a {
@@ -66,17 +66,18 @@
 }
 
 .menu > a {
-    color: white;
+    color: #fff;
     font-size: 18px;
     text-transform: uppercase;
     text-decoration: none;
-    cursor: pointer;
+    line-height: 30px;
 
     padding: 0 15px;
     display: block;
+
     position: relative;
 
-    line-height: 30px;
+    cursor: pointer;
 }
 
 /* .activeState is needed */
@@ -94,45 +95,43 @@
 }
 
 .cogplay {
-    float: right;
-    position: relative;
-
     padding: 4px;
     margin: 0;
     height: 22px;
+
+    float: right;
+    position: relative;
 }
 
 .cogplay:hover {
-    cursor: pointer;
+    background: #fff;
 
-    background: white;
+    cursor: pointer;
 }
 
 .rightContainer {
     display: inline-block;
+    height: 30px;
+
     position: absolute;
     top: 36%;
     right: 8px;
-    height: 30px;
 }
 
 .rightContainer ul {
-    position: absolute;
-    right: 0;
+    background: #fff;
+    font-size: 1.2em;
 
+    display: none;
     width: 250%;
     margin: 0;
     padding: 0;
 
-    list-style-type: none;
-
-    background: white;
-
-    font-size: 1.2em;
-
-    display: none;
-
+    position: absolute;
+    right: 0;
     z-index: 10000;
+
+    list-style-type: none;
 }
 
 .rightContainer ul li {
@@ -141,6 +140,7 @@
 
 .rightContainer ul li:hover {
     background: #dfdfdf;
+
     cursor: pointer;
 }
 
@@ -151,11 +151,12 @@
 /* -> Messages view -- */
 
 .messages {
+    width: 300px;
+    margin: 0 auto;
+
     position: fixed;
     top: 4px;
     right: 10px;
-    width: 300px;
-    margin: 0 auto;
     z-index: 1000;
 }
 

@@ -31,19 +31,20 @@
 }
 
 .detailHeader h3 {
+    font-weight: normal;
+
     padding: 0;
     margin: 0;
-    font-weight: normal;
     display: inline-block;
 }
 
 .error {
-    margin: 10px;
-    padding: 10px;
-
-    border: solid 1px #b8a6a3;
     color: #3a2a25;
     background-color: #e4cfc8;
+
+    margin: 10px;
+    padding: 10px;
+    border: solid 1px #b8a6a3;
 
     border-radius: 5px;
     -webkit-border-radius: 5px;

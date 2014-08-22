@@ -1,19 +1,24 @@
 .message {
-    position: relative;
+    border: 0;
     padding: 10px;
     margin: 10px 0;
+
+    position: relative;
+
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-    border: 0;
 }
 
 .close {
-    position: absolute;
     font-weight: bold;
+
+    padding: 5px;
+
     top: 5px;
     right: 10px;
-    padding: 5px;
+    position: absolute;
+
     cursor: pointer;
 }
 
