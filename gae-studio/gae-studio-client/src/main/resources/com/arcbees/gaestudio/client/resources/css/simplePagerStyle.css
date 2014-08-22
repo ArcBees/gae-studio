@@ -1,10 +1,11 @@
 .pageDetails {
     color: #5d5d5d;
-    display: inline-block;
     font-weight: bold;
+    line-height: 27px;
+
+    display: inline-block;
     padding: 0px 5px;
     margin: 10px 5px;
-    line-height: 27px;
 }
 
 .button {
@@ -12,8 +13,9 @@
     height: 16px;
     display: inline-block;
     overflow: hidden;
-    cursor: pointer;
     margin: 0 4px;
+
+    cursor: pointer;
 }
 
 .button:nth-of-type\(1\), .button:nth-of-type\(2\) {

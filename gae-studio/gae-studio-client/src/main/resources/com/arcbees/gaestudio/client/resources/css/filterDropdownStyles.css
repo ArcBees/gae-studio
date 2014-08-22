@@ -12,9 +12,9 @@
 .openedList {
     background: #fff;
 
-    @mixin boxshadow(4px, 4px, 5px, 0, rgba(0, 0, 0, 0.12));
-
     z-index: 10000;
+
+    @mixin boxshadow(4px, 4px, 5px, 0, rgba(0, 0, 0, 0.12));
 }
 
 .dropDownArrow {
@@ -23,14 +23,16 @@
 
 .dropDownArrow:hover {
     gwt-sprite: "dropDownArrowRl";
+
     height: 46px;
 }
 
 .ul li {
-    height: 46px;
-    line-height: 46px;
     font-size: 1.3em;
     text-transform: uppercase;
+    line-height: 46px;
+
+    height: 46px;
 }
 
 .ul li span {
@@ -41,11 +43,12 @@
 
 .ul li:hover {
     background-color: C_PRIMARY;
+
     cursor: pointer;
 }
 
 .ul li:hover span {
-    color: white;
+    color: #fff;
 }
 
 .ul:focus {
@@ -53,9 +56,10 @@
 }
 
 .dropDownArrow, .dropDownArrow:hover {
-    width: 100%;
     background-position-x: 95%;
     background-position-y: 50%;
+
+    width: 100%;
 }
 
 .hiddenLi {
