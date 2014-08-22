@@ -17,7 +17,6 @@ import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyPrettifier;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -67,13 +66,7 @@ public class ParsedEntityColumnCreator {
 
     public void initializeTable(CellTable<ParsedEntity> entityTable) {
         TextColumn<ParsedEntity> idColumn = buildIdColumn();
-        entityTable.addColumn(idColumn, "ID/NAME");
-
-        TextColumn<ParsedEntity> parentKindColumn = buildParentKindColumn();
-        entityTable.addColumn(parentKindColumn, "Parent Kind");
-
-        TextColumn<ParsedEntity> parentIdColumn = buildParentIdColumn();
-        entityTable.addColumn(parentIdColumn, "Parent ID");
+        entityTable.addColumn(idColumn, "Key/Parent");
 
         TextColumn<ParsedEntity> namespaceColumn = buildNameSpaceColumn();
         entityTable.addColumn(namespaceColumn, "Namespace");
@@ -98,45 +91,11 @@ public class ParsedEntityColumnCreator {
         };
     }
 
-    private TextColumn<ParsedEntity> buildParentKindColumn() {
-        return new TextColumn<ParsedEntity>() {
-            @Override
-            public String getValue(ParsedEntity entityJsonParsed) {
-                ParentKeyDto parentKeyDTO = entityJsonParsed.getKey().getParentKey();
-                if (parentKeyDTO == null) {
-                    return IS_NULL;
-                }
-                return parentKeyDTO.getKind();
-            }
-        };
-    }
-
-    private TextColumn<ParsedEntity> buildParentIdColumn() {
-        return new TextColumn<ParsedEntity>() {
-            @Override
-            public String getValue(ParsedEntity entityJsonParsed) {
-                ParentKeyDto parentKeyDTO = entityJsonParsed.getKey().getParentKey();
-                if (parentKeyDTO == null) {
-                    return IS_NULL;
-                }
-                return parentKeyDTO.getId().toString();
-            }
-        };
-    }
-
     private TextColumn<ParsedEntity> buildIdColumn() {
         return new TextColumn<ParsedEntity>() {
             @Override
             public String getValue(ParsedEntity entityJsonParsed) {
-                String idName;
-
-                if (entityJsonParsed.getKey().getId() != 0) {
-                    idName = entityJsonParsed.getKey().getId().toString();
-                } else {
-                    idName = entityJsonParsed.getKey().getName();
-                }
-
-                return idName;
+                return keyPrettifier.prettifyKey(entityJsonParsed.getKey());
             }
         };
     }
