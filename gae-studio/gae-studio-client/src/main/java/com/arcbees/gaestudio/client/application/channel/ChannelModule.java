@@ -20,7 +20,8 @@ public class ChannelModule extends AbstractGinModule {
         bind(ChannelHandler.class).in(Singleton.class);
 
         GinMultibinder<MessageHandler> multibinder = GinMultibinder.newSetBinder(binder(), MessageHandler.class);
-        multibinder.addBinding().to(TooLargeMessageHandler.class);
         multibinder.addBinding().to(ImportCompletedMessageHandler.class);
+        multibinder.addBinding().to(ImportTooLargeMessageHandler.class);
+        multibinder.addBinding().to(ExportCompletedMessageHandler.class);
     }
 }

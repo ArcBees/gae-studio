@@ -7,17 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.rest;
+package com.arcbees.gaestudio.server.channel;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import com.arcbees.gaestudio.shared.channel.Message;
 
-import com.arcbees.gaestudio.shared.dto.ObjectWrapper;
-import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.gwtplatform.dispatch.rest.shared.RestAction;
-
-@Path(EndPoints.IMPORT)
-public interface ImportService {
-    @GET
-    RestAction<ObjectWrapper<String>> getUploadUrl();
+public interface ChannelMessageSender {
+    void sendMessage(String clientId, Message message);
 }

@@ -19,7 +19,6 @@ import org.junit.runner.RunWith;
 import com.arcbees.gaestudio.server.recorder.HookRegistrar;
 import com.arcbees.gaestudio.server.recorder.authentication.Listener;
 import com.arcbees.gaestudio.server.recorder.authentication.ListenerProvider;
-import com.arcbees.gaestudio.server.service.profiler.RecordServiceImpl;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

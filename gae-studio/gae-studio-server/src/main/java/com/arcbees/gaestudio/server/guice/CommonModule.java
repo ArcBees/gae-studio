@@ -14,12 +14,13 @@ import javax.servlet.ServletContext;
 
 import com.arcbees.gaestudio.server.ConnectFilter;
 import com.arcbees.gaestudio.server.analytic.AnalyticModule;
+import com.arcbees.gaestudio.server.api.ApiModule;
 import com.arcbees.gaestudio.server.appengine.AppEngineModule;
+import com.arcbees.gaestudio.server.channel.ChannelModule;
 import com.arcbees.gaestudio.server.dto.mapper.MapperModule;
 import com.arcbees.gaestudio.server.exception.ExceptionModule;
 import com.arcbees.gaestudio.server.guice.devserver.DevServerModule;
 import com.arcbees.gaestudio.server.recorder.GaeStudioRecorderModule;
-import com.arcbees.gaestudio.server.api.ApiModule;
 import com.arcbees.gaestudio.server.service.ServiceModule;
 import com.arcbees.gaestudio.server.util.UtilModule;
 import com.arcbees.gaestudio.server.velocity.VelocityModule;
@@ -62,6 +63,7 @@ public class CommonModule extends ServletModule {
         install(new VelocityModule());
         install(new AppEngineModule());
         install(new UtilModule());
+        install(new ChannelModule());
 
         bindConstant().annotatedWith(BaseRestPath.class).to(restPath);
 

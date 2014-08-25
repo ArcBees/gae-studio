@@ -40,4 +40,6 @@ public interface AppMessages extends Messages {
     SafeHtml deleteSelectedEntities(int count);
 
     String importTooLarge(int entitiesCount);
+
+    String exportTooLarge(int entitiesCount);
 }

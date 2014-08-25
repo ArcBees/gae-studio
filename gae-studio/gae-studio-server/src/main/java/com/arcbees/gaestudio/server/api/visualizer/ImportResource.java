@@ -28,6 +28,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.arcbees.gaestudio.server.channel.ChannelMessageSender;
+import com.arcbees.gaestudio.server.channel.ClientId;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 import com.arcbees.gaestudio.server.service.visualizer.ImportService;
 import com.arcbees.gaestudio.shared.BaseRestPath;
@@ -37,13 +39,9 @@ import com.arcbees.gaestudio.shared.channel.Topic;
 import com.arcbees.gaestudio.shared.dto.ObjectWrapper;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
-import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreInputStream;
 import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.api.channel.ChannelMessage;
-import com.google.appengine.api.channel.ChannelService;
-import com.google.appengine.api.channel.ChannelServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.TaskOptions;
@@ -51,7 +49,7 @@ import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
-import static com.arcbees.gaestudio.shared.Constants.FREE_IMPORT_QUOTA;
+import static com.arcbees.gaestudio.shared.Constants.FREE_IMPORT_EXPORT_QUOTA;
 
 @Path(EndPoints.IMPORT)
 @GaeStudioResource
@@ -84,22 +82,28 @@ public class ImportResource extends HttpServlet {
     private static final int IMPORT_CHUNK_SIZE = 10_000;
 
     private final BlobstoreService blobstoreService;
+    private final ChannelMessageSender channelMessageSender;
     private final ImportService importService;
     private final Gson gson;
     private final Provider<Queue> queueProvider;
     private final String uploadUrl;
     private final String taskUrl;
+    private final Provider<String> clientIdProvider;
 
     @Inject
     ImportResource(BlobstoreService blobstoreService,
                    ImportService importService,
                    Gson gson,
                    Provider<Queue> queueProvider,
+                   ChannelMessageSender channelMessageSender,
+                   @ClientId Provider<String> clientIdProvider,
                    @BaseRestPath String baseRestPath) {
         this.blobstoreService = blobstoreService;
         this.importService = importService;
         this.gson = gson;
         this.queueProvider = queueProvider;
+        this.channelMessageSender = channelMessageSender;
+        this.clientIdProvider = clientIdProvider;
         uploadUrl = createPath(baseRestPath + EndPoints.IMPORT);
         taskUrl = createPath(baseRestPath + EndPoints.IMPORT_TASK);
     }
@@ -122,9 +126,8 @@ public class ImportResource extends HttpServlet {
             uploadResponse.setMessage("Upload failed");
         } else {
             Queue queue = queueProvider.get();
-            String clientId = request.getParameter(Constants.CLIENT_ID);
             queue.add(TaskOptions.Builder.withUrl(taskUrl).param(UrlParameters.KEY,
-                    blobKey.getKeyString()).param(Constants.CLIENT_ID, clientId));
+                    blobKey.getKeyString()).param(Constants.CLIENT_ID, clientIdProvider.get()));
 
             uploadResponse = new UploadResponse(true);
         }
@@ -150,7 +153,7 @@ public class ImportResource extends HttpServlet {
             }
         }
 
-        sendImportCompletedMessage(clientId);
+        channelMessageSender.sendMessage(clientId, new Message(Topic.IMPORT_COMPLETED));
     }
 
     private void importEntitiesFromBlob(JsonReader reader, String clientId) throws IOException {
@@ -170,8 +173,8 @@ public class ImportResource extends HttpServlet {
             }
 
             count++;
-            if (count >= FREE_IMPORT_QUOTA) {
-                sendTooLargeMessage(clientId);
+            if (count >= FREE_IMPORT_EXPORT_QUOTA) {
+                channelMessageSender.sendMessage(clientId, new Message(Topic.TOO_LARGE_IMPORT));
                 hasCycledThroughAllEntities = false;
                 break;
             }
@@ -184,21 +187,6 @@ public class ImportResource extends HttpServlet {
         if (!buffer.isEmpty()) {
             importService.importEntities(buffer);
         }
-    }
-
-    private void sendTooLargeMessage(String clientId) {
-        sendMessage(clientId, new Message(Topic.TOO_LARGE_IMPORT));
-    }
-
-    private void sendImportCompletedMessage(String clientId) {
-        sendMessage(clientId, new Message(Topic.IMPORT_COMPLETED));
-    }
-
-    private void sendMessage(String clientId, Message message) {
-        String json = gson.toJson(message);
-        ChannelService channelService = ChannelServiceFactory.getChannelService();
-        ChannelMessage channelMessage = new ChannelMessage(clientId, json);
-        channelService.sendMessage(channelMessage);
     }
 
     private BlobKey extractBlobKey(HttpServletRequest request) {

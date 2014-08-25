@@ -15,7 +15,6 @@ import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
-import com.arcbees.gaestudio.client.application.analytics.EventCategories;
 import com.arcbees.gaestudio.client.validation.ViolationsPanel;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
