@@ -22,22 +22,22 @@ import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.json.client.JSONValue;
 import com.google.web.bindery.event.shared.EventBus;
 
-import static com.arcbees.gaestudio.shared.Constants.FREE_IMPORT_QUOTA;
+import static com.arcbees.gaestudio.shared.Constants.FREE_IMPORT_EXPORT_QUOTA;
 
-public class TooLargeMessageHandler implements MessageHandler, HasHandlers {
+public class ImportTooLargeMessageHandler implements MessageHandler, HasHandlers {
     private final EventBus eventBus;
     private final AppMessages appMessages;
 
     @Inject
-    TooLargeMessageHandler(EventBus eventBus,
-                           AppMessages appMessages) {
+    ImportTooLargeMessageHandler(EventBus eventBus,
+                                 AppMessages appMessages) {
         this.eventBus = eventBus;
         this.appMessages = appMessages;
     }
 
     @Override
     public void handleMessage(JSONValue payload) {
-        Message displayMessage = new Message(appMessages.importTooLarge(FREE_IMPORT_QUOTA), MessageStyle.SUCCESS);
+        Message displayMessage = new Message(appMessages.importTooLarge(FREE_IMPORT_EXPORT_QUOTA), MessageStyle.SUCCESS);
         DisplayMessageEvent.fire(this, displayMessage);
         LoadingEvent.fire(this, LoadingEvent.Action.END);
     }

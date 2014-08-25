@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AppConfig {
     public static class Builder {
         private String restPath;
-        private String clientId;
         private String version;
         private String latestVersion;
         private boolean useCookieDomainNone;
@@ -25,11 +24,6 @@ public class AppConfig {
 
         public Builder restPath(String restPath) {
             this.restPath = restPath;
-            return this;
-        }
-
-        public Builder clientId(String clientId) {
-            this.clientId = clientId;
             return this;
         }
 
@@ -49,7 +43,7 @@ public class AppConfig {
         }
 
         public AppConfig build() {
-            return new AppConfig(restPath, clientId, version, latestVersion, useCookieDomainNone);
+            return new AppConfig(restPath, version, latestVersion, useCookieDomainNone);
         }
     }
 
@@ -59,7 +53,6 @@ public class AppConfig {
 
     public static final String OBJECT_KEY = "AppConfiguration";
 
-    private final String clientId;
     private final String restPath;
     private final String version;
     private final String latestVersion;
@@ -67,12 +60,10 @@ public class AppConfig {
 
     @JsonCreator
     private AppConfig(@JsonProperty("restPath") String restPath,
-                      @JsonProperty("clientId") String clientId,
                       @JsonProperty("version") String version,
                       @JsonProperty("latestVersion") String latestVersion,
                       @JsonProperty("useCookieDomainNone") boolean useCookieDomainNone) {
         this.restPath = restPath;
-        this.clientId = clientId;
         this.version = version;
         this.latestVersion = latestVersion;
         this.useCookieDomainNone = useCookieDomainNone;
@@ -84,10 +75,6 @@ public class AppConfig {
 
     public String getRestPath() {
         return restPath;
-    }
-
-    public String getClientId() {
-        return clientId;
     }
 
     public String getLatestVersion() {

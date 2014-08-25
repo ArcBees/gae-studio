@@ -24,10 +24,9 @@ import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
-import com.gwtplatform.dispatch.rest.shared.RestService;
 
 @Path(EndPoints.ENTITIES)
-public interface EntitiesService extends RestService {
+public interface EntitiesService {
     @GET
     RestAction<List<EntityDto>> getByKind(@QueryParam(UrlParameters.KIND) String kind,
                                           @QueryParam(UrlParameters.NAMESPACE) String currentNamespace,

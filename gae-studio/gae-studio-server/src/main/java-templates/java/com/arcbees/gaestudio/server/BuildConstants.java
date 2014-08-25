@@ -9,8 +9,6 @@
 
 package com.arcbees.gaestudio.server;
 
-import java.lang.Boolean;
-
 public class BuildConstants {
     // will be replaced by maven
     public static final String BUILD_TIME_DATE  = "${gaes.buildtime}";
