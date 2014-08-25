@@ -142,13 +142,11 @@ public class ImportResource extends HttpServlet {
             BlobKey blobKey = new BlobKey(blobKeyString);
 
             InputStream inputStream = new BlobstoreInputStream(blobKey);
-            String defaultNamespace = NamespaceManager.get();
 
             try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream))) {
                 importEntitiesFromBlob(reader, clientId);
             } finally {
                 blobstoreService.delete(blobKey);
-                NamespaceManager.set(defaultNamespace);
             }
         }
 
@@ -156,7 +154,7 @@ public class ImportResource extends HttpServlet {
     }
 
     private void importEntitiesFromBlob(JsonReader reader, String clientId) throws IOException {
-        List<Entity> buffer = new ArrayList<>();
+        List<Entity> buffer = new ArrayList<>(IMPORT_CHUNK_SIZE);
         boolean hasCycledThroughAllEntities = true;
         int count = 0;
 
@@ -166,7 +164,7 @@ public class ImportResource extends HttpServlet {
             Entity entity = gson.fromJson(reader, Entity.class);
             buffer.add(entity);
 
-            if (buffer.size() % IMPORT_CHUNK_SIZE == 0) {
+            if (buffer.size() == IMPORT_CHUNK_SIZE) {
                 importService.importEntities(buffer);
                 buffer.clear();
             }
