@@ -9,33 +9,12 @@
 
 package com.arcbees.gaestudio.server.channel;
 
-import java.util.UUID;
-
-import javax.inject.Provider;
-import javax.servlet.http.HttpSession;
-
-import com.arcbees.gaestudio.shared.channel.Constants;
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
 
 public class ChannelModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(ChannelMessageSender.class).to(ChannelMessageSenderImpl.class);
-    }
-
-    @Provides
-    @ClientId
-    String getClientId(Provider<HttpSession> httpSessionProvider) {
-        HttpSession httpSession = httpSessionProvider.get();
-
-        Object clientId = httpSession.getAttribute(Constants.CLIENT_ID);
-
-        if (clientId == null) {
-            clientId = UUID.randomUUID();
-            httpSession.setAttribute(Constants.CLIENT_ID, clientId);
-        }
-
-        return clientId.toString();
+        bind(String.class).annotatedWith(ClientId.class).toProvider(ClientIdProvider.class);
     }
 }
