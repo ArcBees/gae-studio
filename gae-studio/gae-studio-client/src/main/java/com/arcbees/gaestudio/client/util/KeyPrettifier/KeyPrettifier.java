@@ -1,8 +1,15 @@
+/*
+ * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
+ * This source code, and resulting software, is the confidential and proprietary information
+ * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
+ * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
+ * shall use it only in accordance with the terms and conditions of any and all license
+ * agreements you have entered into with The Company.
+ */
+
 package com.arcbees.gaestudio.client.util.KeyPrettifier;
 
 import com.arcbees.gaestudio.shared.PropertyName;
-import com.arcbees.gaestudio.shared.PropertyType;
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 
@@ -27,48 +34,16 @@ public class KeyPrettifier {
         return returnValue;
     }
 
-    public String prettifyKey(JSONValue jsonProperty, String stringValue) {
-        JSONObject jsonObject = jsonProperty.isObject();
-        String value = stringValue;
+    public String prettifyKey(JSONObject key) {
+        String parentValue = writeParentKeys(key);
 
-        if (jsonObject != null) {
-            JSONValue jsonPropertyType = jsonObject.get(PropertyName.GAE_PROPERTY_TYPE);
+        String kind = key.get(PropertyName.KIND).isString().stringValue();
 
-            if (jsonPropertyType != null) {
-                PropertyType propertyType = PropertyType.valueOf(jsonPropertyType.isString().stringValue());
+        String id = key.get(PropertyName.ID).toString();
+        String name = key.get(PropertyName.NAME).toString();
+        String idName = getIdName(id, name);
 
-                if (propertyType == PropertyType.KEY) {
-                    JSONObject propertyValue = jsonObject.get(PropertyName.VALUE).isObject();
-
-                    String parentValue = writeParentKeys(propertyValue);
-
-                    String kind = propertyValue.get(PropertyName.KIND).isString().stringValue();
-
-                    String id = propertyValue.get(PropertyName.ID).toString();
-                    String name = propertyValue.get(PropertyName.NAME).toString();
-                    String idName = getIdName(id, name);
-
-                    value = parentValue + kind + " (" + idName + ")";
-                }
-            }
-        }
-
-        return value;
-    }
-
-    public String prettifyKey(KeyDto key) {
-        String kind = key.getKind();
-        String idName = getIdName(key.getId().toString(), key.getName());
-
-        String parentKind = key.getParentKey() != null ? key.getParentKey().getKind() : null;
-        Long parentKindId = parentKind != null ? key.getParentKey().getId() : null;
-
-        String result = kind + " (" + idName + ")";
-        if (parentKind != null) {
-            result += " > " + parentKind + " (" + parentKindId + ")";
-        }
-
-        return result;
+        return parentValue + kind + " (" + idName + ")";
     }
 
     private String getIdName(String id, String name) {

@@ -18,6 +18,7 @@ import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
@@ -53,7 +54,12 @@ public class ParsedEntityColumnCreator {
                 String stringValue = "";
                 if (jsonProperty != null) {
                     stringValue = parsedEntity.getCleanedUpProperty(propertyName).toString();
-                    stringValue = keyPrettifier.prettifyKey(jsonProperty, stringValue);
+                    JSONObject parsedJson = JSONParser.parseStrict(stringValue).isObject();
+
+                    if (parsedJson != null) {
+                        stringValue = keyPrettifier.prettifyKey(parsedJson);
+                    }
+
                     stringValue = addUnindexedIfNeeded(jsonProperty, stringValue);
                 }
 
@@ -95,7 +101,8 @@ public class ParsedEntityColumnCreator {
         return new TextColumn<ParsedEntity>() {
             @Override
             public String getValue(ParsedEntity entityJsonParsed) {
-                return keyPrettifier.prettifyKey(entityJsonParsed.getKey());
+                JSONObject key = entityJsonParsed.getJsonObject().get(PropertyName.KEY).isObject();
+                return keyPrettifier.prettifyKey(key);
             }
         };
     }

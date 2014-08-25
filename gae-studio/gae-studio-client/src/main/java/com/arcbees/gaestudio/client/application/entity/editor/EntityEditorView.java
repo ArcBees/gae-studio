@@ -12,8 +12,6 @@ package com.arcbees.gaestudio.client.application.entity.editor;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.entity.editor.EntityEditorPresenter.MyView;
-import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyPrettifier;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -21,12 +19,9 @@ import com.gwtplatform.mvp.client.ViewImpl;
 
 public class EntityEditorView extends ViewImpl implements MyView {
     private final FlowPanel panel;
-    private final KeyPrettifier keyPrettifier;
 
     @Inject
-    EntityEditorView(KeyPrettifier keyPrettifier) {
-        this.keyPrettifier = keyPrettifier;
-
+    EntityEditorView() {
         panel = new FlowPanel();
 
         initWidget(panel);
@@ -38,8 +33,8 @@ public class EntityEditorView extends ViewImpl implements MyView {
     }
 
     @Override
-    public void setHeader(ParsedEntity dto) {
-        String text = keyPrettifier.prettifyKey(dto.getKey());
+    public void setHeader(String text) {
+
         InlineLabel headerLabel = new InlineLabel(text);
         panel.add(headerLabel);
     }
