@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.regex.Matcher;
@@ -83,7 +82,6 @@ public class RootServlet extends HttpServlet {
     private AppConfig buildAppConfig() {
         return AppConfig.with()
                 .restPath(restPath)
-                .clientId(UUID.randomUUID().toString())
                 .version(BuildConstants.VERSION)
                 .latestVersion(retrieveLatestVersion())
                 .useCookieDomainNone(useCookieDomainNone)

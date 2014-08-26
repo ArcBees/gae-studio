@@ -62,7 +62,7 @@ public class VisualizerPage {
     }
 
     public void changeCarWheels() {
-        WebElement wheelsContainer = webDriverHelper.waitUntilPresenceOfElementLocated(ByDebugId.id("wheels.size"));
+        WebElement wheelsContainer = webDriverHelper.waitUntilPresenceOfElementLocated(ByDebugId.id("wheels"));
         WebElement targetWheel = webDriverHelper.findChild(wheelsContainer, ByDebugId.id("0"));
         WebElement textbox = targetWheel.findElement(By.tagName("input"));
 

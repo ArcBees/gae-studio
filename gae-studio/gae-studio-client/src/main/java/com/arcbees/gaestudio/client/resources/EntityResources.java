@@ -29,6 +29,10 @@ public interface EntityResources extends ClientBundle {
         String edit();
 
         String fullscreen();
+
+        String form();
+
+        String geopts();
     }
 
     public interface Editor extends GssResource {

@@ -9,16 +9,17 @@
 
 package com.arcbees.gaestudio.server.api.profiler;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.arcbees.gaestudio.server.channel.ClientId;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
-import com.arcbees.gaestudio.shared.channel.Constants;
 import com.arcbees.gaestudio.shared.channel.Token;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.appengine.api.channel.ChannelService;
@@ -29,11 +30,18 @@ import com.google.appengine.api.channel.ChannelServiceFactory;
 @Consumes(MediaType.APPLICATION_JSON)
 @GaeStudioResource
 public class ChannelResource {
+    private final Provider<String> clientIdProvider;
+
+    @Inject
+    ChannelResource(@ClientId Provider<String> clientIdProvider) {
+        this.clientIdProvider = clientIdProvider;
+    }
+
     @Path(EndPoints.TOKEN)
     @GET
-    public Response createToken(@QueryParam(Constants.CLIENT_ID) String cliendId) {
+    public Response createToken() {
         ChannelService channelService = ChannelServiceFactory.getChannelService();
-        String tokenValue = channelService.createChannel(cliendId);
+        String tokenValue = channelService.createChannel(clientIdProvider.get());
 
         Token token = new Token(tokenValue);
 

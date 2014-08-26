@@ -7,17 +7,14 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.rest;
+package com.arcbees.gaestudio.server.channel;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import com.google.inject.AbstractModule;
 
-import com.arcbees.gaestudio.shared.dto.ObjectWrapper;
-import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.gwtplatform.dispatch.rest.shared.RestAction;
-
-@Path(EndPoints.IMPORT)
-public interface ImportService {
-    @GET
-    RestAction<ObjectWrapper<String>> getUploadUrl();
+public class ChannelModule extends AbstractModule {
+    @Override
+    protected void configure() {
+        bind(ChannelMessageSender.class).to(ChannelMessageSenderImpl.class);
+        bind(String.class).annotatedWith(ClientId.class).toProvider(ClientIdProvider.class);
+    }
 }

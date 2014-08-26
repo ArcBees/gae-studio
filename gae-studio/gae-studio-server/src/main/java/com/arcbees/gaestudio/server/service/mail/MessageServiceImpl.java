@@ -9,6 +9,9 @@
 
 package com.arcbees.gaestudio.server.service.mail;
 
+import java.io.IOException;
+import java.net.URL;
+
 import com.arcbees.gaestudio.server.email.ConfirmRegistrationEmailBuilder;
 import com.arcbees.gaestudio.server.email.EmailMessageGenerator;
 import com.arcbees.gaestudio.server.email.ResetPasswordEmailBuilder;
@@ -21,9 +24,6 @@ import com.google.appengine.api.urlfetch.URLFetchService;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
-
-import java.io.IOException;
-import java.net.URL;
 
 public class MessageServiceImpl implements MessageService {
     private static final String CONFIRM_SUBJECT = "GAE Studio - Confirm your registration";

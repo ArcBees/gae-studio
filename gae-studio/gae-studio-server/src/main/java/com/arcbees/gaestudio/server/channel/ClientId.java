@@ -7,17 +7,19 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.rest;
+package com.arcbees.gaestudio.server.channel;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-import com.arcbees.gaestudio.shared.dto.ObjectWrapper;
-import com.arcbees.gaestudio.shared.rest.EndPoints;
-import com.gwtplatform.dispatch.rest.shared.RestAction;
+import com.google.inject.BindingAnnotation;
 
-@Path(EndPoints.IMPORT)
-public interface ImportService {
-    @GET
-    RestAction<ObjectWrapper<String>> getUploadUrl();
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Target({METHOD, PARAMETER})
+@Retention(RUNTIME)
+@BindingAnnotation
+public @interface ClientId {
 }
