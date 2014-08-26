@@ -23,17 +23,16 @@ import static com.arcbees.gaestudio.shared.PropertyName.PROPERTY_MAP;
 
 public class ParsedEntity {
     private EntityDto entityDto;
-
-    public JSONObject getJsonObject() {
-        return jsonObject;
-    }
-
     private JSONObject jsonObject;
 
     public ParsedEntity(EntityDto entityDto) {
         this.entityDto = new EntityDto(entityDto.getKey(), entityDto.getJson());
 
         parseJson();
+    }
+
+    public JSONObject getJsonObject() {
+        return jsonObject;
     }
 
     public Set<String> propertyKeys() {

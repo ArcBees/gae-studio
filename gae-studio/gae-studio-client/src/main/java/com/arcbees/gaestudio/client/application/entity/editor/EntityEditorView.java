@@ -34,7 +34,6 @@ public class EntityEditorView extends ViewImpl implements MyView {
 
     @Override
     public void setHeader(String text) {
-
         InlineLabel headerLabel = new InlineLabel(text);
         panel.add(headerLabel);
     }

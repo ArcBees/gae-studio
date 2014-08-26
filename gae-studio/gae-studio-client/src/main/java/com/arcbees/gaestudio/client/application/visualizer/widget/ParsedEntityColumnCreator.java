@@ -31,7 +31,8 @@ public class ParsedEntityColumnCreator {
     private final KeyPrettifier keyPrettifier;
 
     @Inject
-    ParsedEntityColumnCreator(AppConstants appConstants, KeyPrettifier keyPrettifier) {
+    ParsedEntityColumnCreator(AppConstants appConstants,
+                              KeyPrettifier keyPrettifier) {
         this.appConstants = appConstants;
         this.keyPrettifier = keyPrettifier;
     }
