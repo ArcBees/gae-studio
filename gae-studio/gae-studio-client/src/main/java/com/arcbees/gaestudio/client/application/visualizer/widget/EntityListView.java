@@ -27,6 +27,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.query.client.Function;
+import com.google.gwt.query.client.GQuery;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -34,6 +35,8 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
@@ -60,7 +63,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
     @UiField(provided = true)
     SimplePager pager;
     @UiField(provided = true)
-    CellTable<ParsedEntity> entityTable;
+    CustomCellTable<ParsedEntity> entityTable;
     @UiField
     DivElement refresh;
     @UiField
@@ -71,6 +74,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
     DivElement formQueryHolder;
     @UiField
     Button runQueryButton;
+    @UiField
+    SimplePanel columnControls;
 
     private final VisualizerResources visualizerResources;
     private final String pagerButtons;
@@ -97,7 +102,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
 
         pagerButtons = "." + appResources.styles().pager() + " tbody tr td img";
 
-        entityTable = new CellTable<>(PAGE_SIZE, cellTableResource);
+        entityTable = new CustomCellTable<>(PAGE_SIZE, cellTableResource);
         entityTable.addAttachHandler(new AttachEvent.Handler() {
             @Override
             public void onAttachOrDetach(AttachEvent event) {
@@ -120,6 +125,13 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
     }
 
     @Override
+    public void setInSlot(Object slot, IsWidget content) {
+        if(slot == EntityListPresenter.SLOT_CONTROLS) {
+            columnControls.setWidget(content);
+        }
+    }
+
+    @Override
     public void setTableDataProvider(AsyncDataProvider<ParsedEntity> dataProvider) {
         dataProvider.addDataDisplay(entityTable);
     }
@@ -133,6 +145,16 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
     public void setNewKind(String currentKind) {
         panel.setVisible(true);
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
+    }
+
+    @UiHandler("show")
+    void onShow(ClickEvent event) {
+        entityTable.setShouldHide(false);
+    }
+
+    @UiHandler("hide")
+    void onHide(ClickEvent event) {
+        entityTable.setShouldHide(true);
     }
 
     @Override
@@ -182,6 +204,11 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
                 selectRows(selectedEntities);
             }
         });
+    }
+
+    @Override
+    public List<String> getDefaultColumnNames() {
+        return columnCreator.getDefaultColumnNames();
     }
 
     @Override

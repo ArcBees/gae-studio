@@ -160,6 +160,8 @@ public interface AppResources extends ClientBundle {
         String version();
 
         String kindsList();
+
+        String hiddenCol();
     }
 
     @Source({"css/colors.gss", "css/mixins.gss", "css/styles.gss"})

@@ -8,6 +8,10 @@
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
 
     <g:HTMLPanel ui:field="panel" visible="false" styleName="{visualizer.entityList.main}">
+        <g:Button ui:field="hide">hide</g:Button>
+        <g:Button ui:field="show">show</g:Button>
+        <g:SimplePanel ui:field="columnControls"/>
+        <g:Button ui:field="getall">getemall</g:Button>
         <div class="{visualizer.entityList.heading} {resources.styles.pager}">
             <cellview:SimplePager ui:field="pager"/>
             <div ui:field="refresh" class="{visualizer.entityList.refresh} {resources.styles.refresh}">

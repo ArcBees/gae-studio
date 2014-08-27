@@ -857,3 +857,7 @@ input:focus, textarea:focus, button:focus {
 .licenseButtonContainer {
     position: relative;
 }
+
+table .hiddenCol {
+    display: none;
+}

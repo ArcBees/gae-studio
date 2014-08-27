@@ -17,6 +17,8 @@ import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.application.visualizer.columnfilter.ColumnFilterPresenter;
+import com.arcbees.gaestudio.client.application.visualizer.columnfilter.TypeInfoLoadedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeselectEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesSavedEvent;
@@ -98,7 +100,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         void allowSendingNewRequests();
 
         void addOrReplaceEntities(List<EntityDto> entities);
+
+        List<String> getDefaultColumnNames();
     }
+
+    static final Object SLOT_CONTROLS = new Object();
 
     private final RestDispatch restDispatch;
     private final EntitiesService entitiesService;
@@ -107,6 +113,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private final GqlService gqlService;
     private final AppConstants appConstants;
     private final AppMessages appMessages;
+    private final ColumnFilterPresenter columnFilterPresenter;
 
     private String currentKind;
     private String currentNamespace;
@@ -122,7 +129,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                         PropertyNamesAggregator propertyNamesAggregator,
                         GqlService gqlService,
                         AppConstants appConstants,
-                        AppMessages appMessages) {
+                        AppMessages appMessages,
+                        ColumnFilterPresenter columnFilterPresenter) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
@@ -132,6 +140,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         this.gqlService = gqlService;
         this.appConstants = appConstants;
         this.appMessages = appMessages;
+        this.columnFilterPresenter = columnFilterPresenter;
 
         getView().setUiHandlers(this);
 
@@ -163,7 +172,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                 .without(UrlParameters.KEY)
                 .build();
         placeManager.revealPlace(placeRequest);
-        
+
         RowUnlockedEvent.fire(this);
     }
 
@@ -270,6 +279,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(DeselectEvent.getType(), this);
         addRegisteredHandler(NamespaceSelectedEvent.getType(), this);
+
+        setInSlot(SLOT_CONTROLS, columnFilterPresenter);
     }
 
     private void setTableDataProvider() {
@@ -305,13 +316,15 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         } else {
             revealEntityPlace(Sets.<ParsedEntity>newHashSet());
 
-            Range range = display.getVisibleRange();
+            final Range range = display.getVisibleRange();
 
             if (Strings.isNullOrEmpty(currentGqlRequest)) {
                 restDispatch.execute(getByKindAction(range), new AsyncCallbackImpl<List<EntityDto>>() {
                             @Override
                             public void onSuccess(List<EntityDto> result) {
-                                onLoadPageSuccess(result, display);
+                                setColumns(result, range);
+
+                                setTotalCount();
                             }
                         }
                 );
@@ -330,17 +343,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         }
     }
 
-    private void onLoadPageSuccess(List<EntityDto> entities, HasData<ParsedEntity> display) {
-        List<ParsedEntity> parsedEntities = new ArrayList<>();
-
-        for (EntityDto entityDto : entities) {
-            ParsedEntity parsedEntity = new ParsedEntity(entityDto);
-            parsedEntities.add(parsedEntity);
-        }
+    private void setColumns(List<EntityDto> entities, Range range) {
+        List<ParsedEntity> parsedEntities = transformToParsedEntities(entities);
 
         adjustColumns(parsedEntities);
-        getView().setData(display.getVisibleRange(), parsedEntities);
-        setTotalCount();
+        getView().setData(range, parsedEntities);
     }
 
     private void adjustColumns(List<ParsedEntity> entities) {
@@ -351,6 +358,10 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         for (String propertyName : propertyNames) {
             getView().addProperty(propertyName);
         }
+
+        List<String> columnNames = getView().getDefaultColumnNames();
+        columnNames.addAll(propertyNames);
+        TypeInfoLoadedEvent.fire(this, columnNames, entities.get(0));
 
         getView().redraw();
     }
@@ -378,7 +389,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         placeManager.revealPlace(builder.build());
     }
 
-    private void showEntities(List<EntityDto> entities, Range range, Integer numberOfEntities) {
+    private List<ParsedEntity> transformToParsedEntities(List<EntityDto> entities) {
         List<ParsedEntity> parsedEntities = new ArrayList<>();
 
         for (EntityDto entityDto : entities) {
@@ -386,10 +397,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             parsedEntities.add(parsedEntity);
         }
 
-        adjustColumns(parsedEntities);
-        getView().setData(range, parsedEntities);
-
-        getView().setRowCount(numberOfEntities);
+        return parsedEntities;
     }
 
     private boolean requestHasNoSelect(String gqlRequest) {
@@ -406,7 +414,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                 new AsyncCallbackImpl<List<EntityDto>>() {
                     @Override
                     public void onSuccess(List<EntityDto> result) {
-                        showEntities(result, range, numberOfEntities);
+                        setColumns(result, range);
+
+                        getView().setRowCount(numberOfEntities);
                     }
                 }
         );

@@ -9,15 +9,19 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
+import com.google.common.collect.Lists;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -37,10 +41,12 @@ public class ParsedEntityColumnCreator {
     private static int DEFAULT_COLUMN_COUNT;
 
     private final AppConstants appConstants;
+    private final AppResources appResources;
 
     @Inject
-    ParsedEntityColumnCreator(AppConstants appConstants) {
+    ParsedEntityColumnCreator(AppConstants appConstants, AppResources appResources) {
         this.appConstants = appConstants;
+        this.appResources = appResources;
     }
 
     public void addPropertyColumn(CellTable<ParsedEntity> cellTable,
@@ -61,6 +67,7 @@ public class ParsedEntityColumnCreator {
             }
         };
 
+        column.setCellStyleNames(appResources.styles().hiddenCol());
         cellTable.addColumn(column, propertyName);
     }
 
@@ -78,6 +85,10 @@ public class ParsedEntityColumnCreator {
         entityTable.addColumn(namespaceColumn, "Namespace");
 
         setDefaultColumnCount(entityTable.getColumnCount());
+    }
+
+    public List<String> getDefaultColumnNames() {
+        return Lists.newArrayList("ID/NAME", "Parent Kind", "Parent ID", "Namespace");
     }
 
     private TextColumn<ParsedEntity> buildNameSpaceColumn() {
