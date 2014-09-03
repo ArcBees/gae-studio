@@ -26,7 +26,9 @@ import com.google.gwt.user.cellview.client.TextColumn;
 
 public class ParsedEntityColumnCreator {
     private static final String IS_NULL = "<null>";
+
     private static int DEFAULT_COLUMN_COUNT;
+
     private final AppConstants appConstants;
     private final KeyPrettifier keyPrettifier;
 
