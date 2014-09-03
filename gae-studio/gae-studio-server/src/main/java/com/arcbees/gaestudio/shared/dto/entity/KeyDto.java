@@ -68,8 +68,8 @@ public class KeyDto {
         return parentKey;
     }
 
-    public void setParentKey(KeyDto parentKeyDto) {
-        this.parentKey = parentKeyDto;
+    public void setParentKey(KeyDto parentKey) {
+        this.parentKey = parentKey;
     }
 
     public AppIdNamespaceDto getAppIdNamespace() {

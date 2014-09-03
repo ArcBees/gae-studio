@@ -27,7 +27,7 @@ public class KeyValuePairBuilder {
     private final KeyPrettifier keyPrettifier;
 
     @Inject
-    public KeyValuePairBuilder(KeyPrettifier keyPrettifier) {
+    KeyValuePairBuilder(KeyPrettifier keyPrettifier) {
         this.keyPrettifier = keyPrettifier;
     }
 
