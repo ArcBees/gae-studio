@@ -38,4 +38,8 @@ public interface AppMessages extends Messages {
     String entitiesMatchRequest(int number);
 
     SafeHtml deleteSelectedEntities(int count);
+
+    String keyPrettifyTemplate(String kind, String idName);
+
+    String keyPrettifyChildToken();
 }

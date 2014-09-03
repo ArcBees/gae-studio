@@ -104,8 +104,7 @@ public class ParsedEntityColumnCreator {
         return new TextColumn<ParsedEntity>() {
             @Override
             public String getValue(ParsedEntity entityJsonParsed) {
-                JSONObject key = entityJsonParsed.getJsonObject().get(PropertyName.KEY).isObject();
-                return keyPrettifier.prettifyKey(key);
+                return keyPrettifier.prettifyKey(entityJsonParsed.getKey());
             }
         };
     }
