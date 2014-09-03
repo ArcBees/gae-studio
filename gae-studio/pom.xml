@@ -31,7 +31,7 @@
         <!-- client -->
         <gwt.version>2.6.0</gwt.version>
         <gwtp.version>1.2.1</gwtp.version>
-        <gwtquery.version>1.4.1-SNAPSHOT</gwtquery.version>
+        <gwtquery.version>1.4.2-SNAPSHOT</gwtquery.version>
         <gin.version>2.1.2</gin.version>
         <gquery-plugins.version>1.0</gquery-plugins.version>
         <arcbees.version>1.1.1</arcbees.version>
