@@ -9,11 +9,22 @@
 
 package com.arcbees.gaestudio.client.util.KeyPrettifier;
 
+import javax.inject.Inject;
+
+import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.shared.PropertyName;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
 
 public class KeyPrettifier {
+    private final AppMessages appMessages;
+
+    @Inject
+    public KeyPrettifier(AppMessages appMessages) {
+        this.appMessages = appMessages;
+    }
+
     public String writeParentKeys(JSONObject propertyValue) {
         String returnValue = "";
 
@@ -28,7 +39,25 @@ public class KeyPrettifier {
 
             String idName = getIdName(id, name);
 
-            returnValue += writeParentKeys(jsonObject) + kind + " (" + idName + ") > ";
+            returnValue += writeParentKeys(jsonObject) + appMessages.keyPrettifyTemplate(kind, idName) + appMessages.keyPrettifyChildToken();
+        }
+
+        return returnValue;
+    }
+
+    public String writeParentKeys(KeyDto key) {
+        String returnValue = "";
+        KeyDto parentKey = key.getParentKey();
+
+        if (parentKey != null) {
+            String kind = parentKey.getKind();
+
+            String id = parentKey.getId().toString();
+            String name = parentKey.getName();
+
+            String idName = getIdName(id, name);
+
+            returnValue += writeParentKeys(parentKey.getParentKey()) + appMessages.keyPrettifyTemplate(kind, idName) + appMessages.keyPrettifyChildToken();
         }
 
         return returnValue;
@@ -43,7 +72,19 @@ public class KeyPrettifier {
         String name = key.get(PropertyName.NAME).toString();
         String idName = getIdName(id, name);
 
-        return parentValue + kind + " (" + idName + ")";
+        return parentValue + appMessages.keyPrettifyTemplate(kind, idName);
+    }
+
+    public String prettifyKey(KeyDto key) {
+        String parentValue = writeParentKeys(key);
+
+        String kind = key.getKind();
+
+        String id = key.getId().toString();
+        String name = key.getName();
+        String idName = getIdName(id, name);
+
+        return parentValue + appMessages.keyPrettifyTemplate(kind, idName);
     }
 
     private String getIdName(String id, String name) {

@@ -26,7 +26,9 @@ import com.google.gwt.user.cellview.client.TextColumn;
 
 public class ParsedEntityColumnCreator {
     private static final String IS_NULL = "<null>";
+
     private static int DEFAULT_COLUMN_COUNT;
+
     private final AppConstants appConstants;
     private final KeyPrettifier keyPrettifier;
 
@@ -102,8 +104,7 @@ public class ParsedEntityColumnCreator {
         return new TextColumn<ParsedEntity>() {
             @Override
             public String getValue(ParsedEntity entityJsonParsed) {
-                JSONObject key = entityJsonParsed.getJsonObject().get(PropertyName.KEY).isObject();
-                return keyPrettifier.prettifyKey(key);
+                return keyPrettifier.prettifyKey(entityJsonParsed.getKey());
             }
         };
     }

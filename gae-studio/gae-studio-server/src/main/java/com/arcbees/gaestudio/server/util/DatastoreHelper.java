@@ -15,7 +15,6 @@ import java.util.List;
 import com.arcbees.gaestudio.server.GaeStudioConstants;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -39,7 +38,7 @@ import static com.google.appengine.api.datastore.Query.FilterPredicate;
 
 public class DatastoreHelper {
     public Entity get(KeyDto keyDto) throws EntityNotFoundException {
-        ParentKeyDto parentKeyDto = keyDto.getParentKey();
+        KeyDto parentKeyDto = keyDto.getParentKey();
         AppIdNamespaceDto namespaceDto = keyDto.getAppIdNamespace();
 
         String defaultNamespace = NamespaceManager.get();
