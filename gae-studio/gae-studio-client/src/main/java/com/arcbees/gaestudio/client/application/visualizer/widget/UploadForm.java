@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.resources.AppResources;
+import com.arcbees.gaestudio.shared.channel.Constants;
 import com.arcbees.gaestudio.shared.config.AppConfig;
 import com.google.common.base.Strings;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -28,6 +29,7 @@ import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
@@ -145,6 +147,8 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
         button.addStyleName(resources.styles().chooseFileButton());
         flowPanel.add(selectedFile);
         flowPanel.add(button);
+        Hidden hidden = new Hidden(Constants.CLIENT_ID, appConfig.getClientId());
+        flowPanel.add(hidden);
 
         return flowPanel;
     }

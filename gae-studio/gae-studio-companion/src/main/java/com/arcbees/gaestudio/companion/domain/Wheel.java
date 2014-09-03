@@ -9,6 +9,9 @@
 
 package com.arcbees.gaestudio.companion.domain;
 
+import com.googlecode.objectify.annotation.Embed;
+
+@Embed
 public class Wheel {
     private double size;
 

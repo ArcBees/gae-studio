@@ -21,6 +21,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.arcbees.gaestudio.server.appengine.AppEngineModule;
+import com.arcbees.gaestudio.server.service.visualizer.BlobsService;
+import com.arcbees.gaestudio.server.service.visualizer.BlobsServiceImpl;
 import com.arcbees.gaestudio.server.util.JsonBlobReader;
 import com.arcbees.gaestudio.server.util.JsonBlobReaderFactory;
 import com.arcbees.gaestudio.testutil.BlobGenerator;

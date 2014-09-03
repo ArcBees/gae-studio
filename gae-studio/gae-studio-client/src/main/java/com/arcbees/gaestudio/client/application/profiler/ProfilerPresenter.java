@@ -30,6 +30,7 @@ import com.arcbees.gaestudio.client.rest.ChannelService;
 import com.arcbees.gaestudio.client.rest.RecordService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.channel.Token;
+import com.arcbees.gaestudio.shared.config.AppConfig;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.common.collect.Lists;
 import com.google.gwt.appengine.channel.client.Channel;
@@ -73,6 +74,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     private final StatisticsPresenter statisticsPresenter;
     private final StatementPresenter statementPresenter;
     private final ChannelFactory channelFactory;
+    private final String clientId;
     private final DbOperationDeserializer dbOperationDeserializer;
     private final Logger logger;
     private final UiFactory uiFactory;
@@ -99,6 +101,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                       ChannelFactory channelFactory,
                       DbOperationDeserializer dbOperationDeserializer,
                       Logger logger,
+                      AppConfig appConfig,
                       UiFactory uiFactory,
                       AppConstants myConstants,
                       AppResources resources,
@@ -117,6 +120,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         this.myConstants = myConstants;
         this.resources = resources;
         this.recordService = recordService;
+        this.clientId = appConfig.getClientId();
         this.dbOperationDeserializer = dbOperationDeserializer;
         this.logger = logger;
 
@@ -260,7 +264,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     private void openChannel() {
-        restDispatch.execute(channelService.getToken(), new AsyncCallbackImpl<Token>() {
+        restDispatch.execute(channelService.getToken(clientId), new AsyncCallbackImpl<Token>() {
             @Override
             public void onSuccess(Token token) {
                 openChannel(token);

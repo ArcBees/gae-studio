@@ -16,7 +16,6 @@ import javax.inject.Provider;
 
 import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
 import com.arcbees.gaestudio.client.application.analytics.EventCategories;
-import com.arcbees.gaestudio.client.application.channel.ChannelHandler;
 import com.arcbees.gaestudio.client.application.event.ImportCompletedEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.DeleteEntitiesEvent;
 import com.arcbees.gaestudio.client.application.visualizer.event.EntitiesDeletedEvent;
@@ -72,7 +71,6 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     private final Provider<ImportPresenter> importPresenterProvider;
     private final NamespacesListPresenter namespacesListPresenter;
     private final UniversalAnalytics universalAnalytics;
-    private final ChannelHandler channelHandler;
 
     private KindPanelToggleEvent.Action action = CLOSE;
     private String currentKind;
@@ -87,8 +85,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
                      ExportService exportService,
                      Provider<ImportPresenter> importPresenterProvider,
                      NamespacesListPresenterFactory namespacesListPresenterFactory,
-                     UniversalAnalytics universalAnalytics,
-                     ChannelHandler channelHandler) {
+                     UniversalAnalytics universalAnalytics) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
@@ -97,7 +94,6 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         this.exportService = exportService;
         this.importPresenterProvider = importPresenterProvider;
         this.universalAnalytics = universalAnalytics;
-        this.channelHandler = channelHandler;
         namespacesListPresenter = namespacesListPresenterFactory.create(this);
         namespacesListPresenter.addValueChangeHandler(this);
 
@@ -162,27 +158,16 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
 
     @Override
     public void exportJson() {
-        channelHandler.openChannel(new ChannelHandler.ChannelOpenCallback() {
-            @Override
-            public void onChannelOpen() {
-                String exportKindUrl = exportService
-                        .getExportJson(currentKind, currentNamespace, extractKeysFromPlace());
+        String exportKindUrl = exportService.getExportJson(currentKind, currentNamespace, extractKeysFromPlace());
 
-                getView().setDownloadUrl(exportKindUrl);
-            }
-        });
+        getView().setDownloadUrl(exportKindUrl);
     }
 
     @Override
     public void exportCsv() {
-        channelHandler.openChannel(new ChannelHandler.ChannelOpenCallback() {
-            @Override
-            public void onChannelOpen() {
-                String exportCsvUrl = exportService.getExportCsv(currentKind, currentNamespace, extractKeysFromPlace());
+        String exportCsvUrl = exportService.getExportCsv(currentKind, currentNamespace, extractKeysFromPlace());
 
-                getView().setDownloadUrl(exportCsvUrl);
-            }
-        });
+        getView().setDownloadUrl(exportCsvUrl);
     }
 
     @Override

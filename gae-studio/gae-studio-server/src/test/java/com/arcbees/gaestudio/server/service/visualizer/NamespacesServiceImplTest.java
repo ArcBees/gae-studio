@@ -19,6 +19,8 @@ import org.jukito.TestSingleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.arcbees.gaestudio.server.service.visualizer.NamespacesService;
+import com.arcbees.gaestudio.server.service.visualizer.NamespacesServiceImpl;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
 

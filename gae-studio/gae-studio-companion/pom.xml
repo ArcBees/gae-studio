@@ -49,11 +49,6 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-codeserver</artifactId>
-        </dependency>
-
         <!-- Client dependencies -->
         <dependency>
             <groupId>com.gwtplatform</groupId>
@@ -275,7 +270,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
-                <version>${gwt-maven-plugin.version}</version>
+                <version>${gwt.version}</version>
                 <configuration>
                     <testTimeOut>180</testTimeOut>
                     <includes>**/*GwtTest.java</includes>
@@ -310,24 +305,6 @@
                         </goals>
                     </execution>
                 </executions>
-
-                <dependencies>
-                    <dependency>
-                        <groupId>com.google.gwt</groupId>
-                        <artifactId>gwt-user</artifactId>
-                        <version>${gwt.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>com.google.gwt</groupId>
-                        <artifactId>gwt-dev</artifactId>
-                        <version>${gwt.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>com.google.gwt</groupId>
-                        <artifactId>gwt-codeserver</artifactId>
-                        <version>${gwt.version}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
 
             <!-- Copy the war contents to target -->

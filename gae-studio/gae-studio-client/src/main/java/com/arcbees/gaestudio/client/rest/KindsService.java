@@ -18,9 +18,10 @@ import javax.ws.rs.QueryParam;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
+import com.gwtplatform.dispatch.rest.shared.RestService;
 
 @Path(EndPoints.KINDS)
-public interface KindsService {
+public interface KindsService extends RestService {
     @GET
     RestAction<List<String>> getKinds();
 

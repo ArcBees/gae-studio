@@ -10,7 +10,6 @@
 package com.arcbees.gaestudio.client.application.channel;
 
 import java.util.Map;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -22,20 +21,14 @@ public class MessageHandlers {
     private final Map<Topic, MessageHandler> handlerMap;
 
     @Inject
-    MessageHandlers(Set<MessageHandler> messageHandlers) {
-        ImmutableMap.Builder<Topic, MessageHandler> builder = ImmutableMap.builder();
-
-        for (MessageHandler messageHandler : messageHandlers) {
-            builder.put(messageHandler.getTopic(), messageHandler);
-        }
-
-        handlerMap = builder.build();
+    MessageHandlers(ImportCompletedMessageHandler importCompletedMessageHandler) {
+        handlerMap = ImmutableMap.<Topic, MessageHandler>builder()
+                .put(importCompletedMessageHandler.getTopic(), importCompletedMessageHandler)
+                .build();
     }
 
     public void handle(Topic topic, JSONValue payload) {
         MessageHandler messageHandler = handlerMap.get(topic);
-        if (messageHandler != null) {
-            messageHandler.handleMessage(payload);
-        }
+        messageHandler.handleMessage(payload);
     }
 }

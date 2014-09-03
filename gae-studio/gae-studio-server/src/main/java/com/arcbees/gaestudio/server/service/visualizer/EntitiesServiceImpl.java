@@ -12,7 +12,6 @@ package com.arcbees.gaestudio.server.service.visualizer;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 import javax.inject.Inject;
 
@@ -21,7 +20,6 @@ import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.server.util.DefaultValueGenerator;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.google.appengine.api.NamespaceManager;
-import com.google.appengine.api.datastore.AsyncDatastoreService;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -135,15 +133,6 @@ public class EntitiesServiceImpl implements EntitiesService {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
         return datastore.put(entities);
-    }
-
-    @Override
-    public Future<List<Key>> putAsync(Iterable<Entity> entities) {
-        AppEngineHelper.disableApiHooks();
-
-        AsyncDatastoreService datastoreService = DatastoreServiceFactory.getAsyncDatastoreService();
-
-        return datastoreService.put(entities);
     }
 
     private Entity createEmptyEntityFromTemplate(Entity template) {

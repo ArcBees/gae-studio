@@ -30,14 +30,16 @@ public class ImportServiceImpl implements ImportService {
     @Override
     public void importEntities(List<Entity> entities) {
         String defaultNamespace = NamespaceManager.get();
-        List<Entity> copies = Lists.newArrayList();
+
+        List<Entity> newEntites = Lists.newArrayList();
 
         for (Entity entity : entities) {
             // Entities imported might not have the correct appId, we need to make a copy
-            copies.add(createEntityCopy(entity));
+            Entity newEntity = createEntityCopy(entity);
+            newEntites.add(newEntity);
         }
 
-        entitiesService.putAsync(copies);
+        entitiesService.put(newEntites);
 
         NamespaceManager.set(defaultNamespace);
     }

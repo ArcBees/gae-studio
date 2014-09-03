@@ -9,9 +9,8 @@
 
 package com.arcbees.gaestudio.shared.auth;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.arcbees.gaestudio.shared.util.Validation;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class Profile {
     @NotEmpty(message = Validation.REQUIRED)

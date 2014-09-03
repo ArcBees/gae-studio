@@ -70,21 +70,3 @@
 .editorPanel {
     font-size: 16px;
 }
-
-.form {
-    display: table;
-    width: 100%;
-}
-
-.geopts {
-    display: table;
-    width: 100%;
-}
-
-.geopts > * {
-    display: table-cell;
-}
-
-.geopts > label {
-    width: 100px;
-}

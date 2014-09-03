@@ -19,9 +19,10 @@ import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
+import com.gwtplatform.dispatch.rest.shared.RestService;
 
 @Path(EndPoints.GQL)
-public interface GqlService {
+public interface GqlService extends RestService {
     @GET
     RestAction<List<EntityDto>> executeGqlRequest(@QueryParam(UrlParameters.QUERY) String request,
                                                   @QueryParam(UrlParameters.OFFSET) Integer offset,

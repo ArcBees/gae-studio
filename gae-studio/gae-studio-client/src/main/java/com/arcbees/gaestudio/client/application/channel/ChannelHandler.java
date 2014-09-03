@@ -17,6 +17,7 @@ import com.arcbees.gaestudio.client.rest.ChannelService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.shared.channel.Token;
 import com.arcbees.gaestudio.shared.channel.Topic;
+import com.arcbees.gaestudio.shared.config.AppConfig;
 import com.google.gwt.appengine.channel.client.Channel;
 import com.google.gwt.appengine.channel.client.ChannelError;
 import com.google.gwt.appengine.channel.client.ChannelFactory;
@@ -38,6 +39,7 @@ public class ChannelHandler implements SocketListener {
     private final ChannelFactory channelFactory;
     private final ChannelService channelService;
     private final RestDispatch dispatch;
+    private final AppConfig appConfig;
     private final List<ChannelOpenCallback> callbacks;
     private final MessageHandlers messageHandlers;
 
@@ -46,11 +48,13 @@ public class ChannelHandler implements SocketListener {
 
     @Inject
     ChannelHandler(ChannelService channelService,
+                   AppConfig appConfig,
                    RestDispatch dispatch,
                    ChannelFactory channelFactory,
                    MessageHandlers messageHandlers) {
         this.channelFactory = channelFactory;
         this.dispatch = dispatch;
+        this.appConfig = appConfig;
         this.channelService = channelService;
         this.messageHandlers = messageHandlers;
 
@@ -65,7 +69,7 @@ public class ChannelHandler implements SocketListener {
 
         callbacks.add(callback);
 
-        RestAction<Token> action = channelService.getToken();
+        RestAction<Token> action = channelService.getToken(appConfig.getClientId());
         dispatch.execute(action, new AsyncCallbackImpl<Token>() {
             @Override
             public void onSuccess(Token token) {

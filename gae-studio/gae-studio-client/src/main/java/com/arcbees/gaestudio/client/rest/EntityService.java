@@ -19,9 +19,10 @@ import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
+import com.gwtplatform.dispatch.rest.shared.RestService;
 
 @Path(EndPoints.ENTITY)
-public interface EntityService {
+public interface EntityService extends RestService {
     @GET
     RestAction<EntityDto> getEntity(@QueryParam(UrlParameters.KEY) String encodedKey);
 
