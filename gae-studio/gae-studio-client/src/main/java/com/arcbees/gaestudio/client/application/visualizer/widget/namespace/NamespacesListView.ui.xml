@@ -6,7 +6,7 @@
     <ui:with field="visualizer" type="com.arcbees.gaestudio.client.resources.VisualizerResources"/>
 
     <g:HTMLPanel styleName="{visualizer.styles.namespace} {visualizer.styles.root}">
-        <chzn:ChosenValueListBox ui:field="namespacesDropdown" width="200px"/>
+        <chzn:ChosenValueListBox ui:field="namespacesDropdown" width="185px"/>
         <div ui:field="delete" class="{visualizer.styles.delete} {res.styles.trashSmall}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

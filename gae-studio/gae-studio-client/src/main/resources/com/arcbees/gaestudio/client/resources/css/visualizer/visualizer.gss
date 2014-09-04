@@ -62,7 +62,8 @@
 /* -> Sidebar -- */
 
 .sidebar .namespaces {
-    width: 232px;
+    width: 220px;
+    padding-left: 15px;
 }
 
 .sidebar .actionsPanel {
@@ -72,7 +73,11 @@
 }
 
 .sidebar .dropdown {
+    background-color: #fff;
+
     width: 152px;
+
+    top: -2px;
 }
 
 .sidebar .exportBtn,
@@ -155,11 +160,11 @@
 }
 
 .namespace .delete {
-    margin: 10px 10px 10px 15px;
+    margin: 5px 10px 10px 15px;
 
     position: absolute;
     right: 5px;
-    top: 7px;
+    top: 0;
 
     cursor: pointer;
 }
