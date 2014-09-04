@@ -9,27 +9,11 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget.namespace;
 
-import javax.inject.Inject;
-
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.common.base.Strings;
-import com.google.gwt.safehtml.client.SafeHtmlTemplates;
-import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.text.shared.AbstractRenderer;
 
 public class AppIdNamespaceRenderer extends AbstractRenderer<AppIdNamespaceDto> {
-    interface NamespaceTemplate extends SafeHtmlTemplates {
-        @SafeHtmlTemplates.Template("<span>{0}</span>")
-        SafeHtml namespaceTemplate(String namespace);
-    }
-
-    private final NamespaceTemplate template;
-
-    @Inject
-    AppIdNamespaceRenderer(NamespaceTemplate template) {
-        this.template = template;
-    }
-
     @Override
     public String render(AppIdNamespaceDto object) {
         String namespace;
@@ -42,6 +26,6 @@ public class AppIdNamespaceRenderer extends AbstractRenderer<AppIdNamespaceDto> 
             namespace = object.getNamespace();
         }
 
-        return template.namespaceTemplate(namespace).asString();
+        return namespace;
     }
 }

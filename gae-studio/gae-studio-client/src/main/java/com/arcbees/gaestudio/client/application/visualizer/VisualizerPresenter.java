@@ -291,6 +291,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
             placeManager.revealPlace(builder.build());
         } else if (currentParsedEntities != null && !currentParsedEntities.isEmpty()) {
             EditEntitiesEvent.fire(this, currentParsedEntities);
+            getView().showEntityDetails();
         }
     }
 
