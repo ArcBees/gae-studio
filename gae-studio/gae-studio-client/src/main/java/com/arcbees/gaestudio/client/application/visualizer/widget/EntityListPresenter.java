@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.arcbees.gaestudio.client.application.event.ColumnVisibilityChangedEvent;
 import com.arcbees.gaestudio.client.application.event.DisplayMessageEvent;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
@@ -39,6 +40,7 @@ import com.arcbees.gaestudio.client.rest.EntitiesService;
 import com.arcbees.gaestudio.client.rest.GqlService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.RestCallbackImpl;
+import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.google.common.base.Function;
@@ -71,7 +73,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         implements EntityListUiHandlers, EntitySavedHandler, EntityDeletedHandler, EntitiesDeletedHandler,
         SetStateFromPlaceRequestEvent.SetStateFromPlaceRequestHandler, KindSelectedEvent.KindSelectedHandler,
         EntitiesSavedEvent.EntitiesSavedHandler, DeselectEvent.DeselectHandler,
-        NamespaceSelectedEvent.NamespaceSelectedHandler {
+        NamespaceSelectedEvent.NamespaceSelectedHandler, ColumnVisibilityChangedEvent.ColumnVisibilityChangedHandler {
     interface MyView extends View, HasUiHandlers<EntityListUiHandlers> {
         void setNewKind(String currentKind);
 
@@ -101,10 +103,12 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
         void addOrReplaceEntities(List<EntityDto> entities);
 
-        List<String> getDefaultColumnNames();
+        void setKind(String appId, String namespace, String kind);
+
+        void updateColumnVisibility();
     }
 
-    static final Object SLOT_CONTROLS = new Object();
+    static final Object SLOT_COLUMN_CONFIG_TOOLTIP = new Object();
 
     private final RestDispatch restDispatch;
     private final EntitiesService entitiesService;
@@ -156,7 +160,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     @Override
     public void onEntitySelected(Set<ParsedEntity> selectedEntities) {
         if (selectedEntities.size() == 1) {
-            RowLockedEvent.fire(this);
             ParsedEntity selectedEntity = Iterables.getOnlyElement(selectedEntities);
             EntitySelectedEvent.fire(this, selectedEntity);
         } else {
@@ -268,6 +271,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     }
 
     @Override
+    public void onColumnVisibilityChanged(ColumnVisibilityChangedEvent event) {
+        getView().updateColumnVisibility();
+    }
+
+    @Override
     protected void onBind() {
         super.onBind();
 
@@ -279,8 +287,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         addRegisteredHandler(KindSelectedEvent.getType(), this);
         addRegisteredHandler(DeselectEvent.getType(), this);
         addRegisteredHandler(NamespaceSelectedEvent.getType(), this);
+        addRegisteredHandler(ColumnVisibilityChangedEvent.getType(), this);
 
-        setInSlot(SLOT_CONTROLS, columnFilterPresenter);
+        setInSlot(SLOT_COLUMN_CONFIG_TOOLTIP, columnFilterPresenter);
     }
 
     private void setTableDataProvider() {
@@ -359,9 +368,13 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             getView().addProperty(propertyName);
         }
 
-        List<String> columnNames = getView().getDefaultColumnNames();
+        List<String> columnNames = Lists.newArrayList(ParsedEntityColumnCreator.DEFAULT_COLUMN_NAMES);
         columnNames.addAll(propertyNames);
-        TypeInfoLoadedEvent.fire(this, columnNames, entities.get(0));
+        ParsedEntity prototype = entities.get(0);
+        TypeInfoLoadedEvent.fire(this, columnNames, prototype);
+
+        AppIdNamespaceDto appIdNamespace = prototype.getKey().getAppIdNamespace();
+        getView().setKind(appIdNamespace.getAppId(), appIdNamespace.getNamespace(), prototype.getKey().getKind());
 
         getView().redraw();
     }

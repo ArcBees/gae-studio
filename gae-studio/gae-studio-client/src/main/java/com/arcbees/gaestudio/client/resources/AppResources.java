@@ -162,6 +162,14 @@ public interface AppResources extends ClientBundle {
         String kindsList();
 
         String hiddenCol();
+
+        String columnFilterRoot();
+
+        String columnFilterList();
+
+        String pagerContainer();
+
+        String columnNameCheckbox();
     }
 
     @Source({"css/colors.gss", "css/mixins.gss", "css/styles.gss"})

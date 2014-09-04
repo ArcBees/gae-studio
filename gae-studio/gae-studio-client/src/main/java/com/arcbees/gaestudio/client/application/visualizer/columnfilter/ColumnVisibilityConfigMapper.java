@@ -9,14 +9,9 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.columnfilter;
 
-import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
-import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
+import java.util.Map;
 
-public class ColumnFilterModule extends AbstractPresenterModule {
-    @Override
-    protected void configure() {
-        bind(ColumnNamePresenter.MyView.class).to(ColumnNameView.class);
-        bind(ColumnFilterPresenter.MyView.class).to(ColumnFilterView.class);
-        install(new GinFactoryModuleBuilder().build(ColumnNamePresenterFactory.class));
-    }
+import com.github.nmorel.gwtjackson.client.ObjectMapper;
+
+public interface ColumnVisibilityConfigMapper extends ObjectMapper<Map<String, Map<String, Boolean>>> {
 }

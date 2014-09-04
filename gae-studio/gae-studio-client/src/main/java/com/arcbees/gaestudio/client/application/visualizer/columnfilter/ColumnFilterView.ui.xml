@@ -1,6 +1,9 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
         xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <g:HTMLPanel ui:field="list">
-
+    <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
+    <g:HTMLPanel styleName="{res.styles.columnFilterRoot}">
+        <g:Anchor ui:field="hideAll">Hide All</g:Anchor>
+        <g:Anchor ui:field="showAll">Show All</g:Anchor>
+        <g:HTMLPanel ui:field="list" styleName="{res.styles.columnFilterList}"/>
     </g:HTMLPanel>
 </ui:UiBinder>

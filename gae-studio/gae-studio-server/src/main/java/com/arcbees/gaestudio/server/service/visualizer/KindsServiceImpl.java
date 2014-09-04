@@ -36,8 +36,8 @@ public class KindsServiceImpl implements KindsService {
     public List<String> getKinds(String namespace) {
         AppEngineHelper.disableApiHooks();
 
-        Iterable<Entity> entityIterable = datastoreHelper.queryOnNamespace(namespace,
-                new Query(Entities.KIND_METADATA_KIND));
+        Iterable<Entity> entityIterable = datastoreHelper
+                .queryOnNamespace(namespace, new Query(Entities.KIND_METADATA_KIND));
 
         return getKinds(entityIterable);
     }

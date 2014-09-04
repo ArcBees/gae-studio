@@ -9,14 +9,16 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.columnfilter;
 
-import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
-import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
+import com.google.inject.assistedinject.Assisted;
 
-public class ColumnFilterModule extends AbstractPresenterModule {
-    @Override
-    protected void configure() {
-        bind(ColumnNamePresenter.MyView.class).to(ColumnNameView.class);
-        bind(ColumnFilterPresenter.MyView.class).to(ColumnFilterView.class);
-        install(new GinFactoryModuleBuilder().build(ColumnNamePresenterFactory.class));
-    }
+public interface ColumnNamePresenterFactory {
+    String APP_ID = "appId";
+    String KIND = "kind";
+    String NAMESPACE = "namespace";
+    String COLUMN_NAME = "columnName";
+
+    ColumnNamePresenter create(@Assisted(APP_ID) String appId,
+                               @Assisted(NAMESPACE) String namespace,
+                               @Assisted(KIND) String kind,
+                               @Assisted(COLUMN_NAME) String columnName);
 }

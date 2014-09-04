@@ -32,8 +32,7 @@ public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> imp
     @UiField(provided = true)
     AppResources resources;
 
-    private final SingleSelectionModel<FilterValue<OperationType>> selectionModel =
-            new SingleSelectionModel<FilterValue<OperationType>>();
+    private final SingleSelectionModel<FilterValue<OperationType>> selectionModel = new SingleSelectionModel<>();
 
     @Inject
     TypeFilterView(Binder uiBinder,
@@ -41,7 +40,7 @@ public class TypeFilterView extends ViewWithUiHandlers<TypeFilterUiHandlers> imp
                    TypeFilterCell typeFilterCell,
                    RequestFilterCellListResources cellListResources) {
         this.resources = resources;
-        requests = new CellList<FilterValue<OperationType>>(typeFilterCell, cellListResources);
+        requests = new CellList<>(typeFilterCell, cellListResources);
 
         initWidget(uiBinder.createAndBindUi(this));
 

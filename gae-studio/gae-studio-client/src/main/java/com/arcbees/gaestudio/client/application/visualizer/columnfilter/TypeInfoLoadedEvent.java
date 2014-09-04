@@ -12,7 +12,6 @@ package com.arcbees.gaestudio.client.application.visualizer.columnfilter;
 import java.util.List;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.google.appengine.api.datastore.Entity;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;

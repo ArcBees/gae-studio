@@ -29,6 +29,8 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
 
 public class ParsedEntityColumnCreator {
+    public static final List<String> DEFAULT_COLUMN_NAMES =
+            Lists.newArrayList("ID/NAME", "Parent Kind", "Parent ID", "Namespace");
     public static int getDefaultColumnCount() {
         return DEFAULT_COLUMN_COUNT;
     }

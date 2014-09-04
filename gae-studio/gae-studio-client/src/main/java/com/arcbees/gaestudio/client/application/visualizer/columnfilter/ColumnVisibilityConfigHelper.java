@@ -24,11 +24,11 @@ import static com.arcbees.gaestudio.client.application.visualizer.columnfilter.C
 
 public class ColumnVisibilityConfigHelper {
     private final Storage storage = Storage.getLocalStorageIfSupported();
-    private final ColumnConfigMapper columnConfigMapper;
+    private final ColumnVisibilityConfigMapper columnVisibilityConfigMapper;
 
     @Inject
-    ColumnVisibilityConfigHelper(ColumnConfigMapper columnConfigMapper) {
-        this.columnConfigMapper = columnConfigMapper;
+    ColumnVisibilityConfigHelper(ColumnVisibilityConfigMapper columnVisibilityConfigMapper) {
+        this.columnVisibilityConfigMapper = columnVisibilityConfigMapper;
     }
 
     public void setColumnVisible(String appId, String namespace, String kind, String columnName, boolean visible) {
@@ -51,8 +51,6 @@ public class ColumnVisibilityConfigHelper {
     }
 
     public void addNewColumnsIfNeeded(String appId, String namespace, String kind, List<String> columnNames) {
-        Storage storage = Storage.getLocalStorageIfSupported();
-
         Map<String, Map<String, Boolean>> allConfigs = getVisibilityConfig();
 
         String kindKey = generateKindKey(appId, namespace, kind);
@@ -69,7 +67,7 @@ public class ColumnVisibilityConfigHelper {
             }
         }
 
-        storage.setItem(COLUMN_VISIBILITY_CONFIG, columnConfigMapper.write(allConfigs));
+        storage.setItem(COLUMN_VISIBILITY_CONFIG, columnVisibilityConfigMapper.write(allConfigs));
     }
 
     private String generateKindKey(String appId, String namespace, String kind) {
@@ -77,17 +75,16 @@ public class ColumnVisibilityConfigHelper {
     }
 
     private void saveVisibilityConfig(Map<String, Map<String, Boolean>> visibilityConfig) {
-        storage.setItem(COLUMN_VISIBILITY_CONFIG, columnConfigMapper.write(visibilityConfig));
+        storage.setItem(COLUMN_VISIBILITY_CONFIG, columnVisibilityConfigMapper.write(visibilityConfig));
     }
 
     private Map<String, Map<String, Boolean>> getVisibilityConfig() {
         String item = storage.getItem(COLUMN_VISIBILITY_CONFIG);
-
         if ("".equals(Strings.nullToEmpty(item))) {
             Map<String, Map<String, Boolean>> map = new HashMap<>();
-            storage.setItem(COLUMN_VISIBILITY_CONFIG, columnConfigMapper.write(map));
+            storage.setItem(COLUMN_VISIBILITY_CONFIG, columnVisibilityConfigMapper.write(map));
         }
 
-        return columnConfigMapper.read(item);
+        return columnVisibilityConfigMapper.read(item);
     }
 }

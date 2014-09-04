@@ -9,56 +9,83 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.columnfilter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.google.gwt.query.client.GQuery;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 public class ColumnFilterPresenter extends PresenterWidget<ColumnFilterPresenter.MyView> implements
-        TypeInfoLoadedEvent.TypeInfoLoadedHandler {
-    interface MyView extends View {
+        TypeInfoLoadedEvent.TypeInfoLoadedHandler, ColumnFilterUiHandlers {
+    interface MyView extends View, HasUiHandlers<ColumnFilterUiHandlers> {
         void clear();
 
         void display(IsWidget isWidget);
     }
 
-    private final ColumnVisibilityConfigHelper columnVisibilityConfigHelper;
-    private final ColumnVisibilityWidgetFactory columnVisibilityWidgetFactory;
     static final String COLUMN_VISIBILITY_CONFIG = "column_visibility_config";
+    static final Object SLOT_COLUMNS = new Object();
+
+    private final ColumnVisibilityConfigHelper columnVisibilityConfigHelper;
+    private final ColumnNamePresenterFactory columnNamePresenterFactory;
+
+    private String appId;
+    private String namespace;
+    private String kind;
+    private List<ColumnNamePresenter> columnNamePresenters;
 
     @Inject
     ColumnFilterPresenter(EventBus eventBus,
                           MyView view,
                           ColumnVisibilityConfigHelper columnVisibilityConfigHelper,
-                          ColumnVisibilityWidgetFactory columnVisibilityWidgetFactory) {
+                          ColumnNamePresenterFactory columnNamePresenterFactory) {
         super(eventBus, view);
 
         this.columnVisibilityConfigHelper = columnVisibilityConfigHelper;
-        this.columnVisibilityWidgetFactory = columnVisibilityWidgetFactory;
+        this.columnNamePresenterFactory = columnNamePresenterFactory;
+        this.columnNamePresenters = new ArrayList<>();
+
+        getView().setUiHandlers(this);
     }
 
     @Override
     public void onTypeInfoLoaded(TypeInfoLoadedEvent event) {
         ParsedEntity entity = event.getPrototype();
-        String namespace = entity.getKey().getAppIdNamespace().getNamespace();
-        String appId = entity.getKey().getAppIdNamespace().getAppId();
-        String kind = entity.getKey().getKind();
+        appId = entity.getKey().getAppIdNamespace().getAppId();
+        namespace = entity.getKey().getAppIdNamespace().getNamespace();
+        kind = entity.getKey().getKind();
         List<String> columnNames = event.getColumnNames();
-
-        GQuery.console.info("here");
 
         columnVisibilityConfigHelper.addNewColumnsIfNeeded(appId, namespace, kind, columnNames);
 
-        getView().clear();
+        clearSlot(SLOT_COLUMNS);
+        columnNamePresenters.clear();
 
         for (String columnName : columnNames) {
-            getView().display(columnVisibilityWidgetFactory.create(appId, namespace, kind, columnName));
+            ColumnNamePresenter columnNamePresenter =
+                    columnNamePresenterFactory.create(appId, namespace, kind, columnName);
+            columnNamePresenters.add(columnNamePresenter);
+            addToSlot(SLOT_COLUMNS, columnNamePresenter);
+        }
+    }
+
+    @Override
+    public void showAll() {
+        for (ColumnNamePresenter columnNamePresenter : columnNamePresenters) {
+            columnNamePresenter.setChecked(true);
+        }
+    }
+
+    @Override
+    public void hideAll() {
+        for (ColumnNamePresenter columnNamePresenter : columnNamePresenters) {
+            columnNamePresenter.setChecked(false);
         }
     }
 

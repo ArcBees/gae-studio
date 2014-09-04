@@ -8,12 +8,13 @@
     <ui:with field="debugIds" type="com.arcbees.gaestudio.client.debug.DebugIds"/>
 
     <g:HTMLPanel ui:field="panel" visible="false" styleName="{visualizer.entityList.main}">
-        <g:Button ui:field="hide">hide</g:Button>
-        <g:Button ui:field="show">show</g:Button>
         <g:SimplePanel ui:field="columnControls"/>
-        <g:Button ui:field="getall">getemall</g:Button>
         <div class="{visualizer.entityList.heading} {resources.styles.pager}">
-            <cellview:SimplePager ui:field="pager"/>
+            <span class="{resources.styles.pagerContainer}">
+                <i ui:field="column" class="{fonts.icons.icon_columns}"></i>
+                <cellview:SimplePager ui:field="pager"/>
+            </span>
+
             <div ui:field="refresh" class="{visualizer.entityList.refresh} {resources.styles.refresh}">
                 <i class="{fonts.icons.icon_refresh}"></i>
             </div>
