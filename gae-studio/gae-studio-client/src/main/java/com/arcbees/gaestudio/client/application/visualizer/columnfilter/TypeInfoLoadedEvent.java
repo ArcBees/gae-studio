@@ -17,6 +17,10 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 
 public class TypeInfoLoadedEvent extends GwtEvent<TypeInfoLoadedEvent.TypeInfoLoadedHandler> {
+    public interface TypeInfoLoadedHandler extends EventHandler {
+        void onTypeInfoLoaded(TypeInfoLoadedEvent event);
+    }
+
     private final List<String> columnNames;
     private final ParsedEntity prototype;
 
@@ -32,10 +36,6 @@ public class TypeInfoLoadedEvent extends GwtEvent<TypeInfoLoadedEvent.TypeInfoLo
 
     public static void fire(HasHandlers source, TypeInfoLoadedEvent eventInstance) {
         source.fireEvent(eventInstance);
-    }
-
-    public interface TypeInfoLoadedHandler extends EventHandler {
-        public void onTypeInfoLoaded(TypeInfoLoadedEvent event);
     }
 
     private static final Type<TypeInfoLoadedHandler> TYPE = new Type<>();
