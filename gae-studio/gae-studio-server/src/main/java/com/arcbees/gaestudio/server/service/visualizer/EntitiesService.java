@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.server.service.visualizer;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Future;
 
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.google.appengine.api.datastore.Entity;
@@ -28,4 +29,6 @@ public interface EntitiesService {
     Integer getCount(String kind, String namespace);
 
     List<Key> put(Iterable<Entity> entities);
+
+    Future<List<Key>> putAsync(Iterable<Entity> entities);
 }

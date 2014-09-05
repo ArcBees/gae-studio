@@ -17,10 +17,9 @@ import javax.ws.rs.Path;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
-import com.gwtplatform.dispatch.rest.shared.RestService;
 
 @Path(EndPoints.NAMESPACES)
-public interface NamespacesService extends RestService {
+public interface NamespacesService {
     @GET
     RestAction<List<AppIdNamespaceDto>> getNamespaces();
 }

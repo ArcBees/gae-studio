@@ -24,6 +24,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNull;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
@@ -181,6 +182,13 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
                                       PropertyType propertyType) {
         if (!valuesPrototypes.containsKey(property) || propertyType != null) {
             JSONObject prototype = JSONParser.parseStrict(propertyValue.toString()).isObject();
+
+            if (prototype == null) {
+                prototype = new JSONObject();
+                prototype.put(PropertyName.GAE_PROPERTY_TYPE, new JSONString(PropertyType.STRING.name()));
+                prototype.put(PropertyName.INDEXED, JSONBoolean.getInstance(false));
+            }
+
             prototype.put(PropertyName.VALUE, getDefaultPropertyValue(propertyType));
             valuesPrototypes.put(property, prototype);
         }

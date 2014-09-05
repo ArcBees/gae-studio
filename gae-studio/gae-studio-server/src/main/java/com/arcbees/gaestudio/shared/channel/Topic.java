@@ -10,5 +10,8 @@
 package com.arcbees.gaestudio.shared.channel;
 
 public enum Topic {
-    IMPORT_COMPLETED
+    TOO_LARGE_IMPORT,
+    EXPORT_COMPLETED,
+    IMPORT_COMPLETED,
+    EXPORT_TOO_LARGE
 }
