@@ -47,6 +47,11 @@ public class KeyPrettifier {
 
     public String writeParentKeys(KeyDto key) {
         String returnValue = "";
+
+        if (key == null) {
+            return returnValue;
+        }
+
         KeyDto parentKey = key.getParentKey();
 
         if (parentKey != null) {
