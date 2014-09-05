@@ -62,16 +62,22 @@ public class CarResource {
     }
 
     @POST
-    public Response createCar(Car car) {
+    public Response createCar() {
+
+        Car car = new Car();
+        car.setMake("lololololol");
         car.setId(null);
 
         if (car.getMixedProperties() != null) {
             convertGeoPts(car);
         }
 
+        setVehicleParent(car);
+        setManufacturerRef(car);
+
         carDao.put(car);
 
-        return Response.ok(car.getId()).build();
+        return Response.ok().build();
     }
 
     @Path(TestEndPoints.HIERARCHY)

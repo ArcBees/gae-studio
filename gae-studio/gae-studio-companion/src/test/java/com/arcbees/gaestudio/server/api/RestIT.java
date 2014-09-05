@@ -47,7 +47,7 @@ public class RestIT {
         RestAssured.defaultParser = Parser.JSON;
         RestAssured.requestContentType(ContentType.JSON);
 
-        HOSTNAME = "http://localhost:8888/";
+        HOSTNAME = "http://localhost:8080/";
     }
 
     protected final Gson gson = new GsonBuilder().create();
@@ -56,7 +56,7 @@ public class RestIT {
     public void setUp() {
         helper.setUp();
 
-        clearDatabase();
+//        clearDatabase();
     }
 
     @After

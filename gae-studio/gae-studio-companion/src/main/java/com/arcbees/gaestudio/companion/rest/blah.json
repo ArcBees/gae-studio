@@ -1,0 +1,26 @@
+[
+    {
+        "key": {
+            "parentKey": {
+                "parentKey": null,
+                "appIdNamespace": {
+                    "appId": "gaestudio-staging",
+                    "namespace": ""
+                },
+                "encodedKey": "ahFnYWVzdHVkaW8tc3RhZ2luZ3IUCxIHVmVoaWNsZRiAgICAgICACww",
+                "kind": "Vehicle",
+                "id": 6192449487634432,
+                "name": null
+            },
+            "appIdNamespace": {
+                "appId": "gaestudio-staging",
+                "namespace": ""
+            },
+            "encodedKey": "ahFnYWVzdHVkaW8tc3RhZ2luZ3IkCxIHVmVoaWNsZRiAgICAgICACwwLEgNDYXIYgICAgICAwAsM",
+            "kind": "Car",
+            "id": 6473924464345088,
+            "name": null
+        },
+        "json": "{\n  \"key\": {\n    \"parentKey\": {\n      \"parentKey\": null,\n      \"kind\": \"Vehicle\",\n      \"appId\": null,\n      \"id\": 6192449487634432,\n      \"name\": null,\n      \"appIdNamespace\": {\n        \"appId\": \"gaestudio-staging\",\n        \"namespace\": \"\"\n      }\n    },\n    \"kind\": \"Car\",\n    \"appId\": null,\n    \"id\": 6473924464345088,\n    \"name\": null,\n    \"appIdNamespace\": {\n      \"appId\": \"gaestudio-staging\",\n      \"namespace\": \"\"\n    }\n  },\n  \"propertyMap\": {\n    \"manufacturerRef\": {\n      \"value\": {\n        \"parentKey\": {\n          \"parentKey\": {\n            \"parentKey\": null,\n            \"kind\": \"Concept\",\n            \"appId\": null,\n            \"id\": 4785074604081152,\n            \"name\": null,\n            \"appIdNamespace\": {\n              \"appId\": \"gaestudio-staging\",\n              \"namespace\": \"\"\n            }\n          },\n          \"kind\": \"Business\",\n          \"appId\": null,\n          \"id\": 5910974510923776,\n          \"name\": null,\n          \"appIdNamespace\": {\n            \"appId\": \"gaestudio-staging\",\n            \"namespace\": \"\"\n          }\n        },\n        \"kind\": \"Manufacturer\",\n        \"appId\": null,\n        \"id\": 5348024557502464,\n        \"name\": null,\n        \"appIdNamespace\": {\n          \"appId\": \"gaestudio-staging\",\n          \"namespace\": \"\"\n        }\n      },\n      \"__gaePropertyType\": \"KEY\",\n      \"__indexed\": false\n    },\n    \"make\": {\n      \"value\": \"lololololol\",\n      \"__gaePropertyType\": \"STRING\"\n    }\n  }\n}"
+    }
+]
