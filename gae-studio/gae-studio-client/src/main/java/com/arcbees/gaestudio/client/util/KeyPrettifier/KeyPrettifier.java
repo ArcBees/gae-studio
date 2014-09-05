@@ -34,7 +34,7 @@ public class KeyPrettifier {
         if (jsonObject != null) {
             String kind = jsonObject.get(PropertyName.KIND).isString().stringValue();
 
-            String id = jsonObject.get(PropertyName.ID).toString();
+            long id = (long) jsonObject.get(PropertyName.ID).isNumber().doubleValue();
             String name = jsonObject.get(PropertyName.NAME).toString();
 
             String idName = getIdName(id, name);
@@ -57,7 +57,7 @@ public class KeyPrettifier {
         if (parentKey != null) {
             String kind = parentKey.getKind();
 
-            String id = parentKey.getId().toString();
+            long id = parentKey.getId();
             String name = parentKey.getName();
 
             String idName = getIdName(id, name);
@@ -73,7 +73,7 @@ public class KeyPrettifier {
 
         String kind = key.get(PropertyName.KIND).isString().stringValue();
 
-        String id = key.get(PropertyName.ID).toString();
+        long id = (long) key.get(PropertyName.ID).isNumber().doubleValue();
         String name = key.get(PropertyName.NAME).toString();
         String idName = getIdName(id, name);
 
@@ -85,14 +85,14 @@ public class KeyPrettifier {
 
         String kind = key.getKind();
 
-        String id = key.getId().toString();
+        long id = key.getId();
         String name = key.getName();
         String idName = getIdName(id, name);
 
         return parentValue + appMessages.keyPrettifyTemplate(kind, idName);
     }
 
-    private String getIdName(String id, String name) {
-        return "0".equals(id) ? name : id;
+    private String getIdName(long id, String name) {
+        return 0l == id ? name : String.valueOf(id);
     }
 }
