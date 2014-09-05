@@ -9,8 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.entity.editor;
 
-import javax.inject.Inject;
-
 import com.arcbees.gaestudio.client.application.entity.editor.EntityEditorPresenter.MyView;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -20,7 +18,6 @@ import com.gwtplatform.mvp.client.ViewImpl;
 public class EntityEditorView extends ViewImpl implements MyView {
     private final FlowPanel panel;
 
-    @Inject
     EntityEditorView() {
         panel = new FlowPanel();
 

@@ -21,7 +21,7 @@ public class KeyPrettifier {
     private final AppMessages appMessages;
 
     @Inject
-    public KeyPrettifier(AppMessages appMessages) {
+    KeyPrettifier(AppMessages appMessages) {
         this.appMessages = appMessages;
     }
 
@@ -93,6 +93,6 @@ public class KeyPrettifier {
     }
 
     private String getIdName(String id, String name) {
-        return id.equals("0") ? name : id;
+        return "0".equals(id) ? name : id;
     }
 }
