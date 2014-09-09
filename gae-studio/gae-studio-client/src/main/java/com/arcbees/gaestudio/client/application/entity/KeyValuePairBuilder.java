@@ -17,18 +17,23 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
+import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyDtoMapper;
 import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyPrettifier;
 import com.arcbees.gaestudio.shared.PropertyType;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.common.collect.Lists;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 
 public class KeyValuePairBuilder {
     private final KeyPrettifier keyPrettifier;
+    private final KeyDtoMapper keyDtoMapper;
 
     @Inject
-    KeyValuePairBuilder(KeyPrettifier keyPrettifier) {
+    KeyValuePairBuilder(KeyPrettifier keyPrettifier,
+                        KeyDtoMapper keyDtoMapper) {
         this.keyPrettifier = keyPrettifier;
+        this.keyDtoMapper = keyDtoMapper;
     }
 
     public List<KeyValuePair> fromParsedEntity(ParsedEntity parsedEntity) {
@@ -44,7 +49,8 @@ public class KeyValuePairBuilder {
 
             if (type == PropertyType.KEY) {
                 JSONObject parsedJson = JSONParser.parseStrict(val).isObject();
-                val = keyPrettifier.prettifyKey(parsedJson);
+                KeyDto keyDto = keyDtoMapper.fromJSONObject(parsedJson);
+                val = keyPrettifier.prettifyKey(keyDto);
             }
 
             KeyValuePair keyValuePair = new KeyValuePair(prop, val);
