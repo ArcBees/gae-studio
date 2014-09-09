@@ -1,14 +1,14 @@
 @url CHOSEN_SPRITE_URL chosenArrow;
 
 .chzn-container-single .chzn-single {
-    background-color: #fff;
+    background-color: transparent;
     background-image: none;
     color: #222;
+    text-transform: uppercase;
 
-    height: 23px;
-    border: 1px solid #fff;
+    height: 25px;
+    border: none;
 
-    top: -2px;
     right: 0;
 
     -webkit-border-radius: 0;
@@ -19,6 +19,10 @@
     box-shadow: none;
 }
 
+.chzn-container-single .chzn-single-with-drop {
+    background-color: #fff;
+}
+
 .chzn-container-single .chzn-search {
     display: none;
 }
@@ -26,13 +30,29 @@
 .chzn-container .chzn-drop {
     margin-top: -1px;
     margin-left: 0;
-    border-color: #fff;
     width: 100% !important; /* to overwrite the javascript */
+    border: none;
+
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
 
 .chzn-container .chzn-results {
-    margin: 2px 4px 2px 0;
-    padding: 0 2px;
+    margin: 0;
+    padding: 0;
+}
+
+.chzn-container .chzn-results .active-result{
+    text-transform: uppercase;
+}
+
+.chzn-container-single {
+    font-size: 16px;
+}
+
+.chzn-container-single span {
+    font-weight: bold;
 }
 
 .chzn-container-single .chzn-single div b {

@@ -29,7 +29,7 @@
     width: 1em;
     margin: 0 .1em;
 }
- 
+
 .icon_menu:before {content: "\e810";}
 .icon_columns:before {content: "\e811";}
 .icon_cancel:before {content: "\e800";}
