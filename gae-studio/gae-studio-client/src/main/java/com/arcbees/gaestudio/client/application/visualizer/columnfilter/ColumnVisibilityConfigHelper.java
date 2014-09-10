@@ -80,9 +80,11 @@ public class ColumnVisibilityConfigHelper {
 
     private Map<String, Map<String, Boolean>> getVisibilityConfig() {
         String item = storage.getItem(COLUMN_VISIBILITY_CONFIG);
-        if ("".equals(Strings.nullToEmpty(item))) {
+
+        if (Strings.isNullOrEmpty(item)) {
             Map<String, Map<String, Boolean>> map = new HashMap<>();
-            storage.setItem(COLUMN_VISIBILITY_CONFIG, columnVisibilityConfigMapper.write(map));
+            item = columnVisibilityConfigMapper.write(map);
+            storage.setItem(COLUMN_VISIBILITY_CONFIG, item);
         }
 
         return columnVisibilityConfigMapper.read(item);
