@@ -10,24 +10,25 @@
 package com.arcbees.gaestudio.client.application.visualizer.columnfilter;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import com.arcbees.gaestudio.client.application.visualizer.columnfilter.storage.StorageAdapter;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.google.gwt.storage.client.Storage;
-
-import static com.arcbees.gaestudio.client.application.visualizer.columnfilter.ColumnFilterPresenter
-        .COLUMN_VISIBILITY_CONFIG;
 
 public class ColumnVisibilityConfigHelper {
-    private final Storage storage = Storage.getLocalStorageIfSupported();
+    static final boolean DEFAULT_COLUMN_VISIBILITY = true;
+    static final String COLUMN_VISIBILITY_CONFIG = "column_visibility_config";
+
+    private final StorageAdapter storage;
     private final ColumnVisibilityConfigMapper columnVisibilityConfigMapper;
 
     @Inject
-    ColumnVisibilityConfigHelper(ColumnVisibilityConfigMapper columnVisibilityConfigMapper) {
+    ColumnVisibilityConfigHelper(ColumnVisibilityConfigMapper columnVisibilityConfigMapper,
+                                 StorageAdapter storage) {
+        this.storage = storage;
         this.columnVisibilityConfigMapper = columnVisibilityConfigMapper;
     }
 
@@ -36,6 +37,12 @@ public class ColumnVisibilityConfigHelper {
 
         String kindKey = generateKindKey(appId, namespace, kind);
         Map<String, Boolean> configForKind = visibilityConfig.get(kindKey);
+
+        if (configForKind == null) {
+            configForKind = new HashMap<>();
+            visibilityConfig.put(kindKey, configForKind);
+        }
+
         configForKind.put(columnName, visible);
 
         saveVisibilityConfig(visibilityConfig);
@@ -47,27 +54,17 @@ public class ColumnVisibilityConfigHelper {
         String kindKey = generateKindKey(appId, namespace, kind);
         Map<String, Boolean> configForKind = visibilityConfig.get(kindKey);
 
-        return configForKind.get(columnName);
-    }
-
-    public void addNewColumnsIfNeeded(String appId, String namespace, String kind, List<String> columnNames) {
-        Map<String, Map<String, Boolean>> allConfigs = getVisibilityConfig();
-
-        String kindKey = generateKindKey(appId, namespace, kind);
-
-        Map<String, Boolean> configForKind = allConfigs.get(kindKey);
         if (configForKind == null) {
             configForKind = new HashMap<>();
-            allConfigs.put(kindKey, configForKind);
+            visibilityConfig.put(kindKey, configForKind);
         }
 
-        for (String columnName : columnNames) {
-            if (!configForKind.containsKey(columnName)) {
-                configForKind.put(columnName, true);
-            }
+        if (!configForKind.containsKey(columnName)) {
+            configForKind.put(columnName, DEFAULT_COLUMN_VISIBILITY);
+            saveVisibilityConfig(visibilityConfig);
         }
 
-        storage.setItem(COLUMN_VISIBILITY_CONFIG, columnVisibilityConfigMapper.write(allConfigs));
+        return configForKind.get(columnName);
     }
 
     private String generateKindKey(String appId, String namespace, String kind) {

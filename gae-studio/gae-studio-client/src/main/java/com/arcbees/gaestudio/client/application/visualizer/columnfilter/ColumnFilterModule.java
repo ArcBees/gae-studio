@@ -9,14 +9,17 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.columnfilter;
 
+import com.arcbees.gaestudio.client.application.visualizer.columnfilter.storage.StorageModule;
 import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class ColumnFilterModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
+        install(new StorageModule());
+        install(new GinFactoryModuleBuilder().build(ColumnNamePresenterFactory.class));
+
         bind(ColumnNamePresenter.MyView.class).to(ColumnNameView.class);
         bind(ColumnFilterPresenter.MyView.class).to(ColumnFilterView.class);
-        install(new GinFactoryModuleBuilder().build(ColumnNamePresenterFactory.class));
     }
 }
