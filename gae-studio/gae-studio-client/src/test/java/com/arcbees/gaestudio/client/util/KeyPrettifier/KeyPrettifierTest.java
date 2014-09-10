@@ -40,7 +40,7 @@ public class KeyPrettifierTest {
     }
 
     @Test
-    public void writeParentKeys_noParentKey2() {
+    public void writeParentKeys_nullKey() {
         // When
         String prettifiedKey = keyPrettifier.prettifyKey(null);
 
