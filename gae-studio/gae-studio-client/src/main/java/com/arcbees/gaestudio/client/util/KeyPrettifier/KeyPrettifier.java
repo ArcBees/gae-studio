@@ -23,11 +23,15 @@ public class KeyPrettifier {
     }
 
     public String prettifyKey(KeyDto key) {
+        if (key == null) {
+            return "";
+        }
+
         String parentValue = writeParentKeys(key);
 
         String kind = key.getKind();
 
-        String id = key.getId().toString();
+        long id = key.getId();
         String name = key.getName();
         String idName = getIdName(id, name);
 
@@ -36,11 +40,6 @@ public class KeyPrettifier {
 
     private String writeParentKeys(KeyDto key) {
         String returnValue = "";
-
-        if (key == null) {
-            return returnValue;
-        }
-
         KeyDto parentKey = key.getParentKey();
 
         if (parentKey != null) {

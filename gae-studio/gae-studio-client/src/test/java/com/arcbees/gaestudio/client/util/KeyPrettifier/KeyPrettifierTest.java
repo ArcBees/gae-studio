@@ -40,6 +40,15 @@ public class KeyPrettifierTest {
     }
 
     @Test
+    public void writeParentKeys_noParentKey2() {
+        // When
+        String prettifiedKey = keyPrettifier.prettifyKey(null);
+
+        // Then
+        assertEquals("", prettifiedKey);
+    }
+
+    @Test
     public void writeParentKeys_noParentKey() {
         // Given
         KeyDto keyDto = mock(KeyDto.class);
