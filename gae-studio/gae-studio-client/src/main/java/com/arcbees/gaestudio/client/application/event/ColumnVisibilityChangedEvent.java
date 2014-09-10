@@ -15,22 +15,22 @@ import com.google.gwt.event.shared.HasHandlers;
 
 public class ColumnVisibilityChangedEvent
         extends GwtEvent<ColumnVisibilityChangedEvent.ColumnVisibilityChangedHandler> {
-    public ColumnVisibilityChangedEvent() {
-    }
-
-    public static void fire(HasHandlers source) {
-        ColumnVisibilityChangedEvent eventInstance = new ColumnVisibilityChangedEvent();
-        source.fireEvent(eventInstance);
-    }
-
     public interface ColumnVisibilityChangedHandler extends EventHandler {
         public void onColumnVisibilityChanged(ColumnVisibilityChangedEvent event);
     }
 
     private static final Type<ColumnVisibilityChangedHandler> TYPE = new Type<>();
 
+    public static void fire(HasHandlers source) {
+        ColumnVisibilityChangedEvent eventInstance = new ColumnVisibilityChangedEvent();
+        source.fireEvent(eventInstance);
+    }
+
     public static Type<ColumnVisibilityChangedHandler> getType() {
         return TYPE;
+    }
+
+    private ColumnVisibilityChangedEvent() {
     }
 
     @Override
