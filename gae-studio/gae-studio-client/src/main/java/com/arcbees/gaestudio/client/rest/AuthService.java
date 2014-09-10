@@ -21,10 +21,9 @@ import com.arcbees.gaestudio.shared.auth.User;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
-import com.gwtplatform.dispatch.rest.shared.RestService;
 
 @Path(EndPoints.AUTH)
-public interface AuthService extends RestService {
+public interface AuthService {
     @POST
     @Path(EndPoints.REGISTER)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)

@@ -18,7 +18,7 @@ public class KeyPrettifier {
     private final AppMessages appMessages;
 
     @Inject
-    public KeyPrettifier(AppMessages appMessages) {
+    KeyPrettifier(AppMessages appMessages) {
         this.appMessages = appMessages;
     }
 
@@ -36,12 +36,17 @@ public class KeyPrettifier {
 
     private String writeParentKeys(KeyDto key) {
         String returnValue = "";
+
+        if (key == null) {
+            return returnValue;
+        }
+
         KeyDto parentKey = key.getParentKey();
 
         if (parentKey != null) {
             String kind = parentKey.getKind();
 
-            String id = parentKey.getId().toString();
+            long id = parentKey.getId();
             String name = parentKey.getName();
 
             String idName = getIdName(id, name);
@@ -54,7 +59,7 @@ public class KeyPrettifier {
         return returnValue;
     }
 
-    private String getIdName(String id, String name) {
-        return id.equals("0") ? name : id;
+    private String getIdName(long id, String name) {
+        return 0l == id ? name : String.valueOf(id);
     }
 }

@@ -17,10 +17,9 @@ import javax.ws.rs.QueryParam;
 import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.arcbees.gaestudio.shared.rest.UrlParameters;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
-import com.gwtplatform.dispatch.rest.shared.RestService;
 
 @Path(EndPoints.ARCBEES_LICENSE_SERVICE)
-public interface LicenseService extends RestService {
+public interface LicenseService {
     @GET
     @Path(EndPoints.CHECK)
     RestAction<Void> checkLicense(@QueryParam(UrlParameters.ID) Long userId);

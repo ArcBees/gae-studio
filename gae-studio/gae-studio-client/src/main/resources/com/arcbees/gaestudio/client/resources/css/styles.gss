@@ -779,12 +779,9 @@ input:focus, textarea:focus, button:focus {
     margin-bottom: 4px;
 }
 
-.embeddedEntityProperties {
-    padding-left: 40px;
-}
-
 .embeddedEntityProperties.collectionEditor {
     padding-left: 0;
+    width: 100%;
 }
 
 .embeddedEntityProperties > .editorLabel {
@@ -796,6 +793,10 @@ input:focus, textarea:focus, button:focus {
 .embeddedEntityProperties.collectionEditor > .editorMain > .editorLabel {
     font-size: 16px;
     color: #000;
+
+    display: table-cell;
+    width: 1%;
+    padding-right: 40px;
 }
 
 .editorLabel {
@@ -810,7 +811,12 @@ input:focus, textarea:focus, button:focus {
 }
 
 .editorMain {
-    margin-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+.editorMain .editorMain {
+    width: 100%;
+    display: table;
 }
 
 .editorMain input[type=text] {
@@ -822,7 +828,7 @@ input:focus, textarea:focus, button:focus {
     padding: 2px 4px;
     margin-bottom: 10px;
     border: 0;
-    border-bottom: 2px solid C_SECONDARY_LIGHT2;
+    border-bottom: 1px solid C_SECONDARY_LIGHT2;
 }
 
 .editorMain input[type=text]:hover {
