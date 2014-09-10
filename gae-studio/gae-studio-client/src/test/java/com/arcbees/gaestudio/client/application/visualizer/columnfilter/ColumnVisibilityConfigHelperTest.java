@@ -15,11 +15,6 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.arcbees.gaestudio.client.application.visualizer.columnfilter.storage.StorageAdapter;
-import com.github.nmorel.gwtjackson.client.JsonDeserializationContext;
-import com.github.nmorel.gwtjackson.client.JsonSerializationContext;
-import com.github.nmorel.gwtjackson.client.exception.JsonDeserializationException;
-import com.github.nmorel.gwtjackson.client.exception.JsonSerializationException;
-import com.google.gson.Gson;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -45,32 +40,7 @@ public class ColumnVisibilityConfigHelperTest {
         }
     };
 
-    private final ColumnVisibilityConfigMapper columnVisibilityConfigMapper = new ColumnVisibilityConfigMapper() {
-        @Override
-        public Map<String, Map<String, Boolean>> read(String input) throws JsonDeserializationException {
-            return new Gson().fromJson(input, Map.class);
-        }
-
-        @Override
-        public Map<String, Map<String, Boolean>> read(String input, JsonDeserializationContext ctx) throws
-                JsonDeserializationException {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public String write(Map<String, Map<String, Boolean>> value) throws JsonSerializationException {
-            return new Gson().toJson(value);
-        }
-
-        @Override
-        public String write(Map<String, Map<String, Boolean>> value, JsonSerializationContext ctx) throws
-                JsonSerializationException {
-            throw new UnsupportedOperationException();
-        }
-    };
-
-    private final ColumnVisibilityConfigHelper helper =
-            new ColumnVisibilityConfigHelper(columnVisibilityConfigMapper, storage);
+    private final ColumnVisibilityConfigHelper helper = new ColumnVisibilityConfigHelper(storage);
 
     @Test
     public void setGet_true() {
@@ -91,9 +61,8 @@ public class ColumnVisibilityConfigHelperTest {
         assertEquals(DEFAULT_COLUMN_VISIBILITY, helper.getColumnVisibility("appId", "ns", "kind", "col"));
 
         // we assert that getting a non-exiting column writes the default value to the store
-        Map<String, Map<String, Boolean>> config = columnVisibilityConfigMapper
-                .read(storage.getItem(COLUMN_VISIBILITY_CONFIG));
-
-        assertEquals(DEFAULT_COLUMN_VISIBILITY, config.get("appId$ns$kind").get("col"));
+        String key = COLUMN_VISIBILITY_CONFIG + "$appId$ns$kind$col";
+        String item = storage.getItem(key);
+        assertEquals(DEFAULT_COLUMN_VISIBILITY, Boolean.valueOf(item));
     }
 }
