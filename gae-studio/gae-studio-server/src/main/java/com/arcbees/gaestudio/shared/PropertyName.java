@@ -19,6 +19,7 @@ public class PropertyName {
     public static final String IM_ADDRESS = "address";
 
     public static final String PARENT_KEY = "parentKey";
+    public static final String ENCODED_KEY = "encodedKey";
     public static final String KIND = "kind";
     public static final String APP_ID = "appId";
     public static final String ID = "id";

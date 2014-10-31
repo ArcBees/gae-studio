@@ -31,12 +31,12 @@ public class ParsedEntity {
         parseJson();
     }
 
-    public Set<String> propertyKeys() {
-        return getPropertyMap().keySet();
+    public JSONObject getJsonObject() {
+        return jsonObject;
     }
 
-    public Boolean hasProperty(String key) {
-        return getPropertyMap().containsKey(key);
+    public Set<String> propertyKeys() {
+        return getPropertyMap().keySet();
     }
 
     public PropertyType getPropertyType(String key) {
@@ -57,14 +57,14 @@ public class ParsedEntity {
         return jsonObject.get(PROPERTY_MAP).isObject();
     }
 
+    public EntityDto getEntityDto() {
+        return entityDto;
+    }
+
     public void setEntityDto(EntityDto entityDto) {
         this.entityDto = entityDto;
 
         parseJson();
-    }
-
-    public EntityDto getEntityDto() {
-        return entityDto;
     }
 
     public KeyDto getKey() {

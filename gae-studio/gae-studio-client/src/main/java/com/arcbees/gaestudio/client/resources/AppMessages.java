@@ -42,4 +42,8 @@ public interface AppMessages extends Messages {
     String importTooLarge(int entitiesCount);
 
     String exportTooLarge(int entitiesCount);
+
+    String keyPrettifyTemplate(String kind, String idName);
+
+    String keyPrettifyChildToken();
 }

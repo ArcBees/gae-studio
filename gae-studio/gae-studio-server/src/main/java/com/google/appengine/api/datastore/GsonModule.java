@@ -75,7 +75,8 @@ public class GsonModule extends AbstractModule {
                 .registerTypeAdapter(ShortBlob.class, new ShortBlobValueAdapter())
                 .registerTypeAdapter(Text.class, new TextValueAdapter())
                 .registerTypeAdapter(UnindexedValue.class, new UnindexedValueAdapter())
-                .registerTypeAdapter(Date.class, new DateValueAdapter(Constants.JSON_DATE_FORMAT));
+                .registerTypeAdapter(Date.class, new DateValueAdapter(Constants.JSON_DATE_FORMAT))
+                .registerTypeAdapter(Key.class, new KeySerializer());
 
         return gsonBuilder.create();
     }

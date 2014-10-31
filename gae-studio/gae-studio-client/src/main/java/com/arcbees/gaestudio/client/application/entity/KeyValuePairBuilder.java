@@ -14,18 +14,28 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.shared.PropertyName;
+import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyDtoMapper;
+import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyPrettifier;
 import com.arcbees.gaestudio.shared.PropertyType;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.common.collect.Lists;
-import com.google.gwt.json.client.JSONException;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONValue;
-
-import static com.google.gwt.query.client.GQuery.console;
 
 public class KeyValuePairBuilder {
+    private final KeyPrettifier keyPrettifier;
+    private final KeyDtoMapper keyDtoMapper;
+
+    @Inject
+    KeyValuePairBuilder(KeyPrettifier keyPrettifier,
+                        KeyDtoMapper keyDtoMapper) {
+        this.keyPrettifier = keyPrettifier;
+        this.keyDtoMapper = keyDtoMapper;
+    }
+
     public List<KeyValuePair> fromParsedEntity(ParsedEntity parsedEntity) {
         List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
@@ -38,7 +48,9 @@ public class KeyValuePairBuilder {
             PropertyType type = parsedEntity.getPropertyType(prop);
 
             if (type == PropertyType.KEY) {
-                val = prettifyKeys(val);
+                JSONObject parsedJson = JSONParser.parseStrict(val).isObject();
+                KeyDto keyDto = keyDtoMapper.fromJSONObject(parsedJson);
+                val = keyPrettifier.prettifyKey(keyDto);
             }
 
             KeyValuePair keyValuePair = new KeyValuePair(prop, val);
@@ -46,23 +58,5 @@ public class KeyValuePairBuilder {
         }
 
         return keyValuePairs;
-    }
-
-    private String prettifyKeys(String val) {
-        String prettyValue = val;
-        try {
-            JSONValue jsonValue = JSONParser.parseStrict(val);
-            JSONObject jsonObject = jsonValue.isObject();
-            JSONValue kind = jsonObject.get(PropertyName.KIND);
-            JSONValue id = jsonObject.get(PropertyName.ID);
-
-            String stringKind = kind.toString();
-
-            prettyValue = stringKind.substring(1, stringKind.length() - 1) + " (" + id + ")";
-        } catch (JSONException e) {
-            console.log(e);
-        }
-
-        return prettyValue;
     }
 }

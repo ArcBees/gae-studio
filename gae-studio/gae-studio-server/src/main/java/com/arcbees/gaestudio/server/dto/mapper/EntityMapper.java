@@ -19,7 +19,6 @@ import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.EntityDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.datastore.Category;
@@ -119,15 +118,12 @@ public class EntityMapper {
     }
 
     public KeyDto mapKeyToKeyDto(Key dbKey) {
-        return new KeyDto(getEncodedKey(dbKey), dbKey.getKind(), dbKey.getId(), dbKey.getName(),
-                mapParentKey(dbKey.getParent()), mapNamespace(dbKey));
-    }
-
-    private ParentKeyDto mapParentKey(Key dbParentKey) {
-        if (dbParentKey == null) {
-            return null;
+        KeyDto parentKey = null;
+        if (dbKey.getParent() != null) {
+            parentKey = mapKeyToKeyDto(dbKey.getParent());
         }
-        return new ParentKeyDto(getEncodedKey(dbParentKey), dbParentKey.getKind(), dbParentKey.getId(), null);
+        return new KeyDto(getEncodedKey(dbKey), dbKey.getKind(), dbKey.getId(), dbKey.getName(),
+                parentKey, mapNamespace(dbKey));
     }
 
     private String getEncodedKey(Key key) {

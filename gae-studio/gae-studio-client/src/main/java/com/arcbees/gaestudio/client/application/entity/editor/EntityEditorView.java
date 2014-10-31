@@ -11,6 +11,7 @@ package com.arcbees.gaestudio.client.application.entity.editor;
 
 import com.arcbees.gaestudio.client.application.entity.editor.EntityEditorPresenter.MyView;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
@@ -26,5 +27,11 @@ public class EntityEditorView extends ViewImpl implements MyView {
     @Override
     public void addPropertyEditor(IsWidget widget) {
         panel.add(widget);
+    }
+
+    @Override
+    public void setHeader(String text) {
+        InlineLabel headerLabel = new InlineLabel(text);
+        panel.add(headerLabel);
     }
 }
