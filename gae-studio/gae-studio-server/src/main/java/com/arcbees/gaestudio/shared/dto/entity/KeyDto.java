@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.shared.dto.entity;
 
+import com.arcbees.gaestudio.shared.PropertyName;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -25,12 +26,12 @@ public class KeyDto {
     }
 
     @JsonCreator
-    public KeyDto(@JsonProperty("encodedKey") String encodedKey,
-                  @JsonProperty("kind") String kind,
-                  @JsonProperty("id") Long id,
-                  @JsonProperty("name") String name,
-                  @JsonProperty("parentKey") KeyDto parentKey,
-                  @JsonProperty("appIdNamespace") AppIdNamespaceDto appIdNamespace) {
+    public KeyDto(@JsonProperty(PropertyName.ENCODED_KEY) String encodedKey,
+                  @JsonProperty(PropertyName.KIND) String kind,
+                  @JsonProperty(PropertyName.ID) Long id,
+                  @JsonProperty(PropertyName.NAME) String name,
+                  @JsonProperty(PropertyName.PARENT_KEY) KeyDto parentKey,
+                  @JsonProperty(PropertyName.APP_ID_NAMESPACE) AppIdNamespaceDto appIdNamespace) {
         this.encodedKey = encodedKey;
         this.kind = kind;
         this.id = id;

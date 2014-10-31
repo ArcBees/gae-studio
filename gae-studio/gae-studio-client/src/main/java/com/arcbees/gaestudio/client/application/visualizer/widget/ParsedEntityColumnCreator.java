@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyDtoMapper;
 import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyPrettifier;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
@@ -31,12 +32,15 @@ public class ParsedEntityColumnCreator {
 
     private final AppConstants appConstants;
     private final KeyPrettifier keyPrettifier;
+    private final KeyDtoMapper keyDtoMapper;
 
     @Inject
     ParsedEntityColumnCreator(AppConstants appConstants,
-                              KeyPrettifier keyPrettifier) {
+                              KeyPrettifier keyPrettifier,
+                              KeyDtoMapper keyDtoMapper) {
         this.appConstants = appConstants;
         this.keyPrettifier = keyPrettifier;
+        this.keyDtoMapper = keyDtoMapper;
     }
 
     public static int getDefaultColumnCount() {
@@ -60,7 +64,8 @@ public class ParsedEntityColumnCreator {
                     JSONObject parsedJson = JSONParser.parseStrict(stringValue).isObject();
 
                     if (parsedJson != null) {
-                        stringValue = keyPrettifier.prettifyKey(parsedJson);
+                        KeyDto keyDto = keyDtoMapper.fromJSONObject(parsedJson);
+                        stringValue = keyPrettifier.prettifyKey(keyDto);
                     }
 
                     stringValue = addUnindexedIfNeeded(jsonProperty, stringValue);
