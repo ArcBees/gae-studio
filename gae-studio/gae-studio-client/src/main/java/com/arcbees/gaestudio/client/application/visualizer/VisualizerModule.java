@@ -9,6 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer;
 
+import com.arcbees.gaestudio.client.application.visualizer.columnfilter.ColumnFilterModule;
 import com.arcbees.gaestudio.client.application.visualizer.sidebar.SidebarModule;
 import com.arcbees.gaestudio.client.application.visualizer.widget.VisualizerWidgetModule;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
@@ -18,6 +19,7 @@ public class VisualizerModule extends AbstractPresenterModule {
     protected void configure() {
         install(new SidebarModule());
         install(new VisualizerWidgetModule());
+        install(new ColumnFilterModule());
 
         bindPresenter(VisualizerPresenter.class, VisualizerPresenter.MyView.class,
                 VisualizerView.class, VisualizerPresenter.MyProxy.class);

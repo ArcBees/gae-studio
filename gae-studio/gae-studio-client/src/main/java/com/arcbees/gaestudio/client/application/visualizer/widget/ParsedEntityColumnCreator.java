@@ -9,15 +9,21 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyDtoMapper;
 import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyPrettifier;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.arcbees.gaestudio.shared.dto.entity.ParentKeyDto;
+import com.google.common.collect.Lists;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
@@ -26,6 +32,16 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
 
 public class ParsedEntityColumnCreator {
+    public static final List<String> DEFAULT_COLUMN_NAMES =
+            Lists.newArrayList("ID/NAME", "Parent Kind", "Parent ID", "Namespace");
+    public static int getDefaultColumnCount() {
+        return DEFAULT_COLUMN_COUNT;
+    }
+
+    private static void setDefaultColumnCount(int defaultColumnCount) {
+        DEFAULT_COLUMN_COUNT = defaultColumnCount;
+    }
+
     private static final String IS_NULL = "<null>";
 
     private static int DEFAULT_COLUMN_COUNT;
@@ -33,14 +49,17 @@ public class ParsedEntityColumnCreator {
     private final AppConstants appConstants;
     private final KeyPrettifier keyPrettifier;
     private final KeyDtoMapper keyDtoMapper;
+    private final AppResources appResources;
 
     @Inject
     ParsedEntityColumnCreator(AppConstants appConstants,
                               KeyPrettifier keyPrettifier,
-                              KeyDtoMapper keyDtoMapper) {
+                              KeyDtoMapper keyDtoMapper,
+                              AppResources appResources) {
         this.appConstants = appConstants;
         this.keyPrettifier = keyPrettifier;
         this.keyDtoMapper = keyDtoMapper;
+        this.appResources = appResources;
     }
 
     public static int getDefaultColumnCount() {
@@ -75,6 +94,7 @@ public class ParsedEntityColumnCreator {
             }
         };
 
+        column.setCellStyleNames(appResources.styles().hiddenCol());
         cellTable.addColumn(column, propertyName);
     }
 
@@ -86,6 +106,10 @@ public class ParsedEntityColumnCreator {
         entityTable.addColumn(namespaceColumn, "Namespace");
 
         setDefaultColumnCount(entityTable.getColumnCount());
+    }
+
+    public List<String> getDefaultColumnNames() {
+        return Lists.newArrayList("ID/NAME", "Parent Kind", "Parent ID", "Namespace");
     }
 
     private TextColumn<ParsedEntity> buildNameSpaceColumn() {

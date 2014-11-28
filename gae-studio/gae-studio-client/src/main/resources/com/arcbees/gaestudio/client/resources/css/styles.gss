@@ -343,8 +343,28 @@ input:focus, textarea:focus, button:focus {
     display: none;
 }
 
-.pager table {
+.pager .pagerContainer {
     float: right;
+}
+
+.pager .pagerContainer table,
+.pager .pagerContainer i {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.pager .pagerContainer i {
+    font-size: 1.3em;
+
+    margin: 4px 18px 0 0;
+
+    @mixin transition_effect(all, .25s, ease);
+}
+
+.pager .pagerContainer i:hover::before {
+    cursor: pointer;
+
+    @mixin scale(1.1, 1.1);
 }
 
 .firstTable, .secondTable, .pager {
@@ -364,6 +384,10 @@ input:focus, textarea:focus, button:focus {
 
 .firstTable thead tr:after {
     content: "";
+}
+
+.firstTable thead tr {
+    height: 30px;
 }
 
 .firstTable tbody tr:hover {
@@ -856,4 +880,32 @@ input:focus, textarea:focus, button:focus {
 
 .licenseButtonContainer {
     position: relative;
+}
+
+table .hiddenCol {
+    display: none;
+}
+
+.columnFilterRoot {
+    margin: 7px;
+}
+
+.columnFilterRoot a {
+    color: #fff;
+}
+
+.columnFilterRoot a:hover {
+    cursor: pointer;
+}
+
+.columnFilterRoot .columnFilterList {
+    text-align: left;
+}
+
+table .hiddenCol {
+    display: none;
+}
+
+.columnNameCheckbox {
+    display: block;
 }
