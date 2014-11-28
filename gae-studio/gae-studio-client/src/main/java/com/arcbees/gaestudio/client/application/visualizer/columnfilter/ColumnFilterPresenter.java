@@ -29,10 +29,8 @@ public class ColumnFilterPresenter extends PresenterWidget<ColumnFilterPresenter
         void display(IsWidget isWidget);
     }
 
-    static final String COLUMN_VISIBILITY_CONFIG = "column_visibility_config";
     static final Object SLOT_COLUMNS = new Object();
 
-    private final ColumnVisibilityConfigHelper columnVisibilityConfigHelper;
     private final ColumnNamePresenterFactory columnNamePresenterFactory;
 
     private String appId;
@@ -43,11 +41,9 @@ public class ColumnFilterPresenter extends PresenterWidget<ColumnFilterPresenter
     @Inject
     ColumnFilterPresenter(EventBus eventBus,
                           MyView view,
-                          ColumnVisibilityConfigHelper columnVisibilityConfigHelper,
                           ColumnNamePresenterFactory columnNamePresenterFactory) {
         super(eventBus, view);
 
-        this.columnVisibilityConfigHelper = columnVisibilityConfigHelper;
         this.columnNamePresenterFactory = columnNamePresenterFactory;
         this.columnNamePresenters = new ArrayList<>();
 
@@ -61,8 +57,6 @@ public class ColumnFilterPresenter extends PresenterWidget<ColumnFilterPresenter
         namespace = entity.getKey().getAppIdNamespace().getNamespace();
         kind = entity.getKey().getKind();
         List<String> columnNames = event.getColumnNames();
-
-        columnVisibilityConfigHelper.addNewColumnsIfNeeded(appId, namespace, kind, columnNames);
 
         clearSlot(SLOT_COLUMNS);
         columnNamePresenters.clear();
