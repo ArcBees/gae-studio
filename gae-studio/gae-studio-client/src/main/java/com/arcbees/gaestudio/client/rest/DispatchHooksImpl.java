@@ -14,13 +14,15 @@ import javax.inject.Inject;
 import com.arcbees.gaestudio.client.application.widget.ajax.LoadingEvent;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
+import com.google.gwt.http.client.Response;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.client.DispatchHooks;
+import com.gwtplatform.dispatch.rest.client.RestDispatchHooks;
+import com.gwtplatform.dispatch.rest.shared.RestAction;
 
 import static com.arcbees.gaestudio.client.application.widget.ajax.LoadingEvent.Action.BEGIN;
 import static com.arcbees.gaestudio.client.application.widget.ajax.LoadingEvent.Action.END;
 
-public class DispatchHooksImpl implements DispatchHooks, HasHandlers {
+public class DispatchHooksImpl implements RestDispatchHooks, HasHandlers {
     private final EventBus eventBus;
 
     @Inject
@@ -29,17 +31,17 @@ public class DispatchHooksImpl implements DispatchHooks, HasHandlers {
     }
 
     @Override
-    public void onSuccess() {
-        LoadingEvent.fire(this, END);
-    }
-
-    @Override
-    public void onExecute() {
+    public void onExecute(RestAction restAction) {
         LoadingEvent.fire(this, BEGIN);
     }
 
     @Override
-    public void onFailure() {
+    public void onSuccess(RestAction restAction, Response response, Object o) {
+        LoadingEvent.fire(this, END);
+    }
+
+    @Override
+    public void onFailure(RestAction restAction, Response response, Throwable throwable) {
         LoadingEvent.fire(this, END);
     }
 

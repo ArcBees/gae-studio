@@ -1,4 +1,4 @@
-@url CHOSEN_SPRITE_URL chosenArrow;
+@def CHOSEN_SPRITE_URL chosenArrow;
 
 .chzn-container-single .chzn-single {
     background-color: transparent;
@@ -21,10 +21,6 @@
 
 .chzn-container-single .chzn-single-with-drop {
     background-color: #fff;
-}
-
-.chzn-container-single .chzn-search {
-    display: none;
 }
 
 .chzn-container .chzn-drop {

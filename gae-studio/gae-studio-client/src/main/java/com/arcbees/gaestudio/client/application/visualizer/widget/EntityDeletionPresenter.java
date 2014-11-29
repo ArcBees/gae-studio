@@ -30,7 +30,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.rest.shared.RestDispatch;
+import com.gwtplatform.dispatch.rest.client.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;

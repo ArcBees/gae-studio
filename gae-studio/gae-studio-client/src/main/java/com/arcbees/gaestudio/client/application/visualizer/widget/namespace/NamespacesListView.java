@@ -48,6 +48,7 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
         ChosenOptions options = new ChosenOptions();
         options.setResources(chosenResources);
         options.setDisableSearchThreshold(10);
+        options.setSearchContains(true);
 
         namespacesDropdown = new ChosenValueListBox<>(appIdNamespaceRenderer, options);
         namespacesDropdown.addValueChangeHandler(this);

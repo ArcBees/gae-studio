@@ -10,11 +10,11 @@
 package com.arcbees.gaestudio.client.resources;
 
 import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.GssResource;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 
 public interface AppResources extends ClientBundle {
-    public interface Styles extends GssResource {
+    public interface Styles extends CssResource {
         String clear();
 
         String list();
@@ -160,6 +160,16 @@ public interface AppResources extends ClientBundle {
         String version();
 
         String kindsList();
+
+        String hiddenCol();
+
+        String columnFilterRoot();
+
+        String columnFilterList();
+
+        String pagerContainer();
+
+        String columnNameCheckbox();
     }
 
     @Source({"css/colors.gss", "css/mixins.gss", "css/styles.gss"})

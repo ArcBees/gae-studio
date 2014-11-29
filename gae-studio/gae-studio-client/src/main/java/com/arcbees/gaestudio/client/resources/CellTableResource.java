@@ -9,14 +9,14 @@
 
 package com.arcbees.gaestudio.client.resources;
 
-import com.google.gwt.resources.client.GssResource;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.cellview.client.CellTable;
 
 public interface CellTableResource extends CellTable.Resources {
-    interface TableStyle extends GssResource, CellTable.Style {
+    interface TableStyle extends CssResource, CellTable.Style {
     }
 
     @Override
-    @Source({CellTable.Style.DEFAULT_CSS, "css/mixins.gss", "css/colors.gss", "css/cellTableStyles.gss"})
+    @Source({"css/cellTable.gss", "css/mixins.gss", "css/colors.gss", "css/cellTableStyles.gss"})
     TableStyle cellTableStyle();
 }

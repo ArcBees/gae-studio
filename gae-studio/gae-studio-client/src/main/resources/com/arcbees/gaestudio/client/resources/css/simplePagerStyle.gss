@@ -18,7 +18,7 @@
     cursor: pointer;
 }
 
-.button:nth-of-type\(1\), .button:nth-of-type\(2\) {
+.button:nth-of-type(1), .button:nth-of-type(2) {
     transform: rotateY(180deg);
     -webkit-transform: rotateY(180deg);
 }

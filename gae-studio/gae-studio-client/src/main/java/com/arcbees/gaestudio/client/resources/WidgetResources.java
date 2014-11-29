@@ -10,10 +10,10 @@
 package com.arcbees.gaestudio.client.resources;
 
 import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.GssResource;
+import com.google.gwt.resources.client.CssResource;
 
 public interface WidgetResources extends ClientBundle {
-    public interface Header extends GssResource {
+    public interface Header extends CssResource {
         String header();
 
         String logo();

@@ -19,7 +19,7 @@ public interface PagerResources extends SimplePager.Resources {
     }
 
     @Override
-    @Source("css/simplePagerStyle.css")
+    @Source("css/simplePagerStyle.gss")
     PageStyles simplePagerStyle();
 
     @Override
