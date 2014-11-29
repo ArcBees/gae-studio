@@ -13,10 +13,12 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.util.CurrentUser;
+import com.gwtplatform.mvp.client.annotations.DefaultGatekeeper;
 import com.gwtplatform.mvp.client.proxy.Gatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
+@DefaultGatekeeper
 public class LoggedInGatekeeper implements Gatekeeper {
     private final CurrentUser currentUser;
     private final Gatekeeper licenseGateKeeper;

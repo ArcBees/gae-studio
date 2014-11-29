@@ -45,6 +45,7 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.NoGatekeeper;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
@@ -64,6 +65,7 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
 
     @ProxyStandard
     @NameToken(NameTokens.editEntity)
+    @NoGatekeeper
     interface MyProxy extends ProxyPlace<EditEntityPresenter> {
     }
 
