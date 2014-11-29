@@ -10,11 +10,11 @@
 package com.arcbees.gaestudio.client.resources;
 
 import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.GssResource;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 
 public interface VisualizerResources extends ClientBundle {
-    public interface Styles extends GssResource {
+    public interface Styles extends CssResource {
         String root();
 
         String toolbar();
@@ -60,7 +60,7 @@ public interface VisualizerResources extends ClientBundle {
         String btnDisabled();
     }
 
-    public interface EntityList extends GssResource {
+    public interface EntityList extends CssResource {
         String main();
 
         String heading();

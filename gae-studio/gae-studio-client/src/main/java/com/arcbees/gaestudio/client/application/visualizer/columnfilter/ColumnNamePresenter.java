@@ -19,8 +19,7 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 import static com.arcbees.gaestudio.client.application.visualizer.columnfilter.ColumnNamePresenterFactory.APP_ID;
-import static com.arcbees.gaestudio.client.application.visualizer.columnfilter.ColumnNamePresenterFactory
-        .COLUMN_NAME;
+import static com.arcbees.gaestudio.client.application.visualizer.columnfilter.ColumnNamePresenterFactory.COLUMN_NAME;
 import static com.arcbees.gaestudio.client.application.visualizer.columnfilter.ColumnNamePresenterFactory.KIND;
 import static com.arcbees.gaestudio.client.application.visualizer.columnfilter.ColumnNamePresenterFactory.NAMESPACE;
 

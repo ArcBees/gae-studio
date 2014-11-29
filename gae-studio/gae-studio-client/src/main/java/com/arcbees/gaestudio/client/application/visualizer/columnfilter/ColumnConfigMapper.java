@@ -9,7 +9,6 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.columnfilter;
 
-import java.util.List;
 import java.util.Map;
 
 import com.github.nmorel.gwtjackson.client.ObjectMapper;

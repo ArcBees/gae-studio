@@ -10,11 +10,11 @@
 package com.arcbees.gaestudio.client.resources;
 
 import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.DataResource;
-import com.google.gwt.resources.client.GssResource;
 
 public interface FontsResources extends ClientBundle {
-    public interface Icons extends GssResource {
+    public interface Icons extends CssResource {
         String icon_cancel();
 
         String icon_delete();

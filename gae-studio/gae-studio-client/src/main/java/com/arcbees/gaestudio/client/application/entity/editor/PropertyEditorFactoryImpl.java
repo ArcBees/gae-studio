@@ -23,7 +23,7 @@ import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.BlobInfoDto;
 import com.google.common.collect.Maps;
 import com.google.gwt.json.client.JSONValue;
-import com.gwtplatform.dispatch.rest.shared.RestDispatch;
+import com.gwtplatform.dispatch.rest.client.RestDispatch;
 
 public class PropertyEditorFactoryImpl implements PropertyEditorFactory {
     private static interface EditorFactory {
