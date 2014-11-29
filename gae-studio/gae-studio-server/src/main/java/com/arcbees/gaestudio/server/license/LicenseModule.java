@@ -7,17 +7,13 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.guice;
+package com.arcbees.gaestudio.server.license;
 
-import com.arcbees.gaestudio.server.service.auth.SecureAuthModule;
-import com.google.inject.servlet.ServletModule;
+import com.google.inject.AbstractModule;
 
-public class GaeStudioModule extends ServletModule {
+public class LicenseModule extends AbstractModule {
     @Override
-    protected void configureServlets() {
-        install(new EmbeddedPathModule());
-        install(new CommonModule(getServletContext()));
-        install(new SecureLicenseModule());
-        install(new SecureAuthModule());
+    protected void configure() {
+        bind(LicenseChecker.class).to(LicenseCheckerImpl.class);
     }
 }

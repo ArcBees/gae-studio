@@ -54,6 +54,8 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers>
     Anchor logout;
     @UiField
     DivElement menu;
+    @UiField
+    AnchorElement profilerAnchor;
 
     private final String activeStyleName;
     private final UniversalAnalytics universalAnalytics;
@@ -104,6 +106,7 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers>
     @Override
     public void setProfilerActive() {
         $("." + activeStyleName).removeClass(activeStyleName);
+        $(profilerAnchor).addClass(activeStyleName);
     }
 
     @Override

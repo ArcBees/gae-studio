@@ -7,17 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.guice;
+package com.arcbees.gaestudio.client.application.auth.forgot;
 
-import com.arcbees.gaestudio.server.service.auth.SecureAuthModule;
-import com.google.inject.servlet.ServletModule;
+import com.gwtplatform.mvp.client.UiHandlers;
 
-public class GaeStudioModule extends ServletModule {
-    @Override
-    protected void configureServlets() {
-        install(new EmbeddedPathModule());
-        install(new CommonModule(getServletContext()));
-        install(new SecureLicenseModule());
-        install(new SecureAuthModule());
-    }
+public interface ForgotPasswordUiHandlers extends UiHandlers {
+    void forgotPassword(String email);
 }

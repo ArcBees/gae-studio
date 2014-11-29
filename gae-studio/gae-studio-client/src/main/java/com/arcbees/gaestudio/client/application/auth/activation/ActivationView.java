@@ -7,17 +7,20 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.guice;
+package com.arcbees.gaestudio.client.application.auth.activation;
 
-import com.arcbees.gaestudio.server.service.auth.SecureAuthModule;
-import com.google.inject.servlet.ServletModule;
+import javax.inject.Inject;
 
-public class GaeStudioModule extends ServletModule {
-    @Override
-    protected void configureServlets() {
-        install(new EmbeddedPathModule());
-        install(new CommonModule(getServletContext()));
-        install(new SecureLicenseModule());
-        install(new SecureAuthModule());
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.ViewImpl;
+
+public class ActivationView extends ViewImpl implements ActivationPresenter.MyView {
+    interface Binder extends UiBinder<Widget, ActivationView> {
+    }
+
+    @Inject
+    ActivationView(Binder uiBinder) {
+        initWidget(uiBinder.createAndBindUi(this));
     }
 }

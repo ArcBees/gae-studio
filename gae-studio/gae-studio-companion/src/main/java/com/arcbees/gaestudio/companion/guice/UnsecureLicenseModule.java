@@ -9,17 +9,12 @@
 
 package com.arcbees.gaestudio.companion.guice;
 
-import com.arcbees.gaestudio.server.guice.CommonModule;
-import com.arcbees.gaestudio.server.guice.EmbeddedPathModule;
-import com.arcbees.gaestudio.server.service.auth.UnsecureAuthModule;
-import com.google.inject.servlet.ServletModule;
+import com.arcbees.gaestudio.server.license.LicenseModule;
+import com.google.inject.AbstractModule;
 
-public class TestModule extends ServletModule {
+public class UnsecureLicenseModule extends AbstractModule {
     @Override
-    protected void configureServlets() {
-        install(new EmbeddedPathModule());
-        install(new CommonModule(getServletContext()));
-        install(new UnsecureLicenseModule());
-        install(new UnsecureAuthModule());
+    protected void configure() {
+        install(new LicenseModule());
     }
 }

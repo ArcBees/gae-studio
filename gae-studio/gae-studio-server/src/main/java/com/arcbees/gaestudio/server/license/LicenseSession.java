@@ -7,17 +7,21 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.guice;
+package com.arcbees.gaestudio.server.license;
 
-import com.arcbees.gaestudio.server.service.auth.SecureAuthModule;
-import com.google.inject.servlet.ServletModule;
+import java.io.Serializable;
 
-public class GaeStudioModule extends ServletModule {
-    @Override
-    protected void configureServlets() {
-        install(new EmbeddedPathModule());
-        install(new CommonModule(getServletContext()));
-        install(new SecureLicenseModule());
-        install(new SecureAuthModule());
+import com.google.inject.servlet.SessionScoped;
+
+@SessionScoped
+public class LicenseSession implements Serializable {
+    private Boolean licenseValid;
+
+    public Boolean getLicenseValid() {
+        return licenseValid;
+    }
+
+    public void setLicenseValid(Boolean licenseValid) {
+        this.licenseValid = licenseValid;
     }
 }

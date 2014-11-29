@@ -20,15 +20,13 @@ import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.gson.reflect.TypeToken;
 import com.jayway.restassured.response.Response;
 
+import static com.jayway.restassured.RestAssured.given;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 import static javax.ws.rs.core.Response.Status.OK;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
-import static com.jayway.restassured.RestAssured.given;
 
 public class EntitiesResourceIT extends RestIT {
     private final TypeToken<List<Car>> carListType = new TypeToken<List<Car>>() {
