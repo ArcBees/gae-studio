@@ -24,16 +24,16 @@
     outline-offset: -2px;
 }
 
-.authForm input, .authForm .button {
+.authForm input, .authForm {
     height: 37px;
 }
 
-.authForm .button {
+.authForm {
     margin-bottom: 20px;
     text-transform: none;
 }
 
-.authForm input, .authForm .button {
+.authForm input, .authForm {
     font-size: 1.5em;
 }
 

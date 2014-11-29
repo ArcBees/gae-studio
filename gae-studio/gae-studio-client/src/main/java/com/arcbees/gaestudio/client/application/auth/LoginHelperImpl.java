@@ -68,19 +68,20 @@ public class LoginHelperImpl implements LoginHelper, HasHandlers {
 
     @Override
     public void checkLicense(final PlaceRequest placeToReveal) {
-        restDispatch.execute(licenseService.checkLicense(currentUser.getUserId()), new AsyncCallbackImpl<Void>() {
-            @Override
-            public void handleFailure(Throwable throwable) {
-                currentUser.setLicenseValid(false);
-                navigate(placeToReveal);
-            }
-
-            @Override
-            public void onSuccess(Void aVoid) {
+        // TODO : Security
+//        restDispatch.execute(licenseService.checkLicense(currentUser.getUserId()), new AsyncCallbackImpl<Void>() {
+//            @Override
+//            public void handleFailure(Throwable throwable) {
+//                currentUser.setLicenseValid(false);
+//                navigate(placeToReveal);
+//            }
+//
+//            @Override
+//            public void onSuccess(Void aVoid) {
                 currentUser.setLicenseValid(true);
                 navigate(placeToReveal);
-            }
-        });
+//            }
+//        });
     }
 
     private void navigate(PlaceRequest placeToReveal) {

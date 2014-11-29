@@ -12,19 +12,19 @@ package com.arcbees.gaestudio.server.recorder;
 import java.util.Set;
 
 import com.arcbees.gaestudio.server.GaeStudioConstants;
+import com.arcbees.gaestudio.server.channel.ChannelMessageSender;
 import com.arcbees.gaestudio.server.channel.ClientService;
 import com.arcbees.gaestudio.server.dto.mapper.QueryMapper;
 import com.arcbees.gaestudio.server.dto.mapper.QueryResultMapper;
 import com.arcbees.gaestudio.server.dto.mapper.StackTraceElementMapper;
+import com.arcbees.gaestudio.shared.channel.Message;
+import com.arcbees.gaestudio.shared.channel.Topic;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.arcbees.gaestudio.shared.dto.DeleteRecordDto;
 import com.arcbees.gaestudio.shared.dto.GetRecordDto;
 import com.arcbees.gaestudio.shared.dto.PutRecordDto;
 import com.arcbees.gaestudio.shared.dto.query.QueryRecordDto;
 import com.arcbees.gaestudio.shared.util.StackInspector;
-import com.google.appengine.api.channel.ChannelMessage;
-import com.google.appengine.api.channel.ChannelService;
-import com.google.appengine.api.channel.ChannelServiceFactory;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.apphosting.api.DatastorePb;
 import com.google.gson.Gson;
@@ -34,18 +34,21 @@ import com.google.inject.name.Named;
 
 public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     private final Provider<MemcacheService> memcacheServiceProvider;
+    private final ChannelMessageSender channelMessageSender;
     private final Provider<Long> requestIdProvider;
     private final StackInspector stackInspector;
-    private final ChannelService channelService = ChannelServiceFactory.getChannelService();
     private final Gson gson = new Gson();
     private final ClientService clientService;
 
     @Inject
-    MemcacheDbOperationRecorder(Provider<MemcacheService> memcacheServiceProvider,
-                                ClientService clientService,
-                                @Named(GaeStudioConstants.REQUEST_ID) Provider<Long> requestIdProvider,
-                                StackInspector stackInspector) {
+    MemcacheDbOperationRecorder(
+            Provider<MemcacheService> memcacheServiceProvider,
+            ChannelMessageSender channelMessageSender,
+            ClientService clientService,
+            @Named(GaeStudioConstants.REQUEST_ID) Provider<Long> requestIdProvider,
+            StackInspector stackInspector) {
         this.memcacheServiceProvider = memcacheServiceProvider;
+        this.channelMessageSender = channelMessageSender;
         this.requestIdProvider = requestIdProvider;
         this.stackInspector = stackInspector;
         this.clientService = clientService;
@@ -53,7 +56,7 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
 
     @Override
     public void recordDbOperation(DatastorePb.DeleteRequest request, DatastorePb.DeleteResponse response,
-                                  int executionTimeMs) {
+            int executionTimeMs) {
         recordOperation(new DeleteRecordDto(
                 //request, response,
                 StackTraceElementMapper.mapDTO(stackInspector.getCaller(Thread.currentThread().getStackTrace())),
@@ -62,7 +65,7 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
 
     @Override
     public void recordDbOperation(DatastorePb.GetRequest request, DatastorePb.GetResponse response,
-                                  int executionTimeMs) {
+            int executionTimeMs) {
         recordOperation(new GetRecordDto(
                 //request, response,
                 StackTraceElementMapper.mapDTO(stackInspector.getCaller(Thread.currentThread().getStackTrace())),
@@ -71,7 +74,7 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
 
     @Override
     public void recordDbOperation(DatastorePb.PutRequest request, DatastorePb.PutResponse response,
-                                  int executionTimeMs) {
+            int executionTimeMs) {
         recordOperation(new PutRecordDto(
                 //request, response,
                 StackTraceElementMapper.mapDTO(stackInspector.getCaller(Thread.currentThread().getStackTrace())),
@@ -108,7 +111,7 @@ public class MemcacheDbOperationRecorder implements DbOperationRecorder {
     }
 
     private void streamRecord(String clientId, String serializedRecord) {
-        channelService.sendMessage(new ChannelMessage(clientId, serializedRecord));
+        channelMessageSender.sendMessage(clientId, new Message(Topic.DB_OPERATION, serializedRecord));
     }
 }
 
