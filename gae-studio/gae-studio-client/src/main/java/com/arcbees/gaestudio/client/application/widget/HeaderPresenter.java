@@ -17,8 +17,8 @@ import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.CurrentUser;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.client.RestDispatch;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
-import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -47,13 +47,14 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView>
     private int loadingEventsAccumulator;
 
     @Inject
-    HeaderPresenter(EventBus eventBus,
-                    MyView view,
-                    PlaceManager placeManager,
-                    AuthService authService,
-                    RestDispatch dispatch,
-                    CurrentUser currentUser,
-                    SupportPresenter supportPresenter) {
+    HeaderPresenter(
+            EventBus eventBus,
+            MyView view,
+            PlaceManager placeManager,
+            AuthService authService,
+            RestDispatch dispatch,
+            CurrentUser currentUser,
+            SupportPresenter supportPresenter) {
         super(eventBus, view);
 
         this.placeManager = placeManager;

@@ -20,7 +20,7 @@ import com.arcbees.gaestudio.shared.auth.User;
 import com.google.gwt.http.client.Response;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.rest.shared.RestDispatch;
+import com.gwtplatform.dispatch.rest.client.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -51,13 +51,14 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
     private final PlaceManager placeManager;
 
     @Inject
-    RegisterPresenter(EventBus eventBus,
-                      MyView view,
-                      MyProxy proxy,
-                      AppConstants appConstants,
-                      RestDispatch restDispatch,
-                      AuthService authService,
-                      PlaceManager placeManager) {
+    RegisterPresenter(
+            EventBus eventBus,
+            MyView view,
+            MyProxy proxy,
+            AppConstants appConstants,
+            RestDispatch restDispatch,
+            AuthService authService,
+            PlaceManager placeManager) {
         super(eventBus, view, proxy, RevealType.Root);
 
         this.appConstants = appConstants;
@@ -75,25 +76,26 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
         String firstName = user.getProfile().getFirstName();
         String lastName = user.getProfile().getLastName();
 
-        restDispatch.execute(authService.register(email, password, firstName, lastName), new RestCallbackImpl<String>() {
-            @Override
-            public void setResponse(Response response) {
-                getView().edit(user);
+        restDispatch.execute(authService.register(email, password, firstName, lastName),
+                new RestCallbackImpl<String>() {
+                    @Override
+                    public void setResponse(Response response) {
+                        getView().edit(user);
 
-                if (response.getStatusCode() == 409) {
-                    getView().userAlreadyExist();
-                }
-            }
+                        if (response.getStatusCode() == 409) {
+                            getView().userAlreadyExist();
+                        }
+                    }
 
-            @Override
-            public void onSuccess(String registrationToken) {
-                DisplayMessageEvent.fire(RegisterPresenter.this,
-                        new Message(appConstants.registerSuccessfull(), MessageStyle.SUCCESS));
+                    @Override
+                    public void onSuccess(String registrationToken) {
+                        DisplayMessageEvent.fire(RegisterPresenter.this,
+                                new Message(appConstants.registerSuccessfull(), MessageStyle.SUCCESS));
 
-                PlaceRequest place = new PlaceRequest.Builder().nameToken(NameTokens.getActivation()).build();
-                placeManager.revealPlace(place);
-            }
-        });
+                        PlaceRequest place = new PlaceRequest.Builder().nameToken(NameTokens.getActivation()).build();
+                        placeManager.revealPlace(place);
+                    }
+                });
     }
 
     @Override

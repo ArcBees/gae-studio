@@ -21,7 +21,7 @@ import com.arcbees.gaestudio.shared.auth.User;
 import com.arcbees.gaestudio.shared.config.AppConfig;
 import com.google.common.base.Strings;
 import com.google.gwt.user.client.History;
-import com.gwtplatform.dispatch.rest.shared.RestDispatch;
+import com.gwtplatform.dispatch.rest.client.RestDispatch;
 import com.gwtplatform.mvp.client.Bootstrapper;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.UnauthorizedPlace;

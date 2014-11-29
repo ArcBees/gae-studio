@@ -35,7 +35,6 @@
                                 value="com.arcbees.gaestudio.client.gin.BootstrapperImpl"/>
 
     <set-configuration-property name="CssResource.legacy" value="true" />
-    <!--<set-configuration-property name="CssResource.conversionMode" value="lenient" />-->
 
     <replace-with class="com.arcbees.gaestudio.client.util.ValidatorFactory">
         <when-type-is class="javax.validation.ValidatorFactory"/>

@@ -25,7 +25,7 @@ import com.google.common.base.Strings;
 import com.google.gwt.http.client.Response;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.rest.shared.RestDispatch;
+import com.gwtplatform.dispatch.rest.client.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -55,14 +55,15 @@ public class LicensePresenter
     private final AppConstants appConstants;
 
     @Inject
-    LicensePresenter(EventBus eventBus,
-                     MyView view,
-                     MyProxy proxy,
-                     RestDispatch restDispatch,
-                     LicenseService licenseService,
-                     CurrentUser currentUser,
-                     PlaceManager placeManager,
-                     AppConstants appConstants) {
+    LicensePresenter(
+            EventBus eventBus,
+            MyView view,
+            MyProxy proxy,
+            RestDispatch restDispatch,
+            LicenseService licenseService,
+            CurrentUser currentUser,
+            PlaceManager placeManager,
+            AppConstants appConstants) {
         super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
         this.restDispatch = restDispatch;

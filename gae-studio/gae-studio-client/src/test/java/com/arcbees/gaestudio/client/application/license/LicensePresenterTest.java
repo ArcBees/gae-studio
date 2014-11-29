@@ -23,8 +23,8 @@ import com.arcbees.gaestudio.shared.auth.User;
 import com.google.api.client.http.HttpStatusCodes;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.gwtplatform.dispatch.rest.client.RestDispatch;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
-import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
 import static org.mockito.Mockito.mock;
@@ -46,10 +46,11 @@ public class LicensePresenterTest {
     LicensePresenter presenter;
 
     @Test
-    public void onReveal_licenseCheckReturns403_noErrorMessages(LicensePresenter.MyView view,
-                                                                RestDispatch dispatch,
-                                                                PlaceManager placeManager,
-                                                                CurrentUser currentUser) {
+    public void onReveal_licenseCheckReturns403_noErrorMessages(
+            LicensePresenter.MyView view,
+            RestDispatch dispatch,
+            PlaceManager placeManager,
+            CurrentUser currentUser) {
         //given
         makeDispatcherReturn(dispatch, HttpStatusCodes.STATUS_CODE_FORBIDDEN);
         when(currentUser.getUser()).thenReturn(mock(User.class));

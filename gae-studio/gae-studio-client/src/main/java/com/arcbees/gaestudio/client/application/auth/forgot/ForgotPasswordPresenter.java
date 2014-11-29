@@ -18,7 +18,7 @@ import com.arcbees.gaestudio.client.rest.AuthService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.rest.shared.RestDispatch;
+import com.gwtplatform.dispatch.rest.client.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -49,13 +49,14 @@ public class ForgotPasswordPresenter extends Presenter<ForgotPasswordPresenter.M
     private final AuthService authService;
 
     @Inject
-    ForgotPasswordPresenter(EventBus eventBus,
-                            MyView view,
-                            MyProxy proxy,
-                            AppConstants appConstants,
-                            PlaceManager placeManager,
-                            RestDispatch restDispatch,
-                            AuthService authService) {
+    ForgotPasswordPresenter(
+            EventBus eventBus,
+            MyView view,
+            MyProxy proxy,
+            AppConstants appConstants,
+            PlaceManager placeManager,
+            RestDispatch restDispatch,
+            AuthService authService) {
         super(eventBus, view, proxy, RevealType.Root);
 
         this.appConstants = appConstants;

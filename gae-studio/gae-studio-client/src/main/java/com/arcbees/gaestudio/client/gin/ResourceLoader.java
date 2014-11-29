@@ -11,6 +11,8 @@ package com.arcbees.gaestudio.client.gin;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.CellTableResource;
+import com.arcbees.gaestudio.client.resources.PagerResources;
+import com.arcbees.gaestudio.client.resources.AuthResources;
 import com.arcbees.gaestudio.client.resources.EntityResources;
 import com.arcbees.gaestudio.client.resources.FontsResources;
 import com.arcbees.gaestudio.client.resources.MessageResources;
@@ -28,6 +30,7 @@ public class ResourceLoader {
                           CellTableResource cellTableResource,
                           PagerResources pagerResources,
                           EntityResources entityResources,
+                          AuthResources authResources,
                           ProfilerResources profilerResources,
                           VisualizerResources visualizerResources,
                           WidgetResources widgetResources,
@@ -38,6 +41,7 @@ public class ResourceLoader {
         messageResources.styles().ensureInjected();
         pagerResources.simplePagerStyle().ensureInjected();
         visualizerResources.styles().ensureInjected();
+        authResources.styles().ensureInjected();
         entityResources.styles().ensureInjected();
         entityResources.editor().ensureInjected();
         profilerResources.styles().ensureInjected();

@@ -17,7 +17,7 @@ import com.arcbees.gaestudio.shared.auth.User;
 import com.google.gwt.http.client.Response;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.rest.shared.RestDispatch;
+import com.gwtplatform.dispatch.rest.client.RestDispatch;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -48,14 +48,15 @@ public class AuthPresenter extends Presenter<AuthPresenter.MyView, AuthPresenter
     private final LoginHelper loginHelper;
 
     @Inject
-    AuthPresenter(EventBus eventBus,
-                  MyView view,
-                  MyProxy proxy,
-                  PlaceManager placeManager,
-                  RestDispatch restDispatch,
-                  AuthService authService,
-                  AppConstants appConstants,
-                  LoginHelper loginHelper) {
+    AuthPresenter(
+            EventBus eventBus,
+            MyView view,
+            MyProxy proxy,
+            PlaceManager placeManager,
+            RestDispatch restDispatch,
+            AuthService authService,
+            AppConstants appConstants,
+            LoginHelper loginHelper) {
         super(eventBus, view, proxy, RevealType.Root);
 
         this.placeManager = placeManager;
