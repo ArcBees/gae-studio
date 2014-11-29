@@ -15,11 +15,14 @@ import com.arcbees.gaestudio.client.resources.WidgetResources;
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.UListElement;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -28,7 +31,8 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 import static com.google.gwt.query.client.GQuery.$;
 
-public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements HeaderPresenter.MyView {
+public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> 
+        implements HeaderPresenter.MyView, AttachEvent.Handler {
     interface Binder extends UiBinder<Widget, HeaderView> {
     }
 
@@ -42,9 +46,29 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     Button report;
     @UiField
     DivElement ajaxLoader;
+    @UiField
+    DivElement cog;
+    @UiField
+    UListElement themes;
+    @UiField
+    Anchor logout;
+    @UiField
+    DivElement menu;
 
     private final String activeStyleName;
     private final UniversalAnalytics universalAnalytics;
+    private final Function showThemes = new Function() {
+        @Override
+        public void f() {
+            $(themes).show();
+        }
+    };
+    private final Function hideThemes = new Function() {
+        @Override
+        public void f() {
+            $(themes).hide();
+        }
+    };
 
     @Inject
     HeaderView(Binder uiBinder,
@@ -63,6 +87,16 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
             @Override
             public void f() {
                 universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Header -> Logo");
+            }
+        });
+
+        asWidget().addAttachHandler(this);
+
+        $("a", menu).click(new Function() {
+            @Override
+            public void f() {
+                $("." + activeStyleName).removeClass(activeStyleName);
+                $(getElement()).addClass(activeStyleName);
             }
         });
     }
@@ -87,5 +121,17 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
         getUiHandlers().supportClicked();
 
         universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Header -> Submit Issue");
+    }
+
+    @Override
+    public void onAttachOrDetach(AttachEvent event) {
+        if (event.isAttached()) {
+            $(cog).hover(showThemes, hideThemes);
+        }
+    }
+
+    @UiHandler("logout")
+    void onLogout(ClickEvent event) {
+        getUiHandlers().logout();
     }
 }

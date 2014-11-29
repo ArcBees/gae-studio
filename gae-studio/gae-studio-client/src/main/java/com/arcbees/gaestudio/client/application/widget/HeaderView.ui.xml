@@ -11,6 +11,25 @@
             <g:Image resource="{resources.logo}"/>
         </a>
         <g:Button ui:field="report" styleName="{widgetRes.header.issueBtn}">Submit Issue</g:Button>
+        <div class="{widgetRes.header.rightContainer}">
+            <g:Anchor ui:field="logout" styleName="{resources.styles.power}"/>
+            <div class="{widgetRes.header.cogplay}" ui:field="cog">
+                <g:Image resource="{resources.cogplay}"/>
+                <ul ui:field="themes">
+                    <li>
+                        Clear Theme
+                    </li>
+                    <li class="{widgetRes.header.inactive}">
+                        Dark Theme
+                    </li>
+                </ul>
+            </div>
+            <div ui:field="menu" class="{widgetRes.header.menu}">
+                <a href="#{nameTokens.getVisualizer}" class="{widgetRes.header.activeState}">
+                    Visualizer
+                </a>
+            </div>
+        </div>
         <div class="{resources.styles.clear}"/>
     </g:HTMLPanel>
 </ui:UiBinder>
