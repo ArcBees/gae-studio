@@ -25,8 +25,8 @@ import com.google.gwt.appengine.channel.client.SocketListener;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
+import com.gwtplatform.dispatch.rest.client.RestDispatch;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
-import com.gwtplatform.dispatch.rest.shared.RestDispatch;
 
 import static com.google.common.collect.Lists.newArrayList;
 

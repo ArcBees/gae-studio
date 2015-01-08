@@ -20,7 +20,6 @@
     <inherits name="org.hibernate.validator.HibernateValidator"/>
     <inherits name="com.arcbees.chosen.Chosen"/>
     <inherits name="com.arcbees.analytics.analytics"/>
-    <inherits name="com.google.gwt.resources.GssResource"/>
 
     <!-- Specify the paths for translatable code -->
     <source path='client'/>
@@ -34,6 +33,8 @@
 
     <set-configuration-property name="gwtp.bootstrapper"
                                 value="com.arcbees.gaestudio.client.gin.BootstrapperImpl"/>
+
+    <set-configuration-property name="CssResource.legacy" value="true" />
 
     <replace-with class="com.arcbees.gaestudio.client.util.ValidatorFactory">
         <when-type-is class="javax.validation.ValidatorFactory"/>

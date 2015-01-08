@@ -26,7 +26,7 @@ import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.query.client.GQuery;
 import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.GssResource;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.text.shared.Renderer;
@@ -46,7 +46,7 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
         Style styles();
     }
 
-    public interface Style extends GssResource {
+    public interface Style extends CssResource {
         String selectedLi();
 
         String dropDownArrow();
