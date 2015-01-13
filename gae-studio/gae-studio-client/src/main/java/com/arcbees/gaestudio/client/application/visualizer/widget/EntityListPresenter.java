@@ -163,7 +163,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                 .without(UrlParameters.KEY)
                 .build();
         placeManager.revealPlace(placeRequest);
-        
+
         RowUnlockedEvent.fire(this);
     }
 
@@ -230,6 +230,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                 if (number == 0) {
                     DisplayMessageEvent.fire(this, new Message(appConstants.noEntitiesMatchRequest(),
                             MessageStyle.ERROR));
+                    showEntities(new ArrayList<EntityDto>(), new Range(0, 0), 0);
                 } else {
                     DisplayMessageEvent.fire(this, new Message(appMessages.entitiesMatchRequest(number),
                             MessageStyle.SUCCESS));
