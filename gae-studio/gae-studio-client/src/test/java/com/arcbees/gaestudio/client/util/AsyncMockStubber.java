@@ -16,7 +16,7 @@ import org.mockito.stubbing.Stubber;
 
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.gwtplatform.dispatch.rest.shared.RestCallback;
+import com.gwtplatform.dispatch.rest.client.RestCallback;
 
 public class AsyncMockStubber {
     public static <T> Stubber callResponseWith(final Response response) {

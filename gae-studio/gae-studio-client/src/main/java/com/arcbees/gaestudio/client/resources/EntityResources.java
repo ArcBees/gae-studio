@@ -10,10 +10,10 @@
 package com.arcbees.gaestudio.client.resources;
 
 import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.GssResource;
+import com.google.gwt.resources.client.CssResource;
 
 public interface EntityResources extends ClientBundle {
-    public interface Styles extends GssResource {
+    public interface Styles extends CssResource {
         String root();
 
         String detailHeader();
@@ -35,7 +35,7 @@ public interface EntityResources extends ClientBundle {
         String geopts();
     }
 
-    public interface Editor extends GssResource {
+    public interface Editor extends CssResource {
         String clear();
 
         String checkbox();

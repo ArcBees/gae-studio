@@ -1,4 +1,4 @@
-@url CHOSEN_SPRITE_URL chosenArrow;
+@def CHOSEN_SPRITE_URL resourceUrl(chosenArrow);
 
 .chzn-container-single .chzn-single {
     background-color: transparent;
