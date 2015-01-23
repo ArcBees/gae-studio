@@ -11,7 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import javax.inject.Inject;
 
-import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
+import com.arcbees.analytics.shared.Analytics;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.shared.config.AppConfig;
 import com.google.common.base.Strings;
@@ -68,18 +68,18 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
     private final Handler handler;
     private final Label selectedFile;
     private final AppResources resources;
-    private final UniversalAnalytics universalAnalytics;
+    private final Analytics analytics;
     private final AppConfig appConfig;
 
     @Inject
     UploadForm(AppResources resources,
-               UniversalAnalytics universalAnalytics,
+               Analytics analytics,
                AppConfig appConfig,
                @Assisted String uploadUrl,
                @Assisted Handler handler) {
         this.handler = handler;
         this.resources = resources;
-        this.universalAnalytics = universalAnalytics;
+        this.analytics = analytics;
         this.appConfig = appConfig;
 
         formPanel = new FormPanel();
@@ -137,7 +137,7 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
             public void onClick(ClickEvent event) {
                 registerFileChangedHandler();
                 $(fileUpload).click();
-                universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                analytics.sendEvent(UI_ELEMENTS, "click")
                         .eventLabel("Visualizer -> Upload Form -> Choose File");
             }
         });

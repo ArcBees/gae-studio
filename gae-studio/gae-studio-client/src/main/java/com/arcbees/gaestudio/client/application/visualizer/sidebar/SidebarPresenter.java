@@ -14,7 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
+import com.arcbees.analytics.shared.Analytics;
 import com.arcbees.gaestudio.client.application.analytics.EventCategories;
 import com.arcbees.gaestudio.client.application.channel.ChannelHandler;
 import com.arcbees.gaestudio.client.application.event.ImportCompletedEvent;
@@ -71,7 +71,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     private final ExportService exportService;
     private final Provider<ImportPresenter> importPresenterProvider;
     private final NamespacesListPresenter namespacesListPresenter;
-    private final UniversalAnalytics universalAnalytics;
+    private final Analytics analytics;
     private final ChannelHandler channelHandler;
 
     private KindPanelToggleEvent.Action action = CLOSE;
@@ -87,7 +87,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
                      ExportService exportService,
                      Provider<ImportPresenter> importPresenterProvider,
                      NamespacesListPresenterFactory namespacesListPresenterFactory,
-                     UniversalAnalytics universalAnalytics,
+                     Analytics analytics,
                      ChannelHandler channelHandler) {
         super(eventBus, view);
 
@@ -96,7 +96,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
         this.kindsService = kindsService;
         this.exportService = exportService;
         this.importPresenterProvider = importPresenterProvider;
-        this.universalAnalytics = universalAnalytics;
+        this.analytics = analytics;
         this.channelHandler = channelHandler;
         namespacesListPresenter = namespacesListPresenterFactory.create(this);
         namespacesListPresenter.addValueChangeHandler(this);
@@ -112,7 +112,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
             DeleteEntitiesEvent.fire(this, DeleteEntities.NAMESPACE, "", namespaceDto.getNamespace());
         }
 
-        universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+        analytics.sendEvent(UI_ELEMENTS, "click")
                 .eventLabel("Visualizer -> Kinds sidebar -> Delete All Entities Button");
     }
 
@@ -212,7 +212,7 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
             }
         });
 
-        universalAnalytics.sendEvent(EventCategories.UI_ELEMENTS, "value changed")
+        analytics.sendEvent(EventCategories.UI_ELEMENTS, "value changed")
                 .eventLabel("Visualizer -> Kinds Sidebar -> Kinds");
     }
 

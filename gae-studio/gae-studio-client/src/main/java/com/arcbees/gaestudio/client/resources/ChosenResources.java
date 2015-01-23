@@ -21,6 +21,8 @@ public interface ChosenResources extends Resources {
     ImageResource chosenArrow();
 
     @Override
-    @Source({"com/arcbees/gsss/mixin/client/mixins.gss", "com/arcbees/chosen/client/resources/colors.gss", "com/arcbees/chosen/client/resources/icons/icons.gss", "com/arcbees/chosen/client/resources/chozen.gss", "css/chozen.gss"})
+    @Source({"com/arcbees/gsss/mixin/client/mixins.gss", "com/arcbees/chosen/client/resources/colors.gss",
+            "com/arcbees/chosen/client/resources/icons/icons.gss", "com/arcbees/chosen/client/resources/chozen.gss",
+            "css/chozen.gss"})
     CustomChosenCss css();
 }

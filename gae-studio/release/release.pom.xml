@@ -6,12 +6,13 @@
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
-        <version>8</version>
+        <version>9</version>
     </parent>
 
     <artifactId>gae-studio-webapp</artifactId>
     <groupId>com.arcbees.gaestudio</groupId>
-    <version>0.9</version>
+    <version>1.0-RC3</version>
+	<packaging>war</packaging>
 
     <name>GAE Studio</name>
 

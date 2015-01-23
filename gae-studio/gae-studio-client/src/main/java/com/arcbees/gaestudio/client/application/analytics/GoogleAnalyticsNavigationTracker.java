@@ -11,7 +11,7 @@ package com.arcbees.gaestudio.client.application.analytics;
 
 import javax.inject.Inject;
 
-import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
+import com.arcbees.analytics.shared.Analytics;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.proxy.NavigationEvent;
 import com.gwtplatform.mvp.client.proxy.NavigationHandler;
@@ -19,13 +19,13 @@ import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
 public class GoogleAnalyticsNavigationTracker implements NavigationHandler {
     private final PlaceManager placeManager;
-    private final UniversalAnalytics analytics;
+    private final Analytics analytics;
 
     @Inject
     GoogleAnalyticsNavigationTracker(
             PlaceManager placeManager,
             EventBus eventBus,
-            UniversalAnalytics analytics) {
+            Analytics analytics) {
         this.placeManager = placeManager;
         this.analytics = analytics;
 
