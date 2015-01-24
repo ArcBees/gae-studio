@@ -43,7 +43,7 @@
     padding: 0;
 }
 
-.chzn-container .chzn-results .active-result{
+.chzn-container .chzn-results .active-result {
     text-transform: uppercase;
 }
 
@@ -62,4 +62,9 @@
 .chzn-container .chzn-results .highlighted {
     background-color: #42b9e8;
     background-image: none;
+}
+
+.chzn-container-single .chzn-single div {
+    height: auto;
+    width: auto;
 }
