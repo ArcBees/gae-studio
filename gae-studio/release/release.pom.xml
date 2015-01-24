@@ -11,7 +11,7 @@
 
     <artifactId>gae-studio-webapp</artifactId>
     <groupId>com.arcbees.gaestudio</groupId>
-    <version>1.0-RC3</version>
+    <version>1.0-RC4</version>
 	<packaging>war</packaging>
 
     <name>GAE Studio</name>
