@@ -6,7 +6,7 @@
     <parent>
         <artifactId>gae-studio</artifactId>
         <groupId>com.arcbees.gaestudio</groupId>
-        <version>1.0-RC2-SNAPSHOT</version>
+        <version>1.0-RC4-SNAPSHOT</version>
     </parent>
 
     <artifactId>gae-studio-client</artifactId>
@@ -116,7 +116,7 @@
         </dependency>
         <dependency>
             <groupId>com.arcbees.analytics</groupId>
-            <artifactId>analytics-client</artifactId>
+            <artifactId>universal-analytics</artifactId>
             <version>${analytics.version}</version>
         </dependency>
     </dependencies>

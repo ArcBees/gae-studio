@@ -13,7 +13,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
+import com.arcbees.analytics.shared.Analytics;
 import com.arcbees.chosen.client.ChosenOptions;
 import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.gwt.ChosenListBox;
@@ -87,7 +87,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private final String revealOverlayStyleName;
     private final String revealUnderOverlayStyleName;
     private final String entityDetailPanelVisibilityStyleName;
-    private final UniversalAnalytics universalAnalytics;
+    private final Analytics analytics;
 
     private Widget selectedKind;
     private String currentKind;
@@ -102,13 +102,13 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 AppResources appResources,
                 VisualizerResources visualizerResources,
                 PanelToggleFactory panelToggleFactory,
-                final UniversalAnalytics universalAnalytics) {
+                final Analytics analytics) {
         this.kindTemplate = kindTemplate;
         this.emptyKindsTemplate = emptyKindsTemplate;
         this.fontsResources = fontsResources;
         this.appResources = appResources;
         this.visualizerResources = visualizerResources;
-        this.universalAnalytics = universalAnalytics;
+        this.analytics = analytics;
         this.closeToggle = panelToggleFactory.create(this);
 
         ChosenOptions chosenOptions = new ChosenOptions();
@@ -137,7 +137,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                     getUiHandlers().importKind();
                 }
 
-                universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                analytics.sendEvent(UI_ELEMENTS, "click")
                         .eventLabel("Visualizer -> Kinds Sidebar -> Import Button");
             }
         });
@@ -151,7 +151,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                     getUiHandlers().exportJson();
                 }
 
-                universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                analytics.sendEvent(UI_ELEMENTS, "click")
                         .eventLabel("Visualizer -> Kinds Sidebar -> Export Button");
             }
         });
@@ -167,7 +167,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                     setImportEnabled(true);
                 }
 
-                universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+                analytics.sendEvent(UI_ELEMENTS, "click")
                         .eventLabel("Visualizer -> Kinds Sidebar -> Chosen format: " + currentFormat);
             }
         });
@@ -217,9 +217,9 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
         boolean closing = closeToggle.isOpen();
         if (closing) {
             selectedKind = $("." + appResources.styles().kindListElementSelected()).widget();
-            universalAnalytics.sendEvent(UI_ELEMENTS, "close").eventLabel("Visualizer -> Kinds Sidebar");
+            analytics.sendEvent(UI_ELEMENTS, "close").eventLabel("Visualizer -> Kinds Sidebar");
         } else {
-            universalAnalytics.sendEvent(UI_ELEMENTS, "open").eventLabel("Visualizer -> Kinds Sidebar");
+            analytics.sendEvent(UI_ELEMENTS, "open").eventLabel("Visualizer -> Kinds Sidebar");
         }
 
         $(selectedKind).toggleClass(appResources.styles().kindListElementSelected(), !closing);
@@ -261,7 +261,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
             public void f(Element e) {
                 onKindSelected(e);
 
-                universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Sidebar -> Kind Name");
+                analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Sidebar -> Kind Name");
             }
         });
 

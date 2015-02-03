@@ -9,7 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
-import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
+import com.arcbees.analytics.shared.Analytics;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -38,17 +38,17 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
     @UiField
     AppResources res;
 
-    private final UniversalAnalytics universalAnalytics;
+    private final Analytics analytics;
 
     private UploadForm uploadForm;
 
     @Inject
     ImportView(Binder uiBinder,
                EventBus eventBus,
-               UniversalAnalytics universalAnalytics) {
+               Analytics analytics) {
         super(eventBus);
 
-        this.universalAnalytics = universalAnalytics;
+        this.analytics = analytics;
 
         initWidget(uiBinder.createAndBindUi(this));
     }
@@ -73,14 +73,14 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
     void onUploadClicked(ClickEvent event) {
         uploadForm.submit();
 
-        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Import Popup -> Upload");
+        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Import Popup -> Upload");
     }
 
     @UiHandler({"cancel", "close"})
     void onCancelClicked(ClickEvent event) {
         asPopupPanel().hide();
 
-        universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+        analytics.sendEvent(UI_ELEMENTS, "click")
                 .eventLabel("Visualizer -> Import Popup -> Cancel or Close");
     }
 

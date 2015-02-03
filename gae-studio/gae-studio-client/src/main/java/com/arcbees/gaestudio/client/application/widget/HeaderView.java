@@ -9,7 +9,7 @@
 
 package com.arcbees.gaestudio.client.application.widget;
 
-import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
+import com.arcbees.analytics.shared.Analytics;
 import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.resources.WidgetResources;
 import com.google.gwt.dom.client.AnchorElement;
@@ -71,15 +71,16 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers>
             $(themes).hide();
         }
     };
+    private final Analytics analytics;
 
     @Inject
     HeaderView(Binder uiBinder,
                WidgetResources widgetRes,
                AppResources resources,
-               final UniversalAnalytics universalAnalytics) {
+               final Analytics analytics) {
         this.widgetRes = widgetRes;
         this.resources = resources;
-        this.universalAnalytics = universalAnalytics;
+        this.analytics = analytics;
 
         initWidget(uiBinder.createAndBindUi(this));
 
@@ -88,7 +89,7 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers>
         $(logoAnchor).click(new Function() {
             @Override
             public void f() {
-                universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Header -> Logo");
+                analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Header -> Logo");
             }
         });
 
@@ -123,18 +124,6 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers>
     void handleClick(ClickEvent event) {
         getUiHandlers().supportClicked();
 
-        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Header -> Submit Issue");
-    }
-
-    @Override
-    public void onAttachOrDetach(AttachEvent event) {
-        if (event.isAttached()) {
-            $(cog).hover(showThemes, hideThemes);
-        }
-    }
-
-    @UiHandler("logout")
-    void onLogout(ClickEvent event) {
-        getUiHandlers().logout();
+        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Header -> Submit Issue");
     }
 }

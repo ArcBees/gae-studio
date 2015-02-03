@@ -11,8 +11,7 @@ package com.arcbees.gaestudio.client.gin;
 
 import javax.inject.Inject;
 
-import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
-import com.arcbees.gaestudio.client.application.auth.LoginHelper;
+import com.arcbees.analytics.shared.Analytics;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.rest.AuthService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
@@ -31,7 +30,7 @@ import com.gwtplatform.mvp.shared.proxy.TokenFormatter;
 
 public class BootstrapperImpl implements Bootstrapper {
     private final PlaceManager placeManager;
-    private final UniversalAnalytics universalAnalytics;
+    private final Analytics analytics;
     private final AppConfig appConfig;
     private final CurrentUser currentUser;
     private final AuthService authService;
@@ -44,17 +43,18 @@ public class BootstrapperImpl implements Bootstrapper {
     @Inject
     BootstrapperImpl(
             PlaceManager placeManager,
-            UniversalAnalytics universalAnalytics,
             AppConfig appConfig,
             CurrentUser currentUser,
             AuthService authService,
             RestDispatch restDispatch,
             LoginHelper loginHelper,
             TokenFormatter tokenFormatter,
+            Analytics analytics,
             @DefaultPlace String defaultPlaceNameToken,
-            @UnauthorizedPlace String unauthorizedPlace) {
+            @UnauthorizedPlace String unauthorizedPlace,
+            AppConfig appConfig) {
         this.placeManager = placeManager;
-        this.universalAnalytics = universalAnalytics;
+        this.analytics = analytics;
         this.appConfig = appConfig;
         this.currentUser = currentUser;
         this.authService = authService;
@@ -68,9 +68,9 @@ public class BootstrapperImpl implements Bootstrapper {
     @Override
     public void onBootstrap() {
         if (appConfig.isUseCookieDomainNone()) {
-            universalAnalytics.create().cookieDomain("none");
+            analytics.create().cookieDomain("none");
         } else {
-            universalAnalytics.create();
+            analytics.create();
         }
 
         restDispatch.execute(authService.checkLogin(), new AsyncCallbackImpl<User>() {

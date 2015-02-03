@@ -11,7 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import java.util.Set;
 
-import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
+import com.arcbees.analytics.shared.Analytics;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppMessages;
 import com.arcbees.gaestudio.shared.DeleteEntities;
@@ -43,17 +43,17 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
     HTML message;
 
     private final AppMessages messages;
-    private final UniversalAnalytics universalAnalytics;
+    private final Analytics analytics;
 
     @Inject
     EntityDeletionView(Binder uiBinder,
                        EventBus eventBus,
                        AppMessages messages,
-                       UniversalAnalytics universalAnalytics) {
+                       Analytics analytics) {
         super(eventBus);
 
         this.messages = messages;
-        this.universalAnalytics = universalAnalytics;
+        this.analytics = analytics;
 
         initWidget(uiBinder.createAndBindUi(this));
     }
@@ -106,7 +106,7 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
         getUiHandlers().deleteEntity();
         asPopupPanel().hide();
 
-        universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+        analytics.sendEvent(UI_ELEMENTS, "click")
                 .eventLabel("Visualizer -> Delete Confirmation Popup -> Delete");
     }
 
@@ -115,7 +115,7 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
         getUiHandlers().reset();
         asPopupPanel().hide();
 
-        universalAnalytics.sendEvent(UI_ELEMENTS, "click")
+        analytics.sendEvent(UI_ELEMENTS, "click")
                 .eventLabel("Visualizer -> Delete Confirmation Popup -> Cancel or Close");
     }
 }

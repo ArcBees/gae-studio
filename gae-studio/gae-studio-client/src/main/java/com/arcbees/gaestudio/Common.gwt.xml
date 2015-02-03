@@ -1,5 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module rename-to='gaestudio'>
+    <define-configuration-property name="CssResource.allowedFunctions" is-multi-valued="true"/>
+    <set-configuration-property name="CssResource.allowedFunctions" value=""/>
+
     <!-- Inherit the core Web Toolkit stuff. -->
     <inherits name='com.google.gwt.inject.Inject'/>
 
@@ -19,7 +22,7 @@
     <inherits name="com.google.gwt.validation.Validation"/>
     <inherits name="org.hibernate.validator.HibernateValidator"/>
     <inherits name="com.arcbees.chosen.Chosen"/>
-    <inherits name="com.arcbees.analytics.analytics"/>
+    <inherits name="com.arcbees.analytics.Analytics"/>
 
     <!-- Specify the paths for translatable code -->
     <source path='client'/>

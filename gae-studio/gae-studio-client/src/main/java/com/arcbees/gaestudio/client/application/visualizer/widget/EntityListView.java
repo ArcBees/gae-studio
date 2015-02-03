@@ -11,7 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer.widget;
 
 import java.util.List;
 
-import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
+import com.arcbees.analytics.shared.Analytics;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.application.visualizer.columnfilter.ColumnVisibilityConfigHelper;
 import com.arcbees.gaestudio.client.application.visualizer.columnfilter.ColumnVisibilityTooltip;
@@ -84,6 +84,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
     private final MultiSelectionModel<ParsedEntity> selectionModel;
     private final UniversalAnalytics universalAnalytics;
     private final ColumnVisibilityTooltip columnVisibilityTooltip;
+    private final Analytics analytics;
 
     private HandlerRegistration firstLoadHandlerRegistration;
     private boolean gwtBound = false;
@@ -95,12 +96,12 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
                    AppResources appResources,
                    VisualizerResources visualizerResources,
                    ParsedEntityColumnCreator columnCreator,
-                   UniversalAnalytics universalAnalytics,
+                    Analytics analytics,
                    ColumnVisibilityConfigHelper columnVisibilityConfigHelper,
                    ColumnVisibilityTooltip columnVisibilityTooltip) {
         this.columnCreator = columnCreator;
         this.visualizerResources = visualizerResources;
-        this.universalAnalytics = universalAnalytics;
+        this.analytics = analytics;
         this.columnVisibilityTooltip = columnVisibilityTooltip;
 
         pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 1000, true);
@@ -271,7 +272,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
     public void runGqlQuery(ClickEvent event) {
         getUiHandlers().runGqlQuery(formQuery.getText());
 
-        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> List View -> Run GQL Query");
+        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> List View -> Run GQL Query");
     }
 
     @Override
@@ -370,7 +371,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
 
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
 
-        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> List View -> Refresh");
+        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> List View -> Refresh");
     }
 
     private void selectRows(List<ParsedEntity> parsedEntities) {
@@ -388,7 +389,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
 
         getUiHandlers().onEntitySelected(selectionModel.getSelectedSet());
 
-        universalAnalytics.sendEvent(UI_ELEMENTS, "select").eventLabel("Visualizer -> List View -> Entity Row");
+        analytics.sendEvent(UI_ELEMENTS, "select").eventLabel("Visualizer -> List View -> Entity Row");
     }
 
     private void unselectRow(ParsedEntity parsedEntity) {
@@ -407,12 +408,12 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
 
         if ($(byGql).hasClass(styles.open())) {
             $(formQueryHolder).slideDown(100);
-            universalAnalytics.sendEvent(UI_ELEMENTS, "open")
+            analytics.sendEvent(UI_ELEMENTS, "open")
                     .eventLabel("Visualizer -> List View -> GQL Query Textarea");
         } else {
             $(formQueryHolder).slideUp(100);
 
-            universalAnalytics.sendEvent(UI_ELEMENTS, "close")
+            analytics.sendEvent(UI_ELEMENTS, "close")
                     .eventLabel("Visualizer -> List View -> GQL Query Textarea");
         }
     }

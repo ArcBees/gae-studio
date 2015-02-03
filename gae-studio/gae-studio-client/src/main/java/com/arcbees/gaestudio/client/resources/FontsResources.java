@@ -23,6 +23,8 @@ public interface FontsResources extends ClientBundle {
 
         String icon_dropdown();
 
+        String icon_columns();
+
         String icon_edit();
 
         String icon_export();
