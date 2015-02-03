@@ -31,13 +31,13 @@ public class DispatchHooksImpl implements RestDispatchHooks, HasHandlers {
     }
 
     @Override
-    public void onExecute(RestAction restAction) {
-        LoadingEvent.fire(this, BEGIN);
+    public void onSuccess(RestAction restAction, Response response, Object o) {
+        LoadingEvent.fire(this, END);
     }
 
     @Override
-    public void onSuccess(RestAction restAction, Response response, Object o) {
-        LoadingEvent.fire(this, END);
+    public void onExecute(RestAction restAction) {
+        LoadingEvent.fire(this, BEGIN);
     }
 
     @Override
