@@ -45,7 +45,7 @@ public class RootServlet extends HttpServlet {
             "com/arcbees/gaestudio/server/velocitytemplates/gae-studio.vm";
     private final static String MAVEN_URL = "http://search.maven.org/solrsearch/select?wt=json&q=gae-studio-webapp";
     private final static Pattern LATEST_VERSION_PATTERN =
-            Pattern.compile("\"latestVersion\":\\s*\"([0-9](?:\\.[0-9])*)\"");
+            Pattern.compile("\"latestVersion\":\\s*\"(.*?)\"");
     private final static Pattern RESPONSE_CONTENT_PATTERN = Pattern.compile("^[^{]*(\\{.*\\})$");
     private final static String COULD_NOT_RETRIEVE_LATEST_VERSION = "Could not retrieve latest version";
 

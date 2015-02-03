@@ -11,7 +11,7 @@ package com.arcbees.gaestudio.client.application.visualizer;
 
 import java.util.Set;
 
-import com.arcbees.analytics.client.universalanalytics.UniversalAnalytics;
+import com.arcbees.analytics.shared.Analytics;
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
 import com.arcbees.gaestudio.client.application.event.RowLockedEvent;
 import com.arcbees.gaestudio.client.application.event.RowUnlockedEvent;
@@ -98,7 +98,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
     private final FontsResources fontsResources;
     private final AppConstants myConstants;
     private final ToolbarPresenter toolbarPresenter;
-    private final UniversalAnalytics universalAnalytics;
+    private final Analytics analytics;
 
     private ParsedEntity currentParsedEntity;
     private Set<ParsedEntity> currentParsedEntities;
@@ -115,7 +115,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
                         AppConstants appConstants,
                         PlaceManager placeManager,
                         ToolbarPresenter toolbarPresenter,
-                        UniversalAnalytics universalAnalytics) {
+                        Analytics analytics) {
         super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
         this.uiFactory = uiFactory;
@@ -125,7 +125,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
         this.fontsResources = fontsResources;
         this.myConstants = appConstants;
         this.toolbarPresenter = toolbarPresenter;
-        this.universalAnalytics = universalAnalytics;
+        this.analytics = analytics;
 
         edit = createEditButton();
         delete = createDeleteButton();
@@ -170,9 +170,9 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
         getView().updatePanelsWidth();
 
         if (event.isOpen()) {
-            universalAnalytics.sendEvent(UI_ELEMENTS, "close").eventLabel("Visualizer -> Actions Sidebar");
+            analytics.sendEvent(UI_ELEMENTS, "close").eventLabel("Visualizer -> Actions Sidebar");
         } else {
-            universalAnalytics.sendEvent(UI_ELEMENTS, "open").eventLabel("Visualizer -> Actions Sidebar");
+            analytics.sendEvent(UI_ELEMENTS, "open").eventLabel("Visualizer -> Actions Sidebar");
         }
     }
 
@@ -252,7 +252,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
                     public void onClicked() {
                         delete();
 
-                        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Delete Entity");
+                        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Delete Entity");
                     }
                 }, DebugIds.DELETE_ENGAGE
         );
@@ -273,7 +273,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
                     public void onClicked() {
                         edit();
 
-                        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Edit Entity");
+                        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Edit Entity");
                     }
                 }, DebugIds.EDIT
         );
@@ -307,7 +307,7 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
     }
 
     private void deselect() {
-        universalAnalytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Deselect Entity");
+        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Deselect Entity");
 
         DeselectEvent.fire(this);
     }
