@@ -23,5 +23,6 @@ public class ChannelModule extends AbstractGinModule {
         multibinder.addBinding().to(ImportCompletedMessageHandler.class);
         multibinder.addBinding().to(ImportTooLargeMessageHandler.class);
         multibinder.addBinding().to(ExportCompletedMessageHandler.class);
+        multibinder.addBinding().to(DbOperationMessageHandler.class);
     }
 }

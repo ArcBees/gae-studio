@@ -12,6 +12,8 @@ package com.arcbees.gaestudio.client.application.profiler;
 import java.util.logging.Logger;
 
 import com.arcbees.gaestudio.client.application.ApplicationPresenter;
+import com.arcbees.gaestudio.client.application.channel.ChannelHandler;
+import com.arcbees.gaestudio.client.application.event.DbOperationEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.ClearOperationRecordsEvent;
 import com.arcbees.gaestudio.client.application.profiler.event.RecordingStateChangedEvent;
 import com.arcbees.gaestudio.client.application.profiler.widget.StatementPresenter;
@@ -26,17 +28,11 @@ import com.arcbees.gaestudio.client.debug.DebugLogMessages;
 import com.arcbees.gaestudio.client.place.NameTokens;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppResources;
-import com.arcbees.gaestudio.client.rest.ChannelService;
+import com.arcbees.gaestudio.client.resources.FontsResources;
 import com.arcbees.gaestudio.client.rest.RecordService;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
-import com.arcbees.gaestudio.shared.channel.Token;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.common.collect.Lists;
-import com.google.gwt.appengine.channel.client.Channel;
-import com.google.gwt.appengine.channel.client.ChannelError;
-import com.google.gwt.appengine.channel.client.ChannelFactory;
-import com.google.gwt.appengine.channel.client.Socket;
-import com.google.gwt.appengine.channel.client.SocketListener;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.Window;
@@ -53,7 +49,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, ProfilerPresenter.MyProxy>
-        implements RecordingStateChangedEvent.RecordingStateChangedHandler, SocketListener {
+        implements RecordingStateChangedEvent.RecordingStateChangedHandler, DbOperationEvent.DbOperationHandler {
     interface MyView extends View {
     }
 
@@ -68,56 +64,53 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     public static final Object SLOT_TOOLBAR = new Object();
 
     private final RestDispatch restDispatch;
-    private final ChannelService channelService;
     private final FiltersPresenter filterPresenter;
     private final StatisticsPresenter statisticsPresenter;
     private final StatementPresenter statementPresenter;
-    private final ChannelFactory channelFactory;
-    private final DbOperationDeserializer dbOperationDeserializer;
     private final Logger logger;
     private final UiFactory uiFactory;
     private final AppConstants myConstants;
     private final AppResources resources;
     private final RecordService recordService;
+    private final FontsResources fontsResources;
+    private final ChannelHandler channelHandler;
     private final ToolbarPresenter toolbarPresenter;
     private final ToolbarButton record;
     private final ToolbarButton stop;
     private final ToolbarButton clear;
 
-    private Socket socket;
     private Boolean isRecording = false;
 
     @Inject
-    ProfilerPresenter(EventBus eventBus,
-                      MyView view,
-                      MyProxy proxy,
-                      RestDispatch restDispatch,
-                      ChannelService channelService,
-                      FiltersPresenter filterPresenter,
-                      StatisticsPresenter statisticsPresenter,
-                      StatementPresenter statementPresenter,
-                      ChannelFactory channelFactory,
-                      DbOperationDeserializer dbOperationDeserializer,
-                      Logger logger,
-                      UiFactory uiFactory,
-                      AppConstants myConstants,
-                      AppResources resources,
-                      RecordService recordService,
-                      ToolbarPresenter toolbarPresenter) {
+    ProfilerPresenter(
+            EventBus eventBus,
+            MyView view,
+            MyProxy proxy,
+            RestDispatch restDispatch,
+            FiltersPresenter filterPresenter,
+            StatisticsPresenter statisticsPresenter,
+            StatementPresenter statementPresenter,
+            Logger logger,
+            UiFactory uiFactory,
+            AppConstants myConstants,
+            AppResources resources,
+            FontsResources fontsResources,
+            RecordService recordService,
+            ChannelHandler channelHandler,
+            ToolbarPresenter toolbarPresenter) {
         super(eventBus, view, proxy);
 
         this.restDispatch = restDispatch;
-        this.channelService = channelService;
         this.filterPresenter = filterPresenter;
         this.statisticsPresenter = statisticsPresenter;
         this.statementPresenter = statementPresenter;
-        this.channelFactory = channelFactory;
+        this.fontsResources = fontsResources;
+        this.channelHandler = channelHandler;
         this.toolbarPresenter = toolbarPresenter;
         this.uiFactory = uiFactory;
         this.myConstants = myConstants;
         this.resources = resources;
         this.recordService = recordService;
-        this.dbOperationDeserializer = dbOperationDeserializer;
         this.logger = logger;
 
         record = createRecordButton();
@@ -127,32 +120,15 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
 
     @Override
     public void onRecordingStateChanged(RecordingStateChangedEvent event) {
-        if (event.isStarting()) {
+        if (event.isStarting() && !channelHandler.isChannelOpen()) {
             openChannel();
-        } else {
-            closeChannel();
         }
     }
 
     @Override
-    public void onOpen() {
-        logger.info(DebugLogMessages.CHANNEL_OPENED);
-    }
-
-    @Override
-    public void onMessage(String dbOperation) {
-        DbOperationRecordDto recordDto = dbOperationDeserializer.deserialize(dbOperation);
-
-        processDbOperationRecord(recordDto);
+    public void onDbOperation(DbOperationEvent event) {
+        processDbOperationRecord(event.getDbOperationRecordDto());
         displayNewDbOperationRecords();
-    }
-
-    @Override
-    public void onError(ChannelError channelError) {
-    }
-
-    @Override
-    public void onClose() {
     }
 
     @Override
@@ -175,6 +151,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
         toolbarPresenter.setButtons(Lists.newArrayList(record, stop, clear));
 
         addRegisteredHandler(RecordingStateChangedEvent.getType(), this);
+        addRegisteredHandler(DbOperationEvent.getType(), this);
     }
 
     private void setRecordingState(Boolean isRecording) {
@@ -234,7 +211,7 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
     }
 
     private ToolbarButton createClearButton() {
-        return uiFactory.createToolbarButton(myConstants.clear(), resources.styles().delete(),
+        return uiFactory.createToolbarButton(myConstants.clear(), fontsResources.icons().icon_delete(),
                 new ToolbarButtonCallback() {
                     @Override
                     public void onClicked() {
@@ -253,25 +230,13 @@ public class ProfilerPresenter extends Presenter<ProfilerPresenter.MyView, Profi
                 }, DebugIds.RECORD);
     }
 
-    private void closeChannel() {
-        if (socket != null) {
-            socket.close();
-        }
-    }
-
     private void openChannel() {
-        restDispatch.execute(channelService.getToken(), new AsyncCallbackImpl<Token>() {
+        channelHandler.openChannel(new ChannelHandler.ChannelOpenCallback() {
             @Override
-            public void onSuccess(Token token) {
-                openChannel(token);
+            public void onChannelOpen() {
+                logger.info(DebugLogMessages.CHANNEL_OPENED);
             }
         });
-    }
-
-    private void openChannel(Token token) {
-        Channel channel = channelFactory.createChannel(token.getValue());
-
-        socket = channel.open(this);
     }
 
     private void displayNewDbOperationRecords() {

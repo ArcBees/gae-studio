@@ -9,7 +9,6 @@
 
 package com.arcbees.gaestudio.server.guice;
 
-import com.arcbees.gaestudio.server.service.auth.SecureAuthModule;
 import com.google.inject.servlet.ServletModule;
 
 public class GaeStudioModule extends ServletModule {
@@ -17,6 +16,5 @@ public class GaeStudioModule extends ServletModule {
     protected void configureServlets() {
         install(new EmbeddedPathModule());
         install(new CommonModule(getServletContext()));
-        install(new SecureAuthModule());
     }
 }

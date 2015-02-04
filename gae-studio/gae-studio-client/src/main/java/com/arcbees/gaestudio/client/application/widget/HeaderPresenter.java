@@ -39,10 +39,11 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView>
     private int loadingEventsAccumulator;
 
     @Inject
-    HeaderPresenter(EventBus eventBus,
-                    MyView view,
-                    PlaceManager placeManager,
-                    SupportPresenter supportPresenter) {
+    HeaderPresenter(
+            EventBus eventBus,
+            MyView view,
+            PlaceManager placeManager,
+            SupportPresenter supportPresenter) {
         super(eventBus, view);
 
         this.placeManager = placeManager;

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-@def selectionBorderWidth 2px;
+@def SELECTION_BORDER_WIDTH 2px;
 .cellTableWidget {
 
 }
@@ -87,7 +87,7 @@
 }
 
 .cellTableEvenRowCell {
-    border: selectionBorderWidth solid #ffffff;
+    border: SELECTION_BORDER_WIDTH solid #ffffff;
 }
 
 .cellTableOddRow {
@@ -95,7 +95,7 @@
 }
 
 .cellTableOddRowCell {
-    border: selectionBorderWidth solid #f3f7fb;
+    border: SELECTION_BORDER_WIDTH solid #f3f7fb;
 }
 
 .cellTableHoveredRow {
@@ -103,7 +103,7 @@
 }
 
 .cellTableHoveredRowCell {
-    border: selectionBorderWidth solid #eee;
+    border: SELECTION_BORDER_WIDTH solid #eee;
 }
 
 .cellTableKeyboardSelectedRow {
@@ -111,7 +111,7 @@
 }
 
 .cellTableKeyboardSelectedRowCell {
-    border: selectionBorderWidth solid #ffc;
+    border: SELECTION_BORDER_WIDTH solid #ffc;
 }
 
 .cellTableSelectedRow {
@@ -122,14 +122,14 @@
 }
 
 .cellTableSelectedRowCell {
-    border: selectionBorderWidth solid #628cd5;
+    border: SELECTION_BORDER_WIDTH solid #628cd5;
 }
 
 /**
  * The keyboard selected cell is visible over selection.
  */
 .cellTableKeyboardSelectedCell {
-    border: selectionBorderWidth solid #d7dde8;
+    border: SELECTION_BORDER_WIDTH solid #d7dde8;
 }
 
 .cellTableLoading {

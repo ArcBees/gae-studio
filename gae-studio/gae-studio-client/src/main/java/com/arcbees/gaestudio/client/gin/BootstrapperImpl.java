@@ -26,8 +26,8 @@ public class BootstrapperImpl implements Bootstrapper {
     @Inject
     BootstrapperImpl(
             PlaceManager placeManager,
-            Analytics analytics,
-            AppConfig appConfig) {
+            AppConfig appConfig,
+            Analytics analytics) {
         this.placeManager = placeManager;
         this.analytics = analytics;
         this.appConfig = appConfig;

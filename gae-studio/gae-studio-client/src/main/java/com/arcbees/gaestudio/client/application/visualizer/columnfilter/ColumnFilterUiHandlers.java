@@ -7,18 +7,12 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.exception;
+package com.arcbees.gaestudio.client.application.visualizer.columnfilter;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
+import com.gwtplatform.mvp.client.UiHandlers;
 
-import com.arcbees.oauth.api.util.ResponseException;
+public interface ColumnFilterUiHandlers extends UiHandlers {
+    void showAll();
 
-@Provider
-public class ResponseExceptionMapper implements ExceptionMapper<ResponseException> {
-    @Override
-    public Response toResponse(ResponseException e) {
-        return Response.status(e.getStatusCode()).build();
-    }
+    void hideAll();
 }

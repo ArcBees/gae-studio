@@ -11,5 +11,6 @@ bin
 .checkstyle
 out
 gen
-velocity.log
+velocity.log*
 .DS_Store
+/release/

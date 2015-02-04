@@ -28,7 +28,8 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 import static com.google.gwt.query.client.GQuery.$;
 
-public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements HeaderPresenter.MyView {
+public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers>
+        implements HeaderPresenter.MyView {
     interface Binder extends UiBinder<Widget, HeaderView> {
     }
 
@@ -42,15 +43,20 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     Button report;
     @UiField
     DivElement ajaxLoader;
+    @UiField
+    DivElement menu;
+    @UiField
+    AnchorElement profilerAnchor;
 
     private final String activeStyleName;
     private final Analytics analytics;
 
     @Inject
-    HeaderView(Binder uiBinder,
-               WidgetResources widgetRes,
-               AppResources resources,
-               final Analytics analytics) {
+    HeaderView(
+            Binder uiBinder,
+            WidgetResources widgetRes,
+            AppResources resources,
+            final Analytics analytics) {
         this.widgetRes = widgetRes;
         this.resources = resources;
         this.analytics = analytics;
@@ -65,11 +71,20 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
                 analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Header -> Logo");
             }
         });
+
+        $("a", menu).click(new Function() {
+            @Override
+            public void f() {
+                $("." + activeStyleName).removeClass(activeStyleName);
+                $(getElement()).addClass(activeStyleName);
+            }
+        });
     }
 
     @Override
     public void setProfilerActive() {
         $("." + activeStyleName).removeClass(activeStyleName);
+        $(profilerAnchor).addClass(activeStyleName);
     }
 
     @Override

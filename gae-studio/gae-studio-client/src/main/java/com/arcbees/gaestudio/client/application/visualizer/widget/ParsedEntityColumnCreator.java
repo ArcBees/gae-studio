@@ -9,15 +9,19 @@
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppConstants;
+import com.arcbees.gaestudio.client.resources.AppResources;
 import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyDtoMapper;
 import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyPrettifier;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.google.common.collect.Lists;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
@@ -26,23 +30,6 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
 
 public class ParsedEntityColumnCreator {
-    private static final String IS_NULL = "<null>";
-
-    private static int DEFAULT_COLUMN_COUNT;
-
-    private final AppConstants appConstants;
-    private final KeyPrettifier keyPrettifier;
-    private final KeyDtoMapper keyDtoMapper;
-
-    @Inject
-    ParsedEntityColumnCreator(AppConstants appConstants,
-                              KeyPrettifier keyPrettifier,
-                              KeyDtoMapper keyDtoMapper) {
-        this.appConstants = appConstants;
-        this.keyPrettifier = keyPrettifier;
-        this.keyDtoMapper = keyDtoMapper;
-    }
-
     public static int getDefaultColumnCount() {
         return DEFAULT_COLUMN_COUNT;
     }
@@ -51,8 +38,30 @@ public class ParsedEntityColumnCreator {
         DEFAULT_COLUMN_COUNT = defaultColumnCount;
     }
 
+    public static final List<String> DEFAULT_COLUMN_NAMES = Lists.newArrayList("Key/Parent", "Namespace");
+    private static final String IS_NULL = "<null>";
+
+    private static int DEFAULT_COLUMN_COUNT;
+
+    private final AppConstants appConstants;
+    private final KeyPrettifier keyPrettifier;
+    private final KeyDtoMapper keyDtoMapper;
+    private final AppResources appResources;
+
+    @Inject
+    ParsedEntityColumnCreator(
+            AppConstants appConstants,
+            KeyPrettifier keyPrettifier,
+            KeyDtoMapper keyDtoMapper,
+            AppResources appResources) {
+        this.appConstants = appConstants;
+        this.keyPrettifier = keyPrettifier;
+        this.keyDtoMapper = keyDtoMapper;
+        this.appResources = appResources;
+    }
+
     public void addPropertyColumn(CellTable<ParsedEntity> cellTable,
-                                  final String propertyName) {
+            final String propertyName) {
         Column<ParsedEntity, ?> column = new TextColumn<ParsedEntity>() {
             @Override
             public String getValue(ParsedEntity parsedEntity) {
@@ -75,6 +84,7 @@ public class ParsedEntityColumnCreator {
             }
         };
 
+        column.setCellStyleNames(appResources.styles().hiddenCol());
         cellTable.addColumn(column, propertyName);
     }
 

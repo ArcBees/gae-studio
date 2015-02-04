@@ -1,0 +1,174 @@
+.authForm {
+    width: 345px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.authForm label {
+    width: 120px;
+    display: inline-block;
+}
+
+.authForm input {
+    width: 96%;
+    padding: 0 0 0 4% !important;
+    margin-bottom: 11px;
+    background-color: #FFFFFF !important;
+
+    @mixin boxshadow_inset(2px, 2px, 6px, 1px, rgba(0, 0, 0, 0.2));
+    border: none;
+}
+
+.authForm input:hover, .authForm input:focus {
+    outline: 2px solid C_PRIMARY;
+    outline-offset: -2px;
+}
+
+.authForm input, .authForm {
+    height: 37px;
+}
+
+.authForm {
+    margin-bottom: 20px;
+    text-transform: none;
+}
+
+.authForm input, .authForm {
+    font-size: 1.5em;
+}
+
+#loginForm #registerLink {
+    font-size: 1.5em;
+}
+
+#loginForm {
+    text-align: center;
+    position: relative;
+}
+
+#loginForm #forgotLink {
+    color: C_PRIMARY;
+    font-size: 1.2em;
+}
+
+#loginForm #registerLink {
+    margin-top: 60px;
+    display: block;
+
+    color: #353535;
+}
+
+#loginForm a {
+    cursor: pointer;
+}
+
+#loginForm a:active {
+    text-decoration: underline;
+}
+
+#loginForm #registerLink:hover, #loginForm #forgotLink:hover {
+    color: #0e76bc;
+}
+
+#loginForm #registerLink:active, #loginForm #forgotLink:active {
+    text-decoration: underline;
+}
+
+.errorMessage {
+    height: 34px;
+    margin-bottom: 14px;
+
+    text-align: center;
+    font-size: 1.2em;
+    line-height: 34px;
+
+    color: white;
+    background-color: #ff5400;
+}
+
+.logo {
+    display: block;
+    margin: -168px auto 10px;
+}
+
+.formTitle {
+    color: #353535;
+    font-size: 20px;
+    text-align: center;
+
+    margin-bottom: 25px;
+}
+
+.ajaxContainer {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    margin-right: -35px;
+}
+
+.topBlueBar {
+    height: 4px;
+}
+
+.middleBlueBar {
+    height: 75px;
+    margin-top: 195px;
+}
+
+.topBlueBar, .middleBlueBar, .footer {
+    background-color: C_PRIMARY;
+}
+
+.root {
+    height: 100%;
+    background-color: #e6e6e6;
+}
+
+.wrap {
+    min-height: 100%;
+}
+
+.footer {
+    position: relative;
+    margin-top: -14px;
+    height: 14px;
+    clear: both;
+}
+
+.main {
+    overflow: auto;
+    padding-bottom: 14px;
+}
+
+.buttonContainer {
+    position: relative;
+    margin-top: 20px;
+}
+
+/* -> Activation view -- */
+
+.wrapper {
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.paragraph {
+    margin-bottom: 30px;
+}
+
+.loginLink, .loginLink:visited {
+    color: C_PRIMARY;
+    text-decoration: none;
+}
+
+.loginLink:hover {
+    color: #0e76bc;
+}
+
+/* -> Register view -- */
+
+.separator {
+    background-color: C_PRIMARY;
+    padding: 5px;
+    margin-bottom: 10px;
+}

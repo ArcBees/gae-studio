@@ -7,14 +7,15 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.gatekeeper;
+package com.arcbees.gaestudio.client.application.visualizer.columnfilter.storage;
 
-import com.google.gwt.inject.client.AbstractGinModule;
-import com.gwtplatform.mvp.client.proxy.Gatekeeper;
+/**
+ * This interface makes unit testing of
+ * {@link com.arcbees.gaestudio.client.application.visualizer.columnfilter.ColumnVisibilityConfigHelper} possible,
+ * because {@link com.google.gwt.storage.client.Storage} is a final class and can't be mocked.
+ */
+public interface StorageAdapter {
+    void setItem(String key, String data);
 
-public class UnsecureGatekeeperModule extends AbstractGinModule {
-    @Override
-    protected void configure() {
-        bind(Gatekeeper.class).annotatedWith(LicenseGateKeeper.class).to(UnsecureLicenseGatekeeper.class);
-    }
+    String getItem(String key);
 }

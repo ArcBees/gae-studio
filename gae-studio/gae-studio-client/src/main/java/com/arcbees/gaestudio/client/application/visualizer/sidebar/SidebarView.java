@@ -113,6 +113,7 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
 
         ChosenOptions chosenOptions = new ChosenOptions();
         chosenOptions.setResources(chosenResources);
+        chosenOptions.setDisableSearchThreshold(1000); // must never display the search box
         chosenFormat = new ChosenListBox(chosenOptions);
 
         chosenFormat.addItem(ExportFormats.CSV);

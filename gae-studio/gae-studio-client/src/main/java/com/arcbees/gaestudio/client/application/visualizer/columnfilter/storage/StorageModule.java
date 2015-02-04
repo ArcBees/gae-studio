@@ -7,15 +7,13 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.service.auth;
+package com.arcbees.gaestudio.client.application.visualizer.columnfilter.storage;
 
-import javax.inject.Singleton;
+import com.google.gwt.inject.client.AbstractGinModule;
 
-import com.google.inject.AbstractModule;
-
-public class UnsecureAuthModule extends AbstractModule {
+public class StorageModule extends AbstractGinModule {
     @Override
     protected void configure() {
-        bind(AuthService.class).to(UnsecureAuthService.class).in(Singleton.class);
+        bind(StorageAdapter.class).to(StorageAdapterImpl.class);
     }
 }

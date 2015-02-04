@@ -7,13 +7,10 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.gatekeeper;
+package com.arcbees.gaestudio.client.application.visualizer.columnfilter;
 
-import com.gwtplatform.mvp.client.proxy.Gatekeeper;
+import com.gwtplatform.mvp.client.UiHandlers;
 
-public class UnsecureLicenseGatekeeper implements Gatekeeper {
-    @Override
-    public boolean canReveal() {
-        return true;
-    }
+public interface ColumnNameUiHandlers extends UiHandlers {
+    void onValueChange(Boolean value);
 }

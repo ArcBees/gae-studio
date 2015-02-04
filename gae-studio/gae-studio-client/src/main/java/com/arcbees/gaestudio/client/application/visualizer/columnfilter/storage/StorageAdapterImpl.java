@@ -7,15 +7,20 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.server.service.auth;
+package com.arcbees.gaestudio.client.application.visualizer.columnfilter.storage;
 
-import javax.inject.Singleton;
+import com.google.gwt.storage.client.Storage;
 
-import com.google.inject.AbstractModule;
+public class StorageAdapterImpl implements StorageAdapter {
+    private final Storage storage = Storage.getLocalStorageIfSupported();
 
-public class SecureAuthModule extends AbstractModule {
     @Override
-    protected void configure() {
-        bind(AuthService.class).to(SecureAuthService.class).in(Singleton.class);
+    public void setItem(String key, String data) {
+        storage.setItem(key, data);
+    }
+
+    @Override
+    public String getItem(String key) {
+        return storage.getItem(key);
     }
 }

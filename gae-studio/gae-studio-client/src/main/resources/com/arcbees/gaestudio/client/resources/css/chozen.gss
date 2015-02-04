@@ -23,10 +23,6 @@
     background-color: #fff;
 }
 
-.chzn-container-single .chzn-search {
-    display: none;
-}
-
 .chzn-container .chzn-drop {
     margin-top: -1px;
     margin-left: 0;

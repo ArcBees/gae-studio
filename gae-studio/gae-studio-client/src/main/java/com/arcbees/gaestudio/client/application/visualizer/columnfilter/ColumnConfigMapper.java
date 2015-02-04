@@ -7,14 +7,11 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.gatekeeper;
+package com.arcbees.gaestudio.client.application.visualizer.columnfilter;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import java.util.Map;
 
-import com.google.inject.BindingAnnotation;
+import com.github.nmorel.gwtjackson.client.ObjectMapper;
 
-@BindingAnnotation
-@Retention(RetentionPolicy.RUNTIME)
-public @interface LicenseGateKeeper {
+public interface ColumnConfigMapper extends ObjectMapper<Map<String, Map<String, Boolean>>> {
 }

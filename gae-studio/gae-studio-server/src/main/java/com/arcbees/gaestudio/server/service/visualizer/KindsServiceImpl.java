@@ -17,12 +17,8 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
-import com.google.appengine.api.NamespaceManager;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entities;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
@@ -40,9 +36,8 @@ public class KindsServiceImpl implements KindsService {
     public List<String> getKinds(String namespace) {
         AppEngineHelper.disableApiHooks();
 
-        Query query = new Query(Entities.KIND_METADATA_KIND);
-
-        Iterable<Entity> entityIterable = datastoreHelper.queryOnNamespace(namespace, query);
+        Iterable<Entity> entityIterable = datastoreHelper
+                .queryOnNamespace(namespace, new Query(Entities.KIND_METADATA_KIND));
 
         return getKinds(entityIterable);
     }
@@ -64,20 +59,5 @@ public class KindsServiceImpl implements KindsService {
         }).toSet();
 
         return Lists.newArrayList(kinds);
-    }
-
-    private Iterable<Entity> getKindsInNamespace(String namespace) {
-        String defaultNamespace = NamespaceManager.get();
-        try {
-            DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-
-            NamespaceManager.set(namespace);
-
-            Query query = new Query(Entities.KIND_METADATA_KIND);
-
-            return datastoreService.prepare(query).asList(FetchOptions.Builder.withDefaults());
-        } finally {
-            NamespaceManager.set(defaultNamespace);
-        }
     }
 }

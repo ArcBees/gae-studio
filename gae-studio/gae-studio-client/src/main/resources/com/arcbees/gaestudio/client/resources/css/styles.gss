@@ -102,6 +102,7 @@ input:focus, textarea:focus, button:focus {
     display: inline-block;
     height: 46px;
     width: 40px;
+    margin-top: 3px;
     padding: 11px 0 0 3px;
 
     @mixin transition_effect(all, 0.3s, ease);
@@ -133,17 +134,19 @@ input:focus, textarea:focus, button:focus {
     gwt-sprite: "stop";
 }
 
-.delete,
+.toolbarButton .delete,
 .toolbarButton:hover .delete,
-.stop,
+.toolbarButton .stop,
 .toolbarButton:hover .stop,
 .toolbarButtonDisabled:hover .stop,
-.record {
+.toolbarButton .record,
+.toolbarButton:hover .record,
+.toolbarButtonDisabled:hover .record {
     background-position-x: 50%;
-    background-position-y: 50%;
+    background-position-y: 30%;
 
     height: 46px;
-    width: 46px;
+    width: 40px;
     display: inline-block;
 }
 
@@ -172,7 +175,7 @@ input:focus, textarea:focus, button:focus {
 
     position: fixed;
     right: 20px;
-    top: 12px;
+    top: 8px;
     z-index: 1000;
 }
 
@@ -343,8 +346,28 @@ input:focus, textarea:focus, button:focus {
     display: none;
 }
 
-.pager table {
+.pager .pagerContainer {
     float: right;
+}
+
+.pager .pagerContainer table,
+.pager .pagerContainer i {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.pager .pagerContainer i {
+    font-size: 1.3em;
+
+    margin: 4px 18px 0 0;
+
+    @mixin transition_effect(all, .25s, ease);
+}
+
+.pager .pagerContainer i:hover::before {
+    cursor: pointer;
+
+    @mixin scale(1.1, 1.1);
 }
 
 .firstTable, .secondTable, .pager {
@@ -364,6 +387,10 @@ input:focus, textarea:focus, button:focus {
 
 .firstTable thead tr:after {
     content: "";
+}
+
+.firstTable thead tr {
+    height: 30px;
 }
 
 .firstTable tbody tr:hover {
@@ -856,4 +883,32 @@ input:focus, textarea:focus, button:focus {
 
 .licenseButtonContainer {
     position: relative;
+}
+
+table .hiddenCol {
+    display: none;
+}
+
+.columnFilterRoot {
+    margin: 7px;
+}
+
+.columnFilterRoot a {
+    color: #fff;
+}
+
+.columnFilterRoot a:hover {
+    cursor: pointer;
+}
+
+.columnFilterRoot .columnFilterList {
+    text-align: left;
+}
+
+table .hiddenCol {
+    display: none;
+}
+
+.columnNameCheckbox {
+    display: block;
 }
