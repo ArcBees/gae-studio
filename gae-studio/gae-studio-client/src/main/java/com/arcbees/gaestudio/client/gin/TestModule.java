@@ -9,14 +9,12 @@
 
 package com.arcbees.gaestudio.client.gin;
 
-import com.arcbees.gaestudio.client.gatekeeper.UnsecureGatekeeperModule;
 import com.arcbees.gaestudio.client.log.TestLogModule;
 import com.google.gwt.inject.client.AbstractGinModule;
 
 public class TestModule extends AbstractGinModule {
     @Override
     protected void configure() {
-        install(new UnsecureGatekeeperModule());
         install(new TestLogModule());
     }
 }

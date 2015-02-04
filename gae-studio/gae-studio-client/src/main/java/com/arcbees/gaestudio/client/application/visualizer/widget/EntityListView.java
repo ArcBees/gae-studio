@@ -82,7 +82,6 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
     private final String pagerButtons;
     private final ParsedEntityColumnCreator columnCreator;
     private final MultiSelectionModel<ParsedEntity> selectionModel;
-    private final UniversalAnalytics universalAnalytics;
     private final ColumnVisibilityTooltip columnVisibilityTooltip;
     private final Analytics analytics;
 
@@ -90,15 +89,16 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
     private boolean gwtBound = false;
 
     @Inject
-    EntityListView(Binder uiBinder,
-                   CellTableResource cellTableResource,
-                   PagerResources pagerResources,
-                   AppResources appResources,
-                   VisualizerResources visualizerResources,
-                   ParsedEntityColumnCreator columnCreator,
-                    Analytics analytics,
-                   ColumnVisibilityConfigHelper columnVisibilityConfigHelper,
-                   ColumnVisibilityTooltip columnVisibilityTooltip) {
+    EntityListView(
+            Binder uiBinder,
+            CellTableResource cellTableResource,
+            PagerResources pagerResources,
+            AppResources appResources,
+            VisualizerResources visualizerResources,
+            ParsedEntityColumnCreator columnCreator,
+            Analytics analytics,
+            ColumnVisibilityConfigHelper columnVisibilityConfigHelper,
+            ColumnVisibilityTooltip columnVisibilityTooltip) {
         this.columnCreator = columnCreator;
         this.visualizerResources = visualizerResources;
         this.analytics = analytics;

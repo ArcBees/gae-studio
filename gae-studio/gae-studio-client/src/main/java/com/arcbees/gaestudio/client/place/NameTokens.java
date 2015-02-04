@@ -13,23 +13,6 @@ public class NameTokens {
     public static final String visualizer = "visualizer";
     public static final String profiler = "profiler";
     public static final String editEntity = "editEntity";
-    public static final String license = "license";
-    public static final String auth = "auth";
-    public static final String forgotpass = "forgotpass";
-    public static final String register = "register";
-    public static final String activation = "activation";
-
-    public static String getRegister() {
-        return register;
-    }
-
-    public static String getActivation() {
-        return activation;
-    }
-
-    public static String getForgotpass() {
-        return forgotpass;
-    }
 
     public static String getVisualizer() {
         return visualizer;
@@ -37,17 +20,5 @@ public class NameTokens {
 
     public static String getProfiler() {
         return profiler;
-    }
-
-    public static String getEditEntity() {
-        return editEntity;
-    }
-
-    public static String getLicense() {
-        return license;
-    }
-
-    public static String getAuth() {
-        return auth;
     }
 }

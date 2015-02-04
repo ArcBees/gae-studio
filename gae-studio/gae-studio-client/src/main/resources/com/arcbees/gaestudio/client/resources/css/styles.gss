@@ -175,7 +175,7 @@ input:focus, textarea:focus, button:focus {
 
     position: fixed;
     right: 20px;
-    top: 12px;
+    top: 8px;
     z-index: 1000;
 }
 

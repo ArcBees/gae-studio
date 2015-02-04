@@ -15,14 +15,11 @@ import com.arcbees.gaestudio.client.resources.WidgetResources;
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.dom.client.UListElement;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -31,8 +28,8 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import static com.arcbees.gaestudio.client.application.analytics.EventCategories.UI_ELEMENTS;
 import static com.google.gwt.query.client.GQuery.$;
 
-public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> 
-        implements HeaderPresenter.MyView, AttachEvent.Handler {
+public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers>
+        implements HeaderPresenter.MyView {
     interface Binder extends UiBinder<Widget, HeaderView> {
     }
 
@@ -47,37 +44,19 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers>
     @UiField
     DivElement ajaxLoader;
     @UiField
-    DivElement cog;
-    @UiField
-    UListElement themes;
-    @UiField
-    Anchor logout;
-    @UiField
     DivElement menu;
     @UiField
     AnchorElement profilerAnchor;
 
     private final String activeStyleName;
-    private final UniversalAnalytics universalAnalytics;
-    private final Function showThemes = new Function() {
-        @Override
-        public void f() {
-            $(themes).show();
-        }
-    };
-    private final Function hideThemes = new Function() {
-        @Override
-        public void f() {
-            $(themes).hide();
-        }
-    };
     private final Analytics analytics;
 
     @Inject
-    HeaderView(Binder uiBinder,
-               WidgetResources widgetRes,
-               AppResources resources,
-               final Analytics analytics) {
+    HeaderView(
+            Binder uiBinder,
+            WidgetResources widgetRes,
+            AppResources resources,
+            final Analytics analytics) {
         this.widgetRes = widgetRes;
         this.resources = resources;
         this.analytics = analytics;
@@ -92,8 +71,6 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers>
                 analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Header -> Logo");
             }
         });
-
-        asWidget().addAttachHandler(this);
 
         $("a", menu).click(new Function() {
             @Override

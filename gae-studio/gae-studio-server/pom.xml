@@ -66,12 +66,6 @@
             <version>${arcbees.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.arcbees.oauth</groupId>
-            <artifactId>sdk</artifactId>
-            <version>${oauth-client.version}</version>
-        </dependency>
-
         <!-- Other dependencies -->
         <dependency>
             <groupId>org.apache.velocity</groupId>

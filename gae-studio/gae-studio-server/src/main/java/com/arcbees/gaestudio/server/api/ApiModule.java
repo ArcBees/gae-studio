@@ -9,7 +9,6 @@
 
 package com.arcbees.gaestudio.server.api;
 
-import com.arcbees.gaestudio.server.api.auth.AuthResource;
 import com.arcbees.gaestudio.server.api.profiler.ChannelResource;
 import com.arcbees.gaestudio.server.api.profiler.RecordResource;
 import com.arcbees.gaestudio.server.api.visualizer.BlobsResource;
@@ -31,7 +30,6 @@ public class ApiModule extends AbstractModule {
         bind(EntitiesResource.class);
         bind(ChannelResource.class);
         bind(RecordResource.class);
-        bind(AuthResource.class);
         bind(EntityResource.class);
         bind(ImportResource.class);
         bind(ExportResource.class);

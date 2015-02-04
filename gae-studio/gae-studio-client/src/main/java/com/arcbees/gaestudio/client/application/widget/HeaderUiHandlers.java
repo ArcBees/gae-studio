@@ -13,6 +13,4 @@ import com.gwtplatform.mvp.client.UiHandlers;
 
 interface HeaderUiHandlers extends UiHandlers {
     void supportClicked();
-
-    void logout();
 }

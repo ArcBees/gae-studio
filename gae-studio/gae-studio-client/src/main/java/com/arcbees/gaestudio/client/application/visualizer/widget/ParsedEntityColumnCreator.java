@@ -38,9 +38,7 @@ public class ParsedEntityColumnCreator {
         DEFAULT_COLUMN_COUNT = defaultColumnCount;
     }
 
-    public static final List<String> DEFAULT_COLUMN_NAMES =
-            Lists.newArrayList("ID/NAME", "Parent Kind", "Parent ID", "Namespace");
-
+    public static final List<String> DEFAULT_COLUMN_NAMES = Lists.newArrayList("Key/Parent", "Namespace");
     private static final String IS_NULL = "<null>";
 
     private static int DEFAULT_COLUMN_COUNT;
@@ -51,10 +49,11 @@ public class ParsedEntityColumnCreator {
     private final AppResources appResources;
 
     @Inject
-    ParsedEntityColumnCreator(AppConstants appConstants,
-                              KeyPrettifier keyPrettifier,
-                              KeyDtoMapper keyDtoMapper,
-                              AppResources appResources) {
+    ParsedEntityColumnCreator(
+            AppConstants appConstants,
+            KeyPrettifier keyPrettifier,
+            KeyDtoMapper keyDtoMapper,
+            AppResources appResources) {
         this.appConstants = appConstants;
         this.keyPrettifier = keyPrettifier;
         this.keyDtoMapper = keyDtoMapper;
@@ -62,7 +61,7 @@ public class ParsedEntityColumnCreator {
     }
 
     public void addPropertyColumn(CellTable<ParsedEntity> cellTable,
-                                  final String propertyName) {
+            final String propertyName) {
         Column<ParsedEntity, ?> column = new TextColumn<ParsedEntity>() {
             @Override
             public String getValue(ParsedEntity parsedEntity) {
@@ -97,10 +96,6 @@ public class ParsedEntityColumnCreator {
         entityTable.addColumn(namespaceColumn, "Namespace");
 
         setDefaultColumnCount(entityTable.getColumnCount());
-    }
-
-    public List<String> getDefaultColumnNames() {
-        return Lists.newArrayList("ID/NAME", "Parent Kind", "Parent ID", "Namespace");
     }
 
     private TextColumn<ParsedEntity> buildNameSpaceColumn() {

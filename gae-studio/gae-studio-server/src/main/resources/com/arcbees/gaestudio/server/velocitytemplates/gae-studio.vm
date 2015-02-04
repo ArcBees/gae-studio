@@ -9,10 +9,10 @@
         ${AppConfiguration}
     </script>
     <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" language="javascript" src="gaestudio/gaestudio.nocache.js"></script>
+    <script type="text/javascript" language="javascript" src="/gaestudio/gaestudio.nocache.js"></script>
     <script type="text/javascript" src="/_ah/channel/jsapi"></script>
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 </head>
 
 <body>

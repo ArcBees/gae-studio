@@ -14,10 +14,8 @@ import java.util.logging.Logger;
 import javax.inject.Singleton;
 
 import com.arcbees.gaestudio.client.application.analytics.AnalyticsModule;
-import com.arcbees.gaestudio.client.application.auth.AuthModule;
 import com.arcbees.gaestudio.client.application.channel.ChannelModule;
 import com.arcbees.gaestudio.client.application.entity.EntityModule;
-import com.arcbees.gaestudio.client.application.license.LicenseModule;
 import com.arcbees.gaestudio.client.application.profiler.ProfilerModule;
 import com.arcbees.gaestudio.client.application.support.SupportModule;
 import com.arcbees.gaestudio.client.application.ui.UiFactory;
@@ -41,8 +39,6 @@ public class ApplicationModule extends AbstractPresenterModule {
         install(new AnalyticsModule());
         install(new SupportModule());
         install(new ChannelModule());
-        install(new LicenseModule());
-        install(new AuthModule());
         install(new GinFactoryModuleBuilder().build(UiFactory.class));
 
         bindPresenter(ApplicationPresenter.class, ApplicationPresenter.MyView.class, ApplicationView.class,
