@@ -126,15 +126,15 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
     @Inject
     EntityListPresenter(EventBus eventBus,
-                        MyView view,
-                        PlaceManager placeManager,
-                        RestDispatch restDispatch,
-                        EntitiesService entitiesService,
-                        PropertyNamesAggregator propertyNamesAggregator,
-                        GqlService gqlService,
-                        AppConstants appConstants,
-                        AppMessages appMessages,
-                        ColumnFilterPresenter columnFilterPresenter) {
+            MyView view,
+            PlaceManager placeManager,
+            RestDispatch restDispatch,
+            EntitiesService entitiesService,
+            PropertyNamesAggregator propertyNamesAggregator,
+            GqlService gqlService,
+            AppConstants appConstants,
+            AppMessages appMessages,
+            ColumnFilterPresenter columnFilterPresenter) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
@@ -242,7 +242,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                 if (number == 0) {
                     DisplayMessageEvent.fire(this, new Message(appConstants.noEntitiesMatchRequest(),
                             MessageStyle.ERROR));
-                    showEntities(new ArrayList<EntityDto>(), new Range(0, 0), 0);
+                    setData(new ArrayList<EntityDto>(), new Range(0, 0));
                 } else {
                     DisplayMessageEvent.fire(this, new Message(appMessages.entitiesMatchRequest(number),
                             MessageStyle.SUCCESS));
@@ -332,7 +332,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                 restDispatch.execute(getByKindAction(range), new AsyncCallbackImpl<List<EntityDto>>() {
                             @Override
                             public void onSuccess(List<EntityDto> result) {
-                                setColumns(result, range);
+                                setData(result, range);
 
                                 setTotalCount();
                             }
@@ -353,7 +353,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         }
     }
 
-    private void setColumns(List<EntityDto> entities, Range range) {
+    private void setData(List<EntityDto> entities, Range range) {
         List<ParsedEntity> parsedEntities = transformToParsedEntities(entities);
 
         adjustColumns(parsedEntities);
@@ -428,7 +428,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                 new AsyncCallbackImpl<List<EntityDto>>() {
                     @Override
                     public void onSuccess(List<EntityDto> result) {
-                        setColumns(result, range);
+                        setData(result, range);
 
                         getView().setRowCount(numberOfEntities);
                     }
