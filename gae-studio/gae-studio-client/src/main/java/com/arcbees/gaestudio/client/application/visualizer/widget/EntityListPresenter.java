@@ -123,6 +123,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private String currentNamespace;
     private String currentGqlRequest;
     private Integer currentGqlNumberOfEntities = 0;
+    private boolean isByGql;
 
     @Inject
     EntityListPresenter(EventBus eventBus,
@@ -240,9 +241,10 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
             @Override
             public void onSuccess(Integer number) {
                 if (number == 0) {
-                    DisplayMessageEvent.fire(this, new Message(appConstants.noEntitiesMatchRequest(),
-                            MessageStyle.ERROR));
-                    setData(new ArrayList<EntityDto>(), new Range(0, 0));
+                    DisplayMessageEvent.fire(this,
+                            new Message(appConstants.noEntitiesMatchRequest(), MessageStyle.ERROR));
+
+                    showEntities(new ArrayList<EntityDto>(), new Range(0, 0), number);
                 } else {
                     DisplayMessageEvent.fire(this, new Message(appMessages.entitiesMatchRequest(number),
                             MessageStyle.SUCCESS));
@@ -264,6 +266,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                 }
             }
         });
+    }
+
+    @Override
+    public void setUseGql(boolean isByGql) {
+        this.isByGql = isByGql;
     }
 
     @Override
@@ -291,6 +298,11 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
         addRegisteredHandler(ColumnVisibilityChangedEvent.getType(), this);
 
         setInSlot(SLOT_COLUMN_CONFIG_TOOLTIP, columnFilterPresenter);
+    }
+
+    private void showEntities(List<EntityDto> entities, Range range, Integer number) {
+        setData(entities, range);
+        getView().setRowCount(number);
     }
 
     private void setTableDataProvider() {
@@ -328,7 +340,9 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
 
             final Range range = display.getVisibleRange();
 
-            if (Strings.isNullOrEmpty(currentGqlRequest)) {
+            if (isByGql) {
+                retrieveEntities(range, currentGqlNumberOfEntities);
+            } else {
                 restDispatch.execute(getByKindAction(range), new AsyncCallbackImpl<List<EntityDto>>() {
                             @Override
                             public void onSuccess(List<EntityDto> result) {
@@ -338,8 +352,6 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                             }
                         }
                 );
-            } else {
-                retrieveEntities(range, currentGqlNumberOfEntities);
             }
         }
         EntityPageLoadedEvent.fire(this);
@@ -363,19 +375,21 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private void adjustColumns(List<ParsedEntity> entities) {
         getView().removeKindSpecificColumns();
 
-        Set<String> propertyNames = propertyNamesAggregator.aggregatePropertyNames(entities);
+        if (!entities.isEmpty()) {
+            Set<String> propertyNames = propertyNamesAggregator.aggregatePropertyNames(entities);
 
-        for (String propertyName : propertyNames) {
-            getView().addProperty(propertyName);
+            for (String propertyName : propertyNames) {
+                getView().addProperty(propertyName);
+            }
+
+            List<String> columnNames = Lists.newArrayList(ParsedEntityColumnCreator.DEFAULT_COLUMN_NAMES);
+            columnNames.addAll(propertyNames);
+            ParsedEntity prototype = entities.get(0);
+            TypeInfoLoadedEvent.fire(this, columnNames, prototype);
+
+            AppIdNamespaceDto appIdNamespace = prototype.getKey().getAppIdNamespace();
+            getView().setKind(appIdNamespace.getAppId(), appIdNamespace.getNamespace(), prototype.getKey().getKind());
         }
-
-        List<String> columnNames = Lists.newArrayList(ParsedEntityColumnCreator.DEFAULT_COLUMN_NAMES);
-        columnNames.addAll(propertyNames);
-        ParsedEntity prototype = entities.get(0);
-        TypeInfoLoadedEvent.fire(this, columnNames, prototype);
-
-        AppIdNamespaceDto appIdNamespace = prototype.getKey().getAppIdNamespace();
-        getView().setKind(appIdNamespace.getAppId(), appIdNamespace.getNamespace(), prototype.getKey().getKind());
 
         getView().redraw();
     }
@@ -428,9 +442,7 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
                 new AsyncCallbackImpl<List<EntityDto>>() {
                     @Override
                     public void onSuccess(List<EntityDto> result) {
-                        setData(result, range);
-
-                        getView().setRowCount(numberOfEntities);
+                        showEntities(result, range, numberOfEntities);
                     }
                 }
         );

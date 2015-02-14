@@ -231,7 +231,7 @@ public class EntitiesServiceImpl implements EntitiesService {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
         Query query = new Query().setKeysOnly();
-        datastoreHelper.filterGaeKinds(query);
+        datastoreHelper.preFilterGaeKinds(query);
 
         return datastore.prepare(query).asIterable();
     }

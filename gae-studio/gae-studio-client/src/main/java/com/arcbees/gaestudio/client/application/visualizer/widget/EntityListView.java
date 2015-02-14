@@ -406,7 +406,8 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
         VisualizerResources.EntityList styles = visualizerResources.entityList();
         $(byGql).toggleClass(styles.open());
 
-        if ($(byGql).hasClass(styles.open())) {
+        boolean isByGql = $(byGql).hasClass(styles.open());
+        if (isByGql) {
             $(formQueryHolder).slideDown(100);
             analytics.sendEvent(UI_ELEMENTS, "open")
                     .eventLabel("Visualizer -> List View -> GQL Query Textarea");
@@ -416,5 +417,7 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
             analytics.sendEvent(UI_ELEMENTS, "close")
                     .eventLabel("Visualizer -> List View -> GQL Query Textarea");
         }
+
+        getUiHandlers().setUseGql(isByGql);
     }
 }

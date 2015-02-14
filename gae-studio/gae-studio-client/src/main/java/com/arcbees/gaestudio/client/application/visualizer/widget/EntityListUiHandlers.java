@@ -22,4 +22,6 @@ interface EntityListUiHandlers extends UiHandlers {
     void refresh();
 
     void runGqlQuery(String request);
+
+    void setUseGql(boolean isByGql);
 }
