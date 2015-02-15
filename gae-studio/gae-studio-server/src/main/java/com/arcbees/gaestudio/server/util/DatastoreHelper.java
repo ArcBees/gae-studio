@@ -199,7 +199,17 @@ public class DatastoreHelper {
         }
     }
 
-    public void preFilterGaeKinds(Query query) {
+    /**
+     * Add a filter to remove the GAE specific kinds from the query
+     *
+     * @param query
+     * @throws IllegalArgumentException If the Query already contains an inequality filter
+     */
+    public void preFilterGaeKinds(Query query) throws IllegalArgumentException {
+        if (!canPreFilterGaeKinds(query)) {
+            throw new IllegalArgumentException("Cannot pre-filter kinds. Query already contains an inequality filter");
+        }
+
         FilterPredicate filter;
         if (Entities.KIND_METADATA_KIND.equals(query.getKind())) {
             filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, LESS_THAN,
@@ -232,7 +242,7 @@ public class DatastoreHelper {
         return datastoreService.prepare(namespacesQuery).asIterable();
     }
 
-    private boolean canPreFilterGaeKinds(Query query) {
+    public boolean canPreFilterGaeKinds(Query query) {
         return canPreFilterGaeKinds(query.getFilter());
     }
 

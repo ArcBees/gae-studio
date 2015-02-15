@@ -67,6 +67,7 @@
         <jukito.version>1.4</jukito.version>
         <selenium-java.version>2.37.1</selenium-java.version>
         <testutils.version>1.2</testutils.version>
+        <assertj.version>1.7.1</assertj.version>
 
         <!-- maven -->
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
