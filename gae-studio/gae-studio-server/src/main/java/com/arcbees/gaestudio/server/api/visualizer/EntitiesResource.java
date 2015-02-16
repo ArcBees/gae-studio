@@ -123,7 +123,7 @@ public class EntitiesResource {
         if (Strings.isNullOrEmpty(kind)) {
             responseBuilder = Response.status(Status.BAD_REQUEST);
         } else {
-            Integer count = entitiesService.getCount(kind, namespace);
+            long count = entitiesService.getCount(kind, namespace);
             responseBuilder = Response.ok(count);
         }
 

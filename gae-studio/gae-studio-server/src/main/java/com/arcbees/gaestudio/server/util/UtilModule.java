@@ -13,11 +13,19 @@ import com.google.gson.stream.JsonReader;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 
+import static com.google.appengine.api.utils.SystemProperty.Environment;
+
 public class UtilModule extends AbstractModule {
     @Override
     protected void configure() {
         install(new FactoryModuleBuilder()
                 .implement(JsonReader.class, JsonBlobReader.class)
                 .build(JsonBlobReaderFactory.class));
+
+        if (Environment.Value.Production.equals(Environment.environment.value())) {
+            bind(DatastoreCountProvider.class).to(ProductionDatastoreCountProvider.class);
+        } else {
+            bind(DatastoreCountProvider.class).to(DevServerDatastoreCountProvider.class);
+        }
     }
 }

@@ -17,6 +17,7 @@ import java.util.concurrent.Future;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
+import com.arcbees.gaestudio.server.util.DatastoreCountProvider;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.server.util.DefaultValueGenerator;
 import com.arcbees.gaestudio.shared.DeleteEntities;
@@ -31,19 +32,21 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
 import com.google.common.base.Splitter;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.storage.onestore.v3.OnestoreEntity.EntityProto;
 
 public class EntitiesServiceImpl implements EntitiesService {
     private final DatastoreHelper datastoreHelper;
     private final DefaultValueGenerator defaultValueGenerator;
+    private final DatastoreCountProvider countProvider;
 
     @Inject
     EntitiesServiceImpl(DatastoreHelper datastoreHelper,
-                        DefaultValueGenerator defaultValueGenerator) {
+                        DefaultValueGenerator defaultValueGenerator,
+                        DatastoreCountProvider countProvider) {
         this.datastoreHelper = datastoreHelper;
         this.defaultValueGenerator = defaultValueGenerator;
+        this.countProvider = countProvider;
     }
 
     @Override
@@ -120,12 +123,10 @@ public class EntitiesServiceImpl implements EntitiesService {
     }
 
     @Override
-    public Integer getCount(String kind, String namespace) {
+    public long getCount(String kind, String namespace) {
         AppEngineHelper.disableApiHooks();
 
-        Query query = new Query(kind).setKeysOnly();
-
-        return Iterables.size(datastoreHelper.queryOnNamespace(namespace, query));
+        return countProvider.get(kind, namespace);
     }
 
     @Override

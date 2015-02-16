@@ -30,7 +30,6 @@ import com.google.appengine.api.datastore.Query;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -140,27 +139,8 @@ public class DatastoreHelper {
 
         Collection<Entity> entities = Lists.newArrayList();
         for (Entity namespace : namespaces) {
-            DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-
-            NamespaceManager.set(extractNamespace(namespace));
-
-            Query namespaceAwareQuery = copyQuery(query);
-
-            boolean canPreFilterGaeKinds = canPreFilterGaeKinds(query);
-            if (canPreFilterGaeKinds) {
-                preFilterGaeKinds(namespaceAwareQuery);
-            }
-
-            Iterables.addAll(entities, datastoreService.prepare(namespaceAwareQuery).asIterable(fetchOptions));
-
-            if (!canPreFilterGaeKinds) {
-                entities = Collections2.filter(entities, new Predicate<Entity>() {
-                    @Override
-                    public boolean apply(Entity input) {
-                        return !input.getKind().startsWith(ENTITY_PREFIX);
-                    }
-                });
-            }
+            Iterable<Entity> entitiesInNamespace = queryOnNamespace(extractNamespace(namespace), query, fetchOptions);
+            Iterables.addAll(entities, entitiesInNamespace);
 
             if (fetchLimit != null) {
                 int newLimit = fetchLimit - entities.size();
@@ -175,6 +155,24 @@ public class DatastoreHelper {
         NamespaceManager.set(defaultNamespace);
 
         return entities;
+    }
+
+    public Entity querySingleEntity(String namespace, Query query) {
+        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+        if (namespace == null) {
+            return datastoreService.prepare(query).asSingleEntity();
+        } else {
+            String oldNamespace = NamespaceManager.get();
+            try {
+                NamespaceManager.set(namespace);
+
+                Query namespaceAwareQuery = copyQuery(query);
+
+                return datastoreService.prepare(namespaceAwareQuery).asSingleEntity();
+            } finally {
+                NamespaceManager.set(oldNamespace);
+            }
+        }
     }
 
     public Iterable<Entity> queryOnNamespace(String namespace, Query query) {
@@ -192,7 +190,23 @@ public class DatastoreHelper {
 
                 Query namespaceAwareQuery = copyQuery(query);
 
-                return toSerializableIterable(datastoreService.prepare(namespaceAwareQuery).asIterable(fetchOptions));
+                boolean canPreFilterGaeKinds = canPreFilterGaeKinds(namespaceAwareQuery);
+                if (canPreFilterGaeKinds) {
+                    preFilterGaeKinds(namespaceAwareQuery);
+                }
+
+                Iterable<Entity> entities = datastoreService.prepare(namespaceAwareQuery).asIterable(fetchOptions);
+
+                if (!canPreFilterGaeKinds) {
+                    entities = Iterables.filter(entities, new Predicate<Entity>() {
+                        @Override
+                        public boolean apply(Entity input) {
+                            return !input.getKind().startsWith(ENTITY_PREFIX);
+                        }
+                    });
+                }
+
+                return toSerializableIterable(entities);
             } finally {
                 NamespaceManager.set(oldNamespace);
             }

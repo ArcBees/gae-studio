@@ -26,7 +26,7 @@ public interface EntitiesService {
 
     void deleteEntities(String kind, String namespace, DeleteEntities deleteType, String encodedKeys);
 
-    Integer getCount(String kind, String namespace);
+    long getCount(String kind, String namespace);
 
     List<Key> put(Iterable<Entity> entities);
 
