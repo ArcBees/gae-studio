@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.server.guice;
@@ -41,20 +48,21 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class RootServlet extends HttpServlet {
-    private final static String templateLocation =
+    private static final String templateLocation =
             "com/arcbees/gaestudio/server/velocitytemplates/gae-studio.vm";
-    private final static String MAVEN_URL = "http://search.maven.org/solrsearch/select?wt=json&q=gae-studio-webapp";
-    private final static Pattern LATEST_VERSION_PATTERN =
+    private static final String MAVEN_URL = "http://search.maven.org/solrsearch/select?wt=json&q=gae-studio-webapp";
+    private static final Pattern LATEST_VERSION_PATTERN =
             Pattern.compile("\"latestVersion\":\\s*\"(.*?)\"");
-    private final static Pattern RESPONSE_CONTENT_PATTERN = Pattern.compile("^[^{]*(\\{.*\\})$");
-    private final static String COULD_NOT_RETRIEVE_LATEST_VERSION = "Could not retrieve latest version";
+    private static final Pattern RESPONSE_CONTENT_PATTERN = Pattern.compile("^[^{]*(\\{.*\\})$");
+    private static final String COULD_NOT_RETRIEVE_LATEST_VERSION = "Could not retrieve latest version";
 
-    protected final String restPath;
+    private final String restPath;
     private final VelocityWrapper velocityWrapper;
     private final boolean useCookieDomainNone;
 
     @Inject
-    RootServlet(VelocityWrapperFactory velocityWrapperFactory,
+    RootServlet(
+            VelocityWrapperFactory velocityWrapperFactory,
             @BaseRestPath String restPath,
             @UseCookieDomainNone boolean useCookieDomainNone) {
         this.restPath = restPath;

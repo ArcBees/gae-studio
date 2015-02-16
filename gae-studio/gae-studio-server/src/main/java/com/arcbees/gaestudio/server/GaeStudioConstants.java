@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.server;
@@ -12,15 +19,9 @@ package com.arcbees.gaestudio.server;
 public class GaeStudioConstants {
     public static final String GAE_NAMESPACE = "gaestudio";
     public static final String GA_CLIENT_KIND = "__GAClient";
-    public static final String GAE_USER_KIND = "__GAEUser";
     public static final String GAESTUDIO_OPERATIONS_CLIENT_IDS = "gaestudio-operations-client-ids";
     public static final String DISABLE_API_HOOKS = "GaeStudio.disableApiHooks";
     public static final String REQUEST_ID = "requestId";
     public static final String VISUALIZER_NAMESPACE = "gae.visualizer";
     public static final String REQUEST_COUNTER = "request.counter";
-    public static final String ARCBEES_MAIL_SENDER = "zom.bee@arcbees.com";
-    public static final String ARCBEES_OAUTH_SERVICE = "https://arcbees-oauth.appspot.com/";
-    public static final String OAUTH_USER_REGISTRATION = "https://arcbees-oauth.appspot.com/registration";
-    public static final String TEMPLATE_MAIL_WRAPPER =
-            "com/arcbees/gaestudio/server/velocitytemplates/messages/mailwrappertemplate.vm";
 }

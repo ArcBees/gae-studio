@@ -402,42 +402,42 @@ input:focus, textarea:focus, button:focus {
 }
 
 .trashSmall {
-    gwt-sprite: "trash_small_up";
+    gwt-sprite: "trashSmallUp";
 }
 
 .trashSmallNoHover {
-    gwt-sprite: "trash_small_up";
+    gwt-sprite: "trashSmallUp";
 }
 
 .trashSmall:hover {
-    gwt-sprite: "trash_small_rl";
+    gwt-sprite: "trashSmallRl";
 }
 
 .expand {
-    gwt-sprite: "expand_up";
+    gwt-sprite: "expandUp";
     cursor: pointer;
 }
 
 .expand:hover {
-    gwt-sprite: "expand_rl";
+    gwt-sprite: "expandRl";
 }
 
 .collapse {
-    gwt-sprite: "collapse_up";
+    gwt-sprite: "collapseUp";
     cursor: pointer;
 }
 
 .collapse:hover {
-    gwt-sprite: "collapse_rl";
+    gwt-sprite: "collapseRl";
 }
 
 .importSmall {
-    gwt-sprite: "import_small_up";
+    gwt-sprite: "importSmallUp";
     margin: 0;
 }
 
 .pencilSmall {
-    gwt-sprite: "pencil_small";
+    gwt-sprite: "pencilSmall";
     margin: 0;
 }
 
@@ -619,7 +619,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .pencil {
-    gwt-sprite: "pencil_up";
+    gwt-sprite: "pencilUp";
 }
 
 /* -> Buttons in visualizer top toolbar */

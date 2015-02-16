@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.server.util;
@@ -40,13 +47,8 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-/**
- * @author Max Zhu (thebbsky@gmail.com)
- */
 public class GqlQuery {
-
     private Query query;
-
     private FetchOptions fetchOptions;
     private ParseResult parseResult;
 
@@ -273,43 +275,58 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             ParseResult other = (ParseResult) obj;
             if (from == null) {
-                if (other.from != null)
+                if (other.from != null) {
                     return false;
-            } else if (!from.equals(other.from))
+                }
+            } else if (!from.equals(other.from)) {
                 return false;
+            }
             if (limit == null) {
-                if (other.limit != null)
+                if (other.limit != null) {
                     return false;
-            } else if (!limit.equals(other.limit))
+                }
+            } else if (!limit.equals(other.limit)) {
                 return false;
+            }
             if (offset == null) {
-                if (other.offset != null)
+                if (other.offset != null) {
                     return false;
-            } else if (!offset.equals(other.offset))
+                }
+            } else if (!offset.equals(other.offset)) {
                 return false;
+            }
             if (orderBy == null) {
-                if (other.orderBy != null)
+                if (other.orderBy != null) {
                     return false;
-            } else if (!orderBy.equals(other.orderBy))
+                }
+            } else if (!orderBy.equals(other.orderBy)) {
                 return false;
+            }
             if (select == null) {
-                if (other.select != null)
+                if (other.select != null) {
                     return false;
-            } else if (!select.equals(other.select))
+                }
+            } else if (!select.equals(other.select)) {
                 return false;
+            }
             if (where == null) {
-                if (other.where != null)
+                if (other.where != null) {
                     return false;
-            } else if (!where.equals(other.where))
+                }
+            } else if (!where.equals(other.where)) {
                 return false;
+            }
             return true;
         }
 
@@ -322,7 +339,7 @@ public class GqlQuery {
 
     public static class Select {
         /**
-         * select item, only * and __key__ is allowed (case sensitive)
+         * select item, only * and __key__ is allowed (case sensitive).
          */
         private final boolean keyOnly;
         private final ArrayList<String> projections;
@@ -355,17 +372,22 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             Select other = (Select) obj;
-            if (keyOnly != other.keyOnly)
+            if (keyOnly != other.keyOnly) {
                 return false;
-            if (!projections.equals(other.getProjections()))
+            }
+            if (!projections.equals(other.getProjections())) {
                 return false;
+            }
             return true;
         }
 
@@ -393,18 +415,23 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             From other = (From) obj;
             if (kind == null) {
-                if (other.kind != null)
+                if (other.kind != null) {
                     return false;
-            } else if (!kind.equals(other.kind))
+                }
+            } else if (!kind.equals(other.kind)) {
                 return false;
+            }
             return true;
         }
 
@@ -444,23 +471,30 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             Where other = (Where) obj;
             if (ancestor == null) {
-                if (other.ancestor != null)
+                if (other.ancestor != null) {
                     return false;
-            } else if (!ancestor.equals(other.ancestor))
+                }
+            } else if (!ancestor.equals(other.ancestor)) {
                 return false;
+            }
             if (conditions == null) {
-                if (other.conditions != null)
+                if (other.conditions != null) {
                     return false;
-            } else if (!conditions.equals(other.conditions))
+                }
+            } else if (!conditions.equals(other.conditions)) {
                 return false;
+            }
             return true;
         }
 
@@ -500,18 +534,23 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             Ancestor other = (Ancestor) obj;
             if (e == null) {
-                if (other.e != null)
+                if (other.e != null) {
                     return false;
-            } else if (!e.equals(other.e))
+                }
+            } else if (!e.equals(other.e)) {
                 return false;
+            }
             return true;
         }
 
@@ -543,18 +582,23 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             OrderBy other = (OrderBy) obj;
             if (items == null) {
-                if (other.items != null)
+                if (other.items != null) {
                     return false;
-            } else if (!items.equals(other.items))
+                }
+            } else if (!items.equals(other.items)) {
                 return false;
+            }
             return true;
         }
 
@@ -582,18 +626,23 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             Limit other = (Limit) obj;
             if (limit == null) {
-                if (other.limit != null)
+                if (other.limit != null) {
                     return false;
-            } else if (!limit.equals(other.limit))
+                }
+            } else if (!limit.equals(other.limit)) {
                 return false;
+            }
             return true;
         }
 
@@ -621,18 +670,23 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             Offset other = (Offset) obj;
             if (offset == null) {
-                if (other.offset != null)
+                if (other.offset != null) {
                     return false;
-            } else if (!offset.equals(other.offset))
+                }
+            } else if (!offset.equals(other.offset)) {
                 return false;
+            }
             return true;
         }
 
@@ -643,7 +697,7 @@ public class GqlQuery {
     }
 
     /**
-     * where condition
+     * where condition.
      *
      * @author Max Zhu (thebbsky@gmail.com)
      */
@@ -678,25 +732,33 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             Condition other = (Condition) obj;
             if (e == null) {
-                if (other.e != null)
+                if (other.e != null) {
                     return false;
-            } else if (!e.equals(other.e))
+                }
+            } else if (!e.equals(other.e)) {
                 return false;
-            if (operator != other.operator)
+            }
+            if (operator != other.operator) {
                 return false;
+            }
             if (propertyName == null) {
-                if (other.propertyName != null)
+                if (other.propertyName != null) {
                     return false;
-            } else if (!propertyName.equals(other.propertyName))
+                }
+            } else if (!propertyName.equals(other.propertyName)) {
                 return false;
+            }
             return true;
         }
 
@@ -737,20 +799,26 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             OrderByItem other = (OrderByItem) obj;
-            if (direction != other.direction)
+            if (direction != other.direction) {
                 return false;
+            }
             if (propertyName == null) {
-                if (other.propertyName != null)
+                if (other.propertyName != null) {
                     return false;
-            } else if (!propertyName.equals(other.propertyName))
+                }
+            } else if (!propertyName.equals(other.propertyName)) {
                 return false;
+            }
             return true;
         }
 
@@ -760,27 +828,21 @@ public class GqlQuery {
         }
     }
 
-    public static interface Evaluator {
-
-        /**
-         * @param context
-         * @return
-         */
-        public Object evaluate(Map<String, Object> context);
+    public interface Evaluator {
+        Object evaluate(Map<String, Object> context);
     }
 
     public static class NullEvaluator implements Evaluator {
-
         private static NullEvaluator singleton;
+
+        private NullEvaluator() {
+        }
 
         public static synchronized NullEvaluator get() {
             if (singleton == null) {
                 singleton = new NullEvaluator();
             }
             return singleton;
-        }
-
-        private NullEvaluator() {
         }
 
         @Override
@@ -815,12 +877,15 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             DecimalEvaluator other = (DecimalEvaluator) obj;
 
             return payload.equals(other.payload);
@@ -859,18 +924,23 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             StringEvaluator other = (StringEvaluator) obj;
             if (payload == null) {
-                if (other.payload != null)
+                if (other.payload != null) {
                     return false;
-            } else if (!payload.equals(other.payload))
+                }
+            } else if (!payload.equals(other.payload)) {
                 return false;
+            }
             return true;
         }
 
@@ -902,18 +972,23 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             BooleanEvaluator other = (BooleanEvaluator) obj;
             if (payload == null) {
-                if (other.payload != null)
+                if (other.payload != null) {
                     return false;
-            } else if (!payload.equals(other.payload))
+                }
+            } else if (!payload.equals(other.payload)) {
                 return false;
+            }
             return true;
         }
 
@@ -924,7 +999,6 @@ public class GqlQuery {
     }
 
     public static class FunctionEvaluator implements Evaluator {
-
         public enum Type {
             DATETIME,
             DATE,
@@ -934,8 +1008,12 @@ public class GqlQuery {
             GEOPT
         }
 
-        private final Type type;
+        private static final String DEFAULT_AUTH_DOMAIN = "gmail.com";
+        private static final DateFormat timeFmter = new SimpleDateFormat("HH:mm:ss");
+        private static final DateFormat dateFmter = new SimpleDateFormat("yyyy-MM-dd");
+        private static final DateFormat datetimeFmter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+        private final Type type;
         private final List<Evaluator> ops;
 
         public FunctionEvaluator(String type, Evaluator... ops) {
@@ -973,8 +1051,6 @@ public class GqlQuery {
                     throw new GqlQueryException("Invalid function type " + this.type);
             }
         }
-
-        private static final String DEFAULT_AUTH_DOMAIN = "gmail.com";
 
         private Object user(Map<String, Object> context) {
             if (this.ops.size() == 1) {
@@ -1025,8 +1101,6 @@ public class GqlQuery {
             return null;
         }
 
-        private static DateFormat timeFmter = new SimpleDateFormat("HH:mm:ss");
-
         private Object time(Map<String, Object> context) {
             if (this.ops.size() == 1) {
                 // TIME('HH:MM:SS')
@@ -1060,8 +1134,6 @@ public class GqlQuery {
             }
         }
 
-        private static DateFormat dateFmter = new SimpleDateFormat("yyyy-MM-dd");
-
         private Object date(Map<String, Object> context) {
             if (this.ops.size() == 1) {
                 // DATE('YYYY-MM-DD')
@@ -1090,8 +1162,6 @@ public class GqlQuery {
                 throw new GqlQueryException("Invalid GQL query string. Function date: wrong number of arguments");
             }
         }
-
-        private static DateFormat datetimeFmter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         private Object datetime(Map<String, Object> context) {
             if (this.ops.size() == 1) {
@@ -1148,18 +1218,23 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             FunctionEvaluator other = (FunctionEvaluator) obj;
             if (ops == null) {
-                if (other.ops != null)
+                if (other.ops != null) {
                     return false;
-            } else if (!ops.equals(other.ops))
+                }
+            } else if (!ops.equals(other.ops)) {
                 return false;
+            }
 
             return type == other.type;
         }
@@ -1194,18 +1269,23 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             ParamEvaluator other = (ParamEvaluator) obj;
             if (paramName == null) {
-                if (other.paramName != null)
+                if (other.paramName != null) {
                     return false;
-            } else if (!paramName.equals(other.paramName))
+                }
+            } else if (!paramName.equals(other.paramName)) {
                 return false;
+            }
             return true;
         }
 
@@ -1248,18 +1328,23 @@ public class GqlQuery {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             ListEvaluator other = (ListEvaluator) obj;
             if (evaluators == null) {
-                if (other.evaluators != null)
+                if (other.evaluators != null) {
                     return false;
-            } else if (!evaluators.equals(other.evaluators))
+                }
+            } else if (!evaluators.equals(other.evaluators)) {
                 return false;
+            }
             return true;
         }
 

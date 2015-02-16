@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.client.application.widget.dropdown;
@@ -64,6 +71,26 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
     private final Renderer<T> renderer;
     private final EventBus eventBus;
     private final Resources resources;
+    private final Function clickhandler = new Function() {
+        @Override
+        public boolean f(Event e) {
+            GQuery li = $(getElement());
+
+            if (li.hasClass(resources.styles().selectedLi())) {
+                if (opened) {
+                    close();
+                    makeSelected(li, true);
+                } else {
+                    open();
+                }
+            } else {
+                close();
+                makeSelected(li, true);
+            }
+
+            return true;
+        }
+    };
 
     private boolean opened;
 
@@ -127,27 +154,6 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
             }
         }
     }
-
-    private Function clickhandler = new Function() {
-        @Override
-        public boolean f(Event e) {
-            GQuery li = $(getElement());
-
-            if (li.hasClass(resources.styles().selectedLi())) {
-                if (opened) {
-                    close();
-                    makeSelected(li, true);
-                } else {
-                    open();
-                }
-            } else {
-                close();
-                makeSelected(li, true);
-            }
-
-            return true;
-        }
-    };
 
     @Override
     public void fireEvent(GwtEvent<?> event) {

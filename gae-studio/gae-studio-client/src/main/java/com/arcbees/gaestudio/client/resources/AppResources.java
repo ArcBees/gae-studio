@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.client.resources;
@@ -173,7 +180,7 @@ public interface AppResources extends ClientBundle {
     }
 
     @Source({"css/colors.gss", "css/mixins.gss", "css/styles.gss"})
-    public Styles styles();
+    Styles styles();
 
     @Source("images/create.png")
     ImageResource create();
@@ -185,13 +192,13 @@ public interface AppResources extends ClientBundle {
     ImageResource logo();
 
     @Source("images/pencil_up.png")
-    ImageResource pencil_up();
+    ImageResource pencilUp();
 
     @Source("images/pencil_rl.png")
-    ImageResource pencil_rl();
+    ImageResource pencilRl();
 
     @Source("images/pencil_small.png")
-    ImageResource pencil_small();
+    ImageResource pencilSmall();
 
     @Source("images/record.png")
     ImageResource record();
@@ -203,25 +210,25 @@ public interface AppResources extends ClientBundle {
     ImageResource closeToggle();
 
     @Source("images/trash_small_up.png")
-    ImageResource trash_small_up();
+    ImageResource trashSmallUp();
 
     @Source("images/trash_small_rl.png")
-    ImageResource trash_small_rl();
+    ImageResource trashSmallRl();
 
     @Source("images/import_small_up.png")
-    ImageResource import_small_up();
+    ImageResource importSmallUp();
 
     @Source("images/expand_up.png")
-    ImageResource expand_up();
+    ImageResource expandUp();
 
     @Source("images/expand_rl.png")
-    ImageResource expand_rl();
+    ImageResource expandRl();
 
     @Source("images/collapse_up.png")
-    ImageResource collapse_up();
+    ImageResource collapseUp();
 
     @Source("images/collapse_rl.png")
-    ImageResource collapse_rl();
+    ImageResource collapseRl();
 
     @Source("images/splashLogo.png")
     ImageResource splashLogo();
