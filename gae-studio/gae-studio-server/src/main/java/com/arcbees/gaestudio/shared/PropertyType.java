@@ -41,7 +41,7 @@ public enum PropertyType {
     }
 
     PropertyType(String mappedClass,
-                 PropertyType representation) {
+            PropertyType representation) {
         this.mappedClass = mappedClass;
         this.representation = representation == null ? this : representation;
     }

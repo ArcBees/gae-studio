@@ -7,11 +7,14 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.util.KeyPrettifier;
+package com.arcbees.gaestudio.client.util.KeyPrettifier2;
 
-import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
-import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.inject.client.AbstractGinModule;
 
-public interface KeyDtoMapper {
-    KeyDto fromJSONObject(JSONObject jsonObject);
+public class KeyPrettifierModule extends AbstractGinModule {
+    @Override
+    protected void configure() {
+        bind(KeyDtoMapper.class).to(KeyDtoMapperImpl.class);
+        bind(AppIdNamespaceDtoMapper.class).to(AppIdNamespaceDtoMapperImpl.class);
+    }
 }

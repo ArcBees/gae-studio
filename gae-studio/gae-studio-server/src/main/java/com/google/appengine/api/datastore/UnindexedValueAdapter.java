@@ -37,8 +37,8 @@ public class UnindexedValueAdapter implements JsonSerializer<UnindexedValue>, Js
 
     public static boolean isIndexedValue(JsonElement element) {
         return !element.isJsonObject() // Not an object, so it's not wrapped by UnindexedValue: indexed by default
-               || !element.getAsJsonObject().has(INDEXED) // No indexed property: indexed by default
-               || element.getAsJsonObject().get(INDEXED).getAsBoolean();
+                || !element.getAsJsonObject().has(INDEXED) // No indexed property: indexed by default
+                || element.getAsJsonObject().get(INDEXED).getAsBoolean();
     }
 
     @Override

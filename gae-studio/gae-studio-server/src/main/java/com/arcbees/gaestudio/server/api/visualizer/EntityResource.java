@@ -43,7 +43,7 @@ public class EntityResource {
 
     @Inject
     EntityResource(EntityService entityService,
-                   EntityMapper entityMapper) {
+            EntityMapper entityMapper) {
         this.entityMapper = entityMapper;
         this.entityService = entityService;
     }

@@ -38,11 +38,12 @@ public class NamespacesListPresenter extends PresenterWidget<NamespacesListPrese
     private final DeleteFromNamespaceHandler deleteHandler;
 
     @Inject
-    NamespacesListPresenter(EventBus eventBus,
-                            MyView view,
-                            RestDispatch restDispatch,
-                            NamespacesService namespacesService,
-                            @Assisted DeleteFromNamespaceHandler deleteHandler) {
+    NamespacesListPresenter(
+            EventBus eventBus,
+            MyView view,
+            RestDispatch restDispatch,
+            NamespacesService namespacesService,
+            @Assisted DeleteFromNamespaceHandler deleteHandler) {
         super(eventBus, view);
 
         this.restDispatch = restDispatch;

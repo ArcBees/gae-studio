@@ -59,8 +59,11 @@ public interface PropertyEditorsFactory {
 
     PropertyEditor<?> createRawEditor(String key, JSONValue property);
 
-    PropertyEditor<Key> createKeyEditor(String key, JSONValue property, FetchKindsRunner fetchKindsRunner,
-                                        FetchNamespacesRunner fetchNamespacesRunner);
+    PropertyEditor<Key> createKeyEditor(
+            String key,
+            JSONValue property,
+            FetchKindsRunner fetchKindsRunner,
+            FetchNamespacesRunner fetchNamespacesRunner);
 
     @Named("BYTES")
     PropertyEditor<String> createBytesEditor(String key, JSONValue property);

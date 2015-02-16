@@ -32,8 +32,9 @@ public class RequestFilterPresenter extends PresenterWidget<RequestFilterPresent
     private final Map<Long, FilterValue<Long>> statementsByRequest = new TreeMap<Long, FilterValue<Long>>();
 
     @Inject
-    RequestFilterPresenter(EventBus eventBus,
-                           MyView view) {
+    RequestFilterPresenter(
+            EventBus eventBus,
+            MyView view) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);

@@ -55,10 +55,11 @@ public class SupportView extends PopupViewWithUiHandlers<SupportUiHandlers>
     private final Analytics analytics;
 
     @Inject
-    SupportView(EventBus eventBus,
-                Binder binder,
-                Driver driver,
-                Analytics analytics) {
+    SupportView(
+            EventBus eventBus,
+            Binder binder,
+            Driver driver,
+            Analytics analytics) {
         super(eventBus);
 
         this.driver = driver;

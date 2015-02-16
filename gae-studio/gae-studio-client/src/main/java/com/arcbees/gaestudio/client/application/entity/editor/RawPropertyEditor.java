@@ -25,9 +25,10 @@ public class RawPropertyEditor extends AbstractPropertyEditor<String> {
     private final AppConstants appConstants;
 
     @Inject
-    RawPropertyEditor(AppConstants appConstants,
-                      @Assisted String key,
-                      @Assisted JSONValue property) {
+    RawPropertyEditor(
+            AppConstants appConstants,
+            @Assisted String key,
+            @Assisted JSONValue property) {
         super(key);
 
         this.appConstants = appConstants;

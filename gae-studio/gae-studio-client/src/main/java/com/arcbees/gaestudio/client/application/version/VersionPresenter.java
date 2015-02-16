@@ -24,9 +24,10 @@ public class VersionPresenter extends PresenterWidget<VersionPresenter.MyView> {
     private final AppConfig appConfig;
 
     @Inject
-    VersionPresenter(EventBus eventBus,
-                     MyView view,
-                     AppConfig appConfig) {
+    VersionPresenter(
+            EventBus eventBus,
+            MyView view,
+            AppConfig appConfig) {
         super(eventBus, view);
 
         this.appConfig = appConfig;

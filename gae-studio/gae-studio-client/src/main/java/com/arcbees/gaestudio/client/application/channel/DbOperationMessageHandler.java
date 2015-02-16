@@ -4,13 +4,11 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.event.DbOperationEvent;
 import com.arcbees.gaestudio.client.application.profiler.DbOperationDeserializer;
-import com.arcbees.gaestudio.client.util.Console;
 import com.arcbees.gaestudio.shared.channel.Topic;
 import com.arcbees.gaestudio.shared.dto.DbOperationRecordDto;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.query.client.GQuery;
 import com.google.web.bindery.event.shared.EventBus;
 
 public class DbOperationMessageHandler implements MessageHandler, HasHandlers {

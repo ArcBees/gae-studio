@@ -26,9 +26,9 @@ public class StackTraceElementDto implements Serializable {
 
     @JsonCreator
     public StackTraceElementDto(@JsonProperty("className") String className,
-                                @JsonProperty("fileName") String fileName,
-                                @JsonProperty("lineNumber") int lineNumber,
-                                @JsonProperty("methodName") String methodName) {
+            @JsonProperty("fileName") String fileName,
+            @JsonProperty("lineNumber") int lineNumber,
+            @JsonProperty("methodName") String methodName) {
         this.className = className;
         this.fileName = fileName;
         this.lineNumber = lineNumber;

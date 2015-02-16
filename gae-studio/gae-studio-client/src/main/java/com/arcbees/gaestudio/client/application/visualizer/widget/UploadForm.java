@@ -13,7 +13,6 @@ import javax.inject.Inject;
 
 import com.arcbees.analytics.shared.Analytics;
 import com.arcbees.gaestudio.client.resources.AppResources;
-import com.arcbees.gaestudio.shared.config.AppConfig;
 import com.google.common.base.Strings;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.BrowserEvents;
@@ -69,18 +68,16 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
     private final Label selectedFile;
     private final AppResources resources;
     private final Analytics analytics;
-    private final AppConfig appConfig;
 
     @Inject
-    UploadForm(AppResources resources,
-               Analytics analytics,
-               AppConfig appConfig,
-               @Assisted String uploadUrl,
-               @Assisted Handler handler) {
+    UploadForm(
+            AppResources resources,
+            Analytics analytics,
+            @Assisted String uploadUrl,
+            @Assisted Handler handler) {
         this.handler = handler;
         this.resources = resources;
         this.analytics = analytics;
-        this.appConfig = appConfig;
 
         formPanel = new FormPanel();
         selectedFile = new Label("...");

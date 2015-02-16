@@ -36,10 +36,11 @@ public class StatementView extends ViewWithUiHandlers<StatementUiHandlers> imple
     CellList<DbOperationRecordDto> statements;
 
     @Inject
-    StatementView(Binder uiBinder,
-                  AppResources resources,
-                  StatementCell statementCell,
-                  StatementCellListResource statementCellListResource) {
+    StatementView(
+            Binder uiBinder,
+            AppResources resources,
+            StatementCell statementCell,
+            StatementCellListResource statementCellListResource) {
         this.resources = resources;
         statements = new CellList<DbOperationRecordDto>(statementCell, statementCellListResource);
 

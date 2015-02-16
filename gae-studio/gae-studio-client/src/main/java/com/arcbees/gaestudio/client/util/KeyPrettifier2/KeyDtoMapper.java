@@ -7,12 +7,11 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.application.entity.editor;
+package com.arcbees.gaestudio.client.util.KeyPrettifier2;
 
-import com.google.gwt.safehtml.client.SafeHtmlTemplates;
-import com.google.gwt.safehtml.shared.SafeHtml;
+import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
+import com.google.gwt.json.client.JSONObject;
 
-interface NamespaceTemplate extends SafeHtmlTemplates {
-    @Template("<span>{0}</span>")
-    SafeHtml namespaceTemplate(String namespace);
+public interface KeyDtoMapper {
+    KeyDto fromJSONObject(JSONObject jsonObject);
 }

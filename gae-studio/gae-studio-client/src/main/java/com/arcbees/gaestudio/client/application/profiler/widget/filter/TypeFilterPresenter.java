@@ -37,8 +37,9 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
             new TreeMap<OperationType, FilterValue<OperationType>>();
 
     @Inject
-    TypeFilterPresenter(EventBus eventBus,
-                        MyView view) {
+    TypeFilterPresenter(
+            EventBus eventBus,
+            MyView view) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);
@@ -51,7 +52,7 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
         FilterValue<OperationType> filterValue = statementsByType.get(type);
 
         if (filterValue == null) {
-            filterValue = new FilterValue<OperationType>(type);
+            filterValue = new FilterValue<>(type);
             statementsByType.put(type, filterValue);
         }
 
@@ -60,7 +61,7 @@ public class TypeFilterPresenter extends PresenterWidget<TypeFilterPresenter.MyV
 
     @Override
     public void displayNewDbOperationRecords() {
-        getView().display(new ArrayList<FilterValue<OperationType>>(statementsByType.values()));
+        getView().display(new ArrayList<>(statementsByType.values()));
     }
 
     @Override

@@ -7,7 +7,6 @@
  * agreements you have entered into with The Company.
  */
 
-
 package com.google.appengine.api.datastore;
 
 import java.lang.reflect.Type;

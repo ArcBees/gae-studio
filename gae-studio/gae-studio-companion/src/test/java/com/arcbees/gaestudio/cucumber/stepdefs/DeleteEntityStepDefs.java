@@ -35,9 +35,9 @@ public class DeleteEntityStepDefs {
 
     @Inject
     DeleteEntityStepDefs(RestIT restIT,
-                         BasePage basePage,
-                         VisualizerPage visualizerPage,
-                         CarFactory carFactory) {
+            BasePage basePage,
+            VisualizerPage visualizerPage,
+            CarFactory carFactory) {
         this.restIT = restIT;
         this.basePage = basePage;
         this.visualizerPage = visualizerPage;

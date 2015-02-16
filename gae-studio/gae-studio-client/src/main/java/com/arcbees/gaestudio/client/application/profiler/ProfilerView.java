@@ -36,7 +36,8 @@ public class ProfilerView extends ViewImpl implements ProfilerPresenter.MyView {
     private static final int SPLITTER_SIZE = 7;
 
     @Inject
-    ProfilerView(Binder uiBinder) {
+    ProfilerView(
+            Binder uiBinder) {
         leftPanel = new SplitLayoutPanel(SPLITTER_SIZE);
 
         initWidget(uiBinder.createAndBindUi(this));

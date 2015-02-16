@@ -38,15 +38,15 @@ public class GqlResource {
 
     @Inject
     GqlResource(GqlService gqlService,
-                EntityMapper entityMapper) {
+            EntityMapper entityMapper) {
         this.gqlService = gqlService;
         this.entityMapper = entityMapper;
     }
 
     @GET
     public Response executeGqlRequest(@QueryParam(UrlParameters.QUERY) String gqlRequest,
-                                      @QueryParam(UrlParameters.OFFSET) Integer offset,
-                                      @QueryParam(UrlParameters.LIMIT) Integer limit) {
+            @QueryParam(UrlParameters.OFFSET) Integer offset,
+            @QueryParam(UrlParameters.LIMIT) Integer limit) {
         Iterable<Entity> result = gqlService.executeGqlRequest(gqlRequest, offset, limit);
 
         List<EntityDto> entitiesDtos = entityMapper.mapEntitiesToDtos(result);

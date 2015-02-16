@@ -29,8 +29,9 @@ public class ExportCompletedMessageHandler implements MessageHandler, HasHandler
     private final AppMessages appMessages;
 
     @Inject
-    ExportCompletedMessageHandler(EventBus eventBus,
-                                  AppMessages appMessages) {
+    ExportCompletedMessageHandler(
+            EventBus eventBus,
+            AppMessages appMessages) {
         this.eventBus = eventBus;
         this.appMessages = appMessages;
     }

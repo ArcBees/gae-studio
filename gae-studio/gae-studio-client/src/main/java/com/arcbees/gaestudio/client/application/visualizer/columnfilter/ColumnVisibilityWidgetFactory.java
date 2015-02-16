@@ -17,8 +17,9 @@ public interface ColumnVisibilityWidgetFactory {
     String NAMESPACE = "namespace";
     String COLUMN_NAME = "columnName";
 
-    ColumnVisibilityWidget create(@Assisted(APP_ID) String appId,
-                                  @Assisted(NAMESPACE) String namespace,
-                                  @Assisted(KIND) String kind,
-                                  @Assisted(COLUMN_NAME) String columnName);
+    ColumnVisibilityWidget create(
+            @Assisted(APP_ID) String appId,
+            @Assisted(NAMESPACE) String namespace,
+            @Assisted(KIND) String kind,
+            @Assisted(COLUMN_NAME) String columnName);
 }

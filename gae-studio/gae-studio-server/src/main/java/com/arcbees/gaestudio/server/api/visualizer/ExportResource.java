@@ -42,8 +42,8 @@ public class ExportResource {
     @GET
     @Path(EndPoints.EXPORT_JSON)
     public Response exportAsJson(@QueryParam(UrlParameters.KIND) String kind,
-                                 @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                                 @QueryParam(UrlParameters.KEY) String encodedKeys) {
+            @QueryParam(UrlParameters.NAMESPACE) String namespace,
+            @QueryParam(UrlParameters.KEY) String encodedKeys) {
         String data = exportService.exportToJson(kind, namespace, encodedKeys);
 
         return Response.ok(data)
@@ -54,8 +54,8 @@ public class ExportResource {
     @GET
     @Path(EndPoints.EXPORT_CSV)
     public Response exportAsCsv(@QueryParam(UrlParameters.KIND) String kind,
-                                @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                                @QueryParam(UrlParameters.KEY) String encodedKeys) throws JSONException {
+            @QueryParam(UrlParameters.NAMESPACE) String namespace,
+            @QueryParam(UrlParameters.KEY) String encodedKeys) throws JSONException {
         String data = exportService.exportToCsv(kind, namespace, encodedKeys);
 
         return Response.ok(data)

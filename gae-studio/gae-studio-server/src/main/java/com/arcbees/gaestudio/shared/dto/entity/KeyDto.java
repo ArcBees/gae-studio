@@ -27,11 +27,11 @@ public class KeyDto {
 
     @JsonCreator
     public KeyDto(@JsonProperty(PropertyName.ENCODED_KEY) String encodedKey,
-                  @JsonProperty(PropertyName.KIND) String kind,
-                  @JsonProperty(PropertyName.ID) Long id,
-                  @JsonProperty(PropertyName.NAME) String name,
-                  @JsonProperty(PropertyName.PARENT_KEY) KeyDto parentKey,
-                  @JsonProperty(PropertyName.APP_ID_NAMESPACE) AppIdNamespaceDto appIdNamespace) {
+            @JsonProperty(PropertyName.KIND) String kind,
+            @JsonProperty(PropertyName.ID) Long id,
+            @JsonProperty(PropertyName.NAME) String name,
+            @JsonProperty(PropertyName.PARENT_KEY) KeyDto parentKey,
+            @JsonProperty(PropertyName.APP_ID_NAMESPACE) AppIdNamespaceDto appIdNamespace) {
         this.encodedKey = encodedKey;
         this.kind = kind;
         this.id = id;

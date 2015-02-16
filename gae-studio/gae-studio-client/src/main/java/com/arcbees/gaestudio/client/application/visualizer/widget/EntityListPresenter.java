@@ -126,7 +126,8 @@ public class EntityListPresenter extends PresenterWidget<EntityListPresenter.MyV
     private boolean isByGql;
 
     @Inject
-    EntityListPresenter(EventBus eventBus,
+    EntityListPresenter(
+            EventBus eventBus,
             MyView view,
             PlaceManager placeManager,
             RestDispatch restDispatch,

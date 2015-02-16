@@ -33,11 +33,12 @@ public class ColumnVisibilityWidget implements IsWidget, ValueChangeHandler<Bool
     private final ColumnVisibilityConfigHelper columnVisibilityConfigHelper;
 
     @Inject
-    ColumnVisibilityWidget(ColumnVisibilityConfigHelper columnVisibilityConfigHelper,
-                           @Assisted(APP_ID) String appId,
-                           @Assisted(NAMESPACE) String namespace,
-                           @Assisted(KIND) String kind,
-                           @Assisted(COLUMN_NAME) String columnName) {
+    ColumnVisibilityWidget(
+            ColumnVisibilityConfigHelper columnVisibilityConfigHelper,
+            @Assisted(APP_ID) String appId,
+            @Assisted(NAMESPACE) String namespace,
+            @Assisted(KIND) String kind,
+            @Assisted(COLUMN_NAME) String columnName) {
         this.appId = appId;
         this.namespace = namespace;
         this.kind = kind;

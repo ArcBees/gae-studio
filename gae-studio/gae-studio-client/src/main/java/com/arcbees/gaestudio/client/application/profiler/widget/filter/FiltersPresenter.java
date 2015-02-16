@@ -32,11 +32,12 @@ public class FiltersPresenter extends PresenterWidget<FiltersPresenter.MyView>
     private final TypeFilterPresenter typeFilterPresenter;
 
     @Inject
-    FiltersPresenter(EventBus eventBus,
-                     MyView view,
-                     RequestFilterPresenter requestFilterPresenter,
-                     MethodFilterPresenter methodFilterPresenter,
-                     TypeFilterPresenter typeFilterPresenter) {
+    FiltersPresenter(
+            EventBus eventBus,
+            MyView view,
+            RequestFilterPresenter requestFilterPresenter,
+            MethodFilterPresenter methodFilterPresenter,
+            TypeFilterPresenter typeFilterPresenter) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);

@@ -24,10 +24,11 @@ public class BooleanPropertyEditor extends AbstractPropertyEditorWithWidgetLefts
     private final JSONValue property;
 
     @Inject
-    BooleanPropertyEditor(CustomCheckBox customCheckBox,
-                          AppResources appResources,
-                          @Assisted String key,
-                          @Assisted JSONValue property) {
+    BooleanPropertyEditor(
+            CustomCheckBox customCheckBox,
+            AppResources appResources,
+            @Assisted String key,
+            @Assisted JSONValue property) {
         super(key);
 
         this.property = property;

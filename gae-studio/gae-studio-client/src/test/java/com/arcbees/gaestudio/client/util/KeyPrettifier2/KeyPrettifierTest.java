@@ -7,7 +7,7 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.util.KeyPrettifier;
+package com.arcbees.gaestudio.client.util.KeyPrettifier2;
 
 import org.junit.Before;
 import org.junit.Test;

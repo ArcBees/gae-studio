@@ -29,15 +29,17 @@ public class ImportTooLargeMessageHandler implements MessageHandler, HasHandlers
     private final AppMessages appMessages;
 
     @Inject
-    ImportTooLargeMessageHandler(EventBus eventBus,
-                                 AppMessages appMessages) {
+    ImportTooLargeMessageHandler(
+            EventBus eventBus,
+            AppMessages appMessages) {
         this.eventBus = eventBus;
         this.appMessages = appMessages;
     }
 
     @Override
     public void handleMessage(JSONValue payload) {
-        Message displayMessage = new Message(appMessages.importTooLarge(FREE_IMPORT_EXPORT_QUOTA), MessageStyle.SUCCESS);
+        Message displayMessage = new Message(appMessages.importTooLarge(FREE_IMPORT_EXPORT_QUOTA),
+                MessageStyle.SUCCESS);
         DisplayMessageEvent.fire(this, displayMessage);
         LoadingEvent.fire(this, LoadingEvent.Action.END);
     }

@@ -105,17 +105,18 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
     private String currentKind = "";
 
     @Inject
-    VisualizerPresenter(EventBus eventBus,
-                        MyView view,
-                        MyProxy proxy,
-                        EntityListPresenter entityListPresenter,
-                        SidebarPresenter sidebarPresenter,
-                        UiFactory uiFactory,
-                        FontsResources fontsResources,
-                        AppConstants appConstants,
-                        PlaceManager placeManager,
-                        ToolbarPresenter toolbarPresenter,
-                        Analytics analytics) {
+    VisualizerPresenter(
+            EventBus eventBus,
+            MyView view,
+            MyProxy proxy,
+            EntityListPresenter entityListPresenter,
+            SidebarPresenter sidebarPresenter,
+            UiFactory uiFactory,
+            FontsResources fontsResources,
+            AppConstants appConstants,
+            PlaceManager placeManager,
+            ToolbarPresenter toolbarPresenter,
+            Analytics analytics) {
         super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN);
 
         this.uiFactory = uiFactory;

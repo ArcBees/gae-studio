@@ -31,8 +31,9 @@ public class PanelToggle implements ClickHandler, IsWidget {
     private final String flipped;
 
     @Inject
-    PanelToggle(AppResources appResources,
-                @Assisted ToggleHandler toggleHandler) {
+    PanelToggle(
+            AppResources appResources,
+            @Assisted ToggleHandler toggleHandler) {
         this.toggleHandler = toggleHandler;
 
         widget = new Image();

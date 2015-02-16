@@ -40,10 +40,10 @@ public class ExportServiceImpl implements ExportService {
 
     @Inject
     ExportServiceImpl(EntitiesService entitiesService,
-                      Gson gson,
-                      JsonToCsvConverter jsonToCsvConverter,
-                      ChannelMessageSender channelMessageSender,
-                      @ClientId Provider<String> clientIdProvider) {
+            Gson gson,
+            JsonToCsvConverter jsonToCsvConverter,
+            ChannelMessageSender channelMessageSender,
+            @ClientId Provider<String> clientIdProvider) {
         this.entitiesService = entitiesService;
         this.gson = gson;
         this.jsonToCsvConverter = jsonToCsvConverter;

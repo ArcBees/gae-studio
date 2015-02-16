@@ -32,8 +32,9 @@ public class MethodFilterPresenter extends PresenterWidget<MethodFilterPresenter
             Map<String, FilterValue<String>>>();
 
     @Inject
-    MethodFilterPresenter(EventBus eventBus,
-                          MyView view) {
+    MethodFilterPresenter(
+            EventBus eventBus,
+            MyView view) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);

@@ -28,7 +28,7 @@ public class DbOperationRecorderHook extends BaseHook {
 
     @Inject
     DbOperationRecorderHook(DbOperationRecorder dbOperationRecorder,
-                            @Assisted Delegate<Environment> baseDelegate) {
+            @Assisted Delegate<Environment> baseDelegate) {
         super(baseDelegate);
 
         this.dbOperationRecorder = dbOperationRecorder;

@@ -82,15 +82,16 @@ public class EditEntityPresenter extends Presenter<EditEntityPresenter.MyView, E
     private EntitiesEditorPresenter entitiesEditor;
 
     @Inject
-    EditEntityPresenter(EventBus eventBus,
-                        MyView view,
-                        MyProxy proxy,
-                        RestDispatch restDispatch,
-                        PlaceManager placeManager,
-                        EntitiesService entitiesService,
-                        EntityService entityService,
-                        EntityEditorFactory entityEditorFactory,
-                        AppConstants appConstants) {
+    EditEntityPresenter(
+            EventBus eventBus,
+            MyView view,
+            MyProxy proxy,
+            RestDispatch restDispatch,
+            PlaceManager placeManager,
+            EntitiesService entitiesService,
+            EntityService entityService,
+            EntityEditorFactory entityEditorFactory,
+            AppConstants appConstants) {
         super(eventBus, view, proxy, VisualizerPresenter.SLOT_ENTITY_DETAILS);
 
         this.restDispatch = restDispatch;

@@ -32,7 +32,7 @@ public class RecordResource {
 
     @Inject
     RecordResource(RecordService recordService,
-                   OperationService operationService) {
+            OperationService operationService) {
         this.recordService = recordService;
         this.operationService = operationService;
     }

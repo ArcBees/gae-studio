@@ -33,7 +33,8 @@ public class ColumnFilterView extends ViewWithUiHandlers<ColumnFilterUiHandlers>
     Anchor hideAll;
 
     @Inject
-    ColumnFilterView(Binder binder) {
+    ColumnFilterView(
+                Binder binder) {
         initWidget(binder.createAndBindUi(this));
     }
 

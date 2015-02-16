@@ -46,21 +46,23 @@ public class ToolbarButton implements AttachEvent.Handler, IsWidget {
     private Function buttonClickFunction;
 
     @AssistedInject
-    ToolbarButton(Binder binder,
-                  AppResources resources,
-                  @Assisted("text") String text,
-                  @Assisted("iconClass") String iconClass,
-                  @Assisted ToolbarButtonCallback callback) {
+    ToolbarButton(
+            Binder binder,
+            AppResources resources,
+            @Assisted("text") String text,
+            @Assisted("iconClass") String iconClass,
+            @Assisted ToolbarButtonCallback callback) {
         this(binder, resources, text, iconClass, callback, "");
     }
 
     @AssistedInject
-    ToolbarButton(Binder binder,
-                  AppResources resources,
-                  @Assisted("text") String text,
-                  @Assisted("iconClass") String iconClass,
-                  @Assisted ToolbarButtonCallback callback,
-                  @Assisted("debugId") String debugId) {
+    ToolbarButton(
+            Binder binder,
+            AppResources resources,
+            @Assisted("text") String text,
+            @Assisted("iconClass") String iconClass,
+            @Assisted ToolbarButtonCallback callback,
+            @Assisted("debugId") String debugId) {
         this.resources = resources;
 
         widget = binder.createAndBindUi(this);

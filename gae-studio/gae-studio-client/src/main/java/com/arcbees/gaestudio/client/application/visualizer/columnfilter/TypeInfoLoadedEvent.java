@@ -21,14 +21,6 @@ public class TypeInfoLoadedEvent extends GwtEvent<TypeInfoLoadedEvent.TypeInfoLo
         void onTypeInfoLoaded(TypeInfoLoadedEvent event);
     }
 
-    private final List<String> columnNames;
-    private final ParsedEntity prototype;
-
-    public TypeInfoLoadedEvent(List<String> columnNames, ParsedEntity prototype) {
-        this.columnNames = columnNames;
-        this.prototype = prototype;
-    }
-
     public static void fire(HasHandlers source, List<String> columnNames, ParsedEntity prototype) {
         TypeInfoLoadedEvent eventInstance = new TypeInfoLoadedEvent(columnNames, prototype);
         source.fireEvent(eventInstance);
@@ -38,10 +30,20 @@ public class TypeInfoLoadedEvent extends GwtEvent<TypeInfoLoadedEvent.TypeInfoLo
         source.fireEvent(eventInstance);
     }
 
-    private static final Type<TypeInfoLoadedHandler> TYPE = new Type<>();
-
     public static Type<TypeInfoLoadedHandler> getType() {
         return TYPE;
+    }
+
+    private static final Type<TypeInfoLoadedHandler> TYPE = new Type<>();
+
+    private final List<String> columnNames;
+    private final ParsedEntity prototype;
+
+    public TypeInfoLoadedEvent(
+            List<String> columnNames,
+            ParsedEntity prototype) {
+        this.columnNames = columnNames;
+        this.prototype = prototype;
     }
 
     @Override

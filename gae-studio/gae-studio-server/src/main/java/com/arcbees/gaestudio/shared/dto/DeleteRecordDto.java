@@ -17,9 +17,9 @@ public class DeleteRecordDto extends DbOperationRecordDto {
     }
 
     public DeleteRecordDto(StackTraceElementDto callerStackTraceElement,
-                           Long requestId,
-                           Long statementId,
-                           Integer executionTimeMs) {
+            Long requestId,
+            Long statementId,
+            Integer executionTimeMs) {
         super(callerStackTraceElement, requestId, statementId, executionTimeMs, OperationKind.DELETE);
     }
 }

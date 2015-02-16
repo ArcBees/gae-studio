@@ -41,7 +41,7 @@ import static com.google.gwt.query.client.GQuery.$;
 public class StatementCell extends AbstractCell<DbOperationRecordDto> {
     public interface Renderer extends UiRenderer {
         void render(SafeHtmlBuilder safeHtmlBuilder, String formatted, String callLocation,
-                    String statementDetailsClass, String imageClass);
+                String statementDetailsClass, String imageClass);
 
         void onBrowserEvent(StatementCell cell, NativeEvent event, Element element, DbOperationRecordDto dto);
 
@@ -63,10 +63,11 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
     private RecordFormatter recordFormatter;
 
     @Inject
-    StatementCell(RecordFormatter recordFormatter,
-                  Renderer renderer,
-                  AppResources appResources,
-                  AppMessages appMessages) {
+    StatementCell(
+            RecordFormatter recordFormatter,
+            Renderer renderer,
+            AppResources appResources,
+            AppMessages appMessages) {
         super(BrowserEvents.CLICK, BrowserEvents.MOUSEOVER, BrowserEvents.MOUSEOUT);
 
         this.recordFormatter = recordFormatter;
@@ -77,7 +78,7 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
 
     @Override
     public void onBrowserEvent(Context context, Element parent, DbOperationRecordDto value, NativeEvent event,
-                               ValueUpdater<DbOperationRecordDto> valueUpdater) {
+            ValueUpdater<DbOperationRecordDto> valueUpdater) {
         renderer.onBrowserEvent(this, event, parent, value);
     }
 

@@ -23,7 +23,8 @@ public class PropertyNamesAggregator {
     private final KeyValuePairBuilder keyValuePairBuilder;
 
     @Inject
-    PropertyNamesAggregator(KeyValuePairBuilder keyValuePairBuilder) {
+    PropertyNamesAggregator(
+            KeyValuePairBuilder keyValuePairBuilder) {
         this.keyValuePairBuilder = keyValuePairBuilder;
     }
 

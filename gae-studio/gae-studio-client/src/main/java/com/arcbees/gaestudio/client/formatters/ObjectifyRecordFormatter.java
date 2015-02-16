@@ -99,7 +99,6 @@ public class ObjectifyRecordFormatter extends AbstractRecordFormatter {
         }
 
         return builder.toString();
-
     }
 
     private String operatorToString(QueryFilterOperator operator) {

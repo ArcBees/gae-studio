@@ -17,7 +17,7 @@ import com.google.gwt.text.shared.AbstractRenderer;
 
 public class NameSpaceValueSetter {
     public void setNamespace(List<AppIdNamespaceDto> namespaces, AppIdNamespaceDto appIdNamespaceDto,
-                             ChosenListBox dropdown, AbstractRenderer<AppIdNamespaceDto> renderer) {
+            ChosenListBox dropdown, AbstractRenderer<AppIdNamespaceDto> renderer) {
         for (AppIdNamespaceDto dto : namespaces) {
             dropdown.addItem(renderer.render(dto));
         }

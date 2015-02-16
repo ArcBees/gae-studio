@@ -94,15 +94,16 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
     private String currentFormat = ExportFormats.JSON;
 
     @Inject
-    SidebarView(Binder binder,
-                ChosenResources chosenResources,
-                KindTemplate kindTemplate,
-                EmptyKindsTemplate emptyKindsTemplate,
-                FontsResources fontsResources,
-                AppResources appResources,
-                VisualizerResources visualizerResources,
-                PanelToggleFactory panelToggleFactory,
-                final Analytics analytics) {
+    SidebarView(
+            Binder binder,
+            ChosenResources chosenResources,
+            KindTemplate kindTemplate,
+            EmptyKindsTemplate emptyKindsTemplate,
+            FontsResources fontsResources,
+            AppResources appResources,
+            VisualizerResources visualizerResources,
+            PanelToggleFactory panelToggleFactory,
+            final Analytics analytics) {
         this.kindTemplate = kindTemplate;
         this.emptyKindsTemplate = emptyKindsTemplate;
         this.fontsResources = fontsResources;

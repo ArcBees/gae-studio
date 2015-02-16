@@ -39,9 +39,10 @@ public class ColumnFilterPresenter extends PresenterWidget<ColumnFilterPresenter
     private List<ColumnNamePresenter> columnNamePresenters;
 
     @Inject
-    ColumnFilterPresenter(EventBus eventBus,
-                          MyView view,
-                          ColumnNamePresenterFactory columnNamePresenterFactory) {
+    ColumnFilterPresenter(
+            EventBus eventBus,
+            MyView view,
+            ColumnNamePresenterFactory columnNamePresenterFactory) {
         super(eventBus, view);
 
         this.columnNamePresenterFactory = columnNamePresenterFactory;

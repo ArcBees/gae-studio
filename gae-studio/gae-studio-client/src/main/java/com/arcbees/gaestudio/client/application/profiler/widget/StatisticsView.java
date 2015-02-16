@@ -25,16 +25,12 @@ public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyVi
 
     @UiField
     HTML requestCount;
-
     @UiField
     HTML statementCount;
-
     @UiField
     HTML totalExecutionTime;
-
     @UiField
     HTML totalObjectsRetrieved;
-
     @UiField
     HTML totalDataReceived;
 
@@ -42,8 +38,9 @@ public class StatisticsView extends ViewImpl implements StatisticsPresenter.MyVi
     private final BytesFormatter bytesFormatter;
 
     @Inject
-    StatisticsView(Binder uiBinder,
-                   BytesFormatter bytesFormatter) {
+    StatisticsView(
+            Binder uiBinder,
+            BytesFormatter bytesFormatter) {
         this.bytesFormatter = bytesFormatter;
 
         initWidget(uiBinder.createAndBindUi(this));

@@ -125,7 +125,8 @@ public class OperationServiceImplTest {
     }
 
     @Test
-    public void testGetOperationLimitNotNullAndMostRecentIdGreaterThanLastIdPlusLimit(DbOperationRecordDto dtoFromMemCache1,
+    public void testGetOperationLimitNotNullAndMostRecentIdGreaterThanLastIdPlusLimit(
+            DbOperationRecordDto dtoFromMemCache1,
             DbOperationRecordDto dtoFromMemCache2, DbOperationRecordDto dtoFromMemCache3) {
         // Given
         Long lastId = 1L;
@@ -142,17 +143,18 @@ public class OperationServiceImplTest {
         // then
         verify(memcacheService).get(MemcacheKey.DB_OPERATION_COUNTER.getName());
         verify(memcacheService).getAll(Lists.newArrayList(MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() +
-                2, MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() + 3, MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() +
-                4));
+                2, MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() + 3,
+                MemcacheKey.DB_OPERATION_RECORD_PREFIX.getName() +
+                        4));
         assertEquals(3, results.size());
         assertEquals(dtoFromMemCache1, results.get(0));
         assertEquals(dtoFromMemCache2, results.get(1));
         assertEquals(dtoFromMemCache3, results.get(2));
     }
 
-
     @Test
-    public void testGetOperationLimitNotNullAndMostRecentIdLessThanLastIdPlusLimit(DbOperationRecordDto dtoFromMemCache) {
+    public void testGetOperationLimitNotNullAndMostRecentIdLessThanLastIdPlusLimit(
+            DbOperationRecordDto dtoFromMemCache) {
         // Given
         Long lastId = 1L;
         when(memcacheService.get(MemcacheKey.DB_OPERATION_COUNTER.getName())).thenReturn(2L);

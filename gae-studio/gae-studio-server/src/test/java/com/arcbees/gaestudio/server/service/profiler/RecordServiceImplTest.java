@@ -33,6 +33,7 @@ public class RecordServiceImplTest {
             forceMock(Listener.class);
         }
     }
+
     @Inject
     RecordServiceImpl recordService;
     @Inject
@@ -63,5 +64,4 @@ public class RecordServiceImplTest {
         verify(listenerProvider).get();
         verify(hookRegistrar).removeListener(listener);
     }
-
 }

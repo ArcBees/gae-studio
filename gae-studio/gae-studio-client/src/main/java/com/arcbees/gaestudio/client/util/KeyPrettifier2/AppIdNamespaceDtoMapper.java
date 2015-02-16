@@ -7,18 +7,11 @@
  * agreements you have entered into with The Company.
  */
 
-package com.arcbees.gaestudio.client.util.KeyPrettifier;
+package com.arcbees.gaestudio.client.util.KeyPrettifier2;
 
-import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.google.gwt.json.client.JSONObject;
 
-public class AppIdNamespaceDtoMapperImpl implements AppIdNamespaceDtoMapper {
-    @Override
-    public AppIdNamespaceDto fromJSONObject(JSONObject jsonObject) {
-        String appId = jsonObject.get(PropertyName.APP_ID).isString().toString();
-        String namespace = jsonObject.get(PropertyName.NAMESPACE).isString().toString();
-
-        return new AppIdNamespaceDto(appId, namespace);
-    }
+public interface AppIdNamespaceDtoMapper {
+    AppIdNamespaceDto fromJSONObject(JSONObject jsonObject);
 }

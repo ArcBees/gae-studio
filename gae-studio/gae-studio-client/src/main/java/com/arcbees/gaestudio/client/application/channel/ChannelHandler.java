@@ -45,10 +45,11 @@ public class ChannelHandler implements SocketListener {
     private boolean channelOpen;
 
     @Inject
-    ChannelHandler(ChannelService channelService,
-                   RestDispatch dispatch,
-                   ChannelFactory channelFactory,
-                   MessageHandlers messageHandlers) {
+    ChannelHandler(
+            ChannelService channelService,
+            RestDispatch dispatch,
+            ChannelFactory channelFactory,
+            MessageHandlers messageHandlers) {
         this.channelFactory = channelFactory;
         this.dispatch = dispatch;
         this.channelService = channelService;
@@ -57,7 +58,7 @@ public class ChannelHandler implements SocketListener {
         callbacks = newArrayList();
     }
 
-    public void openChannel(final ChannelOpenCallback callback) {
+    public void openChannel(ChannelOpenCallback callback) {
         if (isChannelOpen()) {
             callback.onChannelOpen();
             return;

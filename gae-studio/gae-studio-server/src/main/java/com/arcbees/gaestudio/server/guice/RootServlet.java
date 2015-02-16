@@ -55,8 +55,8 @@ public class RootServlet extends HttpServlet {
 
     @Inject
     RootServlet(VelocityWrapperFactory velocityWrapperFactory,
-                @BaseRestPath String restPath,
-                @UseCookieDomainNone boolean useCookieDomainNone) {
+            @BaseRestPath String restPath,
+            @UseCookieDomainNone boolean useCookieDomainNone) {
         this.restPath = restPath;
         this.useCookieDomainNone = useCookieDomainNone;
         this.velocityWrapper = velocityWrapperFactory.create(templateLocation);

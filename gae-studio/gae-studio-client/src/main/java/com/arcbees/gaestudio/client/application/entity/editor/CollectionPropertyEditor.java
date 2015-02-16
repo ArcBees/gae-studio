@@ -30,10 +30,11 @@ public class CollectionPropertyEditor extends AbstractPropertyEditor<Collection<
     private JSONValue property;
 
     @Inject
-    CollectionPropertyEditor(PropertyEditorCollectionWidgetFactory factory,
-                             AppResources appResources,
-                             @Assisted String key,
-                             @Assisted JSONValue property) {
+    CollectionPropertyEditor(
+            PropertyEditorCollectionWidgetFactory factory,
+            AppResources appResources,
+            @Assisted String key,
+            @Assisted JSONValue property) {
         super(key);
 
         this.property = property;

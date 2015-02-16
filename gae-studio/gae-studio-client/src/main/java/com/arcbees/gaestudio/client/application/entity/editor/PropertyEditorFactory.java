@@ -13,7 +13,8 @@ import com.arcbees.gaestudio.shared.PropertyType;
 import com.google.gwt.json.client.JSONValue;
 
 public interface PropertyEditorFactory {
-    PropertyEditor create(String key,
-                          PropertyType propertyType,
-                          JSONValue property);
+    PropertyEditor create(
+            String key,
+            PropertyType propertyType,
+            JSONValue property);
 }

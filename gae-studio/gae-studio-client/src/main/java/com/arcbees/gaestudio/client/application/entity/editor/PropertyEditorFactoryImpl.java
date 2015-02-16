@@ -75,10 +75,10 @@ public class PropertyEditorFactoryImpl implements PropertyEditorFactory {
 
     @Inject
     PropertyEditorFactoryImpl(PropertyEditorsFactory propertyEditorsFactory,
-                              RestDispatch restDispatch,
-                              BlobsService blobsService,
-                              KindsService kindsService,
-                              NamespacesService namespacesService) {
+            RestDispatch restDispatch,
+            BlobsService blobsService,
+            KindsService kindsService,
+            NamespacesService namespacesService) {
         this.propertyEditorsFactory = propertyEditorsFactory;
         this.restDispatch = restDispatch;
         this.blobsService = blobsService;
@@ -91,8 +91,8 @@ public class PropertyEditorFactoryImpl implements PropertyEditorFactory {
 
     @Override
     public PropertyEditor create(String key,
-                                 PropertyType propertyType,
-                                 JSONValue property) {
+            PropertyType propertyType,
+            JSONValue property) {
         if (propertyEditorsFactoryMap.containsKey(propertyType)) {
             return propertyEditorsFactoryMap.get(propertyType).create(key, property);
         } else {

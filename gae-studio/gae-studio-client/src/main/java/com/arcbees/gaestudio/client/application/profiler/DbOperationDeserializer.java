@@ -28,10 +28,11 @@ public class DbOperationDeserializer {
     private final QueryOperationMapper queryOperationMapper;
 
     @Inject
-    DbOperationDeserializer(GetOperationMapper getOperationMapper,
-                            PutOperationMapper putOperationMapper,
-                            DeleteOperationMapper deleteOperationMapper,
-                            QueryOperationMapper queryOperationMapper) {
+    DbOperationDeserializer(
+            GetOperationMapper getOperationMapper,
+            PutOperationMapper putOperationMapper,
+            DeleteOperationMapper deleteOperationMapper,
+            QueryOperationMapper queryOperationMapper) {
         this.getOperationMapper = getOperationMapper;
         this.putOperationMapper = putOperationMapper;
         this.deleteOperationMapper = deleteOperationMapper;

@@ -42,9 +42,10 @@ public class MethodFilterView extends ViewWithUiHandlers<MethodFilterUiHandlers>
     private final TreeItemTemplate template;
 
     @Inject
-    MethodFilterView(Binder uiBinder,
-                     AppResources resources,
-                     TreeItemTemplate template) {
+    MethodFilterView(
+            Binder uiBinder,
+            AppResources resources,
+            TreeItemTemplate template) {
         this.resources = resources;
         this.template = template;
 

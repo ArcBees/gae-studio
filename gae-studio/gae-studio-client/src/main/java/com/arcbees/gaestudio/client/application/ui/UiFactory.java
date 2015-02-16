@@ -12,9 +12,14 @@ package com.arcbees.gaestudio.client.application.ui;
 import com.google.inject.assistedinject.Assisted;
 
 public interface UiFactory {
-    ToolbarButton createToolbarButton(@Assisted("text") String text, @Assisted("iconClass") String iconClass,
-                                      final ToolbarButtonCallback callback);
+    ToolbarButton createToolbarButton(
+            @Assisted("text") String text,
+            @Assisted("iconClass") String iconClass,
+            final ToolbarButtonCallback callback);
 
-    ToolbarButton createToolbarButton(@Assisted("text") String text, @Assisted("iconClass") String iconClass,
-                                      final ToolbarButtonCallback callback, @Assisted("debugId") String debugId);
+    ToolbarButton createToolbarButton(
+            @Assisted("text") String text,
+            @Assisted("iconClass") String iconClass,
+            final ToolbarButtonCallback callback,
+            @Assisted("debugId") String debugId);
 }

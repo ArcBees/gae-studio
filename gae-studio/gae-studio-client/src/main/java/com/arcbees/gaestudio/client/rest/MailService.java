@@ -21,5 +21,7 @@ import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 @Path("https://mail.arcbees.com/mail")
 public interface MailService {
     @POST
-    RestAction<Void> sendMessage(MessageRequest messageRequest, @HeaderParam(AUTHORIZATION) String authorization);
+    RestAction<Void> sendMessage(
+            MessageRequest messageRequest,
+            @HeaderParam(AUTHORIZATION) String authorization);
 }

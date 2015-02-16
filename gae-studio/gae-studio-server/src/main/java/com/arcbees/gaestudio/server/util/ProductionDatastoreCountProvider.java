@@ -41,7 +41,7 @@ public class ProductionDatastoreCountProvider implements DatastoreCountProvider 
         if (stats == null) {
             return 0;
         }
-        
+
         return (long) stats.getProperty("count");
     }
 }

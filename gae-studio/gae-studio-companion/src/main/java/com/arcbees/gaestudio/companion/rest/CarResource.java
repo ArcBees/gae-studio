@@ -50,10 +50,10 @@ public class CarResource {
 
     @Inject
     CarResource(CarDao carDao,
-                VehicleDao vehicleDao,
-                ManufacturerDao manufacturerDao,
-                BusinessDao businessDao,
-                ConceptDao conceptDao) {
+            VehicleDao vehicleDao,
+            ManufacturerDao manufacturerDao,
+            BusinessDao businessDao,
+            ConceptDao conceptDao) {
         this.carDao = carDao;
         this.vehicleDao = vehicleDao;
         this.manufacturerDao = manufacturerDao;

@@ -18,11 +18,13 @@ import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.jayway.restassured.response.Response;
 
+import static org.junit.Assert.assertEquals;
+
 import static com.jayway.restassured.RestAssured.given;
+
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 import static javax.ws.rs.core.Response.Status.OK;
-import static org.junit.Assert.assertEquals;
 
 public class EntityResourceIT extends RestIT {
     private Long UNEXISTENT_ID = 99999999l;

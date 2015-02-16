@@ -67,7 +67,9 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
 
     private boolean opened;
 
-    Dropdown(Renderer<T> renderer, Resources resources) {
+    Dropdown(
+            Renderer<T> renderer,
+            Resources resources) {
         this.renderer = renderer;
         this.eventBus = new SimpleEventBus();
         this.resources = resources;
@@ -187,7 +189,6 @@ public class Dropdown<T> implements IsWidget, AttachEvent.Handler, HasValueChang
                 return true;
             }
         });
-
 
         clearChildrenBindings();
     }

@@ -43,7 +43,6 @@ public abstract class AbstractPropertyEditorWithWidgetLeftside<T> implements Pro
     private static EventBus eventBus;
 
     protected final String key;
-
     protected final PropertyEditorUiFields fields;
     protected final Widget widget;
 

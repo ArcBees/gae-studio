@@ -79,16 +79,17 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView> i
     private String currentNamespace;
 
     @Inject
-    SidebarPresenter(EventBus eventBus,
-                     MyView view,
-                     PlaceManager placeManager,
-                     RestDispatch restDispatch,
-                     KindsService kindsService,
-                     ExportService exportService,
-                     Provider<ImportPresenter> importPresenterProvider,
-                     NamespacesListPresenterFactory namespacesListPresenterFactory,
-                     Analytics analytics,
-                     ChannelHandler channelHandler) {
+    SidebarPresenter(
+            EventBus eventBus,
+            MyView view,
+            PlaceManager placeManager,
+            RestDispatch restDispatch,
+            KindsService kindsService,
+            ExportService exportService,
+            Provider<ImportPresenter> importPresenterProvider,
+            NamespacesListPresenterFactory namespacesListPresenterFactory,
+            Analytics analytics,
+            ChannelHandler channelHandler) {
         super(eventBus, view);
 
         this.placeManager = placeManager;

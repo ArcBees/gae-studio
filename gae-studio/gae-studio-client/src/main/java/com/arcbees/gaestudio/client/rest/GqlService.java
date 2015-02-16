@@ -23,11 +23,13 @@ import com.gwtplatform.dispatch.rest.shared.RestAction;
 @Path(EndPoints.GQL)
 public interface GqlService {
     @GET
-    RestAction<List<EntityDto>> executeGqlRequest(@QueryParam(UrlParameters.QUERY) String request,
-                                                  @QueryParam(UrlParameters.OFFSET) Integer offset,
-                                                  @QueryParam(UrlParameters.LIMIT) Integer limit);
+    RestAction<List<EntityDto>> executeGqlRequest(
+            @QueryParam(UrlParameters.QUERY) String request,
+            @QueryParam(UrlParameters.OFFSET) Integer offset,
+            @QueryParam(UrlParameters.LIMIT) Integer limit);
 
     @Path(EndPoints.COUNT)
     @GET
-    RestAction<Integer> getRequestCount(@QueryParam(UrlParameters.QUERY) String gqlRequest);
+    RestAction<Integer> getRequestCount(
+            @QueryParam(UrlParameters.QUERY) String gqlRequest);
 }

@@ -23,11 +23,13 @@ import com.gwtplatform.dispatch.rest.shared.RestAction;
 @Path(EndPoints.ENTITY)
 public interface EntityService {
     @GET
-    RestAction<EntityDto> getEntity(@QueryParam(UrlParameters.KEY) String encodedKey);
+    RestAction<EntityDto> getEntity(
+            @QueryParam(UrlParameters.KEY) String encodedKey);
 
     @PUT
     RestAction<EntityDto> updateEntity(EntityDto entityDto);
 
     @DELETE
-    RestAction<Void> deleteEntity(@QueryParam(UrlParameters.KEY) String encodedKey);
+    RestAction<Void> deleteEntity(
+            @QueryParam(UrlParameters.KEY) String encodedKey);
 }

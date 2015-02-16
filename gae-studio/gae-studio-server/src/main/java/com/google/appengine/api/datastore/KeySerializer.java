@@ -18,9 +18,9 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 /**
- * The default serialization of {@link com.google.appengine.api.datastore.Key} does not include the field
- * {@link com.arcbees.gaestudio.shared.dto.entity.KeyDto#encodedKey}.
- *
+ * The default serialization of {@link com.google.appengine.api.datastore.Key} does not include the field {@link
+ * com.arcbees.gaestudio.shared.dto.entity.KeyDto#encodedKey}.
+ * <p/>
  * This serializer mimics the default serialization of {@link com.google.appengine.api.datastore.Key}, and adds the
  * {@link com.arcbees.gaestudio.shared.dto.entity.KeyDto#encodedKey} to the returned JsonElement.
  */

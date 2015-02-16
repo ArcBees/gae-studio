@@ -50,16 +50,16 @@ public class EntitiesResource {
 
     @Inject
     EntitiesResource(EntitiesService entitiesService,
-                     EntityMapper entityMapper) {
+            EntityMapper entityMapper) {
         this.entitiesService = entitiesService;
         this.entityMapper = entityMapper;
     }
 
     @GET
     public Response getEntities(@QueryParam(UrlParameters.KIND) String kind,
-                                @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                                @QueryParam(UrlParameters.OFFSET) Integer offset,
-                                @QueryParam(UrlParameters.LIMIT) Integer limit) {
+            @QueryParam(UrlParameters.NAMESPACE) String namespace,
+            @QueryParam(UrlParameters.OFFSET) Integer offset,
+            @QueryParam(UrlParameters.LIMIT) Integer limit) {
         ResponseBuilder responseBuilder;
 
         if (kind == null) {
@@ -99,9 +99,9 @@ public class EntitiesResource {
 
     @DELETE
     public Response deleteEntities(@QueryParam(UrlParameters.KIND) String kind,
-                                   @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                                   @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType,
-                                   @QueryParam(UrlParameters.KEY) String encodedKeys) {
+            @QueryParam(UrlParameters.NAMESPACE) String namespace,
+            @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType,
+            @QueryParam(UrlParameters.KEY) String encodedKeys) {
         ResponseBuilder responseBuilder;
 
         if (isValidDeleteRequest(kind, namespace, deleteType, encodedKeys)) {
@@ -117,7 +117,7 @@ public class EntitiesResource {
     @GET
     @Path(EndPoints.COUNT)
     public Response getCount(@QueryParam(UrlParameters.KIND) String kind,
-                             @QueryParam(UrlParameters.NAMESPACE) String namespace) {
+            @QueryParam(UrlParameters.NAMESPACE) String namespace) {
         ResponseBuilder responseBuilder;
 
         if (Strings.isNullOrEmpty(kind)) {
@@ -147,9 +147,9 @@ public class EntitiesResource {
     }
 
     private boolean isValidDeleteRequest(String kind,
-                                         String namespace,
-                                         DeleteEntities deleteType,
-                                         String encodedKeys) {
+            String namespace,
+            DeleteEntities deleteType,
+            String encodedKeys) {
         boolean isValid = false;
 
         if (deleteType != null) {

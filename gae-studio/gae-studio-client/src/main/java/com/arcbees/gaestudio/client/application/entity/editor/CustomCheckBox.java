@@ -29,8 +29,9 @@ public class CustomCheckBox implements IsWidget, AttachEvent.Handler {
     private final AppResources appResources;
 
     @Inject
-    CustomCheckBox(Binder uiBinder,
-                   AppResources appResources) {
+    CustomCheckBox(
+            Binder uiBinder,
+            AppResources appResources) {
         widget = uiBinder.createAndBindUi(this);
 
         this.appResources = appResources;
@@ -46,7 +47,7 @@ public class CustomCheckBox implements IsWidget, AttachEvent.Handler {
                 public boolean f(Event e) {
                     toggleChecked();
 
-                    return  true;
+                    return true;
                 }
             });
         }

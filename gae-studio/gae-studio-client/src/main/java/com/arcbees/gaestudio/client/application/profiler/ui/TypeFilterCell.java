@@ -21,7 +21,8 @@ public class TypeFilterCell extends AbstractCell<FilterValue<OperationType>> {
     private final AppConstants myConstants;
 
     @Inject
-    public TypeFilterCell(AppConstants myConstants) {
+    public TypeFilterCell(
+            AppConstants myConstants) {
         this.myConstants = myConstants;
     }
 

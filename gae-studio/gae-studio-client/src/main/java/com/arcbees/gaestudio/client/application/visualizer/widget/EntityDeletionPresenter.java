@@ -45,7 +45,7 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
         void displayEntityDeletion(ParsedEntity parsedEntity);
 
         void displayEntitiesDeletion(DeleteEntities deleteType, String kind, String namespace,
-                                     Set<ParsedEntity> entities);
+                Set<ParsedEntity> entities);
 
         void hide();
     }
@@ -65,12 +65,13 @@ public class EntityDeletionPresenter extends PresenterWidget<EntityDeletionPrese
     private DeleteEntitiesEvent deleteEntitiesEvent;
 
     @Inject
-    EntityDeletionPresenter(EventBus eventBus,
-                            MyView view,
-                            AppConstants myConstants,
-                            RestDispatch restDispatch,
-                            EntitiesService entitiesService,
-                            EntityService entityService) {
+    EntityDeletionPresenter(
+            EventBus eventBus,
+            MyView view,
+            AppConstants myConstants,
+            RestDispatch restDispatch,
+            EntitiesService entitiesService,
+            EntityService entityService) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);

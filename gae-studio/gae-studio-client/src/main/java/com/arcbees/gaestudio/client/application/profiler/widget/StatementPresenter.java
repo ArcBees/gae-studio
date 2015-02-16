@@ -30,8 +30,9 @@ public class StatementPresenter extends PresenterWidget<StatementPresenter.MyVie
     }
 
     @Inject
-    StatementPresenter(EventBus eventBus,
-                       MyView view) {
+    StatementPresenter(
+            EventBus eventBus,
+            MyView view) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);

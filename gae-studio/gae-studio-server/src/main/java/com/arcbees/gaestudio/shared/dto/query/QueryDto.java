@@ -26,7 +26,7 @@ public class QueryDto implements Serializable {
     }
 
     public QueryDto(String kind, String ancestor, ArrayList<QueryFilterDto> filters, ArrayList<QueryOrderDto> orders,
-                    Integer offset, Integer limit) {
+            Integer offset, Integer limit) {
         this.kind = kind;
         this.ancestor = ancestor;
         this.filters = filters;

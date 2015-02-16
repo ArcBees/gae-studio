@@ -41,9 +41,10 @@ public class ToolbarView extends ViewWithUiHandlers<ToolbarUiHandlers>
     private final PanelToggle toggle;
 
     @Inject
-    ToolbarView(Binder uiBinder,
-                AppResources resources,
-                PanelToggleFactory panelToggleFactory) {
+    ToolbarView(
+            Binder uiBinder,
+            AppResources resources,
+            PanelToggleFactory panelToggleFactory) {
         this.resources = resources;
 
         initWidget(uiBinder.createAndBindUi(this));

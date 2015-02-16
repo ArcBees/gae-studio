@@ -20,7 +20,8 @@ public class AjaxLoader implements IsWidget {
     private final Image widget;
 
     @Inject
-    AjaxLoader(AppResources appResources) {
+    AjaxLoader(
+            AppResources appResources) {
         this.widget = new Image();
         widget.setResource(appResources.ajaxLoader30px());
 

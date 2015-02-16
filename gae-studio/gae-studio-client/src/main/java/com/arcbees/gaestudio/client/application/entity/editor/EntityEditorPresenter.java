@@ -13,8 +13,8 @@ import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.entity.editor.EntityEditorPresenter.MyView;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyDtoMapper;
-import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyPrettifier;
+import com.arcbees.gaestudio.client.util.KeyPrettifier2.KeyDtoMapper;
+import com.arcbees.gaestudio.client.util.KeyPrettifier2.KeyPrettifier;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.gwt.json.client.JSONObject;
@@ -37,12 +37,13 @@ public class EntityEditorPresenter extends PresenterWidget<MyView> {
     private final KeyDtoMapper keyDtoMapper;
 
     @Inject
-    EntityEditorPresenter(EventBus eventBus,
-                          MyView view,
-                          KeyPrettifier keyPrettifier,
-                          PropertyEditorCollectionWidgetFactory propertyEditorCollectionWidgetFactory,
-                          KeyDtoMapper keyDtoMapper,
-                          @Assisted ParsedEntity entity) {
+    EntityEditorPresenter(
+            EventBus eventBus,
+            MyView view,
+            KeyPrettifier keyPrettifier,
+            PropertyEditorCollectionWidgetFactory propertyEditorCollectionWidgetFactory,
+            KeyDtoMapper keyDtoMapper,
+            @Assisted ParsedEntity entity) {
         super(eventBus, view);
 
         this.entity = entity;

@@ -42,8 +42,8 @@ public class EntitiesServiceImpl implements EntitiesService {
 
     @Inject
     EntitiesServiceImpl(DatastoreHelper datastoreHelper,
-                        DefaultValueGenerator defaultValueGenerator,
-                        DatastoreCountProvider countProvider) {
+            DefaultValueGenerator defaultValueGenerator,
+            DatastoreCountProvider countProvider) {
         this.datastoreHelper = datastoreHelper;
         this.defaultValueGenerator = defaultValueGenerator;
         this.countProvider = countProvider;

@@ -42,7 +42,6 @@ import com.google.common.collect.Maps;
 
 /**
  * @author Max Zhu (thebbsky@gmail.com)
- *
  */
 public class GqlQuery {
 
@@ -50,6 +49,7 @@ public class GqlQuery {
 
     private FetchOptions fetchOptions;
     private ParseResult parseResult;
+
     /**
      * @param queryStr
      * @param context
@@ -66,14 +66,14 @@ public class GqlQuery {
      * @param queryStr
      * @param params
      */
-    public GqlQuery(String queryStr, Object ...params) {
+    public GqlQuery(String queryStr, Object... params) {
         super();
 
         Preconditions.checkNotNull(queryStr);
 
         // evaluation context
         Map<String, Object> context = Maps.newHashMap();
-        for (int i = 0 ; i < params.length ; i ++) {
+        for (int i = 0; i < params.length; i++) {
             context.put(String.valueOf(i + 1), params[i]);
         }
 
@@ -81,13 +81,11 @@ public class GqlQuery {
     }
 
     /**
-     *
      * @return
      */
     public ParseResult getParseResult() {
         return parseResult;
     }
-
 
     public void build(ParseResult parseResult, Map<String, Object> context) {
 
@@ -137,7 +135,6 @@ public class GqlQuery {
 
             this.fetchOptions.offset(parseResult.offset.offset);
         }
-
     }
 
     private void build(String queryStr, Map<String, Object> context) {
@@ -329,6 +326,7 @@ public class GqlQuery {
          */
         private final boolean keyOnly;
         private final ArrayList<String> projections;
+
         public Select(boolean keyOnly) {
             super();
             this.keyOnly = keyOnly;
@@ -484,7 +482,7 @@ public class GqlQuery {
         public Key ancestorKey(Map<String, Object> context) {
             Object val = e.evaluate(context);
             if (val instanceof Key) {
-                return (Key)val;
+                return (Key) val;
             } else if (val instanceof Entity) {
                 return ((Entity) val).getKey();
             } else {
@@ -648,7 +646,6 @@ public class GqlQuery {
      * where condition
      *
      * @author Max Zhu (thebbsky@gmail.com)
-     *
      */
     public static class Condition {
         private String propertyName;
@@ -711,7 +708,6 @@ public class GqlQuery {
 
     /**
      * @author Max Zhu (thebbsky@gmail.com)
-     *
      */
     public static class OrderByItem {
 
@@ -784,7 +780,8 @@ public class GqlQuery {
             return singleton;
         }
 
-        private NullEvaluator() {}
+        private NullEvaluator() {
+        }
 
         @Override
         public Object evaluate(Map<String, Object> context) {
@@ -801,7 +798,7 @@ public class GqlQuery {
 
         @Override
         public Object evaluate(Map<String, Object> context) {
-            if ((double)payload.longValue() == payload.doubleValue()) {
+            if ((double) payload.longValue() == payload.doubleValue()) {
                 return this.payload.longValue();
             } else {
                 return this.payload.doubleValue();
@@ -941,7 +938,7 @@ public class GqlQuery {
 
         private final List<Evaluator> ops;
 
-        public FunctionEvaluator(String type, Evaluator ...ops) {
+        public FunctionEvaluator(String type, Evaluator... ops) {
             this.type = Type.valueOf(type.toUpperCase());
             this.ops = Lists.newArrayList(ops);
         }
@@ -958,7 +955,7 @@ public class GqlQuery {
 
         @Override
         public Object evaluate(Map<String, Object> context) {
-            switch(this.type) {
+            switch (this.type) {
                 case DATETIME:
                     return datetime(context);
                 case DATE:
@@ -983,7 +980,7 @@ public class GqlQuery {
             if (this.ops.size() == 1) {
                 Object val = this.ops.get(0).evaluate(context);
                 if (val instanceof String) {
-                    return new User((String)val, DEFAULT_AUTH_DOMAIN);
+                    return new User((String) val, DEFAULT_AUTH_DOMAIN);
                 } else {
                     throw new GqlQueryException("Invalid GQL query string. Function key: invalid input");
                 }
@@ -1009,9 +1006,9 @@ public class GqlQuery {
                         Object nameId = i.next().evaluate(context);
 
                         if (nameId instanceof String) {
-                            key = KeyFactory.createKey(key, kind, (String)nameId);
+                            key = KeyFactory.createKey(key, kind, (String) nameId);
                         } else if (nameId instanceof Long) {
-                            key = KeyFactory.createKey(key, kind, (Long)nameId);
+                            key = KeyFactory.createKey(key, kind, (Long) nameId);
                         }
                     }
 
@@ -1046,9 +1043,9 @@ public class GqlQuery {
             } else if (this.ops.size() == 3) {
                 // TIME(hour, minute, second)
                 try {
-                    int hour = ((Number)this.ops.get(0).evaluate(context)).intValue();
-                    int minute = ((Number)this.ops.get(1).evaluate(context)).intValue();
-                    int second = ((Number)this.ops.get(2).evaluate(context)).intValue();
+                    int hour = ((Number) this.ops.get(0).evaluate(context)).intValue();
+                    int minute = ((Number) this.ops.get(1).evaluate(context)).intValue();
+                    int second = ((Number) this.ops.get(2).evaluate(context)).intValue();
 
                     Calendar c = Calendar.getInstance();
                     c.set(Calendar.HOUR, hour);
@@ -1081,9 +1078,9 @@ public class GqlQuery {
             } else if (this.ops.size() == 3) {
                 // DATE(year, month, day)
                 try {
-                    int year = ((Number)this.ops.get(0).evaluate(context)).intValue();
-                    int month = ((Number)this.ops.get(1).evaluate(context)).intValue();
-                    int day = ((Number)this.ops.get(2).evaluate(context)).intValue();
+                    int year = ((Number) this.ops.get(0).evaluate(context)).intValue();
+                    int month = ((Number) this.ops.get(1).evaluate(context)).intValue();
+                    int day = ((Number) this.ops.get(2).evaluate(context)).intValue();
 
                     return createDate(year, month, day, 0, 0, 0);
                 } catch (ClassCastException e) {
@@ -1112,12 +1109,12 @@ public class GqlQuery {
             } else if (this.ops.size() == 6) {
                 // DATETIME(year, month, day, hour, minute, second)
                 try {
-                    int year = ((Number)this.ops.get(0).evaluate(context)).intValue();
-                    int month = ((Number)this.ops.get(1).evaluate(context)).intValue();
-                    int day = ((Number)this.ops.get(2).evaluate(context)).intValue();
-                    int hour = ((Number)this.ops.get(3).evaluate(context)).intValue();
-                    int minute = ((Number)this.ops.get(4).evaluate(context)).intValue();
-                    int second = ((Number)this.ops.get(5).evaluate(context)).intValue();
+                    int year = ((Number) this.ops.get(0).evaluate(context)).intValue();
+                    int month = ((Number) this.ops.get(1).evaluate(context)).intValue();
+                    int day = ((Number) this.ops.get(2).evaluate(context)).intValue();
+                    int hour = ((Number) this.ops.get(3).evaluate(context)).intValue();
+                    int minute = ((Number) this.ops.get(4).evaluate(context)).intValue();
+                    int second = ((Number) this.ops.get(5).evaluate(context)).intValue();
 
                     return createDate(year, month, day, hour, minute, second);
                 } catch (ClassCastException e) {
@@ -1222,7 +1219,7 @@ public class GqlQuery {
 
         private final List<Evaluator> evaluators;
 
-        public ListEvaluator(Evaluator ...evaluators) {
+        public ListEvaluator(Evaluator... evaluators) {
             super();
             this.evaluators = Lists.newArrayList(evaluators);
         }

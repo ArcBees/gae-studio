@@ -23,7 +23,8 @@ public class BytesFormatter {
     private final AppConstants myConstants;
 
     @Inject
-    public BytesFormatter(AppConstants myConstants) {
+    public BytesFormatter(
+            AppConstants myConstants) {
         this.myConstants = myConstants;
     }
 

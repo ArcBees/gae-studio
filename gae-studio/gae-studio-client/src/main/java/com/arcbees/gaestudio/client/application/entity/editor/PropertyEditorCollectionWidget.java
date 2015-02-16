@@ -24,8 +24,9 @@ public class PropertyEditorCollectionWidget implements IsWidget {
     private final JSONObject propertyMap;
     private final FlowPanel panel;
 
-    PropertyEditorCollectionWidget(Map<String, PropertyEditor<?>> propertyEditors,
-                                   JSONObject propertyMap) {
+    PropertyEditorCollectionWidget(
+            Map<String, PropertyEditor<?>> propertyEditors,
+            JSONObject propertyMap) {
         this.propertyEditors = propertyEditors;
         this.propertyMap = propertyMap;
         panel = new FlowPanel();

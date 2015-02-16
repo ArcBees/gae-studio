@@ -26,10 +26,11 @@ public class EntityCellTable<T> extends CellTable<T> {
     private String namespace;
     private String kind;
 
-    public EntityCellTable(int pageSize,
-                           Resources resources,
-                           AppResources appResources,
-                           ColumnVisibilityConfigHelper columnVisibilityConfigHelper) {
+    public EntityCellTable(
+            int pageSize,
+            Resources resources,
+            AppResources appResources,
+            ColumnVisibilityConfigHelper columnVisibilityConfigHelper) {
         super(pageSize, resources);
 
         this.columnVisibilityConfigHelper = columnVisibilityConfigHelper;

@@ -109,7 +109,8 @@ public class VisualizerPage {
     }
 
     public void clickDeleteConfirmButton() {
-        WebElement deleteConfirmButton = webDriverHelper.waitUntilElementIsClickable(ByDebugId.id(DebugIds.DELETE_CONFIRM));
+        WebElement deleteConfirmButton = webDriverHelper.waitUntilElementIsClickable(
+                ByDebugId.id(DebugIds.DELETE_CONFIRM));
         deleteConfirmButton.click();
     }
 

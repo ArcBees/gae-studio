@@ -67,7 +67,8 @@ public class GqlServiceImplTest extends GaeTestBase {
     public void executeFromUnknowEntityZeroMatchedEntity() {
         createCars();
 
-        Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Autos WHERE make = 'Canada'", null, null);
+        Collection<Entity> result = gqlService.executeGqlRequest("SELECT * FROM Autos WHERE make = 'Canada'", null,
+                null);
 
         assertTrue(result.isEmpty());
     }

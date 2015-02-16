@@ -45,12 +45,13 @@ public class SupportPresenter extends PresenterWidget<SupportPresenter.MyView> i
     private final Validator validator;
 
     @Inject
-    SupportPresenter(EventBus eventBus,
-                     MyView view,
-                     AppConstants appConstants,
-                     RestDispatch dispatch,
-                     MailService mailService,
-                     Validator validator) {
+    SupportPresenter(
+            EventBus eventBus,
+            MyView view,
+            AppConstants appConstants,
+            RestDispatch dispatch,
+            MailService mailService,
+            Validator validator) {
         super(eventBus, view);
 
         this.appConstants = appConstants;

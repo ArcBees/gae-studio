@@ -38,9 +38,10 @@ public class UserPropertyEditor extends AbstractPropertyEditor<User> {
     private final JSONValue property;
 
     @Inject
-    UserPropertyEditor(Binder uiBinder,
-                       @Assisted String key,
-                       @Assisted JSONValue property) {
+    UserPropertyEditor(
+            Binder uiBinder,
+            @Assisted String key,
+            @Assisted JSONValue property) {
         super(key);
 
         this.property = property;

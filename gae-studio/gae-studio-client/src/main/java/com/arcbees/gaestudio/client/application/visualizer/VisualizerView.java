@@ -42,8 +42,9 @@ public class VisualizerView extends ViewImpl implements VisualizerPresenter.MyVi
     private boolean entityDetailsVisible;
 
     @Inject
-    VisualizerView(Binder uiBinder,
-                   AppResources appResources) {
+    VisualizerView(
+            Binder uiBinder,
+            AppResources appResources) {
         initWidget(uiBinder.createAndBindUi(this));
 
         secondTableStyleName = "." + appResources.styles().secondTable();

@@ -28,7 +28,8 @@ public class ColumnNameView extends ViewWithUiHandlers<ColumnNameUiHandlers>
     CheckBox checkBox;
 
     @Inject
-    ColumnNameView(Binder binder) {
+    ColumnNameView(
+            Binder binder) {
         initWidget(binder.createAndBindUi(this));
     }
 

@@ -29,7 +29,7 @@ public abstract class BaseStringDao<T extends HasStringId> {
     }
 
     public boolean update(String id,
-                          T entity) {
+            T entity) {
         if (exists(id)) {
             entity.setName(id);
             put(entity);
@@ -73,7 +73,7 @@ public abstract class BaseStringDao<T extends HasStringId> {
     }
 
     public boolean exists(Class<? extends HasStringId> clazz,
-                          String id) {
+            String id) {
         return exists(Key.create(clazz, id));
     }
 
@@ -99,7 +99,7 @@ public abstract class BaseStringDao<T extends HasStringId> {
     }
 
     public void delete(Object parent,
-                       String id) {
+            String id) {
         ofy().delete().type(clazz).parent(parent).id(id).now();
     }
 

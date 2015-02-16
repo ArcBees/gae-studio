@@ -39,10 +39,11 @@ public class NamespacesListView extends PopupViewWithUiHandlers<NamespacesListUi
     ChosenValueListBox<AppIdNamespaceDto> namespacesDropdown;
 
     @Inject
-    NamespacesListView(Binder uiBinder,
-                       EventBus eventBus,
-                       AppIdNamespaceRenderer appIdNamespaceRenderer,
-                       ChosenResources chosenResources) {
+    NamespacesListView(
+            Binder uiBinder,
+            EventBus eventBus,
+            AppIdNamespaceRenderer appIdNamespaceRenderer,
+            ChosenResources chosenResources) {
         super(eventBus);
 
         ChosenOptions options = new ChosenOptions();

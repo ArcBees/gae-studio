@@ -73,7 +73,8 @@ public class JsonToCsvConverter {
         Iterator currentObjectKeys = fullPropertyMap.keys();
 
         while (currentObjectKeys.hasNext()) {
-            columns.addAll(generateColumnNamesFromPropertyMap(String.valueOf(currentObjectKeys.next()), fullPropertyMap));
+            columns.addAll(
+                    generateColumnNamesFromPropertyMap(String.valueOf(currentObjectKeys.next()), fullPropertyMap));
         }
 
         return columns;
@@ -173,12 +174,12 @@ public class JsonToCsvConverter {
         Set<String> arrayColumns = new LinkedHashSet<>();
 
         for (int i = 0; i < array.length(); i++) {
-            arrayColumns.addAll(generateColumnNamesFromPropertyType(propertyName + "[" + i + "]", array.getJSONObject(i)));
+            arrayColumns.addAll(
+                    generateColumnNamesFromPropertyType(propertyName + "[" + i + "]", array.getJSONObject(i)));
         }
 
         return arrayColumns;
     }
-
 
     private Set<String> generateGeoPtColumnNames(String propertyName) {
         Set<String> geoColumns = new LinkedHashSet<>();

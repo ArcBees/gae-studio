@@ -13,8 +13,9 @@ import org.junit.Test;
 
 import com.jayway.restassured.response.Response;
 
-import static javax.ws.rs.core.Response.Status.OK;
 import static org.junit.Assert.assertEquals;
+
+import static javax.ws.rs.core.Response.Status.OK;
 
 public class NamespacesResourceIT extends RestIT {
     @Test

@@ -25,5 +25,6 @@ public interface KindsService {
     RestAction<List<String>> getKinds();
 
     @GET
-    RestAction<List<String>> getKinds(@QueryParam(UrlParameters.NAMESPACE) String namespace);
+    RestAction<List<String>> getKinds(
+            @QueryParam(UrlParameters.NAMESPACE) String namespace);
 }

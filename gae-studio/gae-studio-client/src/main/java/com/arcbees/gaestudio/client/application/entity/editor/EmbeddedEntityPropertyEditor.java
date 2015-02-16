@@ -25,10 +25,11 @@ public class EmbeddedEntityPropertyEditor extends AbstractPropertyEditor<Map<Str
     private final JSONValue property;
 
     @Inject
-    EmbeddedEntityPropertyEditor(AppResources resources,
-                                 PropertyEditorCollectionWidgetFactory propertyEditorCollectionWidgetFactory,
-                                 @Assisted String key,
-                                 @Assisted JSONValue property) {
+    EmbeddedEntityPropertyEditor(
+            AppResources resources,
+            PropertyEditorCollectionWidgetFactory propertyEditorCollectionWidgetFactory,
+            @Assisted String key,
+            @Assisted JSONValue property) {
         super(key);
 
         this.property = property;

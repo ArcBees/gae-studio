@@ -22,7 +22,8 @@ public class PropertyEditorCollectionWidgetFactoryImpl implements PropertyEditor
     private final PropertyEditorFactory propertyEditorFactory;
 
     @Inject
-    PropertyEditorCollectionWidgetFactoryImpl(PropertyEditorFactory propertyEditorFactory) {
+    PropertyEditorCollectionWidgetFactoryImpl(
+            PropertyEditorFactory propertyEditorFactory) {
         this.propertyEditorFactory = propertyEditorFactory;
     }
 

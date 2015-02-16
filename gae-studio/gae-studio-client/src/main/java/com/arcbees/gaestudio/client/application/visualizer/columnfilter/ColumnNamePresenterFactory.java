@@ -17,8 +17,9 @@ public interface ColumnNamePresenterFactory {
     String NAMESPACE = "namespace";
     String COLUMN_NAME = "columnName";
 
-    ColumnNamePresenter create(@Assisted(APP_ID) String appId,
-                               @Assisted(NAMESPACE) String namespace,
-                               @Assisted(KIND) String kind,
-                               @Assisted(COLUMN_NAME) String columnName);
+    ColumnNamePresenter create(
+            @Assisted(APP_ID) String appId,
+            @Assisted(NAMESPACE) String namespace,
+            @Assisted(KIND) String kind,
+            @Assisted(COLUMN_NAME) String columnName);
 }

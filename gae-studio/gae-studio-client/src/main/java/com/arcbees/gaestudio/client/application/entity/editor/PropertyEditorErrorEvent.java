@@ -18,10 +18,8 @@ public class PropertyEditorErrorEvent extends GwtEvent<PropertyEditorErrorEvent.
         public void onPropertyEditorError(PropertyEditorErrorEvent event);
     }
 
-    private String error;
-
-    PropertyEditorErrorEvent(String error) {
-        this.error = error;
+    public static Type<PropertyEditorErrorHandler> getType() {
+        return TYPE;
     }
 
     public static void fire(HasHandlers source, String error) {
@@ -35,8 +33,10 @@ public class PropertyEditorErrorEvent extends GwtEvent<PropertyEditorErrorEvent.
 
     private static final Type<PropertyEditorErrorHandler> TYPE = new Type<PropertyEditorErrorHandler>();
 
-    public static Type<PropertyEditorErrorHandler> getType() {
-        return TYPE;
+    private String error;
+
+    PropertyEditorErrorEvent(String error) {
+        this.error = error;
     }
 
     @Override

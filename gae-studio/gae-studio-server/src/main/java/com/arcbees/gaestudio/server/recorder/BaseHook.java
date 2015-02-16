@@ -33,7 +33,7 @@ public class BaseHook implements Delegate<Environment> {
 
     @Override
     public Future<byte[]> makeAsyncCall(Environment environment, String packageName, String methodName, byte[] request,
-                                        ApiConfig apiConfig) {
+            ApiConfig apiConfig) {
         return baseDelegate.makeAsyncCall(environment, packageName, methodName, request, apiConfig);
     }
 

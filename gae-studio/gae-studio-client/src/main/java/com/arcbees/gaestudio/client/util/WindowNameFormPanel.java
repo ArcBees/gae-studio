@@ -32,7 +32,7 @@ public class WindowNameFormPanel extends FormPanelImpl {
 
     @Override
     public native void hookEvents(Element iframe, Element form,
-                                  FormPanelImplHost listener) /*-{
+            FormPanelImplHost listener) /*-{
         if (iframe) {
             iframe.onload = function () {
                 if (!iframe.__formAction)

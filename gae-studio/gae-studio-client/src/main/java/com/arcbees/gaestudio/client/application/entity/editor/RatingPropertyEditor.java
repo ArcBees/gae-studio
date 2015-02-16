@@ -20,10 +20,11 @@ public class RatingPropertyEditor extends LongPropertyEditor {
     private final RatingValidator ratingValidator;
 
     @Inject
-    RatingPropertyEditor(AppConstants appConstants,
-                         RatingValidator ratingValidator,
-                         @Assisted String key,
-                         @Assisted JSONValue property) {
+    RatingPropertyEditor(
+            AppConstants appConstants,
+            RatingValidator ratingValidator,
+            @Assisted String key,
+            @Assisted JSONValue property) {
         super(key, property);
 
         this.appConstants = appConstants;

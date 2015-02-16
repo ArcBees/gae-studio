@@ -40,11 +40,12 @@ public class GeoPointPropertyEditor extends AbstractPropertyEditor<GeoPoint> {
     private final AppConstants appConstants;
 
     @Inject
-    GeoPointPropertyEditor(Binder uiBinder,
-                           GeoPtValidator geoPtValidator,
-                           AppConstants appConstants,
-                           @Assisted String key,
-                           @Assisted JSONValue property) {
+    GeoPointPropertyEditor(
+            Binder uiBinder,
+            GeoPtValidator geoPtValidator,
+            AppConstants appConstants,
+            @Assisted String key,
+            @Assisted JSONValue property) {
         super(key);
 
         this.property = property;

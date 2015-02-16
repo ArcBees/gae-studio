@@ -22,7 +22,7 @@ public class EntityDto {
 
     @JsonCreator
     public EntityDto(@JsonProperty("key") KeyDto key,
-                     @JsonProperty("json") String json) {
+            @JsonProperty("json") String json) {
         this.key = key;
         this.json = json;
     }

@@ -30,14 +30,15 @@ public class BlobKeyPropertyEditor extends AbstractPropertyEditor<BlobInfoDto> i
     private final JSONValue property;
 
     @Inject
-    BlobKeyPropertyEditor(BlobInfoRenderer blobInfoRenderer,
-                          @Assisted String key,
-                          @Assisted JSONValue property,
-                          @Assisted FetchBlobKeysRunner fetchBlobKeysRunner) {
+    BlobKeyPropertyEditor(
+            BlobInfoRenderer blobInfoRenderer,
+            @Assisted String key,
+            @Assisted JSONValue property,
+            @Assisted FetchBlobKeysRunner fetchBlobKeysRunner) {
         super(key);
 
         this.property = property;
-        listBox = new ValueListBox<BlobInfoDto>(blobInfoRenderer);
+        listBox = new ValueListBox<>(blobInfoRenderer);
 
         fetchBlobKeys(fetchBlobKeysRunner);
 

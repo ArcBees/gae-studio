@@ -26,7 +26,7 @@ import com.arcbees.gaestudio.client.rest.RestModule;
 import com.arcbees.gaestudio.client.ui.UiModule;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
 import com.arcbees.gaestudio.client.util.CurrentUser;
-import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyPrettifierModule;
+import com.arcbees.gaestudio.client.util.KeyPrettifier2.KeyPrettifierModule;
 import com.google.inject.Provides;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.ErrorPlace;

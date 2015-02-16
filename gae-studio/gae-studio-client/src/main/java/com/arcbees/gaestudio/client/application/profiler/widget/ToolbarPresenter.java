@@ -28,8 +28,9 @@ public class ToolbarPresenter extends PresenterWidget<ToolbarPresenter.MyView> i
     }
 
     @Inject
-    ToolbarPresenter(EventBus eventBus,
-                     MyView view) {
+    ToolbarPresenter(
+            EventBus eventBus,
+            MyView view) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);

@@ -46,11 +46,12 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
     private final Set<String> propertiesToIgnore;
 
     @Inject
-    EntitiesEditorPresenter(EventBus eventBus,
-                            MyView view,
-                            PropertyEditorFactory propertyEditorFactory,
-                            JsonUtils jsonUtils,
-                            @Assisted Set<ParsedEntity> parsedEntities) {
+    EntitiesEditorPresenter(
+            EventBus eventBus,
+            MyView view,
+            PropertyEditorFactory propertyEditorFactory,
+            JsonUtils jsonUtils,
+            @Assisted Set<ParsedEntity> parsedEntities) {
         super(eventBus, view);
 
         this.jsonUtils = jsonUtils;
@@ -118,9 +119,9 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
     }
 
     private void checkIfCommonValue(JsonUtils jsonUtils,
-                                    String propertyKey,
-                                    JSONValue propertyValue,
-                                    Map<String, Integer> commonValuesCount) {
+            String propertyKey,
+            JSONValue propertyValue,
+            Map<String, Integer> commonValuesCount) {
         if (!propertiesToIgnore.contains(propertyKey) && commonValues.containsKey(propertyKey)) {
             JSONValue currentValue = commonValues.get(propertyKey);
             if (!jsonUtils.compareObjects(currentValue, propertyValue)) {
@@ -152,8 +153,8 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
     }
 
     private void addEditor(PropertyEditorFactory propertyEditorFactory,
-                           Map<String, JSONValue> valuesPrototypes,
-                           Map.Entry<String, PropertyType> propertyEntry) {
+            Map<String, JSONValue> valuesPrototypes,
+            Map.Entry<String, PropertyType> propertyEntry) {
         String key = propertyEntry.getKey();
         JSONValue propertyValue = getPropertyValue(commonValues, valuesPrototypes, key);
 
@@ -165,8 +166,8 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
     }
 
     private JSONValue getPropertyValue(Map<String, JSONValue> commonValues,
-                                       Map<String, JSONValue> valuesPrototypes,
-                                       String key) {
+            Map<String, JSONValue> valuesPrototypes,
+            String key) {
         JSONValue propertyValue;
         if (commonValues.containsKey(key)) {
             propertyValue = commonValues.get(key);
@@ -178,8 +179,8 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
     }
 
     private void createPrototypeValue(String property,
-                                      JSONValue propertyValue,
-                                      PropertyType propertyType) {
+            JSONValue propertyValue,
+            PropertyType propertyType) {
         if (!valuesPrototypes.containsKey(property) || propertyType != null) {
             JSONObject prototype = JSONParser.parseStrict(propertyValue.toString()).isObject();
 

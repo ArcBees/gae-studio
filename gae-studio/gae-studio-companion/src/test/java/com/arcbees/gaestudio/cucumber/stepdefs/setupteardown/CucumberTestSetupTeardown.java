@@ -24,7 +24,7 @@ public class CucumberTestSetupTeardown {
 
     @Inject
     CucumberTestSetupTeardown(WebDriver webDriver,
-                              RestIT restIT) {
+            RestIT restIT) {
         this.webDriver = webDriver;
         this.restIT = restIT;
     }

@@ -24,8 +24,9 @@ public class StringPropertyEditor extends AbstractPropertyEditor<String> {
     private final JSONValue property;
 
     @Inject
-    StringPropertyEditor(@Assisted String key,
-                         @Assisted JSONValue property) {
+    StringPropertyEditor(
+            @Assisted String key,
+            @Assisted JSONValue property) {
         super(key);
 
         this.property = property;

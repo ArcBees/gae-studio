@@ -20,7 +20,9 @@ public class IMHandle {
     private String protocol;
     private String address;
 
-    public IMHandle(String protocol, String address) {
+    public IMHandle(
+            String protocol,
+            String address) {
         this.protocol = protocol;
         this.address = address;
     }

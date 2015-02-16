@@ -30,8 +30,8 @@ public class BlobsServiceImpl implements BlobsService {
 
     @Inject
     BlobsServiceImpl(BlobInfoFactory blobInfoFactory,
-                     JsonBlobReaderFactory jsonBlobReaderFactory,
-                     Gson gson) {
+            JsonBlobReaderFactory jsonBlobReaderFactory,
+            Gson gson) {
         this.blobInfoFactory = blobInfoFactory;
         this.jsonBlobReaderFactory = jsonBlobReaderFactory;
         this.gson = gson;
@@ -46,6 +46,7 @@ public class BlobsServiceImpl implements BlobsService {
     public List<Entity> extractEntitiesFromBlob(BlobKey blobKey) {
         JsonReader jsonReader = jsonBlobReaderFactory.create(blobKey);
 
-        return gson.fromJson(jsonReader, new TypeToken<List<Entity>>() {}.getType());
+        return gson.fromJson(jsonReader, new TypeToken<List<Entity>>() {
+        }.getType());
     }
 }

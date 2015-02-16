@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.arcbees.gaestudio</groupId>
@@ -62,6 +62,9 @@
         <datastore-protobuf.version>v1beta2-rev1-2.1.0</datastore-protobuf.version>
         <antlr-runtime.version>3.4</antlr-runtime.version>
 
+        <checkstyle.version>6.0</checkstyle.version>
+        <arcbees-checkstyle.version>1.0</arcbees-checkstyle.version>
+
         <!-- test -->
         <junit.version>4.11</junit.version>
         <jukito.version>1.4</jukito.version>
@@ -77,6 +80,7 @@
         <maven-ear-plugin.version>2.9.1</maven-ear-plugin.version>
         <maven-install-plugin.version>2.5.1</maven-install-plugin.version>
         <maven-failsafe-plugin.version>2.15</maven-failsafe-plugin.version>
+        <maven-checkstyle-plugin.version>2.13</maven-checkstyle-plugin.version>
 
         <target.jdk>1.7</target.jdk>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -106,6 +110,43 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <proc>none</proc>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle-plugin.version}</version>
+                <configuration>
+                    <configLocation>/checkstyle.xml</configLocation>
+                    <suppressionsLocation>/suppressions.xml</suppressionsLocation>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                    <linkXRef>false</linkXRef>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>${checkstyle.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.arcbees</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>${arcbees-checkstyle.version}</version>
+                    </dependency>
+                </dependencies>
+
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>checkstyle</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

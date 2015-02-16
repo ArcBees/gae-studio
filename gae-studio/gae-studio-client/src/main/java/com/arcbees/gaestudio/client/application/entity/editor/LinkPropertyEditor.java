@@ -26,8 +26,9 @@ public class LinkPropertyEditor extends AbstractPropertyEditor<String> {
     private final JSONValue property;
 
     @Inject
-    LinkPropertyEditor(@Assisted String key,
-                       @Assisted JSONValue property) {
+    LinkPropertyEditor(
+            @Assisted String key,
+            @Assisted JSONValue property) {
         super(key);
 
         this.property = property;

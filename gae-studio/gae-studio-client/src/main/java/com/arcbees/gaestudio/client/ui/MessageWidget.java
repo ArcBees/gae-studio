@@ -52,9 +52,10 @@ public class MessageWidget extends Composite {
     };
 
     @Inject
-    MessageWidget(Binder binder,
-                  MessageResources messageResources,
-                  @Assisted Message message) {
+    MessageWidget(
+            Binder binder,
+            MessageResources messageResources,
+            @Assisted Message message) {
         this.messageResources = messageResources;
         this.message = message;
 

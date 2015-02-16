@@ -17,8 +17,8 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
-import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyDtoMapper;
-import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyPrettifier;
+import com.arcbees.gaestudio.client.util.KeyPrettifier2.KeyDtoMapper;
+import com.arcbees.gaestudio.client.util.KeyPrettifier2.KeyPrettifier;
 import com.arcbees.gaestudio.shared.PropertyType;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
 import com.google.common.collect.Lists;
@@ -30,8 +30,9 @@ public class KeyValuePairBuilder {
     private final KeyDtoMapper keyDtoMapper;
 
     @Inject
-    KeyValuePairBuilder(KeyPrettifier keyPrettifier,
-                        KeyDtoMapper keyDtoMapper) {
+    KeyValuePairBuilder(
+            KeyPrettifier keyPrettifier,
+            KeyDtoMapper keyDtoMapper) {
         this.keyPrettifier = keyPrettifier;
         this.keyDtoMapper = keyDtoMapper;
     }

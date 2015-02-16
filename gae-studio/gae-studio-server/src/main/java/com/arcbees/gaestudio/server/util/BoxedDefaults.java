@@ -23,16 +23,16 @@ public final class BoxedDefaults {
 
     static {
         DEFAULTS = ImmutableMap.<Class, Object>builder()
-        .put(Boolean.class, false)
-        .put(Character.class, '\0')
-        .put(Byte.class, (byte) 0)
-        .put(Short.class, (short) 0)
-        .put(Integer.class, 0)
-        .put(Long.class, 0L)
-        .put(Float.class, 0f)
-        .put(Double.class, 0d)
-        .put(String.class, "")
-        .build();
+                .put(Boolean.class, false)
+                .put(Character.class, '\0')
+                .put(Byte.class, (byte) 0)
+                .put(Short.class, (short) 0)
+                .put(Integer.class, 0)
+                .put(Long.class, 0L)
+                .put(Float.class, 0f)
+                .put(Double.class, 0d)
+                .put(String.class, "")
+                .build();
     }
 
     @SuppressWarnings("unchecked")

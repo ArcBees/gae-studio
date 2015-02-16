@@ -22,7 +22,8 @@ public class ColumnVisibilityConfigHelper {
     private final StorageAdapter storage;
 
     @Inject
-    ColumnVisibilityConfigHelper(StorageAdapter storage) {
+    ColumnVisibilityConfigHelper(
+            StorageAdapter storage) {
         this.storage = storage;
     }
 

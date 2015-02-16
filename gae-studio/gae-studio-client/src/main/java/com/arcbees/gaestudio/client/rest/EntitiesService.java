@@ -28,33 +28,39 @@ import com.gwtplatform.dispatch.rest.shared.RestAction;
 @Path(EndPoints.ENTITIES)
 public interface EntitiesService {
     @GET
-    RestAction<List<EntityDto>> getByKind(@QueryParam(UrlParameters.KIND) String kind,
-                                          @QueryParam(UrlParameters.NAMESPACE) String currentNamespace,
-                                          @QueryParam(UrlParameters.OFFSET) Integer offset,
-                                          @QueryParam(UrlParameters.LIMIT) Integer limit);
+    RestAction<List<EntityDto>> getByKind(
+            @QueryParam(UrlParameters.KIND) String kind,
+            @QueryParam(UrlParameters.NAMESPACE) String currentNamespace,
+            @QueryParam(UrlParameters.OFFSET) Integer offset,
+            @QueryParam(UrlParameters.LIMIT) Integer limit);
 
     @GET
-    RestAction<List<EntityDto>> getByKind(@QueryParam(UrlParameters.KIND) String kind,
-                                          @QueryParam(UrlParameters.OFFSET) Integer offset,
-                                          @QueryParam(UrlParameters.LIMIT) Integer limit);
+    RestAction<List<EntityDto>> getByKind(
+            @QueryParam(UrlParameters.KIND) String kind,
+            @QueryParam(UrlParameters.OFFSET) Integer offset,
+            @QueryParam(UrlParameters.LIMIT) Integer limit);
 
     @POST
-    RestAction<EntityDto> createByKind(@QueryParam(UrlParameters.KIND) String kind);
+    RestAction<EntityDto> createByKind(
+            @QueryParam(UrlParameters.KIND) String kind);
 
     @DELETE
-    RestAction<Void> deleteAll(@QueryParam(UrlParameters.KIND) String kind,
-                               @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                               @QueryParam(UrlParameters.TYPE) DeleteEntities deleteEntities,
-                               @QueryParam(UrlParameters.KEY) Set<String> encodedKeys);
+    RestAction<Void> deleteAll(
+            @QueryParam(UrlParameters.KIND) String kind,
+            @QueryParam(UrlParameters.NAMESPACE) String namespace,
+            @QueryParam(UrlParameters.TYPE) DeleteEntities deleteEntities,
+            @QueryParam(UrlParameters.KEY) Set<String> encodedKeys);
 
     @GET
     @Path(EndPoints.COUNT)
-    RestAction<Integer> getCountByKind(@QueryParam(UrlParameters.KIND) String kind,
-                                       @QueryParam(UrlParameters.NAMESPACE) String currentNamespace);
+    RestAction<Integer> getCountByKind(
+            @QueryParam(UrlParameters.KIND) String kind,
+            @QueryParam(UrlParameters.NAMESPACE) String currentNamespace);
 
     @GET
     @Path(EndPoints.COUNT)
-    RestAction<Integer> getCountByKind(@QueryParam(UrlParameters.KIND) String kind);
+    RestAction<Integer> getCountByKind(
+            @QueryParam(UrlParameters.KIND) String kind);
 
     @PUT
     RestAction<List<EntityDto>> updateEntities(List<EntityDto> entities);

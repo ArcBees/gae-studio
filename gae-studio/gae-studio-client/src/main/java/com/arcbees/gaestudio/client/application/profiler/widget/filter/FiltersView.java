@@ -7,7 +7,6 @@
  * agreements you have entered into with The Company.
  */
 
-
 package com.arcbees.gaestudio.client.application.profiler.widget.filter;
 
 import com.arcbees.gaestudio.client.application.widget.dropdown.Dropdown;
@@ -43,11 +42,12 @@ public class FiltersView extends ViewWithUiHandlers<FiltersUiHandlers>
     private Filter currentlySelectedFilter = Filter.REQUEST;
 
     @Inject
-    FiltersView(Binder uiBinder,
-                AppResources resources,
-                DropdownFactory dropdownFactory,
-                FilterDropdownResources dropdownResources,
-                FilterRenderer renderer) {
+    FiltersView(
+            Binder uiBinder,
+            AppResources resources,
+            DropdownFactory dropdownFactory,
+            FilterDropdownResources dropdownResources,
+            FilterRenderer renderer) {
         this.resources = resources;
 
         this.dropdown = dropdownFactory.create(renderer, dropdownResources);

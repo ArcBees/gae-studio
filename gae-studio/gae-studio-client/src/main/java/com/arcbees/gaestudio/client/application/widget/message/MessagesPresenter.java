@@ -22,8 +22,9 @@ public class MessagesPresenter extends PresenterWidget<MessagesPresenter.MyView>
     }
 
     @Inject
-    MessagesPresenter(EventBus eventBus,
-                      MyView view) {
+    MessagesPresenter(
+            EventBus eventBus,
+            MyView view) {
         super(eventBus, view);
     }
 

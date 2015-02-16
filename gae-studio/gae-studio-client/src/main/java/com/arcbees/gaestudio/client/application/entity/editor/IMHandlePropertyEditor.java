@@ -43,10 +43,11 @@ public class IMHandlePropertyEditor extends AbstractPropertyEditor<IMHandle> {
     private final JSONValue property;
 
     @Inject
-    IMHandlePropertyEditor(Binder uiBinder,
-                           AppConstants appConstants,
-                           @Assisted String key,
-                           @Assisted JSONValue property) {
+    IMHandlePropertyEditor(
+            Binder uiBinder,
+            AppConstants appConstants,
+            @Assisted String key,
+            @Assisted JSONValue property) {
         super(key);
 
         this.appConstants = appConstants;

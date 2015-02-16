@@ -24,8 +24,9 @@ public class DoublePropertyEditor extends AbstractPropertyEditor<Double> {
     private final JSONValue property;
 
     @Inject
-    DoublePropertyEditor(@Assisted String key,
-                         @Assisted JSONValue property) {
+    DoublePropertyEditor(
+            @Assisted String key,
+            @Assisted JSONValue property) {
         super(key);
 
         this.property = property;

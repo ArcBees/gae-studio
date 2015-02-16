@@ -19,15 +19,15 @@ import javax.ws.rs.ext.Provider;
 import com.arcbees.gaestudio.server.guice.GaeStudioResource;
 
 /**
- * This class will only be bound when using Dev server and allows Blob upload from any address
- * (127.0.0.1 vs localhost vs hostname)
+ * This class will only be bound when using Dev server and allows Blob upload from any address (127.0.0.1 vs localhost
+ * vs hostname)
  */
 @Provider
 @GaeStudioResource
 public class DebugCorsInterceptor implements ContainerResponseFilter {
     @Override
     public void filter(ContainerRequestContext requestContext,
-                       ContainerResponseContext responseContext) throws IOException {
+            ContainerResponseContext responseContext) throws IOException {
         responseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
     }
 }

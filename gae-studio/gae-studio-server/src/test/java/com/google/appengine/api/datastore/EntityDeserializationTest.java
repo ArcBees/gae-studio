@@ -30,58 +30,58 @@ import static org.junit.Assert.assertTrue;
 public class EntityDeserializationTest {
     private static final String indexedJsonEntity =
             "{\n" +
-            "  \"key\": {\n" +
-            "    \"parentKey\": null,\n" +
-            "    \"kind\": \"TestClass\",\n" +
-            "    \"appId\": null,\n" +
-            "    \"id\": 1,\n" +
-            "    \"name\": null,\n" +
-            "    \"appIdNamespace\": {\n" +
-            "      \"appId\": \"gwtp-studio\",\n" +
-            "      \"namespace\": \"\"\n" +
-            "    }\n" +
-            "  },\n" +
-            "  \"propertyMap\": {\n" +
-            "    \"defaultIndexedProperty\": \"value1\",\n" +
-            "    \"unindexedProperty\" : {\n" +
-            "        \"__indexed\": false,\n" +
-            "        \"value\":  \"value2\"\n" +
-            "    }   \n" +
-            "  }\n" +
-            "}";
+                    "  \"key\": {\n" +
+                    "    \"parentKey\": null,\n" +
+                    "    \"kind\": \"TestClass\",\n" +
+                    "    \"appId\": null,\n" +
+                    "    \"id\": 1,\n" +
+                    "    \"name\": null,\n" +
+                    "    \"appIdNamespace\": {\n" +
+                    "      \"appId\": \"gwtp-studio\",\n" +
+                    "      \"namespace\": \"\"\n" +
+                    "    }\n" +
+                    "  },\n" +
+                    "  \"propertyMap\": {\n" +
+                    "    \"defaultIndexedProperty\": \"value1\",\n" +
+                    "    \"unindexedProperty\" : {\n" +
+                    "        \"__indexed\": false,\n" +
+                    "        \"value\":  \"value2\"\n" +
+                    "    }   \n" +
+                    "  }\n" +
+                    "}";
 
     private static final String jsonEntity =
             "{\n" +
-            "  \"key\": {\n" +
-            "    \"parentKey\": null,\n" +
-            "    \"kind\": \"Complex\",\n" +
-            "    \"appId\": null,\n" +
-            "    \"id\": 4,\n" +
-            "    \"name\": null,\n" +
-            "    \"appIdNamespace\": {\n" +
-            "      \"appId\": \"gae-studio\",\n" +
-            "      \"namespace\": \"\"\n" +
-            "    }\n" +
-            "  },\n" +
-            "  \"propertyMap\": {\n" +
-            "    \"embeddedObject.titre\": \"Object #1\",\n" +
-            "    \"date\": \"Jun 14, 2012 4:43:27 PM\",\n" +
-            "    \"sprocketKey\": {\n" +
-            "      \"value\": {\n" +
-            "        \"parentKey\": null,\n" +
-            "        \"kind\": \"Sprocket\",\n" +
-            "        \"appId\": null,\n" +
-            "        \"id\": 3,\n" +
-            "        \"name\": null,\n" +
-            "        \"appIdNamespace\": {\n" +
-            "          \"appId\": \"gae-studio\",\n" +
-            "          \"namespace\": \"\"\n" +
-            "        }\n" +
-            "      },\n" +
-            "      \"" + PropertyName.GAE_PROPERTY_TYPE + "\": \"" + PropertyType.KEY.name() + "\"\n" +
-            "    }\n" +
-            "  }\n" +
-            "}";
+                    "  \"key\": {\n" +
+                    "    \"parentKey\": null,\n" +
+                    "    \"kind\": \"Complex\",\n" +
+                    "    \"appId\": null,\n" +
+                    "    \"id\": 4,\n" +
+                    "    \"name\": null,\n" +
+                    "    \"appIdNamespace\": {\n" +
+                    "      \"appId\": \"gae-studio\",\n" +
+                    "      \"namespace\": \"\"\n" +
+                    "    }\n" +
+                    "  },\n" +
+                    "  \"propertyMap\": {\n" +
+                    "    \"embeddedObject.titre\": \"Object #1\",\n" +
+                    "    \"date\": \"Jun 14, 2012 4:43:27 PM\",\n" +
+                    "    \"sprocketKey\": {\n" +
+                    "      \"value\": {\n" +
+                    "        \"parentKey\": null,\n" +
+                    "        \"kind\": \"Sprocket\",\n" +
+                    "        \"appId\": null,\n" +
+                    "        \"id\": 3,\n" +
+                    "        \"name\": null,\n" +
+                    "        \"appIdNamespace\": {\n" +
+                    "          \"appId\": \"gae-studio\",\n" +
+                    "          \"namespace\": \"\"\n" +
+                    "        }\n" +
+                    "      },\n" +
+                    "      \"" + PropertyName.GAE_PROPERTY_TYPE + "\": \"" + PropertyType.KEY.name() + "\"\n" +
+                    "    }\n" +
+                    "  }\n" +
+                    "}";
 
     private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
 

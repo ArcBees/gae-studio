@@ -37,13 +37,14 @@ public class ColumnNamePresenter extends PresenterWidget<ColumnNamePresenter.MyV
     private final ColumnVisibilityConfigHelper columnVisibilityConfigHelper;
 
     @Inject
-    ColumnNamePresenter(EventBus eventBus,
-                        MyView myView,
-                        ColumnVisibilityConfigHelper columnVisibilityConfigHelper,
-                        @Assisted(APP_ID) String appId,
-                        @Assisted(NAMESPACE) String namespace,
-                        @Assisted(KIND) String kind,
-                        @Assisted(COLUMN_NAME) String columnName) {
+    ColumnNamePresenter(
+            EventBus eventBus,
+            MyView myView,
+            ColumnVisibilityConfigHelper columnVisibilityConfigHelper,
+            @Assisted(APP_ID) String appId,
+            @Assisted(NAMESPACE) String namespace,
+            @Assisted(KIND) String kind,
+            @Assisted(COLUMN_NAME) String columnName) {
         super(eventBus, myView);
 
         this.appId = appId;

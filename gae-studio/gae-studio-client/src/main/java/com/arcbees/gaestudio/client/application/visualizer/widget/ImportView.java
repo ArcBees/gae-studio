@@ -43,9 +43,10 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
     private UploadForm uploadForm;
 
     @Inject
-    ImportView(Binder uiBinder,
-               EventBus eventBus,
-               Analytics analytics) {
+    ImportView(
+            Binder uiBinder,
+            EventBus eventBus,
+            Analytics analytics) {
         super(eventBus);
 
         this.analytics = analytics;

@@ -31,7 +31,8 @@ public class ColumnVisibilityTooltip {
     private Tooltip tooltip;
 
     @Inject
-    ColumnVisibilityTooltip(TooltipResources tooltipResources) {
+    ColumnVisibilityTooltip(
+            TooltipResources tooltipResources) {
         this.tooltipResources = tooltipResources;
     }
 

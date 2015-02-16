@@ -29,9 +29,9 @@ public class ProfilerStepDefs {
 
     @Inject
     ProfilerStepDefs(BasePage basePage,
-                     RestIT restIT,
-                     ProfilerPage profilerPage,
-                     CarFactory carFactory) {
+            RestIT restIT,
+            ProfilerPage profilerPage,
+            CarFactory carFactory) {
         this.basePage = basePage;
         this.restIT = restIT;
         this.profilerPage = profilerPage;

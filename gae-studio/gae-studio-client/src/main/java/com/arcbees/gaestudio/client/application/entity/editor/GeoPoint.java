@@ -19,7 +19,9 @@ public class GeoPoint {
     private Float latitude;
     private Float longitude;
 
-    public GeoPoint(Float latitude, Float longitude) {
+    public GeoPoint(
+            Float latitude,
+            Float longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }

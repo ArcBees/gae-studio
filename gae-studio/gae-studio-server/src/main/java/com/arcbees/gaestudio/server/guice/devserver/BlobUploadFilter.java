@@ -21,8 +21,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class will only be bound when using Dev server and allows Blob upload from any address
- * (127.0.0.1 vs localhost vs hostname)
+ * This class will only be bound when using Dev server and allows Blob upload from any address (127.0.0.1 vs localhost
+ * vs hostname)
  */
 @Singleton
 public class BlobUploadFilter implements Filter {

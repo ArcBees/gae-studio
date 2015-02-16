@@ -22,7 +22,8 @@ public class ExportService {
     private final String restPath;
 
     @Inject
-    ExportService(@RestApplicationPath String restPath) {
+    ExportService(
+            @RestApplicationPath String restPath) {
         this.restPath = restPath;
     }
 

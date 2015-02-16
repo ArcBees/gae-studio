@@ -20,10 +20,12 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
 public class RequestFilterCell extends AbstractCell<FilterValue<Long>> {
     private static final NumberFormat numberFormat = TimeNumberFormat.getFormat();
+
     private final AppMessages myMessages;
 
     @Inject
-    public RequestFilterCell(AppMessages myMessages) {
+    public RequestFilterCell(
+            AppMessages myMessages) {
         this.myMessages = myMessages;
     }
 

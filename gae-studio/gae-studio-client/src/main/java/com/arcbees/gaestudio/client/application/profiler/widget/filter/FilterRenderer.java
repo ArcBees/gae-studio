@@ -26,8 +26,9 @@ public class FilterRenderer extends AbstractRenderer<Filter> {
     private final AppResources resources;
 
     @Inject
-    FilterRenderer(FilterTemplate template,
-                   AppResources resources) {
+    FilterRenderer(
+            FilterTemplate template,
+            AppResources resources) {
         this.template = template;
         this.resources = resources;
     }

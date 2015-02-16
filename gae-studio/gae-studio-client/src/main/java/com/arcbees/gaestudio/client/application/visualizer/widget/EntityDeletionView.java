@@ -46,10 +46,11 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
     private final Analytics analytics;
 
     @Inject
-    EntityDeletionView(Binder uiBinder,
-                       EventBus eventBus,
-                       AppMessages messages,
-                       Analytics analytics) {
+    EntityDeletionView(
+            Binder uiBinder,
+            EventBus eventBus,
+            AppMessages messages,
+            Analytics analytics) {
         super(eventBus);
 
         this.messages = messages;
@@ -67,9 +68,9 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
 
     @Override
     public void displayEntitiesDeletion(DeleteEntities deleteType,
-                                        String kind,
-                                        String namespace,
-                                        Set<ParsedEntity> entities) {
+            String kind,
+            String namespace,
+            Set<ParsedEntity> entities) {
         SafeHtml message = null;
         switch (deleteType) {
             case KIND:

@@ -10,9 +10,8 @@
 package com.arcbees.gaestudio.client.gin;
 
 import com.arcbees.gaestudio.client.resources.AppResources;
-import com.arcbees.gaestudio.client.resources.CellTableResource;
-import com.arcbees.gaestudio.client.resources.PagerResources;
 import com.arcbees.gaestudio.client.resources.AuthResources;
+import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.resources.EntityResources;
 import com.arcbees.gaestudio.client.resources.FontsResources;
 import com.arcbees.gaestudio.client.resources.MessageResources;
@@ -25,17 +24,18 @@ import com.google.inject.Inject;
 
 public class ResourceLoader {
     @Inject
-    public ResourceLoader(AppResources resources,
-                          MessageResources messageResources,
-                          CellTableResource cellTableResource,
-                          PagerResources pagerResources,
-                          EntityResources entityResources,
-                          AuthResources authResources,
-                          ProfilerResources profilerResources,
-                          VisualizerResources visualizerResources,
-                          WidgetResources widgetResources,
-                          SupportResources supportResources,
-                          FontsResources fontsResources) {
+    public ResourceLoader(
+            AppResources resources,
+            MessageResources messageResources,
+            CellTableResource cellTableResource,
+            PagerResources pagerResources,
+            EntityResources entityResources,
+            AuthResources authResources,
+            ProfilerResources profilerResources,
+            VisualizerResources visualizerResources,
+            WidgetResources widgetResources,
+            SupportResources supportResources,
+            FontsResources fontsResources) {
         resources.styles().ensureInjected();
         cellTableResource.cellTableStyle().ensureInjected();
         messageResources.styles().ensureInjected();

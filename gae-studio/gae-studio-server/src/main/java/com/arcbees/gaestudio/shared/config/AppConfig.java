@@ -60,9 +60,9 @@ public class AppConfig {
 
     @JsonCreator
     private AppConfig(@JsonProperty("restPath") String restPath,
-                      @JsonProperty("version") String version,
-                      @JsonProperty("latestVersion") String latestVersion,
-                      @JsonProperty("useCookieDomainNone") boolean useCookieDomainNone) {
+            @JsonProperty("version") String version,
+            @JsonProperty("latestVersion") String latestVersion,
+            @JsonProperty("useCookieDomainNone") boolean useCookieDomainNone) {
         this.restPath = restPath;
         this.version = version;
         this.latestVersion = latestVersion;

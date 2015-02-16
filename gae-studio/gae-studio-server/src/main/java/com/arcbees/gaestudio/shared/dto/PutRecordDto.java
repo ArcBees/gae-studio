@@ -17,9 +17,9 @@ public class PutRecordDto extends DbOperationRecordDto {
     }
 
     public PutRecordDto(StackTraceElementDto callerStackTraceElement,
-                        Long requestId,
-                        Long statementId,
-                        Integer executionTimeMs) {
+            Long requestId,
+            Long statementId,
+            Integer executionTimeMs) {
         super(callerStackTraceElement, requestId, statementId, executionTimeMs, OperationKind.PUT);
     }
 }

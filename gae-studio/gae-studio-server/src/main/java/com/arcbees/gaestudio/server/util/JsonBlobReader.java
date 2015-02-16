@@ -50,7 +50,7 @@ public class JsonBlobReader extends JsonReader {
 
     @Inject
     JsonBlobReader(BlobstoreService blobstoreService,
-                   @Assisted BlobKey blobKey) {
+            @Assisted BlobKey blobKey) {
         super(new BufferedReader(new BlobReader(blobKey, blobstoreService), BlobstoreService.MAX_BLOB_FETCH_SIZE));
     }
 }

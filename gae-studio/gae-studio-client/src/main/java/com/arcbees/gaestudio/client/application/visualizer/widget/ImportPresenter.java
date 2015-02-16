@@ -37,12 +37,13 @@ public class ImportPresenter extends PresenterWidget<ImportPresenter.MyView> imp
     private final ChannelHandler channelHandler;
 
     @Inject
-    ImportPresenter(EventBus eventBus,
-                    MyView view,
-                    RestDispatchAsync restDispatch,
-                    ImportService importService,
-                    UploadFormFactory uploadFormFactory,
-                    ChannelHandler channelHandler) {
+    ImportPresenter(
+            EventBus eventBus,
+            MyView view,
+            RestDispatchAsync restDispatch,
+            ImportService importService,
+            UploadFormFactory uploadFormFactory,
+            ChannelHandler channelHandler) {
         super(eventBus, view);
 
         this.restDispatch = restDispatch;

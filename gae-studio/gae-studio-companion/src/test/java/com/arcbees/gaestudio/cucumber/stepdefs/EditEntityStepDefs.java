@@ -39,9 +39,9 @@ public class EditEntityStepDefs {
 
     @Inject
     EditEntityStepDefs(RestIT restIT,
-                       BasePage basePage,
-                       VisualizerPage visualizerPage,
-                       CarFactory carFactory) {
+            BasePage basePage,
+            VisualizerPage visualizerPage,
+            CarFactory carFactory) {
         this.basePage = basePage;
         this.restIT = restIT;
         this.visualizerPage = visualizerPage;

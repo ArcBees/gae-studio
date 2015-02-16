@@ -44,13 +44,14 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     private final VersionPresenter versionPresenter;
 
     @Inject
-    ApplicationPresenter(EventBus eventBus,
-                         MyView view,
-                         MyProxy proxy,
-                         HeaderPresenter headerPresenter,
-                         MessagesPresenter messagesPresenter,
-                         LoggerRestorer loggerRestorer,
-                         VersionPresenter versionPresenter) {
+    ApplicationPresenter(
+            EventBus eventBus,
+            MyView view,
+            MyProxy proxy,
+            HeaderPresenter headerPresenter,
+            MessagesPresenter messagesPresenter,
+            LoggerRestorer loggerRestorer,
+            VersionPresenter versionPresenter) {
         super(eventBus, view, proxy);
 
         this.headerPresenter = headerPresenter;

@@ -92,12 +92,12 @@ public class ImportResource extends HttpServlet {
 
     @Inject
     ImportResource(BlobstoreService blobstoreService,
-                   ImportService importService,
-                   Gson gson,
-                   Provider<Queue> queueProvider,
-                   ChannelMessageSender channelMessageSender,
-                   @ClientId Provider<String> clientIdProvider,
-                   @BaseRestPath String baseRestPath) {
+            ImportService importService,
+            Gson gson,
+            Provider<Queue> queueProvider,
+            ChannelMessageSender channelMessageSender,
+            @ClientId Provider<String> clientIdProvider,
+            @BaseRestPath String baseRestPath) {
         this.blobstoreService = blobstoreService;
         this.importService = importService;
         this.gson = gson;

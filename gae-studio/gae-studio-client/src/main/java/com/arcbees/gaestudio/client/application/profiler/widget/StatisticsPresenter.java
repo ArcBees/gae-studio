@@ -40,8 +40,9 @@ public class StatisticsPresenter extends PresenterWidget<StatisticsPresenter.MyV
     private Integer totalDataReceived;
 
     @Inject
-    StatisticsPresenter(EventBus eventBus,
-                        MyView view) {
+    StatisticsPresenter(
+            EventBus eventBus,
+            MyView view) {
         super(eventBus, view);
 
         initStats();

@@ -22,10 +22,10 @@ public class QueryRecordDto extends DbOperationRecordDto {
     }
 
     public QueryRecordDto(QueryDto query, QueryResultDto queryResult,
-                          StackTraceElementDto callerStackTraceElement,
-                          Long requestId,
-                          Long statementId,
-                          Integer executionTimeMs) {
+            StackTraceElementDto callerStackTraceElement,
+            Long requestId,
+            Long statementId,
+            Integer executionTimeMs) {
         super(callerStackTraceElement, requestId, statementId, executionTimeMs, OperationKind.QUERY);
 
         this.query = query;

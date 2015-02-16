@@ -29,7 +29,7 @@ public class ImportCompletedMessageHandler implements MessageHandler, HasHandler
 
     @Inject
     ImportCompletedMessageHandler(AppConstants appConstants,
-                                  EventBus eventBus) {
+            EventBus eventBus) {
         this.appConstants = appConstants;
         this.eventBus = eventBus;
     }

@@ -16,8 +16,8 @@ import javax.inject.Inject;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppResources;
-import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyDtoMapper;
-import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyPrettifier;
+import com.arcbees.gaestudio.client.util.KeyPrettifier2.KeyDtoMapper;
+import com.arcbees.gaestudio.client.util.KeyPrettifier2.KeyPrettifier;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
@@ -60,7 +60,8 @@ public class ParsedEntityColumnCreator {
         this.appResources = appResources;
     }
 
-    public void addPropertyColumn(CellTable<ParsedEntity> cellTable,
+    public void addPropertyColumn(
+            CellTable<ParsedEntity> cellTable,
             final String propertyName) {
         Column<ParsedEntity, ?> column = new TextColumn<ParsedEntity>() {
             @Override

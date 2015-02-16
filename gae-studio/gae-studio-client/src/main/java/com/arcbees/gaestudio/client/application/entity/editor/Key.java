@@ -35,12 +35,13 @@ public class Key {
     private AppIdNamespaceDto appIdNamespace;
     private Key parentKey;
 
-    public Key(String kind,
-               String name,
-               String appId,
-               Long id,
-               AppIdNamespaceDto appIdNamespace,
-               Key parentKey) {
+    public Key(
+            String kind,
+            String name,
+            String appId,
+            Long id,
+            AppIdNamespaceDto appIdNamespace,
+            Key parentKey) {
         this.kind = kind;
         this.name = name;
         this.appId = appId;

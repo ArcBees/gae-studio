@@ -18,9 +18,9 @@ public class GoogleAnalytic {
     private final String clientId;
 
     private GoogleAnalytic(String clientId,
-                           String trackingCode,
-                           String appName,
-                           String appVersion) {
+            String trackingCode,
+            String appName,
+            String appVersion) {
         this.appName = appName;
         this.appVersion = appVersion;
         this.trackingCode = trackingCode;
@@ -28,7 +28,7 @@ public class GoogleAnalytic {
     }
 
     public boolean trackEvent(String eventCategory,
-                              String eventAction) {
+            String eventAction) {
         MeasureProtocolRequest measureProtocolRequest = new MeasureProtocolRequest.Builder()
                 .protocolVersion(PROTOCOL_VERSION)
                 .clientId(clientId)
@@ -44,8 +44,8 @@ public class GoogleAnalytic {
     }
 
     public boolean trackEvent(String eventCategory,
-                              String eventAction,
-                              String eventLabel) {
+            String eventAction,
+            String eventLabel) {
         MeasureProtocolRequest measureProtocolRequest = new MeasureProtocolRequest.Builder()
                 .protocolVersion(PROTOCOL_VERSION)
                 .clientId(clientId)
@@ -62,9 +62,9 @@ public class GoogleAnalytic {
     }
 
     public static GoogleAnalytic build(String clientId,
-                                       String trackingCode,
-                                       String appName,
-                                       String appVersion) {
+            String trackingCode,
+            String appName,
+            String appVersion) {
         return new GoogleAnalytic(clientId, trackingCode, appName, appVersion);
     }
 }

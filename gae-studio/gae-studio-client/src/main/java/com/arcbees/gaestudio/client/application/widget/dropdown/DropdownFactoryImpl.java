@@ -13,7 +13,9 @@ import com.google.gwt.text.shared.Renderer;
 
 public class DropdownFactoryImpl implements DropdownFactory {
     @Override
-    public <T> Dropdown<T> create(Renderer<T> renderer, Dropdown.Resources resources) {
+    public <T> Dropdown<T> create(
+            Renderer<T> renderer,
+            Dropdown.Resources resources) {
         return new Dropdown<T>(renderer, resources);
     }
 }

@@ -34,8 +34,9 @@ public class DatePropertyEditor extends AbstractPropertyEditor<Date> {
     private final JSONValue property;
 
     @Inject
-    DatePropertyEditor(@Assisted String key,
-                       @Assisted JSONValue property) {
+    DatePropertyEditor(
+            @Assisted String key,
+            @Assisted JSONValue property) {
         super(key);
 
         this.property = property;

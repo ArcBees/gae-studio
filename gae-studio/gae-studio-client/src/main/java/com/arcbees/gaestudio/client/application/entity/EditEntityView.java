@@ -37,7 +37,8 @@ public class EditEntityView extends ViewWithUiHandlers<EditEntityUiHandlers> imp
     FlowPanel errors;
 
     @Inject
-    EditEntityView(Binder uiBinder) {
+    EditEntityView(
+            Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
     }
 

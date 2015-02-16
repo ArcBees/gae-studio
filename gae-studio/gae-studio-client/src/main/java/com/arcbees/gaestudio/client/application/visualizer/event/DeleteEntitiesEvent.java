@@ -23,6 +23,26 @@ public class DeleteEntitiesEvent extends GwtEvent<DeleteEntitiesEvent.DeleteEnti
         public void onDeleteEntities(DeleteEntitiesEvent event);
     }
 
+    public static Type<DeleteEntitiesHandler> getType() {
+        return TYPE;
+    }
+
+    public static void fire(HasHandlers source, DeleteEntities deleteEntities) {
+        source.fireEvent(new DeleteEntitiesEvent(deleteEntities, null, null));
+    }
+
+    public static void fire(HasHandlers source, DeleteEntities deleteEntities, String kind, String namespace) {
+        source.fireEvent(new DeleteEntitiesEvent(deleteEntities, kind, namespace));
+    }
+
+    public static void fire(HasHandlers source, DeleteEntities deleteEntities, String kind) {
+        source.fireEvent(new DeleteEntitiesEvent(deleteEntities, kind, null));
+    }
+
+    public static void fire(HasHandlers source, DeleteEntities deleteEntities, Set<ParsedEntity> entities) {
+        source.fireEvent(new DeleteEntitiesEvent(deleteEntities, entities));
+    }
+
     private static final Type<DeleteEntitiesHandler> TYPE = new Type<DeleteEntitiesHandler>();
 
     private DeleteEntities deleteEntities;
@@ -30,14 +50,19 @@ public class DeleteEntitiesEvent extends GwtEvent<DeleteEntitiesEvent.DeleteEnti
     private String kind;
     private String namespace;
 
-    DeleteEntitiesEvent(DeleteEntities deleteEntities, String kind, String namespace) {
+    DeleteEntitiesEvent(
+            DeleteEntities deleteEntities,
+            String kind,
+            String namespace) {
         this.deleteEntities = deleteEntities;
         this.kind = kind;
         this.namespace = namespace;
         this.entities = Sets.newHashSet();
     }
 
-    DeleteEntitiesEvent(DeleteEntities deleteEntities, Set<ParsedEntity> entities) {
+    DeleteEntitiesEvent(
+            DeleteEntities deleteEntities,
+            Set<ParsedEntity> entities) {
         this.deleteEntities = deleteEntities;
         this.entities = entities;
     }
@@ -63,28 +88,8 @@ public class DeleteEntitiesEvent extends GwtEvent<DeleteEntitiesEvent.DeleteEnti
         return TYPE;
     }
 
-    public static Type<DeleteEntitiesHandler> getType() {
-        return TYPE;
-    }
-
     @Override
     protected void dispatch(DeleteEntitiesHandler handler) {
         handler.onDeleteEntities(this);
-    }
-
-    public static void fire(HasHandlers source, DeleteEntities deleteEntities) {
-        source.fireEvent(new DeleteEntitiesEvent(deleteEntities, null, null));
-    }
-
-    public static void fire(HasHandlers source, DeleteEntities deleteEntities, String kind, String namespace) {
-        source.fireEvent(new DeleteEntitiesEvent(deleteEntities, kind, namespace));
-    }
-
-    public static void fire(HasHandlers source, DeleteEntities deleteEntities, String kind) {
-        source.fireEvent(new DeleteEntitiesEvent(deleteEntities, kind, null));
-    }
-
-    public static void fire(HasHandlers source, DeleteEntities deleteEntities, Set<ParsedEntity> entities) {
-        source.fireEvent(new DeleteEntitiesEvent(deleteEntities, entities));
     }
 }

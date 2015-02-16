@@ -22,9 +22,10 @@ public class MessageHandlers {
     private final Map<Topic, MessageHandler> handlerMap;
 
     @Inject
-    MessageHandlers(Set<MessageHandler> messageHandlers) {
-        ImmutableMap.Builder<Topic, MessageHandler> builder = ImmutableMap.builder();
+    MessageHandlers(
+            Set<MessageHandler> messageHandlers) {
 
+        ImmutableMap.Builder<Topic, MessageHandler> builder = ImmutableMap.builder();
         for (MessageHandler messageHandler : messageHandlers) {
             builder.put(messageHandler.getTopic(), messageHandler);
         }

@@ -20,7 +20,7 @@ public class Token {
 
     @JsonCreator
     public Token(@JsonProperty("token") String token,
-                 @JsonProperty("expire") Date expire) {
+            @JsonProperty("expire") Date expire) {
         this.token = token;
         this.expire = expire;
     }

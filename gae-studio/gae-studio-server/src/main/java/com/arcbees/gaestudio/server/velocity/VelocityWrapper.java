@@ -26,7 +26,7 @@ public class VelocityWrapper {
 
     @Inject
     VelocityWrapper(@GaeStudioResource VelocityEngine velocityEngine,
-                    @Assisted String templateLocation) {
+            @Assisted String templateLocation) {
         this.template = velocityEngine.getTemplate(templateLocation);
     }
 

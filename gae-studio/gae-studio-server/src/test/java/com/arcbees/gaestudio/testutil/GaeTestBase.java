@@ -47,9 +47,9 @@ public class GaeTestBase {
     }
 
     public Entity createEntityInNamespace(String namespace,
-                                          String kindName,
-                                          String propertyName,
-                                          Object value) {
+            String kindName,
+            String propertyName,
+            Object value) {
         String defaultNamespace = NamespaceManager.get();
         NamespaceManager.set(namespace);
 

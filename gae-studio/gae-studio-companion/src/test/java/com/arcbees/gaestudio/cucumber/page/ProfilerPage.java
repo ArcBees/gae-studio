@@ -39,7 +39,7 @@ public class ProfilerPage {
     }
 
     public void waitForChannelToOpen() {
-        String xpathExpression = "//code[contains(text(), " +"'" + DebugLogMessages.CHANNEL_OPENED + "')]";
+        String xpathExpression = "//code[contains(text(), " + "'" + DebugLogMessages.CHANNEL_OPENED + "')]";
 
         webDriverHelper.waitUntilPresenceOfElementLocated(By.xpath(xpathExpression));
     }

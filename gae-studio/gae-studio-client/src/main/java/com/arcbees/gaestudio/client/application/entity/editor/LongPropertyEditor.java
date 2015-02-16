@@ -25,8 +25,9 @@ public class LongPropertyEditor extends AbstractPropertyEditor<Long> {
     private final JSONValue property;
 
     @Inject
-    LongPropertyEditor(@Assisted String key,
-                       @Assisted JSONValue property) {
+    LongPropertyEditor(
+            @Assisted String key,
+            @Assisted JSONValue property) {
         super(key);
 
         this.property = property;

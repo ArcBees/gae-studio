@@ -9,14 +9,14 @@
 
 package com.arcbees.gaestudio.client.application.analytics;
 
+import com.arcbees.analytics.client.AnalyticsModule.Builder;
 import com.arcbees.gaestudio.shared.AnalyticsTrackingIds;
 import com.google.gwt.inject.client.AbstractGinModule;
 
 public class AnalyticsModule extends AbstractGinModule {
     @Override
     protected void configure() {
-        install(new com.arcbees.analytics.client.AnalyticsModule.Builder(AnalyticsTrackingIds.CLIENT_TRACKING_ID)
-                .autoCreate(false).build());
+        install(new Builder(AnalyticsTrackingIds.CLIENT_TRACKING_ID).autoCreate(false).build());
         bind(GoogleAnalyticsNavigationTracker.class).asEagerSingleton();
     }
 }

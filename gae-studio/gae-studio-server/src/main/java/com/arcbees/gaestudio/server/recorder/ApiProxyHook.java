@@ -44,10 +44,10 @@ public class ApiProxyHook extends BaseHook {
 
     @Override
     public Future<byte[]> makeAsyncCall(final Environment environment,
-                                        final String packageName,
-                                        final String methodName,
-                                        final byte[] request,
-                                        ApiConfig apiConfig) {
+            final String packageName,
+            final String methodName,
+            final byte[] request,
+            ApiConfig apiConfig) {
 
         if (areApiHooksDisabled(environment)) {
             return getBaseDelegate().makeAsyncCall(environment, packageName, methodName, request, apiConfig);

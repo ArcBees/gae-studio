@@ -26,7 +26,8 @@ public class DispatchHooksImpl implements RestDispatchHooks, HasHandlers {
     private final EventBus eventBus;
 
     @Inject
-    DispatchHooksImpl(EventBus eventBus) {
+    DispatchHooksImpl(
+            EventBus eventBus) {
         this.eventBus = eventBus;
     }
 

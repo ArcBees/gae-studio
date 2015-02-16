@@ -37,8 +37,9 @@ public class VersionView extends ViewImpl implements VersionPresenter.MyView {
     InlineHTML label;
 
     @Inject
-    VersionView(Binder binder,
-                VersionTemplate versionTemplate) {
+    VersionView(
+            Binder binder,
+            VersionTemplate versionTemplate) {
         this.versionTemplate = versionTemplate;
 
         initWidget(binder.createAndBindUi(this));

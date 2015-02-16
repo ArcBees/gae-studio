@@ -25,8 +25,9 @@ public class BytesPropertyEditor extends AbstractPropertyEditor<String> {
     private final JSONValue property;
 
     @Inject
-    BytesPropertyEditor(@Assisted String key,
-                        @Assisted JSONValue property) {
+    BytesPropertyEditor(
+            @Assisted String key,
+            @Assisted JSONValue property) {
         super(key);
 
         this.property = property;
