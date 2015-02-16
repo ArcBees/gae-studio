@@ -156,7 +156,7 @@ input:focus, textarea:focus, button:focus {
     margin-top: 2px;
     padding: 12px 17px;
 
-@mixin rotate(0 deg);
+@mixin rotate(0deg);
 @mixin transition(all, 0.25 s);
 }
 
@@ -164,7 +164,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .flipped {
-@mixin rotate(- 90 deg);
+@mixin rotate(-90deg);
 }
 
 /* -> Version -- */
@@ -450,7 +450,7 @@ input:focus, textarea:focus, button:focus {
     z-index: 110;
     position: relative;
 
-@mixin boxshadow(0 px, 1 px, 16 px, - 2 px, rgba(0, 0, 0, 0.35));
+@mixin boxshadow(0px, 1px, 16px, -2px, rgba(0, 0, 0, 0.35));
 }
 
 .popupIcon {
