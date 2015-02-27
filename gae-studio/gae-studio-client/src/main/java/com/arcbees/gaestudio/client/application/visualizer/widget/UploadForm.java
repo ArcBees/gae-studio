@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
@@ -13,7 +20,6 @@ import javax.inject.Inject;
 
 import com.arcbees.analytics.shared.Analytics;
 import com.arcbees.gaestudio.client.resources.AppResources;
-import com.arcbees.gaestudio.shared.config.AppConfig;
 import com.google.common.base.Strings;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.BrowserEvents;
@@ -69,18 +75,16 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
     private final Label selectedFile;
     private final AppResources resources;
     private final Analytics analytics;
-    private final AppConfig appConfig;
 
     @Inject
-    UploadForm(AppResources resources,
-               Analytics analytics,
-               AppConfig appConfig,
-               @Assisted String uploadUrl,
-               @Assisted Handler handler) {
+    UploadForm(
+            AppResources resources,
+            Analytics analytics,
+            @Assisted String uploadUrl,
+            @Assisted Handler handler) {
         this.handler = handler;
         this.resources = resources;
         this.analytics = analytics;
-        this.appConfig = appConfig;
 
         formPanel = new FormPanel();
         selectedFile = new Label("...");

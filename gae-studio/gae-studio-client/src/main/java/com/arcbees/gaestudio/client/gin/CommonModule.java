@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.client.gin;
@@ -25,8 +32,7 @@ import com.arcbees.gaestudio.client.resources.CellTableResource;
 import com.arcbees.gaestudio.client.rest.RestModule;
 import com.arcbees.gaestudio.client.ui.UiModule;
 import com.arcbees.gaestudio.client.util.AsyncCallbackImpl;
-import com.arcbees.gaestudio.client.util.CurrentUser;
-import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyPrettifierModule;
+import com.arcbees.gaestudio.client.util.keyprettifier.KeyPrettifierModule;
 import com.google.inject.Provides;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.ErrorPlace;
@@ -48,8 +54,6 @@ public class CommonModule extends AbstractPresenterModule {
         bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.visualizer);
         bindConstant().annotatedWith(ErrorPlace.class).to(NameTokens.visualizer);
         bindConstant().annotatedWith(UnauthorizedPlace.class).to(NameTokens.visualizer);
-
-        bind(CurrentUser.class).asEagerSingleton();
 
         bind(BytesFormatter.class).in(Singleton.class);
         bind(AppResources.class).in(Singleton.class);

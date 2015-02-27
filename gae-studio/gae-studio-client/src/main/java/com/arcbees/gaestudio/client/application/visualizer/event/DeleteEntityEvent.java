@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.client.application.visualizer.event;
@@ -16,29 +23,15 @@ import com.google.gwt.event.shared.HasHandlers;
 
 public class DeleteEntityEvent extends GwtEvent<DeleteEntityEvent.DeleteEntityHandler> {
     public interface DeleteEntityHandler extends EventHandler {
-        public void onDeleteEntity(DeleteEntityEvent event);
+        void onDeleteEntity(DeleteEntityEvent event);
     }
 
     private static final Type<DeleteEntityHandler> TYPE = new Type<DeleteEntityHandler>();
 
     private ParsedEntity parsedEntity;
 
-    @Override
-    protected void dispatch(DeleteEntityHandler handler) {
-        handler.onDeleteEntity(this);
-    }
-
-    @Override
-    public Type<DeleteEntityHandler> getAssociatedType() {
-        return TYPE;
-    }
-
     public DeleteEntityEvent(ParsedEntity parsedEntity) {
         this.parsedEntity = parsedEntity;
-    }
-
-    public ParsedEntity getParsedEntity() {
-        return parsedEntity;
     }
 
     public static Type<DeleteEntityHandler> getType() {
@@ -52,5 +45,19 @@ public class DeleteEntityEvent extends GwtEvent<DeleteEntityEvent.DeleteEntityHa
 
     public static void fire(HasHandlers source, DeleteEntityEvent eventInstance) {
         source.fireEvent(eventInstance);
+    }
+
+    @Override
+    protected void dispatch(DeleteEntityHandler handler) {
+        handler.onDeleteEntity(this);
+    }
+
+    @Override
+    public Type<DeleteEntityHandler> getAssociatedType() {
+        return TYPE;
+    }
+
+    public ParsedEntity getParsedEntity() {
+        return parsedEntity;
     }
 }

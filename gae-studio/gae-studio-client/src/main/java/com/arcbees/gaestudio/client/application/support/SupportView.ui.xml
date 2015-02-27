@@ -1,12 +1,12 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-        xmlns:g='urn:import:com.google.gwt.user.client.ui'
-        xmlns:validation="urn:import:com.arcbees.gaestudio.client.validation">
-    
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:validation="urn:import:com.arcbees.gaestudio.client.validation">
+
     <ui:with field="res" type="com.arcbees.gaestudio.client.resources.AppResources"/>
     <ui:with field="supportRes" type="com.arcbees.gaestudio.client.resources.SupportResources"/>
 
     <g:PopupPanel visible="false" glassEnabled="true" glassStyleName="{res.styles.glassPanel}" modal="true"
-            styleName="{res.styles.popup}" autoHideEnabled="true">
+                  styleName="{res.styles.popup}" autoHideEnabled="true">
         <g:HTMLPanel styleName="{supportRes.styles.support}">
             <g:Button ui:field="cancel" text="Cancel" styleName="{supportRes.styles.buttonCancel}"/>
             <h1>Submit an issue</h1>
@@ -19,7 +19,9 @@
                     <g:TextBox ui:field="name"/>
                 </div>
                 <div>
-                    <label>Email<sup>*</sup></label>
+                    <label>Email
+                        <sup>*</sup>
+                    </label>
                     <g:TextBox ui:field="email"/>
                 </div>
                 <div>

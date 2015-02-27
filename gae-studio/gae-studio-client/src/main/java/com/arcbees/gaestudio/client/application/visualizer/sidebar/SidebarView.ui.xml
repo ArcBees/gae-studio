@@ -13,7 +13,7 @@
         <span class='{res.styles.kindHeaderElement}'>
             <widget:PanelToggle ui:field="closeToggle" addStyleNames="{res.styles.toggleKindsPanel}"/>
             <div class="{visualizer.styles.actionsPanel}">
-                <chzn:ChosenListBox ui:field="chosenFormat" styleName="{visualizer.styles.dropdown}" />
+                <chzn:ChosenListBox ui:field="chosenFormat" styleName="{visualizer.styles.dropdown}"/>
                 <div ui:field="importKind" class="{visualizer.styles.importBtn}">
                     <i class="{fonts.icons.icon_import}"></i>
                 </div>

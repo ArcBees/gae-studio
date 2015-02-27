@@ -18,7 +18,7 @@
     <inherits name="com.google.common.collect.Collect"/>
     <inherits name="com.arcbees.gquery.tooltip.Tooltip"/>
     <inherits name="com.google.gwt.appengine.channel.Channel"/>
-    <inherits name="com.github.nmorel.gwtjackson.GwtJackson" />
+    <inherits name="com.github.nmorel.gwtjackson.GwtJackson"/>
     <inherits name="com.google.gwt.validation.Validation"/>
     <inherits name="org.hibernate.validator.HibernateValidator"/>
     <inherits name="com.arcbees.chosen.Chosen"/>
@@ -37,7 +37,7 @@
     <set-configuration-property name="gwtp.bootstrapper"
                                 value="com.arcbees.gaestudio.client.gin.BootstrapperImpl"/>
 
-    <set-configuration-property name="CssResource.legacy" value="true" />
+    <set-configuration-property name="CssResource.legacy" value="true"/>
 
     <replace-with class="com.arcbees.gaestudio.client.util.ValidatorFactory">
         <when-type-is class="javax.validation.ValidatorFactory"/>

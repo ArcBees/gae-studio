@@ -13,7 +13,8 @@
                         <g:SimpleLayoutPanel ui:field="requestPanel" addStyleNames="{profilerRes.styles.lightGrey}"/>
                     </g:center>
                     <g:south size="350">
-                        <g:SimpleLayoutPanel ui:field="statisticsPanel" addStyleNames="{profilerRes.styles.mediumGrey}"/>
+                        <g:SimpleLayoutPanel ui:field="statisticsPanel"
+                                             addStyleNames="{profilerRes.styles.mediumGrey}"/>
                     </g:south>
                 </g:SplitLayoutPanel>
             </g:west>

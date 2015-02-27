@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.server.recorder;
@@ -24,11 +31,12 @@ import com.google.apphosting.api.ApiProxy.Environment;
 
 public class ApiProxyHook extends BaseHook {
     private Map<String, Delegate<Environment>> hooks;
-    boolean isRecording = false;
+    private boolean isRecording;
 
     public ApiProxyHook(Delegate<Environment> baseDelegate) {
         super(baseDelegate);
-        hooks = new HashMap<String, Delegate<Environment>>();
+
+        hooks = new HashMap<>();
     }
 
     @Override
@@ -44,10 +52,10 @@ public class ApiProxyHook extends BaseHook {
 
     @Override
     public Future<byte[]> makeAsyncCall(final Environment environment,
-                                        final String packageName,
-                                        final String methodName,
-                                        final byte[] request,
-                                        ApiConfig apiConfig) {
+            final String packageName,
+            final String methodName,
+            final byte[] request,
+            ApiConfig apiConfig) {
 
         if (areApiHooksDisabled(environment)) {
             return getBaseDelegate().makeAsyncCall(environment, packageName, methodName, request, apiConfig);
@@ -87,7 +95,7 @@ public class ApiProxyHook extends BaseHook {
     }
 
     public boolean areApiHooksDisabled(Environment environment) {
-        return (isDisabledForRequest(environment) || !isRecording);
+        return isDisabledForRequest(environment) || !isRecording;
     }
 
     public void setRecording(boolean recording) {
@@ -96,9 +104,7 @@ public class ApiProxyHook extends BaseHook {
 
     private Boolean isDisabledForRequest(Environment environment) {
         Boolean setting = (Boolean) environment.getAttributes().get(GaeStudioConstants.DISABLE_API_HOOKS);
-        if (setting != null && setting) {
-            return true;
-        }
-        return false;
+
+        return setting != null && setting;
     }
 }

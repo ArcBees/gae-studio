@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.client.application.visualizer.widget;
@@ -16,8 +23,8 @@ import javax.inject.Inject;
 import com.arcbees.gaestudio.client.application.visualizer.ParsedEntity;
 import com.arcbees.gaestudio.client.resources.AppConstants;
 import com.arcbees.gaestudio.client.resources.AppResources;
-import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyDtoMapper;
-import com.arcbees.gaestudio.client.util.KeyPrettifier.KeyPrettifier;
+import com.arcbees.gaestudio.client.util.keyprettifier.KeyDtoMapper;
+import com.arcbees.gaestudio.client.util.keyprettifier.KeyPrettifier;
 import com.arcbees.gaestudio.shared.PropertyName;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
 import com.arcbees.gaestudio.shared.dto.entity.KeyDto;
@@ -30,15 +37,8 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
 
 public class ParsedEntityColumnCreator {
-    public static int getDefaultColumnCount() {
-        return DEFAULT_COLUMN_COUNT;
-    }
-
-    private static void setDefaultColumnCount(int defaultColumnCount) {
-        DEFAULT_COLUMN_COUNT = defaultColumnCount;
-    }
-
     public static final List<String> DEFAULT_COLUMN_NAMES = Lists.newArrayList("Key/Parent", "Namespace");
+
     private static final String IS_NULL = "<null>";
 
     private static int DEFAULT_COLUMN_COUNT;
@@ -60,7 +60,16 @@ public class ParsedEntityColumnCreator {
         this.appResources = appResources;
     }
 
-    public void addPropertyColumn(CellTable<ParsedEntity> cellTable,
+    public static int getDefaultColumnCount() {
+        return DEFAULT_COLUMN_COUNT;
+    }
+
+    private static void setDefaultColumnCount(int defaultColumnCount) {
+        DEFAULT_COLUMN_COUNT = defaultColumnCount;
+    }
+
+    public void addPropertyColumn(
+            CellTable<ParsedEntity> cellTable,
             final String propertyName) {
         Column<ParsedEntity, ?> column = new TextColumn<ParsedEntity>() {
             @Override
@@ -127,6 +136,7 @@ public class ParsedEntityColumnCreator {
     private String addUnindexedIfNeeded(JSONValue value, String stringValue) {
         JSONObject jsonObject = value.isObject();
 
+        String returnValue = stringValue;
         if (jsonObject != null) {
             JSONValue indexedProperty = jsonObject.get(PropertyName.INDEXED);
 
@@ -134,11 +144,11 @@ public class ParsedEntityColumnCreator {
                 boolean isEntityIndexed = indexedProperty.isBoolean().booleanValue();
 
                 if (!isEntityIndexed) {
-                    stringValue += " " + appConstants.unindexed();
+                    returnValue += " " + appConstants.unindexed();
                 }
             }
         }
 
-        return stringValue;
+        return returnValue;
     }
 }

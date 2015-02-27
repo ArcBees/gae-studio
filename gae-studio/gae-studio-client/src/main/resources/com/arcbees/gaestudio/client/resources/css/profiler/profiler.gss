@@ -58,7 +58,7 @@
     width: 130px;
     overflow: hidden;
 
-    @mixin transition_effect(width, .25s, ease);
+@mixin transition_effect(width, .25 s, ease);
 }
 
 /* -> Widget Statistics View -- */

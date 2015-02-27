@@ -1,4 +1,5 @@
 Feature: Using the visualizer
+
   Scenario: Edit an entity
     Given I create an entity
     And I modify the entity

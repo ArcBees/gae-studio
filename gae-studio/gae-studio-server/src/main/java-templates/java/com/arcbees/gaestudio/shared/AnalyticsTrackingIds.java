@@ -11,6 +11,6 @@ package com.arcbees.gaestudio.shared;
 
 public class AnalyticsTrackingIds {
     // will be replaced by maven
-    public static final String SERVER_TRACKING_ID  = "${gaes.analytics.trackingid.server}";
-    public static final String CLIENT_TRACKING_ID  = "${gaes.analytics.trackingid.client}";
+    public static final String SERVER_TRACKING_ID = "${gaes.analytics.trackingid.server}";
+    public static final String CLIENT_TRACKING_ID = "${gaes.analytics.trackingid.client}";
 }

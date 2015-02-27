@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.server.service.visualizer;
@@ -44,28 +51,28 @@ public class EntityServiceImplTest extends GaeTestBase {
 
     @Test
     public void getEntity_entityStored_shouldReturnSameEntity() throws EntityNotFoundException {
-        //given
+        // given
         Entity sentEntity = createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         Long entityId = sentEntity.getKey().getId();
 
-        //when
+        // when
         Entity savedEntity = getEntityFromEntityResource(entityId);
 
-        //then
+        // then
         assertEquals(sentEntity, savedEntity);
     }
 
     @Test
     public void updateEntity_entityStored_shouldUpdateEntity() throws EntityNotFoundException {
-        //given
+        // given
         Entity sentEntity = createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         Long entityId = sentEntity.getKey().getId();
 
-        //when
+        // when
         sentEntity.setProperty(PROPERTY_NAME, ANOTHER_NAME);
         entityService.updateEntity(sentEntity);
 
-        //then
+        // then
         Entity savedEntity = getEntityFromEntityResource(entityId);
 
         assertEquals(ANOTHER_NAME, savedEntity.getProperty(PROPERTY_NAME));
@@ -73,15 +80,15 @@ public class EntityServiceImplTest extends GaeTestBase {
 
     @Test(expected = EntityNotFoundException.class)
     public void deleteEntity_entityStored_shouldDeleteEntity() throws EntityNotFoundException {
-        //given
+        // given
         Entity sentEntity = createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         Key entityKey = sentEntity.getKey();
         Long entityId = entityKey.getId();
 
-        //when
+        // when
         entityService.deleteEntity(entityKey);
 
-        //then
+        // then
         getEntityFromEntityResource(entityId);
     }
 

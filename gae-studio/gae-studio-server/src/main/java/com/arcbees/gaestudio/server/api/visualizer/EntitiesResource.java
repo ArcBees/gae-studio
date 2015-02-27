@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.server.api.visualizer;
@@ -49,17 +56,18 @@ public class EntitiesResource {
     private final EntityMapper entityMapper;
 
     @Inject
-    EntitiesResource(EntitiesService entitiesService,
-                     EntityMapper entityMapper) {
+    EntitiesResource(
+            EntitiesService entitiesService,
+            EntityMapper entityMapper) {
         this.entitiesService = entitiesService;
         this.entityMapper = entityMapper;
     }
 
     @GET
     public Response getEntities(@QueryParam(UrlParameters.KIND) String kind,
-                                @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                                @QueryParam(UrlParameters.OFFSET) Integer offset,
-                                @QueryParam(UrlParameters.LIMIT) Integer limit) {
+            @QueryParam(UrlParameters.NAMESPACE) String namespace,
+            @QueryParam(UrlParameters.OFFSET) Integer offset,
+            @QueryParam(UrlParameters.LIMIT) Integer limit) {
         ResponseBuilder responseBuilder;
 
         if (kind == null) {
@@ -99,9 +107,9 @@ public class EntitiesResource {
 
     @DELETE
     public Response deleteEntities(@QueryParam(UrlParameters.KIND) String kind,
-                                   @QueryParam(UrlParameters.NAMESPACE) String namespace,
-                                   @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType,
-                                   @QueryParam(UrlParameters.KEY) String encodedKeys) {
+            @QueryParam(UrlParameters.NAMESPACE) String namespace,
+            @QueryParam(UrlParameters.TYPE) DeleteEntities deleteType,
+            @QueryParam(UrlParameters.KEY) String encodedKeys) {
         ResponseBuilder responseBuilder;
 
         if (isValidDeleteRequest(kind, namespace, deleteType, encodedKeys)) {
@@ -117,7 +125,7 @@ public class EntitiesResource {
     @GET
     @Path(EndPoints.COUNT)
     public Response getCount(@QueryParam(UrlParameters.KIND) String kind,
-                             @QueryParam(UrlParameters.NAMESPACE) String namespace) {
+            @QueryParam(UrlParameters.NAMESPACE) String namespace) {
         ResponseBuilder responseBuilder;
 
         if (Strings.isNullOrEmpty(kind)) {
@@ -147,9 +155,9 @@ public class EntitiesResource {
     }
 
     private boolean isValidDeleteRequest(String kind,
-                                         String namespace,
-                                         DeleteEntities deleteType,
-                                         String encodedKeys) {
+            String namespace,
+            DeleteEntities deleteType,
+            String encodedKeys) {
         boolean isValid = false;
 
         if (deleteType != null) {
