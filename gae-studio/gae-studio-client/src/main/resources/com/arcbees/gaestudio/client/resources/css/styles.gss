@@ -43,7 +43,7 @@ input:focus, textarea:focus, button:focus {
 
     cursor: pointer;
 
-    @mixin transition_effect(all, .25s, ease);
+@mixin transition_effect(all, .25 s, ease);
 }
 
 .toolbarButton:hover {
@@ -72,7 +72,7 @@ input:focus, textarea:focus, button:focus {
 
     border-left-color: transparent;
 
-    @mixin boxshadow_none();
+@mixin boxshadow_none();
 }
 
 .toolbarButtonDisabled:hover:active {
@@ -105,7 +105,7 @@ input:focus, textarea:focus, button:focus {
     margin-top: 3px;
     padding: 11px 0 0 3px;
 
-    @mixin transition_effect(all, 0.3s, ease);
+@mixin transition_effect(all, 0.3 s, ease);
 }
 
 .toolbarButton:hover i {
@@ -116,10 +116,10 @@ input:focus, textarea:focus, button:focus {
 }
 
 .toolbarButtonDisabled:hover i,
-.toolbarButtonDisabled:hover:active i{
+.toolbarButtonDisabled:hover:active i {
     color: #fff;
 
-    @mixin scale(1, 1);
+@mixin scale(1, 1);
 }
 
 .toolbarButton:hover .delete {
@@ -156,15 +156,15 @@ input:focus, textarea:focus, button:focus {
     margin-top: 2px;
     padding: 12px 17px;
 
-    @mixin rotate(0deg);
-    @mixin transition(all, 0.25s);
+@mixin rotate(0deg);
+@mixin transition(all, 0.25 s);
 }
 
 .profilerToggle.flipped {
 }
 
 .flipped {
-    @mixin rotate(-90deg);
+@mixin rotate(-90deg);
 }
 
 /* -> Version -- */
@@ -225,7 +225,7 @@ input:focus, textarea:focus, button:focus {
 
     position: relative;
 
-    @mixin transition_effect(all, .25s, ease);
+@mixin transition_effect(all, .25 s, ease);
 }
 
 .kindListElement span {
@@ -242,20 +242,20 @@ input:focus, textarea:focus, button:focus {
     top: 3px;
     right: 28px;
 
-    @mixin transition_effect(all, .25s, ease);
-    @mixin opacity(0);
+@mixin transition_effect(all, .25 s, ease);
+@mixin opacity(0);
 }
 
 .kindListElementSelected .kindListElement i {
-    @mixin opacity(1);
+@mixin opacity(1);
 }
 
 .kindListElementSelected .kindListElement i:hover {
-    @mixin scale(1.1, 1.1);
+@mixin scale(1.1, 1.1);
 }
 
 .kindListElementSelected .kindListElement i:hover:active {
-    @mixin scale(0.9, 0.9);
+@mixin scale(0.9, 0.9);
 }
 
 .kindListElement:hover,
@@ -280,7 +280,7 @@ input:focus, textarea:focus, button:focus {
 
     float: left;
 
-    @mixin transition_effect(margin-left, .5s, ease);
+@mixin transition_effect(margin-left, .5 s, ease);
 }
 
 .entityTypeSelector > div {
@@ -335,7 +335,7 @@ input:focus, textarea:focus, button:focus {
     padding-left: 8px;
     opacity: 1;
 
-    @mixin transition_effect(all, .5s, ease);
+@mixin transition_effect(all, .5 s, ease);
 }
 
 .hiddenOverlay.revealOverlay > div:before {
@@ -361,13 +361,13 @@ input:focus, textarea:focus, button:focus {
 
     margin: 4px 18px 0 0;
 
-    @mixin transition_effect(all, .25s, ease);
+@mixin transition_effect(all, .25 s, ease);
 }
 
 .pager .pagerContainer i:hover::before {
     cursor: pointer;
 
-    @mixin scale(1.1, 1.1);
+@mixin scale(1.1, 1.1);
 }
 
 .firstTable, .secondTable, .pager {
@@ -402,42 +402,42 @@ input:focus, textarea:focus, button:focus {
 }
 
 .trashSmall {
-    gwt-sprite: "trash_small_up";
+    gwt-sprite: "trashSmallUp";
 }
 
 .trashSmallNoHover {
-    gwt-sprite: "trash_small_up";
+    gwt-sprite: "trashSmallUp";
 }
 
 .trashSmall:hover {
-    gwt-sprite: "trash_small_rl";
+    gwt-sprite: "trashSmallRl";
 }
 
 .expand {
-    gwt-sprite: "expand_up";
+    gwt-sprite: "expandUp";
     cursor: pointer;
 }
 
 .expand:hover {
-    gwt-sprite: "expand_rl";
+    gwt-sprite: "expandRl";
 }
 
 .collapse {
-    gwt-sprite: "collapse_up";
+    gwt-sprite: "collapseUp";
     cursor: pointer;
 }
 
 .collapse:hover {
-    gwt-sprite: "collapse_rl";
+    gwt-sprite: "collapseRl";
 }
 
 .importSmall {
-    gwt-sprite: "import_small_up";
+    gwt-sprite: "importSmallUp";
     margin: 0;
 }
 
 .pencilSmall {
-    gwt-sprite: "pencil_small";
+    gwt-sprite: "pencilSmall";
     margin: 0;
 }
 
@@ -450,7 +450,7 @@ input:focus, textarea:focus, button:focus {
     z-index: 110;
     position: relative;
 
-    @mixin boxshadow(0px, 1px, 16px, -2px, rgba(0, 0, 0, 0.35));
+@mixin boxshadow(0px, 1px, 16px, -2px, rgba(0, 0, 0, 0.35));
 }
 
 .popupIcon {
@@ -540,7 +540,7 @@ input:focus, textarea:focus, button:focus {
     padding: 5px;
     margin-bottom: 20px;
 
-    @mixin transition(all, 0.3s);
+@mixin transition(all, 0.3 s);
 }
 
 .button:hover:enabled {
@@ -603,7 +603,7 @@ input:focus, textarea:focus, button:focus {
 .panelToggle {
     margin: 7px 0;
 
-    @mixin transition(all, .5s);
+@mixin transition(all, .5 s);
 }
 
 .panelToggle:hover {
@@ -619,7 +619,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .pencil {
-    gwt-sprite: "pencil_up";
+    gwt-sprite: "pencilUp";
 }
 
 /* -> Buttons in visualizer top toolbar */
@@ -633,7 +633,7 @@ input:focus, textarea:focus, button:focus {
 
     cursor: pointer;
 
-    @mixin transition(background-color, 0.3s);
+@mixin transition(background-color, 0.3 s);
 }
 
 .deselectDisabled {
@@ -644,7 +644,7 @@ input:focus, textarea:focus, button:focus {
 .deselect i {
     display: inline-block;
 
-    @mixin transition(all, 0.1s);
+@mixin transition(all, 0.1 s);
 }
 
 .refresh:hover,
@@ -697,7 +697,7 @@ input:focus, textarea:focus, button:focus {
     margin-left: 12px;
     margin-top: 6px;
 
-    @mixin transition_effect(height, .5s, ease);
+@mixin transition_effect(height, .5 s, ease);
 }
 
 .statementDetails p {
@@ -749,7 +749,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .entityPanelTransitions {
-    @mixin transition_effect(width, .75s, ease);
+@mixin transition_effect(width, .75 s, ease);
 }
 
 .power {

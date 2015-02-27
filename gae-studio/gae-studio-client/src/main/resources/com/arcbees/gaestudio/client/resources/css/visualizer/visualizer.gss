@@ -97,7 +97,7 @@
 
     cursor: pointer;
 
-    @mixin transition(all, 0.3s);
+@mixin transition(all, 0.3 s);
 }
 
 .sidebar .exportBtn:hover,
@@ -115,7 +115,7 @@
 
 .sidebar .exportBtn i::before,
 .sidebar .importBtn i::before {
-    @mixin scale(1, 1);
+@mixin scale(1, 1);
 }
 
 .sidebar .btnDisabled,
@@ -128,12 +128,12 @@
 
 .sidebar .exportBtn:hover i::before,
 .sidebar .importBtn:hover i::before {
-    @mixin scale(1.1, 1.1);
+@mixin scale(1.1, 1.1);
 }
 
 .sidebar .exportBtn:active i::before,
 .sidebar .importBtn:active i::before {
-    @mixin scale(0.9, 0.9);
+@mixin scale(0.9, 0.9);
 }
 
 /* -> UI -- */

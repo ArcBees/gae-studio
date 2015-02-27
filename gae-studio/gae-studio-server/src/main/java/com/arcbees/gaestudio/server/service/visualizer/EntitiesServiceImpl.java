@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.server.service.visualizer;
@@ -17,6 +24,7 @@ import java.util.concurrent.Future;
 import javax.inject.Inject;
 
 import com.arcbees.gaestudio.server.util.AppEngineHelper;
+import com.arcbees.gaestudio.server.util.DatastoreCountProvider;
 import com.arcbees.gaestudio.server.util.DatastoreHelper;
 import com.arcbees.gaestudio.server.util.DefaultValueGenerator;
 import com.arcbees.gaestudio.shared.DeleteEntities;
@@ -31,19 +39,22 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
 import com.google.common.base.Splitter;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.storage.onestore.v3.OnestoreEntity.EntityProto;
 
 public class EntitiesServiceImpl implements EntitiesService {
     private final DatastoreHelper datastoreHelper;
     private final DefaultValueGenerator defaultValueGenerator;
+    private final DatastoreCountProvider countProvider;
 
     @Inject
-    EntitiesServiceImpl(DatastoreHelper datastoreHelper,
-                        DefaultValueGenerator defaultValueGenerator) {
+    EntitiesServiceImpl(
+            DatastoreHelper datastoreHelper,
+            DefaultValueGenerator defaultValueGenerator,
+            DatastoreCountProvider countProvider) {
         this.datastoreHelper = datastoreHelper;
         this.defaultValueGenerator = defaultValueGenerator;
+        this.countProvider = countProvider;
     }
 
     @Override
@@ -120,12 +131,10 @@ public class EntitiesServiceImpl implements EntitiesService {
     }
 
     @Override
-    public Integer getCount(String kind, String namespace) {
+    public long getCount(String kind, String namespace) {
         AppEngineHelper.disableApiHooks();
 
-        Query query = new Query(kind).setKeysOnly();
-
-        return Iterables.size(datastoreHelper.queryOnNamespace(namespace, query));
+        return countProvider.get(kind, namespace);
     }
 
     @Override
@@ -231,7 +240,7 @@ public class EntitiesServiceImpl implements EntitiesService {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
         Query query = new Query().setKeysOnly();
-        datastoreHelper.filterGaeKinds(query);
+        datastoreHelper.preFilterGaeKinds(query);
 
         return datastore.prepare(query).asIterable();
     }

@@ -1,16 +1,24 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.server.util;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import com.arcbees.gaestudio.server.GaeStudioConstants;
 import com.arcbees.gaestudio.shared.dto.entity.AppIdNamespaceDto;
@@ -27,16 +35,25 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Projection;
 import com.google.appengine.api.datastore.Query;
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import static com.google.appengine.api.datastore.Query.FilterOperator;
+import static com.google.appengine.api.datastore.Query.FilterOperator.GREATER_THAN;
+import static com.google.appengine.api.datastore.Query.FilterOperator.GREATER_THAN_OR_EQUAL;
 import static com.google.appengine.api.datastore.Query.FilterOperator.LESS_THAN;
+import static com.google.appengine.api.datastore.Query.FilterOperator.LESS_THAN_OR_EQUAL;
 import static com.google.appengine.api.datastore.Query.FilterPredicate;
 
 public class DatastoreHelper {
+    private static final Set<FilterOperator> inequalityFilters =
+            Sets.newHashSet(GREATER_THAN, GREATER_THAN_OR_EQUAL, LESS_THAN, LESS_THAN_OR_EQUAL);
+    private static final String ENTITY_PREFIX = "__";
+
     public Entity get(KeyDto keyDto) throws EntityNotFoundException {
         KeyDto parentKeyDto = keyDto.getParentKey();
         AppIdNamespaceDto namespaceDto = keyDto.getAppIdNamespace();
@@ -119,24 +136,19 @@ public class DatastoreHelper {
         return queryOnAllNamespaces(query, FetchOptions.Builder.withDefaults());
     }
 
-    public Collection<Entity> queryOnAllNamespaces(Query query,
-                                                   FetchOptions fetchOptions) {
+    public Collection<Entity> queryOnAllNamespaces(
+            Query query,
+            FetchOptions options) {
+        FetchOptions fetchOptions = options;
         Integer fetchLimit = fetchOptions.getLimit();
         String defaultNamespace = NamespaceManager.get();
 
         Iterable<Entity> namespaces = getAllNamespaces();
 
-        List<Entity> entities = Lists.newArrayList();
+        Collection<Entity> entities = Lists.newArrayList();
         for (Entity namespace : namespaces) {
-            DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-
-            NamespaceManager.set(extractNamespace(namespace));
-
-            Query namespaceAwareQuery = copyQuery(query);
-
-            filterGaeKinds(namespaceAwareQuery);
-
-            Iterables.addAll(entities, datastoreService.prepare(namespaceAwareQuery).asIterable(fetchOptions));
+            Iterable<Entity> entitiesInNamespace = queryOnNamespace(extractNamespace(namespace), query, fetchOptions);
+            Iterables.addAll(entities, entitiesInNamespace);
 
             if (fetchLimit != null) {
                 int newLimit = fetchLimit - entities.size();
@@ -151,6 +163,24 @@ public class DatastoreHelper {
         NamespaceManager.set(defaultNamespace);
 
         return entities;
+    }
+
+    public Entity querySingleEntity(String namespace, Query query) {
+        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+        if (namespace == null) {
+            return datastoreService.prepare(query).asSingleEntity();
+        } else {
+            String oldNamespace = NamespaceManager.get();
+            try {
+                NamespaceManager.set(namespace);
+
+                Query namespaceAwareQuery = copyQuery(query);
+
+                return datastoreService.prepare(namespaceAwareQuery).asSingleEntity();
+            } finally {
+                NamespaceManager.set(oldNamespace);
+            }
+        }
     }
 
     public Iterable<Entity> queryOnNamespace(String namespace, Query query) {
@@ -168,19 +198,47 @@ public class DatastoreHelper {
 
                 Query namespaceAwareQuery = copyQuery(query);
 
-                return toSerializableIterable(datastoreService.prepare(namespaceAwareQuery).asIterable(fetchOptions));
+                boolean canPreFilterGaeKinds = canPreFilterGaeKinds(namespaceAwareQuery);
+                if (canPreFilterGaeKinds) {
+                    preFilterGaeKinds(namespaceAwareQuery);
+                }
+
+                Iterable<Entity> entities = datastoreService.prepare(namespaceAwareQuery).asIterable(fetchOptions);
+
+                if (!canPreFilterGaeKinds) {
+                    entities = Iterables.filter(entities, new Predicate<Entity>() {
+                        @Override
+                        public boolean apply(Entity input) {
+                            return !input.getKind().startsWith(ENTITY_PREFIX);
+                        }
+                    });
+                }
+
+                return toSerializableIterable(entities);
             } finally {
                 NamespaceManager.set(oldNamespace);
             }
         }
     }
 
-    public void filterGaeKinds(Query query) {
+    /**
+     * Add a filter to remove the GAE specific kinds from the query.
+     *
+     * @param query
+     * @throws IllegalArgumentException If the Query already contains an inequality filter
+     */
+    public void preFilterGaeKinds(Query query) throws IllegalArgumentException {
+        if (!canPreFilterGaeKinds(query)) {
+            throw new IllegalArgumentException("Cannot pre-filter kinds. Query already contains an inequality filter");
+        }
+
         FilterPredicate filter;
         if (Entities.KIND_METADATA_KIND.equals(query.getKind())) {
-            filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, LESS_THAN, Entities.createKindKey("__"));
+            filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, LESS_THAN,
+                    Entities.createKindKey(ENTITY_PREFIX));
         } else {
-            filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, LESS_THAN, KeyFactory.createKey("__", 1l));
+            filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, LESS_THAN,
+                    KeyFactory.createKey(ENTITY_PREFIX, 1L));
         }
 
         List<Query.Filter> filters = Lists.<Query.Filter>newArrayList(filter);
@@ -204,6 +262,27 @@ public class DatastoreHelper {
         namespacesQuery.setFilter(ignoreGaeStudioNamespaceFilter);
 
         return datastoreService.prepare(namespacesQuery).asIterable();
+    }
+
+    public boolean canPreFilterGaeKinds(Query query) {
+        return canPreFilterGaeKinds(query.getFilter());
+    }
+
+    private boolean canPreFilterGaeKinds(Query.Filter filter) {
+        if (filter != null) {
+            if (filter instanceof FilterPredicate) {
+                FilterPredicate filterPredicate = (FilterPredicate) filter;
+                return !inequalityFilters.contains(filterPredicate.getOperator());
+            } else if (filter instanceof Query.CompositeFilter) {
+                for (Query.Filter subFilter : ((Query.CompositeFilter) filter).getSubFilters()) {
+                    if (!canPreFilterGaeKinds(subFilter)) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     private Query copyQuery(Query query) {

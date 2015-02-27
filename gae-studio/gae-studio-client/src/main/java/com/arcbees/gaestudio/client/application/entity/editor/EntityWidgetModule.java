@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.client.application.entity.editor;
@@ -32,33 +39,49 @@ import static com.google.inject.name.Names.named;
 public class EntityWidgetModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
-        install(new GinFactoryModuleBuilder().implement(new TypeLiteral<PropertyEditor<String>>() {},
-                StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(POSTAL_ADDRESS.name()),
-                        StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(CATEGORY.name()),
-                        StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(EMAIL.name()),
-                        StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(PHONE_NUMBER.name()),
-                        StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(BLOB_KEY.name()),
-                        StringPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named("BYTES"), BytesPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<String>>() {}, named(LINK.name()), LinkPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<BlobInfoDto>>() {}, BlobKeyPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Long>>() {}, LongPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Long>>() {}, named("RATING"), RatingPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Double>>() {}, DoublePropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Boolean>>() {}, BooleanPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Date>>() {}, DatePropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<GeoPoint>>() {}, GeoPointPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<IMHandle>>() {}, IMHandlePropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<User>>() {}, UserPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Map<String, ?>>>() {}, EmbeddedEntityPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<?>>() {}, RawPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Key>>() {}, KeyPropertyEditor.class)
-                .implement(new TypeLiteral<PropertyEditor<Collection<?>>>() {}, CollectionPropertyEditor.class)
+        install(new GinFactoryModuleBuilder()
+                .implement(new TypeLiteral<PropertyEditor<String>>() {
+                }, StringPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<String>>() {
+                }, named(POSTAL_ADDRESS.name()), StringPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<String>>() {
+                }, named(CATEGORY.name()), StringPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<String>>() {
+                }, named(EMAIL.name()), StringPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<String>>() {
+                }, named(PHONE_NUMBER.name()), StringPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<String>>() {
+                }, named(BLOB_KEY.name()), StringPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<String>>() {
+                }, named("BYTES"), BytesPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<String>>() {
+                }, named(LINK.name()), LinkPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<BlobInfoDto>>() {
+                }, BlobKeyPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Long>>() {
+                }, LongPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Long>>() {
+                }, named("RATING"), RatingPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Double>>() {
+                }, DoublePropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Boolean>>() {
+                }, BooleanPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Date>>() {
+                }, DatePropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<GeoPoint>>() {
+                }, GeoPointPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<IMHandle>>() {
+                }, IMHandlePropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<User>>() {
+                }, UserPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Map<String, ?>>>() {
+                }, EmbeddedEntityPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<?>>() {
+                }, RawPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Key>>() {
+                }, KeyPropertyEditor.class)
+                .implement(new TypeLiteral<PropertyEditor<Collection<?>>>() {
+                }, CollectionPropertyEditor.class)
                 .build(PropertyEditorsFactory.class));
 
         bind(GeoPointPropertyEditor.Binder.class).in(Singleton.class);

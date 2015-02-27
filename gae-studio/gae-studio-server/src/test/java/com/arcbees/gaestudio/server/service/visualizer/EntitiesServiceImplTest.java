@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.server.service.visualizer;
@@ -19,6 +26,8 @@ import org.jukito.TestSingleton;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.arcbees.gaestudio.server.util.DatastoreCountProvider;
+import com.arcbees.gaestudio.server.util.DevServerDatastoreCountProvider;
 import com.arcbees.gaestudio.shared.DeleteEntities;
 import com.arcbees.gaestudio.testutil.GaeTestBase;
 import com.google.appengine.api.datastore.DatastoreService;
@@ -37,12 +46,12 @@ public class EntitiesServiceImplTest extends GaeTestBase {
         @Override
         protected void configureTest() {
             bind(EntitiesService.class).to(EntitiesServiceImpl.class).in(TestSingleton.class);
+            bind(DatastoreCountProvider.class).to(DevServerDatastoreCountProvider.class).in(TestSingleton.class);
         }
     }
 
     private static final String ALL_NAMESPACES = null;
     private static final String KIND_NAME = "FakeEntity";
-    private static final String GAE_KIND_NAME = "__FakeEntity";
     private static final String PROPERTY_NAME = "property-name";
     private static final String UNINDEXED_PROPERTY_NAME = "unindexed-property-name";
     private static final String A_NAME = "a-name";
@@ -55,14 +64,14 @@ public class EntitiesServiceImplTest extends GaeTestBase {
 
     @Test
     public void getEntities_twoEntitiesStored_shouldReturnTwoEntities() {
-        //given
+        // given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
-        //when
+        // when
         Iterable<Entity> entities = entitiesService.getEntities(KIND_NAME, ALL_NAMESPACES, null, null);
 
-        //then
+        // then
         Iterator<Entity> it = entities.iterator();
 
         Entity entity1 = it.next();
@@ -76,13 +85,13 @@ public class EntitiesServiceImplTest extends GaeTestBase {
     @Test
     public void createEmptyEntity_entityStored_shouldReturnEmptyEntity()
             throws EntityNotFoundException, InstantiationException, IllegalAccessException {
-        //given
+        // given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
 
-        //when
+        // when
         Entity entity = entitiesService.createEmptyEntity(KIND_NAME);
 
-        //then
+        // then
         assertNotNull(entity);
         assertEquals(KIND_NAME, entity.getKind());
         assertEquals("", entity.getProperty(PROPERTY_NAME));
@@ -91,13 +100,13 @@ public class EntitiesServiceImplTest extends GaeTestBase {
     @Test
     public void createEmptyEntity_entityStored_shouldKeepIndexes()
             throws EntityNotFoundException, InstantiationException, IllegalAccessException {
-        //given
+        // given
         createEntityWithMultipleProperties();
 
-        //when
+        // when
         Entity entity = entitiesService.createEmptyEntity(KIND_NAME);
 
-        //then
+        // then
         assertNotNull(entity);
         assertEquals(KIND_NAME, entity.getKind());
         assertEquals("", entity.getProperty(PROPERTY_NAME));
@@ -108,67 +117,67 @@ public class EntitiesServiceImplTest extends GaeTestBase {
 
     @Test
     public void deleteEntitiesByKind_twoEntitiesStored_shouldHaveNoMoreEntities() {
-        //given
+        // given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
-        //when
+        // when
         entitiesService.deleteEntities(KIND_NAME, null, DeleteEntities.KIND, null);
 
-        //then
-        assertEquals(0l, (long) entitiesService.getCount(KIND_NAME, ALL_NAMESPACES));
+        // then
+        assertEquals(0L, entitiesService.getCount(KIND_NAME, ALL_NAMESPACES));
     }
 
     @Test
     public void deleteEntitiesByNamespace_twoEntitiesStored_shouldHaveOneMoreEntities() {
-        //given
+        // given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInNamespace(A_NAMESPACE, KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
-        //when
+        // when
         entitiesService.deleteEntities(null, "", DeleteEntities.NAMESPACE, null);
 
-        //then
-        assertEquals(1l, (long) entitiesService.getCount(KIND_NAME, ALL_NAMESPACES));
+        // then
+        assertEquals(1L, entitiesService.getCount(KIND_NAME, ALL_NAMESPACES));
     }
 
     @Test
     public void getCount_withNamespace_shouldReturnOneEntity() {
-        //given
+        // given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInNamespace(A_NAMESPACE, KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
-        //when
-        Integer entityCount = entitiesService.getCount(KIND_NAME, A_NAMESPACE);
+        // when
+        long entityCount = entitiesService.getCount(KIND_NAME, A_NAMESPACE);
 
-        //then
-        assertEquals(1l, (long) entityCount);
+        // then
+        assertEquals(1L, entityCount);
     }
 
     @Test
     public void getCount_withDefaultNamespace_shouldReturnOneEntity() {
-        //given
+        // given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInNamespace(A_NAMESPACE, KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
-        //when
-        Integer entityCount = entitiesService.getCount(KIND_NAME, DEFAULT_NAMESPACE);
+        // when
+        long entityCount = entitiesService.getCount(KIND_NAME, DEFAULT_NAMESPACE);
 
-        //then
-        assertEquals(1l, (long) entityCount);
+        // then
+        assertEquals(1L, entityCount);
     }
 
     @Test
     public void getCount_twoEntitiesStored_shouldReturnTwoEntities() {
-        //given
+        // given
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, A_NAME);
         createEntityInDatastore(KIND_NAME, PROPERTY_NAME, ANOTHER_NAME);
 
-        //when
-        Integer entityCount = entitiesService.getCount(KIND_NAME, ALL_NAMESPACES);
+        // when
+        long entityCount = entitiesService.getCount(KIND_NAME, ALL_NAMESPACES);
 
-        //then
-        assertEquals(2l, (long) entityCount);
+        // then
+        assertEquals(2L, entityCount);
     }
 
     private void createEntityWithMultipleProperties() {

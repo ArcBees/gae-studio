@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.server.api;
@@ -18,25 +25,27 @@ import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.jayway.restassured.response.Response;
 
-import static com.jayway.restassured.RestAssured.given;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 import static javax.ws.rs.core.Response.Status.OK;
+
 import static org.junit.Assert.assertEquals;
 
+import static com.jayway.restassured.RestAssured.given;
+
 public class EntityResourceIT extends RestIT {
-    private Long UNEXISTENT_ID = 99999999l;
+    private static final Long UNEXISTENT_ID = 99999999L;
 
     @Test
     public void getEntity_createCar_shouldReturnEntity() {
-        //given
+        // given
         Long carId = createRemoteCar();
 
-        //when
+        // when
         Response response = getCarEntityResponse(carId);
         EntityDto entityDto = responseToEntityDto(response);
 
-        //then
+        // then
         assertEquals(OK.getStatusCode(), response.getStatusCode());
         assertEquals(CAR_KIND, entityDto.getKey().getKind());
         assertEquals((long) carId, (long) entityDto.getKey().getId());
@@ -44,14 +53,14 @@ public class EntityResourceIT extends RestIT {
 
     @Test
     public void getEntity_createStringIdEntity_shouldReturnEntity() throws InterruptedException {
-        //given
+        // given
         createStringIdEntity(AN_ENTITY_NAME);
 
-        //when
+        // when
         Response response = getStringIdEntityResponse(AN_ENTITY_NAME);
         EntityDto entityDto = responseToEntityDto(response);
 
-        //then
+        // then
         assertEquals(OK.getStatusCode(), response.getStatusCode());
         assertEquals(STRING_ENTITY_KIND, entityDto.getKey().getKind());
         assertEquals(AN_ENTITY_NAME, entityDto.getKey().getName());
@@ -59,33 +68,33 @@ public class EntityResourceIT extends RestIT {
 
     @Test
     public void getUnexistentEntity_shouldReturnNotFound() {
-        //when
+        // when
         Response response = getCarEntityResponse(UNEXISTENT_ID);
 
-        //then
+        // then
         assertEquals(NOT_FOUND.getStatusCode(), response.getStatusCode());
     }
 
     @Test
     public void deleteCar_createCar_shouldReturnNoContent() {
-        //given
+        // given
         Long carId = createRemoteCar();
 
-        //when
+        // when
         Response response = deleteEntityResponse(carId);
 
-        //then
+        // then
         assertEquals(NO_CONTENT.getStatusCode(), response.getStatusCode());
     }
 
     @Test
     public void updateCar_createCar_shouldReturnOK() {
-        //given
+        // given
         Car car = new Car();
         car.setMake("OldMake");
         Long carId = createRemoteCar(car);
 
-        //when
+        // when
         Response response = getCarEntityResponse(carId);
         EntityDto entityDto = responseToEntityDto(response);
         String newJson = entityDto.getJson().replaceFirst("OldMake", "NewMake");
@@ -93,7 +102,7 @@ public class EntityResourceIT extends RestIT {
 
         Response updateResponse = updateEntityResponse(entityDto);
 
-        //then
+        // then
         assertEquals(OK.getStatusCode(), updateResponse.getStatusCode());
     }
 

@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.client.application.entity.editor;
@@ -23,7 +30,7 @@ import com.google.web.bindery.event.shared.EventBus;
 
 public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
     @UiTemplate("AbstractPropertyEditor.ui.xml")
-    static interface Binder extends UiBinder<Widget, PropertyEditorUiFields> {
+    interface Binder extends UiBinder<Widget, PropertyEditorUiFields> {
     }
 
     /**
@@ -43,7 +50,6 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
     private static EventBus eventBus;
 
     protected final String key;
-
     protected final PropertyEditorUiFields fields;
     protected final Widget widget;
 
@@ -62,14 +68,6 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
         return widget;
     }
 
-    protected void initFormWidget(IsWidget formWidget) {
-        if (fields.form.getWidget() != null) {
-            throw new IllegalStateException("Property Widget already set.");
-        }
-
-        fields.form.setWidget(formWidget);
-    }
-
     @Override
     public final boolean isValid() {
         boolean valid = validate();
@@ -78,6 +76,14 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
         }
 
         return valid;
+    }
+
+    protected void initFormWidget(IsWidget formWidget) {
+        if (fields.form.getWidget() != null) {
+            throw new IllegalStateException("Property Widget already set.");
+        }
+
+        fields.form.setWidget(formWidget);
     }
 
     protected boolean validate() {
@@ -89,7 +95,7 @@ public abstract class AbstractPropertyEditor<T> implements PropertyEditor<T> {
     }
 
     protected final void showErrors(Iterable<String> errors) {
-        for(String error : errors) {
+        for (String error : errors) {
             showError(error);
         }
     }
