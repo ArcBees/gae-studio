@@ -9,17 +9,19 @@
         <version>9</version>
     </parent>
 
-    <artifactId>gae-studio-webapp</artifactId>
     <groupId>com.arcbees.gaestudio</groupId>
-    <version>1.0-RC4</version>
+    <artifactId>gae-studio</artifactId>
+    <version>1.1</version>
     <packaging>war</packaging>
 
     <name>GAE Studio</name>
 
     <licenses>
         <license>
-            <name>GAE Studio License Terms</name>
-            <url>https://arcbees.atlassian.net/wiki/display/GS/GAE+Studio</url>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
         </license>
     </licenses>
 </project>
