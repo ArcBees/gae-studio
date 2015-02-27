@@ -3,9 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>9</version>
+    </parent>
+
     <groupId>com.arcbees.gaestudio</groupId>
-    <artifactId>gae-studio</artifactId>
-    <version>1.0-RC4-SNAPSHOT</version>
+    <artifactId>gae-studio-parent</artifactId>
+    <version>1.1-SNAPSHOT</version>
 
     <packaging>pom</packaging>
     <name>GAE Studio</name>
@@ -19,8 +25,17 @@
     </modules>
 
     <scm>
-        <connection>scm:git:https://bitbucket.org/arcbees/gaestudio.git</connection>
+        <connection>scm:git:https://github.com/ArcBees/gae-studio.gitt</connection>
     </scm>
+
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
 
     <distributionManagement>
         <repository>
@@ -81,6 +96,9 @@
         <maven-install-plugin.version>2.5.1</maven-install-plugin.version>
         <maven-failsafe-plugin.version>2.15</maven-failsafe-plugin.version>
         <maven-checkstyle-plugin.version>2.13</maven-checkstyle-plugin.version>
+        <maven-source-plugin.version>2.4</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>2.10.1</maven-javadoc-plugin.version>
+        <maven-release-plugin.version>2.5</maven-release-plugin.version>
 
         <target.jdk>1.7</target.jdk>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -96,6 +114,9 @@
         <repackage>com.arcbees.gaestudio.repackaged</repackage>
         <gaes.analytics.trackingid.server>UA-41550930-5</gaes.analytics.trackingid.server>
         <gaes.analytics.trackingid.client>UA-41550930-10</gaes.analytics.trackingid.client>
+
+        <gpg.passphrase>SetAsParam</gpg.passphrase>
+        <release.fast>-Dcheckstyle.skip -DskipTests -Dmaven.test.skip</release.fast>
     </properties>
 
     <build>
@@ -149,6 +170,24 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin.version}</version>
+                    <configuration>
+                        <additionalparam>-Xdoclint:none</additionalparam>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <repositories>
@@ -201,6 +240,27 @@
                 <gaes.analytics.trackingid.server>UA-41550930-4</gaes.analytics.trackingid.server>
                 <gaes.analytics.trackingid.client>UA-41550930-6</gaes.analytics.trackingid.client>
             </properties>
+        </profile>
+        <profile>
+            <id>release</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>${maven-release-plugin.version}</version>
+                        <configuration>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <useReleaseProfile>false</useReleaseProfile>
+                            <releaseProfiles>release</releaseProfiles>
+                            <arguments>
+                                -Psonatype-oss-release -Prelease -Dgpg.passphrase=${gpg.passphrase} ${release.fast}
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>

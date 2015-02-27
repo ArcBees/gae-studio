@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>gae-studio</artifactId>
         <groupId>com.arcbees.gaestudio</groupId>
-        <version>1.0-RC4-SNAPSHOT</version>
+        <artifactId>gae-studio-parent</artifactId>
+        <version>1.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>gae-studio-client</artifactId>
