@@ -190,7 +190,7 @@
     transform: rotateY(-180deg);
 }
 
-@defmixin scale(RATIO_HORIZONTAL, RATIO_VERTICAL){
+@defmixin scale(RATIO_HORIZONTAL, RATIO_VERTICAL) {
     -webkit-transform: scale(RATIO_HORIZONTAL, RATIO_VERTICAL);
     -moz-transform: scale(RATIO_HORIZONTAL, RATIO_VERTICAL);
     -o-transform: scale(RATIO_HORIZONTAL, RATIO_VERTICAL);
@@ -198,7 +198,7 @@
     transform: scale(RATIO_HORIZONTAL, RATIO_VERTICAL);
 }
 
-@defmixin translate(HORIZONTAL, VERTICAL){
+@defmixin translate(HORIZONTAL, VERTICAL) {
     -webkit-transform: translate(HORIZONTAL, VERTICAL);
     -moz-transform: translate(HORIZONTAL, VERTICAL);
     -o-transform: translate(HORIZONTAL, VERTICAL);

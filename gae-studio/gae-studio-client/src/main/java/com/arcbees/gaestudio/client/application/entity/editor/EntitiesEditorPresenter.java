@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.client.application.entity.editor;
@@ -46,11 +53,12 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
     private final Set<String> propertiesToIgnore;
 
     @Inject
-    EntitiesEditorPresenter(EventBus eventBus,
-                            MyView view,
-                            PropertyEditorFactory propertyEditorFactory,
-                            JsonUtils jsonUtils,
-                            @Assisted Set<ParsedEntity> parsedEntities) {
+    EntitiesEditorPresenter(
+            EventBus eventBus,
+            MyView view,
+            PropertyEditorFactory propertyEditorFactory,
+            JsonUtils jsonUtils,
+            @Assisted Set<ParsedEntity> parsedEntities) {
         super(eventBus, view);
 
         this.jsonUtils = jsonUtils;
@@ -118,9 +126,9 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
     }
 
     private void checkIfCommonValue(JsonUtils jsonUtils,
-                                    String propertyKey,
-                                    JSONValue propertyValue,
-                                    Map<String, Integer> commonValuesCount) {
+            String propertyKey,
+            JSONValue propertyValue,
+            Map<String, Integer> commonValuesCount) {
         if (!propertiesToIgnore.contains(propertyKey) && commonValues.containsKey(propertyKey)) {
             JSONValue currentValue = commonValues.get(propertyKey);
             if (!jsonUtils.compareObjects(currentValue, propertyValue)) {
@@ -152,8 +160,8 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
     }
 
     private void addEditor(PropertyEditorFactory propertyEditorFactory,
-                           Map<String, JSONValue> valuesPrototypes,
-                           Map.Entry<String, PropertyType> propertyEntry) {
+            Map<String, JSONValue> valuesPrototypes,
+            Map.Entry<String, PropertyType> propertyEntry) {
         String key = propertyEntry.getKey();
         JSONValue propertyValue = getPropertyValue(commonValues, valuesPrototypes, key);
 
@@ -165,8 +173,8 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
     }
 
     private JSONValue getPropertyValue(Map<String, JSONValue> commonValues,
-                                       Map<String, JSONValue> valuesPrototypes,
-                                       String key) {
+            Map<String, JSONValue> valuesPrototypes,
+            String key) {
         JSONValue propertyValue;
         if (commonValues.containsKey(key)) {
             propertyValue = commonValues.get(key);
@@ -178,8 +186,8 @@ public class EntitiesEditorPresenter extends PresenterWidget<MyView> {
     }
 
     private void createPrototypeValue(String property,
-                                      JSONValue propertyValue,
-                                      PropertyType propertyType) {
+            JSONValue propertyValue,
+            PropertyType propertyType) {
         if (!valuesPrototypes.containsKey(property) || propertyType != null) {
             JSONObject prototype = JSONParser.parseStrict(propertyValue.toString()).isObject();
 

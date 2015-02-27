@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.client.application.profiler.ui;
@@ -41,7 +48,7 @@ import static com.google.gwt.query.client.GQuery.$;
 public class StatementCell extends AbstractCell<DbOperationRecordDto> {
     public interface Renderer extends UiRenderer {
         void render(SafeHtmlBuilder safeHtmlBuilder, String formatted, String callLocation,
-                    String statementDetailsClass, String imageClass);
+                String statementDetailsClass, String imageClass);
 
         void onBrowserEvent(StatementCell cell, NativeEvent event, Element element, DbOperationRecordDto dto);
 
@@ -63,10 +70,11 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
     private RecordFormatter recordFormatter;
 
     @Inject
-    StatementCell(RecordFormatter recordFormatter,
-                  Renderer renderer,
-                  AppResources appResources,
-                  AppMessages appMessages) {
+    StatementCell(
+            RecordFormatter recordFormatter,
+            Renderer renderer,
+            AppResources appResources,
+            AppMessages appMessages) {
         super(BrowserEvents.CLICK, BrowserEvents.MOUSEOVER, BrowserEvents.MOUSEOUT);
 
         this.recordFormatter = recordFormatter;
@@ -77,7 +85,7 @@ public class StatementCell extends AbstractCell<DbOperationRecordDto> {
 
     @Override
     public void onBrowserEvent(Context context, Element parent, DbOperationRecordDto value, NativeEvent event,
-                               ValueUpdater<DbOperationRecordDto> valueUpdater) {
+            ValueUpdater<DbOperationRecordDto> valueUpdater) {
         renderer.onBrowserEvent(this, event, parent, value);
     }
 

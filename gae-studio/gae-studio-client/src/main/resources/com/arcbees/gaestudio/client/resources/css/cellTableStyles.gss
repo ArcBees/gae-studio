@@ -7,7 +7,7 @@
     line-height: 20px;
     overflow: hidden;
 
-    @mixin transition_effect(all, .25s, ease);
+@mixin transition_effect(all, .25 s, ease);
 }
 
 .cellTableCell {
@@ -19,7 +19,7 @@
     border: none;
     padding: 2px 20px 2px 0;
 
-    @mixin transition_effect(all, .25s, ease);
+@mixin transition_effect(all, .25 s, ease);
 }
 
 .cellTableHoveredRow .cellTableCell {

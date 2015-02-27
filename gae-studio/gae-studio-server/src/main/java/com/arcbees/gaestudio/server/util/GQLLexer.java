@@ -1,12 +1,20 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
+//CHECKSTYLE_OFF
 // $ANTLR 3.4 GQL.g 2014-07-02 15:17:15
 
 package com.arcbees.gaestudio.server.util;
@@ -118,8 +126,6 @@ public class GQLLexer extends Lexer {
             // GQL.g:19:9: '!='
             {
                 match("!=");
-
-
             }
 
             state.type = _type;
@@ -139,7 +145,6 @@ public class GQLLexer extends Lexer {
             // GQL.g:20:9: '('
             {
                 match('(');
-
             }
 
             state.type = _type;
@@ -159,7 +164,6 @@ public class GQLLexer extends Lexer {
             // GQL.g:21:9: ')'
             {
                 match(')');
-
             }
 
             state.type = _type;
@@ -179,7 +183,6 @@ public class GQLLexer extends Lexer {
             // GQL.g:22:9: '*'
             {
                 match('*');
-
             }
 
             state.type = _type;
@@ -199,7 +202,6 @@ public class GQLLexer extends Lexer {
             // GQL.g:23:9: ','
             {
                 match(',');
-
             }
 
             state.type = _type;
@@ -219,7 +221,6 @@ public class GQLLexer extends Lexer {
             // GQL.g:24:9: ':'
             {
                 match(':');
-
             }
 
             state.type = _type;
@@ -239,7 +240,6 @@ public class GQLLexer extends Lexer {
             // GQL.g:25:9: '<'
             {
                 match('<');
-
             }
 
             state.type = _type;
@@ -259,8 +259,6 @@ public class GQLLexer extends Lexer {
             // GQL.g:26:9: '<='
             {
                 match("<=");
-
-
             }
 
             state.type = _type;
@@ -280,7 +278,6 @@ public class GQLLexer extends Lexer {
             // GQL.g:27:9: '='
             {
                 match('=');
-
             }
 
             state.type = _type;
@@ -300,7 +297,6 @@ public class GQLLexer extends Lexer {
             // GQL.g:28:9: '>'
             {
                 match('>');
-
             }
 
             state.type = _type;
@@ -320,8 +316,6 @@ public class GQLLexer extends Lexer {
             // GQL.g:29:9: '>='
             {
                 match(">=");
-
-
             }
 
             state.type = _type;
@@ -341,8 +335,6 @@ public class GQLLexer extends Lexer {
             // GQL.g:30:9: '__key__'
             {
                 match("__key__");
-
-
             }
 
             state.type = _type;
@@ -363,22 +355,15 @@ public class GQLLexer extends Lexer {
             {
                 mS();
 
-
                 mE();
-
 
                 mL();
 
-
                 mE();
-
 
                 mC();
 
-
                 mT();
-
-
             }
 
             state.type = _type;
@@ -399,16 +384,11 @@ public class GQLLexer extends Lexer {
             {
                 mF();
 
-
                 mR();
-
 
                 mO();
 
-
                 mM();
-
-
             }
 
             state.type = _type;
@@ -429,19 +409,13 @@ public class GQLLexer extends Lexer {
             {
                 mW();
 
-
                 mH();
 
-
                 mE();
-
 
                 mR();
 
-
                 mE();
-
-
             }
 
             state.type = _type;
@@ -462,19 +436,13 @@ public class GQLLexer extends Lexer {
             {
                 mO();
 
-
                 mR();
-
 
                 mD();
 
-
                 mE();
 
-
                 mR();
-
-
             }
 
             state.type = _type;
@@ -495,10 +463,7 @@ public class GQLLexer extends Lexer {
             {
                 mB();
 
-
                 mY();
-
-
             }
 
             state.type = _type;
@@ -519,13 +484,9 @@ public class GQLLexer extends Lexer {
             {
                 mA();
 
-
                 mS();
 
-
                 mC();
-
-
             }
 
             state.type = _type;
@@ -546,16 +507,11 @@ public class GQLLexer extends Lexer {
             {
                 mD();
 
-
                 mE();
-
 
                 mS();
 
-
                 mC();
-
-
             }
 
             state.type = _type;
@@ -576,19 +532,13 @@ public class GQLLexer extends Lexer {
             {
                 mL();
 
-
                 mI();
-
 
                 mM();
 
-
                 mI();
 
-
                 mT();
-
-
             }
 
             state.type = _type;
@@ -609,22 +559,15 @@ public class GQLLexer extends Lexer {
             {
                 mO();
 
-
                 mF();
 
-
                 mF();
-
 
                 mS();
 
-
                 mE();
 
-
                 mT();
-
-
             }
 
             state.type = _type;
@@ -645,28 +588,19 @@ public class GQLLexer extends Lexer {
             {
                 mA();
 
-
                 mN();
-
 
                 mC();
 
-
                 mE();
-
 
                 mS();
 
-
                 mT();
-
 
                 mO();
 
-
                 mR();
-
-
             }
 
             state.type = _type;
@@ -687,10 +621,7 @@ public class GQLLexer extends Lexer {
             {
                 mI();
 
-
                 mS();
-
-
             }
 
             state.type = _type;
@@ -732,21 +663,18 @@ public class GQLLexer extends Lexer {
                                         new NoViableAltException("", 1, 7, input);
 
                                 throw nvae;
-
                             }
                         } else {
                             NoViableAltException nvae =
                                     new NoViableAltException("", 1, 6, input);
 
                             throw nvae;
-
                         }
                     } else {
                         NoViableAltException nvae =
                                 new NoViableAltException("", 1, 1, input);
 
                         throw nvae;
-
                     }
                 }
                 break;
@@ -775,7 +703,6 @@ public class GQLLexer extends Lexer {
                             new NoViableAltException("", 1, 0, input);
 
                     throw nvae;
-
             }
 
             switch (alt1) {
@@ -784,28 +711,19 @@ public class GQLLexer extends Lexer {
                 {
                     mD();
 
-
                     mA();
 
-
                     mT();
-
 
                     mE();
 
-
                     mT();
-
 
                     mI();
 
-
                     mM();
 
-
                     mE();
-
-
                 }
                 break;
                 case 2:
@@ -813,16 +731,11 @@ public class GQLLexer extends Lexer {
                 {
                     mD();
 
-
                     mA();
-
 
                     mT();
 
-
                     mE();
-
-
                 }
                 break;
                 case 3:
@@ -830,16 +743,11 @@ public class GQLLexer extends Lexer {
                 {
                     mT();
 
-
                     mI();
-
 
                     mM();
 
-
                     mE();
-
-
                 }
                 break;
                 case 4:
@@ -847,13 +755,9 @@ public class GQLLexer extends Lexer {
                 {
                     mK();
 
-
                     mE();
 
-
                     mY();
-
-
                 }
                 break;
                 case 5:
@@ -861,16 +765,11 @@ public class GQLLexer extends Lexer {
                 {
                     mU();
 
-
                     mS();
-
 
                     mE();
 
-
                     mR();
-
-
                 }
                 break;
                 case 6:
@@ -878,22 +777,15 @@ public class GQLLexer extends Lexer {
                 {
                     mG();
 
-
                     mE();
-
 
                     mO();
 
-
                     mP();
 
-
                     mT();
-
-
                 }
                 break;
-
             }
             state.type = _type;
             state.channel = _channel;
@@ -913,13 +805,9 @@ public class GQLLexer extends Lexer {
             {
                 mA();
 
-
                 mN();
 
-
                 mD();
-
-
             }
 
             state.type = _type;
@@ -940,10 +828,7 @@ public class GQLLexer extends Lexer {
             {
                 mI();
 
-
                 mN();
-
-
             }
 
             state.type = _type;
@@ -976,22 +861,21 @@ public class GQLLexer extends Lexer {
                         if ((LA2_2 == '\'')) {
                             int LA2_4 = input.LA(3);
 
-                            if (((LA2_4 >= '\u0000' && LA2_4 <= '\t') || (LA2_4 >= '\u000B' && LA2_4 <= '\f') || (LA2_4 >= '\u000E' && LA2_4 <= '\uFFFF'))) {
+                            if (((LA2_4 >= '\u0000' && LA2_4 <= '\t') || (LA2_4 >= '\u000B' && LA2_4 <= '\f') ||
+                                    (LA2_4 >= '\u000E' && LA2_4 <= '\uFFFF'))) {
                                 alt2 = 1;
                             } else {
                                 alt2 = 2;
                             }
-
-
-                        } else if (((LA2_2 >= '\u0000' && LA2_2 <= '\t') || (LA2_2 >= '\u000B' && LA2_2 <= '\f') || (LA2_2 >= '\u000E' && LA2_2 <= '&') || (LA2_2 >= '(' && LA2_2 <= '\uFFFF'))) {
+                        } else if (((LA2_2 >= '\u0000' && LA2_2 <= '\t') || (LA2_2 >= '\u000B' && LA2_2 <= '\f') ||
+                                (LA2_2 >= '\u000E' && LA2_2 <= '&') || (LA2_2 >= '(' && LA2_2 <= '\uFFFF'))) {
                             alt2 = 2;
                         }
-
-
-                    } else if (((LA2_0 >= '\u0000' && LA2_0 <= '\t') || (LA2_0 >= '\u000B' && LA2_0 <= '\f') || (LA2_0 >= '\u000E' && LA2_0 <= '&') || (LA2_0 >= '(' && LA2_0 <= '[') || (LA2_0 >= ']' && LA2_0 <= '\uFFFF'))) {
+                    } else if (((LA2_0 >= '\u0000' && LA2_0 <= '\t') || (LA2_0 >= '\u000B' && LA2_0 <= '\f') ||
+                            (LA2_0 >= '\u000E' && LA2_0 <= '&') || (LA2_0 >= '(' && LA2_0 <= '[') || (LA2_0 >= ']' &&
+                            LA2_0 <= '\uFFFF'))) {
                         alt2 = 2;
                     }
-
 
                     switch (alt2) {
                         case 1:
@@ -1000,21 +884,20 @@ public class GQLLexer extends Lexer {
                             match('\\');
 
                             match('\'');
-
                         }
                         break;
                         case 2:
                             // GQL.g:176:7: ~ ( '\\'' | '\\n' | '\\r' )
                         {
-                            if ((input.LA(1) >= '\u0000' && input.LA(1) <= '\t') || (input.LA(1) >= '\u000B' && input.LA(1) <= '\f') || (input.LA(1) >= '\u000E' && input.LA(1) <= '&') || (input.LA(1) >= '(' && input.LA(1) <= '\uFFFF')) {
+                            if ((input.LA(1) >= '\u0000' && input.LA(1) <= '\t') || (input.LA(
+                                    1) >= '\u000B' && input.LA(1) <= '\f') || (input.LA(1) >= '\u000E' && input.LA(
+                                    1) <= '&') || (input.LA(1) >= '(' && input.LA(1) <= '\uFFFF')) {
                                 input.consume();
                             } else {
                                 MismatchedSetException mse = new MismatchedSetException(null, input);
                                 recover(mse);
                                 throw mse;
                             }
-
-
                         }
                         break;
 
@@ -1023,9 +906,7 @@ public class GQLLexer extends Lexer {
                     }
                 } while (true);
 
-
                 match('\'');
-
             }
 
             state.type = _type;
@@ -1049,11 +930,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1073,11 +950,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1097,11 +970,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1121,11 +990,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1145,11 +1010,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1169,11 +1030,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1193,11 +1050,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1217,11 +1070,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1241,11 +1090,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1265,11 +1110,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1289,11 +1130,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1313,11 +1150,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1337,11 +1170,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1361,11 +1190,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1385,11 +1210,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1409,11 +1230,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1433,11 +1250,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1457,11 +1270,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1481,11 +1290,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1505,11 +1310,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1529,11 +1330,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1553,11 +1350,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1577,11 +1370,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1601,11 +1390,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1625,11 +1410,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1649,11 +1430,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1673,11 +1450,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1697,11 +1470,7 @@ public class GQLLexer extends Lexer {
                     recover(mse);
                     throw mse;
                 }
-
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1715,10 +1484,7 @@ public class GQLLexer extends Lexer {
             // GQL.g:211:16: '.'
             {
                 match('.');
-
             }
-
-
         } finally {
             // do for sure before leaving
         }
@@ -1743,7 +1509,6 @@ public class GQLLexer extends Lexer {
                         alt3 = 1;
                     }
 
-
                     switch (alt3) {
                         case 1:
                             // GQL.g:
@@ -1755,8 +1520,6 @@ public class GQLLexer extends Lexer {
                                 recover(mse);
                                 throw mse;
                             }
-
-
                         }
                         break;
 
@@ -1764,7 +1527,6 @@ public class GQLLexer extends Lexer {
                             break loop3;
                     }
                 } while (true);
-
 
                 // GQL.g:213:19: ( DOT ( DIGIT )+ )?
                 int alt5 = 2;
@@ -1779,7 +1541,6 @@ public class GQLLexer extends Lexer {
                     {
                         mDOT();
 
-
                         // GQL.g:213:24: ( DIGIT )+
                         int cnt4 = 0;
                         loop4:
@@ -1790,7 +1551,6 @@ public class GQLLexer extends Lexer {
                             if (((LA4_0 >= '0' && LA4_0 <= '9'))) {
                                 alt4 = 1;
                             }
-
 
                             switch (alt4) {
                                 case 1:
@@ -1803,8 +1563,6 @@ public class GQLLexer extends Lexer {
                                         recover(mse);
                                         throw mse;
                                     }
-
-
                                 }
                                 break;
 
@@ -1816,14 +1574,9 @@ public class GQLLexer extends Lexer {
                             }
                             cnt4++;
                         } while (true);
-
-
                     }
                     break;
-
                 }
-
-
             }
 
             state.type = _type;
@@ -1852,7 +1605,6 @@ public class GQLLexer extends Lexer {
                         new NoViableAltException("", 6, 0, input);
 
                 throw nvae;
-
             }
             switch (alt6) {
                 case 1:
@@ -1860,16 +1612,11 @@ public class GQLLexer extends Lexer {
                 {
                     mT();
 
-
                     mR();
-
 
                     mU();
 
-
                     mE();
-
-
                 }
                 break;
                 case 2:
@@ -1877,22 +1624,15 @@ public class GQLLexer extends Lexer {
                 {
                     mF();
 
-
                     mA();
-
 
                     mL();
 
-
                     mS();
 
-
                     mE();
-
-
                 }
                 break;
-
             }
             state.type = _type;
             state.channel = _channel;
@@ -1912,16 +1652,11 @@ public class GQLLexer extends Lexer {
             {
                 mN();
 
-
                 mU();
 
-
                 mL();
 
-
                 mL();
-
-
             }
 
             state.type = _type;
@@ -1940,7 +1675,8 @@ public class GQLLexer extends Lexer {
             // GQL.g:221:3: ( ( LETTER | '_' ) ( LETTER | DIGIT | '_' | '-' )* )
             // GQL.g:221:5: ( LETTER | '_' ) ( LETTER | DIGIT | '_' | '-' )*
             {
-                if ((input.LA(1) >= 'A' && input.LA(1) <= 'Z') || input.LA(1) == '_' || (input.LA(1) >= 'a' && input.LA(1) <= 'z')) {
+                if ((input.LA(1) >= 'A' && input.LA(1) <= 'Z') || input.LA(1) == '_' || (input.LA(1) >= 'a' && input.LA(
+                        1) <= 'z')) {
                     input.consume();
                 } else {
                     MismatchedSetException mse = new MismatchedSetException(null, input);
@@ -1948,31 +1684,30 @@ public class GQLLexer extends Lexer {
                     throw mse;
                 }
 
-
                 // GQL.g:221:20: ( LETTER | DIGIT | '_' | '-' )*
                 loop7:
                 do {
                     int alt7 = 2;
                     int LA7_0 = input.LA(1);
 
-                    if ((LA7_0 == '-' || (LA7_0 >= '0' && LA7_0 <= '9') || (LA7_0 >= 'A' && LA7_0 <= 'Z') || LA7_0 == '_' || (LA7_0 >= 'a' && LA7_0 <= 'z'))) {
+                    if ((LA7_0 == '-' || (LA7_0 >= '0' && LA7_0 <= '9') || (LA7_0 >= 'A' && LA7_0 <= 'Z') || LA7_0 ==
+                            '_' || (LA7_0 >= 'a' && LA7_0 <= 'z'))) {
                         alt7 = 1;
                     }
-
 
                     switch (alt7) {
                         case 1:
                             // GQL.g:
                         {
-                            if (input.LA(1) == '-' || (input.LA(1) >= '0' && input.LA(1) <= '9') || (input.LA(1) >= 'A' && input.LA(1) <= 'Z') || input.LA(1) == '_' || (input.LA(1) >= 'a' && input.LA(1) <= 'z')) {
+                            if (input.LA(1) == '-' || (input.LA(1) >= '0' && input.LA(1) <= '9') || (input.LA(
+                                    1) >= 'A' && input.LA(1) <= 'Z') || input.LA(1) == '_' || (input.LA(
+                                    1) >= 'a' && input.LA(1) <= 'z')) {
                                 input.consume();
                             } else {
                                 MismatchedSetException mse = new MismatchedSetException(null, input);
                                 recover(mse);
                                 throw mse;
                             }
-
-
                         }
                         break;
 
@@ -1980,8 +1715,6 @@ public class GQLLexer extends Lexer {
                             break loop7;
                     }
                 } while (true);
-
-
             }
 
             state.type = _type;
@@ -2011,20 +1744,18 @@ public class GQLLexer extends Lexer {
                         alt8 = 1;
                     }
 
-
                     switch (alt8) {
                         case 1:
                             // GQL.g:
                         {
-                            if ((input.LA(1) >= '\t' && input.LA(1) <= '\n') || (input.LA(1) >= '\f' && input.LA(1) <= '\r') || input.LA(1) == ' ') {
+                            if ((input.LA(1) >= '\t' && input.LA(1) <= '\n') || (input.LA(1) >= '\f' && input.LA(
+                                    1) <= '\r') || input.LA(1) == ' ') {
                                 input.consume();
                             } else {
                                 MismatchedSetException mse = new MismatchedSetException(null, input);
                                 recover(mse);
                                 throw mse;
                             }
-
-
                         }
                         break;
 
@@ -2037,9 +1768,7 @@ public class GQLLexer extends Lexer {
                     cnt8++;
                 } while (true);
 
-
                 _channel = HIDDEN;
-
             }
 
             state.type = _type;
@@ -2060,7 +1789,6 @@ public class GQLLexer extends Lexer {
             {
                 match("//");
 
-
                 // GQL.g:226:16: ( . )*
                 loop9:
                 do {
@@ -2069,17 +1797,16 @@ public class GQLLexer extends Lexer {
 
                     if ((LA9_0 == '\n' || LA9_0 == '\r')) {
                         alt9 = 2;
-                    } else if (((LA9_0 >= '\u0000' && LA9_0 <= '\t') || (LA9_0 >= '\u000B' && LA9_0 <= '\f') || (LA9_0 >= '\u000E' && LA9_0 <= '\uFFFF'))) {
+                    } else if (((LA9_0 >= '\u0000' && LA9_0 <= '\t') || (LA9_0 >= '\u000B' && LA9_0 <= '\f') ||
+                            (LA9_0 >= '\u000E' && LA9_0 <= '\uFFFF'))) {
                         alt9 = 1;
                     }
-
 
                     switch (alt9) {
                         case 1:
                             // GQL.g:226:16: .
                         {
                             matchAny();
-
                         }
                         break;
 
@@ -2087,7 +1814,6 @@ public class GQLLexer extends Lexer {
                             break loop9;
                     }
                 } while (true);
-
 
                 if (input.LA(1) == '\n' || input.LA(1) == '\r') {
                     input.consume();
@@ -2097,9 +1823,7 @@ public class GQLLexer extends Lexer {
                     throw mse;
                 }
 
-
                 _channel = HIDDEN;
-
             }
 
             state.type = _type;
@@ -2120,7 +1844,6 @@ public class GQLLexer extends Lexer {
             {
                 match("/*");
 
-
                 // GQL.g:228:26: ( . )*
                 loop10:
                 do {
@@ -2135,19 +1858,15 @@ public class GQLLexer extends Lexer {
                         } else if (((LA10_1 >= '\u0000' && LA10_1 <= '.') || (LA10_1 >= '0' && LA10_1 <= '\uFFFF'))) {
                             alt10 = 1;
                         }
-
-
                     } else if (((LA10_0 >= '\u0000' && LA10_0 <= ')') || (LA10_0 >= '+' && LA10_0 <= '\uFFFF'))) {
                         alt10 = 1;
                     }
-
 
                     switch (alt10) {
                         case 1:
                             // GQL.g:228:26: .
                         {
                             matchAny();
-
                         }
                         break;
 
@@ -2156,12 +1875,9 @@ public class GQLLexer extends Lexer {
                     }
                 } while (true);
 
-
                 match("*/");
 
-
                 _channel = HIDDEN;
-
             }
 
             state.type = _type;
@@ -2173,7 +1889,9 @@ public class GQLLexer extends Lexer {
     // $ANTLR end "MULTILINE_COMMENT"
 
     public void mTokens() throws RecognitionException {
-        // GQL.g:1:8: ( T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | SELECT | FROM | WHERE | ORDER | BY | ASC | DESC | LIMIT | OFFSET | ANCESTOR | IS | FUNCTION | AND | IN | STRING_LITERAL | DECIMAL | BOOLEAN | NULL | IDENTITY | WHITESPACE | COMMENT | MULTILINE_COMMENT )
+        // GQL.g:1:8: ( T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66
+        // | SELECT | FROM | WHERE | ORDER | BY | ASC | DESC | LIMIT | OFFSET | ANCESTOR | IS | FUNCTION | AND | IN |
+        // STRING_LITERAL | DECIMAL | BOOLEAN | NULL | IDENTITY | WHITESPACE | COMMENT | MULTILINE_COMMENT )
         int alt11 = 34;
         alt11 = dfa11.predict(input);
         switch (alt11) {
@@ -2181,279 +1899,208 @@ public class GQLLexer extends Lexer {
                 // GQL.g:1:10: T__55
             {
                 mT__55();
-
-
             }
             break;
             case 2:
                 // GQL.g:1:16: T__56
             {
                 mT__56();
-
-
             }
             break;
             case 3:
                 // GQL.g:1:22: T__57
             {
                 mT__57();
-
-
             }
             break;
             case 4:
                 // GQL.g:1:28: T__58
             {
                 mT__58();
-
-
             }
             break;
             case 5:
                 // GQL.g:1:34: T__59
             {
                 mT__59();
-
-
             }
             break;
             case 6:
                 // GQL.g:1:40: T__60
             {
                 mT__60();
-
-
             }
             break;
             case 7:
                 // GQL.g:1:46: T__61
             {
                 mT__61();
-
-
             }
             break;
             case 8:
                 // GQL.g:1:52: T__62
             {
                 mT__62();
-
-
             }
             break;
             case 9:
                 // GQL.g:1:58: T__63
             {
                 mT__63();
-
-
             }
             break;
             case 10:
                 // GQL.g:1:64: T__64
             {
                 mT__64();
-
-
             }
             break;
             case 11:
                 // GQL.g:1:70: T__65
             {
                 mT__65();
-
-
             }
             break;
             case 12:
                 // GQL.g:1:76: T__66
             {
                 mT__66();
-
-
             }
             break;
             case 13:
                 // GQL.g:1:82: SELECT
             {
                 mSELECT();
-
-
             }
             break;
             case 14:
                 // GQL.g:1:89: FROM
             {
                 mFROM();
-
-
             }
             break;
             case 15:
                 // GQL.g:1:94: WHERE
             {
                 mWHERE();
-
-
             }
             break;
             case 16:
                 // GQL.g:1:100: ORDER
             {
                 mORDER();
-
-
             }
             break;
             case 17:
                 // GQL.g:1:106: BY
             {
                 mBY();
-
-
             }
             break;
             case 18:
                 // GQL.g:1:109: ASC
             {
                 mASC();
-
-
             }
             break;
             case 19:
                 // GQL.g:1:113: DESC
             {
                 mDESC();
-
-
             }
             break;
             case 20:
                 // GQL.g:1:118: LIMIT
             {
                 mLIMIT();
-
-
             }
             break;
             case 21:
                 // GQL.g:1:124: OFFSET
             {
                 mOFFSET();
-
-
             }
             break;
             case 22:
                 // GQL.g:1:131: ANCESTOR
             {
                 mANCESTOR();
-
-
             }
             break;
             case 23:
                 // GQL.g:1:140: IS
             {
                 mIS();
-
-
             }
             break;
             case 24:
                 // GQL.g:1:143: FUNCTION
             {
                 mFUNCTION();
-
-
             }
             break;
             case 25:
                 // GQL.g:1:152: AND
             {
                 mAND();
-
-
             }
             break;
             case 26:
                 // GQL.g:1:156: IN
             {
                 mIN();
-
-
             }
             break;
             case 27:
                 // GQL.g:1:159: STRING_LITERAL
             {
                 mSTRING_LITERAL();
-
-
             }
             break;
             case 28:
                 // GQL.g:1:174: DECIMAL
             {
                 mDECIMAL();
-
-
             }
             break;
             case 29:
                 // GQL.g:1:182: BOOLEAN
             {
                 mBOOLEAN();
-
-
             }
             break;
             case 30:
                 // GQL.g:1:190: NULL
             {
                 mNULL();
-
-
             }
             break;
             case 31:
                 // GQL.g:1:195: IDENTITY
             {
                 mIDENTITY();
-
-
             }
             break;
             case 32:
                 // GQL.g:1:204: WHITESPACE
             {
                 mWHITESPACE();
-
-
             }
             break;
             case 33:
                 // GQL.g:1:215: COMMENT
             {
                 mCOMMENT();
-
-
             }
             break;
             case 34:
                 // GQL.g:1:223: MULTILINE_COMMENT
             {
                 mMULTILINE_COMMENT();
-
-
             }
             break;
-
         }
-
     }
-
 
     protected DFA11 dfa11 = new DFA11(this);
     static final String DFA11_eotS =
@@ -2669,9 +2316,10 @@ public class GQLLexer extends Lexer {
         }
 
         public String getDescription() {
-            return "1:1: Tokens : ( T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | SELECT | FROM | WHERE | ORDER | BY | ASC | DESC | LIMIT | OFFSET | ANCESTOR | IS | FUNCTION | AND | IN | STRING_LITERAL | DECIMAL | BOOLEAN | NULL | IDENTITY | WHITESPACE | COMMENT | MULTILINE_COMMENT );";
+            return "1:1: Tokens : ( T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | " +
+                    "T__65 | T__66 | SELECT | FROM | WHERE | ORDER | BY | ASC | DESC | LIMIT | OFFSET | ANCESTOR | IS" +
+                    " | FUNCTION | AND | IN | STRING_LITERAL | DECIMAL | BOOLEAN | NULL | IDENTITY | WHITESPACE | " +
+                    "COMMENT | MULTILINE_COMMENT );";
         }
     }
-
-
 }

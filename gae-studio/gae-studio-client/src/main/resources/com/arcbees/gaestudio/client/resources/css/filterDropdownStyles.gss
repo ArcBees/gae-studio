@@ -14,7 +14,7 @@
 
     z-index: 10000;
 
-    @mixin boxshadow(4px, 4px, 5px, 0, rgba(0, 0, 0, 0.12));
+@mixin boxshadow(4 px, 4 px, 5 px, 0, rgba(0, 0, 0, 0.12));
 }
 
 .dropDownArrow {

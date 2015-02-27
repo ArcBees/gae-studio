@@ -98,7 +98,7 @@
 
     cursor: pointer;
 
-    @mixin transition(all, 0.2s);
+@mixin transition(all, 0.2 s);
 }
 
 .support .buttonContainer .button:hover {

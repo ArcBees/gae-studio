@@ -19,9 +19,12 @@
                 <i class="{fonts.icons.icon_refresh}"></i>
             </div>
             <div ui:field="byGql" class="{visualizer.entityList.byGql}">
-                <i class="{fonts.icons.icon_gqlclose}"></i> By GQL
+                <i class="{fonts.icons.icon_gqlclose}"></i>
+                By GQL
             </div>
-            <a href="https://developers.google.com/appengine/docs/python/datastore/gqlreference" target="_blank" class="{visualizer.entityList.byGqlLink}">( ? )</a>
+            <a href="https://developers.google.com/appengine/docs/python/datastore/gqlreference" target="_blank"
+               class="{visualizer.entityList.byGqlLink}">( ? )
+            </a>
 
             <div ui:field="formQueryHolder" class="{visualizer.entityList.formQuery}">
                 <g:TextArea ui:field="formQuery"></g:TextArea>

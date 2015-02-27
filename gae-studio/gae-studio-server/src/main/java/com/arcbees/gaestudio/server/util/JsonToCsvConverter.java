@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.server.util;
@@ -73,7 +80,8 @@ public class JsonToCsvConverter {
         Iterator currentObjectKeys = fullPropertyMap.keys();
 
         while (currentObjectKeys.hasNext()) {
-            columns.addAll(generateColumnNamesFromPropertyMap(String.valueOf(currentObjectKeys.next()), fullPropertyMap));
+            columns.addAll(
+                    generateColumnNamesFromPropertyMap(String.valueOf(currentObjectKeys.next()), fullPropertyMap));
         }
 
         return columns;
@@ -94,12 +102,14 @@ public class JsonToCsvConverter {
     }
 
     private String addSeparator(Set<String> columns, String columnsResult, int counter) {
+        String result = columnsResult;
         if (counter < columns.size()) {
-            columnsResult += ", ";
+            result += ", ";
         } else {
-            columnsResult += "\n";
+            result += "\n";
         }
-        return columnsResult;
+
+        return result;
     }
 
     private String buildDataLines(JSONArray dataArray, JSONObject fullPropertyMap) throws JSONException {
@@ -173,12 +183,12 @@ public class JsonToCsvConverter {
         Set<String> arrayColumns = new LinkedHashSet<>();
 
         for (int i = 0; i < array.length(); i++) {
-            arrayColumns.addAll(generateColumnNamesFromPropertyType(propertyName + "[" + i + "]", array.getJSONObject(i)));
+            arrayColumns.addAll(
+                    generateColumnNamesFromPropertyType(propertyName + "[" + i + "]", array.getJSONObject(i)));
         }
 
         return arrayColumns;
     }
-
 
     private Set<String> generateGeoPtColumnNames(String propertyName) {
         Set<String> geoColumns = new LinkedHashSet<>();

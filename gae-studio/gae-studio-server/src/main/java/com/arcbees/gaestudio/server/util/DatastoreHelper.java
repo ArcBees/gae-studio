@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.server.util;
@@ -30,7 +37,6 @@ import com.google.appengine.api.datastore.Query;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -132,7 +138,8 @@ public class DatastoreHelper {
 
     public Collection<Entity> queryOnAllNamespaces(
             Query query,
-            FetchOptions fetchOptions) {
+            FetchOptions options) {
+        FetchOptions fetchOptions = options;
         Integer fetchLimit = fetchOptions.getLimit();
         String defaultNamespace = NamespaceManager.get();
 
@@ -140,27 +147,8 @@ public class DatastoreHelper {
 
         Collection<Entity> entities = Lists.newArrayList();
         for (Entity namespace : namespaces) {
-            DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-
-            NamespaceManager.set(extractNamespace(namespace));
-
-            Query namespaceAwareQuery = copyQuery(query);
-
-            boolean canPreFilterGaeKinds = canPreFilterGaeKinds(query);
-            if (canPreFilterGaeKinds) {
-                preFilterGaeKinds(namespaceAwareQuery);
-            }
-
-            Iterables.addAll(entities, datastoreService.prepare(namespaceAwareQuery).asIterable(fetchOptions));
-
-            if (!canPreFilterGaeKinds) {
-                entities = Collections2.filter(entities, new Predicate<Entity>() {
-                    @Override
-                    public boolean apply(Entity input) {
-                        return !input.getKind().startsWith(ENTITY_PREFIX);
-                    }
-                });
-            }
+            Iterable<Entity> entitiesInNamespace = queryOnNamespace(extractNamespace(namespace), query, fetchOptions);
+            Iterables.addAll(entities, entitiesInNamespace);
 
             if (fetchLimit != null) {
                 int newLimit = fetchLimit - entities.size();
@@ -175,6 +163,24 @@ public class DatastoreHelper {
         NamespaceManager.set(defaultNamespace);
 
         return entities;
+    }
+
+    public Entity querySingleEntity(String namespace, Query query) {
+        DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
+        if (namespace == null) {
+            return datastoreService.prepare(query).asSingleEntity();
+        } else {
+            String oldNamespace = NamespaceManager.get();
+            try {
+                NamespaceManager.set(namespace);
+
+                Query namespaceAwareQuery = copyQuery(query);
+
+                return datastoreService.prepare(namespaceAwareQuery).asSingleEntity();
+            } finally {
+                NamespaceManager.set(oldNamespace);
+            }
+        }
     }
 
     public Iterable<Entity> queryOnNamespace(String namespace, Query query) {
@@ -192,7 +198,23 @@ public class DatastoreHelper {
 
                 Query namespaceAwareQuery = copyQuery(query);
 
-                return toSerializableIterable(datastoreService.prepare(namespaceAwareQuery).asIterable(fetchOptions));
+                boolean canPreFilterGaeKinds = canPreFilterGaeKinds(namespaceAwareQuery);
+                if (canPreFilterGaeKinds) {
+                    preFilterGaeKinds(namespaceAwareQuery);
+                }
+
+                Iterable<Entity> entities = datastoreService.prepare(namespaceAwareQuery).asIterable(fetchOptions);
+
+                if (!canPreFilterGaeKinds) {
+                    entities = Iterables.filter(entities, new Predicate<Entity>() {
+                        @Override
+                        public boolean apply(Entity input) {
+                            return !input.getKind().startsWith(ENTITY_PREFIX);
+                        }
+                    });
+                }
+
+                return toSerializableIterable(entities);
             } finally {
                 NamespaceManager.set(oldNamespace);
             }
@@ -200,7 +222,7 @@ public class DatastoreHelper {
     }
 
     /**
-     * Add a filter to remove the GAE specific kinds from the query
+     * Add a filter to remove the GAE specific kinds from the query.
      *
      * @param query
      * @throws IllegalArgumentException If the Query already contains an inequality filter
@@ -216,7 +238,7 @@ public class DatastoreHelper {
                     Entities.createKindKey(ENTITY_PREFIX));
         } else {
             filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, LESS_THAN,
-                    KeyFactory.createKey(ENTITY_PREFIX, 1l));
+                    KeyFactory.createKey(ENTITY_PREFIX, 1L));
         }
 
         List<Query.Filter> filters = Lists.<Query.Filter>newArrayList(filter);

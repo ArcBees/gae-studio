@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.client.formatters;
@@ -28,22 +35,22 @@ import static org.junit.Assert.assertNotEquals;
 
 @RunWith(JukitoRunner.class)
 public class ObjectifyRecordFormatterTest {
-    public final QueryFilterOperator ANY_OPERATOR = QueryFilterOperator.GREATER_THAN;
+    public static final QueryFilterOperator ANY_OPERATOR = QueryFilterOperator.GREATER_THAN;
 
     @Inject
     ObjectifyRecordFormatter formatter;
 
     @Test
     public void formatRecord_filterValueContainsUnicodeReplacementCharacter_replacementCharacterIsEscaped() {
-        //given
+        // given
         QueryRecordDto queryRecordDto = getQueryRecordDto();
         QueryFilterDto queryFilterDto = getQueryFilterDto("theValue" + '\ufffd');
         queryRecordDto.getQuery().getFilters().add(queryFilterDto);
 
-        //when
+        // when
         String formatted = formatter.formatRecord(queryRecordDto);
 
-        //then
+        // then
         assertNotEquals("Formatted query still contains unicode character",
                 "query().filter(\"null >\", theValue�)", formatted);
         assertEquals("Formatted query does not contain escaped unicode character",

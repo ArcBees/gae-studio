@@ -1,10 +1,17 @@
 /**
- * Copyright (c) 2014 by ArcBees Inc., All rights reserved.
- * This source code, and resulting software, is the confidential and proprietary information
- * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
- * of ArcBees Inc. ("The Company"). You shall not disclose such Proprietary Information and
- * shall use it only in accordance with the terms and conditions of any and all license
- * agreements you have entered into with The Company.
+ * Copyright 2015 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package com.arcbees.gaestudio.server.api;
@@ -20,31 +27,33 @@ import com.arcbees.gaestudio.shared.rest.EndPoints;
 import com.google.gson.reflect.TypeToken;
 import com.jayway.restassured.response.Response;
 
-import static com.jayway.restassured.RestAssured.given;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 import static javax.ws.rs.core.Response.Status.OK;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import static com.jayway.restassured.RestAssured.given;
+
 public class EntitiesResourceIT extends RestIT {
+    private static final String UNEXISTENT_KIND = "UnexistentKind";
+
     private final TypeToken<List<Car>> carListType = new TypeToken<List<Car>>() {
     };
     private final TypeToken<List<StringIdEntity>> stringIdEntityListType = new TypeToken<List<StringIdEntity>>() {
     };
 
-    private String UNEXISTENT_KIND = "UnexistentKind";
-
     @Test
     public void getEntities_createObject_entityReturned() {
-        //given
+        // given
         createRemoteCar();
 
-        //when
+        // when
         Response response = getRemoteEntities(CAR_KIND);
 
-        //then
+        // then
         List<Car> entities = gson.fromJson(response.asString(), carListType.getType());
         assertEquals(1, entities.size());
         assertEquals(OK.getStatusCode(), response.getStatusCode());
@@ -52,13 +61,13 @@ public class EntitiesResourceIT extends RestIT {
 
     @Test
     public void getEntities_createStringIdObject_entityReturned() {
-        //given
+        // given
         createStringIdEntity(AN_ENTITY_NAME);
 
-        //when
+        // when
         Response response = getRemoteEntities(STRING_ENTITY_KIND);
 
-        //then
+        // then
         List<StringIdEntity> entities = gson.fromJson(response.asString(), stringIdEntityListType.getType());
         assertEquals(1, entities.size());
         assertEquals(OK.getStatusCode(), response.getStatusCode());
@@ -66,25 +75,25 @@ public class EntitiesResourceIT extends RestIT {
 
     @Test
     public void getEntitiesWithNoKind_createObject_badRequest() {
-        //given
+        // given
         createRemoteCar();
 
-        //when
+        // when
         Response response = getRemoteEntitiesWithNoKind();
 
-        //then
+        // then
         assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
     }
 
     @Test
     public void createEmptyEntity_createObject_returnEmptyEntity() {
-        //given
+        // given
         createRemoteCar();
 
-        //when
+        // when
         Response response = createRemoteEmptyEntity(CAR_KIND);
 
-        //then
+        // then
         Car emptyCar = gson.fromJson(response.asString(), Car.class);
         assertNotNull(emptyCar);
         assertEquals(OK.getStatusCode(), response.getStatusCode());
@@ -92,37 +101,37 @@ public class EntitiesResourceIT extends RestIT {
 
     @Test
     public void postEntitiesWithNoKind_createObject_badRequest() {
-        //given
+        // given
         createRemoteCar();
 
-        //when
+        // when
         Response response = postRemoteEntitiesWithNoKind();
 
-        //then
+        // then
         assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
     }
 
     @Test
     public void postEntitiesUnexistentEntity_createObject_notFound() {
-        //given
+        // given
         createRemoteCar();
 
-        //when
+        // when
         Response response = createRemoteEmptyEntity(UNEXISTENT_KIND);
 
-        //then
+        // then
         assertEquals(NOT_FOUND.getStatusCode(), response.getStatusCode());
     }
 
     @Test
     public void deleteEntities_createObject_noContent() {
-        //given
+        // given
         createRemoteCar();
 
-        //when
+        // when
         Response response = deleteAllRemoteEntities();
 
-        //then
+        // then
         Response getEntitiesResponse = getRemoteEntities(CAR_KIND);
         List<Car> entities = gson.fromJson(getEntitiesResponse.asString(), carListType.getType());
         assertEquals(0, entities.size());
@@ -131,40 +140,40 @@ public class EntitiesResourceIT extends RestIT {
 
     @Test
     public void deleteEntitiesNoDeleteType_createObject_badRequest() {
-        //given
+        // given
         createRemoteCar();
 
-        //when
+        // when
         Response response = deleteRemoteEntitiesWithNoDeleteType();
 
-        //then
+        // then
         assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
     }
 
     @Test
     public void getCount_createTwoObjects_OkWithTwo() {
-        //given
+        // given
         createRemoteCar();
         createRemoteCar();
 
-        //when
+        // when
         Response response = getCount(CAR_KIND);
 
-        //then
-        assertEquals(2l, (long) gson.fromJson(response.asString(), Long.class));
+        // then
+        assertEquals(2L, (long) gson.fromJson(response.asString(), Long.class));
         assertEquals(OK.getStatusCode(), response.getStatusCode());
     }
 
     @Test
     public void getCountWithNoKind_createTwoObjects_badRequest() {
-        //given
+        // given
         createRemoteCar();
         createRemoteCar();
 
-        //when
+        // when
         Response response = getCountWithNoKind();
 
-        //then
+        // then
         assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
     }
 
@@ -189,7 +198,8 @@ public class EntitiesResourceIT extends RestIT {
     }
 
     private Response getCount(String kind) {
-        return given().queryParam(TestEndPoints.PARAM_KIND, kind).get(getAbsoluteUri(EndPoints.ENTITIES + EndPoints.COUNT));
+        return given().queryParam(TestEndPoints.PARAM_KIND, kind).get(
+                getAbsoluteUri(EndPoints.ENTITIES + EndPoints.COUNT));
     }
 
     private Response getCountWithNoKind() {

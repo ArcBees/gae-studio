@@ -18,9 +18,9 @@
 
     cursor: pointer;
 
-    @mixin opacity(0.5);
-    @mixin boxshadow_none();
-    @mixin transition(opacity, 0.2s);
+@mixin opacity(0.5);
+@mixin boxshadow_none();
+@mixin transition(opacity, 0.2 s);
 }
 
 .issueBtn::after {
@@ -38,8 +38,8 @@
     -moz-transform: translateY(-10px);
     transform: translateY(-10px);
 
-    @mixin opacity(0);
-    @mixin transition(all, 0.2s);
+@mixin opacity(0);
+@mixin transition(all, 0.2 s);
 }
 
 .issueBtn:hover::after {
@@ -49,11 +49,11 @@
     -moz-transform: translateY(0px);
     transform: translateY(0px);
 
-    @mixin opacity(0.8);
+@mixin opacity(0.8);
 }
 
 .issueBtn:active {
-    @mixin opacity(1);
+@mixin opacity(1);
 }
 
 .menu {
@@ -174,7 +174,7 @@
     left: 0;
 }
 
-.ajax span{
+.ajax span {
     background-color: C_PRIMARY;
 
     display: block;
@@ -190,12 +190,20 @@
 }
 
 @-webkit-keyframes move {
-    from {right: 100%}
-    to {right: -100%}
+    from {
+        right: 100%
+    }
+    to {
+        right: -100%
+    }
 }
 
 @keyframes move {
-    from {right: 100%}
-    to {right: -100%}
+    from {
+        right: 100%
+    }
+    to {
+        right: -100%
+    }
 }
 
