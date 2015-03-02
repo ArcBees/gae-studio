@@ -51,7 +51,7 @@ public class RootServlet extends HttpServlet {
     private static final String templateLocation =
             "com/arcbees/gaestudio/server/velocitytemplates/gae-studio.vm";
     private static final String MAVEN_URL = "http://search.maven.org/solrsearch/select?" +
-            "q=g%3A%22com.arcbees.gaestudio%22%20AND%20a%3A%22gaestudio%22&rows=20&wt=json";
+            "q=g%3A%22com.arcbees.gaestudio%22%20AND%20a%3A%22gae-studio%22&rows=20&wt=json";
     private static final Pattern LATEST_VERSION_PATTERN =
             Pattern.compile("\"latestVersion\":\\s*\"(.*?)\"");
     private static final Pattern RESPONSE_CONTENT_PATTERN = Pattern.compile("^[^{]*(\\{.*\\})$");
