@@ -43,6 +43,8 @@ public class GoogleAnalyticsNavigationTracker implements NavigationHandler {
     public void onNavigation(NavigationEvent navigationEvent) {
         String historyToken = placeManager.buildHistoryToken(navigationEvent.getRequest());
 
-        analytics.sendPageView().documentPath("#" + historyToken);
+        analytics.sendPageView()
+                .documentPath("#" + historyToken)
+                .go();
     }
 }

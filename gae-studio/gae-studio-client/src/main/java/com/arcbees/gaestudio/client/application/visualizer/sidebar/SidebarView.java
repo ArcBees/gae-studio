@@ -176,7 +176,8 @@ public class SidebarView extends ViewWithUiHandlers<SidebarUiHandlers> implement
                 }
 
                 analytics.sendEvent(UI_ELEMENTS, "click")
-                        .eventLabel("Visualizer -> Kinds Sidebar -> Chosen format: " + currentFormat);
+                        .eventLabel("Visualizer -> Kinds Sidebar -> Chosen format: " + currentFormat)
+                        .go();
             }
         });
     }

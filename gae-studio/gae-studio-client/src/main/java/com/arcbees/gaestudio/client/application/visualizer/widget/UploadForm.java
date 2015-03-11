@@ -142,7 +142,8 @@ public class UploadForm implements IsWidget, FormPanel.SubmitCompleteHandler {
                 registerFileChangedHandler();
                 $(fileUpload).click();
                 analytics.sendEvent(UI_ELEMENTS, "click")
-                        .eventLabel("Visualizer -> Upload Form -> Choose File");
+                        .eventLabel("Visualizer -> Upload Form -> Choose File")
+                        .go();
             }
         });
         button.setStyleName(resources.styles().button());
