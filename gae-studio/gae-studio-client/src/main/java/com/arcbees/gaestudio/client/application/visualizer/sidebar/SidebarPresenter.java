@@ -121,7 +121,8 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView>
         }
 
         analytics.sendEvent(UI_ELEMENTS, "click")
-                .eventLabel("Visualizer -> Kinds sidebar -> Delete All Entities Button");
+                .eventLabel("Visualizer -> Kinds sidebar -> Delete All Entities Button")
+                .go();
     }
 
     @Override
@@ -221,7 +222,8 @@ public class SidebarPresenter extends PresenterWidget<SidebarPresenter.MyView>
         });
 
         analytics.sendEvent(EventCategories.UI_ELEMENTS, "value changed")
-                .eventLabel("Visualizer -> Kinds Sidebar -> Kinds");
+                .eventLabel("Visualizer -> Kinds Sidebar -> Kinds")
+                .go();
     }
 
     @Override

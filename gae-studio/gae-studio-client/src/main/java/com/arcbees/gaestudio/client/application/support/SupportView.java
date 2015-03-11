@@ -97,13 +97,17 @@ public class SupportView extends PopupViewWithUiHandlers<SupportUiHandlers>
     void onCancel(ClickEvent event) {
         hide();
 
-        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Submit Issue Popup -> Close");
+        analytics.sendEvent(UI_ELEMENTS, "click")
+                .eventLabel("Submit Issue Popup -> Close")
+                .go();
     }
 
     @UiHandler("send")
     void onSend(ClickEvent event) {
         getUiHandlers().send(driver.flush());
 
-        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Submit Issue Popup -> Submit");
+        analytics.sendEvent(UI_ELEMENTS, "click")
+                .eventLabel("Submit Issue Popup -> Submit")
+                .go();
     }
 }

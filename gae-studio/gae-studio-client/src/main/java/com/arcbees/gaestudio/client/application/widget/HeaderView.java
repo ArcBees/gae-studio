@@ -75,7 +75,9 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers>
         $(logoAnchor).click(new Function() {
             @Override
             public void f() {
-                analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Header -> Logo");
+                analytics.sendEvent(UI_ELEMENTS, "click")
+                        .eventLabel("Header -> Logo")
+                        .go();
             }
         });
 
@@ -108,6 +110,8 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers>
     void handleClick(ClickEvent event) {
         getUiHandlers().supportClicked();
 
-        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Header -> Submit Issue");
+        analytics.sendEvent(UI_ELEMENTS, "click")
+                .eventLabel("Header -> Submit Issue")
+                .go();
     }
 }

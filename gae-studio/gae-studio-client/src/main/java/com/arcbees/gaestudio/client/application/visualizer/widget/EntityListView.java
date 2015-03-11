@@ -279,7 +279,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
     public void runGqlQuery(ClickEvent event) {
         getUiHandlers().runGqlQuery(formQuery.getText());
 
-        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> List View -> Run GQL Query");
+        analytics.sendEvent(UI_ELEMENTS, "click")
+                .eventLabel("Visualizer -> List View -> Run GQL Query")
+                .go();
     }
 
     @Override
@@ -378,7 +380,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
 
         entityTable.setVisibleRangeAndClearData(DEFAULT_RANGE, true);
 
-        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> List View -> Refresh");
+        analytics.sendEvent(UI_ELEMENTS, "click")
+                .eventLabel("Visualizer -> List View -> Refresh")
+                .go();
     }
 
     private void selectRows(List<ParsedEntity> parsedEntities) {
@@ -396,7 +400,9 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
 
         getUiHandlers().onEntitySelected(selectionModel.getSelectedSet());
 
-        analytics.sendEvent(UI_ELEMENTS, "select").eventLabel("Visualizer -> List View -> Entity Row");
+        analytics.sendEvent(UI_ELEMENTS, "select")
+                .eventLabel("Visualizer -> List View -> Entity Row")
+                .go();
     }
 
     private void unselectRow(ParsedEntity parsedEntity) {
@@ -417,12 +423,14 @@ public class EntityListView extends ViewWithUiHandlers<EntityListUiHandlers>
         if (isByGql) {
             $(formQueryHolder).slideDown(100);
             analytics.sendEvent(UI_ELEMENTS, "open")
-                    .eventLabel("Visualizer -> List View -> GQL Query Textarea");
+                    .eventLabel("Visualizer -> List View -> GQL Query Textarea")
+                    .go();
         } else {
             $(formQueryHolder).slideUp(100);
 
             analytics.sendEvent(UI_ELEMENTS, "close")
-                    .eventLabel("Visualizer -> List View -> GQL Query Textarea");
+                    .eventLabel("Visualizer -> List View -> GQL Query Textarea")
+                    .go();
         }
 
         getUiHandlers().setUseGql(isByGql);
