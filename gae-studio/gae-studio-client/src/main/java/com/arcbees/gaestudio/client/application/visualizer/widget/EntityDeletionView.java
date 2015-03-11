@@ -74,7 +74,8 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
     }
 
     @Override
-    public void displayEntitiesDeletion(DeleteEntities deleteType,
+    public void displayEntitiesDeletion(
+            DeleteEntities deleteType,
             String kind,
             String namespace,
             Set<ParsedEntity> entities) {
@@ -115,7 +116,8 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
         asPopupPanel().hide();
 
         analytics.sendEvent(UI_ELEMENTS, "click")
-                .eventLabel("Visualizer -> Delete Confirmation Popup -> Delete");
+                .eventLabel("Visualizer -> Delete Confirmation Popup -> Delete")
+                .go();
     }
 
     @UiHandler({"cancel", "close"})
@@ -124,6 +126,7 @@ public class EntityDeletionView extends PopupViewWithUiHandlers<EntityDeletionUi
         asPopupPanel().hide();
 
         analytics.sendEvent(UI_ELEMENTS, "click")
-                .eventLabel("Visualizer -> Delete Confirmation Popup -> Cancel or Close");
+                .eventLabel("Visualizer -> Delete Confirmation Popup -> Cancel or Close")
+                .go();
     }
 }

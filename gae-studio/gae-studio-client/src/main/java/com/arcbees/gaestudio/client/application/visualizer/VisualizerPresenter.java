@@ -178,9 +178,13 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
         getView().updatePanelsWidth();
 
         if (event.isOpen()) {
-            analytics.sendEvent(UI_ELEMENTS, "close").eventLabel("Visualizer -> Actions Sidebar");
+            analytics.sendEvent(UI_ELEMENTS, "close")
+                    .eventLabel("Visualizer -> Actions Sidebar")
+                    .go();
         } else {
-            analytics.sendEvent(UI_ELEMENTS, "open").eventLabel("Visualizer -> Actions Sidebar");
+            analytics.sendEvent(UI_ELEMENTS, "open")
+                    .eventLabel("Visualizer -> Actions Sidebar")
+                    .go();
         }
     }
 
@@ -260,7 +264,9 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
                     public void onClicked() {
                         delete();
 
-                        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Delete Entity");
+                        analytics.sendEvent(UI_ELEMENTS, "click")
+                                .eventLabel("Visualizer -> Delete Entity")
+                                .go();
                     }
                 }, DebugIds.DELETE_ENGAGE
         );
@@ -281,7 +287,9 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
                     public void onClicked() {
                         edit();
 
-                        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Edit Entity");
+                        analytics.sendEvent(UI_ELEMENTS, "click")
+                                .eventLabel("Visualizer -> Edit Entity")
+                                .go();
                     }
                 }, DebugIds.EDIT
         );
@@ -315,7 +323,9 @@ public class VisualizerPresenter extends Presenter<VisualizerPresenter.MyView, V
     }
 
     private void deselect() {
-        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Deselect Entity");
+        analytics.sendEvent(UI_ELEMENTS, "click")
+                .eventLabel("Visualizer -> Deselect Entity")
+                .go();
 
         DeselectEvent.fire(this);
     }

@@ -81,7 +81,9 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
     void onUploadClicked(ClickEvent event) {
         uploadForm.submit();
 
-        analytics.sendEvent(UI_ELEMENTS, "click").eventLabel("Visualizer -> Import Popup -> Upload");
+        analytics.sendEvent(UI_ELEMENTS, "click")
+                .eventLabel("Visualizer -> Import Popup -> Upload")
+                .go();
     }
 
     @UiHandler({"cancel", "close"})
@@ -89,7 +91,8 @@ public class ImportView extends PopupViewImpl implements ImportPresenter.MyView 
         asPopupPanel().hide();
 
         analytics.sendEvent(UI_ELEMENTS, "click")
-                .eventLabel("Visualizer -> Import Popup -> Cancel or Close");
+                .eventLabel("Visualizer -> Import Popup -> Cancel or Close")
+                .go();
     }
 
     private void setUploadButtonEnabled(boolean enabled) {
